@@ -9,7 +9,7 @@ const index = () => {
         <li className="text-sm">example2</li>
         <li className="text-base">example3</li>
         <li className="text-lg">example4</li>
-        <li className="text-xl">example5</li>
+        <li className="text-xls">example5</li>
       </ul>
     </div>
   );
