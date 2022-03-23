@@ -2,7 +2,7 @@ const Layout: React.FC = ({ children }) => {
   return (
     <div>
       {/* <Header /> */}
-      <main className="container p-4">{children}</main>
+      <main className="container">{children}</main>
       {/* <Footer /> */}
     </div>
   );
