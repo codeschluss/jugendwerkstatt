@@ -3,11 +3,11 @@ import logo from './jugendwerkstatt-logo.png'
 
 const index = () => {
   return (
-    <div className="px-0">
+    <div className="px-0 flex flex-col h-screen">
         <div className="px-0 h-[14rem]">
-            <img className="h-full w-full object-cover" src={logo} alt={"logo"}/> 
+            <img className="h-full w-screen object-cover" src={logo} alt={"logo"}/> 
         </div>
-        <div className="h-screen w-screen absolute -mt-10 rounded-3xl bg-white">
+        <div className="flex justify-center items-center flex-grow w-screen -mt-10 rounded-3xl bg-white">
             test
         </div>
     </div>
