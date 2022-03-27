@@ -1,5 +1,6 @@
-import React, { useState, useRef, createRef, MutableRefObject } from "react";
-import logo from './jugendwerkstatt-logo.png';
+import React, { useState, useRef, MutableRefObject } from "react";
+import logo from '../../images/jugendwerkstatt-logo.png';
+import { Route } from 'react-router-dom'
 
 const Index = () => {
 
@@ -22,7 +23,7 @@ const Index = () => {
         }
     }
 
-    const login = () => {
+    const Login = () => {
         var isValid = true;
         setEmailValidationText('');
         setPasswordValidationText('');
@@ -65,10 +66,14 @@ const Index = () => {
             }
 
             if(responseMessage!='success'){
-                window.alert();
                 emailRef.current.value = "";
                 passwordRef.current.value = "";
             }
+
+
+            // if(responseMessage=='success'){
+            //     window.location.href="/Home";
+            // }
 
         }
         
@@ -138,7 +143,7 @@ const Index = () => {
                         <div className="mx-12 pl-1 pb-2 text-center">
                             <button className="w-full h-8 rounded-xl bg-[#C20639] text-white"
                                 disabled={disabledButton}
-                                onClick={login}
+                                onClick={Login}
                             >Anmelden</button>
                         </div>
                     </div>
