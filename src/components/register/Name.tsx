@@ -1,7 +1,11 @@
 import React from "react";
 import useInput from "../../hooks/use-input";
 
-const Name = () => {
+type Inputs = {
+  register: any;
+};
+
+const Name: React.FC<Inputs> = ({ register }) => {
   const {
     value: enteredUsername,
     validity: enteredUsernameValidity,
@@ -11,17 +15,15 @@ const Name = () => {
     resetValue: resetUsernameInput,
   } = useInput((value: string) => value.trim().length !== 0);
 
-  console.log(enteredUsernameValidity);
-
   return (
     <>
-      <div className="relative group rounded-md px-1">
+      <div className="relative group rounded-md px-1 mb-4">
         <input
+          {...register("name")}
+          name="name"
           type="text"
           id="username"
-          name="name"
-          required
-          onChange={usernameCHangeHandler}
+          // onChange={usernameCHangeHandler}
           onBlur={usernameBlurHandler}
           className="w-full px-4 text-xl p-3 peer focus:outline-none border-2 rounded-md"
         />
@@ -31,14 +33,14 @@ const Name = () => {
         >
           Name
         </label>
+        {usernameInputError ? (
+          <span className="text-xs text-rose-500 mt-0">
+            Dies ist ein Pflichtfeld
+          </span>
+        ) : (
+          ""
+        )}
       </div>
-      {usernameInputError ? (
-        <span className="text-xs   mt-0 text-rose-500">
-          Dies ist ein Pflichtfeld
-        </span>
-      ) : (
-        ""
-      )}
     </>
   );
 };

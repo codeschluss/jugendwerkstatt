@@ -1,14 +1,25 @@
 import React from "react";
+import useInput from "../../hooks/use-input";
 
 const Password = () => {
+  const {
+    value: enteredPassword,
+    validity: enteredPasswordValidity,
+    hasError: passwordInputError,
+    valueChangeHandler: passwordCHangeHandler,
+    inputBlurHandler: passwordBlurHandler,
+    resetValue: resetPasswordInput,
+  } = useInput((value: string) => value.trim().length !== 0);
+
   return (
     <>
-      <div className="relative group rounded-md px-1">
+      <div className="relative group rounded-md px-1 mb-4">
         <input
           type="password"
           id="password"
           name="password"
-          required
+          onChange={passwordCHangeHandler}
+          onBlur={passwordBlurHandler}
           className="w-full px-4 text-xl peer p-3 focus:outline-none border-2 rounded-md"
         />
         <label
@@ -17,16 +28,21 @@ const Password = () => {
         >
           Passwort
         </label>
+        {passwordInputError ? (
+          <span className="text-xs mt-0 text-rose-500">
+            Dies ist ein Pflichtfeld
+          </span>
+        ) : (
+          ""
+        )}
       </div>
-      <span className="text-xs   mt-0 text-rose-500">
-        Dies ist ein Pflichtfeld
-      </span>
       <div className="relative group rounded-md px-1">
         <input
           type="password"
           id="password2"
           name="password2"
-          required
+          onChange={passwordCHangeHandler}
+          onBlur={passwordBlurHandler}
           className="w-full px-4 text-xl p-3 peer focus:outline-none border-2 rounded-md"
         />
         <label
@@ -36,11 +52,14 @@ const Password = () => {
           Passwort
         </label>
       </div>
-      <span className="text-xs   mt-0 text-rose-500">
-        Dies ist ein Pflichtfeld
-      </span>
+      {passwordInputError ? (
+        <span className="text-xs   mt-0 text-rose-500">
+          Dies ist ein Pflichtfeld
+        </span>
+      ) : (
+        ""
+      )}
     </>
   );
 };
-
 export default Password;

@@ -3,21 +3,30 @@ import logo from "./background.png";
 import Email from "./Email";
 import Name from "./Name";
 import Password from "./Password";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 const Register = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<any>();
+
+  const submit = (data: any) => console.log(data.name);
   return (
     <div className="px-0 flex flex-col w-screen h-screen">
-      <div className="px-0 h-[30%]">
+      <div className="px-0 sticky top-14 h-100">
         <img className="h-full w-screen object-cover" src={logo} alt={"logo"} />
       </div>
-      <div className="flex justify-center flex-grow w-screen -mt-6 rounded-3xl bg-white">
-        <form className="w-screen">
+      <div className="flex justify-center relative flex-grow w-screen -mt-6 rounded-3xl bg-white">
+        <form onSubmit={handleSubmit(submit)} className="w-screen">
           <div className="grid grid-rows-12">
             <div className="row-span-5">
               <div className="text-3xl text-center mt-5">Registrierung</div>
               <div className="mt-4 w-screen">
                 <div className="p-10 pb-0">
-                  <Name />
+                  <Name register={register} />
                   <Email />
                   <Password />
                 </div>
@@ -34,7 +43,10 @@ const Register = () => {
             <div className="row-start-8 row-end-12">
               <div className="w-screen">
                 <div className="mx-12 pl-1 pb-2 text-center">
-                  <button className="w-full h-8 rounded-2xl active:opacity-80 bg-[#C20639] text-white">
+                  <button
+                    type="submit"
+                    className="w-full h-8 rounded-2xl active:opacity-80 bg-[#C20639] text-white"
+                  >
                     Registrieren
                   </button>
                 </div>

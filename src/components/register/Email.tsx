@@ -11,16 +11,13 @@ const Email = () => {
     resetValue: resetEmailInput,
   } = useInput((value: string) => value.trim().length !== 0);
 
-  console.log(enteredEmailValidity);
-
   return (
     <>
-      <div className="relative group rounded-md px-1">
+      <div className="relative group rounded-md px-1 mb-4">
         <input
           type="email"
           id="email"
           name="email"
-          required
           onChange={emailCHangeHandler}
           onBlur={emailBlurHandler}
           className="w-full px-4 text-xl p-3 peer focus:outline-none border-2 rounded-md"
@@ -31,14 +28,14 @@ const Email = () => {
         >
           E-Mail-Adresse
         </label>
+        {emailInputError ? (
+          <span className="text-xs mt-0 text-rose-500">
+            Dies ist ein Pflichtfeld
+          </span>
+        ) : (
+          ""
+        )}
       </div>
-      {emailInputError ? (
-        <span className="text-xs   mt-0 text-rose-500">
-          Dies ist ein Pflichtfeld
-        </span>
-      ) : (
-        ""
-      )}
     </>
   );
 };
