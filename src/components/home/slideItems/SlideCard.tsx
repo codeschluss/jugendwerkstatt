@@ -17,7 +17,7 @@ const SlideCard: React.FC<SlideCardProps> = ({
 }) => {
   return (
     <div
-      className={`${className} snap-center w-10/12 h-52 overflow-hidden rounded-md flex-none relative p-2`}
+      className={`${className} snap-center w-9/12 h-60 overflow-hidden rounded-md flex-none relative p-2`}
     >
       <img
         alt={eventName}

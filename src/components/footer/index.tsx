@@ -10,7 +10,7 @@ import { NavLink } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-primary justify-around py-2 text-white flex z-10 sticky bottom-0">
+    <footer className="bg-primary justify-around py-2 text-white flex sticky bottom-0">
       <NavLink
         className={(navData) =>
           navData.isActive ? "border-b border-white" : ""
