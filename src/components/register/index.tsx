@@ -4,6 +4,7 @@ import Email from "./Email";
 import Name from "./Name";
 import Password from "./Password";
 import { useForm, SubmitHandler } from "react-hook-form";
+import RegisterInput from "./RegisterInput";
 
 const Register = () => {
   const {
@@ -26,9 +27,24 @@ const Register = () => {
               <div className="text-3xl text-center mt-5">Registrierung</div>
               <div className="mt-4 w-screen">
                 <div className="p-10 pb-0">
-                  <Name register={register} />
-                  <Email />
-                  <Password />
+                  <RegisterInput
+                    name="name"
+                    errorDesc="Name gabim"
+                    register={register}
+                    errors={errors}
+                  />
+                  <RegisterInput
+                    name="email"
+                    errorDesc="emaili gabim"
+                    register={register}
+                    errors={errors}
+                  />
+                  <RegisterInput
+                    name="password"
+                    errorDesc="pw gabim"
+                    register={register}
+                    errors={errors}
+                  />
                 </div>
               </div>
             </div>
