@@ -1,11 +1,11 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Register from "../../components/register";
 
 const index = () => {
   return (
-    <div>
+    <Fragment>
       <Register />
-    </div>
+    </Fragment>
   );
 };
 
