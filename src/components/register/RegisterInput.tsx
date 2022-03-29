@@ -1,34 +1,27 @@
-interface RegisterInputsProps {
-  register?: any;
-  name: string;
-  errorDesc: string;
-  errors: any;
-}
+import { FC, ForwardedRef, forwardRef } from "react";
+import { RegisterProps } from "./Register.props";
 
-const RegisterInputs: React.FC<RegisterInputsProps> = ({
-  register,
-  name,
-  errors,
-  errorDesc,
-}) => {
-  return (
+export const RegisterInput = forwardRef(
+  (
+    { id, error, ...rest }: RegisterProps,
+    ref: ForwardedRef<HTMLInputElement>
+  ) => (
     <div className="relative group rounded-md px-1 mb-4">
       <input
-        {...register(name, { required: true })}
-        name={name}
         type="text"
-        id={name}
         className="w-full px-4 text-xl p-3 peer focus:outline-none border-2 rounded-md"
+        ref={ref}
+        {...rest}
       />
       <label
-        htmlFor={name}
+        htmlFor={id}
         className="transform transition-all text-zinc-400 absolute top-0 left-0 h-full flex items-center pl-4 text-sm group-focus-within:text-xs peer-valid:text-xs group-focus-within:h-1/2 peer-valid:h-1/2 group-focus-within:-translate-y-3 group-focus-within:pl-3 peer-valid:pl-3"
       >
-        {name}
+        {id}
       </label>
-      <p className="text-red-500"> {errors.name && <span>{errorDesc}</span>}</p>
+      {error && <p className="text-red-500">{error.message}</p>}
     </div>
-  );
-};
+  )
+);
 
-export default RegisterInputs;
+RegisterInput.displayName = "RegisterInput";

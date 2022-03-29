@@ -1,20 +1,29 @@
-import React from "react";
 import logo from "./background.png";
-import Email from "./Email";
-import Name from "./Name";
-import Password from "./Password";
-import { useForm, SubmitHandler } from "react-hook-form";
-import RegisterInput from "./RegisterInput";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
+import { RegisterInputsProps } from "./Register.props";
+import { RegisterSchema } from "../../validators/Register.validator";
+import { RegisterInput } from "./RegisterInput";
 
 const Register = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
-  } = useForm<any>();
+  } = useForm<RegisterInputsProps>({
+    reValidateMode: "onChange",
+    resolver: joiResolver(RegisterSchema),
+  });
 
-  const submit = (data: any) => console.log(data.name);
+  // const {login} = useMutation();
+
+  const submit = (data: RegisterInputsProps) => {
+    alert("Successed");
+    // login({
+    //   variables: {...data}
+    // })
+  };
+
   return (
     <div className="px-0 flex flex-col w-screen h-screen">
       <div className="px-0 sticky top-14 h-100">
@@ -28,22 +37,24 @@ const Register = () => {
               <div className="mt-4 w-screen">
                 <div className="p-10 pb-0">
                   <RegisterInput
-                    name="name"
-                    errorDesc="Name gabim"
-                    register={register}
-                    errors={errors}
+                    id="Name"
+                    {...register("name")}
+                    error={errors?.name}
                   />
                   <RegisterInput
-                    name="email"
-                    errorDesc="emaili gabim"
-                    register={register}
-                    errors={errors}
+                    id="Email"
+                    {...register("email")}
+                    error={errors?.email}
                   />
                   <RegisterInput
-                    name="password"
-                    errorDesc="pw gabim"
-                    register={register}
-                    errors={errors}
+                    id="Password"
+                    {...register("password")}
+                    error={errors?.password}
+                  />
+                  <RegisterInput
+                    id="Repeat Password"
+                    {...register("repeatPassword")}
+                    error={errors?.repeatPassword}
                   />
                 </div>
               </div>
