@@ -141,10 +141,16 @@ const Index = () => {
                 <div className="row-start-8 row-end-12">
                     <div className="w-screen">
                         <div className="mx-12 pl-1 pb-2 text-center">
-                            <button className="w-full h-8 rounded-2xl bg-[#C20639] text-white"
+                            {/* <button className="w-full h-8 rounded-2xl bg-[#C20639] text-white"
                                 disabled={disabledButton}
                                 onClick={Login}
-                            >Anmelden</button>
+                            >Anmelden</button> */}
+                            <div style={styles.mainButton} className={`${disabledButton==true? 'pointer-events-none' : 'pointer-events-auto'} text-center select-none row-span-1 w-full h-8 active:opacity-80 rounded-2xl bg-[#C20639] text-white`}
+                                // disabled={disabledButton}
+                                onClick={Login}
+                                            >
+                                <span className="align-middle">Anmelden</span>
+                            </div>
                         </div>
                     </div>
                     <div className="w-screen">
@@ -168,3 +174,11 @@ const Index = () => {
 
 
 export default Index;
+
+
+
+const styles = {
+    mainButton: {
+      boxShadow: '0px 3px 3px grey'
+    },
+};

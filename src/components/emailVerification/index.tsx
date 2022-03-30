@@ -28,15 +28,17 @@ const Index = () => {
             <div className="row-span-5 text-center pt-5">
                 <span className="pt-10">Glückwunsch</span>
             </div>
-            <div className="row-span-6 text-center text-sm px-10">
+            <div className="row-span-6 text-center text-xs px-10">
                     <span>Du wurdest erfolgreich registriert.</span>
                     <br/>
                     <br/>
                     <span>Wir haben einen Link an deine E-Mail-Adresse gesendet, damit du diese verifizieren kannst.</span>
                 </div>
-            <button className="row-span-1  w-full h-8 rounded-2xl bg-[#C20639] text-white"
+            <div style={styles.mainButton} className="text-center select-none row-span-1 w-full h-8 active:opacity-80 rounded-2xl bg-[#C20639] text-white"
                                 // onClick={Login}
-                            >E-Mail verifizieren</button>
+                            >
+                <span className="align-middle">E-Mail verifizieren</span>
+            </div>
         </div>
         
     </div>
@@ -45,3 +47,9 @@ const Index = () => {
 
 
 export default Index;
+
+const styles = {
+    mainButton: {
+      boxShadow: '0px 3px 3px grey'
+    },
+};
