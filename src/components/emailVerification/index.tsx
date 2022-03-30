@@ -1,6 +1,7 @@
 import React, { useState, useRef, MutableRefObject } from "react";
 import logo from '../../images/jugendwerkstatt-logo.png';
-import { Route } from 'react-router-dom'
+import {ReactComponent as DoneSign} from '../../images/done-sign.svg';
+import { Route } from 'react-router-dom';
 
 const Index = () => {
     const [emailVerification, setEmailVerification] = useState(true);
@@ -15,11 +16,29 @@ const Index = () => {
         <div className="px-0 h-[30%]">
             <img className="h-full w-screen object-cover" src={logo} alt={"logo"}/> 
         </div>
-        <div className="flex justify-center place-items-center px-10 flex-grow w-screen -mt-6 rounded-3xl bg-white">
-            <span className="text-center">
-                {emailVerificationMessage}
-            </span>
+        <div className="grid grid-rows-12 flex-grow w-screen h-full px-10 -mt-6 rounded-3xl bg-white">
+            <div className="row-start-5  w-full px-[30%]">
+                <div className="w-full mt-10">
+                    <svg width="" height="" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0 10C0 4.47715 4.47715 0 10 0H100C105.523 0 110 4.47715 110 10V94C110 99.5229 105.523 104 100 104H10C4.47715 104 0 99.5229 0 94V10Z" fill="#FFCF00"/>
+                    <path d="M41.0201 71.3336L22.6714 50.5127L16.5552 57.453L41.0201 85.2141L93.4448 25.7259L87.3286 18.7856L41.0201 71.3336Z" fill="#C20639"/>
+                    </svg>
+                </div>
+            </div>
+            <div className="row-span-5 text-center pt-5">
+                <span className="pt-10">Glückwunsch</span>
+            </div>
+            <div className="row-span-6 text-center text-sm px-10">
+                    <span>Du wurdest erfolgreich registriert.</span>
+                    <br/>
+                    <br/>
+                    <span>Wir haben einen Link an deine E-Mail-Adresse gesendet, damit du diese verifizieren kannst.</span>
+                </div>
+            <button className="row-span-1  w-full h-8 rounded-2xl bg-[#C20639] text-white"
+                                // onClick={Login}
+                            >E-Mail verifizieren</button>
         </div>
+        
     </div>
   );
 };
