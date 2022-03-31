@@ -9,7 +9,7 @@ interface ChatItemProps {
 const ChatItems: React.FC<ChatItemProps> = ({ name, status, time }) => {
   return (
     <div className="flex flex-row w-full my-3">
-      <img src="/assets/avatarGuest.png" className="w-10 h-10" alt="" />
+      <img src="/assets/avatarSmall2.png" className="w-10 h-10" alt="" />
       <div
         className="flex flex-row border-b-2 w-full
        border-[#676767] justify-between ml-3 pb-1 "

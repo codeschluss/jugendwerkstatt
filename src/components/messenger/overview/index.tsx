@@ -6,7 +6,7 @@ const ChatOverview = () => {
   const [chatOrCall, setChatOrCall] = useState(true);
 
   return (
-    <div className="w-full h-full px-8">
+    <div className="w-full h-full px-8 mt-10">
       <div className="text-2xl flex justify-around text-[#676767] mb-10 ">
         <p
           className={` border-[#676767] px-4
