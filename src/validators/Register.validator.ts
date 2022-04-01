@@ -1,4 +1,5 @@
 import Joi from "joi";
+import PasswordComplexity from "joi-password-complexity";
 
 export const RegisterSchema: Joi.ObjectSchema = Joi.object({
   name: Joi.string().required().trim().label("Email").messages({
@@ -15,16 +16,26 @@ export const RegisterSchema: Joi.ObjectSchema = Joi.object({
       "string.email": "Email should be valid",
       "string.empty": "Email should not be empty",
     }),
-  password: Joi.string()
-    .min(8)
-    .max(30)
-    .required()
-    .min(8)
-    .label("password")
-    .messages({
-      "string.empty": "Password should not be empty",
-      // "string.min": "Password should not be empty",
-    }),
+  // password: Joi.string()
+  //   .required()
+  //   .min(8)
+  //   .max(30)
+  //   .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)
+  //   .label("password")
+  //   .messages({
+  //     "string.empty": "Password should not be empty",
+  //     "string.regex": "Password is to week",
+  //     // "string.min": "Password should not be empty",
+  //   }),
+
+  password: PasswordComplexity().messages({
+    "passwordComplexity.symbol":
+      "Password should contain at least 1 special character",
+    "passwordComplexity.numeric": "Password should contain at least 1 number",
+    "passwordComplexity.uppercase":
+      "Password should contain at least 1 upper-cased letter",
+    "string.empty": "Password field should not be empty",
+  }),
   repeatPassword: Joi.any()
     .valid(Joi.ref("password"))
     .required()

@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, HTMLAttributes } from "react";
+import { InputHTMLAttributes } from "react";
 import { FieldError } from "react-hook-form";
 
 export interface RegisterInputsProps {
@@ -8,10 +8,6 @@ export interface RegisterInputsProps {
   repeatPassword: string;
 }
 
-export interface RegisterProps
-  extends DetailedHTMLProps<
-    HTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
-  > {
+export interface RegisterProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: FieldError;
 }

@@ -4,7 +4,11 @@ module.exports = {
   mode: "jit",
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      // backgroundImage: {
+      //   bgimg: "url(/assets/background.png)",
+      // },
+    },
     colors: {
       primary: "#c20639",
       transparent: "transparent",
