@@ -10,16 +10,14 @@ import EmailVerified from "../pages/emailVerified";
 const Router = () => {
   return (
     <BrowserRouter basename="/">
-      <Layout>
         <Routes>
-          <Route index element={<Home />} />
+          <Route index element={<Layout><Home /></Layout>} />
           <Route path="/register" element={<Register />} />
           <Route path="/registeredsuccessfully" element={<RegisteredSuccessfully />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/EmailVerification" element={<EmailVerification />} />
           <Route path="/EmailVerified" element={<EmailVerified />} />
         </Routes>
-      </Layout>
     </BrowserRouter>
   );
 };
