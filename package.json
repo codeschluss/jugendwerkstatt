@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.5.10",
+    "graphql": "^16.3.0",
     "@capacitor/cli": "^3.4.3",
     "@capacitor/core": "^3.4.3",
     "@heroicons/react": "^1.0.6",
