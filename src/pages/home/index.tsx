@@ -1,18 +1,6 @@
-import React from "react";
-
+import Homepage from "../../components/home/Homepage";
 const index = () => {
-  return (
-    <div>
-      Hello i am HOME
-      <ul className="flex flex-col font-bold font-mono">
-        <li className="text-xs">example1</li>
-        <li className="text-sm">example2</li>
-        <li className="text-base">example3</li>
-        <li className="text-lg">example4</li>
-        <li className="text-xls">example5</li>
-      </ul>
-    </div>
-  );
+  return <Homepage />;
 };
 
 export default index;
