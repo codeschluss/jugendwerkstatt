@@ -1,0 +1,9 @@
+query getUsers {
+  getUsers {
+    result {
+      id
+      fullname
+    }
+    total
+  }
+}

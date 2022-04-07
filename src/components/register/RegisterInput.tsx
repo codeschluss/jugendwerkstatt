@@ -1,8 +1,9 @@
 import { FC, ForwardedRef, forwardRef } from "react";
+import clsx from "clsx";
 import { useToggle } from "../../hooks/useToggle";
 import { RegisterProps } from "./Register.props";
 
-import { EyeIcon } from "@heroicons/react/outline";
+import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 import I from "../ui/IconWrapper";
 
 export const RegisterInput = forwardRef(
@@ -17,7 +18,10 @@ export const RegisterInput = forwardRef(
         <div className="relative group rounded-md px-1 mb-4">
           <input
             type={type === "password" && !isToggled ? "password" : "text"}
-            className="w-full px-4 text-xl p-3 peer focus:outline-none border-2 rounded-md"
+            className={clsx(
+              error && "border-red-500",
+              "w-full px-4 text-xl p-3 peer focus:outline-none border-2 rounded-md"
+            )}
             ref={ref}
             {...rest}
           />
@@ -27,9 +31,7 @@ export const RegisterInput = forwardRef(
               className="absolute right-0 top-2"
               onClick={handleToggle}
             >
-              <I>
-                <EyeIcon />
-              </I>
+              <I>{isToggled ? <EyeOffIcon /> : <EyeIcon />}</I>
             </button>
           )}
           <label

@@ -2,10 +2,10 @@ import Joi from "joi";
 import PasswordComplexity from "joi-password-complexity";
 
 export const RegisterSchema: Joi.ObjectSchema = Joi.object({
-  name: Joi.string().required().trim().label("Email").messages({
+  fullname: Joi.string().required().trim().label("fullname").messages({
     "string.empty": "Name should not be empty",
   }),
-  email: Joi.string()
+  loginName: Joi.string()
     .email({
       tlds: { allow: false },
     })

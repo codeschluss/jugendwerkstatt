@@ -6,6 +6,7 @@ import { RegisterInput } from "./RegisterInput";
 import { RegisterFooter } from "./registerfooter/RegisterFooter";
 import { RegisterValidations } from "./registerfooter/RegisterValidations";
 import { useNavigate } from "react-router-dom";
+import { useSaveUserMutation } from "../../graphql/gen/graphql";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -19,12 +20,14 @@ const Register = () => {
     resolver: joiResolver(RegisterSchema),
   });
 
-  // const {register} = useRegisterMutation();
+  const [saveUser] = useSaveUserMutation({
+    onCompleted: () => navigate("../registeredsuccessfully"),
+  });
 
   const onSubmit = (data: RegisterInputsProps) => {
-    alert("Successed");
-    console.log(data);
-    navigate("../registeredsuccessfully");
+    saveUser({
+      variables: { ...data },
+    });
     // register({
     //   variables: {...data}
     // })
@@ -56,13 +59,13 @@ const Register = () => {
           <div className="p-10 pb-0">
             <RegisterInput
               id="Name"
-              {...register("name")}
-              error={errors?.name}
+              {...register("fullname")}
+              error={errors?.fullname}
             />
             <RegisterInput
               id="Email"
-              {...register("email")}
-              error={errors?.email}
+              {...register("loginName")}
+              error={errors?.loginName}
             />
             <RegisterInput
               id="Password"
