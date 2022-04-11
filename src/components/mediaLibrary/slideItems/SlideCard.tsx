@@ -1,40 +1,23 @@
 import { ShareIcon, HeartIcon } from "@heroicons/react/solid";
 
 interface SlideCardProps {
-  className?: string;
-  imgUrl: string;
-  topicName: string;
-  location: string;
-  date: string;
+  videoTitle: string;
+  videoUrl: string;
 }
 
-const SlideCard: React.FC<SlideCardProps> = ({
-  className,
-  location,
-  topicName: topicName,
-  date,
-  imgUrl,
-}) => {
+const SlideCard: React.FC<SlideCardProps> = ({ videoUrl, videoTitle }) => {
   return (
     <div
-      className={`${className} snap-center w-9/12 h-60 overflow-hidden rounded-md flex-none relative p-2`}
+      className="snap-center w-[230px] h-[88px] overflow-hidden bg-[#C20639] rounded-md flex-none relative p-2"
     >
-      <img
-        alt={topicName}
-        className="object-cover w-full h-full absolute inset-0"
-        src={imgUrl}
-      />
-      <div className="absolute left-0 w-full top-0 bg-gradient-to-b from-black to-transparent text-white px-3 pb-8 pt-3 flex justify-between items-center">
-        <small className="font-bold">{topicName}</small>
-        <div className="flex items-center">
-          <ShareIcon className="w-4 h-4 mr-2" />
-          <HeartIcon className="w-4 h-4" />
-        </div>
+      <div className="absolute left-0 w-full top-0 to-transparent text-white px-3 pb-8 pt-3 flex justify-between items-center">
+        <small className="font-bold">{videoTitle}</small>
+
       </div>
-      <div className="absolute left-0 w-full bottom-0 bg-gradient-to-t from-black to-transparent text-white px-3 pb-3 pt-9">
-        <p className="border-b border-white pb-1 mb-1 font-bold">{location}</p>
-        <p>{date}</p>
-      </div>
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18ZM7.5 14.5L14.5 10L7.5 5.5V14.5Z" fill="white"/>
+      </svg>
+
     </div>
   );
 };

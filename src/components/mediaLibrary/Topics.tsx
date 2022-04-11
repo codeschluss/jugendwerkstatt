@@ -1,34 +1,32 @@
 import SlideCard from "./slideItems/SlideCard";
 import Slider from "./slideItems/Slider";
 
-interface TopicsProps {}
+interface TopicsProps {
+  topicTitle: string;
+}
 
-const Topics: React.FC<TopicsProps> = () => {
+const Topics: React.FC<TopicsProps> = ({ topicTitle }) => {
   return (
-    <Slider title="Topics">
+    <Slider topicTitle={topicTitle}>
       <SlideCard
-        topicName="Topicname"
-        location="Location"
-        date="Freitag, 25/02/22"
-        imgUrl="https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80"
+        videoTitle="Video title 1"
+        videoUrl="Location"
       />
       <SlideCard
-        topicName="Topicname"
-        location="Location"
-        date="Freitag, 25/02/22"
-        imgUrl="https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80"
+        videoTitle="Video title 2"
+        videoUrl="Location"
       />
       <SlideCard
-        topicName="Topicname"
-        location="Location"
-        date="Freitag, 25/02/22"
-        imgUrl="https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80"
+        videoTitle="Video title 3"
+        videoUrl="Location"
       />
       <SlideCard
-        topicName="Topicname"
-        location="Location"
-        date="Freitag, 25/02/22"
-        imgUrl="https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80"
+        videoTitle="Video title 4"
+        videoUrl="Location"
+      />
+      <SlideCard
+        videoTitle="Video title 5"
+        videoUrl="Location"
       />
     </Slider>
   );
