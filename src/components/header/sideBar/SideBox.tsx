@@ -1,3 +1,6 @@
+import Head from "./Head";
+import SideItems from "./SideItems";
+
 interface SideBoxProps {
   active: boolean;
   hide: () => void;
@@ -6,7 +9,6 @@ interface SideBoxProps {
 const SideBox: React.FC<SideBoxProps> = ({ active, hide }) => {
   return (
     <>
-      {" "}
       <div
         className={`w-60 bg-white fixed left-0 top-0
         h-full drop-shadow-xl z-20 transition transform-gpu duration-500 ${
@@ -15,7 +17,8 @@ const SideBox: React.FC<SideBoxProps> = ({ active, hide }) => {
             : "-translate-x-60 opacity-0 pointer-events-none"
         }`}
       >
-        asd
+        <Head />
+        <SideItems />
       </div>
       {active && (
         <span
