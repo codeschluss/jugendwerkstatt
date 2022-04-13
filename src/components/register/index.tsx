@@ -6,7 +6,8 @@ import { RegisterInput } from "./RegisterInput";
 import { RegisterFooter } from "./registerfooter/RegisterFooter";
 import { RegisterValidations } from "./registerfooter/RegisterValidations";
 import { useNavigate } from "react-router-dom";
-
+import { useSaveUserMutation } from "../../graphql/gen/graphql";
+import { useState } from "react";
 const Register = () => {
   const navigate = useNavigate();
 
@@ -19,27 +20,50 @@ const Register = () => {
     resolver: joiResolver(RegisterSchema),
   });
 
-  // const {register} = useRegisterMutation();
+  const [saveUser] = useSaveUserMutation({
+    onCompleted: () => navigate("../registeredsuccessfully"),
+  });
 
   const onSubmit = (data: RegisterInputsProps) => {
-    alert("Successed");
-    console.log(data);
-    navigate("../registeredsuccessfully");
-    // register({
-    //   variables: {...data}
-    // })
+    saveUser({
+      variables: { ...data },
+    });
   };
 
-  /**
-   * file -> Authentication.mutation.graphql
-   * mutation Register {
-   *     register(data: {email: string!, password: string!}) {
-   *        token
-   *        status
-   *     }
-   * }
-   *
-   */
+  const [password, setPassword] = useState<string>("");
+  const [passwordBits, setPasswordBits] = useState<number | undefined>();
+
+  function passwordStrength(event: any) {
+    console.log(event);
+    setPassword(event.target.value);
+    const passwordLength = password.length;
+    let possibleSymbols = 0;
+
+    if (password.match(/\d/)) {
+      possibleSymbols = 10;
+      console.log("numrat");
+    }
+    if (password.match(/[a-z]/)) {
+      possibleSymbols += 26;
+      console.log("a-z");
+    }
+    if (password.match(/[A-Z]/)) {
+      possibleSymbols += 26;
+      console.log("A-Z");
+    }
+    if (password.match(/[!@#$%^&*()_+\-=\[\]{};~':"\\|,.<>\/?]/)) {
+      possibleSymbols += 32;
+      console.log("char");
+    }
+    console.log(possibleSymbols);
+    console.log(passwordLength);
+    const argument = Math.pow(possibleSymbols, passwordLength);
+    console.log(argument);
+
+    setPasswordBits(Math.log2(argument));
+
+    console.log(passwordBits);
+  }
 
   return (
     <div className="px-0 flex flex-col w-screen h-screen">
@@ -56,28 +80,29 @@ const Register = () => {
           <div className="p-10 pb-0">
             <RegisterInput
               id="Name"
-              {...register("name")}
-              error={errors?.name}
+              {...register("fullname")}
+              error={errors?.fullname}
             />
             <RegisterInput
               id="Email"
-              {...register("email")}
-              error={errors?.email}
+              {...register("loginName")}
+              error={errors?.loginName}
             />
             <RegisterInput
+              onChange={passwordStrength}
               id="Password"
               type="password"
-              {...register("password")}
-              error={errors?.password}
+              //tani
+              errori={passwordBits && passwordBits <= 20 ? true : false}
             />
             <RegisterInput
-              id="Repeat Password"
+              id="Repeat-Password"
               type="password"
               {...register("repeatPassword")}
               error={errors?.repeatPassword}
             />
+            <RegisterValidations />
           </div>
-          <RegisterValidations />
           <RegisterFooter />
         </form>
       </div>
