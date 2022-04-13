@@ -7,6 +7,7 @@ import { RegisterFooter } from "./registerfooter/RegisterFooter";
 import { RegisterValidations } from "./registerfooter/RegisterValidations";
 import { useNavigate } from "react-router-dom";
 import { useSaveUserMutation } from "../../graphql/gen/graphql";
+import { useState } from "react";
 const Register = () => {
   const navigate = useNavigate();
 
@@ -28,6 +29,41 @@ const Register = () => {
       variables: { ...data },
     });
   };
+
+  const [password, setPassword] = useState<string>("");
+  const [passwordBits, setPasswordBits] = useState<number | undefined>();
+
+  function passwordStrength(event: any) {
+    console.log(event);
+    setPassword(event.target.value);
+    const passwordLength = password.length;
+    let possibleSymbols = 0;
+
+    if (password.match(/\d/)) {
+      possibleSymbols = 10;
+      console.log("numrat");
+    }
+    if (password.match(/[a-z]/)) {
+      possibleSymbols += 26;
+      console.log("a-z");
+    }
+    if (password.match(/[A-Z]/)) {
+      possibleSymbols += 26;
+      console.log("A-Z");
+    }
+    if (password.match(/[!@#$%^&*()_+\-=\[\]{};~':"\\|,.<>\/?]/)) {
+      possibleSymbols += 32;
+      console.log("char");
+    }
+    console.log(possibleSymbols);
+    console.log(passwordLength);
+    const argument = Math.pow(possibleSymbols, passwordLength);
+    console.log(argument);
+
+    setPasswordBits(Math.log2(argument));
+
+    console.log(passwordBits);
+  }
 
   return (
     <div className="px-0 flex flex-col w-screen h-screen">
@@ -53,10 +89,11 @@ const Register = () => {
               error={errors?.loginName}
             />
             <RegisterInput
+              onChange={passwordStrength}
               id="Password"
               type="password"
-              {...register("password")} //tani
-              error={errors?.password}
+              //tani
+              errori={passwordBits && passwordBits <= 20 ? true : false}
             />
             <RegisterInput
               id="Repeat-Password"

@@ -10,4 +10,5 @@ export interface RegisterInputsProps {
 
 export interface RegisterProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: FieldError;
+  errori?: boolean;
 }

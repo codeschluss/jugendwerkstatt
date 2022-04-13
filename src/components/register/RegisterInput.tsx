@@ -8,49 +8,18 @@ import I from "../ui/IconWrapper";
 
 export const RegisterInput = forwardRef(
   (
-    { id, onChange, error, type, ...rest }: RegisterProps,
+    { id, onChange, error, errori, type, ...rest }: RegisterProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     const { isToggled, handleToggle } = useToggle(false);
 
-    function passwordStrength(event: any) {
-      if (id == "Password") {
-        console.log(event);
-        const password = event.target.value;
-        const passwordLength = password.length;
-        var possibleSymbols = 0;
-
-        if (password.match(/\d/)) {
-          possibleSymbols = 10;
-          console.log("numrat");
-        }
-        if (password.match(/[a-z]/)) {
-          possibleSymbols += 26;
-          console.log("a-z");
-        }
-        if (password.match(/[A-Z]/)) {
-          possibleSymbols += 26;
-          console.log("A-Z");
-        }
-        if (password.match(/[!@#$%^&*()_+\-=\[\]{};~':"\\|,.<>\/?]/)) {
-          possibleSymbols += 32;
-          console.log("char");
-        }
-        console.log(possibleSymbols);
-        console.log(passwordLength);
-        const argument = Math.pow(possibleSymbols, passwordLength);
-        console.log(argument);
-        const passwordBits = Math.log2(argument);
-
-        console.log(passwordBits);
-      }
-    }
+    let errorimsg = "insert something here";
 
     return (
       <>
         <div className="relative z-0 mb-6 w-full group">
           <input
-            onChange={passwordStrength}
+            onChange={onChange}
             type={type === "password" && !isToggled ? "password" : "text"}
             className={clsx(
               error && "border-red-500",
@@ -79,6 +48,9 @@ export const RegisterInput = forwardRef(
           <p className="text-red-500 -mt-5 mb-1 text-xs ml-2">
             {error.message}
           </p>
+        )}
+        {errori && (
+          <p className="text-red-500 -mt-5 mb-1 text-xs ml-2">{errorimsg}</p>
         )}
       </>
     );
