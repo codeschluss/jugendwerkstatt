@@ -6,6 +6,7 @@ export const AuthProvider: React.FunctionComponent = ({ children }) => {
   const [isLogedIn, setIsLogedIn] = useState<string>();
   const [username, setUsername] = useState();
   const [userToken, setuserToken] = useState<boolean>(false);
+  const [passwordBits, setPasswordBits] = useState<number>();
   return (
     <AuthContext.Provider
       value={{
@@ -15,6 +16,8 @@ export const AuthProvider: React.FunctionComponent = ({ children }) => {
         setUsername,
         userToken,
         setuserToken,
+        passwordBits,
+        setPasswordBits,
       }}
     >
       {children}

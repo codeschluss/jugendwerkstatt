@@ -1,14 +1,25 @@
 import { FC, ForwardedRef, forwardRef, SyntheticEvent } from "react";
 import clsx from "clsx";
 import { useToggle } from "../../hooks/useToggle";
-import { RegisterProps } from "./Register.props";
+import RegisterProps from "./Register.props";
 
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
 import I from "../ui/IconWrapper";
 
 export const RegisterInput = forwardRef(
   (
-    { id, onChange, error, errori, type, ...rest }: RegisterProps,
+    {
+      id,
+      fullname,
+      loginName,
+      password,
+      repeatPassword,
+      type,
+      onChange,
+      onBlur,
+      error,
+      value,
+    }: RegisterProps,
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     const { isToggled, handleToggle } = useToggle(false);
@@ -20,13 +31,13 @@ export const RegisterInput = forwardRef(
         <div className="relative z-0 mb-6 w-full group">
           <input
             onChange={onChange}
+            onBlur={onBlur}
             type={type === "password" && !isToggled ? "password" : "text"}
             className={clsx(
               error && "border-red-500",
               "w-full px-4 text-xl p-3 peer focus:outline-none border-2 rounded-md"
             )}
-            ref={ref}
-            {...rest}
+            value={value}
           />
           {type === "password" && (
             <button
@@ -45,12 +56,7 @@ export const RegisterInput = forwardRef(
           </label>
         </div>
         {error && (
-          <p className="text-red-500 -mt-5 mb-1 text-xs ml-2">
-            {error.message}
-          </p>
-        )}
-        {errori && (
-          <p className="text-red-500 -mt-5 mb-1 text-xs ml-2">{errorimsg}</p>
+          <p className="text-red-500 -mt-5 mb-1 text-xs ml-2">{error}</p>
         )}
       </>
     );

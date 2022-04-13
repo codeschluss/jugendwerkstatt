@@ -1,14 +1,15 @@
 import { InputHTMLAttributes } from "react";
 import { FieldError } from "react-hook-form";
 
-export interface RegisterInputsProps {
-  fullname: string;
-  loginName: string;
-  password: string;
-  repeatPassword: string;
-}
-
-export interface RegisterProps extends InputHTMLAttributes<HTMLInputElement> {
-  error?: FieldError;
-  errori?: boolean;
+export default interface RegisterInputsProps {
+  id?: string;
+  fullname?: string;
+  loginName?: string;
+  password?: string;
+  type?: string;
+  value?: string;
+  repeatPassword?: string;
+  onBlur?: () => void;
+  onChange?: any;
+  error?: string;
 }
