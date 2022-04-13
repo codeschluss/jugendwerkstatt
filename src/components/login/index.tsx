@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import AuthContext from "../../contexts/AuthContext";
-import { LOAD_USERS } from "../../GraphQl/Querry";
+import { LOAD_USERS } from "../../graphql/Querry";
 import logo from "../../images/jugendwerkstatt-logo.png";
 
 const Index = () => {
