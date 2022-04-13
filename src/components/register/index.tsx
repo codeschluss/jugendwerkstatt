@@ -1,14 +1,15 @@
 /* eslint-disable */
-import { RegisterInput } from "./RegisterInput";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../../contexts/AuthContext";
+import useInput from "../../hooks/use-input";
 import { RegisterFooter } from "./registerfooter/RegisterFooter";
 import { RegisterValidations } from "./registerfooter/RegisterValidations";
-import { useNavigate } from "react-router-dom";
-import { useSaveUserMutation } from "../../graphql/gen/graphql";
-import { useContext, useState } from "react";
-import useInput from "../../hooks/use-input";
-import AuthContext from "../../contexts/AuthContext";
+import { RegisterInput } from "./RegisterInput";
+
 const Register = () => {
   const navigate = useNavigate();
+  const regex = /[^A-Za-z0-9_.]/g;
 
   const {
     value: enteredUsername,
@@ -17,11 +18,36 @@ const Register = () => {
     valueChangeHandler: usernameChangeHandler,
     inputBlurHandler: usernameBlurHandler,
     resetValue: resetUsernameInput,
-  } = useInput((value: string) => {
-    value.trim().length >= 4;
-  });
+  } = useInput((value: string) => value.trim() !== "");
 
-  console.log(enteredUsername);
+  const {
+    value: enteredEmail,
+    validity: enteredEmailValidity,
+    hasError: emailInputError,
+    valueChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    resetValue: resetEmailInput,
+  } = useInput(
+    (value: any) => value.includes("@") && value !== "" && value.includes(".")
+  );
+
+  const {
+    value: enteredPassword,
+    validity: enteredPasswordValidity,
+    hasError: passwordInputError,
+    valueChangeHandler: passwordChangeHandler,
+    inputBlurHandler: passwordBlurHandler,
+    resetValue: resetPasswordInput,
+  } = useInput((value: any) => value.match(regex) && value.trim().length > 6);
+
+  const {
+    value: enteredCPassword,
+    validity: enteredCPasswordValidity,
+    hasError: cPasswordInputError,
+    valueChangeHandler: cPasswordChangeHandler,
+    inputBlurHandler: cPasswordBlurHandler,
+    resetValue: resetCPasswordInput,
+  } = useInput((value: any) => value === enteredPassword);
 
   const formSubmitHandler = (e: any) => {
     e.preventDefault();
@@ -78,14 +104,47 @@ const Register = () => {
             <RegisterInput
               id="Name"
               type="text"
+              inputClassName={`${
+                usernameInputError && "border-500-red"
+              }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
               onChange={usernameChangeHandler}
               onBlur={usernameBlurHandler}
               value={enteredUsername}
-              error={usernameInputError ? "Field should be filled" : ""}
+              error={usernameInputError ? "Cannot be left empty" : ""}
             />
-            <RegisterInput id="Email" />
-            <RegisterInput id="Password" type="password" />
-            <RegisterInput id="Repeat-Password" type="password" />
+            <RegisterInput
+              id="Email"
+              type="text"
+              onChange={emailChangeHandler}
+              onBlur={emailBlurHandler}
+              value={enteredEmail}
+              error={emailInputError ? "msut contain @" : ""}
+              inputClassName={`${
+                emailInputError && "border-500-red"
+              }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+            />
+            <RegisterInput
+              id="Password"
+              type="password"
+              onChange={passwordChangeHandler}
+              onBlur={passwordBlurHandler}
+              value={enteredPassword}
+              error={passwordInputError ? "msut contain @" : ""}
+              inputClassName={`${
+                passwordInputError && "border-500-red"
+              }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+            />
+            <RegisterInput
+              id="Repeat-Password"
+              type="password"
+              onChange={cPasswordChangeHandler}
+              onBlur={cPasswordBlurHandler}
+              value={enteredCPassword}
+              error={cPasswordInputError ? "msut contain @" : ""}
+              inputClassName={`${
+                cPasswordInputError && "border-500-red"
+              }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+            />
             <RegisterValidations />
           </div>
           <RegisterFooter />

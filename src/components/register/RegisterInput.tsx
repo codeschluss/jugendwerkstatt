@@ -1,10 +1,8 @@
-import { FC, ForwardedRef, forwardRef, SyntheticEvent } from "react";
-import clsx from "clsx";
-import { useToggle } from "../../hooks/useToggle";
-import RegisterProps from "./Register.props";
-
 import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
+import { ForwardedRef, forwardRef, useEffect, useState } from "react";
+import { useToggle } from "../../hooks/useToggle";
 import I from "../ui/IconWrapper";
+import RegisterProps from "./Register.props";
 
 export const RegisterInput = forwardRef(
   (
@@ -14,6 +12,7 @@ export const RegisterInput = forwardRef(
       loginName,
       password,
       repeatPassword,
+      inputClassName,
       type,
       onChange,
       onBlur,
@@ -23,20 +22,23 @@ export const RegisterInput = forwardRef(
     ref: ForwardedRef<HTMLInputElement>
   ) => {
     const { isToggled, handleToggle } = useToggle(false);
+    const [hasError, setHasError] = useState<boolean>(false);
 
-    let errorimsg = "insert something here";
-
+    useEffect(() => {
+      if (error) {
+        setHasError(true);
+      }
+    }, [error]);
+    console.log(hasError, "hasError");
     return (
       <>
         <div className="relative z-0 mb-6 w-full group">
           <input
+            style={{ border: error ? "2px solid red" : "" }}
             onChange={onChange}
             onBlur={onBlur}
             type={type === "password" && !isToggled ? "password" : "text"}
-            className={clsx(
-              error && "border-red-500",
-              "w-full px-4 text-xl p-3 peer focus:outline-none border-2 rounded-md"
-            )}
+            className={inputClassName}
             value={value}
           />
           {type === "password" && (
