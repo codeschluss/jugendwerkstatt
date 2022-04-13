@@ -1,26 +1,28 @@
-import React, { Children, Fragment } from "react";
 import { createContext, useState } from "react";
 
 export const AuthContext = createContext<any>(null);
 
-export const AuthProvider = ({ Children }: any) => {
-  const [isLogedIn, setIsLogedIn] = useState(false);
+export const AuthProvider: React.FunctionComponent = ({ children }) => {
+  const [isLogedIn, setIsLogedIn] = useState<string>();
   const [username, setUsername] = useState();
-
-  return;
-  <Fragment>
+  const [userToken, setuserToken] = useState<boolean>(false);
+  const [passwordBits, setPasswordBits] = useState<number>();
+  return (
     <AuthContext.Provider
       value={{
         isLogedIn,
         setIsLogedIn,
         username,
         setUsername,
+        userToken,
+        setuserToken,
+        passwordBits,
+        setPasswordBits,
       }}
     >
-      {Children}
+      {children}
     </AuthContext.Provider>
-    ;
-  </Fragment>;
+  );
 };
 
 export default AuthContext;

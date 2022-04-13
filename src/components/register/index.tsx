@@ -1,37 +1,34 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { RegisterInputsProps } from "./Register.props";
-import { RegisterSchema } from "../../validators/Register.validator";
+/* eslint-disable */
 import { RegisterInput } from "./RegisterInput";
 import { RegisterFooter } from "./registerfooter/RegisterFooter";
 import { RegisterValidations } from "./registerfooter/RegisterValidations";
 import { useNavigate } from "react-router-dom";
 import { useSaveUserMutation } from "../../graphql/gen/graphql";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import useInput from "../../hooks/use-input";
+import AuthContext from "../../contexts/AuthContext";
 const Register = () => {
   const navigate = useNavigate();
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RegisterInputsProps>({
-    reValidateMode: "onChange",
-    resolver: joiResolver(RegisterSchema),
+    value: enteredUsername,
+    validity: enteredUsernameValidity,
+    hasError: usernameInputError,
+    valueChangeHandler: usernameChangeHandler,
+    inputBlurHandler: usernameBlurHandler,
+    resetValue: resetUsernameInput,
+  } = useInput((value: string) => {
+    value.trim().length >= 4;
   });
 
-  const [saveUser] = useSaveUserMutation({
-    onCompleted: () => navigate("../registeredsuccessfully"),
-  });
+  console.log(enteredUsername);
 
-  const onSubmit = (data: RegisterInputsProps) => {
-    saveUser({
-      variables: { ...data },
-    });
+  const formSubmitHandler = (e: any) => {
+    e.preventDefault();
   };
 
   const [password, setPassword] = useState<string>("");
-  const [passwordBits, setPasswordBits] = useState<number | undefined>();
+  const { passwordBits, setPasswordBits } = useContext(AuthContext);
 
   function passwordStrength(event: any) {
     console.log(event);
@@ -67,7 +64,7 @@ const Register = () => {
 
   return (
     <div className="px-0 flex flex-col w-screen h-screen">
-      <div className="px-0 sticky top-14 h-100">
+      <div className="px-0 sticky h-100">
         <img
           className="h-full w-screen object-cover"
           src="/assets/background.png"
@@ -75,32 +72,20 @@ const Register = () => {
         />
       </div>
       <div className="flex justify-center relative flex-grow w-screen -mt-6 rounded-3xl bg-white">
-        <form onSubmit={handleSubmit(onSubmit)} className="w-screen">
+        <form className="w-screen">
           <div className="text-3xl text-center mt-5">Registrierung</div>
           <div className="p-10 pb-0">
             <RegisterInput
               id="Name"
-              {...register("fullname")}
-              error={errors?.fullname}
+              type="text"
+              onChange={usernameChangeHandler}
+              onBlur={usernameBlurHandler}
+              value={enteredUsername}
+              error={usernameInputError ? "Field should be filled" : ""}
             />
-            <RegisterInput
-              id="Email"
-              {...register("loginName")}
-              error={errors?.loginName}
-            />
-            <RegisterInput
-              onChange={passwordStrength}
-              id="Password"
-              type="password"
-              //tani
-              errori={passwordBits && passwordBits <= 20 ? true : false}
-            />
-            <RegisterInput
-              id="Repeat-Password"
-              type="password"
-              {...register("repeatPassword")}
-              error={errors?.repeatPassword}
-            />
+            <RegisterInput id="Email" />
+            <RegisterInput id="Password" type="password" />
+            <RegisterInput id="Repeat-Password" type="password" />
             <RegisterValidations />
           </div>
           <RegisterFooter />

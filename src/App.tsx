@@ -1,13 +1,20 @@
-import { useQuery, gql } from "@apollo/client";
-import { useGetUsersQuery } from "./graphql/gen/graphql";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { AuthProvider } from "./contexts/AuthContext";
 import Router from "./routes/Router";
 
-function App() {
-  const { loading, error, data } = useGetUsersQuery();
-  
-  console.log("this", loading, data, error);
+const client = new ApolloClient({
+  uri: "http://localhost:8061/api/graphql",
+  cache: new InMemoryCache(),
+});
 
-  return <Router />;
+function App() {
+  return (
+    <ApolloProvider client={client}>
+      <AuthProvider>
+        <Router />;
+      </AuthProvider>
+    </ApolloProvider>
+  );
 }
 
 export default App;
