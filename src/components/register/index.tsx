@@ -7,7 +7,6 @@ import { RegisterFooter } from "./registerfooter/RegisterFooter";
 import { RegisterValidations } from "./registerfooter/RegisterValidations";
 import { useNavigate } from "react-router-dom";
 import { useSaveUserMutation } from "../../graphql/gen/graphql";
-
 const Register = () => {
   const navigate = useNavigate();
 
@@ -28,21 +27,7 @@ const Register = () => {
     saveUser({
       variables: { ...data },
     });
-    // register({
-    //   variables: {...data}
-    // })
   };
-
-  /**
-   * file -> Authentication.mutation.graphql
-   * mutation Register {
-   *     register(data: {email: string!, password: string!}) {
-   *        token
-   *        status
-   *     }
-   * }
-   *
-   */
 
   return (
     <div className="px-0 flex flex-col w-screen h-screen">
@@ -70,17 +55,17 @@ const Register = () => {
             <RegisterInput
               id="Password"
               type="password"
-              {...register("password")}
+              {...register("password")} //tani
               error={errors?.password}
             />
             <RegisterInput
-              id="Repeat Password"
+              id="Repeat-Password"
               type="password"
               {...register("repeatPassword")}
               error={errors?.repeatPassword}
             />
+            <RegisterValidations />
           </div>
-          <RegisterValidations />
           <RegisterFooter />
         </form>
       </div>
