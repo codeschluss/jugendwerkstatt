@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import AuthContext from "../../../contexts/AuthContext";
-import { RegisterInput } from "../RegisterInput";
 
 export const RegisterValidations = () => {
   const { passwordBits } = useContext(AuthContext);

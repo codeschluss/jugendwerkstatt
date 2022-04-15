@@ -1,6 +1,3 @@
-import { InputHTMLAttributes } from "react";
-import { FieldError } from "react-hook-form";
-
 export default interface RegisterInputsProps {
   id?: string;
   fullname?: string;
