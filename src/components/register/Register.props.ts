@@ -5,6 +5,7 @@ export default interface RegisterInputsProps {
   password?: string;
   type?: string;
   value?: string;
+  inputClassName: string;
   repeatPassword?: string;
   onBlur?: () => void;
   onChange?: any;

@@ -11,7 +11,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <AuthProvider>
-        <Router />;
+        <Router />
       </AuthProvider>
     </ApolloProvider>
   );
