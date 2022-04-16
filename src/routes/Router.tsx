@@ -6,6 +6,7 @@ import RegisteredSuccessfully from "../components/register/success/registeredSuc
 import Login from "../pages/login";
 import EmailVerification from "../pages/emailVerification";
 import EmailVerified from "../pages/emailVerified";
+import Map from '../components/map'
 
 const Router = () => {
   return (
@@ -17,6 +18,7 @@ const Router = () => {
           <Route path="/Login" element={<Login />} />
           <Route path="/EmailVerification" element={<EmailVerification />} />
           <Route path="/EmailVerified" element={<EmailVerified />} />
+          <Route path="/map" element={<Map />} />
         </Routes>
     </BrowserRouter>
   );
