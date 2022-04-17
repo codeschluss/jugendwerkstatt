@@ -1,0 +1,13 @@
+query getEvent($entity: EventEntityInput) {
+  getEvent(entity: $entity) {
+    titleImage {
+      id
+    }
+    id
+    name
+    address {
+      street
+      place
+    }
+  }
+}

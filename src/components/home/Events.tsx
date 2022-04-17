@@ -1,4 +1,5 @@
 import { useQuery } from "@apollo/client";
+import { useGetEventsQuery } from "../../GraphQl/graphql";
 import { GET_EVENTS } from "../../GraphQl/Querry";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
@@ -8,7 +9,18 @@ interface EventsProps {}
 
 const Events: React.FC<EventsProps> = () => {
   const { data, loading, error } = useQuery(GET_EVENTS);
-  const fetchedData: [EventEntity] = data?.getEvents.result;
+
+  const result = useGetEventsQuery({
+    variables: {
+      params: {
+        sort: 'name',
+        //FilterSortPaginate fields
+      }
+    }
+  });
+
+
+  const fetchedData: [EventEntity] = result.data?.getEvents?.result as [EventEntity];
   console.log(data);
 
   return (
