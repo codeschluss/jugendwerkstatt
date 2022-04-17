@@ -10,13 +10,9 @@ export const LOAD_USERS = gql`
 `;
 
 export const SAVE_USER = gql`
-  mutation User($fullName: String!, $loginName: String!, $password: String!) {
+  mutation User($fullName: String!, $email: String!, $password: String!) {
     saveUser(
-      entity: {
-        fullname: $fullName
-        loginName: $loginName
-        password: $password
-      }
+      entity: { fullname: $fullName, email: $email, password: $password }
     ) {
       id
       fullname

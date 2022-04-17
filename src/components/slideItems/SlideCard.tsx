@@ -1,10 +1,11 @@
-import { ShareIcon, HeartIcon } from "@heroicons/react/solid";
+import { HeartIcon, ShareIcon } from "@heroicons/react/solid";
+import { AddressEntity, EventEntity } from "../home/Test";
 
 interface SlideCardProps {
   className?: string;
   imgUrl: string;
-  eventName: string;
-  location: string;
+  eventName: EventEntity["name"];
+  location: AddressEntity["place"];
   date: string;
 }
 
@@ -20,7 +21,7 @@ const SlideCard: React.FC<SlideCardProps> = ({
       className={`${className} snap-center w-9/12 h-60 overflow-hidden rounded-md flex-none relative p-2`}
     >
       <img
-        alt={eventName}
+        alt={eventName || ""}
         className="object-cover w-full h-full absolute inset-0"
         src={imgUrl}
       />

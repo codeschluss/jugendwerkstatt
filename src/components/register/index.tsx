@@ -5,9 +5,10 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
 import { SAVE_USER } from "../../GraphQl/mutation";
 import useInput from "../../hooks/use-input";
+import AuthInput from "../authentication/AuthInput";
+import AuthWrapper from "../authentication/AuthWrapper";
 import { RegisterFooter } from "./registerfooter/RegisterFooter";
 import { RegisterValidations } from "./registerfooter/RegisterValidations";
-import { RegisterInput } from "./RegisterInput";
 
 const Register = () => {
   const [inputsAreValid, setInputsAreValid] = useState(false);
@@ -127,7 +128,7 @@ const Register = () => {
       await saveNewUser({
         variables: {
           fullName: enteredUsername,
-          loginName: enteredEmail,
+          email: enteredEmail,
           password: enteredPassword,
         },
       });
@@ -141,78 +142,66 @@ const Register = () => {
     //TODO: SET GLOBAL HEAD COMPONENT TO CHECK EMAIL
   };
 
-  useEffect(() => {
-    if (data) {
-    }
-  }, [data]);
-
   return (
-    <div className="px-0 flex flex-col w-screen h-screen">
-      <div className="px-0 sticky h-100">
-        <img
-          className="h-full w-screen object-cover"
-          src="/assets/background.png"
-          alt={"logo"}
-        />
-      </div>
-      <div className="flex justify-center relative flex-grow w-screen -mt-6 rounded-3xl bg-white">
-        <form className="w-screen" onSubmit={onSubmitHandler}>
-          <div className="text-3xl text-center mt-5">Registrierung</div>
-          <div className="p-10 pb-0">
-            <RegisterInput
-              id="Name"
-              type="text"
-              inputClassName={`${
-                usernameInputError && "border-500-red"
-              }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
-              onChange={usernameChangeHandler}
-              onBlur={usernameBlurHandler}
-              value={enteredUsername}
-              error={usernameInputError ? "Cannot be left empty" : ""}
-            />
-            <RegisterInput
-              id="Email"
-              type="text"
-              onChange={emailChangeHandler}
-              onBlur={emailBlurHandler}
-              value={enteredEmail}
-              error={emailInputError ? "must be a valid email address" : ""}
-              inputClassName={`${
-                emailInputError && "border-500-red"
-              }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
-            />
-            <RegisterInput
-              id="Password"
-              type="password"
-              onChange={twoCalls}
-              onBlur={passwordBlurHandler}
-              value={enteredPassword}
-              error={passwordInputError ? "password not strong enough" : ""}
-              inputClassName={`${
-                passwordInputError && "border-500-red"
-              }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
-            />
-            <RegisterInput
-              id="Repeat-Password"
-              type="password"
-              onChange={cPasswordChangeHandler}
-              onBlur={cPasswordBlurHandler}
-              value={enteredCPassword}
-              error={cPasswordInputError ? "password not strong enough" : ""}
-              inputClassName={`${
-                cPasswordInputError && "border-500-red"
-              }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
-            />
-            <RegisterValidations />
-          </div>
-          <RegisterFooter
-            isValidated={inputsAreValid}
-            isDisabled={inputsAreValid}
+    <AuthWrapper title={"Registrierung"}>
+      <form className="w-screen" onSubmit={onSubmitHandler}>
+        <div className="p-10 pb-0">
+          <AuthInput
+            id="Name"
+            type="text"
+            inputClassName={`${
+              usernameInputError && "border-500-red"
+            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+            onChange={usernameChangeHandler}
+            onBlur={usernameBlurHandler}
+            value={enteredUsername}
+            error={usernameInputError ? "Cannot be left empty" : ""}
           />
-        </form>
-      </div>
-    </div>
+          <AuthInput
+            id="Email"
+            type="text"
+            onChange={emailChangeHandler}
+            onBlur={emailBlurHandler}
+            value={enteredEmail}
+            error={emailInputError ? "must be a valid email address" : ""}
+            inputClassName={`${
+              emailInputError && "border-500-red"
+            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+          />
+          <AuthInput
+            id="Password"
+            type="password"
+            onChange={twoCalls}
+            onBlur={passwordBlurHandler}
+            value={enteredPassword}
+            error={passwordInputError ? "password not strong enough" : ""}
+            inputClassName={`${
+              passwordInputError && "border-500-red"
+            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+          />
+          <AuthInput
+            id="Repeat-Password"
+            type="password"
+            onChange={cPasswordChangeHandler}
+            onBlur={cPasswordBlurHandler}
+            value={enteredCPassword}
+            error={cPasswordInputError ? "password not strong enough" : ""}
+            inputClassName={`${
+              cPasswordInputError && "border-500-red"
+            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+          />
+          <RegisterValidations />
+        </div>
+        <RegisterFooter
+          isValidated={inputsAreValid}
+          isDisabled={inputsAreValid}
+        />
+      </form>
+    </AuthWrapper>
   );
 };
 
 export default Register;
+function useQuerry(): { error: any; loading: any; queryData: any } {
+  throw new Error("Function not implemented.");
+}
