@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import AuthContext from "../../contexts/AuthContext";
-import { LOAD_USERS } from "../../GraphQl/mutation";
+import { LOGIN_GET_TOKEN } from "../../GraphQl/mutation";
 import logo from "../../images/jugendwerkstatt-logo.png";
 
 const Index = () => {
@@ -31,7 +31,7 @@ const Index = () => {
   };
   const { userToken, setuserToken } = useContext(AuthContext);
 
-  const [getuserFunction, { loading, error, data }] = useMutation(LOAD_USERS);
+  const [getuserFunction, { loading, error, data }] = useMutation(LOGIN_GET_TOKEN);
 
   useEffect(() => {
     if (data) {
