@@ -9,6 +9,15 @@ export const LOGIN_GET_TOKEN = gql`
   }
 `;
 
+export const REFRESH_TOKEN = gql`
+  mutation Token($refreshToken: String!) {
+    refreshToken(refreshToken: $refreshToken) {
+      access
+      refresh
+    }
+  }
+`;
+
 export const SAVE_USER = gql`
   mutation User($fullName: String!, $email: String!, $password: String!) {
     saveUser(

@@ -5,7 +5,8 @@ export const AuthContext = createContext<any>(null);
 export const AuthProvider: React.FunctionComponent = ({ children }) => {
   const [isLogedIn, setIsLogedIn] = useState<string>();
   const [username, setUsername] = useState();
-  const [userToken, setuserToken] = useState<boolean>(false);
+  const [userToken, setUserToken] = useState<string>();
+  const [refreshToken, setRefreshToken] = useState<string>();
   const [passwordBits, setPasswordBits] = useState<number>();
   return (
     <AuthContext.Provider
@@ -15,7 +16,9 @@ export const AuthProvider: React.FunctionComponent = ({ children }) => {
         username,
         setUsername,
         userToken,
-        setuserToken,
+        setUserToken,
+        refreshToken,
+        setRefreshToken,
         passwordBits,
         setPasswordBits,
       }}
