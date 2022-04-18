@@ -7,7 +7,7 @@ import React, {
   useState,
 } from "react";
 import AuthContext from "../../contexts/AuthContext";
-import { LOAD_USERS } from "../../GraphQl/mutation";
+import { LOGIN_GET_TOKEN } from "../../GraphQl/mutation";
 import logo from "../../images/jugendwerkstatt-logo.png";
 
 const Index = () => {
@@ -29,20 +29,32 @@ const Index = () => {
       setHiddenLine(true);
     }
   };
-  const { userToken, setuserToken } = useContext(AuthContext);
+  const { userToken, setUserToken } = useContext(AuthContext);
+  const { refreshToken, setRefreshToken } = useContext(AuthContext);
 
-  const [getuserFunction, { loading, error, data }] = useMutation(LOAD_USERS);
+  const [getuserFunction, { loading, error, data }] = useMutation(LOGIN_GET_TOKEN);
 
   useEffect(() => {
     if (data) {
-      console.log("datahere", data);
-      setuserToken(data);
+      const tempAccessToken = data.createToken.access;
+      const tempRefreshToken = data.createToken.refresh;
+      
+      setUserToken(tempAccessToken);
+      setRefreshToken(tempRefreshToken);
+
+      localStorage.setItem('jugendwerkstattAccessToken', tempAccessToken);
+      localStorage.setItem('jugendwerkstattRefreshToken', tempRefreshToken);
+
+      const localStorageAccessToken = localStorage.getItem('jugendwerkstattAccessToken');
+      const localStorageRefreshToken = localStorage.getItem('jugendwerkstattRefreshToken');      
+      // console.log('access: ', localStorageAccessToken);
+      // console.log('refresh: ', localStorageRefreshToken);
     }
   }, [data]);
 
-  useEffect(() => {
-    console.log(userToken, "usertoken");
-  }, [userToken]);
+  // useEffect(() => {
+  //   console.log("usertoken", userToken);
+  // }, [userToken]);
 
   const Login = () => {
     getuserFunction({
@@ -80,27 +92,27 @@ const Index = () => {
       isValid = false;
     }
 
-    if (isValid) {
-      setDisabledButton(true);
-      //request to backend here
+    // if (isValid) {
+    //   setDisabledButton(true);
+    //   //request to backend here
 
-      var responseMessage = "wrong";
+    //   var responseMessage = "wrong";
 
-      if (responseMessage == "wrong") {
-        setPasswordValidationText(
-          "Benutzername und Passwort stimmen nicht überein."
-        );
-      }
+    //   if (responseMessage == "wrong") {
+    //     setPasswordValidationText(
+    //       "Benutzername und Passwort stimmen nicht überein."
+    //     );
+    //   }
 
-      if (responseMessage != "success") {
-        emailRef.current.value = "";
-        passwordRef.current.value = "";
-      }
+    //   if (responseMessage != "success") {
+    //     emailRef.current.value = "";
+    //     passwordRef.current.value = "";
+    //   }
 
-      // if(responseMessage=='success'){
-      //     window.location.href="/Home";
-      // }
-    }
+    //   // if(responseMessage=='success'){
+    //   //     window.location.href="/Home";
+    //   // }
+    // }
   };
 
   return (
