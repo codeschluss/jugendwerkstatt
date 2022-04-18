@@ -6,6 +6,7 @@ import RegisteredSuccessfully from "../components/register/success/registeredSuc
 import Layout from "../containers/Layout";
 import EmailVerification from "../pages/emailVerification";
 import EmailVerified from "../pages/emailVerified";
+import EventDetail from "../pages/eventDetail";
 import Home from "../pages/home";
 import Login from "../pages/login";
 import MediaLibrary from "../pages/mediaLibrary";
@@ -30,6 +31,7 @@ const Router = () => {
             <Route path="contacts" element={<Contacts />} />
           </Route>
           <Route path="/messenger/chat/:id" element={<Chat />} />
+          <Route path="/event/:id" element={<EventDetail />} />
 
           <Route path="/Login" element={<Login />} />
           <Route path="/EmailVerification" element={<EmailVerification />} />
