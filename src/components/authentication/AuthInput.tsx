@@ -37,7 +37,7 @@ const AuthInput: React.FC<AuthInputProps> = ({
     <>
       <div className="relative z-0 mb-6 w-full group flex justify-center">
         <input
-          style={{ border: error ? " red" : "" }}
+          style={{ border: error ? "1px solid red" : "" }}
           onChange={onChange}
           onBlur={onBlur}
           type={type === "password" && !isToggled ? "password" : "text"}

@@ -1,32 +1,29 @@
+import {
+  ApolloClient,
+  ApolloLink,
+  ApolloProvider,
+  concat,
+  HttpLink,
+  InMemoryCache,
+} from "@apollo/client";
 import { AuthProvider } from "./contexts/AuthContext";
 import Router from "./routes/Router";
-import { REFRESH_TOKEN } from "./GraphQl/mutation";
 
-import { ApolloClient, ApolloProvider, InMemoryCache, ApolloLink, HttpLink, concat, useMutation } from '@apollo/client';
+let something = false;
+const httpLink = new HttpLink({ uri: "http://localhost:8061/api/graphql" });
 
+const authMiddleware = new ApolloLink((operation, forward: any) => {
+  //TODO if expired something = true;
+  return forward(operation);
+});
 
-
-
-
-
+const client = new ApolloClient({
+  link: concat(authMiddleware, httpLink),
+  cache: new InMemoryCache(),
+  headers: {},
+});
 
 function App() {
-  // const [refreshTokenFunction, { loading, error, data }] = useMutation(REFRESH_TOKEN);
-    
-  const httpLink = new HttpLink({ uri: 'http://localhost:8061/api/graphql' });
-
-  const authMiddleware = new ApolloLink((operation, forward: any) => {
-    console.log("intercepting here...");
-    return forward(operation);
-  });
-
-  const client = new ApolloClient({
-    uri: "http://localhost:8061/api/graphql",
-    link: concat(authMiddleware, httpLink),
-    cache: new InMemoryCache(),
-    headers: {},
-  });
-
   return (
     <ApolloProvider client={client}>
       <AuthProvider>

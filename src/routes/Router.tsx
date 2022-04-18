@@ -30,8 +30,8 @@ const Router = () => {
           />
           <Route path="/forgot-password" element={<ForgotPassword />}>
             <Route path="email" element={<Email />} />
-            <Route path="password" element={<Password />} />
           </Route>
+          <Route path="passwordreset/:id" element={<Password />} />
           <Route path="/messenger" element={<Overview />}>
             <Route path="chats" element={<Chats />} />
             <Route path="calls" element={<Calls />} />
