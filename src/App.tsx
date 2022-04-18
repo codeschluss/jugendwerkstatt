@@ -16,7 +16,6 @@ function App() {
   const httpLink = new HttpLink({ uri: 'http://localhost:8061/api/graphql' });
 
   const authMiddleware = new ApolloLink((operation, forward: any) => {
-    // GetNewToken();
     console.log("intercepting here...");
     return forward(operation);
   });
