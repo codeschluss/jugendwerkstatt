@@ -14,6 +14,7 @@ interface AuthInputProps {
   onBlur?: () => void;
   onChange?: any;
   error?: string;
+  placeholder?: string;
 }
 
 const AuthInput: React.FC<AuthInputProps> = ({
@@ -27,20 +28,22 @@ const AuthInput: React.FC<AuthInputProps> = ({
   password,
   repeatPassword,
   type,
+  placeholder,
   value,
 }) => {
   const { isToggled, handleToggle } = useToggle(false);
 
   return (
     <>
-      <div className="relative z-0 mb-6 w-full group">
+      <div className="relative z-0 mb-6 w-full group flex justify-center">
         <input
-          style={{ border: error ? "2px solid red" : "" }}
+          style={{ border: error ? " red" : "" }}
           onChange={onChange}
           onBlur={onBlur}
           type={type === "password" && !isToggled ? "password" : "text"}
           className={inputClassName}
           value={value}
+          placeholder={placeholder}
         />
         {type === "password" && (
           <button

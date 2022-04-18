@@ -16,7 +16,7 @@ export const SAVE_USER = gql`
     ) {
       id
       fullname
-      loginName
+      email
     }
   }
 `;

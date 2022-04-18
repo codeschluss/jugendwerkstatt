@@ -78,25 +78,6 @@ export enum ConjunctionOperator {
   OrNot = 'OR_NOT'
 }
 
-export type ErrorMessageEntity = {
-  __typename?: 'ErrorMessageEntity';
-  code?: Maybe<Scalars['String']>;
-  created?: Maybe<Scalars['OffsetDateTime']>;
-  id?: Maybe<Scalars['String']>;
-  language?: Maybe<LanguageEntity>;
-  message?: Maybe<Scalars['String']>;
-  modified?: Maybe<Scalars['OffsetDateTime']>;
-};
-
-export type ErrorMessageEntityInput = {
-  code?: InputMaybe<Scalars['String']>;
-  created?: InputMaybe<Scalars['OffsetDateTime']>;
-  id?: InputMaybe<Scalars['String']>;
-  language?: InputMaybe<LanguageEntityInput>;
-  message?: InputMaybe<Scalars['String']>;
-  modified?: InputMaybe<Scalars['OffsetDateTime']>;
-};
-
 export type EventCategoryEntity = {
   __typename?: 'EventCategoryEntity';
   color?: Maybe<Scalars['String']>;
@@ -128,7 +109,6 @@ export type EventEntity = {
   images?: Maybe<Array<Maybe<MediaEntity>>>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   name?: Maybe<Scalars['String']>;
-  nextSchedule?: Maybe<ScheduleEntity>;
   organizer?: Maybe<OrganizerEntity>;
   schedules?: Maybe<Array<Maybe<ScheduleEntity>>>;
   titleImage?: Maybe<MediaEntity>;
@@ -193,23 +173,6 @@ export type JobTypeEntityInput = {
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   id?: InputMaybe<Scalars['String']>;
   jobAds?: InputMaybe<Array<InputMaybe<JobAdEntityInput>>>;
-  modified?: InputMaybe<Scalars['OffsetDateTime']>;
-  name?: InputMaybe<Scalars['String']>;
-};
-
-export type LanguageEntity = {
-  __typename?: 'LanguageEntity';
-  created?: Maybe<Scalars['OffsetDateTime']>;
-  id?: Maybe<Scalars['String']>;
-  locale?: Maybe<Scalars['String']>;
-  modified?: Maybe<Scalars['OffsetDateTime']>;
-  name?: Maybe<Scalars['String']>;
-};
-
-export type LanguageEntityInput = {
-  created?: InputMaybe<Scalars['OffsetDateTime']>;
-  id?: InputMaybe<Scalars['String']>;
-  locale?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   name?: InputMaybe<Scalars['String']>;
 };
@@ -279,8 +242,6 @@ export type Mutation = {
   deleteCategorys: Scalars['Boolean'];
   deleteCompanies: Scalars['Boolean'];
   deleteCompany: Scalars['Boolean'];
-  deleteErrorMessage: Scalars['Boolean'];
-  deleteErrorMessages: Scalars['Boolean'];
   deleteEvent: Scalars['Boolean'];
   deleteEvents: Scalars['Boolean'];
   deleteJobAd: Scalars['Boolean'];
@@ -312,8 +273,6 @@ export type Mutation = {
   saveCategorys?: Maybe<Array<Maybe<EventCategoryEntity>>>;
   saveCompanies?: Maybe<Array<Maybe<CompanyEntity>>>;
   saveCompany?: Maybe<CompanyEntity>;
-  saveErrorMessage?: Maybe<ErrorMessageEntity>;
-  saveErrorMessages?: Maybe<Array<Maybe<ErrorMessageEntity>>>;
   saveEvent?: Maybe<EventEntity>;
   saveEvents?: Maybe<Array<Maybe<EventEntity>>>;
   saveJobAd?: Maybe<JobAdEntity>;
@@ -338,10 +297,8 @@ export type Mutation = {
   saveUserTemplate?: Maybe<UserTemplateEntity>;
   saveUserTemplates?: Maybe<Array<Maybe<UserTemplateEntity>>>;
   saveUsers?: Maybe<Array<Maybe<UserEntity>>>;
-  sendError: Scalars['Boolean'];
   sendPasswordReset: Scalars['Boolean'];
   sendVerification: Scalars['Boolean'];
-  test?: Maybe<UserEntity>;
   verify?: Maybe<UserEntity>;
 };
 
@@ -386,18 +343,6 @@ export type MutationDeleteCompaniesArgs = {
 /** Mutation root */
 export type MutationDeleteCompanyArgs = {
   id?: InputMaybe<Scalars['String']>;
-};
-
-
-/** Mutation root */
-export type MutationDeleteErrorMessageArgs = {
-  id?: InputMaybe<Scalars['String']>;
-};
-
-
-/** Mutation root */
-export type MutationDeleteErrorMessagesArgs = {
-  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
 
@@ -590,18 +535,6 @@ export type MutationSaveCompanyArgs = {
 
 
 /** Mutation root */
-export type MutationSaveErrorMessageArgs = {
-  entity?: InputMaybe<ErrorMessageEntityInput>;
-};
-
-
-/** Mutation root */
-export type MutationSaveErrorMessagesArgs = {
-  entities?: InputMaybe<Array<InputMaybe<ErrorMessageEntityInput>>>;
-};
-
-
-/** Mutation root */
 export type MutationSaveEventArgs = {
   entity?: InputMaybe<EventEntityInput>;
 };
@@ -746,12 +679,6 @@ export type MutationSaveUsersArgs = {
 
 
 /** Mutation root */
-export type MutationSendErrorArgs = {
-  stackTrace?: InputMaybe<Scalars['String']>;
-};
-
-
-/** Mutation root */
 export type MutationSendPasswordResetArgs = {
   mailAddress?: InputMaybe<Scalars['String']>;
 };
@@ -800,12 +727,6 @@ export type PageableList_AddressEntity = {
 export type PageableList_CompanyEntity = {
   __typename?: 'PageableList_CompanyEntity';
   result?: Maybe<Array<Maybe<CompanyEntity>>>;
-  total: Scalars['Long'];
-};
-
-export type PageableList_ErrorMessageEntity = {
-  __typename?: 'PageableList_ErrorMessageEntity';
-  result?: Maybe<Array<Maybe<ErrorMessageEntity>>>;
   total: Scalars['Long'];
 };
 
@@ -913,8 +834,6 @@ export type Query = {
   getCategorys?: Maybe<PageableList_EventCategoryEntity>;
   getCompanies?: Maybe<PageableList_CompanyEntity>;
   getCompany?: Maybe<CompanyEntity>;
-  getErrorMessage?: Maybe<ErrorMessageEntity>;
-  getErrorMessages?: Maybe<PageableList_ErrorMessageEntity>;
   getEvent?: Maybe<EventEntity>;
   getEvents?: Maybe<PageableList_EventEntity>;
   getJobAd?: Maybe<JobAdEntity>;
@@ -976,18 +895,6 @@ export type QueryGetCompaniesArgs = {
 /** Query root */
 export type QueryGetCompanyArgs = {
   entity?: InputMaybe<CompanyEntityInput>;
-};
-
-
-/** Query root */
-export type QueryGetErrorMessageArgs = {
-  entity?: InputMaybe<ErrorMessageEntityInput>;
-};
-
-
-/** Query root */
-export type QueryGetErrorMessagesArgs = {
-  params?: InputMaybe<FilterSortPaginateInput>;
 };
 
 
@@ -1329,6 +1236,20 @@ export type GetEventsQueryVariables = Exact<{
 
 export type GetEventsQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', result?: Array<{ __typename?: 'EventEntity', id?: string | null, name?: string | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null } | null } | null> | null } | null };
 
+export type SendPasswordResetMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type SendPasswordResetMutation = { __typename?: 'Mutation', sendPasswordReset: boolean };
+
+export type SendVerificationMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type SendVerificationMutation = { __typename?: 'Mutation', sendVerification: boolean };
+
 
 export const GetEventDocument = gql`
     query getEvent($entity: EventEntityInput) {
@@ -1418,3 +1339,65 @@ export function useGetEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetEventsQueryHookResult = ReturnType<typeof useGetEventsQuery>;
 export type GetEventsLazyQueryHookResult = ReturnType<typeof useGetEventsLazyQuery>;
 export type GetEventsQueryResult = Apollo.QueryResult<GetEventsQuery, GetEventsQueryVariables>;
+export const SendPasswordResetDocument = gql`
+    mutation sendPasswordReset($email: String!) {
+  sendPasswordReset(mailAddress: $email)
+}
+    `;
+export type SendPasswordResetMutationFn = Apollo.MutationFunction<SendPasswordResetMutation, SendPasswordResetMutationVariables>;
+
+/**
+ * __useSendPasswordResetMutation__
+ *
+ * To run a mutation, you first call `useSendPasswordResetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendPasswordResetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendPasswordResetMutation, { data, loading, error }] = useSendPasswordResetMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useSendPasswordResetMutation(baseOptions?: Apollo.MutationHookOptions<SendPasswordResetMutation, SendPasswordResetMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendPasswordResetMutation, SendPasswordResetMutationVariables>(SendPasswordResetDocument, options);
+      }
+export type SendPasswordResetMutationHookResult = ReturnType<typeof useSendPasswordResetMutation>;
+export type SendPasswordResetMutationResult = Apollo.MutationResult<SendPasswordResetMutation>;
+export type SendPasswordResetMutationOptions = Apollo.BaseMutationOptions<SendPasswordResetMutation, SendPasswordResetMutationVariables>;
+export const SendVerificationDocument = gql`
+    mutation sendVerification($email: String!) {
+  sendVerification(mailAddress: $email)
+}
+    `;
+export type SendVerificationMutationFn = Apollo.MutationFunction<SendVerificationMutation, SendVerificationMutationVariables>;
+
+/**
+ * __useSendVerificationMutation__
+ *
+ * To run a mutation, you first call `useSendVerificationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendVerificationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendVerificationMutation, { data, loading, error }] = useSendVerificationMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useSendVerificationMutation(baseOptions?: Apollo.MutationHookOptions<SendVerificationMutation, SendVerificationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendVerificationMutation, SendVerificationMutationVariables>(SendVerificationDocument, options);
+      }
+export type SendVerificationMutationHookResult = ReturnType<typeof useSendVerificationMutation>;
+export type SendVerificationMutationResult = Apollo.MutationResult<SendVerificationMutation>;
+export type SendVerificationMutationOptions = Apollo.BaseMutationOptions<SendVerificationMutation, SendVerificationMutationVariables>;

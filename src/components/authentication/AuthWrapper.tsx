@@ -1,4 +1,5 @@
 import React from "react";
+import { RegisterFooter } from "../register/registerfooter/RegisterFooter";
 interface AuthWrapperProps {
   title: string;
 }
@@ -16,6 +17,7 @@ const AuthWrapper: React.FC<AuthWrapperProps> = ({ title, children }) => {
       <div className=" w-full relative -mt-6 rounded-3xl bg-white">
         <h4 className="text-3xl text-center mt-5">{title}</h4>
         {children}
+        <RegisterFooter />
       </div>
     </div>
   );

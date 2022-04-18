@@ -3,10 +3,12 @@ import { useMutation } from "@apollo/client";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
+import { useSendVerificationMutation } from "../../GraphQl/graphql";
 import { SAVE_USER } from "../../GraphQl/mutation";
 import useInput from "../../hooks/use-input";
 import AuthInput from "../authentication/AuthInput";
 import AuthWrapper from "../authentication/AuthWrapper";
+import Button from "../ui/Button";
 import { RegisterFooter } from "./registerfooter/RegisterFooter";
 import { RegisterValidations } from "./registerfooter/RegisterValidations";
 
@@ -132,7 +134,7 @@ const Register = () => {
           password: enteredPassword,
         },
       });
-
+      useSendVerificationMutation({ variables: { email: enteredEmail } });
       resetUsernameInput();
       resetEmailInput();
       resetPasswordInput();
@@ -192,16 +194,17 @@ const Register = () => {
           />
           <RegisterValidations />
         </div>
-        <RegisterFooter
+        <Button
           isValidated={inputsAreValid}
           isDisabled={inputsAreValid}
-        />
+          buttonType={"submit"}
+        >
+          Registrieren
+        </Button>
+        <RegisterFooter />
       </form>
     </AuthWrapper>
   );
 };
 
 export default Register;
-function useQuerry(): { error: any; loading: any; queryData: any } {
-  throw new Error("Function not implemented.");
-}

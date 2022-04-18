@@ -1,8 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ForgotPassword from "../components/authentication/forgotPassword";
+import Email from "../components/authentication/forgotPassword/Email";
+import Password from "../components/authentication/forgotPassword/Password";
 import Calls from "../components/messenger/overview/calls";
 import Chats from "../components/messenger/overview/chats";
 import Contacts from "../components/messenger/overview/contacts";
-import RegisteredSuccessfully from "../components/register/success/registeredSuccessfully";
+import RegisteredSuccessfully from "../components/register/success/RegisteredSuccessfully";
 import Layout from "../containers/Layout";
 import EmailVerification from "../pages/emailVerification";
 import EmailVerified from "../pages/emailVerified";
@@ -22,9 +25,13 @@ const Router = () => {
           <Route index element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route
-            path="/registeredsuccessfully"
+            path="/register/verify/:id"
             element={<RegisteredSuccessfully />}
           />
+          <Route path="/forgot-password" element={<ForgotPassword />}>
+            <Route path="email" element={<Email />} />
+            <Route path="password" element={<Password />} />
+          </Route>
           <Route path="/messenger" element={<Overview />}>
             <Route path="chats" element={<Chats />} />
             <Route path="calls" element={<Calls />} />
