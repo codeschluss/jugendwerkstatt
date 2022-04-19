@@ -13,7 +13,32 @@ let something = false;
 const httpLink = new HttpLink({ uri: "http://localhost:8061/api/graphql" });
 
 const authMiddleware = new ApolloLink((operation, forward: any) => {
-  //TODO if expired something = true;
+  const definitions :any = operation.query.definitions[0];
+  const requestName = definitions.selectionSet.selections[0].name.value;
+  console.log('requestName:', requestName);
+
+  if(requestName!="createToken" && requestName!="refreshToken"){
+    console.log('this is a request that needs authorization');
+    const jwtAccessToken = localStorage.getItem('jugendwerkstattAccessToken');
+
+    // if(jwtAccessToken!=null){
+      //   const decodedJwtToken = JSON.parse(atob(jwtAccessToken.split('.')[1]));
+      //   const jwtExpirationDatetimeInSeconds = decodedJwtToken.exp;
+      //   const currentDatetimeInSeconds = Date.now()/1000;        
+
+      //   if(jwtExpirationDatetimeInSeconds >= currentDatetimeInSeconds){
+      //    ...
+      //  }
+    //}
+
+    operation.setContext(({ headers = {} }) => ({
+      headers: {
+        headers,
+        authorization: "bearer "+jwtAccessToken
+      }
+    }));
+  }
+  
   return forward(operation);
 });
 

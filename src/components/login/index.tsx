@@ -39,6 +39,25 @@ const Index = () => {
       const tempAccessToken = data.createToken.access;
       const tempRefreshToken = data.createToken.refresh;
       
+      const decodedJwtToken = JSON.parse(atob(tempAccessToken.split('.')[1]));
+
+      var responseMessage = "wrong";
+
+      if (responseMessage == "wrong") {
+        setPasswordValidationText(
+          "Benutzername und Passwort stimmen nicht überein."
+        );
+      }
+
+      if (responseMessage != "success") {
+        emailRef.current.value = "";
+        passwordRef.current.value = "";
+      }
+
+      // if(responseMessage=='success'){
+      //     window.location.href="/Home";
+      // }
+
       setUserToken(tempAccessToken);
       setRefreshToken(tempRefreshToken);
 
@@ -57,13 +76,6 @@ const Index = () => {
   // }, [userToken]);
 
   const Login = () => {
-    getuserFunction({
-      variables: {
-        username: emailRef.current.value,
-        password: passwordRef.current.value,
-      },
-    });
-
     var isValid = true;
     setEmailValidationText("");
     setPasswordValidationText("");
@@ -92,27 +104,17 @@ const Index = () => {
       isValid = false;
     }
 
-    // if (isValid) {
-    //   setDisabledButton(true);
-    //   //request to backend here
+    if (isValid) {
+      setDisabledButton(true);
+      //request to backend here
+      getuserFunction({
+        variables: {
+          username: emailRef.current.value,
+          password: passwordRef.current.value,
+        },
+      });
+    }
 
-    //   var responseMessage = "wrong";
-
-    //   if (responseMessage == "wrong") {
-    //     setPasswordValidationText(
-    //       "Benutzername und Passwort stimmen nicht überein."
-    //     );
-    //   }
-
-    //   if (responseMessage != "success") {
-    //     emailRef.current.value = "";
-    //     passwordRef.current.value = "";
-    //   }
-
-    //   // if(responseMessage=='success'){
-    //   //     window.location.href="/Home";
-    //   // }
-    // }
   };
 
   return (
