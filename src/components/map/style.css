@@ -5,11 +5,12 @@
 }
 
 .map-tags {
-  width:100%;
+  margin-top:2px;
   height: 40px;
   padding: 8px 24px;
   background-color: red;
   display: flex;
+  overflow-x: scroll;
 }
 
 .tag {

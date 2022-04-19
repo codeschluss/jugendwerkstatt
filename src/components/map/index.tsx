@@ -9,26 +9,37 @@ const Map: FunctionComponent = () => {
       <div className='map-tags'>
         <div className='tag'>tag 1</div>
         <div className='tag'>tag 2</div>
+        <div className='tag'>tag 2</div>
+        <div className='tag'>tag 2</div>
+        <div className='tag'>tag 2</div>
+        <div className='tag'>tag 2</div>
+        <div className='tag'>tag 2</div>
+        <div className='tag'>tag 2</div>
+        <div className='tag'>tag 2</div>
+        <div className='tag'>tag 2</div>
+        <div className='tag'>tag 2</div>
       </div>
 
-      <MapContainer center={[40.505, -100.09]} zoom={13} >
-        <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+      <div className='map'>
+        <MapContainer center={[40.505, -100.09]} zoom={13} >
+          <TileLayer
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
 
-        <Marker position={[40.505, -100.09]}>
-            <Popup>
-              Event 1
-            </Popup>
-        </Marker>
+          <Marker position={[40.505, -100.09]}>
+              <Popup>
+                Event 1
+              </Popup>
+          </Marker>
 
-        <Marker position={[40.505, -100.12]}>
-            <Popup>
-              Event 2
-            </Popup>
-        </Marker>
-      </MapContainer>
+          <Marker position={[40.505, -100.12]}>
+              <Popup>
+                Event 2
+              </Popup>
+          </Marker>
+        </MapContainer>
+      </div>
     </div>
   )
 }
