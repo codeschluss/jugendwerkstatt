@@ -1,7 +1,8 @@
+import React, {FunctionComponent} from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet'
 import './style.css';
 
-const Map = () => {
+const Map: FunctionComponent = () => {
 
   return (
     <div>
