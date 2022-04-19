@@ -18,7 +18,7 @@ const Router = () => {
           <Route path="/Login" element={<Login />} />
           <Route path="/EmailVerification" element={<EmailVerification />} />
           <Route path="/EmailVerified" element={<EmailVerified />} />
-          <Route path="/map" element={<Map />} />
+          <Route path="/map" element={<Layout><Map /></Layout>} />
         </Routes>
     </BrowserRouter>
   );
