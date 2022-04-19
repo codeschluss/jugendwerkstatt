@@ -6,11 +6,13 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
 import { LOGIN_GET_TOKEN } from "../../GraphQl/mutation";
 import logo from "../../images/jugendwerkstatt-logo.png";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [passwordInputType, setPasswordInputType] = useState("password");
   const [hiddenLine, setHiddenLine] = useState(true);
   const [disabledButton, setDisabledButton] = useState(false);
@@ -36,44 +38,50 @@ const Index = () => {
 
   useEffect(() => {
     if (data) {
+      console.log("data: ", data);
       const tempAccessToken = data.createToken.access;
       const tempRefreshToken = data.createToken.refresh;
       
       const decodedJwtToken = JSON.parse(atob(tempAccessToken.split('.')[1]));
+      console.log("decoded token:", decodedJwtToken);
+      const roles = decodedJwtToken.roles;
 
       var responseMessage = "wrong";
+      if(roles.indexOf("verified") > -1)
+      {
+        responseMessage = "success";
+      }
 
       if (responseMessage == "wrong") {
-        setPasswordValidationText(
-          "Benutzername und Passwort stimmen nicht überein."
-        );
-      }
+        setPasswordValidationText("Benutzername und Passwort stimmen nicht überein.");
 
-      if (responseMessage != "success") {
         emailRef.current.value = "";
         passwordRef.current.value = "";
+        
+        setDisabledButton(false);
       }
 
-      // if(responseMessage=='success'){
-      //     window.location.href="/Home";
-      // }
+      if(responseMessage=='success'){
+        setUserToken(tempAccessToken);
+        setRefreshToken(tempRefreshToken);
 
-      setUserToken(tempAccessToken);
-      setRefreshToken(tempRefreshToken);
+        localStorage.setItem('jugendwerkstattAccessToken', tempAccessToken);
+        localStorage.setItem('jugendwerkstattRefreshToken', tempRefreshToken);
 
-      localStorage.setItem('jugendwerkstattAccessToken', tempAccessToken);
-      localStorage.setItem('jugendwerkstattRefreshToken', tempRefreshToken);
+        const localStorageAccessToken = localStorage.getItem('jugendwerkstattAccessToken');
+        const localStorageRefreshToken = localStorage.getItem('jugendwerkstattRefreshToken'); 
+        navigate("/");
+      }
+    }
+    else{
+      setPasswordValidationText("Benutzername und Passwort stimmen nicht überein.");
 
-      const localStorageAccessToken = localStorage.getItem('jugendwerkstattAccessToken');
-      const localStorageRefreshToken = localStorage.getItem('jugendwerkstattRefreshToken');      
-      // console.log('access: ', localStorageAccessToken);
-      // console.log('refresh: ', localStorageRefreshToken);
+      emailRef.current.value = "";
+      passwordRef.current.value = "";
+      
+      setDisabledButton(false);
     }
   }, [data]);
-
-  // useEffect(() => {
-  //   console.log("usertoken", userToken);
-  // }, [userToken]);
 
   const Login = () => {
     var isValid = true;
