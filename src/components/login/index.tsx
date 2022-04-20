@@ -146,7 +146,6 @@ const Index = () => {
                                 <span className="align-middle">Anmelden</span>
                             </div>
                         </div>
-                        {/* aa */}
                     </div>
                     <div className="w-screen">
                         <div className="mx-12 pl-1 pb-2">
