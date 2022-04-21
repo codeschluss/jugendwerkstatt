@@ -39,6 +39,8 @@ const Password = () => {
 
   useEffect(() => {
     if (data?.resetPassword === true) {
+      resetPasswordInput();
+      resetCPasswordInput();
       navigate("/");
     }
   }, [data]);
