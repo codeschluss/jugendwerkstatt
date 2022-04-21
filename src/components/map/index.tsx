@@ -24,7 +24,7 @@ const Map: FunctionComponent = () => {
         <MapContainer center={[40.505, -100.09]} zoom={13} >
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            url="https://api.maptiler.com/maps/openstreetmap/{z}/{x}/{y}@2x.jpg?key=MjiCJwnWXgOykin9V6Np"
           />
 
           <Marker position={[40.505, -100.09]}>
