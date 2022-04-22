@@ -3,7 +3,7 @@ import { AddressEntity, EventEntity } from "../home/Test";
 
 interface SlideCardProps {
   className?: string;
-  imgUrl: string;
+  imgUrl?: any;
   eventName: EventEntity["name"];
   location: AddressEntity["place"];
   date: string;
@@ -23,7 +23,7 @@ const SlideCard: React.FC<SlideCardProps> = ({
       <img
         alt={eventName || ""}
         className="object-cover w-full h-full absolute inset-0"
-        src={imgUrl}
+        src={`http://localhost:8061/api/media/${imgUrl}`}
       />
       <div className="absolute left-0 w-full top-0 bg-gradient-to-b from-black to-transparent text-white px-3 pb-8 pt-3 flex justify-between items-center">
         <small className="font-bold">{eventName}</small>

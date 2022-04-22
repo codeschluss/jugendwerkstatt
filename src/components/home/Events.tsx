@@ -13,14 +13,15 @@ const Events: React.FC<EventsProps> = () => {
   const result = useGetEventsQuery({
     variables: {
       params: {
-        sort: 'name',
+        sort: "name",
         //FilterSortPaginate fields
-      }
-    }
+      },
+    },
   });
 
-
-  const fetchedData: [EventEntity] = result.data?.getEvents?.result as [EventEntity];
+  const fetchedData: [EventEntity] = result.data?.getEvents?.result as [
+    EventEntity
+  ];
   console.log(data);
 
   return (
@@ -32,7 +33,7 @@ const Events: React.FC<EventsProps> = () => {
             eventName={el?.name}
             location={el?.address?.street}
             date="Freitag, 25/02/22"
-            imgUrl={`localhost:8061/api/media/${el?.titleImage?.id}`}
+            imgUrl={el?.titleImage?.id}
           />
         );
       })}

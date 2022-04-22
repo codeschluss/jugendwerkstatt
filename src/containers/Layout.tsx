@@ -9,13 +9,25 @@ import { useRefreshTokenMutation } from "../GraphQl/graphql";
 const Layout: React.FC = ({ children }) => {
   const { setIsLogedIn } = useContext(AuthContext);
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem("accessToken") || "";
-  const refreshToken = localStorage.getItem("refreshToken") || "";
-  const atoken: any = jwtDecode(accessToken);
-  const rtoken: any = jwtDecode(refreshToken);
-  const accessTokenTime = atoken.exp * 1000;
-  const refreshTokenTime = rtoken.exp * 1000;
 
+  let accessToken;
+  let refreshToken: any;
+  let atoken: any;
+  let rtoken: any;
+  let accessTokenTime: any;
+  let refreshTokenTime: any;
+
+  if (
+    localStorage.getItem("accessToken") &&
+    localStorage.getItem("refreshToken")
+  ) {
+    accessToken = localStorage.getItem("accessToken") || "";
+    refreshToken = localStorage.getItem("refreshToken") || "";
+    atoken = jwtDecode(accessToken);
+    rtoken = jwtDecode(refreshToken);
+    accessTokenTime = atoken.exp * 1000;
+    refreshTokenTime = rtoken.exp * 1000;
+  }
   const [refreshTokenMutation, { data, loading, error }] =
     useRefreshTokenMutation({
       variables: {
@@ -30,17 +42,24 @@ const Layout: React.FC = ({ children }) => {
   }
 
   const checkDate = () => {
-    if (Date.now() > accessTokenTime) {
+    if (
+      !localStorage.getItem("accessToken") &&
+      !localStorage.getItem("refreshToken")
+    ) {
+      setIsLogedIn(false);
+      return;
+    } else if (Date.now() < accessTokenTime) {
       setIsLogedIn(true);
-      //goEvents
+      //Events
       return;
     } else if (Date.now() < refreshTokenTime) {
       refreshTokenMutation();
-      return;
-    } else {
-      navigate("/login");
     }
   };
+
+  useEffect(() => {
+    checkDate();
+  }, []);
 
   useEffect(() => {
     const intervalTimer = setInterval(() => {
@@ -56,7 +75,7 @@ const Layout: React.FC = ({ children }) => {
         <Header />
         <div>{children}</div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </main>
   );
 };

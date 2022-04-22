@@ -46,7 +46,7 @@ const Login = () => {
   useTokenCheck(data?.createToken?.access, data?.createToken?.refresh);
 
   return (
-    <AuthWrapper title="Anmelden" headerType="wrong">
+    <AuthWrapper title="Anmelden">
       <form onSubmit={submitHandler} className="mt-5 text-right p-3">
         <AuthInput
           value={enteredEmail}
