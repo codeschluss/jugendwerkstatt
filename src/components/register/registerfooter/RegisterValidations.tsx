@@ -11,23 +11,25 @@ export const RegisterValidations = () => {
       <div className="flex flex-nowrap justify-between">
         <div
           className={`w-1/5 h-1 rounded-lg ${
-            !passwordBits || passwordBits < 40 ? "bg-gray-200" : "bg-green-500"
+            !passwordBits || passwordBits < 5 || passwordBits < 10
+              ? "bg-gray-200"
+              : "bg-rose-500"
           }`}
         ></div>
         <div
           className={`w-1/5 h-1 rounded-lg ${
-            !passwordBits || passwordBits < 20 ? "bg-gray-200" : "bg-green-500"
+            !passwordBits || passwordBits < 15 ? "bg-gray-200" : "bg-rose-500"
           }`}
         ></div>
         <div
           className={`w-1/5 h-1 rounded-lg ${
-            !passwordBits || passwordBits < 20 ? "bg-gray-200" : "bg-green-500"
+            !passwordBits || passwordBits < 35 ? "bg-warning" : "bg-green-500"
           }`}
         ></div>
         <div
           className={`w-1/5 h-1 rounded-lg ${
-            !passwordBits || passwordBits < 20 ? "bg-gray-200" : "bg-green-500"
-          }`}
+            !passwordBits || passwordBits < 35 ? "bg-warning" : "bg-green-500"
+          } ${passwordBits < 10 ? "bg-primary" : "bg-green-500"}`}
         ></div>
       </div>
     </div>
