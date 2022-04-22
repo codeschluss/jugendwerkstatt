@@ -172,13 +172,13 @@ const Register = () => {
       resendLink={aaabbb}
     >
       <form className="w-screen" onSubmit={onSubmitHandler}>
-        <div className="p-10 pb-0">
+        <div className="pb-0 p-12">
           <AuthInput
             id="Name"
             type="text"
             inputClassName={`${
               usernameInputError && "border-500-red"
-            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+            }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
             onChange={usernameChangeHandler}
             onBlur={usernameBlurHandler}
             value={enteredUsername}
@@ -193,7 +193,7 @@ const Register = () => {
             error={emailInputError ? "must be a valid email address" : ""}
             inputClassName={`${
               emailInputError && "border-500-red"
-            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+            }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
           />
           <AuthInput
             id="Password"
@@ -204,7 +204,7 @@ const Register = () => {
             error={passwordInputError ? "password not strong enough" : ""}
             inputClassName={`${
               passwordInputError && "border-500-red"
-            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+            }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
           />
           <AuthInput
             id="Repeat-Password"
@@ -215,7 +215,7 @@ const Register = () => {
             error={cPasswordInputError ? "password not strong enough" : ""}
             inputClassName={`${
               cPasswordInputError && "border-500-red"
-            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+            }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
           />
           <RegisterValidations />
         </div>
@@ -228,7 +228,6 @@ const Register = () => {
             Registrieren
           </Button>
         </span>
-        <RegisterFooter />
       </form>
     </AuthWrapper>
   );

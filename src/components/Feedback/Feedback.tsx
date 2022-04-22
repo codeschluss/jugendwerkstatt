@@ -1,4 +1,5 @@
 import { FeedbackProps } from "./Feedback.props";
+import { Header } from "./header/Header";
 
 const feedbacks: FeedbackProps[] = [
   {
@@ -36,12 +37,8 @@ const feedbacks: FeedbackProps[] = [
 export const Feedback = () => {
   return (
     <>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab
-        reprehenderit fugiat aperiam in quos quis perferendis ea veritatis dicta
-        beatae corrupti sunt adipisci aliquid, eum non. Consectetur obcaecati at
-        ex?
-      </p>
+      <Header />
+      
       {feedbacks.map(({ id, question, options }) => (
         <ul key={id} className="flex">
           <li>{id}.</li>
