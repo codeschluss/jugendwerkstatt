@@ -2004,7 +2004,7 @@ export type GetEventsQueryVariables = Exact<{
 }>;
 
 
-export type GetEventsQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', result?: Array<{ __typename?: 'EventEntity', id?: string | null, name?: string | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null } | null } | null> | null } | null };
+export type GetEventsQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', result?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null, postalCode?: string | null, latitude?: number | null, longitude?: number | null, id?: string | null, houseNumber?: string | null, created?: any | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, endDate?: any | null, startDate?: any | null } | null> | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null, icon?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null, name?: string | null, phone?: string | null, website?: string | null, mail?: string | null } | null } | null> | null } | null };
 
 export type ResultQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2154,14 +2154,38 @@ export const GetEventsDocument = gql`
     query getEvents($params: FilterSortPaginateInput) {
   getEvents(params: $params) {
     result {
+      name
       titleImage {
         id
       }
       id
-      name
+      description
       address {
         street
         place
+        postalCode
+        latitude
+        longitude
+        id
+        houseNumber
+        created
+      }
+      schedules {
+        id
+        endDate
+        startDate
+      }
+      category {
+        id
+        name
+        icon
+      }
+      organizer {
+        id
+        name
+        phone
+        website
+        mail
       }
     }
   }
