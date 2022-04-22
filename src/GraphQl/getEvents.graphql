@@ -1,0 +1,15 @@
+query getEvents($params: FilterSortPaginateInput) {
+  getEvents(params: $params) {
+    result {
+      titleImage {
+        id
+      }
+      id
+      name
+      address {
+        street
+        place
+      }
+    }
+  }
+}

@@ -1,35 +1,41 @@
-import SlideCard from "./slideItems/SlideCard";
-import Slider from "./slideItems/Slider";
+import { useQuery } from "@apollo/client";
+import { useGetEventsQuery } from "../../GraphQl/graphql";
+import { GET_EVENTS } from "../../GraphQl/Querry";
+import SlideCard from "../slideItems/SlideCard";
+import Slider from "../slideItems/Slider";
+import { EventEntity } from "./Test";
 
 interface EventsProps {}
 
 const Events: React.FC<EventsProps> = () => {
+  const { data, loading, error } = useQuery(GET_EVENTS);
+
+  const result = useGetEventsQuery({
+    variables: {
+      params: {
+        sort: 'name',
+        //FilterSortPaginate fields
+      }
+    }
+  });
+
+
+  const fetchedData: [EventEntity] = result.data?.getEvents?.result as [EventEntity];
+  console.log(data);
+
   return (
     <Slider title="Events">
-      <SlideCard
-        eventName="Eventname"
-        location="Location"
-        date="Freitag, 25/02/22"
-        imgUrl="https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80"
-      />
-      <SlideCard
-        eventName="Eventname"
-        location="Location"
-        date="Freitag, 25/02/22"
-        imgUrl="https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80"
-      />
-      <SlideCard
-        eventName="Eventname"
-        location="Location"
-        date="Freitag, 25/02/22"
-        imgUrl="https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80"
-      />
-      <SlideCard
-        eventName="Eventname"
-        location="Location"
-        date="Freitag, 25/02/22"
-        imgUrl="https://images.unsplash.com/photo-1604999565976-8913ad2ddb7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=160&q=80"
-      />
+      {fetchedData?.map((el) => {
+        return (
+          <SlideCard
+            key={el?.name}
+            eventName={el?.name}
+            location={el?.address?.street}
+            date="Freitag, 25/02/22"
+            imgUrl={`localhost:8061/api/media/${el?.titleImage?.id}`}
+          />
+        );
+      })}
     </Slider>
   );
 };

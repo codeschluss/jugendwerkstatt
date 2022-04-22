@@ -1,39 +1,84 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { RegisterInputsProps } from "./Register.props";
-import { RegisterSchema } from "../../validators/Register.validator";
-import { RegisterInput } from "./RegisterInput";
+/* eslint-disable */
+import { useMutation } from "@apollo/client";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../../contexts/AuthContext";
+import { SAVE_USER } from "../../GraphQl/mutation";
+import useInput from "../../hooks/use-input";
+import AuthInput from "../authentication/AuthInput";
+import AuthWrapper from "../authentication/AuthWrapper";
 import { RegisterFooter } from "./registerfooter/RegisterFooter";
 import { RegisterValidations } from "./registerfooter/RegisterValidations";
-import { useNavigate } from "react-router-dom";
-import { useSaveUserMutation } from "../../graphql/gen/graphql";
-import { useState } from "react";
+
 const Register = () => {
+  const [inputsAreValid, setInputsAreValid] = useState(false);
+
   const navigate = useNavigate();
+  const regex = /[^A-Za-z0-9_.]/g;
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<RegisterInputsProps>({
-    reValidateMode: "onChange",
-    resolver: joiResolver(RegisterSchema),
-  });
+    value: enteredUsername,
+    validity: enteredUsernameValidity,
+    hasError: usernameInputError,
+    valueChangeHandler: usernameChangeHandler,
+    inputBlurHandler: usernameBlurHandler,
+    resetValue: resetUsernameInput,
+  } = useInput((value: string) => value.trim() !== "");
 
-  const [saveUser] = useSaveUserMutation({
-    onCompleted: () => navigate("../registeredsuccessfully"),
-  });
+  const {
+    value: enteredEmail,
+    validity: enteredEmailValidity,
+    hasError: emailInputError,
+    valueChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    resetValue: resetEmailInput,
+  } = useInput(
+    (value: any) => value.includes("@") && value !== "" && value.includes(".")
+  );
 
-  const onSubmit = (data: RegisterInputsProps) => {
-    saveUser({
-      variables: { ...data },
-    });
-  };
+  const {
+    value: enteredPassword,
+    validity: enteredPasswordValidity,
+    hasError: passwordInputError,
+    valueChangeHandler: passwordChangeHandler,
+    inputBlurHandler: passwordBlurHandler,
+    resetValue: resetPasswordInput,
+  } = useInput((value: any) => value.match(regex) && value.trim().length > 6);
+
+  const {
+    value: enteredCPassword,
+    validity: enteredCPasswordValidity,
+    hasError: cPasswordInputError,
+    valueChangeHandler: cPasswordChangeHandler,
+    inputBlurHandler: cPasswordBlurHandler,
+    resetValue: resetCPasswordInput,
+  } = useInput((value: any) => value === enteredPassword);
+
+  useEffect(() => {
+    if (
+      enteredUsernameValidity &&
+      enteredEmailValidity &&
+      enteredPasswordValidity &&
+      enteredCPasswordValidity
+    ) {
+      setInputsAreValid(true);
+    } else {
+      setInputsAreValid(false);
+    }
+  }, [
+    enteredUsernameValidity,
+    enteredEmailValidity,
+    enteredPasswordValidity,
+    enteredCPasswordValidity,
+  ]);
+
+  console.log(inputsAreValid, "the inputs");
 
   const [password, setPassword] = useState<string>("");
-  const [passwordBits, setPasswordBits] = useState<number | undefined>();
+  const { passwordBits, setPasswordBits } = useContext(AuthContext);
 
   function passwordStrength(event: any) {
+    passwordChangeHandler;
     console.log(event);
     setPassword(event.target.value);
     const passwordLength = password.length;
@@ -65,49 +110,98 @@ const Register = () => {
     console.log(passwordBits);
   }
 
+  const twoCalls = (e: any) => {
+    passwordStrength(e);
+    passwordChangeHandler(e);
+  };
+
+  const [saveNewUser, { data, loading, error }] = useMutation(SAVE_USER);
+
+  const onSubmitHandler = async (e: any) => {
+    e.preventDefault();
+    if (
+      enteredUsernameValidity &&
+      enteredEmailValidity &&
+      enteredPasswordValidity &&
+      enteredCPasswordValidity
+    ) {
+      await saveNewUser({
+        variables: {
+          fullName: enteredUsername,
+          email: enteredEmail,
+          password: enteredPassword,
+        },
+      });
+
+      resetUsernameInput();
+      resetEmailInput();
+      resetPasswordInput();
+      resetCPasswordInput();
+    }
+    navigate("/login");
+    //TODO: SET GLOBAL HEAD COMPONENT TO CHECK EMAIL
+  };
+
   return (
-    <div className="px-0 flex flex-col w-screen h-screen">
-      <div className="px-0 sticky top-14 h-100">
-        <img
-          className="h-full w-screen object-cover"
-          src="/assets/background.png"
-          alt={"logo"}
+    <AuthWrapper title={"Registrierung"}>
+      <form className="w-screen" onSubmit={onSubmitHandler}>
+        <div className="p-10 pb-0">
+          <AuthInput
+            id="Name"
+            type="text"
+            inputClassName={`${
+              usernameInputError && "border-500-red"
+            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+            onChange={usernameChangeHandler}
+            onBlur={usernameBlurHandler}
+            value={enteredUsername}
+            error={usernameInputError ? "Cannot be left empty" : ""}
+          />
+          <AuthInput
+            id="Email"
+            type="text"
+            onChange={emailChangeHandler}
+            onBlur={emailBlurHandler}
+            value={enteredEmail}
+            error={emailInputError ? "must be a valid email address" : ""}
+            inputClassName={`${
+              emailInputError && "border-500-red"
+            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+          />
+          <AuthInput
+            id="Password"
+            type="password"
+            onChange={twoCalls}
+            onBlur={passwordBlurHandler}
+            value={enteredPassword}
+            error={passwordInputError ? "password not strong enough" : ""}
+            inputClassName={`${
+              passwordInputError && "border-500-red"
+            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+          />
+          <AuthInput
+            id="Repeat-Password"
+            type="password"
+            onChange={cPasswordChangeHandler}
+            onBlur={cPasswordBlurHandler}
+            value={enteredCPassword}
+            error={cPasswordInputError ? "password not strong enough" : ""}
+            inputClassName={`${
+              cPasswordInputError && "border-500-red"
+            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+          />
+          <RegisterValidations />
+        </div>
+        <RegisterFooter
+          isValidated={inputsAreValid}
+          isDisabled={inputsAreValid}
         />
-      </div>
-      <div className="flex justify-center relative flex-grow w-screen -mt-6 rounded-3xl bg-white">
-        <form onSubmit={handleSubmit(onSubmit)} className="w-screen">
-          <div className="text-3xl text-center mt-5">Registrierung</div>
-          <div className="p-10 pb-0">
-            <RegisterInput
-              id="Name"
-              {...register("fullname")}
-              error={errors?.fullname}
-            />
-            <RegisterInput
-              id="Email"
-              {...register("loginName")}
-              error={errors?.loginName}
-            />
-            <RegisterInput
-              onChange={passwordStrength}
-              id="Password"
-              type="password"
-              //tani
-              errori={passwordBits && passwordBits <= 20 ? true : false}
-            />
-            <RegisterInput
-              id="Repeat-Password"
-              type="password"
-              {...register("repeatPassword")}
-              error={errors?.repeatPassword}
-            />
-            <RegisterValidations />
-          </div>
-          <RegisterFooter />
-        </form>
-      </div>
-    </div>
+      </form>
+    </AuthWrapper>
   );
 };
 
 export default Register;
+function useQuerry(): { error: any; loading: any; queryData: any } {
+  throw new Error("Function not implemented.");
+}
