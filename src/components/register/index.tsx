@@ -3,17 +3,22 @@ import { useMutation } from "@apollo/client";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
+import { useSendVerificationMutation } from "../../GraphQl/graphql";
 import { SAVE_USER } from "../../GraphQl/mutation";
 import useInput from "../../hooks/use-input";
 import AuthInput from "../authentication/AuthInput";
 import AuthWrapper from "../authentication/AuthWrapper";
+import Button from "../ui/Button";
 import { RegisterFooter } from "./registerfooter/RegisterFooter";
 import { RegisterValidations } from "./registerfooter/RegisterValidations";
 
 const Register = () => {
   const [inputsAreValid, setInputsAreValid] = useState(false);
-
-  const navigate = useNavigate();
+  const [authHeaderContent, setAuthHeaderContent] = useState({
+    headertype: "",
+    headerText: "",
+  });
+  let disableInput = false;
   const regex = /[^A-Za-z0-9_.]/g;
 
   const {
@@ -117,7 +122,7 @@ const Register = () => {
 
   const [saveNewUser, { data, loading, error }] = useMutation(SAVE_USER);
 
-  const onSubmitHandler = async (e: any) => {
+  const onSubmitHandler = (e: any) => {
     e.preventDefault();
     if (
       enteredUsernameValidity &&
@@ -125,25 +130,47 @@ const Register = () => {
       enteredPasswordValidity &&
       enteredCPasswordValidity
     ) {
-      await saveNewUser({
+      saveNewUser({
         variables: {
           fullName: enteredUsername,
           email: enteredEmail,
           password: enteredPassword,
         },
+        onCompleted: () => {
+          disableInput = true;
+        },
       });
-
-      resetUsernameInput();
-      resetEmailInput();
-      resetPasswordInput();
-      resetCPasswordInput();
     }
-    navigate("/login");
-    //TODO: SET GLOBAL HEAD COMPONENT TO CHECK EMAIL
+
+    if (data) {
+    }
+
+    setAuthHeaderContent({
+      headertype: "email",
+      headerText: "Du hast noch keinen Verifizieringsliink erhalten?",
+    });
   };
 
+  const [sendVerificationMutation] = useSendVerificationMutation({
+    variables: {
+      email: enteredEmail,
+    },
+  });
+
+  const aaabbb = () => {
+    sendVerificationMutation();
+  };
   return (
-    <AuthWrapper title={"Registrierung"}>
+    <AuthWrapper
+      title={"Registrierung"}
+      headerType={`${
+        !authHeaderContent ? false : authHeaderContent.headertype
+      }`}
+      headerContent={`${
+        !authHeaderContent ? false : authHeaderContent.headerText
+      }`}
+      resendLink={aaabbb}
+    >
       <form className="w-screen" onSubmit={onSubmitHandler}>
         <div className="p-10 pb-0">
           <AuthInput
@@ -192,16 +219,19 @@ const Register = () => {
           />
           <RegisterValidations />
         </div>
-        <RegisterFooter
-          isValidated={inputsAreValid}
-          isDisabled={inputsAreValid}
-        />
+        <span className="w-[80%] block m-auto">
+          <Button
+            isValidated={inputsAreValid}
+            isDisabled={inputsAreValid}
+            buttonType={"submit"}
+          >
+            Registrieren
+          </Button>
+        </span>
+        <RegisterFooter />
       </form>
     </AuthWrapper>
   );
 };
 
 export default Register;
-function useQuerry(): { error: any; loading: any; queryData: any } {
-  throw new Error("Function not implemented.");
-}

@@ -6,11 +6,13 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
-import { LOAD_USERS } from "../../GraphQl/mutation";
+import { LOGIN_GET_TOKEN } from "../../GraphQl/mutation";
 import logo from "../../images/jugendwerkstatt-logo.png";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [passwordInputType, setPasswordInputType] = useState("password");
   const [hiddenLine, setHiddenLine] = useState(true);
   const [disabledButton, setDisabledButton] = useState(false);
@@ -29,29 +31,66 @@ const Index = () => {
       setHiddenLine(true);
     }
   };
-  const { userToken, setuserToken } = useContext(AuthContext);
+  const { userToken, setUserToken } = useContext(AuthContext);
+  const { refreshToken, setRefreshToken } = useContext(AuthContext);
 
-  const [getuserFunction, { loading, error, data }] = useMutation(LOAD_USERS);
+  const [getuserFunction, { loading, error, data }] =
+    useMutation(LOGIN_GET_TOKEN);
 
   useEffect(() => {
     if (data) {
-      console.log("datahere", data);
-      setuserToken(data);
+      console.log("data: ", data);
+      const tempAccessToken = data.createToken.access;
+      const tempRefreshToken = data.createToken.refresh;
+
+      const decodedJwtToken = JSON.parse(atob(tempAccessToken.split(".")[1]));
+      console.log("decoded token:", decodedJwtToken);
+      const roles = decodedJwtToken.roles;
+
+      var responseMessage = "wrong";
+      if (roles.indexOf("verified") > -1) {
+        responseMessage = "success";
+      }
+
+      if (responseMessage == "wrong") {
+        setPasswordValidationText(
+          "Benutzername und Passwort stimmen nicht überein."
+        );
+
+        emailRef.current.value = "";
+        passwordRef.current.value = "";
+
+        setDisabledButton(false);
+      }
+
+      if (responseMessage == "success") {
+        setUserToken(tempAccessToken);
+        setRefreshToken(tempRefreshToken);
+
+        localStorage.setItem("jugendwerkstattAccessToken", tempAccessToken);
+        localStorage.setItem("jugendwerkstattRefreshToken", tempRefreshToken);
+
+        const localStorageAccessToken = localStorage.getItem(
+          "jugendwerkstattAccessToken"
+        );
+        const localStorageRefreshToken = localStorage.getItem(
+          "jugendwerkstattRefreshToken"
+        );
+        navigate("/");
+      }
+    } else {
+      setPasswordValidationText(
+        "Benutzername und Passwort stimmen nicht überein."
+      );
+
+      emailRef.current.value = "";
+      passwordRef.current.value = "";
+
+      setDisabledButton(false);
     }
   }, [data]);
 
-  useEffect(() => {
-    console.log(userToken, "usertoken");
-  }, [userToken]);
-
   const Login = () => {
-    getuserFunction({
-      variables: {
-        username: emailRef.current.value,
-        password: passwordRef.current.value,
-      },
-    });
-
     var isValid = true;
     setEmailValidationText("");
     setPasswordValidationText("");
@@ -72,34 +111,23 @@ const Index = () => {
       isValid = false;
     }
 
-    if (tempPasswordValue == "") {
-      setPasswordValidationText("Dies ist ein Pflichtfeld");
-      isValid = false;
-    } else if (tempPasswordValue.length < 6) {
-      setPasswordValidationText("Die Passwortlänge muss 6 oder mehr betragen");
-      isValid = false;
-    }
+    // if (tempPasswordValue == "") {
+    //   setPasswordValidationText("Dies ist ein Pflichtfeld");
+    //   isValid = false;
+    // } else if (tempPasswordValue.length < 6) {
+    //   setPasswordValidationText("Die Passwortlänge muss 6 oder mehr betragen");
+    //   isValid = false;
+    // }
 
     if (isValid) {
       setDisabledButton(true);
       //request to backend here
-
-      var responseMessage = "wrong";
-
-      if (responseMessage == "wrong") {
-        setPasswordValidationText(
-          "Benutzername und Passwort stimmen nicht überein."
-        );
-      }
-
-      if (responseMessage != "success") {
-        emailRef.current.value = "";
-        passwordRef.current.value = "";
-      }
-
-      // if(responseMessage=='success'){
-      //     window.location.href="/Home";
-      // }
+      getuserFunction({
+        variables: {
+          username: emailRef.current.value,
+          password: passwordRef.current.value,
+        },
+      });
     }
   };
 

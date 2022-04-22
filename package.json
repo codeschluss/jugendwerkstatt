@@ -18,7 +18,11 @@
     "@types/react": "^17.0.41",
     "@types/react-dom": "^17.0.14",
     "graphql": "^16.3.0",
+    "jwt-decode": "^3.1.2",
+<<<<<<< HEAD
+=======
     "node-sass": "^7.0.1",
+>>>>>>> 63a47c5afa1eb0d7cd7349558544069790c2a7ed
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-hook-form": "^7.28.1",

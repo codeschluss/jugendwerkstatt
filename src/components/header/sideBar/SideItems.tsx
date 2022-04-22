@@ -1,5 +1,5 @@
+import { ChatAltIcon, HomeIcon } from "@heroicons/react/outline";
 import { NavLink } from "react-router-dom";
-import { HomeIcon, ChatAltIcon } from "@heroicons/react/outline";
 import I from "../../ui/IconWrapper";
 
 interface SideItemsProps {}
@@ -48,13 +48,13 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               ? "border-l-4 bg-gray-100 border-primary block"
               : `border-l-4 border-transparent block`
           }
-          to={"/messenger"}
+          to={"/login"}
         >
           <span className="flex items-center px-4 py-2 font-semibold ">
             <I className="mr-2">
               <ChatAltIcon />
             </I>
-            <span>Messenger</span>
+            <span>Login</span>
           </span>
         </NavLink>
       </li>
@@ -65,13 +65,13 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               ? "border-l-4 bg-gray-100 border-primary block"
               : `border-l-4 border-transparent block`
           }
-          to={"/messenger"}
+          to={"/register"}
         >
           <span className="flex items-center px-4 py-2 font-semibold ">
             <I className="mr-2">
               <ChatAltIcon />
             </I>
-            <span>Messenger</span>
+            <span>Register</span>
           </span>
         </NavLink>
       </li>
