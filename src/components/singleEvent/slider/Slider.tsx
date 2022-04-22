@@ -1,9 +1,13 @@
 import React from "react";
 
-export const Slider = () => {
+interface SliderProps {
+  imgUrl?: any;
+}
+
+export const Slider: React.FC<SliderProps> = ({ imgUrl }) => {
   return (
     <>
-      <img src="/assets/event.jpg" alt="" />
+      <img src={`http://localhost:8061/api/media/${imgUrl}`} alt="" />
     </>
   );
 };

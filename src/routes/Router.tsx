@@ -1,12 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-<<<<<<< HEAD
-import { Feedback } from "../components/Feedback/Feedback";
-=======
 import ForgotPassword from "../components/authentication/forgotPassword";
 import Email from "../components/authentication/forgotPassword/Email";
 import Password from "../components/authentication/forgotPassword/Password";
 import Login from "../components/authentication/login";
->>>>>>> c203d6eb22778700648af66a1fe88214a4a0cd58
+import { Feedback } from "../components/Feedback/Feedback";
 import Calls from "../components/messenger/overview/calls";
 import Chats from "../components/messenger/overview/chats";
 import Contacts from "../components/messenger/overview/contacts";

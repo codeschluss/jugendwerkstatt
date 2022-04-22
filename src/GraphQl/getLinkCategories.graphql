@@ -1,11 +1,13 @@
-query getLinkCategories() {
-  getLinkCategories{
-    result{
+query Result {
+  getLinkCategories {
+    result {
       name
       link {
         title
         url
+        id
       }
+      id
     }
   }
 }
