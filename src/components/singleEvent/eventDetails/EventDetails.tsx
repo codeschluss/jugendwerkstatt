@@ -42,7 +42,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
 }) => {
   return (
     <>
-      <div className="flex text-lg">
+      <div className="flex text-md align-middle">
         <I>
           <FlagIcon />
         </I>
@@ -51,47 +51,47 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
           {`${plz} ${place}`}
         </h3>
       </div>
-      <div className="flex text-lg">
+      <div className="flex text-md">
         <I>
           <PhoneIcon />
         </I>
-        <h3 className="ml-3">{tel}</h3>
+        <h3 className="ml-3 mt-2">{tel}</h3>
       </div>
-      <div className="flex text-lg">
+      <div className="flex text-md">
         <I>
           <MailIcon />
         </I>
-        <h3 className="ml-3">{email}</h3>
+        <h3 className="ml-3 mt-2">{email}</h3>
       </div>
-      <div className="flex text-lg">
+      <div className="flex text-md">
         <I>
           <GlobeAltIcon />
         </I>
-        <h3 className="ml-3">{web}</h3>
+        <h3 className="ml-3 mt-2">{web}</h3>
       </div>
-      <div className="flex text-lg">
+      <div className="flex text-md">
         <I>
           <UserGroupIcon />
         </I>
-        <h3 className="ml-3">{group}</h3>
+        <h3 className="ml-3 mt-2">{group}</h3>
       </div>
-      <div className="flex text-lg">
+      <div className="flex text-md">
         <I>
           <ClockIcon />
         </I>
-        <h3 className="ml-3">{schedule}</h3>
+        <h3 className="ml-3 mt-2">{schedule}</h3>
       </div>
-      <div className="flex text-lg">
+      <div className="flex text-md">
         <I>
           <CalendarIcon />
         </I>
-        <h3 className="ml-3">{startDate}</h3>
+        <h3 className="ml-3 mt-2">{startDate}</h3>
       </div>
-      <div className="flex text-lg">
+      <div className="flex text-md">
         <I>
           <OfficeBuildingIcon />
         </I>
-        <h3 className="ml-3">{theRest}</h3>
+        <h3 className="ml-3 mt-2">{theRest}</h3>
       </div>
       <div>{description}</div>
     </>
