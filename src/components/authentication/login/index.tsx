@@ -7,9 +7,8 @@ import useTokenCheck from "../../../hooks/use-tokenCheck";
 import Button from "../../ui/Button";
 import AuthInput from "../AuthInput";
 import AuthWrapper from "../AuthWrapper";
+
 const Login = () => {
-  const { setIsLogedIn } = useContext(AuthContext);
-  const navigate = useNavigate();
   const {
     value: enteredEmail,
     validity: enteredEmailValidity,
@@ -35,9 +34,6 @@ const Login = () => {
       username: enteredEmail,
       password: enteredPassword,
     },
-    onCompleted: () => {
-      navigate("/");
-    },
   });
 
   const submitHandler = async (e: any) => {
@@ -50,7 +46,7 @@ const Login = () => {
   useTokenCheck(data?.createToken?.access, data?.createToken?.refresh);
 
   return (
-    <AuthWrapper title="Anmelden">
+    <AuthWrapper title="Anmelden" headerType="wrong">
       <form onSubmit={submitHandler} className="mt-5 text-right p-3">
         <AuthInput
           value={enteredEmail}

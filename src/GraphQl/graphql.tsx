@@ -426,6 +426,10 @@ export type Mutation = {
   deleteRoles: Scalars['Boolean'];
   deleteSchedule: Scalars['Boolean'];
   deleteSchedules: Scalars['Boolean'];
+  deleteSubscription: Scalars['Boolean'];
+  deleteSubscriptionType: Scalars['Boolean'];
+  deleteSubscriptionTypes: Scalars['Boolean'];
+  deleteSubscriptions: Scalars['Boolean'];
   deleteTemplate: Scalars['Boolean'];
   deleteTemplateType: Scalars['Boolean'];
   deleteTemplateTypes: Scalars['Boolean'];
@@ -476,6 +480,10 @@ export type Mutation = {
   saveRoles?: Maybe<Array<Maybe<RoleEntity>>>;
   saveSchedule?: Maybe<ScheduleEntity>;
   saveSchedules?: Maybe<Array<Maybe<ScheduleEntity>>>;
+  saveSubscription?: Maybe<SubscriptionEntity>;
+  saveSubscriptionType?: Maybe<SubscriptionTypeEntity>;
+  saveSubscriptionTypes?: Maybe<Array<Maybe<SubscriptionTypeEntity>>>;
+  saveSubscriptions?: Maybe<Array<Maybe<SubscriptionEntity>>>;
   saveTemplate?: Maybe<TemplateEntity>;
   saveTemplateType?: Maybe<TemplateTypeEntity>;
   saveTemplateTypes?: Maybe<Array<Maybe<TemplateTypeEntity>>>;
@@ -730,6 +738,30 @@ export type MutationDeleteScheduleArgs = {
 
 /** Mutation root */
 export type MutationDeleteSchedulesArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteSubscriptionArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteSubscriptionTypeArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteSubscriptionTypesArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteSubscriptionsArgs = {
   ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
@@ -1036,6 +1068,30 @@ export type MutationSaveSchedulesArgs = {
 
 
 /** Mutation root */
+export type MutationSaveSubscriptionArgs = {
+  entity?: InputMaybe<SubscriptionEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveSubscriptionTypeArgs = {
+  entity?: InputMaybe<SubscriptionTypeEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveSubscriptionTypesArgs = {
+  entities?: InputMaybe<Array<InputMaybe<SubscriptionTypeEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationSaveSubscriptionsArgs = {
+  entities?: InputMaybe<Array<InputMaybe<SubscriptionEntityInput>>>;
+};
+
+
+/** Mutation root */
 export type MutationSaveTemplateArgs = {
   entity?: InputMaybe<TemplateEntityInput>;
 };
@@ -1249,6 +1305,18 @@ export type PageableList_ScheduleEntity = {
   total: Scalars['Long'];
 };
 
+export type PageableList_SubscriptionEntity = {
+  __typename?: 'PageableList_SubscriptionEntity';
+  result?: Maybe<Array<Maybe<SubscriptionEntity>>>;
+  total: Scalars['Long'];
+};
+
+export type PageableList_SubscriptionTypeEntity = {
+  __typename?: 'PageableList_SubscriptionTypeEntity';
+  result?: Maybe<Array<Maybe<SubscriptionTypeEntity>>>;
+  total: Scalars['Long'];
+};
+
 export type PageableList_TemplateEntity = {
   __typename?: 'PageableList_TemplateEntity';
   result?: Maybe<Array<Maybe<TemplateEntity>>>;
@@ -1333,6 +1401,10 @@ export type Query = {
   getRoles?: Maybe<PageableList_RoleEntity>;
   getSchedule?: Maybe<ScheduleEntity>;
   getSchedules?: Maybe<PageableList_ScheduleEntity>;
+  getSubscription?: Maybe<SubscriptionEntity>;
+  getSubscriptionType?: Maybe<SubscriptionTypeEntity>;
+  getSubscriptionTypes?: Maybe<PageableList_SubscriptionTypeEntity>;
+  getSubscriptions?: Maybe<PageableList_SubscriptionEntity>;
   getTemplate?: Maybe<TemplateEntity>;
   getTemplateType?: Maybe<TemplateTypeEntity>;
   getTemplateTypes?: Maybe<PageableList_TemplateTypeEntity>;
@@ -1586,6 +1658,30 @@ export type QueryGetSchedulesArgs = {
 
 
 /** Query root */
+export type QueryGetSubscriptionArgs = {
+  entity?: InputMaybe<SubscriptionEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetSubscriptionTypeArgs = {
+  entity?: InputMaybe<SubscriptionTypeEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetSubscriptionTypesArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
+export type QueryGetSubscriptionsArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
 export type QueryGetTemplateArgs = {
   entity?: InputMaybe<TemplateEntityInput>;
 };
@@ -1736,6 +1832,42 @@ export type ScheduleEntityInput = {
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   startDate?: InputMaybe<Scalars['OffsetDateTime']>;
+};
+
+export type SubscriptionEntity = {
+  __typename?: 'SubscriptionEntity';
+  auth_secret?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+  subscriptionType?: Maybe<SubscriptionTypeEntity>;
+};
+
+export type SubscriptionEntityInput = {
+  auth_secret?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
+  subscriptionType?: InputMaybe<SubscriptionTypeEntityInput>;
+};
+
+export type SubscriptionTypeEntity = {
+  __typename?: 'SubscriptionTypeEntity';
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+  name?: Maybe<Scalars['String']>;
+  subscriptions?: Maybe<Array<Maybe<SubscriptionEntity>>>;
+};
+
+export type SubscriptionTypeEntityInput = {
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
+  name?: InputMaybe<Scalars['String']>;
+  subscriptions?: InputMaybe<Array<InputMaybe<SubscriptionEntityInput>>>;
 };
 
 export type TemplateEntity = {
@@ -1903,6 +2035,13 @@ export type SendVerificationMutationVariables = Exact<{
 
 
 export type SendVerificationMutation = { __typename?: 'Mutation', sendVerification: boolean };
+
+export type VerifyMutationVariables = Exact<{
+  key?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type VerifyMutation = { __typename?: 'Mutation', verify?: { __typename?: 'UserEntity', id?: string | null } | null };
 
 
 export const CreateTokenDocument = gql`
@@ -2156,3 +2295,36 @@ export function useSendVerificationMutation(baseOptions?: Apollo.MutationHookOpt
 export type SendVerificationMutationHookResult = ReturnType<typeof useSendVerificationMutation>;
 export type SendVerificationMutationResult = Apollo.MutationResult<SendVerificationMutation>;
 export type SendVerificationMutationOptions = Apollo.BaseMutationOptions<SendVerificationMutation, SendVerificationMutationVariables>;
+export const VerifyDocument = gql`
+    mutation Verify($key: String) {
+  verify(key: $key) {
+    id
+  }
+}
+    `;
+export type VerifyMutationFn = Apollo.MutationFunction<VerifyMutation, VerifyMutationVariables>;
+
+/**
+ * __useVerifyMutation__
+ *
+ * To run a mutation, you first call `useVerifyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useVerifyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [verifyMutation, { data, loading, error }] = useVerifyMutation({
+ *   variables: {
+ *      key: // value for 'key'
+ *   },
+ * });
+ */
+export function useVerifyMutation(baseOptions?: Apollo.MutationHookOptions<VerifyMutation, VerifyMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<VerifyMutation, VerifyMutationVariables>(VerifyDocument, options);
+      }
+export type VerifyMutationHookResult = ReturnType<typeof useVerifyMutation>;
+export type VerifyMutationResult = Apollo.MutationResult<VerifyMutation>;
+export type VerifyMutationOptions = Apollo.BaseMutationOptions<VerifyMutation, VerifyMutationVariables>;

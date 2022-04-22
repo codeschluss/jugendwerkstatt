@@ -6,7 +6,7 @@ import Login from "../components/authentication/login";
 import Calls from "../components/messenger/overview/calls";
 import Chats from "../components/messenger/overview/chats";
 import Contacts from "../components/messenger/overview/contacts";
-import RegisteredSuccessfully from "../components/register/success/RegisteredSuccessfully";
+import RegisteredSuccessfully from "../components/register/success/registeredSuccessfully";
 import Layout from "../containers/Layout";
 import EmailVerification from "../pages/emailVerification";
 import EmailVerified from "../pages/emailVerified";
@@ -25,7 +25,7 @@ const Router = () => {
           <Route index element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route
-            path="/register/verify/:id"
+            path="/verification/:id"
             element={<RegisteredSuccessfully />}
           />
           <Route path="/forgot-password" element={<ForgotPassword />}>
