@@ -24,11 +24,19 @@ const SlideCard: React.FC<SlideCardProps> = ({
       className={`${className} snap-center w-9/12 h-60 overflow-hidden rounded-md flex-none relative p-2`}
     >
       <Link to={route}>
-        <img
-          alt={eventName || ""}
-          className="object-cover w-full h-full absolute inset-0"
-          src={`http://localhost:8061/api/media/${imgUrl}`}
-        />
+        {imgUrl ? (
+          <img
+            alt={eventName || ""}
+            className="object-cover w-full h-full absolute inset-0"
+            src={`http://localhost:8061/api/media/${imgUrl}`}
+          />
+        ) : (
+          <img
+            alt={eventName || ""}
+            className="object-cover w-full h-full absolute inset-0"
+            src="https://www.kalypsofarms.com/wp-content/uploads/2019/08/dummy.png"
+          />
+        )}
       </Link>
       <div className="absolute left-0 w-full top-0 bg-gradient-to-b from-black to-transparent text-white px-3 pb-8 pt-3 flex justify-between items-center">
         <small className="font-bold">{eventName}</small>
