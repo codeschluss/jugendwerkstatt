@@ -1,13 +1,18 @@
 import jwtDecode from "jwt-decode";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/footer";
 import Header from "../components/header";
 import AuthContext from "../contexts/AuthContext";
-import { useRefreshTokenMutation } from "../GraphQl/graphql";
+import {
+  useGetEventsQuery,
+  useGetUserQuery,
+  useRefreshTokenMutation,
+} from "../GraphQl/graphql";
 
 const Layout: React.FC = ({ children }) => {
-  const { setIsLogedIn } = useContext(AuthContext);
+  const [skip, setSkip] = useState(true);
+  const { setIsLogedIn, setTheUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   let accessToken;
@@ -50,12 +55,33 @@ const Layout: React.FC = ({ children }) => {
       return;
     } else if (Date.now() < accessTokenTime) {
       setIsLogedIn(true);
-      //Events
+      //Eventslog
+
       return;
     } else if (Date.now() < refreshTokenTime) {
       refreshTokenMutation();
     }
   };
+  useEffect(() => {
+    if (atoken?.id) {
+      setSkip(false);
+    }
+  }, [atoken]);
+
+  const result = useGetUserQuery({
+    skip: !atoken ? true : false,
+    variables: {
+      entity: {
+        id: atoken?.id,
+      },
+    },
+  });
+
+  useEffect(() => {
+    if (result) {
+      setTheUser(result.data?.getUser);
+    }
+  }, [result]);
 
   useEffect(() => {
     checkDate();

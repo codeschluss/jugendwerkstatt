@@ -2011,6 +2011,13 @@ export type ResultQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type ResultQuery = { __typename?: 'Query', getLinkCategories?: { __typename?: 'PageableList_LinkCategoryEntity', result?: Array<{ __typename?: 'LinkCategoryEntity', name?: string | null, id?: string | null, link?: Array<{ __typename?: 'LinkEntity', title?: string | null, url?: string | null, id?: string | null } | null> | null } | null> | null } | null };
 
+export type GetUserQueryVariables = Exact<{
+  entity?: InputMaybe<UserEntityInput>;
+}>;
+
+
+export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null, course?: { __typename?: 'CourseEntity', id?: string | null, name?: string | null, group?: { __typename?: 'CourseEntity', name?: string | null, id?: string | null } | null } | null, uploads?: Array<{ __typename?: 'MediaEntity', name?: string | null, id?: string | null } | null> | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null } | null> | null } | null };
+
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars['String'];
 }>;
@@ -2261,6 +2268,66 @@ export function useResultLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Res
 export type ResultQueryHookResult = ReturnType<typeof useResultQuery>;
 export type ResultLazyQueryHookResult = ReturnType<typeof useResultLazyQuery>;
 export type ResultQueryResult = Apollo.QueryResult<ResultQuery, ResultQueryVariables>;
+export const GetUserDocument = gql`
+    query GetUser($entity: UserEntityInput) {
+  getUser(entity: $entity) {
+    id
+    profilePicture {
+      id
+    }
+    fullname
+    email
+    course {
+      id
+      group {
+        name
+        id
+      }
+      name
+    }
+    uploads {
+      name
+      id
+    }
+    userTemplates {
+      id
+      name
+      templateType {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetUserQuery__
+ *
+ * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetUserQuery(baseOptions?: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+      }
+export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+        }
+export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
+export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
+export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const RefreshTokenDocument = gql`
     mutation refreshToken($refreshToken: String!) {
   refreshToken(refreshToken: $refreshToken) {
