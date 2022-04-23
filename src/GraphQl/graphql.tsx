@@ -1875,6 +1875,13 @@ export type GetEventsQueryVariables = Exact<{
 
 export type GetEventsQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', result?: Array<{ __typename?: 'EventEntity', id?: string | null, name?: string | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null } | null } | null> | null } | null };
 
+export type GetLinkCategoriesQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetLinkCategoriesQuery = { __typename?: 'Query', getLinkCategories?: { __typename?: 'PageableList_LinkCategoryEntity', result?: Array<{ __typename?: 'LinkCategoryEntity', name?: string | null, link?: Array<{ __typename?: 'LinkEntity', title?: string | null, url?: string | null } | null> | null } | null> | null } | null };
+
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars['String'];
 }>;
@@ -2028,6 +2035,47 @@ export function useGetEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetEventsQueryHookResult = ReturnType<typeof useGetEventsQuery>;
 export type GetEventsLazyQueryHookResult = ReturnType<typeof useGetEventsLazyQuery>;
 export type GetEventsQueryResult = Apollo.QueryResult<GetEventsQuery, GetEventsQueryVariables>;
+export const GetLinkCategoriesDocument = gql`
+    query GetLinkCategories($params: FilterSortPaginateInput) {
+  getLinkCategories(params: $params) {
+    result {
+      name
+      link {
+        title
+        url
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetLinkCategoriesQuery__
+ *
+ * To run a query within a React component, call `useGetLinkCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLinkCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLinkCategoriesQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetLinkCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<GetLinkCategoriesQuery, GetLinkCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLinkCategoriesQuery, GetLinkCategoriesQueryVariables>(GetLinkCategoriesDocument, options);
+      }
+export function useGetLinkCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLinkCategoriesQuery, GetLinkCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLinkCategoriesQuery, GetLinkCategoriesQueryVariables>(GetLinkCategoriesDocument, options);
+        }
+export type GetLinkCategoriesQueryHookResult = ReturnType<typeof useGetLinkCategoriesQuery>;
+export type GetLinkCategoriesLazyQueryHookResult = ReturnType<typeof useGetLinkCategoriesLazyQuery>;
+export type GetLinkCategoriesQueryResult = Apollo.QueryResult<GetLinkCategoriesQuery, GetLinkCategoriesQueryVariables>;
 export const RefreshTokenDocument = gql`
     mutation refreshToken($refreshToken: String!) {
   refreshToken(refreshToken: $refreshToken) {

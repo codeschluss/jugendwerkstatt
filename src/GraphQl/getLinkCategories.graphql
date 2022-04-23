@@ -1,5 +1,5 @@
-query getLinkCategories() {
-  getLinkCategories{
+query GetLinkCategories($params: FilterSortPaginateInput) {
+  getLinkCategories(params: $params){
     result{
       name
       link {
