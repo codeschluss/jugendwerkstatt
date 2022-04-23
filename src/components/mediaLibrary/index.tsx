@@ -1,13 +1,35 @@
-import Topics from "./Topics";
+import { LinkCategoryEntity, useGetLinkCategoriesQuery } from "../../GraphQl/graphql";
+import Slider from "./slideItems/Slider";
+import SlideCard from "./slideItems/SlideCard";
 
 const Homepage: React.FC = () => {
+  const result = useGetLinkCategoriesQuery({
+    variables: {
+      params: {
+        //sort: 'name',
+      }
+    }
+  });
+
+  const fetchedData: [LinkCategoryEntity] = result.data?.getLinkCategories?.result as [LinkCategoryEntity];
+  console.log(fetchedData);
+
   return (
-    //Dummy data events.
     <div className="mt-8">
-      <Topics topicTitle="Was will ich? Was kann ich?"/>
-      <Topics topicTitle="Welche Ausbildungen gibt es?"/>
-      <Topics topicTitle="Wie bewerbe ich mich?"/>
-      <Topics topicTitle="Was kommt nach der Schule?"/>
+      {
+      fetchedData?.map((singleTopic) => {
+        return(
+          <Slider topicTitle={`${singleTopic?.name}`}>
+            {
+              singleTopic?.link?.map((singleVideo) => {
+                return (
+                  <SlideCard videoTitle={`${singleVideo?.title}`} videoUrl={`${singleVideo?.url}`} />
+                )
+              })
+            }
+          </Slider>
+        )
+      })}
     </div>
   );
 };

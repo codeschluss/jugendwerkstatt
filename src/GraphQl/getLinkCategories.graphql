@@ -1,13 +1,11 @@
-query Result {
-  getLinkCategories {
+query GetLinkCategories ($params: FilterSortPaginateInput){
+  getLinkCategories(params: $params) {
     result {
       name
       link {
         title
         url
-        id
       }
-      id
     }
   }
 }
