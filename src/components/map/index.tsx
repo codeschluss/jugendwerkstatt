@@ -1,10 +1,18 @@
-import React, {FunctionComponent} from 'react';
+import React, {FunctionComponent, useContext, useEffect} from 'react';
 import { MapContainer, TileLayer, Marker, Popup  } from 'react-leaflet'
 import { Swiper, SwiperSlide } from 'swiper/react';
+import EventContext from "../../contexts/EventContext";
 import './style.css';
 import 'swiper/css';
 
 const Map: FunctionComponent = () => {
+
+  const { allEvents } = useContext(EventContext);
+
+  useEffect(() => {
+    console.log('here we are inside map');
+    console.log(allEvents)
+  }, [allEvents])
 
   return (
     <div>
