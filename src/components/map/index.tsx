@@ -1,6 +1,8 @@
 import React, {FunctionComponent} from 'react';
 import { MapContainer, TileLayer, Marker, Popup  } from 'react-leaflet'
+import { Swiper, SwiperSlide } from 'swiper/react';
 import './style.css';
+import 'swiper/css';
 
 const Map: FunctionComponent = () => {
 
@@ -39,6 +41,20 @@ const Map: FunctionComponent = () => {
               </Popup>
           </Marker>
         </MapContainer>
+
+      <div className='flex justify-center align-middle'>
+        <Swiper
+          spaceBetween={50}
+          slidesPerView={3}
+          onSlideChange={() => console.log('slide change')}
+          onSwiper={(swiper:any) => console.log(swiper)}
+        >
+          <SwiperSlide>Slide 1</SwiperSlide>
+          <SwiperSlide>Slide 2</SwiperSlide>
+          <SwiperSlide>Slide 3</SwiperSlide>
+          <SwiperSlide>Slide 4</SwiperSlide>
+        </Swiper>
+      </div>
       </div>
     </div>
   )

@@ -1,0 +1,5 @@
+mutation Verify($key: String) {
+  verify(key: $key) {
+    id
+  }
+}

@@ -1,0 +1,6 @@
+mutation CreateToken($password: String, $username: String) {
+  createToken(password: $password, username: $username) {
+    access
+    refresh
+  }
+}

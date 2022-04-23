@@ -1,0 +1,37 @@
+query GetEvent($id: String!) {
+  getEvent(entity: { id: $id }) {
+    name
+    titleImage {
+      id
+    }
+    id
+    description
+    address {
+      street
+      place
+      postalCode
+      latitude
+      longitude
+      id
+      houseNumber
+      created
+    }
+    schedules {
+      id
+      endDate
+      startDate
+    }
+    category {
+      id
+      name
+      icon
+    }
+    organizer {
+      id
+      name
+      phone
+      website
+      mail
+    }
+  }
+}

@@ -23,6 +23,7 @@ module.exports = {
       blue: colors.blue,
       red: colors.red,
       rose: colors.rose,
+      warning: "#FFCF00",
     },
   },
   plugins: [],
