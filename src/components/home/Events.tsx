@@ -12,25 +12,7 @@ interface EventsProps {}
 const Events: React.FC<EventsProps> = () => {
   const { setAllEvents, allEvents } = useContext(EventContext);
 
-  const result = useGetEventsQuery({
-    variables: {
-      params: {
-        sort: "name",
-        //FilterSortPaginate fields
-      },
-    },
-  });
-
-  useEffect(() => {
-    if (result) {
-      setAllEvents(result.data?.getEvents?.result);
-    }
-  }, [result.data?.getEvents?.result]);
-  console.log(allEvents);
-
-  const fetchedData: [EventEntity] = result.data?.getEvents?.result as [
-    EventEntity
-  ];
+  const fetchedData: [EventEntity] = allEvents as [EventEntity];
 
   return (
     <Slider title="Events">

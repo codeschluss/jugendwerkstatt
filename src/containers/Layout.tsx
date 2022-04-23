@@ -53,12 +53,12 @@ const Layout: React.FC = ({ children }) => {
     ) {
       setIsLogedIn(false);
       return;
-    } else if (Date.now() < accessTokenTime) {
+    } else if (Date.now() > accessTokenTime) {
       setIsLogedIn(true);
       //Eventslog
 
       return;
-    } else if (Date.now() < refreshTokenTime) {
+    } else if (Date.now() > refreshTokenTime) {
       refreshTokenMutation();
     }
   };

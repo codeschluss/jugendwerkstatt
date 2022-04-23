@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../../contexts/AuthContext";
+import EventContext from "../../../contexts/EventContext";
 import { useCreateTokenMutation } from "../../../GraphQl/graphql";
 import useInput from "../../../hooks/use-input";
 import useTokenCheck from "../../../hooks/use-tokenCheck";
@@ -35,6 +36,15 @@ const Login = () => {
       password: enteredPassword,
     },
   });
+
+  const { setAllEvents, allEvents } = useContext(EventContext);
+  const { theUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (allEvents) {
+      console.log(allEvents, "events");
+    }
+  }, [allEvents]);
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
