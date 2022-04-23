@@ -14,8 +14,11 @@ import { RegisterValidations } from "./registerfooter/RegisterValidations";
 
 const Register = () => {
   const [inputsAreValid, setInputsAreValid] = useState(false);
-
-  const navigate = useNavigate();
+  const [authHeaderContent, setAuthHeaderContent] = useState({
+    headertype: "",
+    headerText: "",
+  });
+  let disableInput = false;
   const regex = /[^A-Za-z0-9_.]/g;
 
   const {
@@ -119,7 +122,7 @@ const Register = () => {
 
   const [saveNewUser, { data, loading, error }] = useMutation(SAVE_USER);
 
-  const onSubmitHandler = async (e: any) => {
+  const onSubmitHandler = (e: any) => {
     e.preventDefault();
     if (
       enteredUsernameValidity &&
@@ -127,33 +130,55 @@ const Register = () => {
       enteredPasswordValidity &&
       enteredCPasswordValidity
     ) {
-      await saveNewUser({
+      saveNewUser({
         variables: {
           fullName: enteredUsername,
           email: enteredEmail,
           password: enteredPassword,
         },
+        onCompleted: () => {
+          disableInput = true;
+        },
       });
-      useSendVerificationMutation({ variables: { email: enteredEmail } });
-      resetUsernameInput();
-      resetEmailInput();
-      resetPasswordInput();
-      resetCPasswordInput();
     }
-    navigate("/login");
-    //TODO: SET GLOBAL HEAD COMPONENT TO CHECK EMAIL
+
+    if (data) {
+    }
+
+    setAuthHeaderContent({
+      headertype: "email",
+      headerText: "Du hast noch keinen Verifizieringsliink erhalten?",
+    });
   };
 
+  const [sendVerificationMutation] = useSendVerificationMutation({
+    variables: {
+      email: enteredEmail,
+    },
+  });
+
+  const aaabbb = () => {
+    sendVerificationMutation();
+  };
   return (
-    <AuthWrapper title={"Registrierung"}>
+    <AuthWrapper
+      title={"Registrierung"}
+      headerType={`${
+        !authHeaderContent ? false : authHeaderContent.headertype
+      }`}
+      headerContent={`${
+        !authHeaderContent ? false : authHeaderContent.headerText
+      }`}
+      resendLink={aaabbb}
+    >
       <form className="w-screen" onSubmit={onSubmitHandler}>
-        <div className="p-10 pb-0">
+        <div className="pb-0 p-12">
           <AuthInput
             id="Name"
             type="text"
             inputClassName={`${
               usernameInputError && "border-500-red"
-            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+            }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
             onChange={usernameChangeHandler}
             onBlur={usernameBlurHandler}
             value={enteredUsername}
@@ -168,7 +193,7 @@ const Register = () => {
             error={emailInputError ? "must be a valid email address" : ""}
             inputClassName={`${
               emailInputError && "border-500-red"
-            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+            }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
           />
           <AuthInput
             id="Password"
@@ -179,7 +204,7 @@ const Register = () => {
             error={passwordInputError ? "password not strong enough" : ""}
             inputClassName={`${
               passwordInputError && "border-500-red"
-            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+            }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
           />
           <AuthInput
             id="Repeat-Password"
@@ -190,18 +215,19 @@ const Register = () => {
             error={cPasswordInputError ? "password not strong enough" : ""}
             inputClassName={`${
               cPasswordInputError && "border-500-red"
-            }"w-full px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"`}
+            }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
           />
           <RegisterValidations />
         </div>
-        <Button
-          isValidated={inputsAreValid}
-          isDisabled={inputsAreValid}
-          buttonType={"submit"}
-        >
-          Registrieren
-        </Button>
-        <RegisterFooter />
+        <span className="w-[80%] block m-auto">
+          <Button
+            isValidated={inputsAreValid}
+            isDisabled={inputsAreValid}
+            buttonType={"submit"}
+          >
+            Registrieren
+          </Button>
+        </span>
       </form>
     </AuthWrapper>
   );

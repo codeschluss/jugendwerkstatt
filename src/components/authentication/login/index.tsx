@@ -1,15 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../../contexts/AuthContext";
+import EventContext from "../../../contexts/EventContext";
 import { useCreateTokenMutation } from "../../../GraphQl/graphql";
 import useInput from "../../../hooks/use-input";
 import useTokenCheck from "../../../hooks/use-tokenCheck";
 import Button from "../../ui/Button";
 import AuthInput from "../AuthInput";
 import AuthWrapper from "../AuthWrapper";
+
 const Login = () => {
-  const { setIsLogedIn } = useContext(AuthContext);
-  const navigate = useNavigate();
   const {
     value: enteredEmail,
     validity: enteredEmailValidity,
@@ -35,10 +35,16 @@ const Login = () => {
       username: enteredEmail,
       password: enteredPassword,
     },
-    onCompleted: () => {
-      navigate("/");
-    },
   });
+
+  const { setAllEvents, allEvents } = useContext(EventContext);
+  const { theUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (allEvents) {
+      console.log(allEvents, "events");
+    }
+  }, [allEvents]);
 
   const submitHandler = async (e: any) => {
     e.preventDefault();

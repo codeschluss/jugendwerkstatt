@@ -1,4 +1,6 @@
 import { useQuery } from "@apollo/client";
+import { useContext, useEffect } from "react";
+import EventContext from "../../contexts/EventContext";
 import { useGetEventsQuery } from "../../GraphQl/graphql";
 import { GET_EVENTS } from "../../GraphQl/Querry";
 import SlideCard from "../slideItems/SlideCard";
@@ -8,31 +10,21 @@ import { EventEntity } from "./Test";
 interface EventsProps {}
 
 const Events: React.FC<EventsProps> = () => {
-  const { data, loading, error } = useQuery(GET_EVENTS);
+  const { setAllEvents, allEvents } = useContext(EventContext);
 
-  const result = useGetEventsQuery({
-    variables: {
-      params: {
-        sort: 'name',
-        //FilterSortPaginate fields
-      }
-    }
-  });
-
-
-  const fetchedData: [EventEntity] = result.data?.getEvents?.result as [EventEntity];
-  console.log(data);
+  const fetchedData: [EventEntity] = allEvents as [EventEntity];
 
   return (
     <Slider title="Events">
       {fetchedData?.map((el) => {
         return (
           <SlideCard
+            route={`/event/${el.id}`}
             key={el?.name}
             eventName={el?.name}
             location={el?.address?.street}
             date="Freitag, 25/02/22"
-            imgUrl={`localhost:8061/api/media/${el?.titleImage?.id}`}
+            imgUrl={el?.titleImage?.id}
           />
         );
       })}

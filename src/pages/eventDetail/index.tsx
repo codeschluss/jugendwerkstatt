@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import { SingleEvent } from "../../components/singleEvent";
 
 const EventDetail = () => {
-  return (
-    <div>EventDetail</div>
-  )
-}
+  return <SingleEvent />;
+};
 
-export default EventDetail
+export default EventDetail;
