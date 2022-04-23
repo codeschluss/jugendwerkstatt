@@ -11,6 +11,7 @@ import RegisteredSuccessfully from "../components/register/success/registeredSuc
 import Layout from "../containers/Layout";
 import EmailVerification from "../pages/emailVerification";
 import EmailVerified from "../pages/emailVerified";
+import Map from '../components/map'
 import EventDetail from "../pages/eventDetail";
 import Home from "../pages/home";
 import MediaLibrary from "../pages/mediaLibrary";
@@ -44,6 +45,7 @@ const Router = () => {
           <Route path="/Login" element={<Login />} />
           <Route path="/EmailVerification" element={<EmailVerification />} />
           <Route path="/EmailVerified" element={<EmailVerified />} />
+          <Route path="/map" element={<Map />} />
           <Route path="/MediaLibrary" element={<MediaLibrary />} />
           <Route path="/feedback" element={<Feedback />} />
         </Routes>
