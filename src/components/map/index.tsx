@@ -1,45 +1,52 @@
-import React, { FunctionComponent, useContext, useEffect } from "react";
+import React, { FunctionComponent, useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import EventContext from "../../contexts/EventContext";
+import { useGetEventsQuery } from "../../GraphQl/graphql";
+import "./style.css";
 
 const Map: FunctionComponent = () => {
-  const { allEvents } = useContext(EventContext);
+  const [allEvents, setAllEvents] = useState<any>();
+  const [averageLocation, setAverageLocation] = useState<any>(undefined);
+
+  const result = useGetEventsQuery({
+    variables: {
+      params: {
+        //FilterSortPaginate fields
+      },
+    },
+  });
 
   useEffect(() => {
-    console.log("here we are inside map");
-    console.log(allEvents);
-  }, [allEvents]);
+    const events = result.data?.getEvents?.result;
+    setAllEvents(events);
+    console.log(events)
+  }, [result.data?.getEvents?.result, allEvents]);
 
   return (
     <div>
-      <div className="map-tags">
-        <div className="tag">tag 1</div>
-        <div className="tag">tag 2</div>
-        <div className="tag">tag 2</div>
-        <div className="tag">tag 2</div>
-        <div className="tag">tag 2</div>
-        <div className="tag">tag 2</div>
-        <div className="tag">tag 2</div>
-        <div className="tag">tag 2</div>
-        <div className="tag">tag 2</div>
-        <div className="tag">tag 2</div>
-        <div className="tag">tag 2</div>
-      </div>
-
+      { allEvents &&
       <div className="map">
-        <MapContainer center={[40.505, -100.09]} zoom={13}>
+        <MapContainer center={[allEvents[0].address.latitude,allEvents[0].address.longitude]} zoom={13}>
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://api.maptiler.com/maps/openstreetmap/{z}/{x}/{y}@2x.jpg?key=MjiCJwnWXgOykin9V6Np"
           />
 
-          <Marker position={[40.505, -100.09]}>
-            <Popup>Event 1</Popup>
-          </Marker>
-
-          <Marker position={[40.505, -100.12]}>
-            <Popup>Event 2</Popup>
-          </Marker>
+          {
+            allEvents?.map((event: any) => {
+              return (
+                <div key={event.id}>
+                  <Marker position={[event.address.latitude, event.address.longitude]}>
+                    <Popup>
+                      <p>{event.address.place}</p>
+                      <p>{event.address.street}</p>
+                      <p>{event.address.postalCode}</p>
+                    </Popup>
+                  </Marker>
+                </div>
+              )
+            })
+          }
         </MapContainer>
 
         <div className="flex justify-center align-middle">
@@ -57,6 +64,7 @@ const Map: FunctionComponent = () => {
           asd
         </div>
       </div>
+      }
     </div>
   );
 };

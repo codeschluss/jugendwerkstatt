@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { EventEntity, useGetEventsQuery } from "../GraphQl/graphql";
+import { useGetEventsQuery } from "../GraphQl/graphql";
 
 export const EventContext = createContext<any>(null);
 
