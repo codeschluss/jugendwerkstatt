@@ -1915,6 +1915,7 @@ export type TokenDto = {
 
 export type UserEntity = {
   __typename?: 'UserEntity';
+  assignment?: Maybe<Array<Maybe<AssignmentEntity>>>;
   course?: Maybe<CourseEntity>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   email?: Maybe<Scalars['String']>;
@@ -1931,6 +1932,7 @@ export type UserEntity = {
 };
 
 export type UserEntityInput = {
+  assignment?: InputMaybe<Array<InputMaybe<AssignmentEntityInput>>>;
   course?: InputMaybe<CourseEntityInput>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   email?: InputMaybe<Scalars['String']>;
@@ -1999,12 +2001,26 @@ export type GetEventQueryVariables = Exact<{
 
 export type GetEventQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null, postalCode?: string | null, latitude?: number | null, longitude?: number | null, id?: string | null, houseNumber?: string | null, created?: any | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, endDate?: any | null, startDate?: any | null } | null> | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null, icon?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null, name?: string | null, phone?: string | null, website?: string | null, mail?: string | null } | null } | null };
 
+export type GetEventCategoriesQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetEventCategoriesQuery = { __typename?: 'Query', getEventCategories?: { __typename?: 'PageableList_EventCategoryEntity', result?: Array<{ __typename?: 'EventCategoryEntity', name?: string | null, id?: string | null, icon?: string | null, events?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, titleImage?: { __typename?: 'MediaEntity', name?: string | null, id?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null, organizer?: { __typename?: 'OrganizerEntity', website?: string | null, phone?: string | null, name?: string | null, mail?: string | null, id?: string | null } | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, modified?: any | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null> | null } | null> | null } | null };
+
 export type GetEventsQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
 }>;
 
 
 export type GetEventsQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', result?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null, postalCode?: string | null, latitude?: number | null, longitude?: number | null, id?: string | null, houseNumber?: string | null, created?: any | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, endDate?: any | null, startDate?: any | null } | null> | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null, icon?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null, name?: string | null, phone?: string | null, website?: string | null, mail?: string | null } | null } | null> | null } | null };
+
+export type GetJobAdQueryVariables = Exact<{
+  entity?: InputMaybe<JobAdEntityInput>;
+}>;
+
+
+export type GetJobAdQuery = { __typename?: 'Query', getJobAd?: { __typename?: 'JobAdEntity', dueDate?: any | null, id?: string | null, startDate?: any | null, title?: string | null, company?: { __typename?: 'CompanyEntity', website?: string | null, phone?: string | null, name?: string | null, mail?: string | null, id?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, modified?: any | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null } | null };
 
 export type GetJobAdsQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -2025,7 +2041,7 @@ export type GetUserQueryVariables = Exact<{
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null, course?: { __typename?: 'CourseEntity', id?: string | null, name?: string | null, group?: { __typename?: 'CourseEntity', name?: string | null, id?: string | null } | null } | null, uploads?: Array<{ __typename?: 'MediaEntity', name?: string | null, id?: string | null } | null> | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null } | null> | null } | null };
+export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, uploads?: Array<{ __typename?: 'MediaEntity', id?: string | null, name?: string | null } | null> | null, roles?: Array<{ __typename?: 'RoleEntity', name?: string | null, id?: string | null } | null> | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null, course?: { __typename?: 'CourseEntity', id?: string | null, name?: string | null } | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, content?: string | null, name?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', name?: string | null, id?: string | null } | null } | null> | null, verification?: { __typename?: 'VerificationEntity', id?: string | null } | null } | null };
 
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars['String'];
@@ -2166,6 +2182,76 @@ export function useGetEventLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetEventQueryHookResult = ReturnType<typeof useGetEventQuery>;
 export type GetEventLazyQueryHookResult = ReturnType<typeof useGetEventLazyQuery>;
 export type GetEventQueryResult = Apollo.QueryResult<GetEventQuery, GetEventQueryVariables>;
+export const GetEventCategoriesDocument = gql`
+    query GetEventCategories($params: FilterSortPaginateInput) {
+  getEventCategories(params: $params) {
+    result {
+      name
+      id
+      icon
+      events {
+        titleImage {
+          name
+          id
+        }
+        schedules {
+          id
+          startDate
+          endDate
+        }
+        name
+        id
+        organizer {
+          website
+          phone
+          name
+          mail
+          id
+        }
+        description
+        address {
+          houseNumber
+          id
+          latitude
+          longitude
+          modified
+          place
+          postalCode
+          street
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetEventCategoriesQuery__
+ *
+ * To run a query within a React component, call `useGetEventCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEventCategoriesQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetEventCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<GetEventCategoriesQuery, GetEventCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEventCategoriesQuery, GetEventCategoriesQueryVariables>(GetEventCategoriesDocument, options);
+      }
+export function useGetEventCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEventCategoriesQuery, GetEventCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEventCategoriesQuery, GetEventCategoriesQueryVariables>(GetEventCategoriesDocument, options);
+        }
+export type GetEventCategoriesQueryHookResult = ReturnType<typeof useGetEventCategoriesQuery>;
+export type GetEventCategoriesLazyQueryHookResult = ReturnType<typeof useGetEventCategoriesLazyQuery>;
+export type GetEventCategoriesQueryResult = Apollo.QueryResult<GetEventCategoriesQuery, GetEventCategoriesQueryVariables>;
 export const GetEventsDocument = gql`
     query getEvents($params: FilterSortPaginateInput) {
   getEvents(params: $params) {
@@ -2235,6 +2321,61 @@ export function useGetEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetEventsQueryHookResult = ReturnType<typeof useGetEventsQuery>;
 export type GetEventsLazyQueryHookResult = ReturnType<typeof useGetEventsLazyQuery>;
 export type GetEventsQueryResult = Apollo.QueryResult<GetEventsQuery, GetEventsQueryVariables>;
+export const GetJobAdDocument = gql`
+    query GetJobAd($entity: JobAdEntityInput) {
+  getJobAd(entity: $entity) {
+    company {
+      website
+      phone
+      name
+      mail
+      id
+      address {
+        houseNumber
+        id
+        latitude
+        longitude
+        modified
+        place
+        postalCode
+        street
+      }
+    }
+    dueDate
+    id
+    startDate
+    title
+  }
+}
+    `;
+
+/**
+ * __useGetJobAdQuery__
+ *
+ * To run a query within a React component, call `useGetJobAdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetJobAdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetJobAdQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetJobAdQuery(baseOptions?: Apollo.QueryHookOptions<GetJobAdQuery, GetJobAdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetJobAdQuery, GetJobAdQueryVariables>(GetJobAdDocument, options);
+      }
+export function useGetJobAdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetJobAdQuery, GetJobAdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetJobAdQuery, GetJobAdQueryVariables>(GetJobAdDocument, options);
+        }
+export type GetJobAdQueryHookResult = ReturnType<typeof useGetJobAdQuery>;
+export type GetJobAdLazyQueryHookResult = ReturnType<typeof useGetJobAdLazyQuery>;
+export type GetJobAdQueryResult = Apollo.QueryResult<GetJobAdQuery, GetJobAdQueryVariables>;
 export const GetJobAdsDocument = gql`
     query GetJobAds($params: FilterSortPaginateInput) {
   getJobAds(params: $params) {
@@ -2335,31 +2476,35 @@ export type GetLinkCategoriesQueryResult = Apollo.QueryResult<GetLinkCategoriesQ
 export const GetUserDocument = gql`
     query GetUser($entity: UserEntityInput) {
   getUser(entity: $entity) {
-    id
+    uploads {
+      id
+      name
+    }
+    roles {
+      name
+      id
+    }
     profilePicture {
       id
     }
+    id
     fullname
     email
     course {
       id
-      group {
-        name
-        id
-      }
       name
-    }
-    uploads {
-      name
-      id
     }
     userTemplates {
       id
+      content
       name
       templateType {
-        id
         name
+        id
       }
+    }
+    verification {
+      id
     }
   }
 }

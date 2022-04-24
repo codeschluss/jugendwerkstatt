@@ -28,10 +28,10 @@ const Map: FunctionComponent = () => {
 
       <div className="map">
         <MapContainer center={[40.505, -100.09]} zoom={13}>
-          <TileLayer
+          {/* <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://api.maptiler.com/maps/openstreetmap/{z}/{x}/{y}@2x.jpg?key=MjiCJwnWXgOykin9V6Np"
-          />
+          /> */}
 
           <Marker position={[40.505, -100.09]}>
             <Popup>Event 1</Popup>

@@ -11,13 +11,17 @@ import RegisteredSuccessfully from "../components/register/success/registeredSuc
 import Layout from "../containers/Layout";
 import EmailVerification from "../pages/emailVerification";
 import EmailVerified from "../pages/emailVerified";
-import Map from '../components/map'
+import Map from "../components/map";
 import EventDetail from "../pages/eventDetail";
 import Home from "../pages/home";
 import MediaLibrary from "../pages/mediaLibrary";
 import Overview from "../pages/messenger";
 import Chat from "../pages/messenger/Chat";
 import Register from "../pages/register";
+import JobDetails from "../components/singleJobAdd";
+import Favorites from "../pages/favorites";
+import Events from "../pages/events";
+import Jobs from "../pages/jobs";
 
 const Router = () => {
   return (
@@ -41,6 +45,11 @@ const Router = () => {
           </Route>
           <Route path="/messenger/chat/:id" element={<Chat />} />
           <Route path="/event/:id" element={<EventDetail />} />
+          <Route path="/job-ad/:id" element={<JobDetails />} />
+
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/jobs" element={<Jobs />} />
 
           <Route path="/Login" element={<Login />} />
           <Route path="/EmailVerification" element={<EmailVerification />} />
