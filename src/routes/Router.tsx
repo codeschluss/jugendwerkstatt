@@ -6,12 +6,16 @@ import RegisteredSuccessfully from "../components/register/success/registeredSuc
 import Layout from "../containers/Layout";
 import EmailVerification from "../pages/emailVerification";
 import EmailVerified from "../pages/emailVerified";
+import Forms from "../pages/forms";
+import Templates from "../pages/forms/Templates";
+import TemplateEdit from "../pages/forms/TemplateEdit";
 import Home from "../pages/home";
 import Login from "../pages/login";
 import MediaLibrary from "../pages/mediaLibrary";
 import Overview from "../pages/messenger";
 import Chat from "../pages/messenger/Chat";
 import Register from "../pages/register";
+import TemplateView from "../pages/forms/TemplateView";
 
 const Router = () => {
   return (
@@ -35,6 +39,13 @@ const Router = () => {
           <Route path="/EmailVerification" element={<EmailVerification />} />
           <Route path="/EmailVerified" element={<EmailVerified />} />
           <Route path="/MediaLibrary" element={<MediaLibrary />} />
+
+          <Route path="/Forms" element={<Forms />} />
+          <Route path="/Forms/Templates" element={<Templates />} />
+          <Route path="/Forms/Templates/:id" element={<TemplateView />} />
+          <Route path="/Forms/Templates/Edit/:id" element={<TemplateEdit />} />
+
+
         </Routes>
       </Layout>
     </BrowserRouter>
