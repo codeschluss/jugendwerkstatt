@@ -16,3 +16,10 @@
 .tag {
   margin: 0 5px;
 }
+
+.slider {
+  z-index: 200;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}

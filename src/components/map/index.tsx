@@ -1,12 +1,13 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import EventContext from "../../contexts/EventContext";
 import { useGetEventsQuery } from "../../GraphQl/graphql";
+import SlideCard from '../slideItems/SlideCard'
+import Slider from  '../slideItems/Slider'
+import 'swiper/css';
 import "./style.css";
 
 const Map: FunctionComponent = () => {
   const [allEvents, setAllEvents] = useState<any>();
-  const [averageLocation, setAverageLocation] = useState<any>(undefined);
 
   const result = useGetEventsQuery({
     variables: {
@@ -17,7 +18,7 @@ const Map: FunctionComponent = () => {
   });
 
   useEffect(() => {
-    const events = result.data?.getEvents?.result;
+    let events = result.data?.getEvents?.result;
     setAllEvents(events);
     console.log(events)
   }, [result.data?.getEvents?.result, allEvents]);
@@ -38,9 +39,9 @@ const Map: FunctionComponent = () => {
                 <div key={event.id}>
                   <Marker position={[event.address.latitude, event.address.longitude]}>
                     <Popup>
-                      <p>{event.address.place}</p>
-                      <p>{event.address.street}</p>
-                      <p>{event.address.postalCode}</p>
+                      <p>Stadt : {event.address.place}</p>
+                      <p>Straße : {event.address.street}</p>
+                      <p>Postleitzahl: {event.address.postalCode}</p>
                     </Popup>
                   </Marker>
                 </div>
@@ -49,19 +50,21 @@ const Map: FunctionComponent = () => {
           }
         </MapContainer>
 
-        <div className="flex justify-center align-middle">
-          {/* <Swiper
-          spaceBetween={50}
-          slidesPerView={3}
-          onSlideChange={() => console.log('slide change')}
-          onSwiper={(swiper:any) => console.log(swiper)}
-        >
-          <SwiperSlide>Slide 1</SwiperSlide>
-          <SwiperSlide>Slide 2</SwiperSlide>
-          <SwiperSlide>Slide 3</SwiperSlide>
-          <SwiperSlide>Slide 4</SwiperSlide>
-        </Swiper> */}
-          asd
+        <div className="slider">
+        <Slider title="">
+          {allEvents?.map((el: any) => {
+            return (
+              <SlideCard
+                route={`/event/${el.id}`}
+                key={el?.name}
+                eventName={el?.name}
+                location={el?.address?.street}
+                date="Freitag, 25/02/22"
+                imgUrl={el?.titleImage?.id}
+              />
+            );
+          })}
+        </Slider>
         </div>
       </div>
       }
