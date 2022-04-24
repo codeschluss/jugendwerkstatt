@@ -15,6 +15,7 @@ import Map from '../components/map'
 import EventDetail from "../pages/eventDetail";
 import Home from "../pages/home";
 import MediaLibrary from "../pages/mediaLibrary";
+import EventsCalendar from "../pages/eventsCalendar";
 import Overview from "../pages/messenger";
 import Chat from "../pages/messenger/Chat";
 import Register from "../pages/register";
@@ -47,6 +48,7 @@ const Router = () => {
           <Route path="/EmailVerified" element={<EmailVerified />} />
           <Route path="/map" element={<Map />} />
           <Route path="/MediaLibrary" element={<MediaLibrary />} />
+          <Route path="/EventsCalendar" element={<EventsCalendar />} />
           <Route path="/feedback" element={<Feedback />} />
         </Routes>
       </Layout>

@@ -2,7 +2,7 @@ import { LinkCategoryEntity, useGetLinkCategoriesQuery } from "../../GraphQl/gra
 import Slider from "./slideItems/Slider";
 import SlideCard from "./slideItems/SlideCard";
 
-const Homepage: React.FC = () => {
+const MediaLibrary: React.FC = () => {
   const result = useGetLinkCategoriesQuery({
     variables: {
       params: {
@@ -12,18 +12,17 @@ const Homepage: React.FC = () => {
   });
 
   const fetchedData: [LinkCategoryEntity] = result.data?.getLinkCategories?.result as [LinkCategoryEntity];
-  console.log(fetchedData);
 
   return (
     <div className="mt-8">
       {
       fetchedData?.map((singleTopic) => {
         return(
-          <Slider topicTitle={`${singleTopic?.name}`}>
+          <Slider key={`${singleTopic?.id}`} topicTitle={`${singleTopic?.name}`}>
             {
               singleTopic?.link?.map((singleVideo) => {
                 return (
-                  <SlideCard videoTitle={`${singleVideo?.title}`} videoUrl={`${singleVideo?.url}`} />
+                  <SlideCard key={`${singleVideo?.id}`} videoTitle={`${singleVideo?.title}`} videoUrl={`${singleVideo?.url}`} />
                 )
               })
             }
@@ -34,4 +33,4 @@ const Homepage: React.FC = () => {
   );
 };
 
-export default Homepage;
+export default MediaLibrary;
