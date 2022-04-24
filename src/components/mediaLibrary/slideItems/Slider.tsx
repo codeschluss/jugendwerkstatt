@@ -1,5 +1,6 @@
 interface SliderProps {
-  topicTitle?: string;
+  key: string;
+  topicTitle: string;
 }
 
 const Slider: React.FC<SliderProps> = ({ children, topicTitle }) => {

@@ -46,6 +46,63 @@ export type AddressEntityInput = {
   street?: InputMaybe<Scalars['String']>;
 };
 
+export type AnswerEntity = {
+  __typename?: 'AnswerEntity';
+  assignment?: Maybe<AssignmentEntity>;
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+  question?: Maybe<QuestionEntity>;
+  rating?: Maybe<Scalars['Int']>;
+};
+
+export type AnswerEntityInput = {
+  assignment?: InputMaybe<AssignmentEntityInput>;
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
+  question?: InputMaybe<QuestionEntityInput>;
+  rating?: InputMaybe<Scalars['Int']>;
+};
+
+export type AssignmentEntity = {
+  __typename?: 'AssignmentEntity';
+  answers?: Maybe<Array<Maybe<AnswerEntity>>>;
+  assignmentState?: Maybe<AssignmentStateEntity>;
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+  questionnaire?: Maybe<QuestionnaireEntity>;
+  user?: Maybe<UserEntity>;
+};
+
+export type AssignmentEntityInput = {
+  answers?: InputMaybe<Array<InputMaybe<AnswerEntityInput>>>;
+  assignmentState?: InputMaybe<AssignmentStateEntityInput>;
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
+  questionnaire?: InputMaybe<QuestionnaireEntityInput>;
+  user?: InputMaybe<UserEntityInput>;
+};
+
+export type AssignmentStateEntity = {
+  __typename?: 'AssignmentStateEntity';
+  assignments?: Maybe<Array<Maybe<AssignmentEntity>>>;
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type AssignmentStateEntityInput = {
+  assignments?: InputMaybe<Array<InputMaybe<AssignmentEntityInput>>>;
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
+  name?: InputMaybe<Scalars['String']>;
+};
+
 export type CompanyEntity = {
   __typename?: 'CompanyEntity';
   address?: Maybe<AddressEntity>;
@@ -78,6 +135,27 @@ export enum ConjunctionOperator {
   OrNot = 'OR_NOT'
 }
 
+export type CourseEntity = {
+  __typename?: 'CourseEntity';
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  feedbacks?: Maybe<Array<Maybe<FeedbackEntity>>>;
+  group?: Maybe<CourseEntity>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+  name?: Maybe<Scalars['String']>;
+  users?: Maybe<Array<Maybe<UserEntity>>>;
+};
+
+export type CourseEntityInput = {
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  feedbacks?: InputMaybe<Array<InputMaybe<FeedbackEntityInput>>>;
+  group?: InputMaybe<CourseEntityInput>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
+  name?: InputMaybe<Scalars['String']>;
+  users?: InputMaybe<Array<InputMaybe<UserEntityInput>>>;
+};
+
 export type ErrorMessageEntity = {
   __typename?: 'ErrorMessageEntity';
   code?: Maybe<Scalars['String']>;
@@ -99,7 +177,6 @@ export type ErrorMessageEntityInput = {
 
 export type EventCategoryEntity = {
   __typename?: 'EventCategoryEntity';
-  color?: Maybe<Scalars['String']>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   events?: Maybe<Array<Maybe<EventEntity>>>;
   icon?: Maybe<Scalars['String']>;
@@ -109,7 +186,6 @@ export type EventCategoryEntity = {
 };
 
 export type EventCategoryEntityInput = {
-  color?: InputMaybe<Scalars['String']>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   events?: InputMaybe<Array<InputMaybe<EventEntityInput>>>;
   icon?: InputMaybe<Scalars['String']>;
@@ -148,6 +224,25 @@ export type EventEntityInput = {
   titleImage?: InputMaybe<MediaEntityInput>;
 };
 
+export type FeedbackEntity = {
+  __typename?: 'FeedbackEntity';
+  course?: Maybe<CourseEntity>;
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+  rating?: Maybe<Scalars['Int']>;
+  user?: Maybe<UserEntity>;
+};
+
+export type FeedbackEntityInput = {
+  course?: InputMaybe<CourseEntityInput>;
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
+  rating?: InputMaybe<Scalars['Int']>;
+  user?: InputMaybe<UserEntityInput>;
+};
+
 export type FilterSortPaginateInput = {
   dir?: InputMaybe<Scalars['String']>;
   expression?: InputMaybe<QueryExpressionInput>;
@@ -155,6 +250,23 @@ export type FilterSortPaginateInput = {
   search?: InputMaybe<Scalars['String']>;
   size?: InputMaybe<Scalars['Int']>;
   sort?: InputMaybe<Scalars['String']>;
+};
+
+export type GroupEntity = {
+  __typename?: 'GroupEntity';
+  courses?: Maybe<Array<Maybe<CourseEntity>>>;
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+  name?: Maybe<Scalars['String']>;
+};
+
+export type GroupEntityInput = {
+  courses?: InputMaybe<Array<InputMaybe<CourseEntityInput>>>;
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
+  name?: InputMaybe<Scalars['String']>;
 };
 
 export type JobAdEntity = {
@@ -182,6 +294,7 @@ export type JobAdEntityInput = {
 
 export type JobTypeEntity = {
   __typename?: 'JobTypeEntity';
+  color?: Maybe<Scalars['String']>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   id?: Maybe<Scalars['String']>;
   jobAds?: Maybe<Array<Maybe<JobAdEntity>>>;
@@ -190,6 +303,7 @@ export type JobTypeEntity = {
 };
 
 export type JobTypeEntityInput = {
+  color?: InputMaybe<Scalars['String']>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   id?: InputMaybe<Scalars['String']>;
   jobAds?: InputMaybe<Array<InputMaybe<JobAdEntityInput>>>;
@@ -275,14 +389,26 @@ export type Mutation = {
   createToken?: Maybe<TokenDto>;
   deleteAddress: Scalars['Boolean'];
   deleteAddresss: Scalars['Boolean'];
+  deleteAnswer: Scalars['Boolean'];
+  deleteAnswers: Scalars['Boolean'];
+  deleteAssignment: Scalars['Boolean'];
+  deleteAssignmentState: Scalars['Boolean'];
+  deleteAssignmentStates: Scalars['Boolean'];
+  deleteAssignments: Scalars['Boolean'];
   deleteCategory: Scalars['Boolean'];
   deleteCategorys: Scalars['Boolean'];
   deleteCompanies: Scalars['Boolean'];
   deleteCompany: Scalars['Boolean'];
+  deleteCourse: Scalars['Boolean'];
+  deleteCourses: Scalars['Boolean'];
   deleteErrorMessage: Scalars['Boolean'];
   deleteErrorMessages: Scalars['Boolean'];
   deleteEvent: Scalars['Boolean'];
   deleteEvents: Scalars['Boolean'];
+  deleteFeedback: Scalars['Boolean'];
+  deleteFeedbacks: Scalars['Boolean'];
+  deleteGroup: Scalars['Boolean'];
+  deleteGroups: Scalars['Boolean'];
   deleteJobAd: Scalars['Boolean'];
   deleteJobAds: Scalars['Boolean'];
   deleteJobType: Scalars['Boolean'];
@@ -292,6 +418,10 @@ export type Mutation = {
   deleteLinks: Scalars['Boolean'];
   deleteOrganizer: Scalars['Boolean'];
   deleteOrganizers: Scalars['Boolean'];
+  deleteQuestion: Scalars['Boolean'];
+  deleteQuestionnaire: Scalars['Boolean'];
+  deleteQuestionnaires: Scalars['Boolean'];
+  deleteQuestions: Scalars['Boolean'];
   deleteRole: Scalars['Boolean'];
   deleteRoles: Scalars['Boolean'];
   deleteSchedule: Scalars['Boolean'];
@@ -308,14 +438,26 @@ export type Mutation = {
   resetPassword: Scalars['Boolean'];
   saveAddress?: Maybe<AddressEntity>;
   saveAddresss?: Maybe<Array<Maybe<AddressEntity>>>;
+  saveAnswer?: Maybe<AnswerEntity>;
+  saveAnswers?: Maybe<Array<Maybe<AnswerEntity>>>;
+  saveAssignment?: Maybe<AssignmentEntity>;
+  saveAssignmentState?: Maybe<AssignmentStateEntity>;
+  saveAssignmentStates?: Maybe<Array<Maybe<AssignmentStateEntity>>>;
+  saveAssignments?: Maybe<Array<Maybe<AssignmentEntity>>>;
   saveCategory?: Maybe<EventCategoryEntity>;
   saveCategorys?: Maybe<Array<Maybe<EventCategoryEntity>>>;
   saveCompanies?: Maybe<Array<Maybe<CompanyEntity>>>;
   saveCompany?: Maybe<CompanyEntity>;
+  saveCourse?: Maybe<CourseEntity>;
+  saveCourses?: Maybe<Array<Maybe<CourseEntity>>>;
   saveErrorMessage?: Maybe<ErrorMessageEntity>;
   saveErrorMessages?: Maybe<Array<Maybe<ErrorMessageEntity>>>;
   saveEvent?: Maybe<EventEntity>;
   saveEvents?: Maybe<Array<Maybe<EventEntity>>>;
+  saveFeedback?: Maybe<FeedbackEntity>;
+  saveFeedbacks?: Maybe<Array<Maybe<FeedbackEntity>>>;
+  saveGroup?: Maybe<GroupEntity>;
+  saveGroups?: Maybe<Array<Maybe<GroupEntity>>>;
   saveJobAd?: Maybe<JobAdEntity>;
   saveJobAds?: Maybe<Array<Maybe<JobAdEntity>>>;
   saveJobType?: Maybe<JobTypeEntity>;
@@ -326,6 +468,10 @@ export type Mutation = {
   saveLinks?: Maybe<Array<Maybe<LinkEntity>>>;
   saveOrganizer?: Maybe<OrganizerEntity>;
   saveOrganizers?: Maybe<Array<Maybe<OrganizerEntity>>>;
+  saveQuestion?: Maybe<QuestionEntity>;
+  saveQuestionnaire?: Maybe<QuestionnaireEntity>;
+  saveQuestionnaires?: Maybe<Array<Maybe<QuestionnaireEntity>>>;
+  saveQuestions?: Maybe<Array<Maybe<QuestionEntity>>>;
   saveRole?: Maybe<RoleEntity>;
   saveRoles?: Maybe<Array<Maybe<RoleEntity>>>;
   saveSchedule?: Maybe<ScheduleEntity>;
@@ -366,6 +512,42 @@ export type MutationDeleteAddresssArgs = {
 
 
 /** Mutation root */
+export type MutationDeleteAnswerArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteAnswersArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteAssignmentArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteAssignmentStateArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteAssignmentStatesArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteAssignmentsArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
 export type MutationDeleteCategoryArgs = {
   id?: InputMaybe<Scalars['String']>;
 };
@@ -390,6 +572,18 @@ export type MutationDeleteCompanyArgs = {
 
 
 /** Mutation root */
+export type MutationDeleteCourseArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteCoursesArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
 export type MutationDeleteErrorMessageArgs = {
   id?: InputMaybe<Scalars['String']>;
 };
@@ -409,6 +603,30 @@ export type MutationDeleteEventArgs = {
 
 /** Mutation root */
 export type MutationDeleteEventsArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteFeedbackArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteFeedbacksArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteGroupArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteGroupsArgs = {
   ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
@@ -464,6 +682,30 @@ export type MutationDeleteOrganizerArgs = {
 
 /** Mutation root */
 export type MutationDeleteOrganizersArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteQuestionArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteQuestionnaireArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteQuestionnairesArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteQuestionsArgs = {
   ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
@@ -566,6 +808,42 @@ export type MutationSaveAddresssArgs = {
 
 
 /** Mutation root */
+export type MutationSaveAnswerArgs = {
+  entity?: InputMaybe<AnswerEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveAnswersArgs = {
+  entities?: InputMaybe<Array<InputMaybe<AnswerEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationSaveAssignmentArgs = {
+  entity?: InputMaybe<AssignmentEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveAssignmentStateArgs = {
+  entity?: InputMaybe<AssignmentStateEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveAssignmentStatesArgs = {
+  entities?: InputMaybe<Array<InputMaybe<AssignmentStateEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationSaveAssignmentsArgs = {
+  entities?: InputMaybe<Array<InputMaybe<AssignmentEntityInput>>>;
+};
+
+
+/** Mutation root */
 export type MutationSaveCategoryArgs = {
   entity?: InputMaybe<EventCategoryEntityInput>;
 };
@@ -590,6 +868,18 @@ export type MutationSaveCompanyArgs = {
 
 
 /** Mutation root */
+export type MutationSaveCourseArgs = {
+  entity?: InputMaybe<CourseEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveCoursesArgs = {
+  entities?: InputMaybe<Array<InputMaybe<CourseEntityInput>>>;
+};
+
+
+/** Mutation root */
 export type MutationSaveErrorMessageArgs = {
   entity?: InputMaybe<ErrorMessageEntityInput>;
 };
@@ -610,6 +900,30 @@ export type MutationSaveEventArgs = {
 /** Mutation root */
 export type MutationSaveEventsArgs = {
   entities?: InputMaybe<Array<InputMaybe<EventEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationSaveFeedbackArgs = {
+  entity?: InputMaybe<FeedbackEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveFeedbacksArgs = {
+  entities?: InputMaybe<Array<InputMaybe<FeedbackEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationSaveGroupArgs = {
+  entity?: InputMaybe<GroupEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveGroupsArgs = {
+  entities?: InputMaybe<Array<InputMaybe<GroupEntityInput>>>;
 };
 
 
@@ -670,6 +984,30 @@ export type MutationSaveOrganizerArgs = {
 /** Mutation root */
 export type MutationSaveOrganizersArgs = {
   entities?: InputMaybe<Array<InputMaybe<OrganizerEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationSaveQuestionArgs = {
+  entity?: InputMaybe<QuestionEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveQuestionnaireArgs = {
+  entity?: InputMaybe<QuestionnaireEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveQuestionnairesArgs = {
+  entities?: InputMaybe<Array<InputMaybe<QuestionnaireEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationSaveQuestionsArgs = {
+  entities?: InputMaybe<Array<InputMaybe<QuestionEntityInput>>>;
 };
 
 
@@ -797,9 +1135,33 @@ export type PageableList_AddressEntity = {
   total: Scalars['Long'];
 };
 
+export type PageableList_AnswerEntity = {
+  __typename?: 'PageableList_AnswerEntity';
+  result?: Maybe<Array<Maybe<AnswerEntity>>>;
+  total: Scalars['Long'];
+};
+
+export type PageableList_AssignmentEntity = {
+  __typename?: 'PageableList_AssignmentEntity';
+  result?: Maybe<Array<Maybe<AssignmentEntity>>>;
+  total: Scalars['Long'];
+};
+
+export type PageableList_AssignmentStateEntity = {
+  __typename?: 'PageableList_AssignmentStateEntity';
+  result?: Maybe<Array<Maybe<AssignmentStateEntity>>>;
+  total: Scalars['Long'];
+};
+
 export type PageableList_CompanyEntity = {
   __typename?: 'PageableList_CompanyEntity';
   result?: Maybe<Array<Maybe<CompanyEntity>>>;
+  total: Scalars['Long'];
+};
+
+export type PageableList_CourseEntity = {
+  __typename?: 'PageableList_CourseEntity';
+  result?: Maybe<Array<Maybe<CourseEntity>>>;
   total: Scalars['Long'];
 };
 
@@ -818,6 +1180,18 @@ export type PageableList_EventCategoryEntity = {
 export type PageableList_EventEntity = {
   __typename?: 'PageableList_EventEntity';
   result?: Maybe<Array<Maybe<EventEntity>>>;
+  total: Scalars['Long'];
+};
+
+export type PageableList_FeedbackEntity = {
+  __typename?: 'PageableList_FeedbackEntity';
+  result?: Maybe<Array<Maybe<FeedbackEntity>>>;
+  total: Scalars['Long'];
+};
+
+export type PageableList_GroupEntity = {
+  __typename?: 'PageableList_GroupEntity';
+  result?: Maybe<Array<Maybe<GroupEntity>>>;
   total: Scalars['Long'];
 };
 
@@ -848,6 +1222,18 @@ export type PageableList_LinkEntity = {
 export type PageableList_OrganizerEntity = {
   __typename?: 'PageableList_OrganizerEntity';
   result?: Maybe<Array<Maybe<OrganizerEntity>>>;
+  total: Scalars['Long'];
+};
+
+export type PageableList_QuestionEntity = {
+  __typename?: 'PageableList_QuestionEntity';
+  result?: Maybe<Array<Maybe<QuestionEntity>>>;
+  total: Scalars['Long'];
+};
+
+export type PageableList_QuestionnaireEntity = {
+  __typename?: 'PageableList_QuestionnaireEntity';
+  result?: Maybe<Array<Maybe<QuestionnaireEntity>>>;
   total: Scalars['Long'];
 };
 
@@ -909,14 +1295,26 @@ export type Query = {
   __typename?: 'Query';
   getAddress?: Maybe<AddressEntity>;
   getAddresss?: Maybe<PageableList_AddressEntity>;
+  getAnswer?: Maybe<AnswerEntity>;
+  getAnswers?: Maybe<PageableList_AnswerEntity>;
+  getAssignment?: Maybe<AssignmentEntity>;
+  getAssignmentState?: Maybe<AssignmentStateEntity>;
+  getAssignmentStates?: Maybe<PageableList_AssignmentStateEntity>;
+  getAssignments?: Maybe<PageableList_AssignmentEntity>;
   getCategory?: Maybe<EventCategoryEntity>;
   getCategorys?: Maybe<PageableList_EventCategoryEntity>;
   getCompanies?: Maybe<PageableList_CompanyEntity>;
   getCompany?: Maybe<CompanyEntity>;
+  getCourse?: Maybe<CourseEntity>;
+  getCourses?: Maybe<PageableList_CourseEntity>;
   getErrorMessage?: Maybe<ErrorMessageEntity>;
   getErrorMessages?: Maybe<PageableList_ErrorMessageEntity>;
   getEvent?: Maybe<EventEntity>;
   getEvents?: Maybe<PageableList_EventEntity>;
+  getFeedback?: Maybe<FeedbackEntity>;
+  getFeedbacks?: Maybe<PageableList_FeedbackEntity>;
+  getGroup?: Maybe<GroupEntity>;
+  getGroups?: Maybe<PageableList_GroupEntity>;
   getJobAd?: Maybe<JobAdEntity>;
   getJobAds?: Maybe<PageableList_JobAdEntity>;
   getJobType?: Maybe<JobTypeEntity>;
@@ -927,6 +1325,10 @@ export type Query = {
   getLinks?: Maybe<PageableList_LinkEntity>;
   getOrganizer?: Maybe<OrganizerEntity>;
   getOrganizers?: Maybe<PageableList_OrganizerEntity>;
+  getQuestion?: Maybe<QuestionEntity>;
+  getQuestionnaire?: Maybe<QuestionnaireEntity>;
+  getQuestionnaires?: Maybe<PageableList_QuestionnaireEntity>;
+  getQuestions?: Maybe<PageableList_QuestionEntity>;
   getRole?: Maybe<RoleEntity>;
   getRoles?: Maybe<PageableList_RoleEntity>;
   getSchedule?: Maybe<ScheduleEntity>;
@@ -956,6 +1358,42 @@ export type QueryGetAddresssArgs = {
 
 
 /** Query root */
+export type QueryGetAnswerArgs = {
+  entity?: InputMaybe<AnswerEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetAnswersArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
+export type QueryGetAssignmentArgs = {
+  entity?: InputMaybe<AssignmentEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetAssignmentStateArgs = {
+  entity?: InputMaybe<AssignmentStateEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetAssignmentStatesArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
+export type QueryGetAssignmentsArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
 export type QueryGetCategoryArgs = {
   entity?: InputMaybe<EventCategoryEntityInput>;
 };
@@ -980,6 +1418,18 @@ export type QueryGetCompanyArgs = {
 
 
 /** Query root */
+export type QueryGetCourseArgs = {
+  entity?: InputMaybe<CourseEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetCoursesArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
 export type QueryGetErrorMessageArgs = {
   entity?: InputMaybe<ErrorMessageEntityInput>;
 };
@@ -999,6 +1449,30 @@ export type QueryGetEventArgs = {
 
 /** Query root */
 export type QueryGetEventsArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
+export type QueryGetFeedbackArgs = {
+  entity?: InputMaybe<FeedbackEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetFeedbacksArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
+export type QueryGetGroupArgs = {
+  entity?: InputMaybe<GroupEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetGroupsArgs = {
   params?: InputMaybe<FilterSortPaginateInput>;
 };
 
@@ -1059,6 +1533,30 @@ export type QueryGetOrganizerArgs = {
 
 /** Query root */
 export type QueryGetOrganizersArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
+export type QueryGetQuestionArgs = {
+  entity?: InputMaybe<QuestionEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetQuestionnaireArgs = {
+  entity?: InputMaybe<QuestionnaireEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetQuestionnairesArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
+export type QueryGetQuestionsArgs = {
   params?: InputMaybe<FilterSortPaginateInput>;
 };
 
@@ -1166,6 +1664,44 @@ export enum QueryOperator {
   NotEqual = 'NOT_EQUAL'
 }
 
+export type QuestionEntity = {
+  __typename?: 'QuestionEntity';
+  answers?: Maybe<Array<Maybe<AnswerEntity>>>;
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  id?: Maybe<Scalars['String']>;
+  item?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+  questionnaire?: Maybe<QuestionnaireEntity>;
+};
+
+export type QuestionEntityInput = {
+  answers?: InputMaybe<Array<InputMaybe<AnswerEntityInput>>>;
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  item?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
+  questionnaire?: InputMaybe<QuestionnaireEntityInput>;
+};
+
+export type QuestionnaireEntity = {
+  __typename?: 'QuestionnaireEntity';
+  assignments?: Maybe<Array<Maybe<AssignmentEntity>>>;
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+  name?: Maybe<Scalars['String']>;
+  questions?: Maybe<Array<Maybe<QuestionEntity>>>;
+};
+
+export type QuestionnaireEntityInput = {
+  assignments?: InputMaybe<Array<InputMaybe<AssignmentEntityInput>>>;
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
+  name?: InputMaybe<Scalars['String']>;
+  questions?: InputMaybe<Array<InputMaybe<QuestionEntityInput>>>;
+};
+
 export type RoleEntity = {
   __typename?: 'RoleEntity';
   created?: Maybe<Scalars['OffsetDateTime']>;
@@ -1248,6 +1784,7 @@ export type TokenDto = {
 
 export type UserEntity = {
   __typename?: 'UserEntity';
+  course?: Maybe<CourseEntity>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   email?: Maybe<Scalars['String']>;
   fullname?: Maybe<Scalars['String']>;
@@ -1263,6 +1800,7 @@ export type UserEntity = {
 };
 
 export type UserEntityInput = {
+  course?: InputMaybe<CourseEntityInput>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   email?: InputMaybe<Scalars['String']>;
   fullname?: InputMaybe<Scalars['String']>;
@@ -1315,32 +1853,156 @@ export type VerificationEntityInput = {
   user?: InputMaybe<UserEntityInput>;
 };
 
-export type GetEventQueryVariables = Exact<{
-  entity?: InputMaybe<EventEntityInput>;
+export type CreateTokenMutationVariables = Exact<{
+  password?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type GetEventQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', id?: string | null, name?: string | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null } | null } | null };
+export type CreateTokenMutation = { __typename?: 'Mutation', createToken?: { __typename?: 'TokenDto', access?: string | null, refresh?: string | null } | null };
+
+export type GetEventQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetEventQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null, postalCode?: string | null, latitude?: number | null, longitude?: number | null, id?: string | null, houseNumber?: string | null, created?: any | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, endDate?: any | null, startDate?: any | null } | null> | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null, icon?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null, name?: string | null, phone?: string | null, website?: string | null, mail?: string | null } | null } | null };
 
 export type GetEventsQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
 }>;
 
 
-export type GetEventsQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', result?: Array<{ __typename?: 'EventEntity', id?: string | null, name?: string | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null } | null } | null> | null } | null };
+export type GetEventsQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', result?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null, postalCode?: string | null, latitude?: number | null, longitude?: number | null, id?: string | null, houseNumber?: string | null, created?: any | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, endDate?: any | null, startDate?: any | null } | null> | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null, icon?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null, name?: string | null, phone?: string | null, website?: string | null, mail?: string | null } | null } | null> | null } | null };
+
+export type GetJobAdsQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
 
 
+export type GetJobAdsQuery = { __typename?: 'Query', getJobAds?: { __typename?: 'PageableList_JobAdEntity', result?: Array<{ __typename?: 'JobAdEntity', id?: string | null, dueDate?: any | null, startDate?: any | null, title?: string | null, company?: { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', id?: string | null, latitude?: number | null, longitude?: number | null, place?: string | null, postalCode?: string | null, street?: string | null, houseNumber?: string | null } | null } | null } | null> | null } | null };
+
+export type GetLinkCategoriesQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetLinkCategoriesQuery = { __typename?: 'Query', getLinkCategories?: { __typename?: 'PageableList_LinkCategoryEntity', result?: Array<{ __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null, link?: Array<{ __typename?: 'LinkEntity', id?: string | null, title?: string | null, url?: string | null } | null> | null } | null> | null } | null };
+
+export type GetUserQueryVariables = Exact<{
+  entity?: InputMaybe<UserEntityInput>;
+}>;
+
+
+export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null, course?: { __typename?: 'CourseEntity', id?: string | null, name?: string | null, group?: { __typename?: 'CourseEntity', name?: string | null, id?: string | null } | null } | null, uploads?: Array<{ __typename?: 'MediaEntity', name?: string | null, id?: string | null } | null> | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null } | null> | null } | null };
+
+export type RefreshTokenMutationVariables = Exact<{
+  refreshToken: Scalars['String'];
+}>;
+
+
+export type RefreshTokenMutation = { __typename?: 'Mutation', refreshToken?: { __typename?: 'TokenDto', access?: string | null, refresh?: string | null } | null };
+
+export type ResetPasswordMutationVariables = Exact<{
+  key?: InputMaybe<Scalars['String']>;
+  password: Scalars['String'];
+}>;
+
+
+export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: boolean };
+
+export type SendPasswordResetMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type SendPasswordResetMutation = { __typename?: 'Mutation', sendPasswordReset: boolean };
+
+export type SendVerificationMutationVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type SendVerificationMutation = { __typename?: 'Mutation', sendVerification: boolean };
+
+export type VerifyMutationVariables = Exact<{
+  key?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type VerifyMutation = { __typename?: 'Mutation', verify?: { __typename?: 'UserEntity', id?: string | null } | null };
+
+
+export const CreateTokenDocument = gql`
+    mutation CreateToken($password: String, $username: String) {
+  createToken(password: $password, username: $username) {
+    access
+    refresh
+  }
+}
+    `;
+export type CreateTokenMutationFn = Apollo.MutationFunction<CreateTokenMutation, CreateTokenMutationVariables>;
+
+/**
+ * __useCreateTokenMutation__
+ *
+ * To run a mutation, you first call `useCreateTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createTokenMutation, { data, loading, error }] = useCreateTokenMutation({
+ *   variables: {
+ *      password: // value for 'password'
+ *      username: // value for 'username'
+ *   },
+ * });
+ */
+export function useCreateTokenMutation(baseOptions?: Apollo.MutationHookOptions<CreateTokenMutation, CreateTokenMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateTokenMutation, CreateTokenMutationVariables>(CreateTokenDocument, options);
+      }
+export type CreateTokenMutationHookResult = ReturnType<typeof useCreateTokenMutation>;
+export type CreateTokenMutationResult = Apollo.MutationResult<CreateTokenMutation>;
+export type CreateTokenMutationOptions = Apollo.BaseMutationOptions<CreateTokenMutation, CreateTokenMutationVariables>;
 export const GetEventDocument = gql`
-    query getEvent($entity: EventEntityInput) {
-  getEvent(entity: $entity) {
+    query GetEvent($id: String!) {
+  getEvent(entity: {id: $id}) {
+    name
     titleImage {
       id
     }
     id
-    name
+    description
     address {
       street
       place
+      postalCode
+      latitude
+      longitude
+      id
+      houseNumber
+      created
+    }
+    schedules {
+      id
+      endDate
+      startDate
+    }
+    category {
+      id
+      name
+      icon
+    }
+    organizer {
+      id
+      name
+      phone
+      website
+      mail
     }
   }
 }
@@ -1358,11 +2020,11 @@ export const GetEventDocument = gql`
  * @example
  * const { data, loading, error } = useGetEventQuery({
  *   variables: {
- *      entity: // value for 'entity'
+ *      id: // value for 'id'
  *   },
  * });
  */
-export function useGetEventQuery(baseOptions?: Apollo.QueryHookOptions<GetEventQuery, GetEventQueryVariables>) {
+export function useGetEventQuery(baseOptions: Apollo.QueryHookOptions<GetEventQuery, GetEventQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetEventQuery, GetEventQueryVariables>(GetEventDocument, options);
       }
@@ -1377,14 +2039,38 @@ export const GetEventsDocument = gql`
     query getEvents($params: FilterSortPaginateInput) {
   getEvents(params: $params) {
     result {
+      name
       titleImage {
         id
       }
       id
-      name
+      description
       address {
         street
         place
+        postalCode
+        latitude
+        longitude
+        id
+        houseNumber
+        created
+      }
+      schedules {
+        id
+        endDate
+        startDate
+      }
+      category {
+        id
+        name
+        icon
+      }
+      organizer {
+        id
+        name
+        phone
+        website
+        mail
       }
     }
   }
@@ -1418,3 +2104,323 @@ export function useGetEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetEventsQueryHookResult = ReturnType<typeof useGetEventsQuery>;
 export type GetEventsLazyQueryHookResult = ReturnType<typeof useGetEventsLazyQuery>;
 export type GetEventsQueryResult = Apollo.QueryResult<GetEventsQuery, GetEventsQueryVariables>;
+export const GetJobAdsDocument = gql`
+    query GetJobAds($params: FilterSortPaginateInput) {
+  getJobAds(params: $params) {
+    result {
+      id
+      dueDate
+      company {
+        id
+        mail
+        name
+        phone
+        website
+        address {
+          id
+          latitude
+          longitude
+          place
+          postalCode
+          street
+          houseNumber
+        }
+      }
+      startDate
+      title
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetJobAdsQuery__
+ *
+ * To run a query within a React component, call `useGetJobAdsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetJobAdsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetJobAdsQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetJobAdsQuery(baseOptions?: Apollo.QueryHookOptions<GetJobAdsQuery, GetJobAdsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetJobAdsQuery, GetJobAdsQueryVariables>(GetJobAdsDocument, options);
+      }
+export function useGetJobAdsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetJobAdsQuery, GetJobAdsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetJobAdsQuery, GetJobAdsQueryVariables>(GetJobAdsDocument, options);
+        }
+export type GetJobAdsQueryHookResult = ReturnType<typeof useGetJobAdsQuery>;
+export type GetJobAdsLazyQueryHookResult = ReturnType<typeof useGetJobAdsLazyQuery>;
+export type GetJobAdsQueryResult = Apollo.QueryResult<GetJobAdsQuery, GetJobAdsQueryVariables>;
+export const GetLinkCategoriesDocument = gql`
+    query GetLinkCategories($params: FilterSortPaginateInput) {
+  getLinkCategories(params: $params) {
+    result {
+      id
+      name
+      link {
+        id
+        title
+        url
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetLinkCategoriesQuery__
+ *
+ * To run a query within a React component, call `useGetLinkCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLinkCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLinkCategoriesQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetLinkCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<GetLinkCategoriesQuery, GetLinkCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLinkCategoriesQuery, GetLinkCategoriesQueryVariables>(GetLinkCategoriesDocument, options);
+      }
+export function useGetLinkCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLinkCategoriesQuery, GetLinkCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLinkCategoriesQuery, GetLinkCategoriesQueryVariables>(GetLinkCategoriesDocument, options);
+        }
+export type GetLinkCategoriesQueryHookResult = ReturnType<typeof useGetLinkCategoriesQuery>;
+export type GetLinkCategoriesLazyQueryHookResult = ReturnType<typeof useGetLinkCategoriesLazyQuery>;
+export type GetLinkCategoriesQueryResult = Apollo.QueryResult<GetLinkCategoriesQuery, GetLinkCategoriesQueryVariables>;
+export const GetUserDocument = gql`
+    query GetUser($entity: UserEntityInput) {
+  getUser(entity: $entity) {
+    id
+    profilePicture {
+      id
+    }
+    fullname
+    email
+    course {
+      id
+      group {
+        name
+        id
+      }
+      name
+    }
+    uploads {
+      name
+      id
+    }
+    userTemplates {
+      id
+      name
+      templateType {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetUserQuery__
+ *
+ * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetUserQuery(baseOptions?: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+      }
+export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
+        }
+export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
+export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
+export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
+export const RefreshTokenDocument = gql`
+    mutation refreshToken($refreshToken: String!) {
+  refreshToken(refreshToken: $refreshToken) {
+    access
+    refresh
+  }
+}
+    `;
+export type RefreshTokenMutationFn = Apollo.MutationFunction<RefreshTokenMutation, RefreshTokenMutationVariables>;
+
+/**
+ * __useRefreshTokenMutation__
+ *
+ * To run a mutation, you first call `useRefreshTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRefreshTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [refreshTokenMutation, { data, loading, error }] = useRefreshTokenMutation({
+ *   variables: {
+ *      refreshToken: // value for 'refreshToken'
+ *   },
+ * });
+ */
+export function useRefreshTokenMutation(baseOptions?: Apollo.MutationHookOptions<RefreshTokenMutation, RefreshTokenMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RefreshTokenMutation, RefreshTokenMutationVariables>(RefreshTokenDocument, options);
+      }
+export type RefreshTokenMutationHookResult = ReturnType<typeof useRefreshTokenMutation>;
+export type RefreshTokenMutationResult = Apollo.MutationResult<RefreshTokenMutation>;
+export type RefreshTokenMutationOptions = Apollo.BaseMutationOptions<RefreshTokenMutation, RefreshTokenMutationVariables>;
+export const ResetPasswordDocument = gql`
+    mutation resetPassword($key: String, $password: String!) {
+  resetPassword(key: $key, password: $password)
+}
+    `;
+export type ResetPasswordMutationFn = Apollo.MutationFunction<ResetPasswordMutation, ResetPasswordMutationVariables>;
+
+/**
+ * __useResetPasswordMutation__
+ *
+ * To run a mutation, you first call `useResetPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useResetPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [resetPasswordMutation, { data, loading, error }] = useResetPasswordMutation({
+ *   variables: {
+ *      key: // value for 'key'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOptions<ResetPasswordMutation, ResetPasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ResetPasswordMutation, ResetPasswordMutationVariables>(ResetPasswordDocument, options);
+      }
+export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
+export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
+export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const SendPasswordResetDocument = gql`
+    mutation sendPasswordReset($email: String!) {
+  sendPasswordReset(mailAddress: $email)
+}
+    `;
+export type SendPasswordResetMutationFn = Apollo.MutationFunction<SendPasswordResetMutation, SendPasswordResetMutationVariables>;
+
+/**
+ * __useSendPasswordResetMutation__
+ *
+ * To run a mutation, you first call `useSendPasswordResetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendPasswordResetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendPasswordResetMutation, { data, loading, error }] = useSendPasswordResetMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useSendPasswordResetMutation(baseOptions?: Apollo.MutationHookOptions<SendPasswordResetMutation, SendPasswordResetMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendPasswordResetMutation, SendPasswordResetMutationVariables>(SendPasswordResetDocument, options);
+      }
+export type SendPasswordResetMutationHookResult = ReturnType<typeof useSendPasswordResetMutation>;
+export type SendPasswordResetMutationResult = Apollo.MutationResult<SendPasswordResetMutation>;
+export type SendPasswordResetMutationOptions = Apollo.BaseMutationOptions<SendPasswordResetMutation, SendPasswordResetMutationVariables>;
+export const SendVerificationDocument = gql`
+    mutation sendVerification($email: String!) {
+  sendVerification(mailAddress: $email)
+}
+    `;
+export type SendVerificationMutationFn = Apollo.MutationFunction<SendVerificationMutation, SendVerificationMutationVariables>;
+
+/**
+ * __useSendVerificationMutation__
+ *
+ * To run a mutation, you first call `useSendVerificationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendVerificationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendVerificationMutation, { data, loading, error }] = useSendVerificationMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useSendVerificationMutation(baseOptions?: Apollo.MutationHookOptions<SendVerificationMutation, SendVerificationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendVerificationMutation, SendVerificationMutationVariables>(SendVerificationDocument, options);
+      }
+export type SendVerificationMutationHookResult = ReturnType<typeof useSendVerificationMutation>;
+export type SendVerificationMutationResult = Apollo.MutationResult<SendVerificationMutation>;
+export type SendVerificationMutationOptions = Apollo.BaseMutationOptions<SendVerificationMutation, SendVerificationMutationVariables>;
+export const VerifyDocument = gql`
+    mutation Verify($key: String) {
+  verify(key: $key) {
+    id
+  }
+}
+    `;
+export type VerifyMutationFn = Apollo.MutationFunction<VerifyMutation, VerifyMutationVariables>;
+
+/**
+ * __useVerifyMutation__
+ *
+ * To run a mutation, you first call `useVerifyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useVerifyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [verifyMutation, { data, loading, error }] = useVerifyMutation({
+ *   variables: {
+ *      key: // value for 'key'
+ *   },
+ * });
+ */
+export function useVerifyMutation(baseOptions?: Apollo.MutationHookOptions<VerifyMutation, VerifyMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<VerifyMutation, VerifyMutationVariables>(VerifyDocument, options);
+      }
+export type VerifyMutationHookResult = ReturnType<typeof useVerifyMutation>;
+export type VerifyMutationResult = Apollo.MutationResult<VerifyMutation>;
+export type VerifyMutationOptions = Apollo.BaseMutationOptions<VerifyMutation, VerifyMutationVariables>;
