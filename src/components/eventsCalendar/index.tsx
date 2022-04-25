@@ -1,7 +1,7 @@
 import React, { Children, useState } from "react";
 import ReactDOM from "react-dom";
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import './eventsCalendarStyle.css';
 
 
 
@@ -24,9 +24,14 @@ const EventsCalendar: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <Calendar className="mx-auto border-none" onChange={onChange} value={value} />
+            <Calendar  className="mx-auto border-none" onChange={onChange} value={value} />
         </div>
     );
 };
 
 export default EventsCalendar;
+
+
+const TodoComponent = {
+    backgroundColor: "red",
+}
