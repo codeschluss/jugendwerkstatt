@@ -1,6 +1,7 @@
 import { ShareIcon, HeartIcon } from "@heroicons/react/solid";
 
 interface SlideCardProps {
+  key: string;
   videoTitle: string;
   videoUrl: string;
 }

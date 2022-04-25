@@ -1,0 +1,26 @@
+query GetJobAds($params: FilterSortPaginateInput) {
+  getJobAds(params: $params) {
+    result {
+      id
+      dueDate
+      company {
+        id
+        mail
+        name
+        phone
+        website
+        address {
+          id
+          latitude
+          longitude
+          place
+          postalCode
+          street
+          houseNumber
+        }
+      }
+      startDate
+      title
+    }
+  }
+}

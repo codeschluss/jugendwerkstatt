@@ -4,7 +4,7 @@ export const AuthContext = createContext<any>(null);
 
 export const AuthProvider: React.FunctionComponent = ({ children }) => {
   const [isLogedIn, setIsLogedIn] = useState<string>();
-  const [authHeaderStatus, setAuthHeaderStatus] = useState('')
+  const [theUser, setTheUser] = useState("");
   const [username, setUsername] = useState();
   const [userToken, setUserToken] = useState<string>();
   const [refreshToken, setRefreshToken] = useState<string>();
@@ -14,8 +14,8 @@ export const AuthProvider: React.FunctionComponent = ({ children }) => {
       value={{
         isLogedIn,
         setIsLogedIn,
-        authHeaderStatus,
-        setAuthHeaderStatus,
+        theUser,
+        setTheUser,
         username,
         setUsername,
         userToken,

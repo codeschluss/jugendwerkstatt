@@ -1,72 +1,81 @@
 import jwtDecode from "jwt-decode";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/footer";
 import Header from "../components/header";
 import AuthContext from "../contexts/AuthContext";
-import { useRefreshTokenMutation } from "../GraphQl/graphql";
+import {
+  useGetEventsQuery,
+  useGetUserQuery,
+  useRefreshTokenMutation,
+} from "../GraphQl/graphql";
 
 const Layout: React.FC = ({ children }) => {
-  const { setIsLogedIn } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const [accessT, setAccessT] = useState();
+  const [refreshT, setRefreshT] = useState();
 
-  let accessToken;
-  let refreshToken: any;
-  let atoken: any;
-  let rtoken: any;
-  let accessTokenTime: any;
-  let refreshTokenTime: any;
+  const { setIsLogedIn, setTheUser } = useContext(AuthContext);
 
-  if (
-    localStorage.getItem("accessToken") &&
-    localStorage.getItem("refreshToken")
-  ) {
-    accessToken = localStorage.getItem("accessToken") || "";
-    refreshToken = localStorage.getItem("refreshToken") || "";
-    atoken = jwtDecode(accessToken);
-    rtoken = jwtDecode(refreshToken);
-    accessTokenTime = atoken.exp * 1000;
-    refreshTokenTime = rtoken.exp * 1000;
-  }
-  const [refreshTokenMutation, { data, loading, error }] =
-    useRefreshTokenMutation({
-      variables: {
-        refreshToken: refreshToken,
+  const result = useGetUserQuery({
+    skip: !accessT ? true : false,
+    variables: {
+      entity: {
+        id: accessT,
       },
-    });
+    },
+  });
 
+  useEffect(() => {
+    result.refetch();
+  }, [accessT]);
+
+  useEffect(() => {
+    if (result.data) {
+      setTheUser(result.data.getUser);
+      setIsLogedIn(true);
+    }
+  }, [result.data]);
+
+  const [refreshTokenMutation, { data, loading, error }] =
+    useRefreshTokenMutation();
   if (data) {
-    localStorage.setItem("accessToken", data.refreshToken?.access || "");
-    localStorage.setItem("refreshToken", data.refreshToken?.refresh || "");
-    setIsLogedIn(true);
+    localStorage.setItem("accessToken", data?.refreshToken?.access || "");
+    localStorage.setItem("refreshToken", data?.refreshToken?.refresh || "");
   }
 
-  const checkDate = () => {
-    if (
-      !localStorage.getItem("accessToken") &&
-      !localStorage.getItem("refreshToken")
-    ) {
-      setIsLogedIn(false);
+  const checkToken = () => {
+    if (!localStorage.getItem("accessToken")) {
       return;
-    } else if (Date.now() < accessTokenTime) {
-      setIsLogedIn(true);
-      //Events
-      return;
-    } else if (Date.now() < refreshTokenTime) {
-      refreshTokenMutation();
+    } else {
+      const aToken: any = jwtDecode(localStorage.getItem("accessToken") || "");
+      const rToken: any = jwtDecode(localStorage.getItem("refreshToken") || "");
+      const accessToken: number | any = aToken.exp * 1000;
+      const refreshToken: number | any = rToken.exp * 1000;
+      if (Date.now() < accessToken) {
+        setAccessT(aToken.id);
+
+        return;
+      } else {
+        if (Date.now() < refreshToken) {
+          refreshTokenMutation({
+            variables: {
+              refreshToken: localStorage.getItem("refreshToken") || "",
+            },
+          });
+          return;
+        } else {
+          return;
+        }
+      }
     }
   };
 
   useEffect(() => {
-    checkDate();
-  }, []);
+    const timer = setInterval(() => {
+      checkToken();
+    }, 1000);
 
-  useEffect(() => {
-    const intervalTimer = setInterval(() => {
-      checkDate();
-    }, 2000);
-
-    return () => clearInterval(intervalTimer);
+    return () => clearInterval(timer);
   }, []);
 
   return (
