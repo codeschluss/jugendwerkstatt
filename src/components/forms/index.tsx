@@ -3,25 +3,26 @@ import ChevronRightIcon from "@heroicons/react/outline/ChevronRightIcon";
 import UploadIcon from "@heroicons/react/solid/UploadIcon";
 import I from "../ui/IconWrapper";
 import { Link } from "react-router-dom";
+import { TemplateTypeEntity, useGetTemplateTypesQuery } from "../../GraphQl/graphql";
 
-interface TemplateTypes {
-  name: string,
-  type: string
-}
 
 const Forms: React.FC = () => {
-  const templateTypes: TemplateTypes[] = [
-    {name: 'Deckblatt', type: 'coverPage'},
-    {name: 'Anschreiben', type: 'coverLetter'},
-    {name: 'Lebensaluf', type: 'cv'},
-  ]
+  const result = useGetTemplateTypesQuery({
+    variables: {
+      params: {
+        //sort: 'name',
+      }
+    }
+  });
+
+  const fetchedData: [TemplateTypeEntity] = result.data?.getTemplateTypes?.result as [TemplateTypeEntity];
 
   return (
     <div className="container mx-auto px-4 pt-4">
       <h5 className="text-2xl font-bold">Formulare</h5>
       <ul className="list-none text-base font-normal pl-4 text-gray-600">
         {
-          templateTypes.map((template, index) => {
+          fetchedData?.map((template, index) => {
             return (
               <li className="pt-4" key={index}>
                 <Link
@@ -31,7 +32,7 @@ const Forms: React.FC = () => {
                   state= {{
                     templateType: {
                       name: template.name,
-                      type: template.type
+                      id: template.id
                     }
                   }}
                 >

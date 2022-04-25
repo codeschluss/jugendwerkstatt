@@ -46,18 +46,9 @@ const TemplateEdit: React.FC = () => {
                 <CKEditor
                     editor={ ClassicEditor }
                     data={content}
-                    onReady={ (editor: any) => {
-                        console.log( 'Editor is ready to use!', editor );
-                    } }
                     onChange={ ( event: any, editor: any ) => {
                         const data = editor.getData(); 
                         setContent(data);
-                    } }
-                    onBlur={ ( event: any, editor: any ) => {
-                        console.log( 'Blur.', editor );
-                    } }
-                    onFocus={ ( event: any, editor: any ) => {
-                        console.log( 'Focus.', editor );
                     } }
                 />
             </div>

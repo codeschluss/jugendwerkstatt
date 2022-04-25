@@ -1,0 +1,8 @@
+query GetTemplateTypes($params: FilterSortPaginateInput) {
+  getTemplateTypes(params: $params) {
+    result {
+      id
+      name
+    }
+  }
+}
