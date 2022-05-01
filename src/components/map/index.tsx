@@ -7,6 +7,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import SwiperCore, { Virtual } from 'swiper';
+import SlideCard from "../slideItems/SlideCard";
 SwiperCore.use([Virtual]);
 
 const Map: FunctionComponent = () => {
@@ -22,13 +23,8 @@ const Map: FunctionComponent = () => {
   });
 
   const slideTo = (index:any) => {
-    console.log('e kena kliku')
     swiperRef.slideTo(index - 1, 0);
   };
-
-  const slides = Array.from({ length: 1000 }).map(
-    (_, index) => `Slide ${index + 1}`
-  );
 
   useEffect(() => {
     let events = result.data?.getEvents?.result;
@@ -47,9 +43,9 @@ const Map: FunctionComponent = () => {
           />
 
           {
-            allEvents?.map((event: any) => {
+            allEvents?.map((event: any, index:number) => {
               return (
-                <div key={event.id} onClick={() => slideTo(10)}>
+                <div key={event.id} onClick={() => slideTo(index)}>
                   <Marker position={[event.address.latitude, event.address.longitude]} >
                     <Popup>
                       <p>Stadt : {event.address.place}</p>
@@ -71,7 +67,7 @@ const Map: FunctionComponent = () => {
             slidesPerView={1.5}
             onSlideChange={() => console.log()}
           >
-            {/* {allEvents?.map((el: any) => {
+            {allEvents?.map((el: any, index: number) => {
               return (
                 <SwiperSlide key={el.id}>
                   <div>
@@ -86,12 +82,7 @@ const Map: FunctionComponent = () => {
                   </div>
                 </SwiperSlide>
               );
-            })} */}
-            {slides.map((slideContent, index) => (
-          <SwiperSlide key={slideContent} virtualIndex={index}>
-            {slideContent}
-          </SwiperSlide>
-        ))}
+            })}
           </Swiper>
         </div>
       </div>
