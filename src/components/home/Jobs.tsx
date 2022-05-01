@@ -18,7 +18,7 @@ const Events: React.FC<EventsProps> = () => {
       {fetchedData?.map((el) => {
         return (
           <SlideCard
-            route={`/event/${el.id}`}
+            route={`/job-ad/${el.id}`}
             key={el?.name}
             eventName={el?.name}
             location={el?.address?.street}
