@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useContext} from "react";
 import ChevronRightIcon from "@heroicons/react/outline/ChevronRightIcon";
 import I from "../../ui/IconWrapper";
 import { Link, useLocation } from "react-router-dom";
 import { TemplateEntity, useGetTemplatesQuery, useGetUserTemplatesQuery, UserTemplateEntity } from "../../../GraphQl/graphql";
-import jwtDecode from "jwt-decode";
+import AuthContext from "../../../contexts/AuthContext";
 
 const Templates: React.FC = () => {
     const location = useLocation();
@@ -17,19 +17,11 @@ const Templates: React.FC = () => {
     
     const fetchedTemplates: [TemplateEntity] = templatesResult.data?.getTemplates?.result as [TemplateEntity];
 
-    let accessToken: any;
-    let atoken: any;
-    if (
-        localStorage.getItem("accessToken") &&
-        localStorage.getItem("refreshToken")
-    ) {
-        accessToken = localStorage.getItem("accessToken") || "";
-        atoken = jwtDecode(accessToken);
-    }
+    const { theUser } = useContext(AuthContext);
 
     const userTemplatesResult = useGetUserTemplatesQuery({
         variables: {
-          id: atoken?.id ? atoken?.id: '5852aa11-4e5c-4d8d-bc41-9fa44cb6ca1a'
+          id: theUser.id
         }
     });
     

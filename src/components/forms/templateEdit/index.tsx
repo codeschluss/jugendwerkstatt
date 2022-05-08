@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { useGetTemplateQuery, useGetUserTemplateQuery, useGetUserTemplatesQuery, useSaveUserTemplateMutation } from "../../../GraphQl/graphql";
-import jwtDecode from "jwt-decode";
+import { useGetTemplateQuery, useGetUserTemplateQuery, useSaveUserTemplateMutation } from "../../../GraphQl/graphql";
 import DownloadIcon from "@heroicons/react/solid/DownloadIcon";
 import I from "../../ui/IconWrapper";
+import AuthContext from "../../../contexts/AuthContext";
 import axios from "axios";
 
 const TemplateEdit: React.FC = () => {
@@ -17,6 +17,8 @@ const TemplateEdit: React.FC = () => {
     const [templateContent, setTemplateContent] = useState('');
     const [editName, setEditName] = useState(false);
 
+    const { theUser } = useContext(AuthContext);
+
     const handleClick = (): void => {
         setEditName(true);
     }
@@ -25,25 +27,19 @@ const TemplateEdit: React.FC = () => {
         setTemplateName(event.target.value)
     }
 
-    let accessToken: any;
-    let atoken: any;
-    if (
-        localStorage.getItem("accessToken") &&
-        localStorage.getItem("refreshToken")
-    ) {
-        accessToken = localStorage.getItem("accessToken") || "";
-        atoken = jwtDecode(accessToken);
-    }
-
     const [saveUserTemplateMutation, { data, loading, error }] = useSaveUserTemplateMutation({
         variables: {
             name: templateName,
             content: templateContent,
             templateTypeId: templateTypeId,
             templateId: edit ? id : '',
-            userId: atoken?.id ? atoken?.id: '36808f63-4b6b-40e7-b2ee-a91f657e4e58'
+            userId: theUser.id
         },
     });
+
+    const downloadTemplate = (): void => {
+        axios.get(`http://localhost:8061/api/media/download/${id}`)
+    }
 
     const saveTemplate = (): void => {
         saveUserTemplateMutation();
@@ -69,7 +65,7 @@ const TemplateEdit: React.FC = () => {
             <h5 className="text-2xl font-bold">
                 {templateType}
 
-                <I className="h-5 float-right">
+                <I className="h-5 float-right" onClick={downloadTemplate}>
                     <DownloadIcon />
                 </I>
             </h5>
