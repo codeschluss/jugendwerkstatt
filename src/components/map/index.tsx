@@ -1,13 +1,18 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useGetEventsQuery } from "../../GraphQl/graphql";
-import SlideCard from '../slideItems/SlideCard'
-import Slider from  '../slideItems/Slider'
-// import 'swiper/css';
-import "./style.css";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import './style.css'
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+import SwiperCore, { Virtual } from 'swiper';
+import SlideCard from "../slideItems/SlideCard";
+SwiperCore.use([Virtual]);
 
 const Map: FunctionComponent = () => {
   const [allEvents, setAllEvents] = useState<any>();
+  const [swiperRef, setSwiperRef] = useState<any>(null);
 
   const result = useGetEventsQuery({
     variables: {
@@ -16,6 +21,10 @@ const Map: FunctionComponent = () => {
       },
     },
   });
+
+  const slideTo = (index:any) => {
+    swiperRef.slideTo(index - 1, 0);
+  };
 
   useEffect(() => {
     let events = result.data?.getEvents?.result;
@@ -34,10 +43,10 @@ const Map: FunctionComponent = () => {
           />
 
           {
-            allEvents?.map((event: any) => {
+            allEvents?.map((event: any, index:number) => {
               return (
-                <div key={event.id}>
-                  <Marker position={[event.address.latitude, event.address.longitude]}>
+                <div key={event.id} onClick={() => slideTo(index)}>
+                  <Marker position={[event.address.latitude, event.address.longitude]} >
                     <Popup>
                       <p>Stadt : {event.address.place}</p>
                       <p>Straße : {event.address.street}</p>
@@ -51,20 +60,30 @@ const Map: FunctionComponent = () => {
         </MapContainer>
 
         <div className="slider">
-        <Slider title="">
-          {allEvents?.map((el: any) => {
-            return (
-              <SlideCard
-                route={`/event/${el.id}`}
-                key={el?.name}
-                eventName={el?.name}
-                location={el?.address?.street}
-                date="Freitag, 25/02/22"
-                imgUrl={el?.titleImage?.id}
-              />
-            );
-          })}
-        </Slider>
+          <Swiper
+          onSwiper={setSwiperRef}
+          modules={[Virtual]}
+            spaceBetween={0}
+            slidesPerView={1.5}
+            onSlideChange={() => console.log()}
+          >
+            {allEvents?.map((el: any, index: number) => {
+              return (
+                <SwiperSlide key={el.id}>
+                  <div>
+                    <SlideCard
+                      route={`/event/${el.id}`}
+                      key={el?.name}
+                      eventName={el?.name}
+                      location={el?.address?.street}
+                      date="Freitag, 25/02/22"
+                      imgUrl={el?.titleImage?.id}
+                    />
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
         </div>
       </div>
       }

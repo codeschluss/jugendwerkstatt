@@ -1,0 +1,25 @@
+query GetJobAd($entity: JobAdEntityInput) {
+  getJobAd(entity: $entity) {
+    company {
+      website
+      phone
+      name
+      mail
+      id
+      address {
+        houseNumber
+        id
+        latitude
+        longitude
+        modified
+        place
+        postalCode
+        street
+      }
+    }
+    dueDate
+    id
+    startDate
+    title
+  }
+}

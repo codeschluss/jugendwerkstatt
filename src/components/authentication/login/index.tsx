@@ -1,15 +1,21 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../../contexts/AuthContext";
 import EventContext from "../../../contexts/EventContext";
-import { useCreateTokenMutation } from "../../../GraphQl/graphql";
+import {
+  useCreateTokenMutation,
+  useGetUserQuery,
+} from "../../../GraphQl/graphql";
 import useInput from "../../../hooks/use-input";
 import useTokenCheck from "../../../hooks/use-tokenCheck";
 import Button from "../../ui/Button";
 import AuthInput from "../AuthInput";
 import AuthWrapper from "../AuthWrapper";
+import jwtDecode from "jwt-decode";
 
 const Login = () => {
+  const { setTheUser } = useContext(AuthContext);
+  const [accessToken, setAccessToken] = useState();
   const {
     value: enteredEmail,
     validity: enteredEmailValidity,
@@ -37,14 +43,25 @@ const Login = () => {
     },
   });
 
-  const { setAllEvents, allEvents } = useContext(EventContext);
-  const { theUser } = useContext(AuthContext);
+  const result = useGetUserQuery({
+    skip: !accessToken ? true : false,
+    variables: {
+      entity: {
+        id: accessToken,
+      },
+    },
+  });
 
   useEffect(() => {
-    if (allEvents) {
-      console.log(allEvents, "events");
+    if (data) {
+      setAccessToken(jwtDecode(data?.createToken?.access || ""));
+      result.refetch();
     }
-  }, [allEvents]);
+  }, [data, result.data]);
+
+  if (result.data) {
+    setTheUser(result.data.getUser);
+  }
 
   const submitHandler = async (e: any) => {
     e.preventDefault();

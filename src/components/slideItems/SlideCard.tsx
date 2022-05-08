@@ -7,8 +7,9 @@ interface SlideCardProps {
   imgUrl?: any;
   eventName: EventEntity["name"];
   location: AddressEntity["place"];
-  date: string;
+  date: any;
   route: any;
+  width?: string;
 }
 
 const SlideCard: React.FC<SlideCardProps> = ({
@@ -18,10 +19,11 @@ const SlideCard: React.FC<SlideCardProps> = ({
   date,
   imgUrl,
   route,
+  width = "w-9/12",
 }) => {
   return (
     <div
-      className={`${className} snap-center w-9/12 h-60 overflow-hidden rounded-md flex-none relative p-2`}
+      className={`${className} snap-center ${width} h-60 overflow-hidden rounded-md flex-none relative p-2`}
     >
       <Link to={route}>
         {imgUrl ? (
