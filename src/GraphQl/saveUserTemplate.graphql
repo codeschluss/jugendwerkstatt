@@ -1,0 +1,20 @@
+mutation SaveUserTemplate(
+  $name: String
+  $content: String
+  $templateTypeId: String!
+  $templateId: String
+  $userId: String!
+) {
+  saveUserTemplate(
+    entity: {
+      id: $templateId
+      content: $content
+      name: $name
+      templateType: { id: $templateTypeId }
+      user: { id: $userId }
+    }
+  ) {
+    id
+    name
+  }
+}

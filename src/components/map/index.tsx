@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useGetEventsQuery } from "../../GraphQl/graphql";
 import SlideCard from '../slideItems/SlideCard'
 import Slider from  '../slideItems/Slider'
-import 'swiper/css';
+// import 'swiper/css';
 import "./style.css";
 
 const Map: FunctionComponent = () => {

@@ -2022,6 +2022,13 @@ export type GetLinkCategoriesQueryVariables = Exact<{
 
 export type GetLinkCategoriesQuery = { __typename?: 'Query', getLinkCategories?: { __typename?: 'PageableList_LinkCategoryEntity', result?: Array<{ __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null, link?: Array<{ __typename?: 'LinkEntity', id?: string | null, title?: string | null, url?: string | null } | null> | null } | null> | null } | null };
 
+export type GetTemplateQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetTemplateQuery = { __typename?: 'Query', getTemplate?: { __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null };
+
 export type GetTemplateTypesQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
 }>;
@@ -2043,12 +2050,19 @@ export type GetUserQueryVariables = Exact<{
 
 export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null, course?: { __typename?: 'CourseEntity', id?: string | null, name?: string | null, group?: { __typename?: 'CourseEntity', name?: string | null, id?: string | null } | null } | null, uploads?: Array<{ __typename?: 'MediaEntity', name?: string | null, id?: string | null } | null> | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null } | null> | null } | null };
 
+export type GetUserTemplateQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetUserTemplateQuery = { __typename?: 'Query', getUserTemplate?: { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null };
+
 export type GetUserTemplatesQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 
-export type GetUserTemplatesQuery = { __typename?: 'Query', getUserTemplates?: { __typename?: 'PageableList_UserTemplateEntity', result?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null } | null> | null } | null };
+export type GetUserTemplatesQuery = { __typename?: 'Query', getUserTemplates?: { __typename?: 'PageableList_UserTemplateEntity', result?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null> | null } | null };
 
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars['String'];
@@ -2064,6 +2078,17 @@ export type ResetPasswordMutationVariables = Exact<{
 
 
 export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword?: boolean | null };
+
+export type SaveUserTemplateMutationVariables = Exact<{
+  name?: InputMaybe<Scalars['String']>;
+  content?: InputMaybe<Scalars['String']>;
+  templateTypeId: Scalars['String'];
+  templateId?: InputMaybe<Scalars['String']>;
+  userId: Scalars['String'];
+}>;
+
+
+export type SaveUserTemplateMutation = { __typename?: 'Mutation', saveUserTemplate?: { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null } | null };
 
 export type SendPasswordResetMutationVariables = Exact<{
   email: Scalars['String'];
@@ -2357,6 +2382,43 @@ export function useGetLinkCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetLinkCategoriesQueryHookResult = ReturnType<typeof useGetLinkCategoriesQuery>;
 export type GetLinkCategoriesLazyQueryHookResult = ReturnType<typeof useGetLinkCategoriesLazyQuery>;
 export type GetLinkCategoriesQueryResult = Apollo.QueryResult<GetLinkCategoriesQuery, GetLinkCategoriesQueryVariables>;
+export const GetTemplateDocument = gql`
+    query GetTemplate($id: String!) {
+  getTemplate(entity: {id: $id}) {
+    id
+    name
+    content
+  }
+}
+    `;
+
+/**
+ * __useGetTemplateQuery__
+ *
+ * To run a query within a React component, call `useGetTemplateQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTemplateQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTemplateQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetTemplateQuery(baseOptions: Apollo.QueryHookOptions<GetTemplateQuery, GetTemplateQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTemplateQuery, GetTemplateQueryVariables>(GetTemplateDocument, options);
+      }
+export function useGetTemplateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTemplateQuery, GetTemplateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTemplateQuery, GetTemplateQueryVariables>(GetTemplateDocument, options);
+        }
+export type GetTemplateQueryHookResult = ReturnType<typeof useGetTemplateQuery>;
+export type GetTemplateLazyQueryHookResult = ReturnType<typeof useGetTemplateLazyQuery>;
+export type GetTemplateQueryResult = Apollo.QueryResult<GetTemplateQuery, GetTemplateQueryVariables>;
 export const GetTemplateTypesDocument = gql`
     query GetTemplateTypes($params: FilterSortPaginateInput) {
   getTemplateTypes(params: $params) {
@@ -2495,6 +2557,43 @@ export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
+export const GetUserTemplateDocument = gql`
+    query GetUserTemplate($id: String!) {
+  getUserTemplate(entity: {id: $id}) {
+    id
+    name
+    content
+  }
+}
+    `;
+
+/**
+ * __useGetUserTemplateQuery__
+ *
+ * To run a query within a React component, call `useGetUserTemplateQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserTemplateQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserTemplateQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUserTemplateQuery(baseOptions: Apollo.QueryHookOptions<GetUserTemplateQuery, GetUserTemplateQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserTemplateQuery, GetUserTemplateQueryVariables>(GetUserTemplateDocument, options);
+      }
+export function useGetUserTemplateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserTemplateQuery, GetUserTemplateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserTemplateQuery, GetUserTemplateQueryVariables>(GetUserTemplateDocument, options);
+        }
+export type GetUserTemplateQueryHookResult = ReturnType<typeof useGetUserTemplateQuery>;
+export type GetUserTemplateLazyQueryHookResult = ReturnType<typeof useGetUserTemplateLazyQuery>;
+export type GetUserTemplateQueryResult = Apollo.QueryResult<GetUserTemplateQuery, GetUserTemplateQueryVariables>;
 export const GetUserTemplatesDocument = gql`
     query GetUserTemplates($id: String!) {
   getUserTemplates(
@@ -2503,6 +2602,7 @@ export const GetUserTemplatesDocument = gql`
     result {
       id
       name
+      content
     }
   }
 }
@@ -2601,6 +2701,46 @@ export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOption
 export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
 export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const SaveUserTemplateDocument = gql`
+    mutation SaveUserTemplate($name: String, $content: String, $templateTypeId: String!, $templateId: String, $userId: String!) {
+  saveUserTemplate(
+    entity: {id: $templateId, content: $content, name: $name, templateType: {id: $templateTypeId}, user: {id: $userId}}
+  ) {
+    id
+    name
+  }
+}
+    `;
+export type SaveUserTemplateMutationFn = Apollo.MutationFunction<SaveUserTemplateMutation, SaveUserTemplateMutationVariables>;
+
+/**
+ * __useSaveUserTemplateMutation__
+ *
+ * To run a mutation, you first call `useSaveUserTemplateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveUserTemplateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveUserTemplateMutation, { data, loading, error }] = useSaveUserTemplateMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      content: // value for 'content'
+ *      templateTypeId: // value for 'templateTypeId'
+ *      templateId: // value for 'templateId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useSaveUserTemplateMutation(baseOptions?: Apollo.MutationHookOptions<SaveUserTemplateMutation, SaveUserTemplateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveUserTemplateMutation, SaveUserTemplateMutationVariables>(SaveUserTemplateDocument, options);
+      }
+export type SaveUserTemplateMutationHookResult = ReturnType<typeof useSaveUserTemplateMutation>;
+export type SaveUserTemplateMutationResult = Apollo.MutationResult<SaveUserTemplateMutation>;
+export type SaveUserTemplateMutationOptions = Apollo.BaseMutationOptions<SaveUserTemplateMutation, SaveUserTemplateMutationVariables>;
 export const SendPasswordResetDocument = gql`
     mutation sendPasswordReset($email: String!) {
   sendPasswordReset(mailAddress: $email)

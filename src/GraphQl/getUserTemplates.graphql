@@ -9,6 +9,7 @@ query GetUserTemplates($id: String!) {
     result {
       id
       name
+      content
     }
   }
 }

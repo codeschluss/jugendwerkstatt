@@ -29,8 +29,7 @@ const Templates: React.FC = () => {
 
     const userTemplatesResult = useGetUserTemplatesQuery({
         variables: {
-            // TODO: Change it to ID
-          id: "5852aa11-4e5c-4d8d-bc41-9fa44cb6ca1a"
+          id: atoken?.id ? atoken?.id: '5852aa11-4e5c-4d8d-bc41-9fa44cb6ca1a'
         }
     });
     
@@ -47,12 +46,13 @@ const Templates: React.FC = () => {
               <li className="pt-4" key={index}>
                 <Link
                   to={{
-                    pathname: "/Forms/Templates/Edit/1"
+                    pathname: `/Forms/Templates/Edit/${template.id}`
                 }}
                 state= {{
                     templateType: templateType.name,
                     name: template.name,
-                    id: template.id
+                    templateTypeId: templateType.id,
+                    edit: false,
                 }}
                 >
                   {template.name}
@@ -75,12 +75,13 @@ const Templates: React.FC = () => {
                 <li className="pt-4" key={index}>
                     <Link
                     to={{
-                        pathname: "/Forms/Templates/Edit/1"
+                        pathname: `/Forms/Templates/Edit/${template.id}`
                     }}
                     state= {{
                         templateType: templateType.name,
                         name: template.name,
-                        id: template.id
+                        templateTypeId: templateType.id,
+                        edit: true,
                     }}
                     >
                     {template.name}
