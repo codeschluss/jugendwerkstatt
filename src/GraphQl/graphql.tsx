@@ -387,55 +387,59 @@ export type MediaEntityInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createToken?: Maybe<TokenDto>;
-  deleteAddress: Scalars['Boolean'];
-  deleteAddresss: Scalars['Boolean'];
-  deleteAnswer: Scalars['Boolean'];
-  deleteAnswers: Scalars['Boolean'];
-  deleteAssignment: Scalars['Boolean'];
-  deleteAssignmentState: Scalars['Boolean'];
-  deleteAssignmentStates: Scalars['Boolean'];
-  deleteAssignments: Scalars['Boolean'];
-  deleteCategory: Scalars['Boolean'];
-  deleteCategorys: Scalars['Boolean'];
-  deleteCompanies: Scalars['Boolean'];
-  deleteCompany: Scalars['Boolean'];
-  deleteCourse: Scalars['Boolean'];
-  deleteCourses: Scalars['Boolean'];
-  deleteErrorMessage: Scalars['Boolean'];
-  deleteErrorMessages: Scalars['Boolean'];
-  deleteEvent: Scalars['Boolean'];
-  deleteEvents: Scalars['Boolean'];
-  deleteFeedback: Scalars['Boolean'];
-  deleteFeedbacks: Scalars['Boolean'];
-  deleteGroup: Scalars['Boolean'];
-  deleteGroups: Scalars['Boolean'];
-  deleteJobAd: Scalars['Boolean'];
-  deleteJobAds: Scalars['Boolean'];
-  deleteJobType: Scalars['Boolean'];
-  deleteJobTypes: Scalars['Boolean'];
-  deleteLink: Scalars['Boolean'];
-  deleteLinkCategory: Scalars['Boolean'];
-  deleteLinks: Scalars['Boolean'];
-  deleteOrganizer: Scalars['Boolean'];
-  deleteOrganizers: Scalars['Boolean'];
-  deleteQuestion: Scalars['Boolean'];
-  deleteQuestionnaire: Scalars['Boolean'];
-  deleteQuestionnaires: Scalars['Boolean'];
-  deleteQuestions: Scalars['Boolean'];
-  deleteRole: Scalars['Boolean'];
-  deleteRoles: Scalars['Boolean'];
-  deleteSchedule: Scalars['Boolean'];
-  deleteSchedules: Scalars['Boolean'];
-  deleteTemplate: Scalars['Boolean'];
-  deleteTemplateType: Scalars['Boolean'];
-  deleteTemplateTypes: Scalars['Boolean'];
-  deleteTemplates: Scalars['Boolean'];
-  deleteUser: Scalars['Boolean'];
-  deleteUserTemplate: Scalars['Boolean'];
-  deleteUserTemplates: Scalars['Boolean'];
-  deleteUsers: Scalars['Boolean'];
+  deleteAddress?: Maybe<Scalars['Boolean']>;
+  deleteAddresss?: Maybe<Scalars['Boolean']>;
+  deleteAnswer?: Maybe<Scalars['Boolean']>;
+  deleteAnswers?: Maybe<Scalars['Boolean']>;
+  deleteAssignment?: Maybe<Scalars['Boolean']>;
+  deleteAssignmentState?: Maybe<Scalars['Boolean']>;
+  deleteAssignmentStates?: Maybe<Scalars['Boolean']>;
+  deleteAssignments?: Maybe<Scalars['Boolean']>;
+  deleteCompanies?: Maybe<Scalars['Boolean']>;
+  deleteCompany?: Maybe<Scalars['Boolean']>;
+  deleteCourse?: Maybe<Scalars['Boolean']>;
+  deleteCourses?: Maybe<Scalars['Boolean']>;
+  deleteErrorMessage?: Maybe<Scalars['Boolean']>;
+  deleteErrorMessages?: Maybe<Scalars['Boolean']>;
+  deleteEvent?: Maybe<Scalars['Boolean']>;
+  deleteEventCategories?: Maybe<Scalars['Boolean']>;
+  deleteEventCategory?: Maybe<Scalars['Boolean']>;
+  deleteEvents?: Maybe<Scalars['Boolean']>;
+  deleteFeedback?: Maybe<Scalars['Boolean']>;
+  deleteFeedbacks?: Maybe<Scalars['Boolean']>;
+  deleteGroup?: Maybe<Scalars['Boolean']>;
+  deleteGroups?: Maybe<Scalars['Boolean']>;
+  deleteJobAd?: Maybe<Scalars['Boolean']>;
+  deleteJobAds?: Maybe<Scalars['Boolean']>;
+  deleteJobType?: Maybe<Scalars['Boolean']>;
+  deleteJobTypes?: Maybe<Scalars['Boolean']>;
+  deleteLink?: Maybe<Scalars['Boolean']>;
+  deleteLinkCategory?: Maybe<Scalars['Boolean']>;
+  deleteLinks?: Maybe<Scalars['Boolean']>;
+  deleteOrganizer?: Maybe<Scalars['Boolean']>;
+  deleteOrganizers?: Maybe<Scalars['Boolean']>;
+  deleteQuestion?: Maybe<Scalars['Boolean']>;
+  deleteQuestionnaire?: Maybe<Scalars['Boolean']>;
+  deleteQuestionnaires?: Maybe<Scalars['Boolean']>;
+  deleteQuestions?: Maybe<Scalars['Boolean']>;
+  deleteRole?: Maybe<Scalars['Boolean']>;
+  deleteRoles?: Maybe<Scalars['Boolean']>;
+  deleteSchedule?: Maybe<Scalars['Boolean']>;
+  deleteSchedules?: Maybe<Scalars['Boolean']>;
+  deleteSubscription?: Maybe<Scalars['Boolean']>;
+  deleteSubscriptionType?: Maybe<Scalars['Boolean']>;
+  deleteSubscriptionTypes?: Maybe<Scalars['Boolean']>;
+  deleteSubscriptions?: Maybe<Scalars['Boolean']>;
+  deleteTemplate?: Maybe<Scalars['Boolean']>;
+  deleteTemplateType?: Maybe<Scalars['Boolean']>;
+  deleteTemplateTypes?: Maybe<Scalars['Boolean']>;
+  deleteTemplates?: Maybe<Scalars['Boolean']>;
+  deleteUser?: Maybe<Scalars['Boolean']>;
+  deleteUserTemplate?: Maybe<Scalars['Boolean']>;
+  deleteUserTemplates?: Maybe<Scalars['Boolean']>;
+  deleteUsers?: Maybe<Scalars['Boolean']>;
   refreshToken?: Maybe<TokenDto>;
-  resetPassword: Scalars['Boolean'];
+  resetPassword?: Maybe<Scalars['Boolean']>;
   saveAddress?: Maybe<AddressEntity>;
   saveAddresss?: Maybe<Array<Maybe<AddressEntity>>>;
   saveAnswer?: Maybe<AnswerEntity>;
@@ -444,8 +448,6 @@ export type Mutation = {
   saveAssignmentState?: Maybe<AssignmentStateEntity>;
   saveAssignmentStates?: Maybe<Array<Maybe<AssignmentStateEntity>>>;
   saveAssignments?: Maybe<Array<Maybe<AssignmentEntity>>>;
-  saveCategory?: Maybe<EventCategoryEntity>;
-  saveCategorys?: Maybe<Array<Maybe<EventCategoryEntity>>>;
   saveCompanies?: Maybe<Array<Maybe<CompanyEntity>>>;
   saveCompany?: Maybe<CompanyEntity>;
   saveCourse?: Maybe<CourseEntity>;
@@ -453,6 +455,8 @@ export type Mutation = {
   saveErrorMessage?: Maybe<ErrorMessageEntity>;
   saveErrorMessages?: Maybe<Array<Maybe<ErrorMessageEntity>>>;
   saveEvent?: Maybe<EventEntity>;
+  saveEventCategories?: Maybe<Array<Maybe<EventCategoryEntity>>>;
+  saveEventCategory?: Maybe<EventCategoryEntity>;
   saveEvents?: Maybe<Array<Maybe<EventEntity>>>;
   saveFeedback?: Maybe<FeedbackEntity>;
   saveFeedbacks?: Maybe<Array<Maybe<FeedbackEntity>>>;
@@ -476,6 +480,10 @@ export type Mutation = {
   saveRoles?: Maybe<Array<Maybe<RoleEntity>>>;
   saveSchedule?: Maybe<ScheduleEntity>;
   saveSchedules?: Maybe<Array<Maybe<ScheduleEntity>>>;
+  saveSubscription?: Maybe<SubscriptionEntity>;
+  saveSubscriptionType?: Maybe<SubscriptionTypeEntity>;
+  saveSubscriptionTypes?: Maybe<Array<Maybe<SubscriptionTypeEntity>>>;
+  saveSubscriptions?: Maybe<Array<Maybe<SubscriptionEntity>>>;
   saveTemplate?: Maybe<TemplateEntity>;
   saveTemplateType?: Maybe<TemplateTypeEntity>;
   saveTemplateTypes?: Maybe<Array<Maybe<TemplateTypeEntity>>>;
@@ -484,10 +492,9 @@ export type Mutation = {
   saveUserTemplate?: Maybe<UserTemplateEntity>;
   saveUserTemplates?: Maybe<Array<Maybe<UserTemplateEntity>>>;
   saveUsers?: Maybe<Array<Maybe<UserEntity>>>;
-  sendError: Scalars['Boolean'];
-  sendPasswordReset: Scalars['Boolean'];
-  sendVerification: Scalars['Boolean'];
-  test?: Maybe<UserEntity>;
+  sendError?: Maybe<Scalars['Boolean']>;
+  sendPasswordReset?: Maybe<Scalars['Boolean']>;
+  sendVerification?: Maybe<Scalars['Boolean']>;
   verify?: Maybe<UserEntity>;
 };
 
@@ -548,18 +555,6 @@ export type MutationDeleteAssignmentsArgs = {
 
 
 /** Mutation root */
-export type MutationDeleteCategoryArgs = {
-  id?: InputMaybe<Scalars['String']>;
-};
-
-
-/** Mutation root */
-export type MutationDeleteCategorysArgs = {
-  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-};
-
-
-/** Mutation root */
 export type MutationDeleteCompaniesArgs = {
   ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
@@ -597,6 +592,18 @@ export type MutationDeleteErrorMessagesArgs = {
 
 /** Mutation root */
 export type MutationDeleteEventArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteEventCategoriesArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteEventCategoryArgs = {
   id?: InputMaybe<Scalars['String']>;
 };
 
@@ -735,6 +742,30 @@ export type MutationDeleteSchedulesArgs = {
 
 
 /** Mutation root */
+export type MutationDeleteSubscriptionArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteSubscriptionTypeArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteSubscriptionTypesArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteSubscriptionsArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
 export type MutationDeleteTemplateArgs = {
   id?: InputMaybe<Scalars['String']>;
 };
@@ -844,18 +875,6 @@ export type MutationSaveAssignmentsArgs = {
 
 
 /** Mutation root */
-export type MutationSaveCategoryArgs = {
-  entity?: InputMaybe<EventCategoryEntityInput>;
-};
-
-
-/** Mutation root */
-export type MutationSaveCategorysArgs = {
-  entities?: InputMaybe<Array<InputMaybe<EventCategoryEntityInput>>>;
-};
-
-
-/** Mutation root */
 export type MutationSaveCompaniesArgs = {
   entities?: InputMaybe<Array<InputMaybe<CompanyEntityInput>>>;
 };
@@ -894,6 +913,18 @@ export type MutationSaveErrorMessagesArgs = {
 /** Mutation root */
 export type MutationSaveEventArgs = {
   entity?: InputMaybe<EventEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveEventCategoriesArgs = {
+  entities?: InputMaybe<Array<InputMaybe<EventCategoryEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationSaveEventCategoryArgs = {
+  entity?: InputMaybe<EventCategoryEntityInput>;
 };
 
 
@@ -1032,6 +1063,30 @@ export type MutationSaveScheduleArgs = {
 /** Mutation root */
 export type MutationSaveSchedulesArgs = {
   entities?: InputMaybe<Array<InputMaybe<ScheduleEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationSaveSubscriptionArgs = {
+  entity?: InputMaybe<SubscriptionEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveSubscriptionTypeArgs = {
+  entity?: InputMaybe<SubscriptionTypeEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveSubscriptionTypesArgs = {
+  entities?: InputMaybe<Array<InputMaybe<SubscriptionTypeEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationSaveSubscriptionsArgs = {
+  entities?: InputMaybe<Array<InputMaybe<SubscriptionEntityInput>>>;
 };
 
 
@@ -1249,6 +1304,18 @@ export type PageableList_ScheduleEntity = {
   total: Scalars['Long'];
 };
 
+export type PageableList_SubscriptionEntity = {
+  __typename?: 'PageableList_SubscriptionEntity';
+  result?: Maybe<Array<Maybe<SubscriptionEntity>>>;
+  total: Scalars['Long'];
+};
+
+export type PageableList_SubscriptionTypeEntity = {
+  __typename?: 'PageableList_SubscriptionTypeEntity';
+  result?: Maybe<Array<Maybe<SubscriptionTypeEntity>>>;
+  total: Scalars['Long'];
+};
+
 export type PageableList_TemplateEntity = {
   __typename?: 'PageableList_TemplateEntity';
   result?: Maybe<Array<Maybe<TemplateEntity>>>;
@@ -1301,8 +1368,6 @@ export type Query = {
   getAssignmentState?: Maybe<AssignmentStateEntity>;
   getAssignmentStates?: Maybe<PageableList_AssignmentStateEntity>;
   getAssignments?: Maybe<PageableList_AssignmentEntity>;
-  getCategory?: Maybe<EventCategoryEntity>;
-  getCategorys?: Maybe<PageableList_EventCategoryEntity>;
   getCompanies?: Maybe<PageableList_CompanyEntity>;
   getCompany?: Maybe<CompanyEntity>;
   getCourse?: Maybe<CourseEntity>;
@@ -1310,6 +1375,8 @@ export type Query = {
   getErrorMessage?: Maybe<ErrorMessageEntity>;
   getErrorMessages?: Maybe<PageableList_ErrorMessageEntity>;
   getEvent?: Maybe<EventEntity>;
+  getEventCategories?: Maybe<PageableList_EventCategoryEntity>;
+  getEventCategory?: Maybe<EventCategoryEntity>;
   getEvents?: Maybe<PageableList_EventEntity>;
   getFeedback?: Maybe<FeedbackEntity>;
   getFeedbacks?: Maybe<PageableList_FeedbackEntity>;
@@ -1333,6 +1400,10 @@ export type Query = {
   getRoles?: Maybe<PageableList_RoleEntity>;
   getSchedule?: Maybe<ScheduleEntity>;
   getSchedules?: Maybe<PageableList_ScheduleEntity>;
+  getSubscription?: Maybe<SubscriptionEntity>;
+  getSubscriptionType?: Maybe<SubscriptionTypeEntity>;
+  getSubscriptionTypes?: Maybe<PageableList_SubscriptionTypeEntity>;
+  getSubscriptions?: Maybe<PageableList_SubscriptionEntity>;
   getTemplate?: Maybe<TemplateEntity>;
   getTemplateType?: Maybe<TemplateTypeEntity>;
   getTemplateTypes?: Maybe<PageableList_TemplateTypeEntity>;
@@ -1394,18 +1465,6 @@ export type QueryGetAssignmentsArgs = {
 
 
 /** Query root */
-export type QueryGetCategoryArgs = {
-  entity?: InputMaybe<EventCategoryEntityInput>;
-};
-
-
-/** Query root */
-export type QueryGetCategorysArgs = {
-  params?: InputMaybe<FilterSortPaginateInput>;
-};
-
-
-/** Query root */
 export type QueryGetCompaniesArgs = {
   params?: InputMaybe<FilterSortPaginateInput>;
 };
@@ -1444,6 +1503,18 @@ export type QueryGetErrorMessagesArgs = {
 /** Query root */
 export type QueryGetEventArgs = {
   entity?: InputMaybe<EventEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetEventCategoriesArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
+export type QueryGetEventCategoryArgs = {
+  entity?: InputMaybe<EventCategoryEntityInput>;
 };
 
 
@@ -1581,6 +1652,30 @@ export type QueryGetScheduleArgs = {
 
 /** Query root */
 export type QueryGetSchedulesArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
+export type QueryGetSubscriptionArgs = {
+  entity?: InputMaybe<SubscriptionEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetSubscriptionTypeArgs = {
+  entity?: InputMaybe<SubscriptionTypeEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetSubscriptionTypesArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
+export type QueryGetSubscriptionsArgs = {
   params?: InputMaybe<FilterSortPaginateInput>;
 };
 
@@ -1736,6 +1831,42 @@ export type ScheduleEntityInput = {
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   startDate?: InputMaybe<Scalars['OffsetDateTime']>;
+};
+
+export type SubscriptionEntity = {
+  __typename?: 'SubscriptionEntity';
+  auth_secret?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+  subscriptionType?: Maybe<SubscriptionTypeEntity>;
+};
+
+export type SubscriptionEntityInput = {
+  auth_secret?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
+  subscriptionType?: InputMaybe<SubscriptionTypeEntityInput>;
+};
+
+export type SubscriptionTypeEntity = {
+  __typename?: 'SubscriptionTypeEntity';
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+  name?: Maybe<Scalars['String']>;
+  subscriptions?: Maybe<Array<Maybe<SubscriptionEntity>>>;
+};
+
+export type SubscriptionTypeEntityInput = {
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
+  name?: InputMaybe<Scalars['String']>;
+  subscriptions?: InputMaybe<Array<InputMaybe<SubscriptionEntityInput>>>;
 };
 
 export type TemplateEntity = {
@@ -1905,12 +2036,47 @@ export type GetLinkCategoriesQueryVariables = Exact<{
 
 export type GetLinkCategoriesQuery = { __typename?: 'Query', getLinkCategories?: { __typename?: 'PageableList_LinkCategoryEntity', result?: Array<{ __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null, link?: Array<{ __typename?: 'LinkEntity', id?: string | null, title?: string | null, url?: string | null } | null> | null } | null> | null } | null };
 
+export type GetTemplateQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetTemplateQuery = { __typename?: 'Query', getTemplate?: { __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null };
+
+export type GetTemplateTypesQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetTemplateTypesQuery = { __typename?: 'Query', getTemplateTypes?: { __typename?: 'PageableList_TemplateTypeEntity', result?: Array<{ __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null> | null } | null };
+
+export type GetTemplatesQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetTemplatesQuery = { __typename?: 'Query', getTemplates?: { __typename?: 'PageableList_TemplateEntity', result?: Array<{ __typename?: 'TemplateEntity', id?: string | null, name?: string | null } | null> | null } | null };
+
 export type GetUserQueryVariables = Exact<{
   entity?: InputMaybe<UserEntityInput>;
 }>;
 
 
 export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, uploads?: Array<{ __typename?: 'MediaEntity', id?: string | null, name?: string | null } | null> | null, roles?: Array<{ __typename?: 'RoleEntity', name?: string | null, id?: string | null } | null> | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null, course?: { __typename?: 'CourseEntity', id?: string | null, name?: string | null } | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, content?: string | null, name?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', name?: string | null, id?: string | null } | null } | null> | null, verification?: { __typename?: 'VerificationEntity', id?: string | null } | null } | null };
+
+export type GetUserTemplateQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetUserTemplateQuery = { __typename?: 'Query', getUserTemplate?: { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null };
+
+export type GetUserTemplatesQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
+
+
+export type GetUserTemplatesQuery = { __typename?: 'Query', getUserTemplates?: { __typename?: 'PageableList_UserTemplateEntity', result?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null> | null } | null };
 
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars['String'];
@@ -1925,21 +2091,32 @@ export type ResetPasswordMutationVariables = Exact<{
 }>;
 
 
-export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: boolean };
+export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword?: boolean | null };
+
+export type SaveUserTemplateMutationVariables = Exact<{
+  name?: InputMaybe<Scalars['String']>;
+  content?: InputMaybe<Scalars['String']>;
+  templateTypeId: Scalars['String'];
+  templateId?: InputMaybe<Scalars['String']>;
+  userId: Scalars['String'];
+}>;
+
+
+export type SaveUserTemplateMutation = { __typename?: 'Mutation', saveUserTemplate?: { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null } | null };
 
 export type SendPasswordResetMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
 
 
-export type SendPasswordResetMutation = { __typename?: 'Mutation', sendPasswordReset: boolean };
+export type SendPasswordResetMutation = { __typename?: 'Mutation', sendPasswordReset?: boolean | null };
 
 export type SendVerificationMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
 
 
-export type SendVerificationMutation = { __typename?: 'Mutation', sendVerification: boolean };
+export type SendVerificationMutation = { __typename?: 'Mutation', sendVerification?: boolean | null };
 
 export type VerifyMutationVariables = Exact<{
   key?: InputMaybe<Scalars['String']>;
@@ -2344,6 +2521,121 @@ export function useGetLinkCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetLinkCategoriesQueryHookResult = ReturnType<typeof useGetLinkCategoriesQuery>;
 export type GetLinkCategoriesLazyQueryHookResult = ReturnType<typeof useGetLinkCategoriesLazyQuery>;
 export type GetLinkCategoriesQueryResult = Apollo.QueryResult<GetLinkCategoriesQuery, GetLinkCategoriesQueryVariables>;
+export const GetTemplateDocument = gql`
+    query GetTemplate($id: String!) {
+  getTemplate(entity: {id: $id}) {
+    id
+    name
+    content
+  }
+}
+    `;
+
+/**
+ * __useGetTemplateQuery__
+ *
+ * To run a query within a React component, call `useGetTemplateQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTemplateQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTemplateQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetTemplateQuery(baseOptions: Apollo.QueryHookOptions<GetTemplateQuery, GetTemplateQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTemplateQuery, GetTemplateQueryVariables>(GetTemplateDocument, options);
+      }
+export function useGetTemplateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTemplateQuery, GetTemplateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTemplateQuery, GetTemplateQueryVariables>(GetTemplateDocument, options);
+        }
+export type GetTemplateQueryHookResult = ReturnType<typeof useGetTemplateQuery>;
+export type GetTemplateLazyQueryHookResult = ReturnType<typeof useGetTemplateLazyQuery>;
+export type GetTemplateQueryResult = Apollo.QueryResult<GetTemplateQuery, GetTemplateQueryVariables>;
+export const GetTemplateTypesDocument = gql`
+    query GetTemplateTypes($params: FilterSortPaginateInput) {
+  getTemplateTypes(params: $params) {
+    result {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTemplateTypesQuery__
+ *
+ * To run a query within a React component, call `useGetTemplateTypesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTemplateTypesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTemplateTypesQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetTemplateTypesQuery(baseOptions?: Apollo.QueryHookOptions<GetTemplateTypesQuery, GetTemplateTypesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTemplateTypesQuery, GetTemplateTypesQueryVariables>(GetTemplateTypesDocument, options);
+      }
+export function useGetTemplateTypesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTemplateTypesQuery, GetTemplateTypesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTemplateTypesQuery, GetTemplateTypesQueryVariables>(GetTemplateTypesDocument, options);
+        }
+export type GetTemplateTypesQueryHookResult = ReturnType<typeof useGetTemplateTypesQuery>;
+export type GetTemplateTypesLazyQueryHookResult = ReturnType<typeof useGetTemplateTypesLazyQuery>;
+export type GetTemplateTypesQueryResult = Apollo.QueryResult<GetTemplateTypesQuery, GetTemplateTypesQueryVariables>;
+export const GetTemplatesDocument = gql`
+    query GetTemplates($id: String!) {
+  getTemplates(
+    params: {expression: {entity: {operator: EQUAL, path: "templateType.id", value: $id}}}
+  ) {
+    result {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetTemplatesQuery__
+ *
+ * To run a query within a React component, call `useGetTemplatesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTemplatesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTemplatesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetTemplatesQuery(baseOptions: Apollo.QueryHookOptions<GetTemplatesQuery, GetTemplatesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTemplatesQuery, GetTemplatesQueryVariables>(GetTemplatesDocument, options);
+      }
+export function useGetTemplatesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTemplatesQuery, GetTemplatesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTemplatesQuery, GetTemplatesQueryVariables>(GetTemplatesDocument, options);
+        }
+export type GetTemplatesQueryHookResult = ReturnType<typeof useGetTemplatesQuery>;
+export type GetTemplatesLazyQueryHookResult = ReturnType<typeof useGetTemplatesLazyQuery>;
+export type GetTemplatesQueryResult = Apollo.QueryResult<GetTemplatesQuery, GetTemplatesQueryVariables>;
 export const GetUserDocument = gql`
     query GetUser($entity: UserEntityInput) {
   getUser(entity: $entity) {
@@ -2408,6 +2700,84 @@ export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
 export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
+export const GetUserTemplateDocument = gql`
+    query GetUserTemplate($id: String!) {
+  getUserTemplate(entity: {id: $id}) {
+    id
+    name
+    content
+  }
+}
+    `;
+
+/**
+ * __useGetUserTemplateQuery__
+ *
+ * To run a query within a React component, call `useGetUserTemplateQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserTemplateQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserTemplateQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUserTemplateQuery(baseOptions: Apollo.QueryHookOptions<GetUserTemplateQuery, GetUserTemplateQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserTemplateQuery, GetUserTemplateQueryVariables>(GetUserTemplateDocument, options);
+      }
+export function useGetUserTemplateLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserTemplateQuery, GetUserTemplateQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserTemplateQuery, GetUserTemplateQueryVariables>(GetUserTemplateDocument, options);
+        }
+export type GetUserTemplateQueryHookResult = ReturnType<typeof useGetUserTemplateQuery>;
+export type GetUserTemplateLazyQueryHookResult = ReturnType<typeof useGetUserTemplateLazyQuery>;
+export type GetUserTemplateQueryResult = Apollo.QueryResult<GetUserTemplateQuery, GetUserTemplateQueryVariables>;
+export const GetUserTemplatesDocument = gql`
+    query GetUserTemplates($id: String!) {
+  getUserTemplates(
+    params: {expression: {entity: {operator: EQUAL, path: "templateType.id", value: $id}}}
+  ) {
+    result {
+      id
+      name
+      content
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetUserTemplatesQuery__
+ *
+ * To run a query within a React component, call `useGetUserTemplatesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserTemplatesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserTemplatesQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUserTemplatesQuery(baseOptions: Apollo.QueryHookOptions<GetUserTemplatesQuery, GetUserTemplatesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserTemplatesQuery, GetUserTemplatesQueryVariables>(GetUserTemplatesDocument, options);
+      }
+export function useGetUserTemplatesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserTemplatesQuery, GetUserTemplatesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserTemplatesQuery, GetUserTemplatesQueryVariables>(GetUserTemplatesDocument, options);
+        }
+export type GetUserTemplatesQueryHookResult = ReturnType<typeof useGetUserTemplatesQuery>;
+export type GetUserTemplatesLazyQueryHookResult = ReturnType<typeof useGetUserTemplatesLazyQuery>;
+export type GetUserTemplatesQueryResult = Apollo.QueryResult<GetUserTemplatesQuery, GetUserTemplatesQueryVariables>;
 export const RefreshTokenDocument = gql`
     mutation refreshToken($refreshToken: String!) {
   refreshToken(refreshToken: $refreshToken) {
@@ -2474,6 +2844,46 @@ export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOption
 export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
 export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const SaveUserTemplateDocument = gql`
+    mutation SaveUserTemplate($name: String, $content: String, $templateTypeId: String!, $templateId: String, $userId: String!) {
+  saveUserTemplate(
+    entity: {id: $templateId, content: $content, name: $name, templateType: {id: $templateTypeId}, user: {id: $userId}}
+  ) {
+    id
+    name
+  }
+}
+    `;
+export type SaveUserTemplateMutationFn = Apollo.MutationFunction<SaveUserTemplateMutation, SaveUserTemplateMutationVariables>;
+
+/**
+ * __useSaveUserTemplateMutation__
+ *
+ * To run a mutation, you first call `useSaveUserTemplateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveUserTemplateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveUserTemplateMutation, { data, loading, error }] = useSaveUserTemplateMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      content: // value for 'content'
+ *      templateTypeId: // value for 'templateTypeId'
+ *      templateId: // value for 'templateId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useSaveUserTemplateMutation(baseOptions?: Apollo.MutationHookOptions<SaveUserTemplateMutation, SaveUserTemplateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveUserTemplateMutation, SaveUserTemplateMutationVariables>(SaveUserTemplateDocument, options);
+      }
+export type SaveUserTemplateMutationHookResult = ReturnType<typeof useSaveUserTemplateMutation>;
+export type SaveUserTemplateMutationResult = Apollo.MutationResult<SaveUserTemplateMutation>;
+export type SaveUserTemplateMutationOptions = Apollo.BaseMutationOptions<SaveUserTemplateMutation, SaveUserTemplateMutationVariables>;
 export const SendPasswordResetDocument = gql`
     mutation sendPasswordReset($email: String!) {
   sendPasswordReset(mailAddress: $email)
