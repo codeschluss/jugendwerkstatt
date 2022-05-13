@@ -23,6 +23,7 @@ import JobDetails from "../components/singleJobAdd";
 import Favorites from "../pages/favorites";
 import Events from "../pages/events";
 import Jobs from "../pages/jobs";
+import PushNotificationsContainer from "../pages/capacitor";
 
 const Router = () => {
   return (
@@ -39,7 +40,7 @@ const Router = () => {
             <Route path="email" element={<Email />} />
             <Route path="password/:id" element={<Password />} />
           </Route>
-          <Route path="/messenger" element={<Overview />}>
+          <Route path="/messenger" element={<PushNotificationsContainer />}>
             <Route path="chats" element={<Chats />} />
             <Route path="calls" element={<Calls />} />
             <Route path="contacts" element={<Contacts />} />
