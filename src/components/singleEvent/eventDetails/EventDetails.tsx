@@ -8,23 +8,11 @@ import {
   GlobeAltIcon,
   CalendarIcon,
 } from "@heroicons/react/outline";
-import { string } from "yup";
 import I from "../../ui/IconWrapper";
+import { formatDate } from "../../../utils/date/formatDate";
+import { getHour } from "../../../utils/date/getHour";
 
-interface EventDetailsProps {
-  street?: string;
-  houseNr?: string;
-  plz?: string;
-  place?: string;
-  tel?: string;
-  email?: string;
-  web?: string;
-  group?: string;
-  schedule?: any;
-  startDate?: string;
-  theRest?: string;
-  description?: string;
-}
+import { EventDetailsProps } from "./eventDetailsProps";
 
 export const EventDetails: React.FC<EventDetailsProps> = ({
   street,
@@ -55,19 +43,25 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
         <I>
           <PhoneIcon />
         </I>
-        <h3 className="ml-3 mt-2">{tel}</h3>
+        <a href={`tel:${tel}`} className="ml-3 mt-2">
+          {tel}
+        </a>
       </div>
       <div className="flex text-md">
         <I>
           <MailIcon />
         </I>
-        <h3 className="ml-3 mt-2">{email}</h3>
+        <a href={`mailto:${email}`} className="ml-3 mt-2">
+          {email}
+        </a>
       </div>
       <div className="flex text-md">
         <I>
           <GlobeAltIcon />
         </I>
-        <h3 className="ml-3 mt-2">{web}</h3>
+        <a href={`${web}`} target="_blank" className="ml-3 mt-2">
+          {web}
+        </a>
       </div>
       <div className="flex text-md">
         <I>
@@ -79,13 +73,13 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
         <I>
           <ClockIcon />
         </I>
-        <h3 className="ml-3 mt-2">{schedule}</h3>
+        <h3 className="ml-3 mt-2">{getHour(schedule)} Uhr</h3>
       </div>
       <div className="flex text-md">
         <I>
           <CalendarIcon />
         </I>
-        <h3 className="ml-3 mt-2">{startDate}</h3>
+        <h3 className="ml-3 mt-2">{formatDate(new Date(startDate || ""))}</h3>
       </div>
       <div className="flex text-md">
         <I>

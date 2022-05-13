@@ -17,6 +17,7 @@ export const SingleEvent = () => {
       "datat"
     );
   }
+  console.log(data?.getEvent);
   return (
     <>
       <Slider imgUrl={data?.getEvent?.titleImage?.id} />

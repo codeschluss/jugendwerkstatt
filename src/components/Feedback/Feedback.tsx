@@ -62,25 +62,25 @@ export const Feedback = () => {
             <input
               className="my-3 h-3 w-3 border-gray-100 border-2"
               type="radio"
-              name="{options}"
+              name={`${id}`}
               id="1"
             />
             <input
               className="my-3 h-3 w-3 border-gray-100 border-2"
               type="radio"
-              name="{options}"
+              name={`${id}`}
               id="2"
             />
             <input
               className="my-3 h-3 w-3 border-gray-100 border-2"
               type="radio"
-              name="{options}"
+              name={`${id}`}
               id="3"
             />
             <input
               className="my-3 h-3 w-3 border-gray-100 border-2"
               type="radio"
-              name="{options}"
+              name={`${id}`}
               id="4"
             />
 
