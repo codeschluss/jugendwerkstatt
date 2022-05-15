@@ -45,7 +45,10 @@ const TemplateEdit: React.FC = () => {
         saveUserTemplateMutation();
     }
     
-    const userTemplateResult = useGetUserTemplateQuery({variables: {id: id!},fetchPolicy: 'network-only'});
+    const userTemplateResult = useGetUserTemplateQuery({
+            skip: !theUser.id ? true : false,
+            variables: {id: id!},fetchPolicy: 'network-only'
+    });
     const templateResult = useGetTemplateQuery({variables: {id: id!},fetchPolicy: 'network-only'});
    
     const userTemplateContent = userTemplateResult.data?.getUserTemplate?.content;
