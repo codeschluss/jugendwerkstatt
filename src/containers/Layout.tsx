@@ -71,11 +71,7 @@ const Layout: React.FC = ({ children }) => {
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      checkToken();
-    }, 1000);
-
-    return () => clearInterval(timer);
+    checkToken();
   }, []);
 
   return (

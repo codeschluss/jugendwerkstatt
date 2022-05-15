@@ -17,8 +17,8 @@ const Head: React.FunctionComponent = () => {
         alt=""
       />
       <div className="mt-5">
-        <p className="text-lg font-semibold">{theUser.fullname}</p>
-        <p>{theUser.email}</p>
+        <p className="text-lg font-semibold">{theUser?.fullname}</p>
+        <p>{theUser?.email}</p>
       </div>
     </div>
   );
