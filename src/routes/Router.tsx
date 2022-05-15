@@ -19,6 +19,7 @@ import EventDetail from "../pages/eventDetail";
 import Home from "../pages/home";
 import MediaLibrary from "../pages/mediaLibrary";
 import EventsCalendar from "../pages/eventsCalendar";
+import EventsTime from "../pages/eventsTime";
 import Overview from "../pages/messenger";
 import Chat from "../pages/messenger/Chat";
 import Register from "../pages/register";
@@ -61,7 +62,8 @@ const Router = () => {
           <Route path="/EmailVerified" element={<EmailVerified />} />
           <Route path="/map" element={<Map />} />
           <Route path="/MediaLibrary" element={<MediaLibrary />} />
-
+          <Route path="/EventsCalendar" element={<EventsCalendar />} />
+          <Route path="/EventsTime" element={<EventsTime />} />
           <Route path="/Forms" element={<Forms />} />
           <Route path="/Forms/Templates" element={<Templates />} />
           <Route path="/Forms/Templates/:id" element={<TemplateView />} />
