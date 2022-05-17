@@ -72,7 +72,7 @@ const Layout: React.FC = ({ children }) => {
 
   useEffect(() => {
     checkToken();
-  }, []);
+  }, [localStorage.getItem("accessToken")]);
 
   return (
     <main className="flex flex-col justify-between min-h-screen">

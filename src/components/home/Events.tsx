@@ -20,7 +20,7 @@ const Events: React.FC<EventsProps> = () => {
         return (
           <SlideCard
             route={`/event/${el.id}`}
-            key={el?.name}
+            key={el?.id}
             eventName={el?.name}
             location={el?.address?.street}
             date="Freitag, 25/02/22"

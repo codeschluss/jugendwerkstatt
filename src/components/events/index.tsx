@@ -4,7 +4,7 @@ import { useGetEventCategoriesQuery } from "../../GraphQl/graphql";
 import { useEffect, useState } from "react";
 import { EventCategoryEntity, EventEntity } from "../home/Test";
 
-const Jobs = () => {
+const Events = () => {
   const [categoriesData, setCategoriesData] = useState<
     EventCategoryEntity | any
   >();
@@ -33,6 +33,7 @@ const Jobs = () => {
                     location={`${el?.address?.street}, ${el?.address?.houseNumber}, ${el?.address?.place}`}
                     date={new Date(el?.schedules[0]?.startDate).getFullYear()}
                     route={"#"}
+                    key={el?.id}
                     imgUrl={el?.titleImage?.id}
                   />
                 </Slider>
@@ -45,4 +46,4 @@ const Jobs = () => {
   );
 };
 
-export default Jobs;
+export default Events;
