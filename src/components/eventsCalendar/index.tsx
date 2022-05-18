@@ -1,12 +1,13 @@
-import { Children } from "react";
+import React, { Children, useState } from "react";
 import ReactDOM from "react-dom";
-
-
-
+import Calendar from 'react-calendar';
+import './eventsCalendarStyle.css';
 
 
 
 const EventsCalendar: React.FC = () => {
+    const [value, onChange] = useState(new Date());
+
     return (
         <div className="absolute top-0 left-0 w-screen h-screen bg-white z-10">
             <div className="flex bg-primary h-[6.5rem] text-white">
@@ -23,8 +24,14 @@ const EventsCalendar: React.FC = () => {
                     </div>
                 </div>
             </div>
+            <Calendar  className="mx-auto border-none" onChange={onChange} value={value} />
         </div>
     );
 };
 
 export default EventsCalendar;
+
+
+const TodoComponent = {
+    backgroundColor: "red",
+}

@@ -1,0 +1,14 @@
+query GetTemplates($id: String!) {
+  getTemplates(
+    params: {
+      expression: {
+        entity: { operator: EQUAL, path: "templateType.id", value: $id }
+      }
+    }
+  ) {
+    result {
+      id
+      name
+    }
+  }
+}
