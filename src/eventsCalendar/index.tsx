@@ -1,6 +1,5 @@
-import React, { Children, useEffect, useState } from "react";
+import React, { Children, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { EventEntity, useGetEventsQuery } from "../../GraphQl/graphql";
 
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
@@ -21,91 +20,64 @@ const EventsCalendar: React.FC = () => {
 
     const localizer = momentLocalizer(moment);
 
-    const [eventsData, setEventsData] = useState<EventEntity | any>();
-    const result = useGetEventsQuery();
-    useEffect(() => {
-        if (result.data) {
-            setEventsData(result?.data?.getEvents?.result);
+    var datesOnEvents = [
+        {
+            id: 0,
+            numberOfEvents: 3,
+            allDay: true,
+            start: new Date(2022,4,6,10),
+            end: new Date(2022,4,6,13)
+        },
+        {
+            id: 1,
+            numberOfEvents: 3,
+            allDay: true,
+            start: new Date(2022,4,6,11),
+            end: new Date(2022,4,6,14)
+        },
+        {
+            id: 2,
+            numberOfEvents: 3,
+            allDay: true,
+            start: new Date(2022,4,6,11),
+            end: new Date(2022,4,6,14)
+        },
+        {
+            id: 3,
+            numberOfEvents: 1,
+            allDay: true,
+            start: new Date(2022,4,18),
+            end: new Date(2022,4,19)
+        },
+        {
+            id: 4,
+            numberOfEvents: 1,
+            allDay: true,
+            start: new Date(2022,4,19),
+            end: new Date(2022,4,19)
+        },
+        {
+            id: 5,
+            numberOfEvents: 1,
+            allDay: true,
+            start: new Date(2022,4,10),
+            end: new Date(2022,4,10)
+        },
+        {
+            id: 6,
+            numberOfEvents: 1,
+            allDay: true,
+            start: new Date(2022,4,12),
+            end: new Date(2022,4,12)
+        },
+        {
+            id: 7,
+            numberOfEvents: 1,
+            allDay: true,
+            start: new Date(2022,3,12),
+            end: new Date(2022,3,12)
         }
-    }, [result.data]);
-
-    var datesOnEvents: any = [];
-    var temmmpCounter = 0;
-    {eventsData?.map((singleEvent: EventEntity) => {
-        var tempSchedules = singleEvent?.schedules as any;
-
-        for (let i = 0; i < tempSchedules?.length; i++) {
-            datesOnEvents[temmmpCounter] = {
-                id : temmmpCounter,
-                eventId : singleEvent.id,
-                start : new Date(tempSchedules[i]?.startDate),
-                end : new Date(tempSchedules[i]?.endDate),
-                allDay: true
-            }
-            temmmpCounter = temmmpCounter+1;
-        }
-    })};
-
-    console.log('datesOnEvents', datesOnEvents);
-
-    // var datesOnEvents = [
-    //     {
-    //         id: 0,
-    //         numberOfEvents: 3,
-    //         allDay: true,
-    //         start: new Date(2022,4,6,10),
-    //         end: new Date(2022,4,6,13)
-    //     },
-    //     {
-    //         id: 1,
-    //         numberOfEvents: 3,
-    //         allDay: true,
-    //         start: new Date(2022,4,6,11),
-    //         end: new Date(2022,4,6,14)
-    //     },
-    //     {
-    //         id: 2,
-    //         numberOfEvents: 3,
-    //         allDay: true,
-    //         start: new Date(2022,4,6,11),
-    //         end: new Date(2022,4,6,14)
-    //     },
-    //     {
-    //         id: 3,
-    //         numberOfEvents: 1,
-    //         allDay: true,
-    //         start: new Date(2022,4,18),
-    //         end: new Date(2022,4,19)
-    //     },
-    //     {
-    //         id: 4,
-    //         numberOfEvents: 1,
-    //         allDay: true,
-    //         start: new Date(2022,4,19),
-    //         end: new Date(2022,4,19)
-    //     },
-    //     {
-    //         id: 5,
-    //         numberOfEvents: 1,
-    //         allDay: true,
-    //         start: new Date(2022,4,10),
-    //         end: new Date(2022,4,10)
-    //     },
-    //     {
-    //         id: 6,
-    //         numberOfEvents: 1,
-    //         allDay: true,
-    //         start: new Date(2022,4,12),
-    //         end: new Date(2022,4,12)
-    //     },
-    //     {
-    //         id: 7,
-    //         numberOfEvents: 1,
-    //         allDay: true,
-    //         start: new Date(2022,3,12),
-    //         end: new Date(2022,3,12)
-    //     }
-    // ];
+    ];
 
 
     var finalDatesEvents = [];
@@ -136,17 +108,14 @@ const EventsCalendar: React.FC = () => {
 
         while(beginningTempDate<=maxDate){
             var numberOfEventsPerDate = 0;
-            var tempEventsIds: string | any[] = [];
     
             for (let i = 0; i < datesOnEvents?.length; i++) {
-                if(((datesOnEvents[i].start<=beginningTempDate && datesOnEvents[i].end>=beginningTempDate)||
+                if((datesOnEvents[i].start<=beginningTempDate && datesOnEvents[i].end>=beginningTempDate)||
                     (datesOnEvents[i].start>=beginningTempDate && datesOnEvents[i].end<endTempDate)||
-                    (datesOnEvents[i].start<endTempDate && datesOnEvents[i].end>endTempDate)) &&
-                    (tempEventsIds.indexOf(datesOnEvents[i].eventId) <= -1)
+                    (datesOnEvents[i].start<endTempDate && datesOnEvents[i].end>endTempDate)
                     )
                 {
                     numberOfEventsPerDate++;
-                    tempEventsIds.push(datesOnEvents[i].eventId);
                 }
             }
 
