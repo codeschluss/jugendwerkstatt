@@ -14,7 +14,7 @@ const Events = () => {
   useEffect(() => {
     if (result.data) {
       // setCategoriesData(result?.data?.getEventCategories?.result);
-      setCategoriesData(result?.data?.getCategorys?.result);
+      setCategoriesData(result?.data?.getEventCategories?.result);
     }
   }, [result.data]);
 

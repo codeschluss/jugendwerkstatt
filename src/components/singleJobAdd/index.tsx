@@ -20,7 +20,10 @@ const JobDetails: React.FC = () => {
   }
   return (
     <>
-      <Slider colorBg={data?.getJobAd?.company?.name} />
+      <Slider
+        title={data?.getJobAd?.title}
+        colorBg={data?.getJobAd?.type?.color}
+      />
       <div className="p-5">
         <EventHeader
           eventName={data?.getJobAd?.company?.name || null || undefined}
