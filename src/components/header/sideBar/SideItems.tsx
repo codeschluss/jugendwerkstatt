@@ -1,4 +1,15 @@
-import { ChatAltIcon, HomeIcon } from "@heroicons/react/outline";
+import {
+  ChatAltIcon,
+  HomeIcon,
+  CalendarIcon,
+  AcademicCapIcon,
+  DocumentTextIcon,
+  BookOpenIcon,
+  PaperAirplaneIcon,
+  CogIcon,
+  QuestionMarkCircleIcon,
+} from "@heroicons/react/outline";
+import { HeartIcon } from "@heroicons/react/solid";
 import { NavLink } from "react-router-dom";
 import I from "../../ui/IconWrapper";
 
@@ -16,7 +27,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
           }
           to={"/"}
         >
-          <span className="flex items-center px-4 py-2 font-semibold ">
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
               <HomeIcon />
             </I>
@@ -31,79 +42,11 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               ? "border-l-4 bg-gray-100 border-primary block"
               : `border-l-4 border-transparent block`
           }
-          to={"/messenger"}
+          to={"/Forms"}
         >
-          <span className="flex items-center px-4 py-2 font-semibold ">
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
-              <ChatAltIcon />
-            </I>
-            <span>Messenger</span>
-          </span>
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className={(navData) =>
-            navData.isActive
-              ? "border-l-4 bg-gray-100 border-primary block"
-              : `border-l-4 border-transparent block`
-          }
-          to={"/login"}
-        >
-          <span className="flex items-center px-4 py-2 font-semibold ">
-            <I className="mr-2">
-              <ChatAltIcon />
-            </I>
-            <span>Login</span>
-          </span>
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className={(navData) =>
-            navData.isActive
-              ? "border-l-4 bg-gray-100 border-primary block"
-              : `border-l-4 border-transparent block`
-          }
-          to={"/register"}
-        >
-          <span className="flex items-center px-4 py-2 font-semibold ">
-            <I className="mr-2">
-              <ChatAltIcon />
-            </I>
-            <span>Register</span>
-          </span>
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className={(navData) =>
-            navData.isActive
-              ? "border-l-4 bg-gray-100 border-primary block"
-              : `border-l-4 border-transparent block`
-          }
-          to={"/favorites"}
-        >
-          <span className="flex items-center px-4 py-2 font-semibold ">
-            <I className="mr-2">
-              <ChatAltIcon />
-            </I>
-            <span>Favorites</span>
-          </span>
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className={(navData) =>
-            navData.isActive
-              ? "border-l-4 bg-gray-100 border-primary block"
-              : `border-l-4 border-transparent block`
-          }
-          to={"/forms"}
-        >
-          <span className="flex items-center px-4 py-2 font-semibold ">
-            <I className="mr-2">
-              <ChatAltIcon />
+              <DocumentTextIcon />
             </I>
             <span>Formulare</span>
           </span>
@@ -118,9 +61,9 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
           }
           to={"/events"}
         >
-          <span className="flex items-center px-4 py-2 font-semibold ">
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
-              <ChatAltIcon />
+              <PaperAirplaneIcon />
             </I>
             <span>Events</span>
           </span>
@@ -133,13 +76,47 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               ? "border-l-4 bg-gray-100 border-primary block"
               : `border-l-4 border-transparent block`
           }
+          to={"/MediaLibrary"}
+        >
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
+            <I className="mr-2">
+              <AcademicCapIcon />
+            </I>
+            <span>E-Learning</span>
+          </span>
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          className={(navData) =>
+            navData.isActive
+              ? "border-l-4 bg-gray-100 border-primary block"
+              : `border-l-4 border-transparent block`
+          }
+          to={"/messenger"}
+        >
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
+            <I className="mr-2">
+              <ChatAltIcon />
+            </I>
+            <span>Messenger</span>
+          </span>
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          className={(navData) =>
+            navData.isActive
+              ? "border-l-4 bg-gray-100 border-primary block"
+              : `border-l-4 border-transparent block`
+          }
           to={"/jobs"}
         >
-          <span className="flex items-center px-4 py-2 font-semibold ">
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
-              <ChatAltIcon />
+              <BookOpenIcon />
             </I>
-            <span>Jobs</span>
+            <span>Stellenausschreibung</span>
           </span>
         </NavLink>
       </li>
@@ -150,13 +127,13 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               ? "border-l-4 bg-gray-100 border-primary block"
               : `border-l-4 border-transparent block`
           }
-          to={"/map"}
+          to={"/EventsCalendar"}
         >
-          <span className="flex items-center px-4 py-2 font-semibold ">
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
-              <ChatAltIcon />
+              <CalendarIcon />
             </I>
-            <span>Map</span>
+            <span>Kalendar</span>
           </span>
         </NavLink>
       </li>
@@ -167,13 +144,47 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               ? "border-l-4 bg-gray-100 border-primary block"
               : `border-l-4 border-transparent block`
           }
-          to={"/mediaLibrary"}
+          to={"/favorites"}
         >
-          <span className="flex items-center px-4 py-2 font-semibold ">
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
-              <ChatAltIcon />
+              <HeartIcon />
             </I>
-            <span>Media</span>
+            <span>Favoriten</span>
+          </span>
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          className={(navData) =>
+            navData.isActive
+              ? "border-l-4 bg-gray-100 border-primary block"
+              : `border-l-4 border-transparent block`
+          }
+          to={"/profile"}
+        >
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
+            <I className="mr-2">
+              <CogIcon />
+            </I>
+            <span>Einstellungen</span>
+          </span>
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          className={(navData) =>
+            navData.isActive
+              ? "border-l-4 bg-gray-100 border-primary block"
+              : `border-l-4 border-transparent block`
+          }
+          to={"/#"}
+        >
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
+            <I className="mr-2">
+              <QuestionMarkCircleIcon />
+            </I>
+            <span>Hilfe</span>
           </span>
         </NavLink>
       </li>

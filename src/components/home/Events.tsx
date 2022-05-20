@@ -13,7 +13,6 @@ const Events: React.FC<EventsProps> = () => {
   const { setAllEvents, allEvents } = useContext(EventContext);
 
   const fetchedData: [EventEntity] = allEvents as [EventEntity];
-  console.log(fetchedData, "evvveeents");
 
   return (
     <Slider title="Events">

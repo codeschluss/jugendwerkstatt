@@ -25,8 +25,6 @@ const Events = () => {
           <div>
             <p className="mb-3 mt-3">{category?.name}</p>
             {category?.events?.map((el: any) => {
-              console.log(el);
-
               return (
                 <Slider className="-mx-4">
                   <SlideCard

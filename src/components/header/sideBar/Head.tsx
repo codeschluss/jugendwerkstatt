@@ -4,7 +4,6 @@ import Styles from "./Head.module.css";
 
 const Head: React.FunctionComponent = () => {
   const { theUser } = useContext(AuthContext);
-  console.log(theUser);
 
   return (
     <div className="w-full p-8 relative">

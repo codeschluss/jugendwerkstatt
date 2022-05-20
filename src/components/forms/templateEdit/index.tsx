@@ -23,8 +23,6 @@ const TemplateEdit: React.FC = () => {
 
   const { theUser } = useContext(AuthContext);
 
-  console.log(location);
-
   const handleClick = (): void => {
     setEditName(true);
   };

@@ -29,7 +29,6 @@ const Map: FunctionComponent = () => {
   useEffect(() => {
     let events = result.data?.getEvents?.result;
     setAllEvents(events);
-    console.log(events);
   }, [result.data?.getEvents?.result, allEvents]);
 
   return (
@@ -71,7 +70,6 @@ const Map: FunctionComponent = () => {
               modules={[Virtual]}
               spaceBetween={0}
               slidesPerView={1.5}
-              onSlideChange={() => console.log()}
             >
               {allEvents?.map((el: any, index: number) => {
                 return (

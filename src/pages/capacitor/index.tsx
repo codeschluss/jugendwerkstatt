@@ -30,8 +30,6 @@ export default function PushNotificationsContainer() {
   }, []);
 
   const register = () => {
-    console.log("Initializing HomePage");
-
     PushNotifications.register();
 
     PushNotifications.addListener("registration", (token: Token) => {

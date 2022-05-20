@@ -29,6 +29,8 @@ import Favorites from "../pages/favorites";
 import Events from "../pages/events";
 import Jobs from "../pages/jobs";
 import PushNotificationsContainer from "../pages/capacitor";
+import ProfileSettings from "../pages/Profile/ProfileSettings";
+import PersonalData from "../pages/Profile/PersonalData";
 
 const Router = () => {
   return (
@@ -57,6 +59,8 @@ const Router = () => {
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/events" element={<Events />} />
           <Route path="/jobs" element={<Jobs />} />
+          <Route path="/profile" element={<ProfileSettings />} />
+          <Route path="/profile-personal" element={<PersonalData />} />
 
           <Route path="/Login" element={<Login />} />
           <Route path="/EmailVerification" element={<EmailVerification />} />
@@ -69,7 +73,6 @@ const Router = () => {
           <Route path="/Forms/Templates" element={<Templates />} />
           <Route path="/Forms/Templates/:id" element={<TemplateView />} />
           <Route path="/Forms/Templates/Edit/:id" element={<TemplateEdit />} />
-
 
           <Route path="/EventsCalendar" element={<EventsCalendar />} />
           <Route path="/feedback" element={<Feedback />} />

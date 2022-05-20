@@ -48,8 +48,6 @@ const EventsCalendar: React.FC = () => {
     });
   }
 
-  console.log("datesOnEvents", datesOnEvents);
-
   // var datesOnEvents = [
   //     {
   //         id: 0,

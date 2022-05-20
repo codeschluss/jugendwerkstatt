@@ -15,9 +15,7 @@ const JobDetails: React.FC = () => {
       },
     },
   });
-  if (data) {
-    console.log(data.getJobAd);
-  }
+
   return (
     <>
       <Slider
