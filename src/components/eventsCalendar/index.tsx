@@ -8,9 +8,6 @@ import "moment/locale/de";
 
 import "./eventsCalendarAndTimeStyle.css";
 
-import Modal from "../modals/courseReviewPopUp"
-
-
 const EventsCalendar: React.FC = () => {
 
     const navigate = useNavigate();
@@ -117,11 +114,6 @@ const EventsCalendar: React.FC = () => {
 
     return (
         <div className="absolute top-0 left-0 w-screen h-screen bg-white z-10">
-            <Modal 
-                visible={false}
-                course={'Holz 1'}
-            >
-            </Modal>
             <div className="flex bg-primary h-[6.5rem] text-white">
                 <div className="my-auto relative">
                     <button className="absolute inline ml-5 -mt-3" onClick={goBack} style={{zIndex: 2}}>
