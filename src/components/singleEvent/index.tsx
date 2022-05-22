@@ -11,7 +11,6 @@ export const SingleEvent = () => {
   const { data, loading, error } = useGetEventQuery({
     variables: { id: params.id || "" },
   });
-
   return (
     <>
       <Slider imgUrl={data?.getEvent?.titleImage?.id} />

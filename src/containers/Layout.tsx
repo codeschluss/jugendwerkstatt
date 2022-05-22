@@ -10,6 +10,7 @@ import {
   useGetUserQuery,
   useRefreshTokenMutation,
 } from "../GraphQl/graphql";
+import Modal from "../components/modals/courseReviewPopUp";
 
 const Layout: React.FC = ({ children }) => {
   const [accessT, setAccessT] = useState();
@@ -78,6 +79,11 @@ const Layout: React.FC = ({ children }) => {
   return (
     <main className="flex flex-col justify-between min-h-screen">
       <div>
+        <Modal 
+              visible={false}
+              course={'Holz 1'}
+          >
+        </Modal>
         <Header />
         {result.loading ? <Loader /> : <div>{children}</div>}
       </div>

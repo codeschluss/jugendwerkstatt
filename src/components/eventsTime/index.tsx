@@ -1,4 +1,4 @@
-import React, { Component, Children, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { EventEntity, useGetEventsQuery } from "../../GraphQl/graphql";
 
 import { useNavigate } from "react-router-dom";
@@ -7,10 +7,6 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 
 const EventsTime: React.FC = () => {
-    // const todayDate = new Date();
-    // const formatter = new Intl.DateTimeFormat('de', { month: 'long' });
-    // const monthName = formatter.format(currentDate);
-    // const currentDateString = `${currentDate.getDate()}. ${monthName} ${currentDate.getFullYear()}`;
 
     const navigate = useNavigate();
     function goBack() {
@@ -41,6 +37,7 @@ const EventsTime: React.FC = () => {
                 eventId : singleEvent.id,
                 name: singleEvent.name,
                 description: singleEvent.description,
+                // color: singleEvent.color,
                 start : new Date(tempSchedules[i]?.startDate),
                 end : new Date(tempSchedules[i]?.endDate),
                 allDay: false
@@ -48,37 +45,6 @@ const EventsTime: React.FC = () => {
             temmmpCounter = temmmpCounter+1;
         }
     })};
-
-    // const eventsInfo = [
-    //     {
-    //         id: 0,
-    //         name: "First Event",
-    //         allDay: false,
-    //         start: new Date(2022,4,10,10),
-    //         end: new Date(2022,4,10,13)
-    //     },
-    //     {
-    //         id: 1,
-    //         name: "Second Event",
-    //         allDay: false,
-    //         start: new Date(2022,4,10,11),
-    //         end: new Date(2022,4,10,14)
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "Third Event",
-    //         allDay: false,
-    //         start: new Date(2022,4,10,11),
-    //         end: new Date(2022,4,10,14)
-    //     },
-    //     {
-    //         id: 3,
-    //         name: "Fourth Event",
-    //         allDay: false,
-    //         start: new Date(2022,4,9,11),
-    //         end: new Date(2022,4,10,14)
-    //     }
-    // ];
       
     var endTempDate =  moment(currentDate).add(1, 'd').toDate();
     var tempEventsInfo = []

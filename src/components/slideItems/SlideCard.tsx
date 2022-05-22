@@ -25,7 +25,7 @@ const SlideCard: React.FC<SlideCardProps> = ({
 }) => {
   return (
     <div
-      className={`${className} snap-center ${width} h-60 overflow-hidden rounded-md flex-none relative p-2`}
+      className={`${className} snap-center ${width} h-60 overflow-hidden rounded-md flex-none relative m-2 p-2`}
     >
       <Link to={route}>
         {imgUrl ? (

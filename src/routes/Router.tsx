@@ -79,8 +79,7 @@ const Router = () => {
           <Route path="/Forms/Templates" element={<Templates />} />
           <Route path="/Forms/Templates/:id" element={<TemplateView />} />
           <Route path="/Forms/Templates/Edit/:id" element={<TemplateEdit />} />
-
-          <Route path="/EventsCalendar" element={<EventsCalendar />} />
+          
           <Route path="/feedback" element={<Feedback />} />
         </Routes>
       </Layout>
