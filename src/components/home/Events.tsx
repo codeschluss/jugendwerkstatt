@@ -5,7 +5,7 @@ import { useGetEventsQuery } from "../../GraphQl/graphql";
 import { GET_EVENTS } from "../../GraphQl/Querry";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
-import { EventEntity } from "./Test";
+import { EventEntity, ScheduleEntity } from "./Test";
 
 interface EventsProps {}
 
@@ -16,14 +16,14 @@ const Events: React.FC<EventsProps> = () => {
 
   return (
     <Slider title="Events">
-      {fetchedData?.map((el) => {
+      {fetchedData?.map((el: any) => {
         return (
           <SlideCard
             route={`/event/${el.id}`}
-            key={el?.name}
+            key={el?.id}
             eventName={el?.name}
             location={el?.address?.street}
-            date="Freitag, 25/02/22"
+            date={el?.schedules[el?.schedules?.length - 1]?.startDate}
             imgUrl={el?.titleImage?.id}
           />
         );

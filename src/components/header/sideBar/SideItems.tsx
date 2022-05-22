@@ -1,12 +1,14 @@
 import {
   ChatAltIcon,
   HomeIcon,
-  DocumentTextIcon,
   CalendarIcon,
-  BookOpenIcon,
   AcademicCapIcon,
+  DocumentTextIcon,
+  BookOpenIcon,
+  PaperAirplaneIcon,
+  CogIcon,
+  QuestionMarkCircleIcon,
 } from "@heroicons/react/outline";
-
 import { HeartIcon } from "@heroicons/react/solid";
 import { NavLink } from "react-router-dom";
 import I from "../../ui/IconWrapper";
@@ -25,7 +27,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
           }
           to={"/"}
         >
-          <span className="flex items-center px-4 py-2 font-semibold ">
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
               <HomeIcon />
             </I>
@@ -40,9 +42,9 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               ? "border-l-4 bg-gray-100 border-primary block"
               : `border-l-4 border-transparent block`
           }
-          to={"/forms"}
+          to={"/Forms"}
         >
-          <span className="flex items-center px-4 py-2 font-semibold ">
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
               <DocumentTextIcon />
             </I>
@@ -59,9 +61,9 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
           }
           to={"/events"}
         >
-          <span className="flex items-center px-4 py-2 font-semibold ">
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
-              <CalendarIcon />
+              <PaperAirplaneIcon />
             </I>
             <span>Events</span>
           </span>
@@ -74,9 +76,9 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               ? "border-l-4 bg-gray-100 border-primary block"
               : `border-l-4 border-transparent block`
           }
-          to={"/messenger"}
+          to={"/MediaLibrary"}
         >
-          <span className="flex items-center px-4 py-2 font-semibold ">
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
               <AcademicCapIcon />
             </I>
@@ -93,7 +95,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
           }
           to={"/messenger"}
         >
-          <span className="flex items-center px-4 py-2 font-semibold ">
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
               <ChatAltIcon />
             </I>
@@ -108,9 +110,9 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               ? "border-l-4 bg-gray-100 border-primary block"
               : `border-l-4 border-transparent block`
           }
-          to={"/messenger"}
+          to={"/jobs"}
         >
-          <span className="flex items-center px-4 py-2 font-semibold ">
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
               <BookOpenIcon />
             </I>
@@ -118,7 +120,23 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
           </span>
         </NavLink>
       </li>
-
+      <li>
+        <NavLink
+          className={(navData) =>
+            navData.isActive
+              ? "border-l-4 bg-gray-100 border-primary block"
+              : `border-l-4 border-transparent block`
+          }
+          to={"/EventsCalendar"}
+        >
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
+            <I className="mr-2">
+              <CalendarIcon />
+            </I>
+            <span>Kalendar</span>
+          </span>
+        </NavLink>
+      </li>
       <li>
         <NavLink
           className={(navData) =>
@@ -128,7 +146,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
           }
           to={"/favorites"}
         >
-          <span className="flex items-center px-4 py-2 font-semibold ">
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
               <HeartIcon />
             </I>
@@ -143,13 +161,13 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               ? "border-l-4 bg-gray-100 border-primary block"
               : `border-l-4 border-transparent block`
           }
-          to={"/jobs"}
+          to={"/profile"}
         >
-          <span className="flex items-center px-4 py-2 font-semibold ">
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
-              <ChatAltIcon />
+              <CogIcon />
             </I>
-            <span>Jobs</span>
+            <span>Einstellungen</span>
           </span>
         </NavLink>
       </li>
@@ -160,30 +178,13 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               ? "border-l-4 bg-gray-100 border-primary block"
               : `border-l-4 border-transparent block`
           }
-          to={"/map"}
+          to={"/#"}
         >
-          <span className="flex items-center px-4 py-2 font-semibold ">
+          <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
-              <ChatAltIcon />
+              <QuestionMarkCircleIcon />
             </I>
-            <span>Map</span>
-          </span>
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className={(navData) =>
-            navData.isActive
-              ? "border-l-4 bg-gray-100 border-primary block"
-              : `border-l-4 border-transparent block`
-          }
-          to={"/mediaLibrary"}
-        >
-          <span className="flex items-center px-4 py-2 font-semibold ">
-            <I className="mr-2">
-              <ChatAltIcon />
-            </I>
-            <span>Media</span>
+            <span>Hilfe</span>
           </span>
         </NavLink>
       </li>

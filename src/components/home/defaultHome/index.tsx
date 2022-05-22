@@ -4,7 +4,14 @@ import Button from "../../ui/Button";
 const DefaultHome: React.FC = () => {
   return (
     <div className="w-full h-screen m-0">
-      <img className="w-full mb-7" src="/assets/home-bg.jpg" alt="" />
+      <img className="w-full mb-7" src="/assets/circles-bg.png" alt="" />
+      <div className="flex justify-center">
+        <img
+          className="my-8 w-52"
+          src="/assets/jugendwerkstatt-lg.png"
+          alt=""
+        />
+      </div>
       <p className="text-sm p-2">
         Die Jugendwerkstatt ist eine Einrichtung für Jugendliche, die besondere
         Schwierigkeiten beim Übergang von der Schule in das Berufsleben haben.

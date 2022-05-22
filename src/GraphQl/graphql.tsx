@@ -2020,14 +2020,14 @@ export type GetJobAdQueryVariables = Exact<{
 }>;
 
 
-export type GetJobAdQuery = { __typename?: 'Query', getJobAd?: { __typename?: 'JobAdEntity', dueDate?: any | null, id?: string | null, startDate?: any | null, title?: string | null, company?: { __typename?: 'CompanyEntity', website?: string | null, phone?: string | null, name?: string | null, mail?: string | null, id?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, modified?: any | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null } | null };
+export type GetJobAdQuery = { __typename?: 'Query', getJobAd?: { __typename?: 'JobAdEntity', dueDate?: any | null, id?: string | null, title?: string | null, startDate?: any | null, company?: { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null, type?: { __typename?: 'JobTypeEntity', color?: string | null, id?: string | null, name?: string | null } | null } | null };
 
 export type GetJobAdsQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
 }>;
 
 
-export type GetJobAdsQuery = { __typename?: 'Query', getJobAds?: { __typename?: 'PageableList_JobAdEntity', result?: Array<{ __typename?: 'JobAdEntity', id?: string | null, dueDate?: any | null, startDate?: any | null, title?: string | null, company?: { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', id?: string | null, latitude?: number | null, longitude?: number | null, place?: string | null, postalCode?: string | null, street?: string | null, houseNumber?: string | null } | null } | null } | null> | null } | null };
+export type GetJobAdsQuery = { __typename?: 'Query', getJobAds?: { __typename?: 'PageableList_JobAdEntity', result?: Array<{ __typename?: 'JobAdEntity', dueDate?: any | null, id?: string | null, title?: string | null, startDate?: any | null, company?: { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null, type?: { __typename?: 'JobTypeEntity', color?: string | null, id?: string | null, name?: string | null } | null } | null> | null } | null };
 
 export type GetLinkCategoriesQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -2371,26 +2371,30 @@ export const GetJobAdDocument = gql`
     query GetJobAd($entity: JobAdEntityInput) {
   getJobAd(entity: $entity) {
     company {
-      website
-      phone
-      name
-      mail
-      id
       address {
         houseNumber
         id
         latitude
         longitude
-        modified
         place
         postalCode
         street
       }
+      id
+      mail
+      name
+      phone
+      website
     }
     dueDate
     id
-    startDate
     title
+    type {
+      color
+      id
+      name
+    }
+    startDate
   }
 }
     `;
@@ -2426,26 +2430,31 @@ export const GetJobAdsDocument = gql`
     query GetJobAds($params: FilterSortPaginateInput) {
   getJobAds(params: $params) {
     result {
-      id
-      dueDate
       company {
-        id
-        mail
-        name
-        phone
-        website
         address {
+          houseNumber
           id
           latitude
           longitude
           place
           postalCode
           street
-          houseNumber
         }
+        id
+        mail
+        name
+        phone
+        website
+      }
+      dueDate
+      id
+      title
+      type {
+        color
+        id
+        name
       }
       startDate
-      title
     }
   }
 }

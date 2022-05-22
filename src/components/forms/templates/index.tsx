@@ -12,7 +12,8 @@ const Templates: React.FC = () => {
     const templatesResult = useGetTemplatesQuery({
         variables: {
           id: templateType.id
-        }
+        },
+        fetchPolicy: 'network-only'
     });
     
     const fetchedTemplates: [TemplateEntity] = templatesResult.data?.getTemplates?.result as [TemplateEntity];
@@ -20,13 +21,15 @@ const Templates: React.FC = () => {
     const { theUser } = useContext(AuthContext);
 
     const userTemplatesResult = useGetUserTemplatesQuery({
-        variables: {
-          id: theUser.id
-        }
+      skip: !theUser.id ? true : false,
+      variables: {
+        id: theUser.id
+      },
+      fetchPolicy: 'network-only'
     });
-    
-    const fetchedUserTemplates: [UserTemplateEntity] = userTemplatesResult.data?.getUserTemplates?.result as [UserTemplateEntity];
 
+    const fetchedUserTemplates: [UserTemplateEntity] = userTemplatesResult.data?.getUserTemplates?.result as [UserTemplateEntity];
+  
   return (
     <div className="container mx-auto px-4 pt-4">
         <h5 className="text-2xl font-bold">{templateType.name}</h5>

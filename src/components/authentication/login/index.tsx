@@ -74,7 +74,7 @@ const Login = () => {
 
   return (
     <AuthWrapper title="Anmelden">
-      <form onSubmit={submitHandler} className="mt-5 text-right p-3">
+      <form onSubmit={submitHandler} className="mt-5 text-right p-6">
         <AuthInput
           value={enteredEmail}
           onBlur={emailBlurHandler}
@@ -82,7 +82,7 @@ const Login = () => {
           type="text"
           error={emailInputError ? "must be a valid email address" : ""}
           placeholder="E-Mail Adresse"
-          inputClassName="w-25 px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"
+          inputClassName="w-full px-4 text-xl p-3 peer focus:outline-none border-2 rounded-md"
         />
         <AuthInput
           value={enteredPassword}
@@ -91,7 +91,7 @@ const Login = () => {
           error={passwordInputError ? "password not strong enough" : ""}
           type="password"
           placeholder="Neuer Password"
-          inputClassName="w-25 px-4  text-xl p-3 peer f
+          inputClassName="w-full px-4 text-xl p-3 peer f
           ocus:outline-none border-2 rounded-md"
         />
 

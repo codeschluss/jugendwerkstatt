@@ -10,8 +10,6 @@ const RightContent: React.FC<RightContentProps> = () => {
   const { theUser } = useContext(AuthContext);
   const [toggleSearch, setToggleSearch] = useState<boolean>(false);
 
-  console.log(theUser);
-
   return (
     <div className="flex items-center flex-grow justify-end relative">
       <Search

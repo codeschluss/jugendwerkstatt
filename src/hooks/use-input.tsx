@@ -1,7 +1,9 @@
 import { useState } from "react";
 
-const useInput = (inputValidation: any) => {
-  const [enteredValue, setEnteredValue] = useState("");
+const useInput = (inputValidation: any, initialValue?: string | undefined) => {
+  const [enteredValue, setEnteredValue] = useState(
+    initialValue ? initialValue : ""
+  );
   const [isBlured, setIsBlured] = useState(false);
 
   const validValue = inputValidation(enteredValue);
