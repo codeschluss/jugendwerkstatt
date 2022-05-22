@@ -1,4 +1,4 @@
-import React, { Children, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { EventEntity, useGetEventsQuery } from "../../GraphQl/graphql";
 
@@ -8,11 +8,10 @@ import 'moment/locale/de';
 
 import  "./eventsCalendarAndTimeStyle.css";
 
+import Modal from "../modals/courseReviewPopUp"
+
+
 const EventsCalendar: React.FC = () => {
-    // const todayDate = new Date();
-    // const formatter = new Intl.DateTimeFormat('de', { month: 'long' });
-    // const monthName = formatter.format(todayDate);
-    // const todayDateString = `${todayDate.getDate()}. ${monthName} ${todayDate.getFullYear()}`;
 
     const navigate = useNavigate();
     function goBack() {
@@ -45,68 +44,6 @@ const EventsCalendar: React.FC = () => {
             temmmpCounter = temmmpCounter+1;
         }
     })};
-
-    console.log('datesOnEvents', datesOnEvents);
-
-    // var datesOnEvents = [
-    //     {
-    //         id: 0,
-    //         numberOfEvents: 3,
-    //         allDay: true,
-    //         start: new Date(2022,4,6,10),
-    //         end: new Date(2022,4,6,13)
-    //     },
-    //     {
-    //         id: 1,
-    //         numberOfEvents: 3,
-    //         allDay: true,
-    //         start: new Date(2022,4,6,11),
-    //         end: new Date(2022,4,6,14)
-    //     },
-    //     {
-    //         id: 2,
-    //         numberOfEvents: 3,
-    //         allDay: true,
-    //         start: new Date(2022,4,6,11),
-    //         end: new Date(2022,4,6,14)
-    //     },
-    //     {
-    //         id: 3,
-    //         numberOfEvents: 1,
-    //         allDay: true,
-    //         start: new Date(2022,4,18),
-    //         end: new Date(2022,4,19)
-    //     },
-    //     {
-    //         id: 4,
-    //         numberOfEvents: 1,
-    //         allDay: true,
-    //         start: new Date(2022,4,19),
-    //         end: new Date(2022,4,19)
-    //     },
-    //     {
-    //         id: 5,
-    //         numberOfEvents: 1,
-    //         allDay: true,
-    //         start: new Date(2022,4,10),
-    //         end: new Date(2022,4,10)
-    //     },
-    //     {
-    //         id: 6,
-    //         numberOfEvents: 1,
-    //         allDay: true,
-    //         start: new Date(2022,4,12),
-    //         end: new Date(2022,4,12)
-    //     },
-    //     {
-    //         id: 7,
-    //         numberOfEvents: 1,
-    //         allDay: true,
-    //         start: new Date(2022,3,12),
-    //         end: new Date(2022,3,12)
-    //     }
-    // ];
-
 
     var finalDatesEvents = [];
 
@@ -181,6 +118,11 @@ const EventsCalendar: React.FC = () => {
     return (
         
         <div className="absolute top-0 left-0 w-screen h-screen bg-white z-10">
+            <Modal 
+                visible={false}
+                course={'Holz 1'}
+            >
+            </Modal>
             <div className="flex bg-primary h-[6.5rem] text-white">
                 <div className="my-auto relative">
                     <button className="absolute inline ml-5 -mt-3" onClick={goBack} style={{zIndex: 2}}>
