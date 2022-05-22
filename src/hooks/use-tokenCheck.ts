@@ -8,12 +8,13 @@ const useTokenCheck = (access: any, refresh: any) => {
   const navigate = useNavigate();
   if (access && refresh) {
     const recievedToken: [string] | any = jwt_decode(access);
-    if (recievedToken.roles.includes("approved" || "verified")) {
+    if (recievedToken.roles.includes("verified")) {
       localStorage.setItem("accessToken", access || "");
       localStorage.setItem("refreshToken", refresh || "");
       setIsLogedIn(true);
       navigate("/");
     } else {
+      navigate("/reVerifyEmail");
       return;
     }
   }

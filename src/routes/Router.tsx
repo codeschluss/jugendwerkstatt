@@ -31,6 +31,10 @@ import Jobs from "../pages/jobs";
 import PushNotificationsContainer from "../pages/capacitor";
 import ProfileSettings from "../pages/Profile/ProfileSettings";
 import PersonalData from "../pages/Profile/PersonalData";
+import EmailVerificationOne from "../components/emailVerification";
+import ToVerifyUser from "../pages/verify/ToVerifyUser";
+import AlreadyVerifiedUser from "../pages/verify/AlreadyVerifiedUser";
+import ReVerifyUser from "../pages/verify/ReVerifyUser";
 
 const Router = () => {
   return (
@@ -63,8 +67,10 @@ const Router = () => {
           <Route path="/profile-personal" element={<PersonalData />} />
 
           <Route path="/Login" element={<Login />} />
-          <Route path="/EmailVerification" element={<EmailVerification />} />
-          <Route path="/EmailVerified" element={<EmailVerified />} />
+          <Route path="/toVerifyEmail" element={<ToVerifyUser />} />
+          <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />
+          <Route path="/reVerifyEmail" element={<ReVerifyUser />} />
+
           <Route path="/map" element={<Map />} />
           <Route path="/MediaLibrary" element={<MediaLibrary />} />
           <Route path="/EventsCalendar" element={<EventsCalendar />} />

@@ -14,10 +14,9 @@ import { RegisterValidations } from "./registerfooter/RegisterValidations";
 
 const Register = () => {
   const [inputsAreValid, setInputsAreValid] = useState(false);
-  const [authHeaderContent, setAuthHeaderContent] = useState({
-    headertype: "",
-    headerText: "",
-  });
+
+  const navigate = useNavigate();
+  const { setTempEmail } = useContext(AuthContext);
   let disableInput = false;
   const regex = /[^A-Za-z0-9_.]/g;
 
@@ -129,36 +128,12 @@ const Register = () => {
         },
       });
     }
-
-    if (data) {
-    }
-
-    setAuthHeaderContent({
-      headertype: "email",
-      headerText: "Du hast noch keinen Verifizieringsliink erhalten?",
-    });
+    setTempEmail(enteredEmail);
+    navigate("/toVerifyEmail");
   };
 
-  const [sendVerificationMutation] = useSendVerificationMutation({
-    variables: {
-      email: enteredEmail,
-    },
-  });
-
-  const aaabbb = () => {
-    sendVerificationMutation();
-  };
   return (
-    <AuthWrapper
-      title={"Registrierung"}
-      headerType={`${
-        !authHeaderContent ? false : authHeaderContent.headertype
-      }`}
-      headerContent={`${
-        !authHeaderContent ? false : authHeaderContent.headerText
-      }`}
-      resendLink={aaabbb}
-    >
+    <AuthWrapper title={"Registrierung"}>
       <form className="w-screen" onSubmit={onSubmitHandler}>
         <div className="pb-0 p-12">
           <AuthInput

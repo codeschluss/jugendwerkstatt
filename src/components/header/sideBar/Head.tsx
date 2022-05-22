@@ -5,16 +5,41 @@ import Styles from "./Head.module.css";
 const Head: React.FunctionComponent = () => {
   const { theUser } = useContext(AuthContext);
 
+  const getRandomColor: any = () => {
+    return Math.floor(Math.random() * 5);
+  };
+  const colors = [
+    "bg-green-600",
+    "bg-purple-600",
+    "bg-red-500",
+    "bg-blue-600",
+    "bg-yellow-400",
+  ];
+
+  let letter;
+
+  theUser?.fullname &&
+    (letter = theUser.fullname.substring(0, 1).toUpperCase());
   return (
     <div className="w-full p-8 relative">
       <span
         className={`absolute inset-0 overflow-hidden ${Styles.headStyle}`}
       ></span>
-      <img
-        className="h-14 w-14 object-cover rounded-full"
-        src={`http://localhost:8061/api/media/${theUser?.profilePicture?.id}`}
-        alt=""
-      />
+      {theUser?.profilePicture?.id ? (
+        <img
+          className="h-14 w-14 object-cover rounded-full"
+          src={`http://localhost:8061/api/media/${theUser?.profilePicture?.id}`}
+          alt=""
+        />
+      ) : (
+        <span
+          className={`w-14 h-14 rounded-full ${
+            colors[getRandomColor()]
+          } flex justify-center items-center text-white`}
+        >
+          {letter}
+        </span>
+      )}
       <div className="mt-5">
         <p className="text-lg font-semibold">{theUser?.fullname}</p>
         <p>{theUser?.email}</p>

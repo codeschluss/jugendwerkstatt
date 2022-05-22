@@ -14,7 +14,7 @@ import AuthWrapper from "../AuthWrapper";
 import jwtDecode from "jwt-decode";
 
 const Login = () => {
-  const { setTheUser } = useContext(AuthContext);
+  const { setTheUser, setTempEmail } = useContext(AuthContext);
   const [accessToken, setAccessToken] = useState();
   const {
     value: enteredEmail,
@@ -68,6 +68,7 @@ const Login = () => {
     await createToken();
     resetEmailInput();
     resetPasswordInput();
+    setTempEmail(enteredEmail);
   };
 
   useTokenCheck(data?.createToken?.access, data?.createToken?.refresh);
