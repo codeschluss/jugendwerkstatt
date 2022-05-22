@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/footer";
 import Header from "../components/header";
+import Loader from "../components/ui/Loader";
 import AuthContext from "../contexts/AuthContext";
 import {
   useGetEventsQuery,
@@ -71,18 +72,14 @@ const Layout: React.FC = ({ children }) => {
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      checkToken();
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
+    checkToken();
+  }, [localStorage.getItem("accessToken")]);
 
   return (
     <main className="flex flex-col justify-between min-h-screen">
       <div>
         <Header />
-        <div>{children}</div>
+        {result.loading ? <Loader /> : <div>{children}</div>}
       </div>
       {/* <Footer /> */}
     </main>

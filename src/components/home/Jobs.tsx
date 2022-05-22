@@ -1,29 +1,35 @@
-import { useContext, useEffect } from "react";
-import EventContext from "../../contexts/EventContext";
-import JobAddContext from "../../contexts/JobAddContext";
+import { useGetJobAdsQuery } from "../../GraphQl/graphql";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
-import { EventEntity } from "./Test";
+import { JobAdEntity } from "./Test";
 
 interface EventsProps {}
 
 const Events: React.FC<EventsProps> = () => {
-  const { setAllJobAds, allJobAds } = useContext(JobAddContext);
+  const result = useGetJobAdsQuery({
+    variables: {
+      params: {
+        //FilterSortPaginate fields
+      },
+    },
+  });
 
-  const fetchedData: [EventEntity] = allJobAds as [EventEntity];
-  console.log(allJobAds, "jobAdds");
+  const fetchedData: [JobAdEntity] = result.data?.getJobAds?.result as [
+    JobAdEntity
+  ];
 
   return (
     <Slider title="Jobs">
-      {fetchedData?.map((el) => {
+      {fetchedData?.map((el: any) => {
         return (
           <SlideCard
             route={`/job-ad/${el.id}`}
-            key={el?.name}
-            eventName={el?.name}
-            location={el?.address?.street}
-            date="Freitag, 25/02/22"
+            key={el?.id}
+            eventName={el?.company?.name}
+            location={el?.company?.address?.street}
+            date={el?.startDate}
             // imgUrl={el?.titleImage?.id}
+            color={el?.type?.color}
           />
         );
       })}

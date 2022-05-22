@@ -11,12 +11,6 @@ export const SingleEvent = () => {
   const { data, loading, error } = useGetEventQuery({
     variables: { id: params.id || "" },
   });
-  if (data) {
-    console.log(
-      data?.getEvent?.schedules && data?.getEvent?.schedules[0]?.endDate,
-      "datat"
-    );
-  }
   return (
     <>
       <Slider imgUrl={data?.getEvent?.titleImage?.id} />

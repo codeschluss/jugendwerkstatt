@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "892826535808",
+    "project_id": "jugend-eb0c3",
+    "storage_bucket": "jugend-eb0c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892826535808:android:16f6075b606cd86db5e365",
+        "android_client_info": {
+          "package_name": "com.jugendwerkstatt.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "892826535808-ghkspnm25j4bm7bfutd1lo8vv15f8fc5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyXT70FAoONaQYqti2pfS3ttuW-9pUhFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "892826535808-ghkspnm25j4bm7bfutd1lo8vv15f8fc5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

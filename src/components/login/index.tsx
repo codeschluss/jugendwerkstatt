@@ -39,12 +39,10 @@ const Index = () => {
 
   useEffect(() => {
     if (data) {
-      console.log("data: ", data);
       const tempAccessToken = data.createToken.access;
       const tempRefreshToken = data.createToken.refresh;
 
       const decodedJwtToken = JSON.parse(atob(tempAccessToken.split(".")[1]));
-      console.log("decoded token:", decodedJwtToken);
       const roles = decodedJwtToken.roles;
 
       var responseMessage = "wrong";

@@ -6,7 +6,6 @@ import message from "./testChat.json";
 
 const Chat = () => {
   const { id } = useParams();
-  console.log(id, "params");
 
   const [data, setData] = useState<any>(message);
 
@@ -33,7 +32,6 @@ const Chat = () => {
         senderId: "1",
       },
     ]);
-    console.log(data);
   };
 
   return (

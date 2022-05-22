@@ -3,7 +3,6 @@ import AuthContext from "../../../contexts/AuthContext";
 
 export const RegisterValidations = () => {
   const { passwordBits } = useContext(AuthContext);
-  console.log(passwordBits, "pbits");
 
   return (
     <div className="w-full mx-auto mb-10 mt-0">

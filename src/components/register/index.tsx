@@ -77,42 +77,30 @@ const Register = () => {
     enteredCPasswordValidity,
   ]);
 
-  console.log(inputsAreValid, "the inputs");
-
   const [password, setPassword] = useState<string>("");
   const { passwordBits, setPasswordBits } = useContext(AuthContext);
 
   function passwordStrength(event: any) {
     passwordChangeHandler;
-    console.log(event);
     setPassword(event.target.value);
     const passwordLength = password.length;
     let possibleSymbols = 0;
 
     if (password.match(/\d/)) {
       possibleSymbols = 10;
-      console.log("numrat");
     }
     if (password.match(/[a-z]/)) {
       possibleSymbols += 26;
-      console.log("a-z");
     }
     if (password.match(/[A-Z]/)) {
       possibleSymbols += 26;
-      console.log("A-Z");
     }
     if (password.match(/[!@#$%^&*()_+\-=\[\]{};~':"\\|,.<>\/?]/)) {
       possibleSymbols += 32;
-      console.log("char");
     }
-    console.log(possibleSymbols);
-    console.log(passwordLength);
     const argument = Math.pow(possibleSymbols, passwordLength);
-    console.log(argument);
 
     setPasswordBits(Math.log2(argument));
-
-    console.log(passwordBits);
   }
 
   const twoCalls = (e: any) => {

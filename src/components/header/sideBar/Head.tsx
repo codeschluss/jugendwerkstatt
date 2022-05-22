@@ -4,7 +4,6 @@ import Styles from "./Head.module.css";
 
 const Head: React.FunctionComponent = () => {
   const { theUser } = useContext(AuthContext);
-  console.log(theUser);
 
   return (
     <div className="w-full p-8 relative">
@@ -17,8 +16,8 @@ const Head: React.FunctionComponent = () => {
         alt=""
       />
       <div className="mt-5">
-        <p className="text-lg font-semibold">{theUser.fullname}</p>
-        <p>{theUser.email}</p>
+        <p className="text-lg font-semibold">{theUser?.fullname}</p>
+        <p>{theUser?.email}</p>
       </div>
     </div>
   );

@@ -387,55 +387,59 @@ export type MediaEntityInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createToken?: Maybe<TokenDto>;
-  deleteAddress: Scalars['Boolean'];
-  deleteAddresss: Scalars['Boolean'];
-  deleteAnswer: Scalars['Boolean'];
-  deleteAnswers: Scalars['Boolean'];
-  deleteAssignment: Scalars['Boolean'];
-  deleteAssignmentState: Scalars['Boolean'];
-  deleteAssignmentStates: Scalars['Boolean'];
-  deleteAssignments: Scalars['Boolean'];
-  deleteCategory: Scalars['Boolean'];
-  deleteCategorys: Scalars['Boolean'];
-  deleteCompanies: Scalars['Boolean'];
-  deleteCompany: Scalars['Boolean'];
-  deleteCourse: Scalars['Boolean'];
-  deleteCourses: Scalars['Boolean'];
-  deleteErrorMessage: Scalars['Boolean'];
-  deleteErrorMessages: Scalars['Boolean'];
-  deleteEvent: Scalars['Boolean'];
-  deleteEvents: Scalars['Boolean'];
-  deleteFeedback: Scalars['Boolean'];
-  deleteFeedbacks: Scalars['Boolean'];
-  deleteGroup: Scalars['Boolean'];
-  deleteGroups: Scalars['Boolean'];
-  deleteJobAd: Scalars['Boolean'];
-  deleteJobAds: Scalars['Boolean'];
-  deleteJobType: Scalars['Boolean'];
-  deleteJobTypes: Scalars['Boolean'];
-  deleteLink: Scalars['Boolean'];
-  deleteLinkCategory: Scalars['Boolean'];
-  deleteLinks: Scalars['Boolean'];
-  deleteOrganizer: Scalars['Boolean'];
-  deleteOrganizers: Scalars['Boolean'];
-  deleteQuestion: Scalars['Boolean'];
-  deleteQuestionnaire: Scalars['Boolean'];
-  deleteQuestionnaires: Scalars['Boolean'];
-  deleteQuestions: Scalars['Boolean'];
-  deleteRole: Scalars['Boolean'];
-  deleteRoles: Scalars['Boolean'];
-  deleteSchedule: Scalars['Boolean'];
-  deleteSchedules: Scalars['Boolean'];
-  deleteTemplate: Scalars['Boolean'];
-  deleteTemplateType: Scalars['Boolean'];
-  deleteTemplateTypes: Scalars['Boolean'];
-  deleteTemplates: Scalars['Boolean'];
-  deleteUser: Scalars['Boolean'];
-  deleteUserTemplate: Scalars['Boolean'];
-  deleteUserTemplates: Scalars['Boolean'];
-  deleteUsers: Scalars['Boolean'];
+  deleteAddress?: Maybe<Scalars['Boolean']>;
+  deleteAddresss?: Maybe<Scalars['Boolean']>;
+  deleteAnswer?: Maybe<Scalars['Boolean']>;
+  deleteAnswers?: Maybe<Scalars['Boolean']>;
+  deleteAssignment?: Maybe<Scalars['Boolean']>;
+  deleteAssignmentState?: Maybe<Scalars['Boolean']>;
+  deleteAssignmentStates?: Maybe<Scalars['Boolean']>;
+  deleteAssignments?: Maybe<Scalars['Boolean']>;
+  deleteCompanies?: Maybe<Scalars['Boolean']>;
+  deleteCompany?: Maybe<Scalars['Boolean']>;
+  deleteCourse?: Maybe<Scalars['Boolean']>;
+  deleteCourses?: Maybe<Scalars['Boolean']>;
+  deleteErrorMessage?: Maybe<Scalars['Boolean']>;
+  deleteErrorMessages?: Maybe<Scalars['Boolean']>;
+  deleteEvent?: Maybe<Scalars['Boolean']>;
+  deleteEventCategories?: Maybe<Scalars['Boolean']>;
+  deleteEventCategory?: Maybe<Scalars['Boolean']>;
+  deleteEvents?: Maybe<Scalars['Boolean']>;
+  deleteFeedback?: Maybe<Scalars['Boolean']>;
+  deleteFeedbacks?: Maybe<Scalars['Boolean']>;
+  deleteGroup?: Maybe<Scalars['Boolean']>;
+  deleteGroups?: Maybe<Scalars['Boolean']>;
+  deleteJobAd?: Maybe<Scalars['Boolean']>;
+  deleteJobAds?: Maybe<Scalars['Boolean']>;
+  deleteJobType?: Maybe<Scalars['Boolean']>;
+  deleteJobTypes?: Maybe<Scalars['Boolean']>;
+  deleteLink?: Maybe<Scalars['Boolean']>;
+  deleteLinkCategory?: Maybe<Scalars['Boolean']>;
+  deleteLinks?: Maybe<Scalars['Boolean']>;
+  deleteOrganizer?: Maybe<Scalars['Boolean']>;
+  deleteOrganizers?: Maybe<Scalars['Boolean']>;
+  deleteQuestion?: Maybe<Scalars['Boolean']>;
+  deleteQuestionnaire?: Maybe<Scalars['Boolean']>;
+  deleteQuestionnaires?: Maybe<Scalars['Boolean']>;
+  deleteQuestions?: Maybe<Scalars['Boolean']>;
+  deleteRole?: Maybe<Scalars['Boolean']>;
+  deleteRoles?: Maybe<Scalars['Boolean']>;
+  deleteSchedule?: Maybe<Scalars['Boolean']>;
+  deleteSchedules?: Maybe<Scalars['Boolean']>;
+  deleteSubscription?: Maybe<Scalars['Boolean']>;
+  deleteSubscriptionType?: Maybe<Scalars['Boolean']>;
+  deleteSubscriptionTypes?: Maybe<Scalars['Boolean']>;
+  deleteSubscriptions?: Maybe<Scalars['Boolean']>;
+  deleteTemplate?: Maybe<Scalars['Boolean']>;
+  deleteTemplateType?: Maybe<Scalars['Boolean']>;
+  deleteTemplateTypes?: Maybe<Scalars['Boolean']>;
+  deleteTemplates?: Maybe<Scalars['Boolean']>;
+  deleteUser?: Maybe<Scalars['Boolean']>;
+  deleteUserTemplate?: Maybe<Scalars['Boolean']>;
+  deleteUserTemplates?: Maybe<Scalars['Boolean']>;
+  deleteUsers?: Maybe<Scalars['Boolean']>;
   refreshToken?: Maybe<TokenDto>;
-  resetPassword: Scalars['Boolean'];
+  resetPassword?: Maybe<Scalars['Boolean']>;
   saveAddress?: Maybe<AddressEntity>;
   saveAddresss?: Maybe<Array<Maybe<AddressEntity>>>;
   saveAnswer?: Maybe<AnswerEntity>;
@@ -444,8 +448,6 @@ export type Mutation = {
   saveAssignmentState?: Maybe<AssignmentStateEntity>;
   saveAssignmentStates?: Maybe<Array<Maybe<AssignmentStateEntity>>>;
   saveAssignments?: Maybe<Array<Maybe<AssignmentEntity>>>;
-  saveCategory?: Maybe<EventCategoryEntity>;
-  saveCategorys?: Maybe<Array<Maybe<EventCategoryEntity>>>;
   saveCompanies?: Maybe<Array<Maybe<CompanyEntity>>>;
   saveCompany?: Maybe<CompanyEntity>;
   saveCourse?: Maybe<CourseEntity>;
@@ -453,6 +455,8 @@ export type Mutation = {
   saveErrorMessage?: Maybe<ErrorMessageEntity>;
   saveErrorMessages?: Maybe<Array<Maybe<ErrorMessageEntity>>>;
   saveEvent?: Maybe<EventEntity>;
+  saveEventCategories?: Maybe<Array<Maybe<EventCategoryEntity>>>;
+  saveEventCategory?: Maybe<EventCategoryEntity>;
   saveEvents?: Maybe<Array<Maybe<EventEntity>>>;
   saveFeedback?: Maybe<FeedbackEntity>;
   saveFeedbacks?: Maybe<Array<Maybe<FeedbackEntity>>>;
@@ -476,6 +480,10 @@ export type Mutation = {
   saveRoles?: Maybe<Array<Maybe<RoleEntity>>>;
   saveSchedule?: Maybe<ScheduleEntity>;
   saveSchedules?: Maybe<Array<Maybe<ScheduleEntity>>>;
+  saveSubscription?: Maybe<SubscriptionEntity>;
+  saveSubscriptionType?: Maybe<SubscriptionTypeEntity>;
+  saveSubscriptionTypes?: Maybe<Array<Maybe<SubscriptionTypeEntity>>>;
+  saveSubscriptions?: Maybe<Array<Maybe<SubscriptionEntity>>>;
   saveTemplate?: Maybe<TemplateEntity>;
   saveTemplateType?: Maybe<TemplateTypeEntity>;
   saveTemplateTypes?: Maybe<Array<Maybe<TemplateTypeEntity>>>;
@@ -484,10 +492,9 @@ export type Mutation = {
   saveUserTemplate?: Maybe<UserTemplateEntity>;
   saveUserTemplates?: Maybe<Array<Maybe<UserTemplateEntity>>>;
   saveUsers?: Maybe<Array<Maybe<UserEntity>>>;
-  sendError: Scalars['Boolean'];
-  sendPasswordReset: Scalars['Boolean'];
-  sendVerification: Scalars['Boolean'];
-  test?: Maybe<UserEntity>;
+  sendError?: Maybe<Scalars['Boolean']>;
+  sendPasswordReset?: Maybe<Scalars['Boolean']>;
+  sendVerification?: Maybe<Scalars['Boolean']>;
   verify?: Maybe<UserEntity>;
 };
 
@@ -548,18 +555,6 @@ export type MutationDeleteAssignmentsArgs = {
 
 
 /** Mutation root */
-export type MutationDeleteCategoryArgs = {
-  id?: InputMaybe<Scalars['String']>;
-};
-
-
-/** Mutation root */
-export type MutationDeleteCategorysArgs = {
-  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-};
-
-
-/** Mutation root */
 export type MutationDeleteCompaniesArgs = {
   ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
@@ -597,6 +592,18 @@ export type MutationDeleteErrorMessagesArgs = {
 
 /** Mutation root */
 export type MutationDeleteEventArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteEventCategoriesArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteEventCategoryArgs = {
   id?: InputMaybe<Scalars['String']>;
 };
 
@@ -735,6 +742,30 @@ export type MutationDeleteSchedulesArgs = {
 
 
 /** Mutation root */
+export type MutationDeleteSubscriptionArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteSubscriptionTypeArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteSubscriptionTypesArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteSubscriptionsArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
 export type MutationDeleteTemplateArgs = {
   id?: InputMaybe<Scalars['String']>;
 };
@@ -844,18 +875,6 @@ export type MutationSaveAssignmentsArgs = {
 
 
 /** Mutation root */
-export type MutationSaveCategoryArgs = {
-  entity?: InputMaybe<EventCategoryEntityInput>;
-};
-
-
-/** Mutation root */
-export type MutationSaveCategorysArgs = {
-  entities?: InputMaybe<Array<InputMaybe<EventCategoryEntityInput>>>;
-};
-
-
-/** Mutation root */
 export type MutationSaveCompaniesArgs = {
   entities?: InputMaybe<Array<InputMaybe<CompanyEntityInput>>>;
 };
@@ -894,6 +913,18 @@ export type MutationSaveErrorMessagesArgs = {
 /** Mutation root */
 export type MutationSaveEventArgs = {
   entity?: InputMaybe<EventEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveEventCategoriesArgs = {
+  entities?: InputMaybe<Array<InputMaybe<EventCategoryEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationSaveEventCategoryArgs = {
+  entity?: InputMaybe<EventCategoryEntityInput>;
 };
 
 
@@ -1032,6 +1063,30 @@ export type MutationSaveScheduleArgs = {
 /** Mutation root */
 export type MutationSaveSchedulesArgs = {
   entities?: InputMaybe<Array<InputMaybe<ScheduleEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationSaveSubscriptionArgs = {
+  entity?: InputMaybe<SubscriptionEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveSubscriptionTypeArgs = {
+  entity?: InputMaybe<SubscriptionTypeEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveSubscriptionTypesArgs = {
+  entities?: InputMaybe<Array<InputMaybe<SubscriptionTypeEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationSaveSubscriptionsArgs = {
+  entities?: InputMaybe<Array<InputMaybe<SubscriptionEntityInput>>>;
 };
 
 
@@ -1249,6 +1304,18 @@ export type PageableList_ScheduleEntity = {
   total: Scalars['Long'];
 };
 
+export type PageableList_SubscriptionEntity = {
+  __typename?: 'PageableList_SubscriptionEntity';
+  result?: Maybe<Array<Maybe<SubscriptionEntity>>>;
+  total: Scalars['Long'];
+};
+
+export type PageableList_SubscriptionTypeEntity = {
+  __typename?: 'PageableList_SubscriptionTypeEntity';
+  result?: Maybe<Array<Maybe<SubscriptionTypeEntity>>>;
+  total: Scalars['Long'];
+};
+
 export type PageableList_TemplateEntity = {
   __typename?: 'PageableList_TemplateEntity';
   result?: Maybe<Array<Maybe<TemplateEntity>>>;
@@ -1301,8 +1368,6 @@ export type Query = {
   getAssignmentState?: Maybe<AssignmentStateEntity>;
   getAssignmentStates?: Maybe<PageableList_AssignmentStateEntity>;
   getAssignments?: Maybe<PageableList_AssignmentEntity>;
-  getCategory?: Maybe<EventCategoryEntity>;
-  getCategorys?: Maybe<PageableList_EventCategoryEntity>;
   getCompanies?: Maybe<PageableList_CompanyEntity>;
   getCompany?: Maybe<CompanyEntity>;
   getCourse?: Maybe<CourseEntity>;
@@ -1310,6 +1375,8 @@ export type Query = {
   getErrorMessage?: Maybe<ErrorMessageEntity>;
   getErrorMessages?: Maybe<PageableList_ErrorMessageEntity>;
   getEvent?: Maybe<EventEntity>;
+  getEventCategories?: Maybe<PageableList_EventCategoryEntity>;
+  getEventCategory?: Maybe<EventCategoryEntity>;
   getEvents?: Maybe<PageableList_EventEntity>;
   getFeedback?: Maybe<FeedbackEntity>;
   getFeedbacks?: Maybe<PageableList_FeedbackEntity>;
@@ -1333,6 +1400,10 @@ export type Query = {
   getRoles?: Maybe<PageableList_RoleEntity>;
   getSchedule?: Maybe<ScheduleEntity>;
   getSchedules?: Maybe<PageableList_ScheduleEntity>;
+  getSubscription?: Maybe<SubscriptionEntity>;
+  getSubscriptionType?: Maybe<SubscriptionTypeEntity>;
+  getSubscriptionTypes?: Maybe<PageableList_SubscriptionTypeEntity>;
+  getSubscriptions?: Maybe<PageableList_SubscriptionEntity>;
   getTemplate?: Maybe<TemplateEntity>;
   getTemplateType?: Maybe<TemplateTypeEntity>;
   getTemplateTypes?: Maybe<PageableList_TemplateTypeEntity>;
@@ -1394,18 +1465,6 @@ export type QueryGetAssignmentsArgs = {
 
 
 /** Query root */
-export type QueryGetCategoryArgs = {
-  entity?: InputMaybe<EventCategoryEntityInput>;
-};
-
-
-/** Query root */
-export type QueryGetCategorysArgs = {
-  params?: InputMaybe<FilterSortPaginateInput>;
-};
-
-
-/** Query root */
 export type QueryGetCompaniesArgs = {
   params?: InputMaybe<FilterSortPaginateInput>;
 };
@@ -1444,6 +1503,18 @@ export type QueryGetErrorMessagesArgs = {
 /** Query root */
 export type QueryGetEventArgs = {
   entity?: InputMaybe<EventEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetEventCategoriesArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
+export type QueryGetEventCategoryArgs = {
+  entity?: InputMaybe<EventCategoryEntityInput>;
 };
 
 
@@ -1581,6 +1652,30 @@ export type QueryGetScheduleArgs = {
 
 /** Query root */
 export type QueryGetSchedulesArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
+export type QueryGetSubscriptionArgs = {
+  entity?: InputMaybe<SubscriptionEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetSubscriptionTypeArgs = {
+  entity?: InputMaybe<SubscriptionTypeEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetSubscriptionTypesArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
+export type QueryGetSubscriptionsArgs = {
   params?: InputMaybe<FilterSortPaginateInput>;
 };
 
@@ -1738,6 +1833,42 @@ export type ScheduleEntityInput = {
   startDate?: InputMaybe<Scalars['OffsetDateTime']>;
 };
 
+export type SubscriptionEntity = {
+  __typename?: 'SubscriptionEntity';
+  auth_secret?: Maybe<Scalars['String']>;
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+  subscriptionType?: Maybe<SubscriptionTypeEntity>;
+};
+
+export type SubscriptionEntityInput = {
+  auth_secret?: InputMaybe<Scalars['String']>;
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
+  subscriptionType?: InputMaybe<SubscriptionTypeEntityInput>;
+};
+
+export type SubscriptionTypeEntity = {
+  __typename?: 'SubscriptionTypeEntity';
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  description?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+  name?: Maybe<Scalars['String']>;
+  subscriptions?: Maybe<Array<Maybe<SubscriptionEntity>>>;
+};
+
+export type SubscriptionTypeEntityInput = {
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  description?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
+  name?: InputMaybe<Scalars['String']>;
+  subscriptions?: InputMaybe<Array<InputMaybe<SubscriptionEntityInput>>>;
+};
+
 export type TemplateEntity = {
   __typename?: 'TemplateEntity';
   content?: Maybe<Scalars['String']>;
@@ -1784,6 +1915,7 @@ export type TokenDto = {
 
 export type UserEntity = {
   __typename?: 'UserEntity';
+  assignment?: Maybe<Array<Maybe<AssignmentEntity>>>;
   course?: Maybe<CourseEntity>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   email?: Maybe<Scalars['String']>;
@@ -1800,6 +1932,7 @@ export type UserEntity = {
 };
 
 export type UserEntityInput = {
+  assignment?: InputMaybe<Array<InputMaybe<AssignmentEntityInput>>>;
   course?: InputMaybe<CourseEntityInput>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   email?: InputMaybe<Scalars['String']>;
@@ -1873,7 +2006,7 @@ export type GetEventCategoriesQueryVariables = Exact<{
 }>;
 
 
-export type GetEventCategoriesQuery = { __typename?: 'Query', getCategorys?: { __typename?: 'PageableList_EventCategoryEntity', result?: Array<{ __typename?: 'EventCategoryEntity', name?: string | null, id?: string | null, icon?: string | null, events?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, titleImage?: { __typename?: 'MediaEntity', name?: string | null, id?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null, organizer?: { __typename?: 'OrganizerEntity', website?: string | null, phone?: string | null, name?: string | null, mail?: string | null, id?: string | null } | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, modified?: any | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null> | null } | null> | null } | null };
+export type GetEventCategoriesQuery = { __typename?: 'Query', getEventCategories?: { __typename?: 'PageableList_EventCategoryEntity', result?: Array<{ __typename?: 'EventCategoryEntity', name?: string | null, id?: string | null, icon?: string | null, events?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, titleImage?: { __typename?: 'MediaEntity', name?: string | null, id?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null, organizer?: { __typename?: 'OrganizerEntity', website?: string | null, phone?: string | null, name?: string | null, mail?: string | null, id?: string | null } | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, modified?: any | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null> | null } | null> | null } | null };
 
 export type GetEventsQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -1887,14 +2020,14 @@ export type GetJobAdQueryVariables = Exact<{
 }>;
 
 
-export type GetJobAdQuery = { __typename?: 'Query', getJobAd?: { __typename?: 'JobAdEntity', dueDate?: any | null, id?: string | null, startDate?: any | null, title?: string | null, company?: { __typename?: 'CompanyEntity', website?: string | null, phone?: string | null, name?: string | null, mail?: string | null, id?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, modified?: any | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null } | null };
+export type GetJobAdQuery = { __typename?: 'Query', getJobAd?: { __typename?: 'JobAdEntity', dueDate?: any | null, id?: string | null, title?: string | null, startDate?: any | null, company?: { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null, type?: { __typename?: 'JobTypeEntity', color?: string | null, id?: string | null, name?: string | null } | null } | null };
 
 export type GetJobAdsQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
 }>;
 
 
-export type GetJobAdsQuery = { __typename?: 'Query', getJobAds?: { __typename?: 'PageableList_JobAdEntity', result?: Array<{ __typename?: 'JobAdEntity', id?: string | null, dueDate?: any | null, startDate?: any | null, title?: string | null, company?: { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', id?: string | null, latitude?: number | null, longitude?: number | null, place?: string | null, postalCode?: string | null, street?: string | null, houseNumber?: string | null } | null } | null } | null> | null } | null };
+export type GetJobAdsQuery = { __typename?: 'Query', getJobAds?: { __typename?: 'PageableList_JobAdEntity', result?: Array<{ __typename?: 'JobAdEntity', dueDate?: any | null, id?: string | null, title?: string | null, startDate?: any | null, company?: { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null, type?: { __typename?: 'JobTypeEntity', color?: string | null, id?: string | null, name?: string | null } | null } | null> | null } | null };
 
 export type GetLinkCategoriesQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -1958,7 +2091,7 @@ export type ResetPasswordMutationVariables = Exact<{
 }>;
 
 
-export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: boolean };
+export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword?: boolean | null };
 
 export type SaveUserTemplateMutationVariables = Exact<{
   name?: InputMaybe<Scalars['String']>;
@@ -1976,14 +2109,14 @@ export type SendPasswordResetMutationVariables = Exact<{
 }>;
 
 
-export type SendPasswordResetMutation = { __typename?: 'Mutation', sendPasswordReset: boolean };
+export type SendPasswordResetMutation = { __typename?: 'Mutation', sendPasswordReset?: boolean | null };
 
 export type SendVerificationMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
 
 
-export type SendVerificationMutation = { __typename?: 'Mutation', sendVerification: boolean };
+export type SendVerificationMutation = { __typename?: 'Mutation', sendVerification?: boolean | null };
 
 export type VerifyMutationVariables = Exact<{
   key?: InputMaybe<Scalars['String']>;
@@ -2097,7 +2230,7 @@ export type GetEventLazyQueryHookResult = ReturnType<typeof useGetEventLazyQuery
 export type GetEventQueryResult = Apollo.QueryResult<GetEventQuery, GetEventQueryVariables>;
 export const GetEventCategoriesDocument = gql`
     query GetEventCategories($params: FilterSortPaginateInput) {
-  getCategorys(params: $params) {
+  getEventCategories(params: $params) {
     result {
       name
       id
@@ -2238,26 +2371,30 @@ export const GetJobAdDocument = gql`
     query GetJobAd($entity: JobAdEntityInput) {
   getJobAd(entity: $entity) {
     company {
-      website
-      phone
-      name
-      mail
-      id
       address {
         houseNumber
         id
         latitude
         longitude
-        modified
         place
         postalCode
         street
       }
+      id
+      mail
+      name
+      phone
+      website
     }
     dueDate
     id
-    startDate
     title
+    type {
+      color
+      id
+      name
+    }
+    startDate
   }
 }
     `;
@@ -2293,26 +2430,31 @@ export const GetJobAdsDocument = gql`
     query GetJobAds($params: FilterSortPaginateInput) {
   getJobAds(params: $params) {
     result {
-      id
-      dueDate
       company {
-        id
-        mail
-        name
-        phone
-        website
         address {
+          houseNumber
           id
           latitude
           longitude
           place
           postalCode
           street
-          houseNumber
         }
+        id
+        mail
+        name
+        phone
+        website
+      }
+      dueDate
+      id
+      title
+      type {
+        color
+        id
+        name
       }
       startDate
-      title
     }
   }
 }

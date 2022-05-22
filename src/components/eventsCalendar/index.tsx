@@ -4,9 +4,9 @@ import { EventEntity, useGetEventsQuery } from "../../GraphQl/graphql";
 
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
-import 'moment/locale/de';
+import "moment/locale/de";
 
-import  "./eventsCalendarAndTimeStyle.css";
+import "./eventsCalendarAndTimeStyle.css";
 
 import Modal from "../modals/courseReviewPopUp"
 
@@ -116,7 +116,6 @@ const EventsCalendar: React.FC = () => {
     };
 
     return (
-        
         <div className="absolute top-0 left-0 w-screen h-screen bg-white z-10">
             <Modal 
                 visible={false}
