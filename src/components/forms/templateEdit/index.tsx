@@ -37,7 +37,7 @@ const TemplateEdit: React.FC = () => {
         name: templateName,
         content: templateContent,
         templateTypeId: templateTypeId,
-        templateId: !edit ? id : "",
+        templateId: edit ? id : "",
         userId: theUser.id,
       },
     });
@@ -48,17 +48,21 @@ const TemplateEdit: React.FC = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ html: templateContent, name: templateName }),
     };
-    await fetch("http://localhost:8061/api/media/pdf", requestOptions);
-    // axios.post(
-    //   `http://localhost:8061/api/media/pdf`,
-    //   {
-    //     html: templateContent,
-    //     name: templateName,
-    //   },
-    //   {
-    //     responseType: "blob",
-    //   }
-    // );
+    await fetch("http://localhost:8061/api/media/pdf", requestOptions)
+      .then((resp) => resp.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        // the filename you want
+        a.download = `${templateName}.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        alert("your file has downloaded!");
+      })
+      .catch(() => alert("oh no!"));
   };
 
   const saveTemplate = (): void => {
