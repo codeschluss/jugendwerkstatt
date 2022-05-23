@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const useInput = (inputValidation: any, initialValue?: string | undefined) => {
+const useInput = (inputValidation: any, initialValue?: any | undefined) => {
   const [enteredValue, setEnteredValue] = useState(
     initialValue ? initialValue : ""
   );

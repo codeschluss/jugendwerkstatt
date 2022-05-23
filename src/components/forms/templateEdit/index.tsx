@@ -81,7 +81,7 @@ const TemplateEdit: React.FC = () => {
   useEffect(() => {
     if (edit && userTemplateContent) {
       setTemplateContent(userTemplateContent);
-    } else if (!edit && templateContentResult) {
+    } else if (edit && templateContentResult) {
       setTemplateContent(templateContentResult);
     }
   }, [userTemplateContent, templateContentResult]);

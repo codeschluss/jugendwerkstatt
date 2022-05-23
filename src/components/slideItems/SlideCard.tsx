@@ -23,6 +23,22 @@ const SlideCard: React.FC<SlideCardProps> = ({
   color,
   width = "w-9/12",
 }) => {
+  const theDate = new Date(date);
+  const year = theDate.getFullYear();
+  const month = theDate.getMonth();
+  const day = theDate.getDate();
+
+  const weekDays = [
+    "Sonntag",
+    "Montag",
+    "Dienstag",
+    "Mittwoch",
+    "Donnerstag",
+    "Freitag",
+    "Samstag",
+  ];
+  const weekDay = weekDays[theDate.getDay()];
+
   return (
     <div
       className={`${className} snap-center ${width} h-60 overflow-hidden rounded-md flex-none relative m-2 p-2`}
@@ -52,7 +68,7 @@ const SlideCard: React.FC<SlideCardProps> = ({
       </div>
       <div className="absolute left-0 w-full bottom-0 bg-gradient-to-t from-black to-transparent text-white px-3 pb-3 pt-9">
         <p className="border-b border-white pb-1 mb-1 font-bold">{location}</p>
-        <p>{date?.substring(0, 10)}</p>
+        <p>{`${weekDay}, ${day}.${month}.${year}`}</p>
       </div>
     </div>
   );

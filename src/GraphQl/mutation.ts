@@ -19,9 +19,19 @@ export const REFRESH_TOKEN = gql`
 `;
 
 export const SAVE_USER = gql`
-  mutation User($fullName: String!, $email: String!, $password: String!) {
+  mutation User(
+    $fullName: String
+    $email: String
+    $password: String
+    $id: String
+  ) {
     saveUser(
-      entity: { fullname: $fullName, email: $email, password: $password }
+      entity: {
+        fullname: $fullName
+        email: $email
+        password: $password
+        id: $id
+      }
     ) {
       id
       fullname

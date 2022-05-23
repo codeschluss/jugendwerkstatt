@@ -22,17 +22,17 @@ const Events = () => {
     <div className="p-4 m-auto">
       {categoriesData?.map((category: EventCategoryEntity) => {
         return (
-          <div>
+          <div key={category.id}>
             <p className="mb-3 mt-3">{category?.name}</p>
             {category?.events?.map((el: any) => {
+              console.log(new Date(el.schedules[0].startDate).getFullYear());
               return (
-                <Slider className="-mx-4">
+                <Slider className="-mx-4" key={el?.id}>
                   <SlideCard
                     eventName={el?.name}
                     location={`${el?.address?.street}, ${el?.address?.houseNumber}, ${el?.address?.place}`}
-                    date={new Date(el?.schedules[0]?.startDate).getFullYear()}
+                    date={el?.schedules[el.schedules.length - 1]?.startDate}
                     route={"#"}
-                    key={el?.id}
                     imgUrl={el?.titleImage?.id}
                   />
                 </Slider>

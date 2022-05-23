@@ -35,6 +35,7 @@ import EmailVerificationOne from "../components/emailVerification";
 import ToVerifyUser from "../pages/verify/ToVerifyUser";
 import AlreadyVerifiedUser from "../pages/verify/AlreadyVerifiedUser";
 import ReVerifyUser from "../pages/verify/ReVerifyUser";
+import ChangePassword from "../pages/Profile/ChangePassword";
 
 const Router = () => {
   return (
@@ -65,6 +66,7 @@ const Router = () => {
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/profile" element={<ProfileSettings />} />
           <Route path="/profile-personal" element={<PersonalData />} />
+          <Route path="/profile-password" element={<ChangePassword />} />
 
           <Route path="/Login" element={<Login />} />
           <Route path="/toVerifyEmail" element={<ToVerifyUser />} />
@@ -79,7 +81,7 @@ const Router = () => {
           <Route path="/Forms/Templates" element={<Templates />} />
           <Route path="/Forms/Templates/:id" element={<TemplateView />} />
           <Route path="/Forms/Templates/Edit/:id" element={<TemplateEdit />} />
-          
+
           <Route path="/feedback" element={<Feedback />} />
         </Routes>
       </Layout>

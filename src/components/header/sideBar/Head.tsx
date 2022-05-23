@@ -3,18 +3,7 @@ import AuthContext from "../../../contexts/AuthContext";
 import Styles from "./Head.module.css";
 
 const Head: React.FunctionComponent = () => {
-  const { theUser } = useContext(AuthContext);
-
-  const getRandomColor: any = () => {
-    return Math.floor(Math.random() * 5);
-  };
-  const colors = [
-    "bg-green-600",
-    "bg-purple-600",
-    "bg-red-500",
-    "bg-blue-600",
-    "bg-yellow-400",
-  ];
+  const { theUser, bgColor } = useContext(AuthContext);
 
   let letter;
 
@@ -33,9 +22,7 @@ const Head: React.FunctionComponent = () => {
         />
       ) : (
         <span
-          className={`w-14 h-14 rounded-full ${
-            colors[getRandomColor()]
-          } flex justify-center items-center text-white`}
+          className={`w-14 h-14 rounded-full ${bgColor} flex justify-center items-center text-white`}
         >
           {letter}
         </span>

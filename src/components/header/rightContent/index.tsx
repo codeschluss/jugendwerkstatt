@@ -1,4 +1,5 @@
 import { SearchIcon } from "@heroicons/react/solid";
+import { BellIcon } from "@heroicons/react/outline";
 import { useContext, useState } from "react";
 import Search from "./Search";
 import I from "../../ui/IconWrapper";
@@ -24,14 +25,7 @@ const RightContent: React.FC<RightContentProps> = () => {
           <SearchIcon />
         </I>
       )}
-
-      {theUser && (
-        <img
-          className="w-11 object-cover h-11 rounded-full"
-          src={`http://localhost:8061/api/media/${theUser?.profilePicture?.id}`}
-          alt=""
-        />
-      )}
+      <BellIcon className="h-6 w-6 text-white " />
     </div>
   );
 };
