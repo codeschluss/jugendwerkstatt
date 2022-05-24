@@ -22,12 +22,12 @@ RUN \
   # deploy
   echo \
   'server {'  \
-  'client_max_body_size 0;' \
-  'listen 80 default_server;' \
-  'location / {' \
-  'alias /usr/share/webapps/jugendwerkstatt.client;' \
-  'try_files $uri /index.html;' \
-  '}' \
+    'listen 80;' \
+    'listen [::]:80;' \
+    'root /usr/share/webapps/jugendwerkstatt.client;' \
+    'location / {' \
+      'try_files $uri /index.html;' \
+    '}' \
   '}' \
   > /etc/nginx/http.d/default.conf && \
   #
