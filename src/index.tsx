@@ -4,14 +4,15 @@ import {
   ApolloProvider,
   concat,
   HttpLink,
-  InMemoryCache,
+  InMemoryCache
 } from "@apollo/client";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import { API_URL } from "./config/app";
 import "./index.css";
 
-const httpLink = new HttpLink({ uri: "http://localhost:8061/api/graphql" });
+const httpLink = new HttpLink({ uri: API_URL + "graphql" });
 
 // const logoutLink = onError(({ networkError }) => {
 //   if (networkError.statusCode === 401) logout();

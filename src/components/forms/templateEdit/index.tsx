@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useLocation, useParams } from "react-router-dom";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import DownloadIcon from "@heroicons/react/solid/DownloadIcon";
+import React, { useContext, useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { API_URL } from "../../../config/app";
+import AuthContext from "../../../contexts/AuthContext";
 import {
   useGetTemplateQuery,
   useGetUserTemplateQuery,
-  useSaveUserTemplateMutation,
+  useSaveUserTemplateMutation
 } from "../../../GraphQl/graphql";
-import DownloadIcon from "@heroicons/react/solid/DownloadIcon";
 import I from "../../ui/IconWrapper";
-import AuthContext from "../../../contexts/AuthContext";
-import axios from "axios";
 
 const TemplateEdit: React.FC = () => {
   const { id } = useParams();
@@ -48,7 +48,7 @@ const TemplateEdit: React.FC = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ html: templateContent, name: templateName }),
     };
-    await fetch("http://localhost:8061/api/media/pdf", requestOptions)
+    await fetch(API_URL + "media/pdf", requestOptions)
       .then((resp) => resp.blob())
       .then((blob) => {
         const url = window.URL.createObjectURL(blob);

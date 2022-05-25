@@ -1,12 +1,11 @@
 import React from "react";
-
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-
 import "swiper/css";
 // import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { API_URL } from "../../../config/app";
 import "./style.css";
+
+
 
 // import "./style.css";
 interface SliderProps {
@@ -19,7 +18,7 @@ export const Slider: React.FC<SliderProps> = ({ imgUrl, colorBg, title }) => {
   return (
     <>
       {imgUrl && (
-        <img src={`http://localhost:8061/api/media/${imgUrl}`} alt="" />
+        <img src={`${API_URL}media/${imgUrl}`} alt="" />
       )}
       {colorBg && (
         <div
