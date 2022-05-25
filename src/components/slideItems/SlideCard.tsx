@@ -1,7 +1,12 @@
 import { HeartIcon, ShareIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
+<<<<<<< HEAD
 import { AddressEntity, EventEntity } from "../../GraphQl/graphql";
 import { API_URL } from "../../config/app";
+=======
+import { API_URL } from "../../config/app";
+import { AddressEntity, EventEntity } from "../../GraphQl/graphql";
+>>>>>>> e0fa27512e4a86302cb5a3886b07310210de65be
 
 interface SlideCardProps {
   className?: string;
