@@ -23,7 +23,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers = {} }) => ({
     headers: {
       ...headers,
-      authorization: localStorage.getItem("accessToken") || "",
+      authorization: "Bearer " + localStorage.getItem("accessToken") || "",
     },
   }));
 
