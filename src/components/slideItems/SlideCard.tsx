@@ -1,5 +1,6 @@
 import { HeartIcon, ShareIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
+import { API_URL } from "../../config/app";
 import { AddressEntity, EventEntity } from "../home/Test";
 
 interface SlideCardProps {
@@ -48,7 +49,7 @@ const SlideCard: React.FC<SlideCardProps> = ({
           <img
             alt={eventName || ""}
             className="object-cover w-full h-full absolute inset-0"
-            src={`http://localhost:8061/api/media/${imgUrl}`}
+            src={`${API_URL}media/${imgUrl}`}
           />
         ) : (
           <div

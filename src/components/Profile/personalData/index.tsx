@@ -1,13 +1,14 @@
+import { useMutation } from "@apollo/client";
+import { PencilIcon } from "@heroicons/react/solid";
 import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../../config/app";
 import AuthContext from "../../../contexts/AuthContext";
+import { SAVE_USER } from "../../../GraphQl/mutation";
 import useInput from "../../../hooks/use-input";
+import CustomHeader from "../../header/customHeader/CustomHeader";
 import Button from "../../ui/Button";
 import Input from "./Input";
-import { PencilIcon } from "@heroicons/react/solid";
-import CustomHeader from "../../header/customHeader/CustomHeader";
-import { useNavigate } from "react-router-dom";
-import { useMutation } from "@apollo/client";
-import { SAVE_USER } from "../../../GraphQl/mutation";
 
 const PersonalData = () => {
   const { theUser, bgColor } = useContext(AuthContext);
@@ -78,7 +79,7 @@ const PersonalData = () => {
               {theUser?.profilePicture?.id ? (
                 <img
                   className="h-24 w-24 object-cover rounded-full"
-                  src={`http://localhost:8061/api/media/${theUser?.profilePicture?.id}`}
+                  src={`${API_URL}media/${theUser?.profilePicture?.id}`}
                   alt=""
                 />
               ) : (

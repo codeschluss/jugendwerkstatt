@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { API_URL } from "../../../config/app";
 import AuthContext from "../../../contexts/AuthContext";
 import Styles from "./Head.module.css";
 
@@ -17,7 +18,7 @@ const Head: React.FunctionComponent = () => {
       {theUser?.profilePicture?.id ? (
         <img
           className="h-14 w-14 object-cover rounded-full"
-          src={`http://localhost:8061/api/media/${theUser?.profilePicture?.id}`}
+          src={`${API_URL}media/${theUser?.profilePicture?.id}`}
           alt=""
         />
       ) : (
