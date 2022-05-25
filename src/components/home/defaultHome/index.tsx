@@ -3,7 +3,7 @@ import Button from "../../ui/Button";
 
 const DefaultHome: React.FC = () => {
   return (
-    <div className="w-full h-screen m-0">
+    <div className="w-full h-screen absolute top-0 z-20 m-0">
       <img className="w-full mb-7" src="/assets/circles-bg.png" alt="" />
       <div className="flex justify-center">
         <img

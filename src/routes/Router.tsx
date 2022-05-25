@@ -36,6 +36,7 @@ import ToVerifyUser from "../pages/verify/ToVerifyUser";
 import AlreadyVerifiedUser from "../pages/verify/AlreadyVerifiedUser";
 import ReVerifyUser from "../pages/verify/ReVerifyUser";
 import ChangePassword from "../pages/Profile/ChangePassword";
+import Protected from "../pages/Protected";
 
 const Router = () => {
   return (
@@ -52,37 +53,191 @@ const Router = () => {
             <Route path="email" element={<Email />} />
             <Route path="password/:id" element={<Password />} />
           </Route>
-          <Route path="/messenger" element={<PushNotificationsContainer />}>
-            <Route path="chats" element={<Chats />} />
-            <Route path="calls" element={<Calls />} />
-            <Route path="contacts" element={<Contacts />} />
+          <Route
+            path="/messenger"
+            element={
+              <Protected>
+                <PushNotificationsContainer />
+              </Protected>
+            }
+          >
+            <Route
+              path="chats"
+              element={
+                <Protected>
+                  <Chats />
+                </Protected>
+              }
+            />
+            <Route
+              path="calls"
+              element={
+                <Protected>
+                  <Calls />
+                </Protected>
+              }
+            />
+            <Route
+              path="contacts"
+              element={
+                <Protected>
+                  <Contacts />
+                </Protected>
+              }
+            />
           </Route>
-          <Route path="/messenger/chat/:id" element={<Chat />} />
-          <Route path="/event/:id" element={<EventDetail />} />
-          <Route path="/job-ad/:id" element={<JobDetails />} />
+          <Route
+            path="/messenger/chat/:id"
+            element={
+              <Protected>
+                <Chat />
+              </Protected>
+            }
+          />
+          <Route
+            path="/event/:id"
+            element={
+              <Protected>
+                <EventDetail />
+              </Protected>
+            }
+          />
+          <Route
+            path="/job-ad/:id"
+            element={
+              <Protected>
+                <JobDetails />
+              </Protected>
+            }
+          />
 
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/jobs" element={<Jobs />} />
-          <Route path="/profile" element={<ProfileSettings />} />
-          <Route path="/profile-personal" element={<PersonalData />} />
-          <Route path="/profile-password" element={<ChangePassword />} />
+          <Route
+            path="/favorites"
+            element={
+              <Protected>
+                <Favorites />
+              </Protected>
+            }
+          />
+          <Route
+            path="/events"
+            element={
+              <Protected>
+                <Events />
+              </Protected>
+            }
+          />
+          <Route
+            path="/jobs"
+            element={
+              <Protected>
+                <Jobs />
+              </Protected>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <Protected>
+                <ProfileSettings />
+              </Protected>
+            }
+          />
+          <Route
+            path="/profile-personal"
+            element={
+              <Protected>
+                <PersonalData />
+              </Protected>
+            }
+          />
+          <Route
+            path="/profile-password"
+            element={
+              <Protected>
+                <ChangePassword />
+              </Protected>
+            }
+          />
 
           <Route path="/Login" element={<Login />} />
           <Route path="/toVerifyEmail" element={<ToVerifyUser />} />
           <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />
           <Route path="/reVerifyEmail" element={<ReVerifyUser />} />
 
-          <Route path="/map" element={<Map />} />
-          <Route path="/MediaLibrary" element={<MediaLibrary />} />
-          <Route path="/EventsCalendar" element={<EventsCalendar />} />
-          <Route path="/EventsTime" element={<EventsTime />} />
-          <Route path="/Forms" element={<Forms />} />
-          <Route path="/Forms/Templates" element={<Templates />} />
-          <Route path="/Forms/Templates/:id" element={<TemplateView />} />
-          <Route path="/Forms/Templates/Edit/:id" element={<TemplateEdit />} />
+          <Route
+            path="/map"
+            element={
+              <Protected>
+                <Map />
+              </Protected>
+            }
+          />
+          <Route
+            path="/MediaLibrary"
+            element={
+              <Protected>
+                <MediaLibrary />
+              </Protected>
+            }
+          />
+          <Route
+            path="/EventsCalendar"
+            element={
+              <Protected>
+                <EventsCalendar />
+              </Protected>
+            }
+          />
+          <Route
+            path="/EventsTime"
+            element={
+              <Protected>
+                <EventsTime />
+              </Protected>
+            }
+          />
+          <Route
+            path="/Forms"
+            element={
+              <Protected>
+                <Forms />
+              </Protected>
+            }
+          />
+          <Route
+            path="/Forms/Templates"
+            element={
+              <Protected>
+                <Templates />
+              </Protected>
+            }
+          />
+          <Route
+            path="/Forms/Templates/:id"
+            element={
+              <Protected>
+                <TemplateView />
+              </Protected>
+            }
+          />
+          <Route
+            path="/Forms/Templates/Edit/:id"
+            element={
+              <Protected>
+                <TemplateEdit />
+              </Protected>
+            }
+          />
 
-          <Route path="/feedback" element={<Feedback />} />
+          <Route
+            path="/feedback"
+            element={
+              <Protected>
+                <Feedback />
+              </Protected>
+            }
+          />
         </Routes>
       </Layout>
     </BrowserRouter>

@@ -1,8 +1,10 @@
 import Slider from "../slideItems/Slider";
 import SlideCard from "../slideItems/SlideCard";
-import { useGetEventCategoriesQuery } from "../../GraphQl/graphql";
+import {
+  EventCategoryEntity,
+  useGetEventCategoriesQuery,
+} from "../../GraphQl/graphql";
 import { useEffect, useState } from "react";
-import { EventCategoryEntity, EventEntity } from "../home/Test";
 
 const Events = () => {
   const [categoriesData, setCategoriesData] = useState<

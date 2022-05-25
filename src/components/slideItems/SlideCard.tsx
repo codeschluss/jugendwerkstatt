@@ -1,6 +1,6 @@
 import { HeartIcon, ShareIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
-import { AddressEntity, EventEntity } from "../home/Test";
+import { AddressEntity, EventEntity } from "../../GraphQl/graphql";
 
 interface SlideCardProps {
   className?: string;
@@ -10,7 +10,7 @@ interface SlideCardProps {
   date: any;
   route: any;
   width?: string;
-  color?: string;
+  color?: string | undefined | null;
 }
 
 const SlideCard: React.FC<SlideCardProps> = ({

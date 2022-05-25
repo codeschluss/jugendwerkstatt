@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../../contexts/AuthContext";
-import EventContext from "../../../contexts/EventContext";
 import {
   useCreateTokenMutation,
   useGetUserQuery,
@@ -96,9 +95,9 @@ const Login = () => {
           ocus:outline-none border-2 rounded-md"
         />
 
-        <Link className="underline my-10" to="/password-reset/password">
+        <Link className="underline my-10" to="/forgot-password/email">
           {" "}
-          Password Vergessen?
+          <p>Password Vergessen?</p>
         </Link>
         <Button
           isValidated={enteredPasswordValidity && enteredEmailValidity}

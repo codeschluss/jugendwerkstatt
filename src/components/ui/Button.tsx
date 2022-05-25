@@ -4,6 +4,7 @@ interface ButtonProps {
   isValidated?: boolean;
   isDisabled?: boolean;
   buttonType?: any;
+  click?: () => void;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -11,9 +12,11 @@ const Button: React.FC<ButtonProps> = ({
   isDisabled,
   children,
   buttonType,
+  click,
 }) => {
   return (
     <button
+      onClick={click}
       type={buttonType}
       disabled={!isDisabled}
       style={{ background: isValidated ? "#C20639" : "#c2063898" }}

@@ -2029,6 +2029,13 @@ export type GetJobAdsQueryVariables = Exact<{
 
 export type GetJobAdsQuery = { __typename?: 'Query', getJobAds?: { __typename?: 'PageableList_JobAdEntity', result?: Array<{ __typename?: 'JobAdEntity', dueDate?: any | null, id?: string | null, title?: string | null, startDate?: any | null, company?: { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null, type?: { __typename?: 'JobTypeEntity', color?: string | null, id?: string | null, name?: string | null } | null } | null> | null } | null };
 
+export type GetJobTypesQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetJobTypesQuery = { __typename?: 'Query', getJobTypes?: { __typename?: 'PageableList_JobTypeEntity', result?: Array<{ __typename?: 'JobTypeEntity', color?: string | null, created?: any | null, id?: string | null, name?: string | null, modified?: any | null, jobAds?: Array<{ __typename?: 'JobAdEntity', created?: any | null, dueDate?: any | null, id?: string | null, modified?: any | null, startDate?: any | null, title?: string | null, company?: { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, modified?: any | null, created?: any | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null, type?: { __typename?: 'JobTypeEntity', color?: string | null } | null } | null> | null } | null> | null } | null };
+
 export type GetLinkCategoriesQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
 }>;
@@ -2487,6 +2494,74 @@ export function useGetJobAdsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetJobAdsQueryHookResult = ReturnType<typeof useGetJobAdsQuery>;
 export type GetJobAdsLazyQueryHookResult = ReturnType<typeof useGetJobAdsLazyQuery>;
 export type GetJobAdsQueryResult = Apollo.QueryResult<GetJobAdsQuery, GetJobAdsQueryVariables>;
+export const GetJobTypesDocument = gql`
+    query GetJobTypes($params: FilterSortPaginateInput) {
+  getJobTypes(params: $params) {
+    result {
+      color
+      created
+      id
+      name
+      modified
+      jobAds {
+        created
+        dueDate
+        id
+        modified
+        startDate
+        title
+        company {
+          address {
+            houseNumber
+            id
+            place
+            postalCode
+            street
+          }
+          id
+          mail
+          name
+          phone
+          website
+          modified
+          created
+        }
+        type {
+          color
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetJobTypesQuery__
+ *
+ * To run a query within a React component, call `useGetJobTypesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetJobTypesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetJobTypesQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetJobTypesQuery(baseOptions?: Apollo.QueryHookOptions<GetJobTypesQuery, GetJobTypesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetJobTypesQuery, GetJobTypesQueryVariables>(GetJobTypesDocument, options);
+      }
+export function useGetJobTypesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetJobTypesQuery, GetJobTypesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetJobTypesQuery, GetJobTypesQueryVariables>(GetJobTypesDocument, options);
+        }
+export type GetJobTypesQueryHookResult = ReturnType<typeof useGetJobTypesQuery>;
+export type GetJobTypesLazyQueryHookResult = ReturnType<typeof useGetJobTypesLazyQuery>;
+export type GetJobTypesQueryResult = Apollo.QueryResult<GetJobTypesQuery, GetJobTypesQueryVariables>;
 export const GetLinkCategoriesDocument = gql`
     query GetLinkCategories($params: FilterSortPaginateInput) {
   getLinkCategories(params: $params) {

@@ -1,7 +1,6 @@
-import { useGetJobAdsQuery } from "../../GraphQl/graphql";
+import { JobAdEntity, useGetJobAdsQuery } from "../../GraphQl/graphql";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
-import { JobAdEntity } from "./Test";
 
 interface EventsProps {}
 

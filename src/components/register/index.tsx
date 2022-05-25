@@ -133,7 +133,7 @@ const Register = () => {
   };
 
   return (
-    <AuthWrapper title={"Registrierung"}>
+    <AuthWrapper page="register" title={"Registrierung"}>
       <form className="w-screen" onSubmit={onSubmitHandler}>
         <div className="pb-0 p-12">
           <AuthInput

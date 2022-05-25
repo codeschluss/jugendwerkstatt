@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../../../contexts/AuthContext";
 import { useSendPasswordResetMutation } from "../../../GraphQl/graphql";
 import useInput from "../../../hooks/use-input";
 import Button from "../../ui/Button";
@@ -7,6 +8,7 @@ import AuthInput from "../AuthInput";
 
 const Email: React.FC = () => {
   const [errorText, setErrorText] = useState(false);
+  const { setTempEmail } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const {
@@ -35,7 +37,8 @@ const Email: React.FC = () => {
 
   useEffect(() => {
     if (data?.sendPasswordReset === true) {
-      navigate("/");
+      setTempEmail(enteredEmail);
+      navigate("/reVerifyEmail");
     } else if (error) {
       setErrorText(true);
     }

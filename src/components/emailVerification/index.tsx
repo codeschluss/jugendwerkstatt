@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import logo from "../../images/jugendwerkstatt-logo.png";
 import { CheckIcon, MailIcon } from "@heroicons/react/outline";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../contexts/AuthContext";
 import {
   useSendVerificationMutation,
   useVerifyMutation,
 } from "../../GraphQl/graphql";
+import Button from "../ui/Button";
 
 interface CheckingProps {
   verified?: boolean;
@@ -33,8 +34,10 @@ const RegistrationOrVerification: React.FC<CheckingProps> = ({
     reSendVerification();
   };
 
+  const navigate = useNavigate();
+
   return (
-    <div className="px-0 flex flex-col w-screen h-screen">
+    <div className="px-0 flex flex-col w-screen h-screen absolute top-0 z-20">
       <div className="px-0 h-[30%]">
         <img className="h-full w-screen object-cover" src={logo} alt={"logo"} />
       </div>
@@ -90,9 +93,13 @@ const RegistrationOrVerification: React.FC<CheckingProps> = ({
             </>
           )}
         </div>
-        <div className="text-center select-none row-span-1 w-full h-8 active:opacity-80 rounded-2xl bg-[#C20639] text-white">
-          <span className="align-middle ">E-Mail verifizieren</span>
-        </div>
+        <Button
+          click={() => navigate("/")}
+          isValidated={true}
+          isDisabled={true}
+        >
+          Zur App
+        </Button>
       </div>
     </div>
   );

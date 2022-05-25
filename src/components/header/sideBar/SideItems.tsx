@@ -13,9 +13,11 @@ import { HeartIcon } from "@heroicons/react/solid";
 import { NavLink } from "react-router-dom";
 import I from "../../ui/IconWrapper";
 
-interface SideItemsProps {}
+interface SideItemsProps {
+  clicked?: () => void;
+}
 
-const SideItems: React.FunctionComponent<SideItemsProps> = () => {
+const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
   return (
     <ul>
       <li>
@@ -26,6 +28,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               : `border-l-4 border-transparent block`
           }
           to={"/"}
+          onClick={clicked}
         >
           <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
@@ -43,6 +46,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               : `border-l-4 border-transparent block`
           }
           to={"/Forms"}
+          onClick={clicked}
         >
           <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
@@ -60,6 +64,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               : `border-l-4 border-transparent block`
           }
           to={"/events"}
+          onClick={clicked}
         >
           <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
@@ -77,6 +82,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               : `border-l-4 border-transparent block`
           }
           to={"/MediaLibrary"}
+          onClick={clicked}
         >
           <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
@@ -94,6 +100,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               : `border-l-4 border-transparent block`
           }
           to={"/messenger"}
+          onClick={clicked}
         >
           <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
@@ -111,6 +118,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               : `border-l-4 border-transparent block`
           }
           to={"/jobs"}
+          onClick={clicked}
         >
           <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
@@ -128,6 +136,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               : `border-l-4 border-transparent block`
           }
           to={"/EventsCalendar"}
+          onClick={clicked}
         >
           <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
@@ -145,6 +154,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               : `border-l-4 border-transparent block`
           }
           to={"/favorites"}
+          onClick={clicked}
         >
           <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
@@ -162,6 +172,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               : `border-l-4 border-transparent block`
           }
           to={"/profile"}
+          onClick={clicked}
         >
           <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">
@@ -178,7 +189,8 @@ const SideItems: React.FunctionComponent<SideItemsProps> = () => {
               ? "border-l-4 bg-gray-100 border-primary block"
               : `border-l-4 border-transparent block`
           }
-          to={"/#"}
+          to={"/profile"}
+          onClick={clicked}
         >
           <span className="flex items-center px-4 py-2 font-medium text-[#424242] ">
             <I className="mr-2">

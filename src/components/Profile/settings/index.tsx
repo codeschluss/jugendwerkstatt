@@ -10,7 +10,7 @@ const ProfileSettings = () => {
         {" "}
         <Items text="Personal Data" link="/profile-personal" />
         <Items text="Benachrichtigungen" link="/#" />
-        <Items text="Passwort ändern" link="/#" />
+        <Items text="Passwort ändern" link="/profile-password" />
         <Items text="FAQ" link="/#" />
         <Items text="Datenschutz" link="/#" />
       </div>

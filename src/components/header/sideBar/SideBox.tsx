@@ -18,7 +18,7 @@ const SideBox: React.FC<SideBoxProps> = ({ active, hide }) => {
         }`}
       >
         <Head />
-        <SideItems />
+        <SideItems clicked={hide} />
       </div>
       {active && (
         <span
