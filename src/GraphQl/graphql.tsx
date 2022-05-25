@@ -2100,6 +2100,13 @@ export type ResetPasswordMutationVariables = Exact<{
 
 export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword?: boolean | null };
 
+export type SaveUserMutationVariables = Exact<{
+  entity?: InputMaybe<UserEntityInput>;
+}>;
+
+
+export type SaveUserMutation = { __typename?: 'Mutation', saveUser?: { __typename?: 'UserEntity', id?: string | null, uploads?: Array<{ __typename?: 'MediaEntity', base64?: string | null, id?: string | null, name?: string | null, mimeType?: string | null } | null> | null } | null };
+
 export type SaveUserTemplateMutationVariables = Exact<{
   name?: InputMaybe<Scalars['String']>;
   content?: InputMaybe<Scalars['String']>;
@@ -2928,6 +2935,45 @@ export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOption
 export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
 export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const SaveUserDocument = gql`
+    mutation SaveUser($entity: UserEntityInput) {
+  saveUser(entity: $entity) {
+    id
+    uploads {
+      base64
+      id
+      name
+      mimeType
+    }
+  }
+}
+    `;
+export type SaveUserMutationFn = Apollo.MutationFunction<SaveUserMutation, SaveUserMutationVariables>;
+
+/**
+ * __useSaveUserMutation__
+ *
+ * To run a mutation, you first call `useSaveUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveUserMutation, { data, loading, error }] = useSaveUserMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveUserMutation(baseOptions?: Apollo.MutationHookOptions<SaveUserMutation, SaveUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveUserMutation, SaveUserMutationVariables>(SaveUserDocument, options);
+      }
+export type SaveUserMutationHookResult = ReturnType<typeof useSaveUserMutation>;
+export type SaveUserMutationResult = Apollo.MutationResult<SaveUserMutation>;
+export type SaveUserMutationOptions = Apollo.BaseMutationOptions<SaveUserMutation, SaveUserMutationVariables>;
 export const SaveUserTemplateDocument = gql`
     mutation SaveUserTemplate($name: String, $content: String, $templateTypeId: String!, $templateId: String, $userId: String!) {
   saveUserTemplate(

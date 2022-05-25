@@ -37,6 +37,7 @@ import AlreadyVerifiedUser from "../pages/verify/AlreadyVerifiedUser";
 import ReVerifyUser from "../pages/verify/ReVerifyUser";
 import ChangePassword from "../pages/Profile/ChangePassword";
 import Protected from "../pages/Protected";
+import UploadData from "../pages/forms/UploadData";
 
 const Router = () => {
   return (
@@ -164,6 +165,8 @@ const Router = () => {
           <Route path="/toVerifyEmail" element={<ToVerifyUser />} />
           <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />
           <Route path="/reVerifyEmail" element={<ReVerifyUser />} />
+
+          <Route path="/upload-file" element={<UploadData />} />
 
           <Route
             path="/map"

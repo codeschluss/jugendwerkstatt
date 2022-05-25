@@ -1,0 +1,11 @@
+mutation SaveUser($entity: UserEntityInput) {
+  saveUser(entity: $entity) {
+    id
+    uploads {
+      base64
+      id
+      name
+      mimeType
+    }
+  }
+}

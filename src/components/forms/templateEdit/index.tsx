@@ -8,7 +8,7 @@ import AuthContext from "../../../contexts/AuthContext";
 import {
   useGetTemplateQuery,
   useGetUserTemplateQuery,
-  useSaveUserTemplateMutation
+  useSaveUserTemplateMutation,
 } from "../../../GraphQl/graphql";
 import I from "../../ui/IconWrapper";
 
@@ -55,7 +55,6 @@ const TemplateEdit: React.FC = () => {
         const a = document.createElement("a");
         a.style.display = "none";
         a.href = url;
-        // the filename you want
         a.download = `${templateName}.pdf`;
         document.body.appendChild(a);
         a.click();
