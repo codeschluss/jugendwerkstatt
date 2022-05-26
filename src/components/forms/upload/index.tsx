@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../contexts/AuthContext";
 import { useSaveUserMutation } from "../../../GraphQl/graphql";
 import TypeInput from "./TypeInput";
@@ -12,10 +13,14 @@ const UploadFile = () => {
   });
   const [fileName, setFileName] = useState<string>("");
   const [display, setDisplay] = useState<string>("block");
+  const navigate = useNavigate();
 
   const uploadHandler = async (e: any) => {
     const file = e.target.files[0];
     const base64 = await convertBase64(file);
+    console.log(file);
+    console.log(base64);
+
     setFileData({
       base64: base64,
       mimeType: file.type,
@@ -42,10 +47,10 @@ const UploadFile = () => {
   const [saveUserMutation, { data, loading, error }] = useSaveUserMutation({
     variables: {
       entity: {
-        id: theUser.id,
+        id: theUser?.id,
         uploads: [
           {
-            base64: fileData.base64,
+            base64: fileData.base64.split(",")[1],
             mimeType: fileData.mimeType,
             name: fileData.name,
           },
@@ -53,10 +58,18 @@ const UploadFile = () => {
       },
     },
     onCompleted: () => {
-      alert("completed");
+      setFileData({
+        base64: "",
+        mimeType: "",
+        name: "",
+      });
+      setFileName("");
+      navigate("/Forms");
     },
   });
-
+  if (data) {
+    console.log(data);
+  }
   const fireUpload = () => {
     saveUserMutation();
   };

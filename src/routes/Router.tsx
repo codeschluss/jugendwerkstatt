@@ -3,7 +3,6 @@ import ForgotPassword from "../components/authentication/forgotPassword";
 import Email from "../components/authentication/forgotPassword/Email";
 import Password from "../components/authentication/forgotPassword/Password";
 import Login from "../components/authentication/login";
-import { Feedback } from "../components/Feedback/Feedback";
 import Calls from "../components/messenger/overview/calls";
 import Chats from "../components/messenger/overview/chats";
 import Contacts from "../components/messenger/overview/contacts";
@@ -38,6 +37,7 @@ import ReVerifyUser from "../pages/verify/ReVerifyUser";
 import ChangePassword from "../pages/Profile/ChangePassword";
 import Protected from "../pages/Protected";
 import UploadData from "../pages/forms/UploadData";
+import Feedback from "../components/Feedback";
 
 const Router = () => {
   return (
@@ -233,14 +233,7 @@ const Router = () => {
             }
           />
 
-          <Route
-            path="/feedback"
-            element={
-              <Protected>
-                <Feedback />
-              </Protected>
-            }
-          />
+          <Route path="/feedback" element={<Feedback />} />
         </Routes>
       </Layout>
     </BrowserRouter>

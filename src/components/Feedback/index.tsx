@@ -37,7 +37,7 @@ const feedbacks: FeedbackProps[] = [
   },
 ];
 
-export const Feedback = () => {
+const Feedback = () => {
   return (
     <div className="p-5 bg-gray-100 h-screen text-sm">
       <Header />
@@ -108,3 +108,5 @@ export const Feedback = () => {
     </div>
   );
 };
+
+export default Feedback;

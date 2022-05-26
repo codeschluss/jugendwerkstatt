@@ -2,7 +2,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import DownloadIcon from "@heroicons/react/solid/DownloadIcon";
 import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../../../config/app";
 import AuthContext from "../../../contexts/AuthContext";
 import {
@@ -14,6 +14,8 @@ import I from "../../ui/IconWrapper";
 
 const TemplateEdit: React.FC = () => {
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   const location = useLocation();
   const { templateType, name, templateTypeId, edit }: any = location.state;
@@ -39,6 +41,9 @@ const TemplateEdit: React.FC = () => {
         templateTypeId: templateTypeId,
         templateId: edit ? id : "",
         userId: theUser.id,
+      },
+      onCompleted: () => {
+        navigate("/Forms");
       },
     });
 

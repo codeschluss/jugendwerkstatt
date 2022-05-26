@@ -1,11 +1,94 @@
 mutation SaveUser($entity: UserEntityInput) {
   saveUser(entity: $entity) {
+    assignments {
+      questionnaire {
+        name
+        questions {
+          answers {
+            rating
+            id
+          }
+          id
+          item
+        }
+        id
+      }
+      id
+    }
+    course {
+      id
+      name
+    }
+    email
+    favoriteEvents {
+      id
+      name
+      titleImage {
+        base64
+        id
+        modified
+        name
+      }
+      images {
+        base64
+        id
+        mimeType
+        name
+      }
+      nextSchedule {
+        endDate
+        id
+        startDate
+      }
+    }
+    favoriteJobAds {
+      type {
+        color
+      }
+      startDate
+      dueDate
+      title
+      company {
+        address {
+          houseNumber
+          id
+          street
+          postalCode
+        }
+        mail
+        name
+        phone
+        website
+        id
+      }
+    }
+    fullname
     id
+    phone
+    profilePicture {
+      base64
+      id
+      mimeType
+      name
+    }
     uploads {
       base64
       id
-      name
       mimeType
+      name
+    }
+    userTemplates {
+      name
+      id
+      content
+      templateType {
+        id
+        name
+      }
+    }
+    verification {
+      id
+      key
     }
   }
 }

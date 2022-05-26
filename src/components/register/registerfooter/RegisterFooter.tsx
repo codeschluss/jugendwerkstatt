@@ -13,7 +13,7 @@ export const RegisterFooter: React.FunctionComponent<{ type?: string }> = ({
             <span className="text-sm ">Du hast bereits einen Account?</span>
             <br />
             <br />
-            <Link to="/register">
+            <Link to="/login">
               {" "}
               <p className="underline font-bold">Jetzt anmelden!</p>
             </Link>

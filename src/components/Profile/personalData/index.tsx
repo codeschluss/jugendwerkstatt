@@ -58,6 +58,7 @@ const PersonalData = () => {
           id: theUser.id,
           fullName: enteredName === "" ? theUser.fullname : enteredName,
           email: enteredEmail === "" ? theUser.email : enteredEmail,
+          phone: enteredPhone,
         },
         onCompleted: () => {
           navigate("/");
@@ -118,7 +119,7 @@ const PersonalData = () => {
           </div>
           <span className="w-4/6">
             <Button
-              isDisabled={!enteredNameValidity || !enteredEmailValidity}
+              isDisabled={enteredNameValidity || enteredEmailValidity}
               isValidated={enteredEmailValidity || enteredNameValidity}
               buttonType={"submit"}
             >
