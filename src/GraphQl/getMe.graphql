@@ -1,0 +1,34 @@
+query GetUser($entity: UserEntityInput) {
+  getUser(entity: $entity) {
+    uploads {
+      id
+      name
+    }
+    roles {
+      name
+      id
+    }
+    profilePicture {
+      id
+    }
+    id
+    fullname
+    email
+    course {
+      id
+      name
+    }
+    userTemplates {
+      id
+      content
+      name
+      templateType {
+        name
+        id
+      }
+    }
+    verification {
+      id
+    }
+  }
+}
