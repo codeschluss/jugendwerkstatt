@@ -1,11 +1,16 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../contexts/AuthContext";
-import { useSaveUserMutation } from "../../../GraphQl/graphql";
+import {
+  useGetMeBasicQuery,
+  useSaveUploadsMutation,
+  useSaveUserMutation,
+} from "../../../GraphQl/graphql";
 import TypeInput from "./TypeInput";
 
 const UploadFile = () => {
-  const { theUser } = useContext(AuthContext);
+  const user = useGetMeBasicQuery();
+
   const [fileData, setFileData] = useState<any>({
     base64: "",
     mimeType: "",
@@ -44,18 +49,15 @@ const UploadFile = () => {
     });
   };
 
-  const [saveUserMutation, { data, loading, error }] = useSaveUserMutation({
+  const [saveUpload, { data, loading, error }] = useSaveUploadsMutation({
     variables: {
-      entity: {
-        id: theUser?.id,
-        uploads: [
-          {
-            base64: fileData.base64.split(",")[1],
-            mimeType: fileData.mimeType,
-            name: fileData.name,
-          },
-        ],
-      },
+      uploads: [
+        {
+          base64: fileData.base64.split(",")[1],
+          mimeType: fileData.mimeType,
+          name: fileData.name,
+        },
+      ],
     },
     onCompleted: () => {
       setFileData({
@@ -71,7 +73,7 @@ const UploadFile = () => {
     console.log(data);
   }
   const fireUpload = () => {
-    saveUserMutation();
+    saveUpload();
   };
 
   return (

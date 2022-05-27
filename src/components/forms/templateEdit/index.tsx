@@ -6,8 +6,10 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../../../config/app";
 import AuthContext from "../../../contexts/AuthContext";
 import {
+  useGetMeBasicQuery,
   useGetTemplateQuery,
   useGetUserTemplateQuery,
+  UserEntity,
   useSaveUserTemplateMutation,
 } from "../../../GraphQl/graphql";
 import I from "../../ui/IconWrapper";
@@ -23,8 +25,8 @@ const TemplateEdit: React.FC = () => {
   const [templateContent, setTemplateContent] = useState("");
   const [editName, setEditName] = useState(false);
 
-  const { theUser } = useContext(AuthContext);
-
+  const userBasic = useGetMeBasicQuery();
+  const userBasicId: any = userBasic?.data?.me?.id;
   const handleClick = (): void => {
     setEditName(true);
   };
@@ -40,7 +42,7 @@ const TemplateEdit: React.FC = () => {
         content: templateContent,
         templateTypeId: templateTypeId,
         templateId: edit ? id : "",
-        userId: theUser.id,
+        userId: userBasicId,
       },
       onCompleted: () => {
         navigate("/Forms");
@@ -74,7 +76,6 @@ const TemplateEdit: React.FC = () => {
   };
 
   const userTemplateResult = useGetUserTemplateQuery({
-    skip: !theUser.id ? true : false,
     variables: { id: id! },
     fetchPolicy: "network-only",
   });

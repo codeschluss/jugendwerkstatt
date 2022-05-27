@@ -5,22 +5,21 @@ import Footer from "../components/footer";
 import Header from "../components/header";
 import Loader from "../components/ui/Loader";
 import AuthContext from "../contexts/AuthContext";
-import { useGetUserQuery, useRefreshTokenMutation } from "../GraphQl/graphql";
+import {
+  useGetMeBasicQuery,
+  useGetUserQuery,
+  useRefreshTokenMutation,
+} from "../GraphQl/graphql";
 import Modal from "../components/modals/courseReviewPopUp";
 
 const Layout: React.FC = ({ children }) => {
   const [accessT, setAccessT] = useState();
   const [refreshT, setRefreshT] = useState();
 
-  const { setIsLogedIn, setTheUser, isLogedIn } = useContext(AuthContext);
+  const { setIsLogedIn, isLogedIn } = useContext(AuthContext);
 
-  const result = useGetUserQuery({
+  const result = useGetMeBasicQuery({
     skip: !accessT ? true : false,
-    variables: {
-      entity: {
-        id: accessT,
-      },
-    },
   });
 
   useEffect(() => {
@@ -31,7 +30,6 @@ const Layout: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (result.data) {
-      setTheUser(result.data.getUser);
       setIsLogedIn(true);
     }
   }, [result.data]);

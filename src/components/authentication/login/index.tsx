@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthContext from "../../../contexts/AuthContext";
 import {
   useCreateTokenMutation,
+  useGetMeBasicQuery,
   useGetUserQuery,
 } from "../../../GraphQl/graphql";
 import useInput from "../../../hooks/use-input";
@@ -13,7 +14,7 @@ import AuthWrapper from "../AuthWrapper";
 import jwtDecode from "jwt-decode";
 
 const Login = () => {
-  const { setTheUser, setTempEmail } = useContext(AuthContext);
+  const { setTempEmail } = useContext(AuthContext);
   const [accessToken, setAccessToken] = useState();
   const {
     value: enteredEmail,
@@ -42,13 +43,8 @@ const Login = () => {
     },
   });
 
-  const result = useGetUserQuery({
+  const result = useGetMeBasicQuery({
     skip: !accessToken ? true : false,
-    variables: {
-      entity: {
-        id: accessToken,
-      },
-    },
   });
 
   useEffect(() => {
@@ -57,10 +53,6 @@ const Login = () => {
       result.refetch();
     }
   }, [data, result.data]);
-
-  if (result.data) {
-    setTheUser(result.data.getUser);
-  }
 
   const submitHandler = async (e: any) => {
     e.preventDefault();

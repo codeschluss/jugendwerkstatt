@@ -5,8 +5,7 @@ import AuthContext from "../contexts/AuthContext";
 const Protected: React.FunctionComponent<{ children: any }> = ({
   children,
 }) => {
-  const { isLogedIn, theUser } = useContext(AuthContext);
-  console.log(isLogedIn, theUser);
+  const { isLogedIn } = useContext(AuthContext);
 
   if (!isLogedIn) {
     return <Navigate to="/" replace />;

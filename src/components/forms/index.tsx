@@ -6,38 +6,28 @@ import { Link } from "react-router-dom";
 import {
   MediaEntity,
   TemplateTypeEntity,
+  useGetMeBasicQuery,
+  useGetMeUploadsQuery,
   useGetTemplateTypesQuery,
   useGetUserQuery,
 } from "../../GraphQl/graphql";
 import AuthContext from "../../contexts/AuthContext";
 
 const Forms: React.FC = () => {
-  const { theUser } = useContext(AuthContext);
-
   const result = useGetTemplateTypesQuery({
-    variables: {
-      params: {
-        //sort: 'name',
-      },
-    },
     fetchPolicy: "network-only",
   });
 
   const fetchedData: [TemplateTypeEntity] = result.data?.getTemplateTypes
     ?.result as [TemplateTypeEntity];
 
-  const userUploads = useGetUserQuery({
-    skip: !theUser.id ? true : false,
-    variables: {
-      entity: {
-        id: theUser.id,
-      },
-    },
+  const userUploads = useGetMeUploadsQuery({
     fetchPolicy: "network-only",
   });
 
-  const fetchedUserUploads: [MediaEntity] = userUploads.data?.getUser
-    ?.uploads as [MediaEntity];
+  const fetchedUserUploads: [MediaEntity] = userUploads.data?.me?.uploads as [
+    MediaEntity
+  ];
 
   return (
     <div className="container mx-auto px-4 pt-4">

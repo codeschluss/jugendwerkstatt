@@ -1,0 +1,11 @@
+query GetMeBasic {
+  me(entity: {}) {
+    id
+    fullname
+    phone
+    email
+    profilePicture {
+      id
+    }
+  }
+}

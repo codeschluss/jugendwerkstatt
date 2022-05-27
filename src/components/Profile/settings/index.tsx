@@ -6,12 +6,11 @@ import Button from "../../ui/Button";
 import Items from "./Items";
 
 const ProfileSettings = () => {
-  const { setTheUser, setIsLogedIn } = useContext(AuthContext);
+  const { setIsLogedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const logoutHandler = () => {
     localStorage.clear();
-    setTheUser(undefined);
     setIsLogedIn(false);
     navigate("/");
   };

@@ -1,24 +1,26 @@
 import { useContext } from "react";
 import { API_URL } from "../../../config/app";
 import AuthContext from "../../../contexts/AuthContext";
+import { useGetMeBasicQuery } from "../../../GraphQl/graphql";
 import Styles from "./Head.module.css";
 
 const Head: React.FunctionComponent = () => {
-  const { theUser, bgColor } = useContext(AuthContext);
+  const { bgColor } = useContext(AuthContext);
+  const { data } = useGetMeBasicQuery();
 
   let letter;
 
-  theUser?.fullname &&
-    (letter = theUser.fullname.substring(0, 1).toUpperCase());
+  data?.me?.fullname &&
+    (letter = data?.me?.fullname?.substring(0, 1).toUpperCase());
   return (
     <div className="w-full p-8 relative">
       <span
         className={`absolute inset-0 overflow-hidden ${Styles.headStyle}`}
       ></span>
-      {theUser?.profilePicture?.id ? (
+      {data?.me?.profilePicture?.id ? (
         <img
           className="h-14 w-14 object-cover rounded-full"
-          src={`${API_URL}media/${theUser?.profilePicture?.id}`}
+          src={`${API_URL}media/${data?.me?.profilePicture?.id}`}
           alt=""
         />
       ) : (
@@ -29,8 +31,8 @@ const Head: React.FunctionComponent = () => {
         </span>
       )}
       <div className="mt-5">
-        <p className="text-lg font-semibold">{theUser?.fullname}</p>
-        <p>{theUser?.email}</p>
+        <p className="text-lg font-semibold">{data?.me?.fullname}</p>
+        <p>{data?.me?.email}</p>
       </div>
     </div>
   );

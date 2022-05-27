@@ -8,7 +8,6 @@ import AuthContext from "../../../contexts/AuthContext";
 interface RightContentProps {}
 
 const RightContent: React.FC<RightContentProps> = () => {
-  const { theUser } = useContext(AuthContext);
   const [toggleSearch, setToggleSearch] = useState<boolean>(false);
 
   return (

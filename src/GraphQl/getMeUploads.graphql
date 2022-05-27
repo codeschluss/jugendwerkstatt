@@ -1,0 +1,11 @@
+query GetMeUploads {
+  me(entity: {}) {
+    id
+    uploads {
+      id
+      mimeType
+      base64
+      name
+    }
+  }
+}

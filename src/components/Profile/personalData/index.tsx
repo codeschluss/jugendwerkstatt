@@ -4,6 +4,7 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../../config/app";
 import AuthContext from "../../../contexts/AuthContext";
+import { useGetMeBasicQuery } from "../../../GraphQl/graphql";
 import { SAVE_USER } from "../../../GraphQl/mutation";
 import useInput from "../../../hooks/use-input";
 import CustomHeader from "../../header/customHeader/CustomHeader";
@@ -11,7 +12,8 @@ import Button from "../../ui/Button";
 import Input from "./Input";
 
 const PersonalData = () => {
-  const { theUser, bgColor } = useContext(AuthContext);
+  const { bgColor } = useContext(AuthContext);
+  const user = useGetMeBasicQuery();
   const navigate = useNavigate();
   const {
     value: enteredName,
@@ -45,8 +47,8 @@ const PersonalData = () => {
   );
 
   let letter;
-  theUser?.fullname &&
-    (letter = theUser.fullname.substring(0, 1).toUpperCase());
+  user.data?.me?.fullname &&
+    (letter = user.data.me.fullname.substring(0, 1).toUpperCase());
 
   const [saveNewUser, { data, loading, error }] = useMutation(SAVE_USER);
 
@@ -55,10 +57,10 @@ const PersonalData = () => {
     if (enteredNameValidity || enteredEmailValidity) {
       saveNewUser({
         variables: {
-          id: theUser.id,
-          fullName: enteredName === "" ? theUser.fullname : enteredName,
-          email: enteredEmail === "" ? theUser.email : enteredEmail,
-          phone: enteredPhone,
+          id: user?.data?.me?.id,
+          fullName: enteredName === "" ? user.data?.me?.fullname : enteredName,
+          email: enteredEmail === "" ? user.data?.me?.email : enteredEmail,
+          phone: enteredPhone === "" ? user.data?.me?.phone : enteredPhone,
         },
         onCompleted: () => {
           navigate("/");
@@ -77,10 +79,10 @@ const PersonalData = () => {
         >
           <div className="flex w-full items-center flex-col  justify-between">
             <div className="w-full flex flex-row pt-5 justify-end pr-10 relative">
-              {theUser?.profilePicture?.id ? (
+              {user.data?.me?.profilePicture?.id ? (
                 <img
                   className="h-24 w-24 object-cover rounded-full"
-                  src={`${API_URL}media/${theUser?.profilePicture?.id}`}
+                  src={`${API_URL}media/${user.data.me?.profilePicture?.id}`}
                   alt=""
                 />
               ) : (
@@ -99,7 +101,7 @@ const PersonalData = () => {
               </span>
             </div>
             <Input
-              value={!theUser ? "dreni" : enteredName}
+              value={enteredName}
               title="Name"
               onInput={nameChangeHandler}
               onBlur={nameBlurHandler}

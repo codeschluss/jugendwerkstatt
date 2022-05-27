@@ -4,9 +4,9 @@ import I from "../../ui/IconWrapper";
 import { Link, useLocation } from "react-router-dom";
 import {
   TemplateEntity,
+  useGetMeBasicQuery,
   useGetTemplatesQuery,
   useGetUserQuery,
-  useGetUserTemplatesQuery,
   UserTemplateEntity,
 } from "../../../GraphQl/graphql";
 import AuthContext from "../../../contexts/AuthContext";
@@ -14,8 +14,7 @@ import AuthContext from "../../../contexts/AuthContext";
 const Templates: React.FC = () => {
   const location = useLocation();
   const { templateType }: any = location.state;
-  const { theUser } = useContext(AuthContext);
-
+  const user = useGetMeBasicQuery();
   const templatesResult = useGetTemplatesQuery({
     variables: {
       id: templateType.id,
@@ -26,18 +25,10 @@ const Templates: React.FC = () => {
   const fetchedTemplates: [TemplateEntity] = templatesResult.data?.getTemplates
     ?.result as [TemplateEntity];
 
-  // const userTemplatesResult = useGetUserTemplatesQuery({
-  //   skip: !theUser.id ? true : false,
-  //   variables: {
-  //     id: theUser.id,
-  //   },
-  //   fetchPolicy: "network-only",
-  // });
   const userTemplatesResult = useGetUserQuery({
-    skip: !theUser.id ? true : false,
     variables: {
       entity: {
-        id: theUser.id,
+        id: user.data?.me?.id,
       },
     },
     fetchPolicy: "network-only",

@@ -7,9 +7,10 @@ import CustomHeader from "../../header/customHeader/CustomHeader";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { SAVE_USER } from "../../../GraphQl/mutation";
+import { useGetMeBasicQuery } from "../../../GraphQl/graphql";
 
 const ChangePassword = () => {
-  const { theUser } = useContext(AuthContext);
+  const user = useGetMeBasicQuery();
   const navigate = useNavigate();
   const {
     value: passwordOne,
@@ -35,7 +36,7 @@ const ChangePassword = () => {
     if (passwordOneValidity || passwordTwoValidity) {
       saveNewUser({
         variables: {
-          id: theUser.id,
+          id: user.data?.me?.id,
           password: passwordOne,
         },
         onCompleted: () => {
