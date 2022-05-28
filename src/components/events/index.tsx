@@ -24,12 +24,10 @@ const Events = () => {
     <div className="p-4 m-auto">
       {categoriesData?.map((category: EventCategoryEntity) => {
         return (
-          <div key={category.id}>
-            <p className="mb-3 mt-3">{category?.name}</p>
-            {category?.events?.map((el: any) => {
-              console.log(new Date(el.schedules[0].startDate).getFullYear());
-              return (
-                <Slider className="-mx-4" key={el?.id}>
+          <Slider title={category?.name || ""} className="-mx-4">
+            <div key={category.id}>
+              {category?.events?.map((el: any) => {
+                return (
                   <SlideCard
                     eventName={el?.name}
                     location={`${el?.address?.street}, ${el?.address?.houseNumber}, ${el?.address?.place}`}
@@ -37,10 +35,10 @@ const Events = () => {
                     route={"#"}
                     imgUrl={el?.titleImage?.id}
                   />
-                </Slider>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          </Slider>
         );
       })}
     </div>

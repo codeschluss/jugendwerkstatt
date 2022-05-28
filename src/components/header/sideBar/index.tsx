@@ -1,15 +1,19 @@
 import { MenuIcon } from "@heroicons/react/solid";
 import I from "../../ui/IconWrapper";
-import { useState } from "react";
+import { useContext } from "react";
 import SideBox from "./SideBox";
+import SideBarContext from "../../../contexts/SideBarContext";
 
 interface SideBarProps {}
 
 const SideBar: React.FC<SideBarProps> = () => {
-  const [sideBar, setSideBar] = useState<boolean>(false);
+  const { sideBar, setSideBar } = useContext(SideBarContext);
   return (
     <>
-      <I className="text-white -ml-3" onClick={() => setSideBar(true)}>
+      <I
+        className="text-white md:text-black -ml-3"
+        onClick={() => setSideBar(!sideBar)}
+      >
         <MenuIcon className="h-5 w-5" />
       </I>
       <SideBox hide={() => setSideBar(false)} active={sideBar} />

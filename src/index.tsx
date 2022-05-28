@@ -4,13 +4,14 @@ import {
   ApolloProvider,
   concat,
   HttpLink,
-  InMemoryCache
+  InMemoryCache,
 } from "@apollo/client";
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { API_URL } from "./config/app";
-import "./index.css";
+import "./styles/index.css";
+import "./styles/SlickSlider.css";
 
 const httpLink = new HttpLink({ uri: API_URL + "graphql" });
 

@@ -11,10 +11,12 @@ import {
   useRefreshTokenMutation,
 } from "../GraphQl/graphql";
 import Modal from "../components/modals/courseReviewPopUp";
+import SideBarContext from "../contexts/SideBarContext";
 
 const Layout: React.FC = ({ children }) => {
   const [accessT, setAccessT] = useState();
   const [refreshT, setRefreshT] = useState();
+  const { sideBar } = useContext(SideBarContext);
 
   const { setIsLogedIn, setTheUser } = useContext(AuthContext);
 
@@ -77,14 +79,14 @@ const Layout: React.FC = ({ children }) => {
   }, [localStorage.getItem("accessToken")]);
 
   return (
-    <main className="flex flex-col justify-between min-h-screen">
-      <div>
-        <Modal 
-              visible={false}
-              course={'Holz 1'}
-          >
-        </Modal>
-        <Header />
+    <main
+      className={`flex flex-col justify-between min-h-screen transition-all duration-500 ${
+        sideBar ? "md:pl-60" : ""
+      }`}
+    >
+      <Header />
+      <div className="md:p-12">
+        <Modal visible={false} course={"Holz 1"}></Modal>
         {result.loading ? <Loader /> : <div>{children}</div>}
       </div>
       {/* <Footer /> */}

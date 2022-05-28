@@ -23,22 +23,25 @@ const Jobs = () => {
     <div className="p-4 m-auto">
       {typesData?.map((category: JobTypeEntity) => {
         return (
-          <div key={category.id}>
-            <p className="mb-3 mt-3">{category?.name}</p>
+          <Slider
+            title={category?.name || ""}
+            className="-mx-4"
+            key={category?.id}
+          >
             {category?.jobAds?.map((el: JobAdEntity | any) => {
               return (
-                <Slider className="-mx-4" key={el?.id}>
-                  <SlideCard
-                    route={`/job-ad/${el.id}`}
-                    eventName={el?.title}
-                    location={`${el?.company?.name}`}
-                    date={el?.dueDate}
-                    color={category?.color}
-                  />
-                </Slider>
+                <SlideCard
+                  key={el.id}
+                  gradient={false}
+                  route={`/job-ad/${el.id}`}
+                  eventName={el?.title}
+                  location={`${el?.company?.name}`}
+                  date={el?.dueDate}
+                  color={category?.color}
+                />
               );
             })}
-          </div>
+          </Slider>
         );
       })}
     </div>
