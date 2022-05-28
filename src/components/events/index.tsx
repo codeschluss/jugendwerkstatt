@@ -20,27 +20,26 @@ const Events = () => {
     }
   }, [result.data]);
 
+  console.log(result.data?.getEventCategories?.result, "events");
+
   return (
     <div className="p-4 m-auto">
       {categoriesData?.map((category: EventCategoryEntity) => {
         return (
-          <div key={category.id}>
-            <p className="mb-3 mt-3">{category?.name}</p>
+          <Slider title={category?.name || ""} className="-mx-4">
             {category?.events?.map((el: any) => {
-              console.log(new Date(el.schedules[0].startDate).getFullYear());
+              console.log(el, "eventData");
               return (
-                <Slider className="-mx-4" key={el?.id}>
-                  <SlideCard
-                    eventName={el?.name}
-                    location={`${el?.address?.street}, ${el?.address?.houseNumber}, ${el?.address?.place}`}
-                    date={el?.schedules[el.schedules.length - 1]?.startDate}
-                    route={"#"}
-                    imgUrl={el?.titleImage?.id}
-                  />
-                </Slider>
+                <SlideCard
+                  eventName={el?.name}
+                  location={`${el?.address?.street}, ${el?.address?.houseNumber}, ${el?.address?.place}`}
+                  date={el?.schedules[el.schedules.length - 1]?.startDate}
+                  route={"#"}
+                  imgUrl={el?.titleImage?.id}
+                />
               );
             })}
-          </div>
+          </Slider>
         );
       })}
     </div>

@@ -31,6 +31,7 @@ export const SAVE_USER = gql`
         email: $email
         password: $password
         id: $id
+        evaluateCourse: false
       }
     ) {
       id

@@ -1,5 +1,6 @@
 import Head from "./Head";
 import SideItems from "./SideItems";
+import detectDevice from "../../../utils/isTouch";
 
 interface SideBoxProps {
   active: boolean;
@@ -7,20 +8,22 @@ interface SideBoxProps {
 }
 
 const SideBox: React.FC<SideBoxProps> = ({ active, hide }) => {
+  const isTouch = detectDevice();
   return (
     <>
       <div
-        className={`w-60 bg-white fixed left-0 top-0
-        h-full drop-shadow-xl z-20 transition transform-gpu duration-500 ${
+        className={`w-60 bg-white md:bg-primary  fixed left-0 top-0
+        h-full drop-shadow-xl md:drop-shadow-none z-20 transition transform-gpu duration-500 ${
           active
             ? "translate-x-0 opacity-1 pointer-events-auto"
             : "-translate-x-60 opacity-0 pointer-events-none"
         }`}
       >
-        <Head />
+        {isTouch && <Head />}
+
         <SideItems clicked={hide} />
       </div>
-      {active && (
+      {active && isTouch && (
         <span
           onClick={hide}
           className="fixed inset-0 z-10 bg-black bg-opacity-40"

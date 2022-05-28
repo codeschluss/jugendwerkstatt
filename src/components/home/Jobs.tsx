@@ -23,6 +23,7 @@ const Events: React.FC<EventsProps> = () => {
         return (
           <SlideCard
             route={`/job-ad/${el.id}`}
+            gradient={false}
             key={el?.id}
             eventName={el?.company?.name}
             location={el?.company?.address?.street}

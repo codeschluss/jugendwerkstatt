@@ -3,8 +3,10 @@ import Jobs from "./Jobs";
 
 const Homepage: React.FC = () => {
   return (
-    //Dummy data events.
     <>
+      <h1 className="p-4 rounded-md bg-white mb-8 text-3xl font-semibold hidden md:block">
+        Jugendwerkstatt
+      </h1>
       <Events />
       <Jobs />
     </>
