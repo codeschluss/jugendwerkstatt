@@ -134,7 +134,7 @@ const Register = () => {
 
   return (
     <AuthWrapper page="register" title={"Registrierung"}>
-      <form className="w-screen" onSubmit={onSubmitHandler}>
+      <form className="w-full" onSubmit={onSubmitHandler}>
         <div className="pb-0 p-12">
           <AuthInput
             id="Name"

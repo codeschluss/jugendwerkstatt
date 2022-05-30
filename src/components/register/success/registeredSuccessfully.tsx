@@ -30,12 +30,12 @@ const RegisteredSuccessfully: React.FC = () => {
   );
 
   return (
-    <div className="px-0 flex flex-col w-screen relative">
+    <div className="px-0 flex flex-col w-full relative">
       {data && (
         <>
           <div className="px-0 bg-bgimg">
             <img
-              className="h-full w-screen object-cover"
+              className="h-full w-full object-cover "
               src="/assets/background.png"
               alt={"logo"}
             />

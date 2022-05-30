@@ -26,7 +26,6 @@ query GetUser($entity: UserEntityInput) {
         name
         id
       }
-      theUser
     }
     verification {
       id

@@ -6,8 +6,7 @@ export const RegisterFooter: React.FunctionComponent<{ type?: string }> = ({
 }) => {
   return (
     <div className="row-start-8 row-end-12">
-      <div className="w-screen"></div>
-      <div className="w-screen">
+      <div className="w-full">
         {type === "register" ? (
           <div className="mx-12 pl-1 pb-2">
             <span className="text-sm ">Du hast bereits einen Account?</span>

@@ -16,7 +16,7 @@ const ProfileSettings = () => {
   };
 
   return (
-    <div className="  absolute bg-white w-full h-screen top-0 z-40 flex flex-col items-center justify-between">
+    <div className="absolute md:static bg-white w-full h-screen top-0 z-40 flex flex-col items-center justify-between">
       <div className="w-full">
         <CustomHeader>Profileinstellungen</CustomHeader>
         <div className="w-4/5 m-auto">

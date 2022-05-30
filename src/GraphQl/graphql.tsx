@@ -529,6 +529,7 @@ export type MessageEntityInput = {
 /** Mutation root */
 export type Mutation = {
   __typename?: 'Mutation';
+  addAssignments?: Maybe<UserEntity>;
   addEventFavorite?: Maybe<UserEntity>;
   addJobAdFavorite?: Maybe<UserEntity>;
   addUploads?: Maybe<UserEntity>;
@@ -664,6 +665,12 @@ export type Mutation = {
   sendPasswordReset?: Maybe<Scalars['Boolean']>;
   sendVerification?: Maybe<Scalars['Boolean']>;
   verify?: Maybe<UserEntity>;
+};
+
+
+/** Mutation root */
+export type MutationAddAssignmentsArgs = {
+  assignments?: InputMaybe<Array<InputMaybe<AssignmentEntityInput>>>;
 };
 
 
@@ -2639,6 +2646,11 @@ export type GetMeBasicQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetMeBasicQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, phone?: string | null, email?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null };
 
+export type GetMeFavoritesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMeFavoritesQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, favoriteEvents?: Array<{ __typename?: 'EventEntity', id?: string | null, name?: string | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', endDate?: any | null, startDate?: any | null } | null> | null, nextSchedule?: { __typename?: 'ScheduleEntity', endDate?: any | null, startDate?: any | null } | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null> | null, favoriteJobAds?: Array<{ __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null, company?: { __typename?: 'CompanyEntity', mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null, type?: { __typename?: 'JobTypeEntity', color?: string | null } | null } | null> | null } | null };
+
 export type GetMeUploadsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3260,6 +3272,84 @@ export function useGetMeBasicLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetMeBasicQueryHookResult = ReturnType<typeof useGetMeBasicQuery>;
 export type GetMeBasicLazyQueryHookResult = ReturnType<typeof useGetMeBasicLazyQuery>;
 export type GetMeBasicQueryResult = Apollo.QueryResult<GetMeBasicQuery, GetMeBasicQueryVariables>;
+export const GetMeFavoritesDocument = gql`
+    query GetMeFavorites {
+  me(entity: {}) {
+    id
+    favoriteEvents {
+      id
+      titleImage {
+        id
+        base64
+        mimeType
+      }
+      schedules {
+        endDate
+        startDate
+      }
+      nextSchedule {
+        endDate
+        startDate
+      }
+      name
+      address {
+        houseNumber
+        place
+        postalCode
+        street
+      }
+    }
+    favoriteJobAds {
+      id
+      company {
+        address {
+          houseNumber
+          place
+          postalCode
+          street
+        }
+        mail
+        name
+        phone
+        website
+      }
+      title
+      type {
+        color
+      }
+      startDate
+      dueDate
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMeFavoritesQuery__
+ *
+ * To run a query within a React component, call `useGetMeFavoritesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMeFavoritesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMeFavoritesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMeFavoritesQuery(baseOptions?: Apollo.QueryHookOptions<GetMeFavoritesQuery, GetMeFavoritesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMeFavoritesQuery, GetMeFavoritesQueryVariables>(GetMeFavoritesDocument, options);
+      }
+export function useGetMeFavoritesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMeFavoritesQuery, GetMeFavoritesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMeFavoritesQuery, GetMeFavoritesQueryVariables>(GetMeFavoritesDocument, options);
+        }
+export type GetMeFavoritesQueryHookResult = ReturnType<typeof useGetMeFavoritesQuery>;
+export type GetMeFavoritesLazyQueryHookResult = ReturnType<typeof useGetMeFavoritesLazyQuery>;
+export type GetMeFavoritesQueryResult = Apollo.QueryResult<GetMeFavoritesQuery, GetMeFavoritesQueryVariables>;
 export const GetMeUploadsDocument = gql`
     query GetMeUploads {
   me(entity: {}) {

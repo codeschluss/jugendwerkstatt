@@ -1,0 +1,49 @@
+query GetMeFavorites {
+  me(entity: {}) {
+    id
+    favoriteEvents {
+      id
+      titleImage {
+        id
+        base64
+        mimeType
+      }
+      schedules {
+        endDate
+        startDate
+      }
+      nextSchedule {
+        endDate
+        startDate
+      }
+      name
+      address {
+        houseNumber
+        place
+        postalCode
+        street
+      }
+    }
+    favoriteJobAds {
+      id
+      company {
+        address {
+          houseNumber
+          place
+          postalCode
+          street
+        }
+        mail
+        name
+        phone
+        website
+      }
+      title
+      type {
+        color
+      }
+      startDate
+      dueDate
+    }
+  }
+}

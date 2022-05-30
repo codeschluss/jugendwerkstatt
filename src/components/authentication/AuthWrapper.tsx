@@ -20,13 +20,14 @@ const AuthWrapper: React.FC<AuthWrapperProps> = ({
   let authHeaderIcon;
 
   return (
-    <div className="px-0 flex flex-col w-screen h-screen absolute top-0 z-20">
+    <div className="px-0 flex flex-col w-full h-full  top-0 z-20">
       <div className="px-0 relative h-100 flex justify-center items-center ">
         <img
-          className="h-full w-screen object-cover"
+          className="h-full w-full object-cover md:hidden block"
           src="/assets/background.png"
           alt={"logo"}
         />
+
         {headerType && (
           <div
             className="w-[80%]  h-[80%] bg white absolute z-10
@@ -43,7 +44,12 @@ const AuthWrapper: React.FC<AuthWrapperProps> = ({
           </div>
         )}
       </div>
-      <div className=" w-full relative -mt-6 rounded-3xl bg-white">
+      <div className=" w-full relative -mt-6 rounded-3xl bg-white md:w-1/2 md:mx-auto p-5">
+        <img
+          className="md:block hidden mx-auto w-52"
+          src="/assets/authLogo.png"
+          alt=""
+        />
         <h4 className="text-3xl text-center mt-5">{title}</h4>
         {children}
         <RegisterFooter type={page} />

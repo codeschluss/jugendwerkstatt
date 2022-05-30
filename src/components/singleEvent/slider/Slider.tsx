@@ -5,8 +5,6 @@ import "swiper/css/pagination";
 import { API_URL } from "../../../config/app";
 import "./style.css";
 
-
-
 // import "./style.css";
 interface SliderProps {
   imgUrl?: string | undefined | null;
@@ -16,9 +14,13 @@ interface SliderProps {
 
 export const Slider: React.FC<SliderProps> = ({ imgUrl, colorBg, title }) => {
   return (
-    <>
+    <div className="w-full md:w-1/2 md:bg-white md:rounded-md md:p-5">
       {imgUrl && (
-        <img src={`${API_URL}media/${imgUrl}`} alt="" />
+        <img
+          className="md:rounded-md"
+          src={`${API_URL}media/${imgUrl}`}
+          alt=""
+        />
       )}
       {colorBg && (
         <div
@@ -28,6 +30,6 @@ export const Slider: React.FC<SliderProps> = ({ imgUrl, colorBg, title }) => {
           {title}
         </div>
       )}
-    </>
+    </div>
   );
 };

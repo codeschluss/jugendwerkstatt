@@ -80,7 +80,8 @@ const Layout: React.FC = ({ children }) => {
         sideBar ? "md:pl-60" : ""
       }`}
     >
-      <Header />
+      {isLogedIn && <Header />}
+
       <div className="md:p-12">
         <Modal visible={false} course={"Holz 1"}></Modal>
         {result.loading ? <Loader /> : <div>{children}</div>}

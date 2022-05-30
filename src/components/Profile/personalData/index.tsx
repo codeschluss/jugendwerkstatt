@@ -70,7 +70,7 @@ const PersonalData = () => {
   };
 
   return (
-    <div className="text-[#676767] absolute w-full z-20 top-0 bg-white ">
+    <div className="text-[#676767] absolute md:static w-full z-20 top-0 bg-white">
       <CustomHeader>Personal Data</CustomHeader>
       <div className="">
         <form

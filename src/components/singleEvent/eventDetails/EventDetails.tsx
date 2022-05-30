@@ -29,7 +29,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
   description,
 }) => {
   return (
-    <>
+    <div className="">
       <div className="flex text-md align-middle">
         <I>
           <FlagIcon />
@@ -87,7 +87,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
         </I>
         <h3 className="ml-3 mt-2">{theRest}</h3>
       </div>
-      <div>{description}</div>
-    </>
+      <div className="md:hidden block">{description}</div>
+    </div>
   );
 };
