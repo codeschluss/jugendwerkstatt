@@ -92,7 +92,7 @@ const UploadImg = () => {
             onClick={fireUpload}
             className="w-40 h-10 bg-primary rounded-md mt-10 text-white"
           >
-            Hochladen
+            Speichern
           </button>
           <span className="mt-24 w-60">
             <img src={fileData.base64} alt="" className="w-full h-full" />

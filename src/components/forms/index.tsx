@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import ChevronRightIcon from "@heroicons/react/outline/ChevronRightIcon";
 import UploadIcon from "@heroicons/react/solid/UploadIcon";
 import I from "../ui/IconWrapper";
 import { Link } from "react-router-dom";
@@ -12,8 +11,15 @@ import {
   useGetUserQuery,
 } from "../../GraphQl/graphql";
 import AuthContext from "../../contexts/AuthContext";
+import detectDevice from "../../utils/isTouch";
+import { ChevronRightIcon } from "@heroicons/react/outline";
+import Row from "../../shared/components/table/Row";
+import TableName from "../../shared/components/table/TableName";
+import Action from "../../shared/components/table/Action";
 
 const Forms: React.FC = () => {
+  const isTouch = detectDevice();
+
   const result = useGetTemplateTypesQuery({
     fetchPolicy: "network-only",
   });
@@ -35,8 +41,12 @@ const Forms: React.FC = () => {
       <ul className="list-none text-base font-normal pl-4 text-gray-600">
         {fetchedData?.map((template, index) => {
           return (
-            <li className="pt-4" key={index}>
+            <li
+              className="px-2 md:w-96  md:bg-white md:my-2 flex items-center  md:h-16    "
+              key={index}
+            >
               <Link
+                className="w-full h-full flex justify-between items-center"
                 to={{
                   pathname: "/Forms/Templates",
                 }}
@@ -47,10 +57,9 @@ const Forms: React.FC = () => {
                   },
                 }}
               >
-                {template.name}
-                <I className="h-5 float-right">
-                  <ChevronRightIcon />
-                </I>
+                <p>{template.name}</p>
+
+                <ChevronRightIcon className="h-5" />
               </Link>
             </li>
           );
@@ -65,15 +74,37 @@ const Forms: React.FC = () => {
           </Link>
         </I>
       </h5>
-      <ul className="list-none text-base font-normal pl-4 text-gray-600">
-        {fetchedUserUploads?.map((file, index) => {
-          return (
-            <li className="pt-4" key={index}>
-              {file.name}
-            </li>
-          );
-        })}
-      </ul>
+      {!isTouch && (
+        <>
+          {" "}
+          <div className="flex w-full">
+            <TableName rowName="Dokumentenname" />
+            <TableName rowName="Aktionen" />
+          </div>
+          <div>
+            {fetchedUserUploads?.map((el) => {
+              return (
+                <div className="flex justify-between w-full">
+                  <Row rowItem={el.name} />
+                  <Action onApprove onDelete />
+                </div>
+              );
+            })}
+          </div>{" "}
+        </>
+      )}
+
+      {isTouch && (
+        <ul className="list-none text-base font-normal pl-4 text-gray-600">
+          {fetchedUserUploads?.map((file, index) => {
+            return (
+              <li className="pt-4" key={index}>
+                {file.name}
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 };

@@ -39,7 +39,7 @@ const RightContent: React.FC<RightContentProps> = () => {
       >
         <div>
           <div className="flex justify-start border-b-2 mb-4 pb-4">
-            <Avatar size="20" />
+            <Avatar size="10" />
             <div className="h-20 flex flex-col justify-around ml-4">
               <p className="text-lg">{user.data?.me?.fullname}</p>
               <p className="text-xs">{user.data?.me?.email}</p>

@@ -94,7 +94,7 @@ const UploadFile = () => {
             onClick={fireUpload}
             className="w-40 h-10 bg-primary rounded-md mt-10 text-white"
           >
-            Hochladen
+            Speichern
           </button>
           <h4 className="my-5">{fileName}</h4>
         </span>

@@ -34,7 +34,7 @@ const Events = () => {
                   eventName={el?.name}
                   location={`${el?.address?.street}, ${el?.address?.houseNumber}, ${el?.address?.place}`}
                   date={el?.schedules[el.schedules.length - 1]?.startDate}
-                  route={"#"}
+                  route={`/event/${el.id}`}
                   imgUrl={el?.titleImage?.id}
                 />
               );

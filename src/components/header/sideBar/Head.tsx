@@ -13,7 +13,7 @@ const Head: React.FunctionComponent = () => {
       <span
         className={`absolute inset-0 overflow-hidden ${Styles.headStyle}`}
       ></span>
-      <Avatar size="14" />
+      <Avatar size="65" />
       <div className="mt-5">
         <p className="text-lg font-semibold">{data?.me?.fullname}</p>
         <p>{data?.me?.email}</p>

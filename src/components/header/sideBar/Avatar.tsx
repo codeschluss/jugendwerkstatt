@@ -20,7 +20,8 @@ const Avatar: React.FC<{ size: string }> = ({ size }) => {
         />
       ) : (
         <span
-          className={`h-${size} w-${size} rounded-full ${bgColor} flex justify-center items-center text-white`}
+          //   style={{ height: size + "px", width: size + "px" }}
+          className={` w-${size} h-${size} rounded-full ${bgColor} flex justify-center items-center text-white`}
         >
           {letter}
         </span>

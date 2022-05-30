@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import I from "../../ui/IconWrapper";
 import detectDevice from "../../../utils/isTouch";
+import { useContext } from "react";
+import SideBarContext from "../../../contexts/SideBarContext";
 
 interface ItemProps {
   clicked?: () => void;
@@ -11,6 +13,7 @@ interface ItemProps {
 
 const Item: React.FC<ItemProps> = ({ clicked, icon, name, href }) => {
   const isTouch = detectDevice();
+  const { sideBar } = useContext(SideBarContext);
   return (
     <li>
       <NavLink
@@ -22,9 +25,15 @@ const Item: React.FC<ItemProps> = ({ clicked, icon, name, href }) => {
         to={href}
         onClick={isTouch ? clicked : undefined}
       >
-        <span className="flex items-center px-4 py-2 font-medium ">
+        <span
+          className={`flex items-center px-4 py-2 font-medium ${
+            !isTouch ? !sideBar && "justify-end" : ""
+          } `}
+        >
           <I className="mr-2">{icon}</I>
-          <span>{name}</span>
+          <span className={`${!isTouch ? !sideBar && "hidden" : ""}`}>
+            {name}
+          </span>
         </span>
       </NavLink>
     </li>

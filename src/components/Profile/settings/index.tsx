@@ -10,7 +10,11 @@ const ProfileSettings = () => {
   const { setIsLogedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const dreni = useLogout();
+  const logoutHandler = () => {
+    localStorage.clear();
+    setIsLogedIn(false);
+    navigate("/");
+  };
 
   return (
     <div className="absolute md:static bg-white w-full h-screen top-0 z-40 flex flex-col items-center justify-between">
@@ -26,7 +30,7 @@ const ProfileSettings = () => {
         </div>
       </div>
       <div className="mb-8 flex h-20 flex-col w-3/5 justify-between">
-        <Button isDisabled={true} isValidated={true} click={() => useLogout}>
+        <Button isDisabled={true} isValidated={true} click={logoutHandler}>
           Logout
         </Button>
         <Button isDisabled={true} isValidated={true} click={() => alert("awd")}>
