@@ -13,6 +13,7 @@ const TypeInput: React.FC<TypeInputProps> = ({
   return (
     <label htmlFor="contained-button-file" className="m-0 h-full w-full">
       <input
+        accept="image/png, image/gif, image/jpeg"
         value={value}
         disabled={disabled}
         style={{ display: "none" }}

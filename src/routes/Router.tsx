@@ -2,14 +2,11 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ForgotPassword from "../components/authentication/forgotPassword";
 import Email from "../components/authentication/forgotPassword/Email";
 import Password from "../components/authentication/forgotPassword/Password";
-import Login from "../components/authentication/login";
 import Calls from "../components/messenger/overview/calls";
 import Chats from "../components/messenger/overview/chats";
 import Contacts from "../components/messenger/overview/contacts";
 import RegisteredSuccessfully from "../components/register/success/registeredSuccessfully";
 import Layout from "../containers/Layout";
-import EmailVerification from "../pages/emailVerification";
-import EmailVerified from "../pages/emailVerified";
 import Forms from "../pages/forms";
 import Templates from "../pages/forms/Templates";
 import TemplateEdit from "../pages/forms/TemplateEdit";
@@ -19,9 +16,7 @@ import Home from "../pages/home";
 import MediaLibrary from "../pages/mediaLibrary";
 import EventsCalendar from "../pages/eventsCalendar";
 import EventsTime from "../pages/eventsTime";
-import Overview from "../pages/messenger";
 import Chat from "../pages/messenger/Chat";
-import Register from "../pages/register";
 import TemplateView from "../pages/forms/TemplateView";
 import JobDetails from "../components/singleJobAdd";
 import Favorites from "../pages/favorites";
@@ -30,7 +25,6 @@ import Jobs from "../pages/jobs";
 import PushNotificationsContainer from "../pages/capacitor";
 import ProfileSettings from "../pages/Profile/ProfileSettings";
 import PersonalData from "../pages/Profile/PersonalData";
-import EmailVerificationOne from "../components/emailVerification";
 import ToVerifyUser from "../pages/verify/ToVerifyUser";
 import AlreadyVerifiedUser from "../pages/verify/AlreadyVerifiedUser";
 import ReVerifyUser from "../pages/verify/ReVerifyUser";
@@ -38,6 +32,9 @@ import ChangePassword from "../pages/Profile/ChangePassword";
 import Protected from "../pages/Protected";
 import UploadData from "../pages/forms/UploadData";
 import Feedback from "../components/Feedback";
+import ProfileImageUpload from "../pages/Profile/ProfileImageUpload";
+import LoginPage from "../pages/authentication/LoginPage";
+import RegisterPage from "../pages/authentication/Register";
 
 const Router = () => {
   return (
@@ -45,7 +42,7 @@ const Router = () => {
       <Layout>
         <Routes>
           <Route index element={<Home />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route
             path="/verification/:id"
             element={<RegisteredSuccessfully />}
@@ -160,8 +157,16 @@ const Router = () => {
               </Protected>
             }
           />
+          <Route
+            path="/profile-upload-picture"
+            element={
+              <Protected>
+                <ProfileImageUpload />
+              </Protected>
+            }
+          />
 
-          <Route path="/Login" element={<Login />} />
+          <Route path="/Login" element={<LoginPage />} />
           <Route path="/toVerifyEmail" element={<ToVerifyUser />} />
           <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />
           <Route path="/reVerifyEmail" element={<ReVerifyUser />} />

@@ -76,18 +76,6 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
         clicked={clicked}
         href="/profile"
       />
-      <Item
-        name="Login"
-        icon={<ChatAltIcon />}
-        clicked={clicked}
-        href="/login"
-      />
-      <Item
-        name="Register"
-        icon={<ChatAltIcon />}
-        clicked={clicked}
-        href="/register"
-      />
     </ul>
   );
 };

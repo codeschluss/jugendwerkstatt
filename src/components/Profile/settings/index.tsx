@@ -4,16 +4,13 @@ import AuthContext from "../../../contexts/AuthContext";
 import CustomHeader from "../../header/customHeader/CustomHeader";
 import Button from "../../ui/Button";
 import Items from "./Items";
+import { useLogout } from "../../../hooks/useLogout";
 
 const ProfileSettings = () => {
   const { setIsLogedIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const logoutHandler = () => {
-    localStorage.clear();
-    setIsLogedIn(false);
-    navigate("/");
-  };
+  const dreni = useLogout();
 
   return (
     <div className="absolute md:static bg-white w-full h-screen top-0 z-40 flex flex-col items-center justify-between">
@@ -29,7 +26,7 @@ const ProfileSettings = () => {
         </div>
       </div>
       <div className="mb-8 flex h-20 flex-col w-3/5 justify-between">
-        <Button isDisabled={true} isValidated={true} click={logoutHandler}>
+        <Button isDisabled={true} isValidated={true} click={() => useLogout}>
           Logout
         </Button>
         <Button isDisabled={true} isValidated={true} click={() => alert("awd")}>

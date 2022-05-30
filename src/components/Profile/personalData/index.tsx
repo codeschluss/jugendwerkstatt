@@ -1,7 +1,7 @@
 import { useMutation } from "@apollo/client";
 import { PencilIcon } from "@heroicons/react/solid";
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../../../config/app";
 import AuthContext from "../../../contexts/AuthContext";
 import { useGetMeBasicQuery } from "../../../GraphQl/graphql";
@@ -97,7 +97,9 @@ const PersonalData = () => {
                 className="absolute w-8 flex justify-center items-center h-8 
               border-[1px] bottom-0 border-gray-600 rounded-full bg-white z-20"
               >
-                <PencilIcon className="w-5 h-5" />
+                <Link to="/profile-upload-picture">
+                  <PencilIcon className="w-5 h-5" />
+                </Link>
               </span>
             </div>
             <Input
