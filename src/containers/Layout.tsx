@@ -1,16 +1,16 @@
 import jwtDecode from "jwt-decode";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/footer";
-import Header from "../components/header";
-import Loader from "../components/ui/Loader";
+import Footer from "../client/components/footer";
+import Header from "../shared/components/header";
+import Loader from "../shared/components/ui/Loader";
 import AuthContext from "../contexts/AuthContext";
 import {
   useGetMeBasicQuery,
   useGetUserQuery,
   useRefreshTokenMutation,
 } from "../GraphQl/graphql";
-import Modal from "../components/modals/courseReviewPopUp";
+import Modal from "../client/components/modals/courseReviewPopUp";
 import SideBarContext from "../contexts/SideBarContext";
 
 const Layout: React.FC = ({ children }) => {

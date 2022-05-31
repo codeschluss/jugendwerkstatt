@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import detectDevice from "../utils/isTouch";
+import detectDevice from "../shared/utils/isTouch";
 
 export const SideBarContext = createContext<{
   sideBar: boolean;
