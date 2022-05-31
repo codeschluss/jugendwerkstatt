@@ -19,7 +19,10 @@ const SideBox: React.FC<SideBoxProps> = ({ active, hide }) => {
         h-full drop-shadow-xl md:drop-shadow-none z-20 transition transform-gpu duration-500 ${
           active
             ? "translate-x- opacity-1 pointer-events-auto"
-            : `-translate-x-${!isTouch ? "40" : "60"} opacity-1 `
+            : !isTouch
+            ? "-translate-x-40 opacity-1"
+            : "-translate-x-60 opacity-1"
+          // : `-translate-x-${!isTouch ? "40" : "60"} opacity-1 `
         }`}
       >
         {isTouch && <Head />}

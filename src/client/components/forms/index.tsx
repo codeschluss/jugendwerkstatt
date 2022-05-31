@@ -86,7 +86,7 @@ const Forms: React.FC = () => {
               return (
                 <div className="flex justify-between w-full">
                   <Row rowItem={el.name} />
-                  <Action onApprove onDelete />
+                  <Action onDelete />
                 </div>
               );
             })}

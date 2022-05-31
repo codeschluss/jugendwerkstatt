@@ -92,7 +92,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
       ) : (
         <span
           onClick={() => setSideBar(true)}
-          className="flex justify-end pr-6 w-full text-white"
+          className="flex justify-end  pr-6 w-full text-white"
         >
           <ChevronDoubleRightIcon className="w-8" />
         </span>

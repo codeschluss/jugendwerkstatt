@@ -14,7 +14,7 @@ const SideBar: React.FC<SideBarProps> = () => {
         className="text-white md:text-black -ml-3"
         onClick={() => setSideBar(!sideBar)}
       >
-        <MenuIcon className="h-5 w-5" />
+        <MenuIcon className="h-5 w-5 md:hidden" />
       </I>
       <SideBox hide={() => setSideBar(false)} active={sideBar} />
     </>
