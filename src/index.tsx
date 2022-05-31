@@ -10,8 +10,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { API_URL } from "./config/app";
-import "./styles/index.css";
-import "./styles/SlickSlider.css";
+import "./shared/styles/index.css";
+import "./shared/styles/SlickSlider.css";
 
 const httpLink = new HttpLink({ uri: API_URL + "graphql" });
 
