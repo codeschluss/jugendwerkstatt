@@ -40,7 +40,7 @@ const Templates: React.FC = () => {
   console.log(fetchedUserTemplates);
 
   return (
-    <div className="container mx-auto px-4 pt-4">
+    <div className="container mx-auto px-4 pt-4 md:bg-white md:w-2/5 md:mx-0 md:py-6 md:rounded-md">
       <h5 className="text-2xl font-bold">{templateType.name}</h5>
       <h5 className="text-xl font-bold pt-4">Vorlagen</h5>
       <ul className="list-none text-base font-normal pl-4 text-gray-600">

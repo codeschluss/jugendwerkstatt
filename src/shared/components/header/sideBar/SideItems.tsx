@@ -8,6 +8,7 @@ import {
   PaperAirplaneIcon,
   CogIcon,
   QuestionMarkCircleIcon,
+  ChevronDoubleRightIcon,
 } from "@heroicons/react/outline";
 import { HeartIcon } from "@heroicons/react/solid";
 import { useContext } from "react";
@@ -86,15 +87,14 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
           className="text-center w-full text-white"
           onClick={() => setSideBar(false)}
         >
-          Menu ofnen
+          Menu schliesen
         </span>
       ) : (
         <span
           onClick={() => setSideBar(true)}
-          className="flex justify-end w-full text-white"
+          className="flex justify-end pr-6 w-full text-white"
         >
-          {" "}
-          V{" "}
+          <ChevronDoubleRightIcon className="w-8" />
         </span>
       )}
     </div>

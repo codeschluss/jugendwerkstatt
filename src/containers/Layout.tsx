@@ -77,7 +77,7 @@ const Layout: React.FC = ({ children }) => {
   return (
     <main
       className={`flex flex-col  min-h-screen transition-all duration-500 ${
-        sideBar ? "md:pl-60" : ""
+        sideBar ? "md:pl-60" : "md:pl-40"
       }`}
     >
       {isLogedIn && <Header />}
