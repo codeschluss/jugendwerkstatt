@@ -20,19 +20,17 @@ const Accordion: FC<AccordionProps> & AccordionComposition = ({
     setShowAccordionContent(!showAccordionContent);
 
   return (
-    <div
-      role="button"
-      onClick={handleAccordionContent}
-      className="p-4 bg-white rounded-sm"
-      {...rest}
-    >
-      {title}
+    <div className="p-4 bg-white rounded-sm">
+      <div role="button" onClick={handleAccordionContent} {...rest}>
+        {title}
+      </div>
       <If condition={showAccordionContent}>
         <div className="mt-8">{children}</div>
       </If>
     </div>
   );
 };
+
 Accordion.Item = AccordionItem;
 
 export default Accordion;

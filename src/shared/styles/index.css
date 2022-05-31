@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Admin */
-@import '../admin/components/index.css';
+@import '../../admin/components/index.css';
 
 /* CKEditor styles */
 .ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar, .ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners {
