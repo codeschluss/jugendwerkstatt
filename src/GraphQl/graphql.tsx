@@ -2592,6 +2592,11 @@ export type CreateTokenMutationVariables = Exact<{
 
 export type CreateTokenMutation = { __typename?: 'Mutation', createToken?: { __typename?: 'TokenDto', access?: string | null, refresh?: string | null } | null };
 
+export type ExampleGetEventsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ExampleGetEventsQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', result?: Array<{ __typename?: 'EventEntity', id?: string | null } | null> | null } | null };
+
 export type GetEventQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -2795,6 +2800,42 @@ export function useCreateTokenMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateTokenMutationHookResult = ReturnType<typeof useCreateTokenMutation>;
 export type CreateTokenMutationResult = Apollo.MutationResult<CreateTokenMutation>;
 export type CreateTokenMutationOptions = Apollo.BaseMutationOptions<CreateTokenMutation, CreateTokenMutationVariables>;
+export const ExampleGetEventsDocument = gql`
+    query ExampleGetEvents {
+  getEvents {
+    result {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useExampleGetEventsQuery__
+ *
+ * To run a query within a React component, call `useExampleGetEventsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useExampleGetEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useExampleGetEventsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useExampleGetEventsQuery(baseOptions?: Apollo.QueryHookOptions<ExampleGetEventsQuery, ExampleGetEventsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ExampleGetEventsQuery, ExampleGetEventsQueryVariables>(ExampleGetEventsDocument, options);
+      }
+export function useExampleGetEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ExampleGetEventsQuery, ExampleGetEventsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ExampleGetEventsQuery, ExampleGetEventsQueryVariables>(ExampleGetEventsDocument, options);
+        }
+export type ExampleGetEventsQueryHookResult = ReturnType<typeof useExampleGetEventsQuery>;
+export type ExampleGetEventsLazyQueryHookResult = ReturnType<typeof useExampleGetEventsLazyQuery>;
+export type ExampleGetEventsQueryResult = Apollo.QueryResult<ExampleGetEventsQuery, ExampleGetEventsQueryVariables>;
 export const GetEventDocument = gql`
     query GetEvent($id: String!) {
   getEvent(entity: {id: $id}) {
