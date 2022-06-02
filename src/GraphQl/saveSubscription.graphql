@@ -1,0 +1,5 @@
+mutation SaveSubscription($entity: SubscriptionEntityInput) {
+  saveSubscription(entity: $entity) {
+    id
+  }
+}

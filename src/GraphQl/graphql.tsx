@@ -533,7 +533,7 @@ export type Mutation = {
   addEventFavorite?: Maybe<UserEntity>;
   addJobAdFavorite?: Maybe<UserEntity>;
   addUploads?: Maybe<UserEntity>;
-  approveUser?: Maybe<UserEntity>;
+  approve?: Maybe<UserEntity>;
   createToken?: Maybe<TokenDto>;
   deleteAddress?: Maybe<Scalars['Boolean']>;
   deleteAddresss?: Maybe<Scalars['Boolean']>;
@@ -693,7 +693,7 @@ export type MutationAddUploadsArgs = {
 
 
 /** Mutation root */
-export type MutationApproveUserArgs = {
+export type MutationApproveArgs = {
   userId?: InputMaybe<Scalars['String']>;
 };
 
@@ -2231,12 +2231,6 @@ export type QueryLookupAddressArgs = {
   entity?: InputMaybe<AddressEntityInput>;
 };
 
-
-/** Query root */
-export type QueryMeArgs = {
-  entity?: InputMaybe<UserEntityInput>;
-};
-
 export type QueryConjunctionInput = {
   operands?: InputMaybe<Array<InputMaybe<QueryExpressionInput>>>;
   operator?: InputMaybe<ConjunctionOperator>;
@@ -2592,11 +2586,6 @@ export type CreateTokenMutationVariables = Exact<{
 
 export type CreateTokenMutation = { __typename?: 'Mutation', createToken?: { __typename?: 'TokenDto', access?: string | null, refresh?: string | null } | null };
 
-export type ExampleGetEventsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ExampleGetEventsQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', result?: Array<{ __typename?: 'EventEntity', id?: string | null } | null> | null } | null };
-
 export type GetEventQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -2718,6 +2707,13 @@ export type ResetPasswordMutationVariables = Exact<{
 
 export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword?: boolean | null };
 
+export type SaveSubscriptionMutationVariables = Exact<{
+  entity?: InputMaybe<SubscriptionEntityInput>;
+}>;
+
+
+export type SaveSubscriptionMutation = { __typename?: 'Mutation', saveSubscription?: { __typename?: 'SubscriptionEntity', id?: string | null } | null };
+
 export type SaveUploadsMutationVariables = Exact<{
   uploads?: InputMaybe<Array<InputMaybe<MediaEntityInput>> | InputMaybe<MediaEntityInput>>;
 }>;
@@ -2800,42 +2796,6 @@ export function useCreateTokenMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateTokenMutationHookResult = ReturnType<typeof useCreateTokenMutation>;
 export type CreateTokenMutationResult = Apollo.MutationResult<CreateTokenMutation>;
 export type CreateTokenMutationOptions = Apollo.BaseMutationOptions<CreateTokenMutation, CreateTokenMutationVariables>;
-export const ExampleGetEventsDocument = gql`
-    query ExampleGetEvents {
-  getEvents {
-    result {
-      id
-    }
-  }
-}
-    `;
-
-/**
- * __useExampleGetEventsQuery__
- *
- * To run a query within a React component, call `useExampleGetEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useExampleGetEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useExampleGetEventsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useExampleGetEventsQuery(baseOptions?: Apollo.QueryHookOptions<ExampleGetEventsQuery, ExampleGetEventsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ExampleGetEventsQuery, ExampleGetEventsQueryVariables>(ExampleGetEventsDocument, options);
-      }
-export function useExampleGetEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ExampleGetEventsQuery, ExampleGetEventsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ExampleGetEventsQuery, ExampleGetEventsQueryVariables>(ExampleGetEventsDocument, options);
-        }
-export type ExampleGetEventsQueryHookResult = ReturnType<typeof useExampleGetEventsQuery>;
-export type ExampleGetEventsLazyQueryHookResult = ReturnType<typeof useExampleGetEventsLazyQuery>;
-export type ExampleGetEventsQueryResult = Apollo.QueryResult<ExampleGetEventsQuery, ExampleGetEventsQueryVariables>;
 export const GetEventDocument = gql`
     query GetEvent($id: String!) {
   getEvent(entity: {id: $id}) {
@@ -3275,7 +3235,7 @@ export type GetLinkCategoriesLazyQueryHookResult = ReturnType<typeof useGetLinkC
 export type GetLinkCategoriesQueryResult = Apollo.QueryResult<GetLinkCategoriesQuery, GetLinkCategoriesQueryVariables>;
 export const GetMeBasicDocument = gql`
     query GetMeBasic {
-  me(entity: {}) {
+  me {
     id
     fullname
     phone
@@ -3315,7 +3275,7 @@ export type GetMeBasicLazyQueryHookResult = ReturnType<typeof useGetMeBasicLazyQ
 export type GetMeBasicQueryResult = Apollo.QueryResult<GetMeBasicQuery, GetMeBasicQueryVariables>;
 export const GetMeFavoritesDocument = gql`
     query GetMeFavorites {
-  me(entity: {}) {
+  me {
     id
     favoriteEvents {
       id
@@ -3393,7 +3353,7 @@ export type GetMeFavoritesLazyQueryHookResult = ReturnType<typeof useGetMeFavori
 export type GetMeFavoritesQueryResult = Apollo.QueryResult<GetMeFavoritesQuery, GetMeFavoritesQueryVariables>;
 export const GetMeUploadsDocument = gql`
     query GetMeUploads {
-  me(entity: {}) {
+  me {
     id
     uploads {
       id
@@ -3754,6 +3714,39 @@ export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOption
 export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
 export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const SaveSubscriptionDocument = gql`
+    mutation SaveSubscription($entity: SubscriptionEntityInput) {
+  saveSubscription(entity: $entity) {
+    id
+  }
+}
+    `;
+export type SaveSubscriptionMutationFn = Apollo.MutationFunction<SaveSubscriptionMutation, SaveSubscriptionMutationVariables>;
+
+/**
+ * __useSaveSubscriptionMutation__
+ *
+ * To run a mutation, you first call `useSaveSubscriptionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveSubscriptionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveSubscriptionMutation, { data, loading, error }] = useSaveSubscriptionMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveSubscriptionMutation(baseOptions?: Apollo.MutationHookOptions<SaveSubscriptionMutation, SaveSubscriptionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveSubscriptionMutation, SaveSubscriptionMutationVariables>(SaveSubscriptionDocument, options);
+      }
+export type SaveSubscriptionMutationHookResult = ReturnType<typeof useSaveSubscriptionMutation>;
+export type SaveSubscriptionMutationResult = Apollo.MutationResult<SaveSubscriptionMutation>;
+export type SaveSubscriptionMutationOptions = Apollo.BaseMutationOptions<SaveSubscriptionMutation, SaveSubscriptionMutationVariables>;
 export const SaveUploadsDocument = gql`
     mutation SaveUploads($uploads: [MediaEntityInput]) {
   addUploads(uploads: $uploads) {

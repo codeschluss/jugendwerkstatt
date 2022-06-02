@@ -1,5 +1,5 @@
 query GetMeUploads {
-  me(entity: {}) {
+  me {
     id
     uploads {
       id

@@ -21,7 +21,7 @@ const Layout: React.FC = ({ children }) => {
   const { setIsLogedIn, isLogedIn } = useContext(AuthContext);
 
   const result = useGetMeBasicQuery({
-    skip: !accessT ? true : false,
+    skip: !accessT,
   });
 
   useEffect(() => {
