@@ -2409,7 +2409,6 @@ export type SubscriptionEntity = {
   deviceToken?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
-  subscriptionType?: Maybe<SubscriptionTypeEntity>;
   user?: Maybe<UserEntity>;
 };
 
@@ -2418,7 +2417,6 @@ export type SubscriptionEntityInput = {
   deviceToken?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
-  subscriptionType?: InputMaybe<SubscriptionTypeEntityInput>;
   user?: InputMaybe<UserEntityInput>;
 };
 
@@ -2429,7 +2427,6 @@ export type SubscriptionTypeEntity = {
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   name?: Maybe<Scalars['String']>;
-  subscriptions?: Maybe<Array<Maybe<SubscriptionEntity>>>;
 };
 
 export type SubscriptionTypeEntityInput = {
@@ -2438,7 +2435,6 @@ export type SubscriptionTypeEntityInput = {
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   name?: InputMaybe<Scalars['String']>;
-  subscriptions?: InputMaybe<Array<InputMaybe<SubscriptionEntityInput>>>;
 };
 
 export type TemplateEntity = {
