@@ -1,1 +1,2 @@
-@import './ui/index.css';
+@import './atoms/index.css';
+@import './templates/layouts/AdminDashboardLayout.css';

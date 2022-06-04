@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { AccordionItem } from './AccordionItem';
 import { AccordionProps, AccordionComposition } from './Accordion.props';
-import { If } from '../../../shared/components/If/If';
+import { If } from '../../../../shared/components/If/If';
 
 const Accordion: FC<AccordionProps> & AccordionComposition = ({
   title,
