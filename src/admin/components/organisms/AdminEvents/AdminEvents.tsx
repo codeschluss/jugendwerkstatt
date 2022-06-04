@@ -12,8 +12,8 @@ export const AdminEvents = () => (
           <Table.Data>
             <Action
               onApprove={() => {}}
-              onDelete={() => {}}
-              onUpdate={() => {}}
+              // onDelete={() => {}}
+              // onUpdate={() => {}}
             />
           </Table.Data>
         </Table.Row>

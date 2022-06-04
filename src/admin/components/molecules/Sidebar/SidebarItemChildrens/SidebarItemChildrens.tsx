@@ -1,6 +1,7 @@
-import { FC, ReactElement } from 'react';
-import { NavLink } from 'react-router-dom';
-import { SidebarItemChildrensProps } from './SidebarItemChildrens.props';
+import { FC, ReactElement } from "react";
+import { NavLink } from "react-router-dom";
+import { twClsx } from "../../../../utils";
+import { SidebarItemChildrensProps } from "./SidebarItemChildrens.props";
 
 export const SidebarItemChildrens: FC<SidebarItemChildrensProps> = ({
   baseUrl,
@@ -9,8 +10,6 @@ export const SidebarItemChildrens: FC<SidebarItemChildrensProps> = ({
   ...rest
 }): ReactElement | null => {
   if (!show) return null;
-
-  console.log('nested', items);
 
   return (
     <>
@@ -27,18 +26,26 @@ export const SidebarItemChildrens: FC<SidebarItemChildrensProps> = ({
               <SidebarItemChildrens
                 className="ml-[33px]"
                 show={!!childrens}
-                baseUrl={href ?? ''}
+                baseUrl={href ?? ""}
                 items={childrens}
               />
             </>
           ) : (
             <NavLink
               key={`${href}-${name}`}
-              to={`${baseUrl}${href ? `/${href}` : ''}`}
+              to={`${baseUrl}${href ? `/${href}` : ""}`}
+              end
             >
-              <li className="flex items-center mb-8 text-white opacity-50 hover:opacity-100">
-                {name}
-              </li>
+              {({ isActive }) => (
+                <li
+                  className={twClsx(
+                    "flex items-center mb-8 text-white opacity-50 hover:opacity-100",
+                    isActive && "opacity-1"
+                  )}
+                >
+                  {name}
+                </li>
+              )}
             </NavLink>
           );
         })}

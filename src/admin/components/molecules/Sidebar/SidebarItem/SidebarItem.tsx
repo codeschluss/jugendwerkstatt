@@ -1,9 +1,9 @@
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline';
-import { FC, useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import { cx } from '../../../../../shared/utils/ClassNames';
-import { SidebarItemChildrens } from '../SidebarItemChildrens/SidebarItemChildrens';
-import { SidebarItemProps } from './SidebarItem.props';
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/outline";
+import { FC, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { twClsx } from "../../../../utils";
+import { SidebarItemChildrens } from "../SidebarItemChildrens/SidebarItemChildrens";
+import { SidebarItemProps } from "./SidebarItem.props";
 
 export const SidebarItem: FC<SidebarItemProps> = ({
   icon,
@@ -13,25 +13,34 @@ export const SidebarItem: FC<SidebarItemProps> = ({
   children,
   ...rest
 }) => {
+  const { pathname } = useLocation();
   const [isSubNavigationOpen, setIsSubNavigationOpen] = useState(false);
 
   /**
    * handlers
    */
-  const handleSubNavigationOpen = () =>
+  const handleSubNavigationOpen = () => {
     setIsSubNavigationOpen(!isSubNavigationOpen);
+  };
+
   const handleIconClick = () => {
     if (!isSidebarOpen && handleSidebarToggler) handleSidebarToggler();
   };
+
+  useEffect(() => {
+    if (pathname.includes(item?.href || "")) {
+      setIsSubNavigationOpen(true);
+    }
+  }, [pathname, item]);
 
   return (
     <>
       <li
         role="button"
         onClick={handleSubNavigationOpen}
-        className={cx([
-          'flex items-center mb-8 text-white',
-          isSidebarOpen && 'gap-x-3',
+        className={twClsx([
+          "flex items-center mb-8 text-white",
+          isSidebarOpen && "gap-x-3",
         ])}
         {...rest}
       >
@@ -60,4 +69,4 @@ export const SidebarItem: FC<SidebarItemProps> = ({
   );
 };
 
-SidebarItem.displayName = 'Sidebar.Item';
+SidebarItem.displayName = "Sidebar.Item";

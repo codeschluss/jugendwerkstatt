@@ -1,12 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AdminEvents } from "../admin/components/organisms/AdminEvents/AdminEvents";
 import { AdminDashboardLayout } from "../admin/components/templates";
+import { AdminEventsPage } from "../admin/pages";
 
 export const AdminRoutes = () => (
   <BrowserRouter>
     <Routes>
-      <Route path="/admin" element={<AdminDashboardLayout />}>
-        <Route index element={<AdminEvents />} />
+      <Route element={<AdminDashboardLayout />}>
+        <Route path="/admin/events" element={<AdminEventsPage />} />
+        <Route path="/admin/events/organizers" element={<div>hello</div>} />
       </Route>
     </Routes>
   </BrowserRouter>

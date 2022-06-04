@@ -1,5 +1,5 @@
-import { forwardRef } from 'react';
-import { InputProps } from './Input.props';
+import { forwardRef } from "react";
+import { InputProps } from "./Input.props";
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ iconRight, ...rest }, ref) => (
