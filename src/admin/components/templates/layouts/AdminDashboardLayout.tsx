@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import { Header } from '../../organisms/Header/Header';
 import Sidebar from '../../organisms/Sidebar/Sidebar';
 
 export const AdminDashboardLayout = () => (
@@ -7,7 +8,7 @@ export const AdminDashboardLayout = () => (
     <Sidebar />
 
     {/* Header */}
-    <header className="dashboard-header">Header</header>
+    <Header />
 
     {/* Main Content */}
     <main className="dashboard-content">

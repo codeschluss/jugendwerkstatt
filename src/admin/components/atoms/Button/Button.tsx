@@ -5,14 +5,19 @@ import { ButtonProps, ButtonVariants } from './Button.props';
 
 export const Button: FC<ButtonProps> = ({
   variant = buttonVariants.PRIMARY,
+  iconRight = null,
   className,
   children,
   ...rest
 }): ReactElement => (
   <button
-    className={cx([`btn btn-${ButtonVariants[variant]}`, className])}
+    className={cx([
+      `flex items-center justify-center gap-x-4 btn btn-${ButtonVariants[variant]}`,
+      className,
+    ])}
     {...rest}
   >
     {children}
+    {iconRight && iconRight}
   </button>
 );

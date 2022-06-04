@@ -1,14 +1,14 @@
 .dashboard-layout {
-    @apply grid w-full h-screen;
+    @apply relative grid w-full h-screen;
     grid-template-areas: "sidebar header"
     "sidebar content"
     "sidebar content";
-    grid-template-columns: 210px 1fr;
+    grid-template-columns: max-content 1fr;
     grid-template-rows: 80px 1fr;
 }
 
 .dashboard-header {
-    @apply bg-blue-600;
+    @apply flex items-center justify-end bg-white gap-x-10;
     grid-area: header;
 }
 

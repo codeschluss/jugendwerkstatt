@@ -4,9 +4,13 @@
 }
 
 .btn-primary {
-    @apply border border-red-700 text-red-700;
+    @apply text-red-700 border border-red-700;
 }
 
 .btn-secondary {
     @apply bg-[#424242] text-white;
+}
+
+.btn-link {
+    @apply inline px-0 my-3 text-white transition-none rounded-none shadow-none cursor-pointer hover:shadow-none min-w-fit;
 }
