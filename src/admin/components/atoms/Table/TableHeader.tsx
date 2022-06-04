@@ -7,7 +7,7 @@ export const TableHeader: FC<TableSectionProps> = ({
   className,
   ...rest
 }): ReactElement => (
-  <thead {...rest} className={twClsx(className)}>
+  <thead {...rest} className={twClsx("w-full ", className)}>
     {children}
   </thead>
 );

@@ -9,6 +9,9 @@ module.exports = {
       //   bgimg: "url(/assets/background.png)",
       // },
     },
+    fontFamily: {
+      redHat: "Red Hat Display, sans-serif",
+    },
     screens: {
       sm: "576px",
       // => @media (min-width: 576px) { ... }

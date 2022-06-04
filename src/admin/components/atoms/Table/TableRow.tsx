@@ -7,7 +7,13 @@ export const TableRow: FC<TableRowProps> = ({
   className,
   ...rest
 }): ReactElement => (
-  <tr {...rest} className={twClsx(className)}>
+  <tr
+    {...rest}
+    className={twClsx(
+      "flex justify-start items-center flex-row mb-2",
+      className
+    )}
+  >
     {children}
   </tr>
 );

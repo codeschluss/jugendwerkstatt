@@ -3,12 +3,12 @@ import { twClsx } from "../../../utils";
 import { TableBody, TableData, TableHeader, TableRow } from "../../atoms";
 import { TableComposition, TableProps } from "./Table.types";
 
-const Table: FC<TableProps> & TableComposition = ({
+export const Table: FC<TableProps> & TableComposition = ({
   children,
   className,
   ...rest
 }) => (
-  <table className={twClsx(className, "bg-primary rounded-md")} {...rest}>
+  <table className={twClsx("p-2 w-full", className)} {...rest}>
     {children}
   </table>
 );
@@ -17,5 +17,3 @@ Table.Row = TableRow;
 Table.Data = TableData;
 Table.Header = TableHeader;
 Table.Body = TableBody;
-
-export default Table;

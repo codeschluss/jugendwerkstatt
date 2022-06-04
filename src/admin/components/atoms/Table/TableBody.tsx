@@ -7,7 +7,7 @@ export const TableBody: FC<TableSectionProps> = ({
   className,
   ...rest
 }): ReactElement => (
-  <tbody {...rest} className={twClsx(className)}>
+  <tbody {...rest} className={twClsx("w-full", className)}>
     {children}
   </tbody>
 );

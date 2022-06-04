@@ -1,4 +1,15 @@
-import { DetailedHTMLProps, HTMLAttributes } from "react";
+import {
+  ComponentPropsWithRef,
+  DetailedHTMLProps,
+  ElementType,
+  FC,
+  HTMLAttributes,
+} from "react";
+
+export type TableProps = DetailedHTMLProps<
+  HTMLAttributes<HTMLTableElement>,
+  HTMLTableElement
+>;
 
 export type TableSectionProps = DetailedHTMLProps<
   HTMLAttributes<HTMLTableSectionElement>,
@@ -10,10 +21,27 @@ export type TableRowProps = DetailedHTMLProps<
   HTMLTableRowElement
 >;
 
-export interface TableDataProps
+export interface TableDataBaseProps
   extends DetailedHTMLProps<
     HTMLAttributes<HTMLTableCellElement>,
     HTMLTableCellElement
   > {
   action?: boolean;
+}
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type MergeElementProps<
+  T extends ElementType,
+  P extends object = {}
+> = Omit<ComponentPropsWithRef<T>, keyof P> & P;
+
+export type TableDataProps<P extends ElementType = "th"> = {
+  as?: P;
+} & MergeElementProps<P, TableDataBaseProps>;
+
+export interface TableComposition {
+  Data: FC<TableDataProps>;
+  Row: FC<TableRowProps>;
+  Header: FC<TableSectionProps>;
+  Body: FC<TableSectionProps>;
 }
