@@ -1,4 +1,5 @@
 import { Table } from "../../atoms";
+import { Action } from "../../atoms/Table/Action";
 import { CustomTable } from "../../molecules";
 
 export const AdminEvents = () => (
@@ -7,8 +8,14 @@ export const AdminEvents = () => (
       headerData={["Nr", "Name"]}
       bodyData={["hello", "test"].map((i, idx) => (
         <Table.Row key={idx}>
-          <Table.Data>{idx}</Table.Data>
           <Table.Data>{i}</Table.Data>
+          <Table.Data>
+            <Action
+              onApprove={() => {}}
+              onDelete={() => {}}
+              onUpdate={() => {}}
+            />
+          </Table.Data>
         </Table.Row>
       ))}
     />

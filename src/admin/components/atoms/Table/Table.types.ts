@@ -29,6 +29,12 @@ export interface TableDataBaseProps
   action?: boolean;
 }
 
+export interface ActionProps {
+  onApprove?: () => void;
+  onDelete?: () => void;
+  onUpdate?: () => void;
+}
+
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type MergeElementProps<
   T extends ElementType,
