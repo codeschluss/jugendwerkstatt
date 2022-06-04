@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AdminEvents } from '../admin/components/organisms/AdminEvents/AdminEvents';
-import { AdminDashboardLayout } from '../admin/components/templates/layouts/AdminDashboardLayout';
+import { AdminDashboardLayout } from '../admin/components/templates/Layouts/AdminDashboardLayout';
 
 export const AdminRoutes = () => (
   <BrowserRouter>

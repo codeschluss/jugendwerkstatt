@@ -1,0 +1,23 @@
+.dashboard-layout {
+    @apply grid w-full h-screen;
+    grid-template-areas: "sidebar header"
+    "sidebar content"
+    "sidebar content";
+    grid-template-columns: 210px 1fr;
+    grid-template-rows: 80px 1fr;
+}
+
+.dashboard-header {
+    @apply bg-blue-600;
+    grid-area: header;
+}
+
+.dashboard-sidebar {
+    @apply flex flex-col justify-between bg-primary;
+    grid-area: sidebar;
+}
+
+.dashboard-content {
+    grid-area: content;
+    padding: 2rem;
+}
