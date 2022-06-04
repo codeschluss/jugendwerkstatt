@@ -1,0 +1,11 @@
+.input-wrapper {
+    @apply flex items-start px-2 py-1 border border-gray-600 rounded-sm;
+}
+
+.input-wrapper input {
+    @apply flex-1 border-none outline-none;
+}
+
+.input-wrapper svg {
+    @apply self-center;
+}

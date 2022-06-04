@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, DetailedHTMLProps } from 'react';
+import { ButtonHTMLAttributes, DetailedHTMLProps, ReactElement } from 'react';
 import { ButtonVariantsEnum } from '../../../interfaces/enums/ButtonVariants.enum';
 
 export interface ButtonProps
@@ -7,9 +7,11 @@ export interface ButtonProps
     HTMLButtonElement
   > {
   variant?: ButtonVariantsEnum;
+  iconRight?: ReactElement;
 }
 
 export const ButtonVariants: Record<ButtonVariantsEnum, string> = {
   primary: 'primary',
   secondary: 'secondary',
+  link: 'link',
 };

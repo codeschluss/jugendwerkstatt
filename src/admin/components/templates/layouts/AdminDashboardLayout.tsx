@@ -1,10 +1,18 @@
-import { FC } from "react";
 import { Outlet } from "react-router-dom";
+import { Header } from "../../organisms/Header/Header";
+import Sidebar from "../../organisms/Sidebar/Sidebar";
 
-export const AdminDashboardLayout: FC = ({ children }) => (
+export const AdminDashboardLayout = () => (
   <div className="dashboard-layout">
-    <div>Header</div>
-    <div>Sidenav</div>
-    <Outlet />
+    {/* SideBar */}
+    <Sidebar />
+
+    {/* Header */}
+    <Header />
+
+    {/* Main Content */}
+    <main className="dashboard-content">
+      <Outlet />
+    </main>
   </div>
 );
