@@ -174,3 +174,26 @@ export const EditUserPage = loadable(
     fallback: <PageLoader />,
   }
 );
+
+// Forms pages
+export const FormsListPage = loadable(
+  () => timeout(import("./Forms/FormsListPage"), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const FormsDocumentsListPage = loadable(
+  () => timeout(import("./Forms/FormsDocumentsListPage"), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const CreateFormsPage = loadable(
+  () => timeout(import("./Forms/CreateFormsPage"), PAGE_LOAD_TIMEOUT),
+
+  {
+    fallback: <PageLoader />,
+  }
+);

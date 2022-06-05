@@ -23,6 +23,9 @@ import {
   UsersListPage,
   UsersRequestsListPage,
   EditUserPage,
+  CreateFormsPage,
+  FormsDocumentsListPage,
+  FormsListPage,
 } from "../admin/pages";
 
 export const AdminRoutes = () => (
@@ -98,6 +101,16 @@ export const AdminRoutes = () => (
         />
         <Route path="/admin/users" element={<UsersListPage />} />
         <Route path="/admin/users/:id" element={<EditUserPage />} />
+
+        <Route path="/admin/forms/templates" element={<FormsListPage />} />
+        <Route
+          path="/admin/forms/templates/new"
+          element={<CreateFormsPage />}
+        />
+        <Route
+          path="/admin/forms/documents"
+          element={<FormsDocumentsListPage />}
+        />
       </Route>
       <Route path="*" element={<h1>Page Not Found!</h1>} />
     </Routes>
