@@ -1,9 +1,13 @@
-import React, { useContext } from "react";
-import { API_URL } from "../../../../config/app";
-import AuthContext from "../../../../contexts/AuthContext";
-import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
+import React, { useContext } from 'react';
+import { API_URL } from '../../../../config/app';
+import AuthContext from '../../../../contexts/AuthContext';
+import { useGetMeBasicQuery } from '../../../../GraphQl/graphql';
+import { cx } from '../../../utils/ClassNames';
 
-const Avatar: React.FC<{ size: string }> = ({ size }) => {
+const Avatar: React.FC<{ size: string; className?: string }> = ({
+  size,
+  className,
+}) => {
   const { bgColor } = useContext(AuthContext);
   const { data } = useGetMeBasicQuery();
 
@@ -14,14 +18,20 @@ const Avatar: React.FC<{ size: string }> = ({ size }) => {
     <div>
       {data?.me?.profilePicture?.id ? (
         <img
-          className={`h-${size} w-${size} object-cover rounded-full`}
+          className={cx([
+            `h-${size} w-${size} object-cover rounded-full`,
+            className,
+          ])}
           src={`${API_URL}media/${data?.me?.profilePicture?.id}`}
           alt=""
         />
       ) : (
         <span
           //   style={{ height: size + "px", width: size + "px" }}
-          className={` w-${size} h-${size} rounded-full ${bgColor} flex justify-center items-center text-white`}
+          className={cx([
+            `w-${size} h-${size} rounded-full ${bgColor} flex justify-center items-center text-white`,
+            className,
+          ])}
         >
           {letter}
         </span>

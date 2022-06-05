@@ -3,7 +3,7 @@ import { CustomTable } from "../../components/molecules";
 
 const MediaCategoriesListPage = () => {
   return (
-    <Panel
+    <Panel.Wrapper
       action={{
         to: "/admin/medias/categories/new",
         label: "Neue Kategorie erstellen",
@@ -20,7 +20,7 @@ const MediaCategoriesListPage = () => {
           </Table.Row>
         ))}
       />
-    </Panel>
+    </Panel.Wrapper>
   );
 };
 

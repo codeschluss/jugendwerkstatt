@@ -3,7 +3,7 @@ import { CustomTable } from "../../components/molecules";
 
 const OrganizersListPage = () => {
   return (
-    <Panel
+    <Panel.Wrapper
       action={{
         to: "/admin/events/organizers/new",
         label: "Neuen Veranstalter hinzufügen",
@@ -33,7 +33,7 @@ const OrganizersListPage = () => {
           </Table.Row>
         ))}
       />
-    </Panel>
+    </Panel.Wrapper>
   );
 };
 

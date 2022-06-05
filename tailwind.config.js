@@ -13,6 +13,9 @@ module.exports = {
       redHat: "Red Hat Display, sans-serif",
     },
     screens: {
+      xs: "320px",
+      // => @media (min-width: 320px) { ... }
+
       sm: "576px",
       // => @media (min-width: 576px) { ... }
 

@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { twClsx } from "../../../../utils";
 import { SidebarItemChildrens } from "../SidebarItemChildrens/SidebarItemChildrens";
 import { SidebarItemProps } from "./SidebarItem.props";
+import { Icon } from "../../../atoms/Icons/Icon";
 
 export const SidebarItem: FC<SidebarItemProps> = ({
   icon,
@@ -50,9 +51,9 @@ export const SidebarItem: FC<SidebarItemProps> = ({
         <span className="flex-1">{children}</span>
         {isSidebarOpen ? (
           isSubNavigationOpen ? (
-            <ChevronUpIcon className="w-5 h-5" />
+            <Icon icon={<ChevronUpIcon />} />
           ) : (
-            <ChevronDownIcon className="w-5 h-5" />
+            <Icon icon={<ChevronDownIcon />} />
           )
         ) : null}
       </li>

@@ -1,5 +1,5 @@
 .input-wrapper {
-    @apply flex items-start px-2 py-1 border border-gray-600 rounded-sm;
+    @apply flex items-start px-2 py-1 border rounded-sm;
 }
 
 .input-wrapper input {

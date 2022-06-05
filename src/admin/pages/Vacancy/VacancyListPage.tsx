@@ -3,7 +3,7 @@ import { CustomTable } from "../../components/molecules";
 
 const CreateVacancyPage = () => {
   return (
-    <Panel
+    <Panel.Wrapper
       action={{
         to: "/admin/job-announcements/new",
         label: "Neue Stellenausschreibung erstellen",
@@ -35,7 +35,7 @@ const CreateVacancyPage = () => {
           </Table.Row>
         ))}
       />
-    </Panel>
+    </Panel.Wrapper>
   );
 };
 

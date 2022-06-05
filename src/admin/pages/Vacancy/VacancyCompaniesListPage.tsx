@@ -3,7 +3,7 @@ import { CustomTable } from "../../components/molecules";
 
 const VacancyCompaniesListPage = () => {
   return (
-    <Panel
+    <Panel.Wrapper
       action={{
         to: "/admin/job-announcements/companies/new",
         label: "Neues Unternehmen hinzufügen",
@@ -29,7 +29,7 @@ const VacancyCompaniesListPage = () => {
           </Table.Row>
         ))}
       />
-    </Panel>
+    </Panel.Wrapper>
   );
 };
 

@@ -7,6 +7,33 @@ const PageLoader = () => <h1>Loading...</h1>;
 
 //* Export all pages
 
+// Account pages
+export const AdminProfilePage = loadable(
+  () => timeout(import("./profile/AdminProfilePage"), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const AdminProfilePasswordPage = loadable(
+  () =>
+    timeout(import("./profile/AdminProfilePasswordPage"), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const AdminProfileEmailNotificationsPage = loadable(
+  () =>
+    timeout(
+      import("./profile/AdminProfileEmailNotificationsPage"),
+      PAGE_LOAD_TIMEOUT
+    ),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
 // Events pages
 export const EventsListPage = loadable(
   () => timeout(import("./events/EventsListPage"), PAGE_LOAD_TIMEOUT),
@@ -142,6 +169,7 @@ export const UsersListPage = loadable(
 
 export const EditUserPage = loadable(
   () => timeout(import("./user/EditUserPage"), PAGE_LOAD_TIMEOUT),
+
   {
     fallback: <PageLoader />,
   }

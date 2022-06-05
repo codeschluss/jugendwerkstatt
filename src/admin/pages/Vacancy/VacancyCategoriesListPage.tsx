@@ -3,7 +3,7 @@ import { CustomTable } from "../../components/molecules";
 
 const VacancyCategoriesListPage = () => {
   return (
-    <Panel
+    <Panel.Wrapper
       action={{
         to: "/admin/job-announcements/categories/new",
         label: "Neue Kategorie hinzufügen",
@@ -21,7 +21,7 @@ const VacancyCategoriesListPage = () => {
           </Table.Row>
         ))}
       />
-    </Panel>
+    </Panel.Wrapper>
   );
 };
 

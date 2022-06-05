@@ -1,28 +1,24 @@
 import { FC, ReactElement } from "react";
-import { Link } from "react-router-dom";
+import { twClsx } from "../../../utils/twClsx";
+import { Button } from "../Form/Button/Button";
+import { PanelComposition, PanelProps } from "./Panel.types";
+import { PanelBody } from "./PanelBody";
+import { PanelWrapper } from "./PanelWrapper";
 
-import { twClsx } from "../../../utils";
-import { Button } from "../Button/Button";
-import { PanelProps } from "./Panel.types";
-
-export const Panel: FC<PanelProps> = ({
+export const Panel: FC<PanelProps> & PanelComposition = ({
+  title,
+  submitButton = true,
+  onSubmit,
   className,
   children,
-  action,
   ...rest
 }): ReactElement => (
-  <div
-    className={twClsx(
-      "min-h-full p-4 bg-white flex justify-between flex-col items-start",
-      className
-    )}
-    {...rest}
-  >
+  <div className={twClsx("bg-white p-8 rounded-sm", className)} {...rest}>
+    <h1 className="text-2xl font-light tracking-widest">{title}</h1>
     {children}
-    {action && (
-      <Button>
-        <Link to={action.to}>{action.label}</Link>
-      </Button>
-    )}
+    {submitButton && <Button onClick={onSubmit}>Speichern</Button>}
   </div>
 );
+
+Panel.Body = PanelBody;
+Panel.Wrapper = PanelWrapper;

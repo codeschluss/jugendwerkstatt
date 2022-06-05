@@ -3,7 +3,9 @@ import { CustomTable } from "../../components/molecules";
 
 const EventsListPage = () => {
   return (
-    <Panel action={{ to: "/admin/events/new", label: "Neues Event erstellen" }}>
+    <Panel.Wrapper
+      action={{ to: "/admin/events/new", label: "Neues Event erstellen" }}
+    >
       <CustomTable
         headerData={[
           "Eventname",
@@ -30,7 +32,7 @@ const EventsListPage = () => {
           </Table.Row>
         ))}
       />
-    </Panel>
+    </Panel.Wrapper>
   );
 };
 

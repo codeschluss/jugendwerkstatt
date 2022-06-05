@@ -3,7 +3,7 @@ import { CustomTable } from "../../components/molecules";
 
 const MediaListPage = () => {
   return (
-    <Panel
+    <Panel.Wrapper
       action={{ to: "/admin/medias/new", label: "Neues Video hinzufügen" }}
     >
       <CustomTable
@@ -19,7 +19,7 @@ const MediaListPage = () => {
           </Table.Row>
         ))}
       />
-    </Panel>
+    </Panel.Wrapper>
   );
 };
 

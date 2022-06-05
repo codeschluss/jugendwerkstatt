@@ -3,7 +3,7 @@ import { CustomTable } from "../../components/molecules";
 
 const UsersListPage = () => {
   return (
-    <Panel>
+    <Panel.Wrapper>
       <CustomTable
         headerData={[
           "Benutzer/in",
@@ -26,7 +26,7 @@ const UsersListPage = () => {
           </Table.Row>
         ))}
       />
-    </Panel>
+    </Panel.Wrapper>
   );
 };
 

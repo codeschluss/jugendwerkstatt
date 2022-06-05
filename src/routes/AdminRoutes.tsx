@@ -1,6 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AdminDashboardLayout } from "../admin/components/templates";
 import {
+  AdminProfileEmailNotificationsPage,
+  AdminProfilePage,
+  AdminProfilePasswordPage,
   EventsListPage,
   CreateEventsPage,
   OrganizersListPage,
@@ -26,6 +29,17 @@ export const AdminRoutes = () => (
   <BrowserRouter>
     <Routes>
       <Route element={<AdminDashboardLayout />}>
+        <Route path="/admin/profile" element={<AdminProfilePage />} />
+        <Route
+          path="/admin/profile-password"
+          element={<AdminProfilePasswordPage />}
+        />
+
+        <Route
+          path="/admin/email-notifications"
+          element={<AdminProfileEmailNotificationsPage />}
+        />
+
         <Route path="/admin/events" element={<EventsListPage />} />
         <Route path="/admin/events/new" element={<CreateEventsPage />} />
         <Route
@@ -85,6 +99,7 @@ export const AdminRoutes = () => (
         <Route path="/admin/users" element={<UsersListPage />} />
         <Route path="/admin/users/:id" element={<EditUserPage />} />
       </Route>
+      <Route path="*" element={<h1>Page Not Found!</h1>} />
     </Routes>
   </BrowserRouter>
 );

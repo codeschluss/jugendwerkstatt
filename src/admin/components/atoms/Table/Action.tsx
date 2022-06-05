@@ -2,7 +2,7 @@ import { FC, ReactElement } from "react";
 import { CheckIcon, PencilIcon, XIcon } from "@heroicons/react/outline";
 
 import { ActionProps } from "./Table.types";
-import { Button } from "../Button/Button";
+import { Button } from "../Form/Button/Button";
 
 export const Action: FC<ActionProps> = ({
   onUpdate,
