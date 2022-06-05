@@ -12,7 +12,7 @@ const EventsListPage = () => {
           "Kategorie",
           "Datum",
           "Uhrzeit",
-          "Uhrzeit",
+          "Turnus",
           "Aktionen",
         ]}
         bodyData={["test"].map((i, idx) => (
@@ -24,7 +24,7 @@ const EventsListPage = () => {
             <Table.Data>{i}</Table.Data>
             <Table.Data>
               <Action
-                onApprove={() => {}}
+                onSend={() => {}}
                 onDelete={() => {}}
                 onUpdate={() => {}}
               />

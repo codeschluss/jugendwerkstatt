@@ -1,16 +1,16 @@
-import { FC, ReactElement, useContext } from 'react';
-import { BellIcon, LogoutIcon, SearchIcon } from '@heroicons/react/outline';
-import I from '../../../../shared/components/ui/IconWrapper';
-import DropDown from '../../../../shared/components/ui/DropDown';
-import Avatar from '../../../../shared/components/header/sideBar/Avatar';
-import { Link, useNavigate } from 'react-router-dom';
-import { useGetMeBasicQuery } from '../../../../GraphQl/graphql';
-import { Input } from '../../atoms/Form/Input/Input';
-import { Button } from '../../atoms/Form/Button/Button';
-import { RightDropdownElipse } from '../../atoms/Icons/RightDropdownElipse';
-import { LeftDropdownElipse } from '../../atoms/Icons/LeftDropdownElipse';
-import { ButtonVariantsEnum } from '../../../interfaces/enums/ButtonVariants.enum';
-import AuthContext from '../../../../contexts/AuthContext';
+import { FC, ReactElement, useContext } from "react";
+import { BellIcon, LogoutIcon, SearchIcon } from "@heroicons/react/outline";
+import I from "../../../../shared/components/ui/IconWrapper";
+import DropDown from "../../../../shared/components/ui/DropDown";
+import Avatar from "../../../../shared/components/header/sideBar/Avatar";
+import { Link, useNavigate } from "react-router-dom";
+import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
+import { Input } from "../../atoms/Form/Input/Input";
+import { Button } from "../../atoms/Form/Button/Button";
+import { RightDropdownElipse } from "../../atoms/Icons/RightDropdownElipse";
+import { LeftDropdownElipse } from "../../atoms/Icons/LeftDropdownElipse";
+import { ButtonVariantsEnum } from "../../../interfaces/enums/ButtonVariants.enum";
+import AuthContext from "../../../../contexts/AuthContext";
 
 export const Header: FC = (): ReactElement => {
   const user = useGetMeBasicQuery();
@@ -23,7 +23,7 @@ export const Header: FC = (): ReactElement => {
   const handleLogout = () => {
     localStorage.clear();
     setIsLogedIn(false);
-    navigate('/');
+    navigate("/");
   };
 
   return (
@@ -50,16 +50,16 @@ export const Header: FC = (): ReactElement => {
               <div className="flex flex-col justify-around h-20 ml-4">
                 <p className="text-lg">{user.data?.me?.fullname}</p>
                 <p className="text-xs">{user.data?.me?.email}</p>
-                <Link to="profile">
+                <Link to="/admin/profile">
                   <p className="mt-3 text-lg">Profil Bearbeiten</p>
                 </Link>
               </div>
             </div>
             <div className="flex flex-col items-start justify-around h-24 pb-4 mb-4 border-b-2 ">
-              <Link to="profile-password">
+              <Link to="/admin/profile-password">
                 <p>Passwort ändern</p>
               </Link>
-              <Link to="email-notifications">
+              <Link to="/admin/email-notifications">
                 <p>E-Mail Benachrichtigungen</p>
               </Link>
             </div>

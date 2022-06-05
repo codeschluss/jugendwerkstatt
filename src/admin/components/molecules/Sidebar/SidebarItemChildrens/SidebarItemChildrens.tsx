@@ -1,5 +1,5 @@
 import { FC, ReactElement } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { twClsx } from "../../../../utils";
 import { SidebarItemChildrensProps } from "./SidebarItemChildrens.props";
 
@@ -9,7 +9,10 @@ export const SidebarItemChildrens: FC<SidebarItemChildrensProps> = ({
   items,
   ...rest
 }): ReactElement | null => {
+  const { pathname } = useLocation();
+
   if (!show) return null;
+  const paths = pathname.split("/");
 
   return (
     <>
@@ -40,6 +43,12 @@ export const SidebarItemChildrens: FC<SidebarItemChildrensProps> = ({
                 <li
                   className={twClsx(
                     "flex items-center mb-8 text-white opacity-50 hover:opacity-100",
+                    paths.at(-1) === "new" &&
+                      paths.at(-2) ===
+                        `${baseUrl}${href ? `/${href}` : ""}`
+                          .split("/")
+                          .at(-1) &&
+                      "opacity-1",
                     isActive && "opacity-1"
                   )}
                 >

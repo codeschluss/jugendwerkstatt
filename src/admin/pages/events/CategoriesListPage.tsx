@@ -5,7 +5,7 @@ const CategoriesListPage = () => {
   return (
     <Panel.Wrapper
       action={{
-        to: "/admin/categories/new",
+        to: "/admin/events/categories/new",
         label: "Neue Kategorie erstellen",
       }}
     >

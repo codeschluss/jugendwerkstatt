@@ -13,14 +13,14 @@ export const PanelWrapper: FC<PanelWrapperProps> = ({
 }): ReactElement => (
   <div
     className={twClsx(
-      "min-h-full p-4 bg-white flex justify-between flex-col items-start",
+      "min-h-[70vh] p-4 bg-white flex justify-between flex-col items-start",
       className
     )}
     {...rest}
   >
     {children}
     {action && (
-      <Button>
+      <Button className="mt-20">
         <Link to={action.to}>{action.label}</Link>
       </Button>
     )}
