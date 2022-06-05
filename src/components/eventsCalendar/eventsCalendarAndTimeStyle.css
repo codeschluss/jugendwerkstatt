@@ -854,8 +854,10 @@ button.rbc-input::-moz-focus-inner {
 }
 
 
-.rbc-off-range-bg{
-  background-color: transparent !important;
+.rbc-day-bg,
+.rbc-timeslot-group
+{
+  background-color: white !important;
 }
 
 .rbc-date-cell{

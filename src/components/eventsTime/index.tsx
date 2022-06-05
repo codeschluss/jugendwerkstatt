@@ -45,9 +45,41 @@ const EventsTime: React.FC = () => {
             temmmpCounter = temmmpCounter+1;
         }
     })};
-      
+
+    // const eventsInfo = [
+    //     {
+    //         id: 0,
+    //         name: "First Event",
+    //         allDay: false,
+    //         start: new Date(2022,4,10,10),
+    //         end: new Date(2022,4,10,13)
+    //     },
+    //     {
+    //         id: 1,
+    //         name: "Second Event",
+    //         allDay: false,
+    //         start: new Date(2022,4,10,11),
+    //         end: new Date(2022,4,10,14)
+    //     },
+    //     {
+    //         id: 2,
+    //         name: "Third Event",
+    //         allDay: false,
+    //         start: new Date(2022,4,10,11),
+    //         end: new Date(2022,4,10,14)
+    //     },
+    //     {
+    //         id: 3,
+    //         name: "Fourth Event",
+    //         allDay: false,
+    //         start: new Date(2022,4,9,11),
+    //         end: new Date(2022,4,10,14)
+    //     }
+    // ];
+
     var endTempDate =  moment(currentDate).add(1, 'd').toDate();
     var tempEventsInfo = []
+    
     for (let i = 0; i < eventsInfo?.length; i++) {
         if(eventsInfo[i].start>=currentDate && eventsInfo[i].end<=endTempDate){
             if(eventsInfo[i].end.getTime()===endTempDate.getTime()){
@@ -99,7 +131,6 @@ const EventsTime: React.FC = () => {
                     {event.description}
                 </div>
             </div>
-            
         );
     };
 
