@@ -28,7 +28,7 @@ export const Switch = (): ReactElement => {
           'bg-[#3B8873] w-4 h-4 rounded-full shadow-md transform duration-300 ease-in-out',
           isToggled && 'transform translate-x-7'
         )}
-      ></div>
+      />
     </div>
   );
 };
