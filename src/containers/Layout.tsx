@@ -1,39 +1,37 @@
 import jwtDecode from "jwt-decode";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Footer from "../components/footer";
-import Header from "../components/header";
-import Loader from "../components/ui/Loader";
+import Footer from "../client/components/footer";
+import Header from "../shared/components/header";
+import Loader from "../shared/components/ui/Loader";
 import AuthContext from "../contexts/AuthContext";
 import {
-  useGetEventsQuery,
+  useGetMeBasicQuery,
   useGetUserQuery,
   useRefreshTokenMutation,
 } from "../GraphQl/graphql";
-import Modal from "../components/modals/courseReviewPopUp";
+import Modal from "../client/components/modals/courseReviewPopUp";
+import SideBarContext from "../contexts/SideBarContext";
 
 const Layout: React.FC = ({ children }) => {
   const [accessT, setAccessT] = useState();
   const [refreshT, setRefreshT] = useState();
+  const { sideBar } = useContext(SideBarContext);
 
-  const { setIsLogedIn, setTheUser } = useContext(AuthContext);
+  const { setIsLogedIn, isLogedIn } = useContext(AuthContext);
 
-  const result = useGetUserQuery({
-    skip: !accessT ? true : false,
-    variables: {
-      entity: {
-        id: accessT,
-      },
-    },
+  const result = useGetMeBasicQuery({
+    skip: !accessT,
   });
 
   useEffect(() => {
-    result.refetch();
+    if (accessT) {
+      result.refetch();
+    }
   }, [accessT]);
 
   useEffect(() => {
     if (result.data) {
-      setTheUser(result.data.getUser);
       setIsLogedIn(true);
     }
   }, [result.data]);
@@ -77,14 +75,15 @@ const Layout: React.FC = ({ children }) => {
   }, [localStorage.getItem("accessToken")]);
 
   return (
-    <main className="flex flex-col justify-between min-h-screen">
-      <div>
-        <Modal 
-              visible={false}
-              course={'Holz 1'}
-          >
-        </Modal>
-        <Header />
+    <main
+      className={`flex flex-col  min-h-screen transition-all duration-500 ${
+        sideBar ? "md:pl-60" : "md:pl-20"
+      }`}
+    >
+      {isLogedIn && <Header />}
+
+      <div className="md:p-12">
+        <Modal visible={false} course={"Holz 1"}></Modal>
         {result.loading ? <Loader /> : <div>{children}</div>}
       </div>
       {/* <Footer /> */}

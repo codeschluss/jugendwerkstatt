@@ -1,0 +1,38 @@
+query GetJobTypes($params: FilterSortPaginateInput) {
+  getJobTypes(params: $params) {
+    result {
+      color
+      created
+      id
+      name
+      modified
+      jobAds {
+        created
+        dueDate
+        id
+        modified
+        startDate
+        title
+        company {
+          address {
+            houseNumber
+            id
+            place
+            postalCode
+            street
+          }
+          id
+          mail
+          name
+          phone
+          website
+          modified
+          created
+        }
+        type {
+          color
+        }
+      }
+    }
+  }
+}

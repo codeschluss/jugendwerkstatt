@@ -1,8 +1,8 @@
 import { CapacitorConfig } from "@capacitor/cli";
 
 const config: CapacitorConfig = {
-  appId: "com.jugendwerkstatt.app",
-  appName: "jugendwerkstatt",
+  appId: "app.alphaev",
+  appName: "Jugendwerkstatt",
   webDir: "build",
   bundledWebRuntime: false,
 };

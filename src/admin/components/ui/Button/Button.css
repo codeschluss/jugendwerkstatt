@@ -1,0 +1,12 @@
+.btn {
+    @apply py-[6px] px-4 rounded transition-all hover:shadow-inner;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary {
+    @apply border border-red-700 text-red-700;
+}
+
+.btn-secondary {
+    @apply bg-[#424242] text-white;
+}

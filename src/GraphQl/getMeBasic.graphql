@@ -1,0 +1,11 @@
+query GetMeBasic {
+  me {
+    id
+    fullname
+    phone
+    email
+    profilePicture {
+      id
+    }
+  }
+}

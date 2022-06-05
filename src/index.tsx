@@ -9,9 +9,11 @@ import {
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import "./index.css";
+import { API_URL } from "./config/app";
+import "./shared/styles/index.css";
+import "./shared/styles/SlickSlider.css";
 
-const httpLink = new HttpLink({ uri: "http://localhost:8061/api/graphql" });
+const httpLink = new HttpLink({ uri: API_URL + "graphql" });
 
 // const logoutLink = onError(({ networkError }) => {
 //   if (networkError.statusCode === 401) logout();
@@ -22,7 +24,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers = {} }) => ({
     headers: {
       ...headers,
-      authorization: localStorage.getItem("accessToken") || "",
+      authorization: "Bearer " + localStorage.getItem("accessToken") || "",
     },
   }));
 

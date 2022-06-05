@@ -1,0 +1,5 @@
+mutation SaveUploads($uploads: [MediaEntityInput]) {
+  addUploads(uploads: $uploads) {
+    id
+  }
+}

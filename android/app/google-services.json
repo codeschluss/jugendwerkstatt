@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:892826535808:android:16f6075b606cd86db5e365",
+        "mobilesdk_app_id": "1:892826535808:android:e8c2f327c67f465db5e365",
         "android_client_info": {
-          "package_name": "com.jugendwerkstatt.app"
+          "package_name": "app.alphaev"
         }
       },
       "oauth_client": [
