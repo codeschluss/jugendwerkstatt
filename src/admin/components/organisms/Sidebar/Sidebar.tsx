@@ -1,6 +1,4 @@
 import { FC, ReactElement, useState } from "react";
-import { SidebarItem } from "../../molecules/Sidebar/SidebarItem/SidebarItem";
-import { SidebarItems } from "../../molecules/Sidebar/SidebarItems/SidebarItems";
 import { navigationItems } from "../../../static/navigationItems";
 import { SidebarComposition, SidebarProps } from "./Sidebar.props";
 import { ButtonVariantsEnum } from "../../../interfaces/enums/ButtonVariants.enum";
@@ -8,10 +6,11 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from "@heroicons/react/outline";
-import { Button } from "../../atoms/Form/Button/Button";
-import { Icon } from "../../atoms/Icons/Icon";
+import { Button } from "../../atoms";
+import { SidebarItem, SidebarItems } from "../../molecules";
 
-const Sidebar: FC<SidebarProps> & SidebarComposition = (): ReactElement => {
+export const Sidebar: FC<SidebarProps> &
+  SidebarComposition = (): ReactElement => {
   /**
    * local state
    */
@@ -53,4 +52,3 @@ const Sidebar: FC<SidebarProps> & SidebarComposition = (): ReactElement => {
 
 Sidebar.Item = SidebarItem;
 Sidebar.Items = SidebarItems;
-export default Sidebar;

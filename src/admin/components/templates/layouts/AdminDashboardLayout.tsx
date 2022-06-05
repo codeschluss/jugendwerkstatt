@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { Header } from "../../organisms/Header/Header";
-import Sidebar from "../../organisms/Sidebar/Sidebar";
+import { Header, Sidebar } from "../../organisms";
 
 export const AdminDashboardLayout = () => (
   <div className="dashboard-layout">
