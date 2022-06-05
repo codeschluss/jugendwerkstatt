@@ -1,8 +1,12 @@
-import { DetailedHTMLProps, FC, HTMLAttributes } from 'react';
+import { DetailedHTMLProps, FC, HTMLAttributes, ReactNode } from "react";
 
 export interface AccordionProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title: string;
+  showSide?: boolean;
+  sideTitle?: ReactNode;
+  sideContent?: ReactNode;
+  sideClassName?: string;
 }
 
 export interface AccordionComposition {

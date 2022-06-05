@@ -6,8 +6,29 @@ import { PAGE_LOAD_TIMEOUT } from "../config/global";
 const PageLoader = () => <h1>Loading...</h1>;
 
 //* Export all pages
-export const AdminEventsPage = loadable(
-  () => timeout(import("./AdminEventsPage"), PAGE_LOAD_TIMEOUT),
+export const EventsListPage = loadable(
+  () => timeout(import("./events/EventsListPage"), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const CreateEventsPage = loadable(
+  () => timeout(import("./events/CreateEventsPage"), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const OrganizersListPage = loadable(
+  () => timeout(import("./events/OrganizersListPage"), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const CreateOrganizersPage = loadable(
+  () => timeout(import("./events/CreateOrganizersPage"), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
