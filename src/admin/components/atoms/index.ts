@@ -9,3 +9,5 @@ export * from "./Form/Input/Input";
 export * from "./Form/Label/Label";
 export * from "./Form/Switch/Switch";
 export * from "./Panel/Panel";
+
+export * from "./Icons";
