@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes, DetailedHTMLProps, ReactElement } from 'react';
-import { ButtonVariantsEnum } from '../../../interfaces/enums/ButtonVariants.enum';
+import { ButtonVariantsEnum } from '../../../../interfaces/enums/ButtonVariants.enum';
 
 export interface ButtonProps
   extends DetailedHTMLProps<
@@ -7,6 +7,8 @@ export interface ButtonProps
     HTMLButtonElement
   > {
   variant?: ButtonVariantsEnum;
+  iconOnly?: boolean;
+  iconLeft?: ReactElement;
   iconRight?: ReactElement;
 }
 

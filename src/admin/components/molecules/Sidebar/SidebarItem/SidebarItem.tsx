@@ -2,6 +2,7 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline';
 import { FC, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { cx } from '../../../../../shared/utils/ClassNames';
+import { Icon } from '../../../atoms/Icons/Icon';
 import { SidebarItemChildrens } from '../SidebarItemChildrens/SidebarItemChildrens';
 import { SidebarItemProps } from './SidebarItem.props';
 
@@ -41,9 +42,9 @@ export const SidebarItem: FC<SidebarItemProps> = ({
         <span className="flex-1">{children}</span>
         {isSidebarOpen ? (
           isSubNavigationOpen ? (
-            <ChevronUpIcon className="w-5 h-5" />
+            <Icon icon={<ChevronUpIcon />} />
           ) : (
-            <ChevronDownIcon className="w-5 h-5" />
+            <Icon icon={<ChevronDownIcon />} />
           )
         ) : null}
       </li>

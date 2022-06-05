@@ -1,23 +1,37 @@
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, useContext } from 'react';
 import { BellIcon, LogoutIcon, SearchIcon } from '@heroicons/react/outline';
 import I from '../../../../shared/components/ui/IconWrapper';
-import { Input } from '../../atoms/Input/Input';
 import DropDown from '../../../../shared/components/ui/DropDown';
 import Avatar from '../../../../shared/components/header/sideBar/Avatar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useGetMeBasicQuery } from '../../../../GraphQl/graphql';
+import { Input } from '../../atoms/Form/Input/Input';
+import { Button } from '../../atoms/Form/Button/Button';
 import { RightDropdownElipse } from '../../atoms/Icons/RightDropdownElipse';
 import { LeftDropdownElipse } from '../../atoms/Icons/LeftDropdownElipse';
+import { ButtonVariantsEnum } from '../../../interfaces/enums/ButtonVariants.enum';
+import AuthContext from '../../../../contexts/AuthContext';
 
 export const Header: FC = (): ReactElement => {
   const user = useGetMeBasicQuery();
+  const navigate = useNavigate();
+  const { setIsLogedIn } = useContext(AuthContext);
+
+  /**
+   * handlers
+   */
+  const handleLogout = () => {
+    localStorage.clear();
+    setIsLogedIn(false);
+    navigate('/');
+  };
 
   return (
     <header className="dashboard-header">
       <Input
         className="w-80"
         placeholder="Suche..."
-        iconRight={<SearchIcon className="w-5 h-5" />}
+        iconRight={<SearchIcon />}
       />
 
       <div className="flex items-center mr-4">
@@ -42,26 +56,33 @@ export const Header: FC = (): ReactElement => {
               </div>
             </div>
             <div className="flex flex-col items-start justify-around h-24 pb-4 mb-4 border-b-2 ">
-              <Link to="/profile-password">
+              <Link to="profile-password">
                 <p>Passwort ändern</p>
               </Link>
-              <p>E-Mail Benachrichtigungen</p>
+              <Link to="email-notifications">
+                <p>E-Mail Benachrichtigungen</p>
+              </Link>
             </div>
-            <div className="flex items-center justify-start">
-              {' '}
-              <I className="hidden w-8 h-8 text-white md:text-black md:flex">
-                <LogoutIcon />
-              </I>{' '}
+            <Button
+              variant={ButtonVariantsEnum.LINK}
+              iconLeft={<LogoutIcon />}
+              className="text-black"
+              onClick={handleLogout}
+            >
               <p>Logout</p>
-            </div>
+            </Button>
           </div>
         </DropDown>
         <I className="w-6 h-6 text-white md:text-black md:ml-6">
           <BellIcon />
         </I>
-        <I className="hidden w-6 h-6 text-white md:text-black md:flex md:ml-6">
-          <LogoutIcon />
-        </I>
+        <Button
+          iconOnly
+          variant={ButtonVariantsEnum.LINK}
+          iconRight={<LogoutIcon className="text-primary" />}
+          className="hidden w-6 h-6 text-white md:text-black md:flex md:ml-6"
+          onClick={handleLogout}
+        />
       </div>
     </header>
   );

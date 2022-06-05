@@ -1,5 +1,4 @@
 import { FC, ReactElement, useState } from 'react';
-import { Button } from '../../atoms/Button/Button';
 import { SidebarItem } from '../../molecules/Sidebar/SidebarItem/SidebarItem';
 import { SidebarItems } from '../../molecules/Sidebar/SidebarItems/SidebarItems';
 import { navigationItems } from '../../../static/navigationItems';
@@ -9,6 +8,8 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from '@heroicons/react/outline';
+import { Button } from '../../atoms/Form/Button/Button';
+import { Icon } from '../../atoms/Icons/Icon';
 
 const Sidebar: FC<SidebarProps> & SidebarComposition = (): ReactElement => {
   /**
@@ -40,11 +41,7 @@ const Sidebar: FC<SidebarProps> & SidebarComposition = (): ReactElement => {
       <Button
         variant={ButtonVariantsEnum.LINK}
         iconRight={
-          isSidebarOpen ? (
-            <ChevronDoubleLeftIcon className="w-5 h-5" />
-          ) : (
-            <ChevronDoubleRightIcon className="w-5 h-5" />
-          )
+          isSidebarOpen ? <ChevronDoubleLeftIcon /> : <ChevronDoubleRightIcon />
         }
         onClick={handleSidebarToggler}
       >

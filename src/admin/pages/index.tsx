@@ -6,8 +6,23 @@ import { PAGE_LOAD_TIMEOUT } from '../config/global';
 const PageLoader = () => <h1>Loading...</h1>;
 
 //* Export all pages
-export const OnboardingPages = loadable(
-  () => timeout(import('./TestPage'), PAGE_LOAD_TIMEOUT),
+export const AdminProfilePage = loadable(
+  () => timeout(import('./AdminProfilePage'), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const AdminProfilePasswordPage = loadable(
+  () => timeout(import('./AdminProfilePasswordPage'), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const AdminProfileEmailNotificationsPage = loadable(
+  () =>
+    timeout(import('./AdminProfileEmailNotificationsPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }

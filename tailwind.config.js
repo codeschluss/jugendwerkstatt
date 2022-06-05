@@ -1,8 +1,8 @@
-const colors = require("tailwindcss/colors");
+const colors = require('tailwindcss/colors');
 
 module.exports = {
-  mode: "jit",
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  mode: 'jit',
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       // backgroundImage: {
@@ -10,19 +10,22 @@ module.exports = {
       // },
     },
     screens: {
-      sm: "576px",
+      xs: '320px',
+      // => @media (min-width: 320px) { ... }
+
+      sm: '576px',
       // => @media (min-width: 576px) { ... }
 
-      md: "960px",
+      md: '960px',
       // => @media (min-width: 960px) { ... }
 
-      lg: "1440px",
+      lg: '1440px',
       // => @media (min-width: 1440px) { ... }
     },
     colors: {
-      primary: "#c20639",
-      transparent: "transparent",
-      current: "currentColor",
+      primary: '#c20639',
+      transparent: 'transparent',
+      current: 'currentColor',
       black: colors.black,
       white: colors.white,
       gray: colors.slate,
@@ -33,7 +36,7 @@ module.exports = {
       blue: colors.blue,
       red: colors.red,
       rose: colors.rose,
-      warning: "#FFCF00",
+      warning: '#FFCF00',
     },
   },
   plugins: [],

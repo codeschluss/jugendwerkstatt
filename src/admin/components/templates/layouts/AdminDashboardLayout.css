@@ -18,6 +18,6 @@
 }
 
 .dashboard-content {
+    @apply p-12;
     grid-area: content;
-    padding: 2rem;
 }

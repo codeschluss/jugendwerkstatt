@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useVerifyMutation } from "../../../../GraphQl/graphql";
+import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useVerifyMutation } from '../../../../GraphQl/graphql';
 
 const RegisteredSuccessfully: React.FC = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const RegisteredSuccessfully: React.FC = () => {
   const checkIcon = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="h-20 w-20"
+      className="w-20 h-20"
       fill="none"
       viewBox="0 0 24 24"
       stroke="#52BD06"
@@ -30,27 +30,27 @@ const RegisteredSuccessfully: React.FC = () => {
   );
 
   return (
-    <div className="px-0 flex flex-col w-full relative">
+    <div className="relative flex flex-col w-full px-0">
       {data && (
         <>
           <div className="px-0 bg-bgimg">
             <img
-              className="h-full w-full object-cover "
+              className="object-cover w-full h-full "
               src="/assets/background.png"
-              alt={"logo"}
+              alt={'logo'}
             />
           </div>
           <div className="-mt-5 bg-white rounded-3xl">
-            <div className="mx-12 flex flex-col text-center">
-              <span className="w-full flex justify-center">{checkIcon}</span>
-              <h3 className="text-bold text-xl">Glückwunsch</h3>
-              <p className="text-gray-600 my-10">
+            <div className="flex flex-col mx-12 text-center">
+              <span className="flex justify-center w-full">{checkIcon}</span>
+              <h3 className="text-xl text-bold">Glückwunsch</h3>
+              <p className="my-10 text-gray-600">
                 Du hast deine E-Mail-Adresse erfolgreich verifiziert.
               </p>
 
-              <div className="mx-12 mt-10 pl-1 pb-2 text-center">
+              <div className="pb-2 pl-1 mx-12 mt-10 text-center">
                 <button
-                  onClick={() => navigate("/login")}
+                  onClick={() => navigate('/login')}
                   className="w-full h-8 drop-shadow-md rounded-2xl active:opacity-80 bg-[#C20639] text-white"
                 >
                   Zur App
