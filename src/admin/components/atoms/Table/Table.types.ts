@@ -31,6 +31,7 @@ export interface TableDataBaseProps
 
 export interface ActionProps {
   onApprove?: () => void;
+  onSend?: () => void;
   onDelete?: () => void;
   onUpdate?: () => void;
 }

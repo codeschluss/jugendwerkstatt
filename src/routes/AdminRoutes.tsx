@@ -13,6 +13,13 @@ import {
   CreateVacancyCategoriesPage,
   VacancyCompaniesListPage,
   CreateVacancyCompaniesPage,
+  MediaListPage,
+  CreateMediaPage,
+  MediaCategoriesListPage,
+  CreateMediaCategoriesPage,
+  UsersListPage,
+  UsersRequestsListPage,
+  EditUserPage,
 } from "../admin/pages";
 
 export const AdminRoutes = () => (
@@ -59,6 +66,24 @@ export const AdminRoutes = () => (
           path="/admin/job-announcements/companies/new"
           element={<CreateVacancyCompaniesPage />}
         />
+
+        <Route path="/admin/medias" element={<MediaListPage />} />
+        <Route path="/admin/medias/new" element={<CreateMediaPage />} />
+        <Route
+          path="/admin/medias/categories"
+          element={<MediaCategoriesListPage />}
+        />
+        <Route
+          path="/admin/medias/categories/new"
+          element={<CreateMediaCategoriesPage />}
+        />
+
+        <Route
+          path="/admin/users/requests"
+          element={<UsersRequestsListPage />}
+        />
+        <Route path="/admin/users" element={<UsersListPage />} />
+        <Route path="/admin/users/:id" element={<EditUserPage />} />
       </Route>
     </Routes>
   </BrowserRouter>

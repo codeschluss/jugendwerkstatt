@@ -1,5 +1,5 @@
 import { FC, ReactElement } from "react";
-import { PencilIcon, XIcon } from "@heroicons/react/outline";
+import { CheckIcon, PencilIcon, XIcon } from "@heroicons/react/outline";
 
 import { ActionProps } from "./Table.types";
 import { Button } from "../Button/Button";
@@ -7,12 +7,21 @@ import { Button } from "../Button/Button";
 export const Action: FC<ActionProps> = ({
   onUpdate,
   onDelete,
+  onSend,
   onApprove,
 }): ReactElement => (
   <span className="flex justify-center items-center py-[4px]">
-    {onUpdate && (
+    {onApprove && (
       <Button
-        onClick={onUpdate}
+        onClick={onApprove}
+        className="p-0 bg-transparent border-none shadow-none hover:shadow-none"
+      >
+        <CheckIcon className="w-5 mx-1 text-green-500" />
+      </Button>
+    )}
+    {onSend && (
+      <Button
+        onClick={onSend}
         className="p-0 bg-transparent border-none shadow-none hover:shadow-none"
       >
         <svg
@@ -30,12 +39,12 @@ export const Action: FC<ActionProps> = ({
         </svg>
       </Button>
     )}
-    {onApprove && (
+    {onUpdate && (
       <Button
-        onClick={onApprove}
+        onClick={onUpdate}
         className="p-0 bg-transparent border-none shadow-none hover:shadow-none"
       >
-        <PencilIcon className="w-5 mx-1 text-green-500" />
+        <PencilIcon className="w-5 mx-1 text-green-800" />
       </Button>
     )}
     {onDelete && (

@@ -52,13 +52,13 @@ export const CreateCategoriesPage = loadable(
 
 // Vacancy pages
 export const VacancyListPage = loadable(
-  () => timeout(import("./Vacancy/VacancyListPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import("./vacancy/VacancyListPage"), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 export const CreateVacancyPage = loadable(
-  () => timeout(import("./Vacancy/CreateVacancyPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import("./vacancy/CreateVacancyPage"), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
@@ -66,7 +66,7 @@ export const CreateVacancyPage = loadable(
 
 export const VacancyCategoriesListPage = loadable(
   () =>
-    timeout(import("./Vacancy/VacancyCategoriesListPage"), PAGE_LOAD_TIMEOUT),
+    timeout(import("./vacancy/VacancyCategoriesListPage"), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
@@ -74,7 +74,7 @@ export const VacancyCategoriesListPage = loadable(
 
 export const CreateVacancyCategoriesPage = loadable(
   () =>
-    timeout(import("./Vacancy/CreateVacancyCategoriesPage"), PAGE_LOAD_TIMEOUT),
+    timeout(import("./vacancy/CreateVacancyCategoriesPage"), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
@@ -82,7 +82,7 @@ export const CreateVacancyCategoriesPage = loadable(
 
 export const VacancyCompaniesListPage = loadable(
   () =>
-    timeout(import("./Vacancy/VacancyCompaniesListPage"), PAGE_LOAD_TIMEOUT),
+    timeout(import("./vacancy/VacancyCompaniesListPage"), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
@@ -90,7 +90,58 @@ export const VacancyCompaniesListPage = loadable(
 
 export const CreateVacancyCompaniesPage = loadable(
   () =>
-    timeout(import("./Vacancy/CreateVacancyCompaniesPage"), PAGE_LOAD_TIMEOUT),
+    timeout(import("./vacancy/CreateVacancyCompaniesPage"), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+// Medias pages
+export const MediaListPage = loadable(
+  () => timeout(import("./media/MediaListPage"), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const CreateMediaPage = loadable(
+  () => timeout(import("./media/CreateMediaPage"), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const MediaCategoriesListPage = loadable(
+  () => timeout(import("./media/MediaCategoriesListPage"), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const CreateMediaCategoriesPage = loadable(
+  () => timeout(import("./media/CreateMediaCategoriesPage"), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+// User pages
+export const UsersRequestsListPage = loadable(
+  () => timeout(import("./user/UsersRequestsListPage"), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const UsersListPage = loadable(
+  () => timeout(import("./user/UsersListPage"), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const EditUserPage = loadable(
+  () => timeout(import("./user/EditUserPage"), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
