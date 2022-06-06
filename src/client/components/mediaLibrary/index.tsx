@@ -40,6 +40,7 @@ const MediaLibrary: React.FC = () => {
 
   function showOrHideArrows() {
     
+  console.log('window.innerWidth', window.innerWidth);    
     if(window.innerWidth>=1024){
       
       var elements = document.getElementsByClassName("possiblyOverflowing");
@@ -70,7 +71,7 @@ const MediaLibrary: React.FC = () => {
   const fetchedData: [LinkCategoryEntity] = result.data?.getLinkCategories?.result as [LinkCategoryEntity];
 
   return (
-    <div className="pt-8 lg:p-8 lg:bg-[#fff7f7]">
+    <div className="pt-8 lg:p-0 ">
       {
       fetchedData?.map((singleTopic) => {
         return(
@@ -96,7 +97,14 @@ const MediaLibrary: React.FC = () => {
             {
               singleTopic?.link?.map((singleVideo) => {
                 return (
+                  <>
                   <SlideCard key={`${singleVideo?.id}`} videoTitle={`${singleVideo?.title}`} videoUrl={`${singleVideo?.url}`} />
+                  <SlideCard key={`${singleVideo?.id}`} videoTitle={`${singleVideo?.title}`} videoUrl={`${singleVideo?.url}`} />
+                  <SlideCard key={`${singleVideo?.id}`} videoTitle={`${singleVideo?.title}`} videoUrl={`${singleVideo?.url}`} />
+                  <SlideCard key={`${singleVideo?.id}`} videoTitle={`${singleVideo?.title}`} videoUrl={`${singleVideo?.url}`} />
+                  <SlideCard key={`${singleVideo?.id}`} videoTitle={`${singleVideo?.title}`} videoUrl={`${singleVideo?.url}`} />
+                  <SlideCard key={`${singleVideo?.id}`} videoTitle={`${singleVideo?.title}`} videoUrl={`${singleVideo?.url}`} />
+                  </>
                 )
               })
             }

@@ -43,65 +43,6 @@ const EventsCalendar: React.FC = () => {
         }
     })};
 
-    // var datesOnEvents = [
-    //     {
-    //         eventId: 0,
-    //         numberOfEvents: 3,
-    //         allDay: true,
-    //         start: new Date(2022,4,6,10),
-    //         end: new Date(2022,4,6,13)
-    //     },
-    //     {
-    //         eventId: 1,
-    //         numberOfEvents: 3,
-    //         allDay: true,
-    //         start: new Date(2022,4,6,11),
-    //         end: new Date(2022,4,6,14)
-    //     },
-    //     {
-    //         eventId: 2,
-    //         numberOfEvents: 3,
-    //         allDay: true,
-    //         start: new Date(2022,4,6,11),
-    //         end: new Date(2022,4,6,14)
-    //     },
-    //     {
-    //         eventId: 3,
-    //         numberOfEvents: 1,
-    //         allDay: true,
-    //         start: new Date(2022,4,18),
-    //         end: new Date(2022,4,19)
-    //     },
-    //     {
-    //         eventId: 4,
-    //         numberOfEvents: 1,
-    //         allDay: true,
-    //         start: new Date(2022,4,19),
-    //         end: new Date(2022,4,19)
-    //     },
-    //     {
-    //         eventId: 5,
-    //         numberOfEvents: 1,
-    //         allDay: true,
-    //         start: new Date(2022,4,10),
-    //         end: new Date(2022,4,10)
-    //     },
-    //     {
-    //         eventId: 6,
-    //         numberOfEvents: 1,
-    //         allDay: true,
-    //         start: new Date(2022,4,12),
-    //         end: new Date(2022,4,12)
-    //     },
-    //     {
-    //         eventId: 7,
-    //         numberOfEvents: 1,
-    //         allDay: true,
-    //         start: new Date(2022,3,12),
-    //         end: new Date(2022,3,12)
-    //     }
-    // ];
-
     var finalDatesEvents: any[] | undefined = [];
 
     var minDate = currentDate;
@@ -182,48 +123,6 @@ const EventsCalendar: React.FC = () => {
         }
     };
 
-
-    
-    // const datesOnEvents = [
-    //     {
-    //         id: 0,
-    //         name: "First Event",
-    //         allDay: false,
-    //         start: new Date(2022,4,27,10),
-    //         end: new Date(2022,4,29,13)
-    //     },
-    //     {
-    //         id: 1,
-    //         name: "Second Event",
-    //         allDay: false,
-    //         start: new Date(2022,4,29,10),
-    //         end: new Date(2022,4,29,14)
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "Third Event",
-    //         allDay: false,
-    //         start: new Date(2022,4,29,12),
-    //         end: new Date(2022,4,29,14)
-    //     },
-    //     {
-    //         id: 3,
-    //         name: "Fourth Event",
-    //         allDay: false,
-    //         start: new Date(2022,4,29,11),
-    //         end: new Date(2022,4,29,15)
-    //     },
-    //     {
-    //         id: 4,
-    //         name: "Fifth Event",
-    //         allDay: false,
-    //         start: new Date(2022,5,1,11),
-    //         end: new Date(2022,5,1,15)
-    //     }
-    // ];
-
-    // var hourlyEvents = datesOnEvents;
-    
     var finalHourlyEvents: any[] | undefined = [];
     if(datesOnEvents.length>0){
         var minHourlyDate = datesOnEvents[0].start;
@@ -301,7 +200,7 @@ const EventsCalendar: React.FC = () => {
     };
 
     return (
-        <div className="absolute lg:relative top-0 left-0 w-screen h-screen bg-[#f7f7f7] z-10 lg:z-auto  pt-0 lg:pt-10">
+        <div className="absolute lg:relative top-0 left-0 w-screen h-screen lg:w-full lg:h-full bg-[#f7f7f7] z-10 lg:z-auto pt-0">
             <div className="lg:hidden flex bg-primary h-[6.5rem] text-white">
                 <div className="my-auto relative">
                     <button className="absolute inline ml-5 -mt-3" onClick={goBack} style={{zIndex: 2}}>
@@ -316,14 +215,14 @@ const EventsCalendar: React.FC = () => {
                     </div>
                 </div>
             </div>
-            <div className="hidden lg:flex items-center justify-center  mx-6 text-3xl font-semibold">
-                <div className="bg-white w-full mx-20 p-2 rounded-md">
+            <div className="hidden lg:flex items-center justify-center text-3xl font-semibold">
+                <div className="bg-white w-full p-2 rounded-md">
                     Kalender
                 </div>
             </div>
-            <div className="flex items-center justify-center mt-0 lg:mt-5">
+            <div className="flex items-center justify-center lg:justify-start mt-0 lg:mt-5">
                 <Calendar
-                    className="max-w-2xl w-full mx-auto customized-monthly-calendar bg-white pb-10"
+                    className="max-w-2xl w-full mx-auto lg:mx-0 customized-monthly-calendar bg-white pb-10"
                     localizer={localizer}
                     events={finalDatesEvents}
                     components={{event: event_dates}}
@@ -336,7 +235,7 @@ const EventsCalendar: React.FC = () => {
                 />
                 
                 <Calendar
-                    className="max-w-2xl min-w-[300px] mx-auto overflow-y-scroll hidden lg:inline "
+                    className="max-w-2xl min-w-[400px] ml-14 overflow-y-scroll hidden lg:inline "
                     localizer={localizer}
                     events={finalHourlyEvents}
                     components={{event: event_hourly}}

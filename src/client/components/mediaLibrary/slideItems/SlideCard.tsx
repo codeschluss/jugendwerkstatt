@@ -8,7 +8,7 @@ const SlideCard: React.FC<SlideCardProps> = ({ videoUrl, videoTitle }) => {
   return (
     <a
       href={videoUrl}
-      className="snap-center w-[14.375rem] h-[5.5rem] overflow-hidden bg-[#C20639] rounded-md flex-none relative p-2
+      className="snap-center w-[14.375rem] h-[5.5rem] lg:h-[6rem] overflow-hidden bg-[#C20639] rounded-md flex-none relative p-2
       shadow-inner-2xl
       "
       style={{ boxShadow: "inset 0 0 2.5rem 0 #841c1c"}}
