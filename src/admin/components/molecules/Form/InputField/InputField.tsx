@@ -1,11 +1,11 @@
 import { forwardRef, ReactElement } from "react";
-import { Input } from "../../../atoms/Form/Input/Input";
-import { Label } from "../../../atoms/Form/Label/Label";
+import { twClsx } from "../../../../utils";
+import { Input, Label } from "../../../atoms";
 import { InputFieldProps } from "./InputField.props";
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
-  ({ id, name, label, labelProps, ...rest }, ref): ReactElement => (
-    <div className="input-field">
+  ({ id, name, label, className, labelProps, ...rest }, ref): ReactElement => (
+    <div className={twClsx("w-full", className)}>
       <Label {...labelProps} htmlFor={id || name}>
         {label}
       </Label>
