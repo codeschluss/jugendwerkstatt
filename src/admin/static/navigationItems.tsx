@@ -7,129 +7,129 @@ import {
   UserIcon,
   UsersIcon,
   ViewListIcon,
-} from "@heroicons/react/outline";
-import { NavigationItemProps } from "../interfaces/interfaces/NavigationItem.props";
+} from '@heroicons/react/outline';
+import { NavigationItemProps } from '../interfaces/interfaces/NavigationItem.props';
 
 export const navigationItems: NavigationItemProps[] = [
   {
-    name: "Events",
+    name: 'Events',
     icon: <CalendarIcon />,
-    href: "events",
+    href: 'events',
     childrens: [
       {
-        name: "Events",
+        name: 'Events',
       },
       {
-        name: "Veranstalter",
-        href: "organizers",
+        name: 'Veranstalter',
+        href: 'organizers',
       },
       {
-        name: "Kategorien",
-        href: "categories",
+        name: 'Kategorien',
+        href: 'categories',
       },
     ],
   },
   {
-    name: "Stellenausschreibungen",
+    name: 'Stellenausschreibungen',
     icon: <BookOpenIcon />,
-    href: "job-announcements",
+    href: 'job-announcements',
     childrens: [
       {
-        name: "Stellenausschreibungen",
+        name: 'Stellenausschreibungen',
       },
       {
-        name: "Kategorien",
-        href: "categories",
+        name: 'Kategorien',
+        href: 'categories',
       },
       {
-        name: "Unternehmen",
-        href: "companies",
+        name: 'Unternehmen',
+        href: 'companies',
       },
     ],
   },
   {
-    name: "Mediathek",
+    name: 'Mediathek',
     icon: <PlayIcon />,
-    href: "medias",
+    href: 'medias',
     childrens: [
       {
-        name: "Inhalte",
+        name: 'Inhalte',
       },
       {
-        name: "Kategorien",
-        href: "categories",
+        name: 'Kategorien',
+        href: 'categories',
       },
     ],
   },
   {
-    name: "Formulare",
+    name: 'Formulare',
     icon: <DocumentTextIcon />,
-    href: "forms",
+    href: 'forms',
     childrens: [
       {
-        name: "Vorlagen",
-        href: "templates",
+        name: 'Vorlagen',
+        href: 'templates',
       },
       {
-        name: "Dokumente",
-        href: "documents",
+        name: 'Dokumente',
+        href: 'documents',
       },
     ],
   },
   {
-    name: "Gruppen",
+    name: 'Gruppen',
     icon: <UsersIcon />,
-    href: "groups",
+    href: 'groups',
     childrens: [
       {
-        name: "Übersicht",
+        name: 'Übersicht',
       },
       {
-        name: "Holz",
+        name: 'Holz',
         childrens: [
           {
-            name: "Kursbewertung",
-            href: "course-rating",
+            name: 'Kursbewertung',
+            href: 'course-rating',
           },
           {
-            name: "Teilnehmer",
-            href: "attendees",
+            name: 'Teilnehmer',
+            href: 'participants',
           },
         ],
       },
     ],
   },
   {
-    name: "Evaluierung",
+    name: 'Evaluierung',
     icon: <ViewListIcon />,
-    href: "evaluations",
+    href: 'evaluations',
     childrens: [
       {
-        name: "Auswertung",
+        name: 'Auswertung',
       },
       {
-        name: "Fragen",
-        href: "questions",
+        name: 'Fragen',
+        href: 'questions',
       },
     ],
   },
   {
-    name: "Benutzer",
+    name: 'Benutzer',
     icon: <UserIcon />,
-    href: "users",
+    href: 'users',
     childrens: [
       {
-        name: "Anfragen",
-        href: "requests",
+        name: 'Anfragen',
+        href: 'requests',
       },
       {
-        name: "Benutzer",
+        name: 'Benutzer',
       },
     ],
   },
   {
-    name: "Allgemein",
+    name: 'Allgemein',
     icon: <CogIcon />,
-    href: "general-settings",
+    href: 'general-settings',
   },
 ];

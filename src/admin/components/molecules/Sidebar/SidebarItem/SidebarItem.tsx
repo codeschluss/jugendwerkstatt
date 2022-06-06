@@ -1,10 +1,10 @@
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/outline";
-import { FC, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { twClsx } from "../../../../utils";
-import { SidebarItemChildrens } from "../SidebarItemChildrens/SidebarItemChildrens";
-import { SidebarItemProps } from "./SidebarItem.props";
-import { Icon } from "../../../atoms/Icons/Icon";
+import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/outline';
+import { FC, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { twClsx } from '../../../../utils';
+import { SidebarItemChildrens } from '../SidebarItemChildrens/SidebarItemChildrens';
+import { SidebarItemProps } from './SidebarItem.props';
+import { Icon } from '../../../atoms/Icons/Icon';
 
 export const SidebarItem: FC<SidebarItemProps> = ({
   icon,
@@ -29,7 +29,7 @@ export const SidebarItem: FC<SidebarItemProps> = ({
   };
 
   useEffect(() => {
-    if (pathname.includes(item?.href || "")) {
+    if (pathname.includes(item?.href || '')) {
       setIsSubNavigationOpen(true);
     }
   }, [pathname, item]);
@@ -40,8 +40,8 @@ export const SidebarItem: FC<SidebarItemProps> = ({
         role="button"
         onClick={handleSubNavigationOpen}
         className={twClsx([
-          "flex items-center mb-8 text-white",
-          isSidebarOpen && "gap-x-3",
+          'flex items-center mb-8 text-white',
+          isSidebarOpen && 'gap-x-3',
         ])}
         {...rest}
       >
@@ -70,4 +70,4 @@ export const SidebarItem: FC<SidebarItemProps> = ({
   );
 };
 
-SidebarItem.displayName = "Sidebar.Item";
+SidebarItem.displayName = 'Sidebar.Item';

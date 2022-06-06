@@ -27,6 +27,8 @@ import {
   FormsDocumentsListPage,
   FormsListPage,
   GroupListPage,
+  EditGroupPage,
+  GroupParticipantsListPage,
 } from '../admin/pages';
 import CreateGroupPage from '../admin/pages/Group/CreateGroupPage';
 
@@ -115,7 +117,12 @@ export const AdminRoutes = () => (
         />
 
         <Route path="/admin/groups" element={<GroupListPage />} />
+        <Route
+          path="/admin/groups/participants"
+          element={<GroupParticipantsListPage />}
+        />
         <Route path="/admin/groups/new" element={<CreateGroupPage />} />
+        <Route path="/admin/groups/:id" element={<EditGroupPage />} />
       </Route>
 
       <Route path="*" element={<h1>Page Not Found!</h1>} />
