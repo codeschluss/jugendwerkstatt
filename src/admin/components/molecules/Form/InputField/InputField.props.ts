@@ -3,5 +3,6 @@ import { LabelProps } from "../../../atoms/Form/Label/Label.props";
 
 export interface InputFieldProps extends InputProps {
   label: string;
+  inputClassName?: string;
   labelProps?: LabelProps;
 }
