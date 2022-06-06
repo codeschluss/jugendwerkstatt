@@ -1,5 +1,5 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AdminDashboardLayout } from "../admin/components/templates";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AdminDashboardLayout } from '../admin/components/templates';
 import {
   AdminProfileEmailNotificationsPage,
   AdminProfilePage,
@@ -26,7 +26,9 @@ import {
   CreateFormsPage,
   FormsDocumentsListPage,
   FormsListPage,
-} from "../admin/pages";
+  GroupListPage,
+} from '../admin/pages';
+import CreateGroupPage from '../admin/pages/Group/CreateGroupPage';
 
 export const AdminRoutes = () => (
   <BrowserRouter>
@@ -111,7 +113,11 @@ export const AdminRoutes = () => (
           path="/admin/forms/documents"
           element={<FormsDocumentsListPage />}
         />
+
+        <Route path="/admin/groups" element={<GroupListPage />} />
+        <Route path="/admin/groups/new" element={<CreateGroupPage />} />
       </Route>
+
       <Route path="*" element={<h1>Page Not Found!</h1>} />
     </Routes>
   </BrowserRouter>
