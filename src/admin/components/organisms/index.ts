@@ -6,6 +6,8 @@ export * from "./Events/AddressForm";
 export * from "./Events/BaseDataForm";
 export * from "./Events/DescriptionFrom";
 export * from "./Events/BaseOrganizerForm";
+export * from "./Forms/FormsBaseForm";
 
 // export all types
 export * from "./Events/Events.types";
+export * from "./Forms/Forms.types";

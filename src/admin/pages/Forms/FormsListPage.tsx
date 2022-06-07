@@ -5,7 +5,7 @@ const FormsListPage = () => {
   return (
     <Panel.Wrapper
       action={{
-        to: "/admin/forms/new",
+        to: "/admin/forms/templates/new",
         label: "Neues Formular erstellen",
       }}
     >

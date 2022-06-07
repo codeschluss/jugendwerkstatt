@@ -4,17 +4,18 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import { Button } from "../../atoms";
-import { EventsFormInputs } from "./Events.types";
 
 export const DescriptionFrom = (): ReactElement => {
-  const { trigger, setValue, getValues } = useFormContext<EventsFormInputs>();
+  const { trigger, setValue, getValues } = useFormContext();
 
   const handleSetValue = (_event: any, editor: any) => {
     setValue("description", JSON.stringify(editor.getData() || ""));
   };
 
   const handleGetValue = (editor: any) => {
-    editor.setData(JSON.parse(getValues("description") || ""));
+    editor.setData(
+      getValues("description") ? JSON.parse(getValues("description")) : ""
+    );
   };
 
   const handleTrigger = () => trigger("description");
