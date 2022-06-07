@@ -1,13 +1,13 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { ReactElement } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { Accordion } from "../../components/molecules";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { ReactElement } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { Accordion } from '../../components/molecules';
 import {
   DescriptionFrom,
   FormsBaseForm,
   FormsFormInputs,
-} from "../../components/organisms";
-import { FormsFormSchema } from "../../validations";
+} from '../../components/organisms';
+import { FormsFormSchema } from '../../validations';
 
 const CreateFormsPage = (): ReactElement => {
   const methods = useForm<FormsFormInputs>({
@@ -15,7 +15,7 @@ const CreateFormsPage = (): ReactElement => {
   });
 
   const handleOnSubmit = (data: FormsFormInputs) => {
-    console.log("data", data);
+    console.log('data', data);
   };
 
   return (
