@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
-import Avatar from "../../../../shared/components/header/sideBar/Avatar";
-import { Button, Panel } from "../../atoms";
-import { InputField } from "../../molecules";
+import { ReactElement } from 'react';
+import Avatar from '../../../../shared/components/header/sideBar/Avatar';
+import { Button, Panel } from '../../atoms';
+import { InputField } from '../../molecules';
 
 export const AdminProfile = (): ReactElement => (
   <Panel onSubmit={() => {}} title="Profil bearbeiten" className="max-w-xl">
@@ -12,16 +12,16 @@ export const AdminProfile = (): ReactElement => (
       </div>
 
       <div className="flex flex-col flex-1 gap-y-10">
-        <InputField id="name" label="Name" labelProps={{ htmlFor: "name" }} />
+        <InputField id="name" label="Name" labelProps={{ htmlFor: 'name' }} />
         <InputField
           id="email"
           label="E-Mail-Adresse"
-          labelProps={{ htmlFor: "email" }}
+          labelProps={{ htmlFor: 'email' }}
         />
         <InputField
           id="phone"
           label="Telefonnummer"
-          labelProps={{ htmlFor: "phone" }}
+          labelProps={{ htmlFor: 'phone' }}
         />
       </div>
     </Panel.Body>

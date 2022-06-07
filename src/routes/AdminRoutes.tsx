@@ -1,4 +1,8 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import {
+  GeneralAddressForm,
+  PublicPagesForm,
+} from '../admin/components/organisms';
 import { AdminDashboardLayout } from '../admin/components/templates';
 import {
   AdminProfileEmailNotificationsPage,
@@ -29,100 +33,86 @@ import {
   GroupListPage,
   EditGroupPage,
   GroupParticipantsListPage,
+  PushNotificationsPage,
+  ChatActivationPage,
+  GeneralAddressPage,
+  PublicPagesPage,
 } from '../admin/pages';
 import CreateGroupPage from '../admin/pages/Group/CreateGroupPage';
 
 export const AdminRoutes = () => (
   <BrowserRouter>
     <Routes>
-      <Route element={<AdminDashboardLayout />}>
-        <Route path="/admin/profile" element={<AdminProfilePage />} />
+      <Route path="/admin" element={<AdminDashboardLayout />}>
+        <Route path="profile" element={<AdminProfilePage />} />
+        <Route path="profile-password" element={<AdminProfilePasswordPage />} />
         <Route
-          path="/admin/profile-password"
-          element={<AdminProfilePasswordPage />}
-        />
-
-        <Route
-          path="/admin/email-notifications"
+          path="email-notifications"
           element={<AdminProfileEmailNotificationsPage />}
         />
-
-        <Route path="/admin/events" element={<EventsListPage />} />
-        <Route path="/admin/events/new" element={<CreateEventsPage />} />
+        <Route path="events" element={<EventsListPage />} />
+        <Route path="events/new" element={<CreateEventsPage />} />
+        <Route path="events/organizers" element={<OrganizersListPage />} />
         <Route
-          path="/admin/events/organizers"
-          element={<OrganizersListPage />}
-        />
-        <Route
-          path="/admin/events/organizers/new"
+          path="events/organizers/new"
           element={<CreateOrganizersPage />}
         />
+        <Route path="events/categories" element={<CategoriesListPage />} />
         <Route
-          path="/admin/events/categories"
-          element={<CategoriesListPage />}
-        />
-        <Route
-          path="/admin/events/categories/new"
+          path="events/categories/new"
           element={<CreateCategoriesPage />}
         />
-
-        <Route path="/admin/job-announcements" element={<VacancyListPage />} />
+        <Route path="job-announcements" element={<VacancyListPage />} />
+        <Route path="job-announcements/new" element={<CreateVacancyPage />} />
         <Route
-          path="/admin/job-announcements/new"
-          element={<CreateVacancyPage />}
-        />
-        <Route
-          path="/admin/job-announcements/categories"
+          path="job-announcements/categories"
           element={<VacancyCategoriesListPage />}
         />
         <Route
-          path="/admin/job-announcements/categories/new"
+          path="job-announcements/categories/new"
           element={<CreateVacancyCategoriesPage />}
         />
         <Route
-          path="/admin/job-announcements/companies"
+          path="job-announcements/companies"
           element={<VacancyCompaniesListPage />}
         />
         <Route
-          path="/admin/job-announcements/companies/new"
+          path="job-announcements/companies/new"
           element={<CreateVacancyCompaniesPage />}
         />
-
-        <Route path="/admin/medias" element={<MediaListPage />} />
-        <Route path="/admin/medias/new" element={<CreateMediaPage />} />
+        <Route path="medias" element={<MediaListPage />} />
+        <Route path="medias/new" element={<CreateMediaPage />} />
+        <Route path="medias/categories" element={<MediaCategoriesListPage />} />
         <Route
-          path="/admin/medias/categories"
-          element={<MediaCategoriesListPage />}
-        />
-        <Route
-          path="/admin/medias/categories/new"
+          path="medias/categories/new"
           element={<CreateMediaCategoriesPage />}
         />
+        <Route path="users/requests" element={<UsersRequestsListPage />} />
+        <Route path="users" element={<UsersListPage />} />
+        <Route path="users/:id" element={<EditUserPage />} />
+        <Route path="forms/templates" element={<FormsListPage />} />
+        <Route path="forms/templates/new" element={<CreateFormsPage />} />
+        <Route path="forms/documents" element={<FormsDocumentsListPage />} />
+        <Route path="groups" element={<GroupListPage />}>
+          <Route path="participants" element={<GroupParticipantsListPage />} />
+          <Route path="new" element={<CreateGroupPage />} />
+          <Route path=":id" element={<EditGroupPage />} />
+        </Route>
 
-        <Route
-          path="/admin/users/requests"
-          element={<UsersRequestsListPage />}
-        />
-        <Route path="/admin/users" element={<UsersListPage />} />
-        <Route path="/admin/users/:id" element={<EditUserPage />} />
+        {/* General Settings */}
+        <Route path="general-settings">
+          <Route
+            path="push-notifications"
+            element={<PushNotificationsPage />}
+          />
+          <Route path="chat-activation" element={<ChatActivationPage />} />
 
-        <Route path="/admin/forms/templates" element={<FormsListPage />} />
-        <Route
-          path="/admin/forms/templates/new"
-          element={<CreateFormsPage />}
-        />
-        <Route
-          path="/admin/forms/documents"
-          element={<FormsDocumentsListPage />}
-        />
+          <Route path="address" element={<GeneralAddressPage />} />
+          <Route path="address/new" element={<GeneralAddressForm />} />
 
-        <Route path="/admin/groups" element={<GroupListPage />} />
-        <Route
-          path="/admin/groups/participants"
-          element={<GroupParticipantsListPage />}
-        />
-        <Route path="/admin/groups/new" element={<CreateGroupPage />} />
-        <Route path="/admin/groups/:id" element={<EditGroupPage />} />
+          <Route path="public-pages" element={<PublicPagesPage />} />
+          <Route path="public-pages/new" element={<PublicPagesForm />} />
+        </Route>
       </Route>
 
       <Route path="*" element={<h1>Page Not Found!</h1>} />

@@ -13,12 +13,11 @@ export const SidebarItemChildrens: FC<SidebarItemChildrensProps> = ({
 
   if (!show) return null;
   const paths = pathname.split('/');
-  console.log(pathname);
+
   return (
     <>
       <ul {...rest}>
         {items.map(({ href, name, childrens }) => {
-          console.log('href', href);
           return !!childrens ? (
             <>
               <li
@@ -30,7 +29,7 @@ export const SidebarItemChildrens: FC<SidebarItemChildrensProps> = ({
               <SidebarItemChildrens
                 className="ml-[33px]"
                 show={!!childrens}
-                baseUrl={`${pathname}/${href}` ?? ''}
+                baseUrl={`${baseUrl}/${href}` ?? ''}
                 items={childrens}
               />
             </>

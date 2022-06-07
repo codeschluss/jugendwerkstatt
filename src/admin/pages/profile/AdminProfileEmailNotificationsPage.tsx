@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { Panel, Switch } from "../../components/atoms";
+import { ReactElement } from 'react';
+import { Panel, Switch } from '../../components/atoms';
 
 const AdminProfileEmailNotificationsPage = (): ReactElement => (
   <Panel
@@ -9,7 +9,7 @@ const AdminProfileEmailNotificationsPage = (): ReactElement => (
   >
     <Panel.Body className="flex items-center justify-between mb-0 mt-14">
       <p>Neuer User</p>
-      <Switch />
+      <Switch onSwitch={() => {}} />
     </Panel.Body>
   </Panel>
 );

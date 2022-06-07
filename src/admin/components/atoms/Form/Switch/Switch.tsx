@@ -1,8 +1,9 @@
-import { ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 import { useToggle } from '../../../../../hooks/useToggle';
 import { twClsx } from '../../../../utils/twClsx';
+import { SwitchProps } from './Switch.props';
 
-export const Switch = (): ReactElement => {
+export const Switch: FC<SwitchProps> = ({ onSwitch }): ReactElement => {
   /**
    * hooks
    */
@@ -10,16 +11,12 @@ export const Switch = (): ReactElement => {
 
   const handleSwitchToggle = () => {
     handleToggle();
-
-    console.log(
-      !isToggled
-        ? 'Sending request... -> Enabled'
-        : 'Sending request... -> Disabled'
-    );
+    onSwitch(!isToggled);
   };
 
   return (
     <div
+      role="button"
       className="flex items-center w-12 h-6 p-1 border-2 border-[#3B8873] rounded-full cursor-pointer md:w-14 md:h-7"
       onClick={handleSwitchToggle}
     >

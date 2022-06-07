@@ -1,13 +1,13 @@
-import { FC, ReactElement, useState } from "react";
-import { navigationItems } from "../../../static/navigationItems";
-import { SidebarComposition, SidebarProps } from "./Sidebar.props";
-import { ButtonVariantsEnum } from "../../../interfaces/enums/ButtonVariants.enum";
+import { FC, ReactElement, useState } from 'react';
+import { navigationItems } from '../../../static/navigationItems';
+import { SidebarComposition, SidebarProps } from './Sidebar.props';
+import { ButtonVariantsEnum } from '../../../interfaces/enums/ButtonVariants.enum';
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
-} from "@heroicons/react/outline";
-import { Button } from "../../atoms";
-import { SidebarItem, SidebarItems } from "../../molecules";
+} from '@heroicons/react/outline';
+import { Button } from '../../atoms';
+import { SidebarItem, SidebarItems } from '../../molecules';
 
 export const Sidebar: FC<SidebarProps> &
   SidebarComposition = (): ReactElement => {
@@ -44,7 +44,7 @@ export const Sidebar: FC<SidebarProps> &
         }
         onClick={handleSidebarToggler}
       >
-        {isSidebarOpen && "Menü einklappen"}
+        {isSidebarOpen && 'Menü einklappen'}
       </Button>
     </aside>
   );

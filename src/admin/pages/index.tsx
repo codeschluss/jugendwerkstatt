@@ -226,3 +226,38 @@ export const GroupParticipantsListPage = loadable(
     fallback: <PageLoader />,
   }
 );
+
+// General Settings
+export const PushNotificationsPage = loadable(
+  () =>
+    timeout(
+      import('./GeneralSettings/PushNotificationsPage'),
+      PAGE_LOAD_TIMEOUT
+    ),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const ChatActivationPage = loadable(
+  () =>
+    timeout(import('./GeneralSettings/ChatActivationPage'), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const PublicPagesPage = loadable(
+  () => timeout(import('./GeneralSettings/PublicPagesPage'), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const GeneralAddressPage = loadable(
+  () =>
+    timeout(import('./GeneralSettings/GeneralAddressPage'), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);

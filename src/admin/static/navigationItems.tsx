@@ -131,5 +131,25 @@ export const navigationItems: NavigationItemProps[] = [
     name: 'Allgemein',
     icon: <CogIcon />,
     href: 'general-settings',
+    childrens: [
+      {
+        name: 'App',
+        childrens: [
+          { name: 'Push-Nachrichten', href: 'push-messages' },
+          { name: 'Chat Aktivierung' },
+        ],
+      },
+      {
+        name: 'Öffentliche Seiten',
+        childrens: [
+          { name: 'Startseite' },
+          { name: 'Impressum' },
+          { name: 'Datenschutz' },
+        ],
+      },
+      {
+        name: 'Adressen',
+      },
+    ],
   },
 ];
