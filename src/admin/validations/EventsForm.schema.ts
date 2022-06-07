@@ -15,3 +15,7 @@ export const OrganizerFormSchema = Joi.object({
   address: AddressFormSchema,
   baseData: OrganizerBaseDataFormSchema,
 });
+
+export const CategoryFormSchema = Joi.object({
+  category: Joi.string().required().label("Kategoriename"),
+});

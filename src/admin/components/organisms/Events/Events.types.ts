@@ -29,3 +29,6 @@ export interface OrganizerFormInputs {
   baseData: OrganizerBaseDataFormInputs;
   address: AddressFormInputs;
 }
+export interface CategoryFormInputs {
+  category: string;
+}
