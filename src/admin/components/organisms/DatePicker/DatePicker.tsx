@@ -17,6 +17,7 @@ export const DatePicker: FC<DatePickerProps> = ({
         inputClassName="border rounded-sm border-gray-400"
       />
     }
+    className="max-w-sm"
     {...rest}
   />
 );
