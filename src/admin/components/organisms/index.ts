@@ -9,8 +9,11 @@ export * from './Events/BaseOrganizerForm';
 export * from './Forms/FormsBaseForm';
 export * from './GeneralSettings/GeneralAddressForm';
 export * from './GeneralSettings/PublicPagesForm';
+export * from './DatePicker/DatePicker';
+export * from './DatePicker/TimePicker';
 
 // export all types
 export * from './GeneralSettings/GeneralAddressForm.props';
 export * from './Events/Events.types';
 export * from './Forms/Forms.types';
+export * from './DatePicker/DatePicker.props';
