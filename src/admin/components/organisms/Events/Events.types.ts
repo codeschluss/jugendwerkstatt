@@ -9,7 +9,14 @@ export interface BaseDataFormInputs {
   phone: string;
   email: string;
   website?: string;
-  organizator: string;
+  organizer: string;
+  category: string;
+}
+export interface OrganizerBaseDataFormInputs {
+  organizerName: string;
+  phone: string;
+  email: string;
+  website?: string;
   category: string;
 }
 
@@ -17,4 +24,8 @@ export interface EventsFormInputs {
   baseData: BaseDataFormInputs;
   address: AddressFormInputs;
   description: string;
+}
+export interface OrganizerFormInputs {
+  baseData: OrganizerBaseDataFormInputs;
+  address: AddressFormInputs;
 }
