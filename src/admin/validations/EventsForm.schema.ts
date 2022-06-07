@@ -5,4 +5,5 @@ import { EventBaseDataFormSchema } from "./EventBaseDataForm.schema";
 export const EventsFormSchema = Joi.object({
   address: AddressFormSchema,
   baseData: EventBaseDataFormSchema,
+  description: Joi.string().required().label("Beschreibung"),
 });

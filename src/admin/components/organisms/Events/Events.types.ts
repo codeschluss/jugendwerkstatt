@@ -9,9 +9,12 @@ export interface BaseDataFormInputs {
   phone: string;
   email: string;
   website?: string;
+  organizator: string;
+  category: string;
 }
 
 export interface EventsFormInputs {
   baseData: BaseDataFormInputs;
   address: AddressFormInputs;
+  description: string;
 }

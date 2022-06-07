@@ -6,6 +6,7 @@ import { Accordion } from "../../components/molecules";
 import {
   AddressForm,
   BaseDataForm,
+  DescriptionFrom,
   EventsFormInputs,
 } from "../../components/organisms";
 import { EventsFormSchema } from "../../validations";
@@ -28,7 +29,7 @@ const CreateEventsPage = (): ReactElement => {
             <AddressForm />
           </Accordion>
           <Accordion title="Beschreibung">
-            <p>lorem ispum</p>
+            <DescriptionFrom />
           </Accordion>
           <Accordion title="Bilder">
             <p>lorem ispum</p>
