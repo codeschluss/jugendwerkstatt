@@ -2,30 +2,32 @@ import { ReactElement } from "react";
 import { useFormContext } from "react-hook-form";
 import { Button, Select } from "../../atoms";
 import { InputField } from "../../molecules";
-import { EventsFormInputs } from "./Events.types";
+import { OrganizerFormInputs } from "./Events.types";
 
-export const BaseDataForm = (): ReactElement => {
+export const BaseOrganizerForm = (): ReactElement => {
   const {
     trigger,
     register,
     formState: {
       errors: { baseData },
     },
-  } = useFormContext<EventsFormInputs>();
+  } = useFormContext<OrganizerFormInputs>();
 
   const handleTrigger = () => trigger("baseData");
 
   return (
     <>
       <div className="grid grid-cols-2 gap-8">
-        <div className="flex flex-col justify-start w-full space-y-6">
+        <div className="flex flex-col justify-start w-full space-y-6 col-span-2">
           <InputField
-            id="eventName"
-            label="Eventname"
-            {...register("baseData.eventName")}
-            error={baseData?.eventName?.message}
-            placeholder="Das erste Event"
+            id="organizerName"
+            label="Veranstalter Name"
+            {...register("baseData.organizerName")}
+            error={baseData?.organizerName?.message}
+            placeholder="IHK Wuppertal"
           />
+        </div>
+        <div className="flex flex-col justify-start w-full space-y-6">
           <InputField
             id="phone"
             label="Telefonnummer"
@@ -49,19 +51,6 @@ export const BaseDataForm = (): ReactElement => {
           </Select>
         </div>
         <div className="flex flex-col justify-start space-y-6">
-          <Select
-            id="organizator"
-            label="Veranstalter"
-            {...register("baseData.organizer")}
-            defaultValue={2}
-            error={baseData?.organizer?.message}
-          >
-            {[1, 2, 3].map((i) => (
-              <option key={i} value={i}>
-                test {i}
-              </option>
-            ))}
-          </Select>
           <InputField
             id="email"
             label="E-Mail-Adresse"

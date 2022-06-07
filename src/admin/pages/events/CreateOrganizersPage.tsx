@@ -1,22 +1,37 @@
-import { ReactElement } from 'react';
-import { Select } from '../../components/atoms/Form/Select/Select';
-import { Accordion } from '../../components/molecules';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { ReactElement } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { Accordion } from "../../components/molecules";
+import {
+  AddressForm,
+  BaseOrganizerForm,
+  OrganizerFormInputs,
+} from "../../components/organisms";
+import { OrganizerFormSchema } from "../../validations";
 
 const CreateOrganizersPage = (): ReactElement => {
+  const methods = useForm<OrganizerFormInputs>({
+    resolver: joiResolver(OrganizerFormSchema),
+  });
+
+  const handleOnSubmit = (data: OrganizerFormInputs) => {
+    console.log("data", data);
+  };
+
   return (
-    <div className="min-h-full">
-      <Accordion title="Stammdaten">
-        <p>lorem ispum</p>
-        <Select label="Select A field">
-          <option>Option 1</option>
-          <option>Option 2</option>
-          <option>Option 3</option>
-        </Select>
-      </Accordion>
-      <Accordion title="Adresse">
-        <p>lorem ispum</p>
-      </Accordion>
-    </div>
+    <FormProvider {...methods}>
+      <form
+        className="min-h-full"
+        onSubmit={methods.handleSubmit(handleOnSubmit)}
+      >
+        <Accordion title="Stammdaten">
+          <BaseOrganizerForm />
+        </Accordion>
+        <Accordion title="Adresse">
+          <AddressForm />
+        </Accordion>
+      </form>
+    </FormProvider>
   );
 };
 

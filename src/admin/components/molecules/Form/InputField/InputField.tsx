@@ -1,7 +1,7 @@
-import { forwardRef, ReactElement } from 'react';
-import { twClsx } from '../../../../utils';
-import { Input, Label } from '../../../atoms';
-import { InputFieldProps } from './InputField.props';
+import { forwardRef, ReactElement } from "react";
+import { twClsx } from "../../../../utils";
+import { Input, Label } from "../../../atoms";
+import { InputFieldProps } from "./InputField.props";
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   (
@@ -17,10 +17,10 @@ export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
     },
     ref
   ): ReactElement => (
-    <div className={twClsx('w-full', className)}>
-      <Label {...labelProps} htmlFor={id || name}>
+    <div className={twClsx("w-full", className)}>
+      <Label {...labelProps} htmlFor={id || name} className="text-lg">
         {label}
-        {required && <span className="p-1 text-lg text-primary">*</span>}
+        {required && <span className="p-1 text-primary">*</span>}
       </Label>
       <Input
         {...rest}
