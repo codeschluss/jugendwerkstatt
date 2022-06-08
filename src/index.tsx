@@ -5,15 +5,16 @@ import {
   concat,
   HttpLink,
   InMemoryCache,
-} from "@apollo/client";
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import { API_URL } from "./config/app";
-import "./shared/styles/index.css";
-import "./shared/styles/SlickSlider.css";
+} from '@apollo/client';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import { API_URL } from './config/app';
+import './shared/styles/index.css';
+import './shared/styles/SlickSlider.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
-const httpLink = new HttpLink({ uri: API_URL + "graphql" });
+const httpLink = new HttpLink({ uri: API_URL + 'graphql' });
 
 // const logoutLink = onError(({ networkError }) => {
 //   if (networkError.statusCode === 401) logout();
@@ -24,7 +25,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers = {} }) => ({
     headers: {
       ...headers,
-      authorization: "Bearer " + localStorage.getItem("accessToken") || "",
+      authorization: 'Bearer ' + localStorage.getItem('accessToken') || '',
     },
   }));
 
@@ -42,5 +43,5 @@ ReactDOM.render(
       <App />
     </ApolloProvider>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root')
 );
