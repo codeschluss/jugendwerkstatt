@@ -16,7 +16,9 @@ const CreateEventsPage = (): ReactElement => {
     resolver: joiResolver(EventsFormSchema),
   });
 
-  const handleOnSubmit = (data: EventsFormInputs) => console.log("data", data);
+  const handleOnSubmit = (data: EventsFormInputs) => {
+    console.log("data", data);
+  };
 
   return (
     <FormProvider {...methods}>

@@ -5,3 +5,4 @@ export * from "./GeneralAddressForm.shema";
 export * from "./PublicPagesForm.schema";
 export * from "./FormsForm.schema";
 export * from "./VideoForm.schema";
+export * from "./VacancyForm.schema";

@@ -41,7 +41,7 @@ export const Accordion: FC<AccordionProps> & AccordionComposition = ({
         </If>
       </div>
       {showSide && (
-        <div className={twClsx("bg-white p-1 rounded-sm h-fit", sideClassName)}>
+        <div className={twClsx("bg-white rounded-sm h-fit", sideClassName)}>
           <h3
             role="button"
             onClick={handleAccordion}
@@ -49,9 +49,7 @@ export const Accordion: FC<AccordionProps> & AccordionComposition = ({
           >
             {sideTitle}
           </h3>
-          <If condition={openAccordion}>
-            <div className="mt-4">{sideContent}</div>
-          </If>
+          <If condition={openAccordion}>{sideContent}</If>
         </div>
       )}
     </div>

@@ -10,9 +10,12 @@ export * from "./Forms/FormsBaseForm";
 export * from "./GeneralSettings/GeneralAddressForm";
 export * from "./GeneralSettings/PublicPagesForm";
 export * from "./Media/MediaForm";
+export * from "./Vacancy/VacancyCompanyForm";
+export * from "./Vacancy/VacancyForm";
 
 // export all types
 export * from "./GeneralSettings/GeneralAddressForm.props";
 export * from "./Events/Events.types";
 export * from "./Forms/Forms.types";
 export * from "./Media/Media.types";
+export * from "./Vacancy/Vacancy.types";
