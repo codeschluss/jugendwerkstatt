@@ -1,12 +1,12 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { ReactElement } from "react";
-import { useForm } from "react-hook-form";
-import { SketchPicker } from "react-color";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { ReactElement } from 'react';
+import { useForm } from 'react-hook-form';
+import { SketchPicker } from 'react-color';
 
-import { Button } from "../../components/atoms";
-import { Accordion, InputField } from "../../components/molecules";
-import { VacancyCategoryFormInputs } from "../../components/organisms";
-import { VacancyCategoryFormSchema } from "../../validations";
+import { Button } from '../../components/atoms';
+import { Accordion, InputField } from '../../components/molecules';
+import { VacancyCategoryFormInputs } from '../../components/organisms';
+import { VacancyCategoryFormSchema } from '../../validations';
 
 const CreateVacancyCategoriesPage = (): ReactElement => {
   const {
@@ -20,7 +20,7 @@ const CreateVacancyCategoriesPage = (): ReactElement => {
   });
 
   const handleOnSubmit = (data: VacancyCategoryFormInputs) => {
-    console.log("data", data);
+    console.log('data', data);
   };
 
   return (
@@ -32,8 +32,8 @@ const CreateVacancyCategoriesPage = (): ReactElement => {
         sideContent={
           <div className="p-3 bg-white w-fit">
             <SketchPicker
-              onChange={(data) => setValue("color", data.hex)}
-              color={watch("color")}
+              onChange={(data: any) => setValue('color', data.hex)}
+              color={watch('color')}
             />
           </div>
         }
@@ -43,14 +43,14 @@ const CreateVacancyCategoriesPage = (): ReactElement => {
             id="category"
             label="Kategoriename"
             placeholder="Metallhandwerk"
-            {...register("category")}
+            {...register('category')}
             error={errors?.category?.message}
           />
           <InputField
             id="color"
             label="Farbe"
             placeholder="#FFFFFF"
-            {...register("color")}
+            {...register('color')}
             error={errors?.color?.message}
           />
         </div>
