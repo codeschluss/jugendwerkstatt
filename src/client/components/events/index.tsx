@@ -2,7 +2,6 @@ import Slider from "../slideItems/Slider";
 import SlideCard from "../slideItems/SlideCard";
 import {
   EventCategoryEntity,
-  useExampleGetEventsQuery,
   useGetEventCategoriesQuery,
 } from "../../../GraphQl/graphql";
 import { useEffect, useState } from "react";

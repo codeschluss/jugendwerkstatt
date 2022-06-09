@@ -1,0 +1,17 @@
+query GetEventCategoriesAdmin {
+  categories: getEventCategories {
+    total
+    result {
+      id
+      icon
+      name
+    }
+  }
+}
+
+query GetEventCategory($entity: EventCategoryEntityInput) {
+  getEventCategory(entity: $entity) {
+    id
+    name
+  }
+}

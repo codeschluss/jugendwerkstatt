@@ -1,5 +1,5 @@
 query GetMeBasic {
-  me(entity: {}) {
+  me {
     id
     fullname
     phone

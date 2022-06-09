@@ -24,6 +24,7 @@ export const AuthProvider: React.FunctionComponent = ({ children }) => {
     setBgColor(colors[idx]);
   });
 
+  console.log("userToken", userToken);
   return (
     <AuthContext.Provider
       value={{

@@ -1,5 +1,5 @@
 query GetMeFavorites {
-  me(entity: {}) {
+  me {
     id
     favoriteEvents {
       id

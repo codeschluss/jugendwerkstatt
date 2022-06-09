@@ -6,6 +6,7 @@ import { twClsx } from "../../../utils";
 
 export const Accordion: FC<AccordionProps> & AccordionComposition = ({
   title,
+  open = false,
   children,
   className,
   showSide,
@@ -15,7 +16,7 @@ export const Accordion: FC<AccordionProps> & AccordionComposition = ({
   ...rest
 }) => {
   // local state
-  const [openAccordion, setOpenAccordion] = useState(false);
+  const [openAccordion, setOpenAccordion] = useState(open);
 
   // handlers
   const handleAccordion = () => setOpenAccordion(!openAccordion);

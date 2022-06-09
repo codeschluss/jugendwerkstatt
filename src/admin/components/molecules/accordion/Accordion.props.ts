@@ -4,6 +4,7 @@ export interface AccordionProps
   extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   title: string;
   showSide?: boolean;
+  open?: boolean;
   sideTitle?: ReactNode;
   sideContent?: ReactNode;
   sideClassName?: string;

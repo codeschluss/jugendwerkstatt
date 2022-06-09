@@ -1,9 +1,9 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
   GeneralAddressForm,
   PublicPagesForm,
-} from '../admin/components/organisms';
-import { AdminDashboardLayout } from '../admin/components/templates';
+} from "../admin/components/organisms";
+import { AdminDashboardLayout } from "../admin/components/templates";
 import {
   AdminProfileEmailNotificationsPage,
   AdminProfilePage,
@@ -37,8 +37,8 @@ import {
   ChatActivationPage,
   GeneralAddressPage,
   PublicPagesPage,
-} from '../admin/pages';
-import CreateGroupPage from '../admin/pages/Group/CreateGroupPage';
+} from "../admin/pages";
+import CreateGroupPage from "../admin/pages/Group/CreateGroupPage";
 
 export const AdminRoutes = () => (
   <BrowserRouter>
@@ -60,6 +60,10 @@ export const AdminRoutes = () => (
         <Route path="events/categories" element={<CategoriesListPage />} />
         <Route
           path="events/categories/new"
+          element={<CreateCategoriesPage />}
+        />
+        <Route
+          path="events/categories/:id"
           element={<CreateCategoriesPage />}
         />
         <Route path="job-announcements" element={<VacancyListPage />} />

@@ -1,7 +1,33 @@
+import { useNavigate } from "react-router-dom";
+import {
+  useDeleteEventCategoryMutation,
+  useGetEventCategoriesAdminQuery,
+} from "../../../GraphQl/graphql";
 import { Table, Action, Panel } from "../../components/atoms";
 import { CustomTable } from "../../components/molecules";
 
 const CategoriesListPage = () => {
+  const navigate = useNavigate();
+
+  const { data, refetch } = useGetEventCategoriesAdminQuery({
+    fetchPolicy: "cache-and-network",
+  });
+
+  const [deleteEventCategoryMutation] = useDeleteEventCategoryMutation({
+    onCompleted: () => refetch(),
+  });
+
+  const handleDeleteById = (id: string) => () => {
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm("Are you sure you want to delete!")) {
+      deleteEventCategoryMutation({
+        variables: { deleteEventCategoryId: id },
+      });
+    }
+  };
+
+  const handleUpdateById = (id: string) => () => navigate(id);
+
   return (
     <Panel.Wrapper
       action={{
@@ -11,14 +37,19 @@ const CategoriesListPage = () => {
     >
       <CustomTable
         headerData={["Kategorie", "Aktionen"]}
-        bodyData={["test"].map((i, idx) => (
-          <Table.Row key={idx}>
-            <Table.Data>{i}</Table.Data>
-            <Table.Data>
-              <Action onUpdate={() => {}} onDelete={() => {}} />
-            </Table.Data>
-          </Table.Row>
-        ))}
+        bodyData={
+          data?.categories?.result?.map((item) => (
+            <Table.Row key={item?.id}>
+              <Table.Data>{item?.name}</Table.Data>
+              <Table.Data>
+                <Action
+                  onUpdate={handleUpdateById(item?.id || "")}
+                  onDelete={handleDeleteById(item?.id || "")}
+                />
+              </Table.Data>
+            </Table.Row>
+          )) || []
+        }
       />
     </Panel.Wrapper>
   );

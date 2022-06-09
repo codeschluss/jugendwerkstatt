@@ -533,7 +533,7 @@ export type Mutation = {
   addEventFavorite?: Maybe<UserEntity>;
   addJobAdFavorite?: Maybe<UserEntity>;
   addUploads?: Maybe<UserEntity>;
-  approveUser?: Maybe<UserEntity>;
+  approve?: Maybe<UserEntity>;
   createToken?: Maybe<TokenDto>;
   deleteAddress?: Maybe<Scalars['Boolean']>;
   deleteAddresss?: Maybe<Scalars['Boolean']>;
@@ -693,7 +693,7 @@ export type MutationAddUploadsArgs = {
 
 
 /** Mutation root */
-export type MutationApproveUserArgs = {
+export type MutationApproveArgs = {
   userId?: InputMaybe<Scalars['String']>;
 };
 
@@ -2231,12 +2231,6 @@ export type QueryLookupAddressArgs = {
   entity?: InputMaybe<AddressEntityInput>;
 };
 
-
-/** Query root */
-export type QueryMeArgs = {
-  entity?: InputMaybe<UserEntityInput>;
-};
-
 export type QueryConjunctionInput = {
   operands?: InputMaybe<Array<InputMaybe<QueryExpressionInput>>>;
   operator?: InputMaybe<ConjunctionOperator>;
@@ -2415,7 +2409,6 @@ export type SubscriptionEntity = {
   deviceToken?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
-  subscriptionType?: Maybe<SubscriptionTypeEntity>;
   user?: Maybe<UserEntity>;
 };
 
@@ -2424,7 +2417,6 @@ export type SubscriptionEntityInput = {
   deviceToken?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
-  subscriptionType?: InputMaybe<SubscriptionTypeEntityInput>;
   user?: InputMaybe<UserEntityInput>;
 };
 
@@ -2435,7 +2427,6 @@ export type SubscriptionTypeEntity = {
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   name?: Maybe<Scalars['String']>;
-  subscriptions?: Maybe<Array<Maybe<SubscriptionEntity>>>;
 };
 
 export type SubscriptionTypeEntityInput = {
@@ -2444,7 +2435,6 @@ export type SubscriptionTypeEntityInput = {
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   name?: InputMaybe<Scalars['String']>;
-  subscriptions?: InputMaybe<Array<InputMaybe<SubscriptionEntityInput>>>;
 };
 
 export type TemplateEntity = {
@@ -2584,6 +2574,32 @@ export type VerificationEntityInput = {
   user?: InputMaybe<UserEntityInput>;
 };
 
+export type SaveEventCategoriesMutationVariables = Exact<{
+  entities?: InputMaybe<Array<InputMaybe<EventCategoryEntityInput>> | InputMaybe<EventCategoryEntityInput>>;
+}>;
+
+
+export type SaveEventCategoriesMutation = { __typename?: 'Mutation', saveEventCategories?: Array<{ __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null> | null };
+
+export type DeleteEventCategoryMutationVariables = Exact<{
+  deleteEventCategoryId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteEventCategoryMutation = { __typename?: 'Mutation', deleteEventCategory?: boolean | null };
+
+export type GetEventCategoriesAdminQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetEventCategoriesAdminQuery = { __typename?: 'Query', categories?: { __typename?: 'PageableList_EventCategoryEntity', total: any, result?: Array<{ __typename?: 'EventCategoryEntity', id?: string | null, icon?: string | null, name?: string | null } | null> | null } | null };
+
+export type GetEventCategoryQueryVariables = Exact<{
+  entity?: InputMaybe<EventCategoryEntityInput>;
+}>;
+
+
+export type GetEventCategoryQuery = { __typename?: 'Query', getEventCategory?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null };
+
 export type CreateTokenMutationVariables = Exact<{
   password?: InputMaybe<Scalars['String']>;
   username?: InputMaybe<Scalars['String']>;
@@ -2591,11 +2607,6 @@ export type CreateTokenMutationVariables = Exact<{
 
 
 export type CreateTokenMutation = { __typename?: 'Mutation', createToken?: { __typename?: 'TokenDto', access?: string | null, refresh?: string | null } | null };
-
-export type ExampleGetEventsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type ExampleGetEventsQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', result?: Array<{ __typename?: 'EventEntity', id?: string | null } | null> | null } | null };
 
 export type GetEventQueryVariables = Exact<{
   id: Scalars['String'];
@@ -2765,6 +2776,146 @@ export type VerifyMutationVariables = Exact<{
 export type VerifyMutation = { __typename?: 'Mutation', verify?: { __typename?: 'UserEntity', id?: string | null } | null };
 
 
+export const SaveEventCategoriesDocument = gql`
+    mutation SaveEventCategories($entities: [EventCategoryEntityInput]) {
+  saveEventCategories(entities: $entities) {
+    id
+    name
+  }
+}
+    `;
+export type SaveEventCategoriesMutationFn = Apollo.MutationFunction<SaveEventCategoriesMutation, SaveEventCategoriesMutationVariables>;
+
+/**
+ * __useSaveEventCategoriesMutation__
+ *
+ * To run a mutation, you first call `useSaveEventCategoriesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveEventCategoriesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveEventCategoriesMutation, { data, loading, error }] = useSaveEventCategoriesMutation({
+ *   variables: {
+ *      entities: // value for 'entities'
+ *   },
+ * });
+ */
+export function useSaveEventCategoriesMutation(baseOptions?: Apollo.MutationHookOptions<SaveEventCategoriesMutation, SaveEventCategoriesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveEventCategoriesMutation, SaveEventCategoriesMutationVariables>(SaveEventCategoriesDocument, options);
+      }
+export type SaveEventCategoriesMutationHookResult = ReturnType<typeof useSaveEventCategoriesMutation>;
+export type SaveEventCategoriesMutationResult = Apollo.MutationResult<SaveEventCategoriesMutation>;
+export type SaveEventCategoriesMutationOptions = Apollo.BaseMutationOptions<SaveEventCategoriesMutation, SaveEventCategoriesMutationVariables>;
+export const DeleteEventCategoryDocument = gql`
+    mutation DeleteEventCategory($deleteEventCategoryId: String) {
+  deleteEventCategory(id: $deleteEventCategoryId)
+}
+    `;
+export type DeleteEventCategoryMutationFn = Apollo.MutationFunction<DeleteEventCategoryMutation, DeleteEventCategoryMutationVariables>;
+
+/**
+ * __useDeleteEventCategoryMutation__
+ *
+ * To run a mutation, you first call `useDeleteEventCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteEventCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteEventCategoryMutation, { data, loading, error }] = useDeleteEventCategoryMutation({
+ *   variables: {
+ *      deleteEventCategoryId: // value for 'deleteEventCategoryId'
+ *   },
+ * });
+ */
+export function useDeleteEventCategoryMutation(baseOptions?: Apollo.MutationHookOptions<DeleteEventCategoryMutation, DeleteEventCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteEventCategoryMutation, DeleteEventCategoryMutationVariables>(DeleteEventCategoryDocument, options);
+      }
+export type DeleteEventCategoryMutationHookResult = ReturnType<typeof useDeleteEventCategoryMutation>;
+export type DeleteEventCategoryMutationResult = Apollo.MutationResult<DeleteEventCategoryMutation>;
+export type DeleteEventCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteEventCategoryMutation, DeleteEventCategoryMutationVariables>;
+export const GetEventCategoriesAdminDocument = gql`
+    query GetEventCategoriesAdmin {
+  categories: getEventCategories {
+    total
+    result {
+      id
+      icon
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetEventCategoriesAdminQuery__
+ *
+ * To run a query within a React component, call `useGetEventCategoriesAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventCategoriesAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEventCategoriesAdminQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetEventCategoriesAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetEventCategoriesAdminQuery, GetEventCategoriesAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEventCategoriesAdminQuery, GetEventCategoriesAdminQueryVariables>(GetEventCategoriesAdminDocument, options);
+      }
+export function useGetEventCategoriesAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEventCategoriesAdminQuery, GetEventCategoriesAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEventCategoriesAdminQuery, GetEventCategoriesAdminQueryVariables>(GetEventCategoriesAdminDocument, options);
+        }
+export type GetEventCategoriesAdminQueryHookResult = ReturnType<typeof useGetEventCategoriesAdminQuery>;
+export type GetEventCategoriesAdminLazyQueryHookResult = ReturnType<typeof useGetEventCategoriesAdminLazyQuery>;
+export type GetEventCategoriesAdminQueryResult = Apollo.QueryResult<GetEventCategoriesAdminQuery, GetEventCategoriesAdminQueryVariables>;
+export const GetEventCategoryDocument = gql`
+    query GetEventCategory($entity: EventCategoryEntityInput) {
+  getEventCategory(entity: $entity) {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetEventCategoryQuery__
+ *
+ * To run a query within a React component, call `useGetEventCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEventCategoryQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetEventCategoryQuery(baseOptions?: Apollo.QueryHookOptions<GetEventCategoryQuery, GetEventCategoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEventCategoryQuery, GetEventCategoryQueryVariables>(GetEventCategoryDocument, options);
+      }
+export function useGetEventCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEventCategoryQuery, GetEventCategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEventCategoryQuery, GetEventCategoryQueryVariables>(GetEventCategoryDocument, options);
+        }
+export type GetEventCategoryQueryHookResult = ReturnType<typeof useGetEventCategoryQuery>;
+export type GetEventCategoryLazyQueryHookResult = ReturnType<typeof useGetEventCategoryLazyQuery>;
+export type GetEventCategoryQueryResult = Apollo.QueryResult<GetEventCategoryQuery, GetEventCategoryQueryVariables>;
 export const CreateTokenDocument = gql`
     mutation CreateToken($password: String, $username: String) {
   createToken(password: $password, username: $username) {
@@ -2800,42 +2951,6 @@ export function useCreateTokenMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateTokenMutationHookResult = ReturnType<typeof useCreateTokenMutation>;
 export type CreateTokenMutationResult = Apollo.MutationResult<CreateTokenMutation>;
 export type CreateTokenMutationOptions = Apollo.BaseMutationOptions<CreateTokenMutation, CreateTokenMutationVariables>;
-export const ExampleGetEventsDocument = gql`
-    query ExampleGetEvents {
-  getEvents {
-    result {
-      id
-    }
-  }
-}
-    `;
-
-/**
- * __useExampleGetEventsQuery__
- *
- * To run a query within a React component, call `useExampleGetEventsQuery` and pass it any options that fit your needs.
- * When your component renders, `useExampleGetEventsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useExampleGetEventsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useExampleGetEventsQuery(baseOptions?: Apollo.QueryHookOptions<ExampleGetEventsQuery, ExampleGetEventsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ExampleGetEventsQuery, ExampleGetEventsQueryVariables>(ExampleGetEventsDocument, options);
-      }
-export function useExampleGetEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ExampleGetEventsQuery, ExampleGetEventsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ExampleGetEventsQuery, ExampleGetEventsQueryVariables>(ExampleGetEventsDocument, options);
-        }
-export type ExampleGetEventsQueryHookResult = ReturnType<typeof useExampleGetEventsQuery>;
-export type ExampleGetEventsLazyQueryHookResult = ReturnType<typeof useExampleGetEventsLazyQuery>;
-export type ExampleGetEventsQueryResult = Apollo.QueryResult<ExampleGetEventsQuery, ExampleGetEventsQueryVariables>;
 export const GetEventDocument = gql`
     query GetEvent($id: String!) {
   getEvent(entity: {id: $id}) {
@@ -3275,7 +3390,7 @@ export type GetLinkCategoriesLazyQueryHookResult = ReturnType<typeof useGetLinkC
 export type GetLinkCategoriesQueryResult = Apollo.QueryResult<GetLinkCategoriesQuery, GetLinkCategoriesQueryVariables>;
 export const GetMeBasicDocument = gql`
     query GetMeBasic {
-  me(entity: {}) {
+  me {
     id
     fullname
     phone
@@ -3315,7 +3430,7 @@ export type GetMeBasicLazyQueryHookResult = ReturnType<typeof useGetMeBasicLazyQ
 export type GetMeBasicQueryResult = Apollo.QueryResult<GetMeBasicQuery, GetMeBasicQueryVariables>;
 export const GetMeFavoritesDocument = gql`
     query GetMeFavorites {
-  me(entity: {}) {
+  me {
     id
     favoriteEvents {
       id
@@ -3393,7 +3508,7 @@ export type GetMeFavoritesLazyQueryHookResult = ReturnType<typeof useGetMeFavori
 export type GetMeFavoritesQueryResult = Apollo.QueryResult<GetMeFavoritesQuery, GetMeFavoritesQueryVariables>;
 export const GetMeUploadsDocument = gql`
     query GetMeUploads {
-  me(entity: {}) {
+  me {
     id
     uploads {
       id
