@@ -23,9 +23,7 @@ const Nav: FC<NavProps> & NavComposition = ({
   /**
    * handlers
    */
-  const handleSidebarToggler = () => {
-    toggleSidebar();
-  };
+  const handleSidebarToggler = () => toggleSidebar();
 
   return (
     <>
@@ -62,4 +60,5 @@ const Nav: FC<NavProps> & NavComposition = ({
 
 Nav.Item = NavItem;
 Nav.Wrapper = NavWrapper;
+
 export default Nav;

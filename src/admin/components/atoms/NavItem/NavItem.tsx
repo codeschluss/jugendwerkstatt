@@ -1,5 +1,5 @@
-import { FC, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid';
 import clsx from 'clsx';
 import { BASE_HREF } from '../../../config/global';
@@ -15,6 +15,11 @@ export const NavItem: FC<NavItemProps> = ({
   ...rest
 }) => {
   /**
+   * hooks
+   */
+  const { pathname } = useLocation();
+
+  /**
    * local state
    */
   const [showItems, setShowItems] = useState(false);
@@ -23,6 +28,13 @@ export const NavItem: FC<NavItemProps> = ({
    * global state
    */
   const { isSidebarToggled, toggleSidebar } = useSidebarStore();
+
+  /**
+   * effects
+   */
+  useEffect(() => {
+    if (pathname.includes(`${BASE_HREF}/${item.location}`)) setShowItems(true);
+  }, [item.location, pathname]);
 
   /**
    * handler
@@ -53,7 +65,13 @@ export const NavItem: FC<NavItemProps> = ({
           )}
         </button>
       ) : (
-        <NavLink to={`${BASE_HREF}/${item.location}`}>{item.name}</NavLink>
+        <NavLink
+          end
+          to={`${BASE_HREF}/${item.location}`}
+          className={({ isActive }) => (isActive ? 'text-charcoal' : '')}
+        >
+          {item.name}
+        </NavLink>
       )}
 
       {isSidebarToggled && showItems && hasChild && (

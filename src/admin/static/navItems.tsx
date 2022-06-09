@@ -34,6 +34,7 @@ export const navItems: NavModel = {
     {
       name: 'Stellenausschreibungen',
       icon: <BookOpenIcon />,
+      location: 'job-announcements',
       items: [
         {
           name: 'Stellenausschreibungen',
@@ -52,6 +53,7 @@ export const navItems: NavModel = {
     {
       name: 'Mediathek',
       icon: <PlayIcon />,
+      location: 'medias',
       items: [
         {
           name: 'Inhalte',
@@ -81,6 +83,7 @@ export const navItems: NavModel = {
     {
       name: 'Gruppen',
       icon: <UsersIcon />,
+      location: 'groups',
       items: [
         {
           name: 'Übersicht',
@@ -104,6 +107,7 @@ export const navItems: NavModel = {
     {
       name: 'Evaluierung',
       icon: <ViewListIcon />,
+      location: 'evaluations',
       items: [
         {
           name: 'Auswertung',
@@ -118,6 +122,7 @@ export const navItems: NavModel = {
     {
       name: 'Benutzer',
       icon: <UserIcon />,
+      location: 'users',
       items: [
         {
           name: 'Anfragen',
@@ -132,6 +137,7 @@ export const navItems: NavModel = {
     {
       name: 'Allgemein',
       icon: <CogIcon />,
+      location: 'general-settings',
       items: [
         {
           name: 'App',
