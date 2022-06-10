@@ -30,7 +30,7 @@ const MediaCategoriesListPage = (): ReactElement => {
   return (
     <Panel.Wrapper
       action={{
-        to: "/admin/medias/medias/new",
+        to: "/admin/medias/categories/new",
         label: "Neue Kategorie erstellen",
       }}
     >
