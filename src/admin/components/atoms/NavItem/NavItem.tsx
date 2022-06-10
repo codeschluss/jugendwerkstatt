@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useParams } from 'react-router-dom';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid';
 import clsx from 'clsx';
 import { BASE_HREF } from '../../../config/global';
@@ -19,6 +19,7 @@ export const NavItem: FC<NavItemProps> = ({
    * hooks
    */
   const { pathname } = useLocation();
+  const { id } = useParams();
 
   /**
    * local state
@@ -47,7 +48,7 @@ export const NavItem: FC<NavItemProps> = ({
   const activeLink =
     pathname
       .split('/')
-      .filter((item) => item !== 'new')
+      .filter((item) => item !== id ?? 'new')
       .join('/') === `${BASE_HREF}/${item.location}`;
 
   return (

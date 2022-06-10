@@ -1,0 +1,4 @@
+fragment Role on RoleEntity {
+  id
+  name
+}

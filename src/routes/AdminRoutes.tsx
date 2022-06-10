@@ -102,8 +102,11 @@ export const AdminRoutes = () => (
           element={<CreateMediaCategoriesPage />}
         />
         <Route path="users/requests" element={<UsersRequestsListPage />} />
+
         <Route path="users" element={<UsersListPage />} />
+        <Route path="users/requests" element={<UsersRequestsListPage />} />
         <Route path="users/:id" element={<EditUserPage />} />
+
         <Route path="forms/templates" element={<FormsListPage />} />
         <Route path="forms/templates/new" element={<CreateFormsPage />} />
         <Route path="forms/documents" element={<FormsDocumentsListPage />} />
