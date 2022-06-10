@@ -2606,6 +2606,8 @@ export type VerificationEntityInput = {
   user?: InputMaybe<UserEntityInput>;
 };
 
+export type CategoryFieldFragment = { __typename?: 'EventCategoryEntity', id?: string | null, icon?: string | null, name?: string | null };
+
 export type RoleFragment = { __typename?: 'RoleEntity', id?: string | null, name?: string | null };
 
 export type UserFragment = { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null };
@@ -2615,14 +2617,28 @@ export type SaveEventCategoriesMutationVariables = Exact<{
 }>;
 
 
-export type SaveEventCategoriesMutation = { __typename?: 'Mutation', saveEventCategories?: Array<{ __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null> | null };
+export type SaveEventCategoriesMutation = { __typename?: 'Mutation', saveEventCategories?: Array<{ __typename?: 'EventCategoryEntity', id?: string | null, icon?: string | null, name?: string | null } | null> | null };
 
 export type DeleteEventCategoryMutationVariables = Exact<{
-  deleteEventCategoryId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
 }>;
 
 
 export type DeleteEventCategoryMutation = { __typename?: 'Mutation', deleteEventCategory?: boolean | null };
+
+export type SaveOrganizerMutationVariables = Exact<{
+  entity?: InputMaybe<OrganizerEntityInput>;
+}>;
+
+
+export type SaveOrganizerMutation = { __typename?: 'Mutation', organizer?: { __typename?: 'OrganizerEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null } | null };
+
+export type DeleteOrganizerMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteOrganizerMutation = { __typename?: 'Mutation', deleteOrganizer?: boolean | null };
 
 export type ApproveUserMutationVariables = Exact<{
   userId?: InputMaybe<Scalars['String']>;
@@ -2648,7 +2664,19 @@ export type GetEventCategoryQueryVariables = Exact<{
 }>;
 
 
-export type GetEventCategoryQuery = { __typename?: 'Query', getEventCategory?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null };
+export type GetEventCategoryQuery = { __typename?: 'Query', category?: { __typename?: 'EventCategoryEntity', id?: string | null, icon?: string | null, name?: string | null } | null };
+
+export type GetOrganizersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetOrganizersQuery = { __typename?: 'Query', organizers?: { __typename?: 'PageableList_OrganizerEntity', total: any, result?: Array<{ __typename?: 'OrganizerEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null } | null> | null } | null };
+
+export type GetOrganizerQueryVariables = Exact<{
+  entity?: InputMaybe<OrganizerEntityInput>;
+}>;
+
+
+export type GetOrganizerQuery = { __typename?: 'Query', organizer?: { __typename?: 'OrganizerEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null } | null };
 
 export type GetRolesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2835,6 +2863,13 @@ export type VerifyMutationVariables = Exact<{
 
 export type VerifyMutation = { __typename?: 'Mutation', verify?: { __typename?: 'UserEntity', id?: string | null } | null };
 
+export const CategoryFieldFragmentDoc = gql`
+    fragment CategoryField on EventCategoryEntity {
+  id
+  icon
+  name
+}
+    `;
 export const RoleFragmentDoc = gql`
     fragment Role on RoleEntity {
   id
@@ -2857,6 +2892,7 @@ export const SaveEventCategoriesDocument = gql`
     mutation SaveEventCategories($entities: [EventCategoryEntityInput]) {
   saveEventCategories(entities: $entities) {
     id
+    icon
     name
   }
 }
@@ -2888,8 +2924,8 @@ export type SaveEventCategoriesMutationHookResult = ReturnType<typeof useSaveEve
 export type SaveEventCategoriesMutationResult = Apollo.MutationResult<SaveEventCategoriesMutation>;
 export type SaveEventCategoriesMutationOptions = Apollo.BaseMutationOptions<SaveEventCategoriesMutation, SaveEventCategoriesMutationVariables>;
 export const DeleteEventCategoryDocument = gql`
-    mutation DeleteEventCategory($deleteEventCategoryId: String) {
-  deleteEventCategory(id: $deleteEventCategoryId)
+    mutation DeleteEventCategory($id: String) {
+  deleteEventCategory(id: $id)
 }
     `;
 export type DeleteEventCategoryMutationFn = Apollo.MutationFunction<DeleteEventCategoryMutation, DeleteEventCategoryMutationVariables>;
@@ -2907,7 +2943,7 @@ export type DeleteEventCategoryMutationFn = Apollo.MutationFunction<DeleteEventC
  * @example
  * const [deleteEventCategoryMutation, { data, loading, error }] = useDeleteEventCategoryMutation({
  *   variables: {
- *      deleteEventCategoryId: // value for 'deleteEventCategoryId'
+ *      id: // value for 'id'
  *   },
  * });
  */
@@ -2918,6 +2954,74 @@ export function useDeleteEventCategoryMutation(baseOptions?: Apollo.MutationHook
 export type DeleteEventCategoryMutationHookResult = ReturnType<typeof useDeleteEventCategoryMutation>;
 export type DeleteEventCategoryMutationResult = Apollo.MutationResult<DeleteEventCategoryMutation>;
 export type DeleteEventCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteEventCategoryMutation, DeleteEventCategoryMutationVariables>;
+export const SaveOrganizerDocument = gql`
+    mutation SaveOrganizer($entity: OrganizerEntityInput) {
+  organizer: saveOrganizer(entity: $entity) {
+    id
+    mail
+    name
+    phone
+    website
+  }
+}
+    `;
+export type SaveOrganizerMutationFn = Apollo.MutationFunction<SaveOrganizerMutation, SaveOrganizerMutationVariables>;
+
+/**
+ * __useSaveOrganizerMutation__
+ *
+ * To run a mutation, you first call `useSaveOrganizerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveOrganizerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveOrganizerMutation, { data, loading, error }] = useSaveOrganizerMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveOrganizerMutation(baseOptions?: Apollo.MutationHookOptions<SaveOrganizerMutation, SaveOrganizerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveOrganizerMutation, SaveOrganizerMutationVariables>(SaveOrganizerDocument, options);
+      }
+export type SaveOrganizerMutationHookResult = ReturnType<typeof useSaveOrganizerMutation>;
+export type SaveOrganizerMutationResult = Apollo.MutationResult<SaveOrganizerMutation>;
+export type SaveOrganizerMutationOptions = Apollo.BaseMutationOptions<SaveOrganizerMutation, SaveOrganizerMutationVariables>;
+export const DeleteOrganizerDocument = gql`
+    mutation DeleteOrganizer($id: String) {
+  deleteOrganizer(id: $id)
+}
+    `;
+export type DeleteOrganizerMutationFn = Apollo.MutationFunction<DeleteOrganizerMutation, DeleteOrganizerMutationVariables>;
+
+/**
+ * __useDeleteOrganizerMutation__
+ *
+ * To run a mutation, you first call `useDeleteOrganizerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteOrganizerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteOrganizerMutation, { data, loading, error }] = useDeleteOrganizerMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteOrganizerMutation(baseOptions?: Apollo.MutationHookOptions<DeleteOrganizerMutation, DeleteOrganizerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteOrganizerMutation, DeleteOrganizerMutationVariables>(DeleteOrganizerDocument, options);
+      }
+export type DeleteOrganizerMutationHookResult = ReturnType<typeof useDeleteOrganizerMutation>;
+export type DeleteOrganizerMutationResult = Apollo.MutationResult<DeleteOrganizerMutation>;
+export type DeleteOrganizerMutationOptions = Apollo.BaseMutationOptions<DeleteOrganizerMutation, DeleteOrganizerMutationVariables>;
 export const ApproveUserDocument = gql`
     mutation ApproveUser($userId: String) {
   approve(userId: $userId) {
@@ -3023,8 +3127,9 @@ export type GetEventCategoriesAdminLazyQueryHookResult = ReturnType<typeof useGe
 export type GetEventCategoriesAdminQueryResult = Apollo.QueryResult<GetEventCategoriesAdminQuery, GetEventCategoriesAdminQueryVariables>;
 export const GetEventCategoryDocument = gql`
     query GetEventCategory($entity: EventCategoryEntityInput) {
-  getEventCategory(entity: $entity) {
+  category: getEventCategory(entity: $entity) {
     id
+    icon
     name
   }
 }
@@ -3057,6 +3162,86 @@ export function useGetEventCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetEventCategoryQueryHookResult = ReturnType<typeof useGetEventCategoryQuery>;
 export type GetEventCategoryLazyQueryHookResult = ReturnType<typeof useGetEventCategoryLazyQuery>;
 export type GetEventCategoryQueryResult = Apollo.QueryResult<GetEventCategoryQuery, GetEventCategoryQueryVariables>;
+export const GetOrganizersDocument = gql`
+    query GetOrganizers {
+  organizers: getOrganizers {
+    result {
+      id
+      mail
+      name
+      phone
+      website
+    }
+    total
+  }
+}
+    `;
+
+/**
+ * __useGetOrganizersQuery__
+ *
+ * To run a query within a React component, call `useGetOrganizersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOrganizersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOrganizersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetOrganizersQuery(baseOptions?: Apollo.QueryHookOptions<GetOrganizersQuery, GetOrganizersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOrganizersQuery, GetOrganizersQueryVariables>(GetOrganizersDocument, options);
+      }
+export function useGetOrganizersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOrganizersQuery, GetOrganizersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOrganizersQuery, GetOrganizersQueryVariables>(GetOrganizersDocument, options);
+        }
+export type GetOrganizersQueryHookResult = ReturnType<typeof useGetOrganizersQuery>;
+export type GetOrganizersLazyQueryHookResult = ReturnType<typeof useGetOrganizersLazyQuery>;
+export type GetOrganizersQueryResult = Apollo.QueryResult<GetOrganizersQuery, GetOrganizersQueryVariables>;
+export const GetOrganizerDocument = gql`
+    query GetOrganizer($entity: OrganizerEntityInput) {
+  organizer: getOrganizer(entity: $entity) {
+    id
+    mail
+    name
+    phone
+    website
+  }
+}
+    `;
+
+/**
+ * __useGetOrganizerQuery__
+ *
+ * To run a query within a React component, call `useGetOrganizerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOrganizerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOrganizerQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetOrganizerQuery(baseOptions?: Apollo.QueryHookOptions<GetOrganizerQuery, GetOrganizerQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOrganizerQuery, GetOrganizerQueryVariables>(GetOrganizerDocument, options);
+      }
+export function useGetOrganizerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOrganizerQuery, GetOrganizerQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOrganizerQuery, GetOrganizerQueryVariables>(GetOrganizerDocument, options);
+        }
+export type GetOrganizerQueryHookResult = ReturnType<typeof useGetOrganizerQuery>;
+export type GetOrganizerLazyQueryHookResult = ReturnType<typeof useGetOrganizerLazyQuery>;
+export type GetOrganizerQueryResult = Apollo.QueryResult<GetOrganizerQuery, GetOrganizerQueryVariables>;
 export const GetRolesDocument = gql`
     query GetRoles {
   roles: getRoles {

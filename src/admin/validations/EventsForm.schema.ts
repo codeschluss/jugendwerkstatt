@@ -12,7 +12,6 @@ export const EventsFormSchema = Joi.object({
 });
 
 export const OrganizerFormSchema = Joi.object({
-  address: AddressFormSchema,
   baseData: OrganizerBaseDataFormSchema,
 });
 

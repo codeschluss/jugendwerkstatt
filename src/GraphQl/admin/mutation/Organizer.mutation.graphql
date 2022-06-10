@@ -1,0 +1,13 @@
+mutation SaveOrganizer($entity: OrganizerEntityInput) {
+  organizer: saveOrganizer(entity: $entity) {
+    id
+    mail
+    name
+    phone
+    website
+  }
+}
+
+mutation DeleteOrganizer($id: String) {
+  deleteOrganizer(id: $id)
+}

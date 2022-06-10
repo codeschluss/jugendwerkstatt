@@ -10,9 +10,9 @@ export const EventBaseDataFormSchema = Joi.object({
 });
 
 export const OrganizerBaseDataFormSchema = Joi.object({
-  organizerName: Joi.string().required().label("Veranstalter Name"),
+  name: Joi.string().required().label("Veranstalter Name"),
   phone: Joi.string().required().label("Telefonnummer"),
   category: Joi.string().required().label("Kategorie"),
   website: Joi.string().uri().optional().label("Webseite"),
-  email: Joi.string().email({ tlds: false }).label("E-Mail-Adresse"),
+  mail: Joi.string().email({ tlds: false }).label("E-Mail-Adresse"),
 });

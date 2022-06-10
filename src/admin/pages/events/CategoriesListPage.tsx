@@ -20,9 +20,7 @@ const CategoriesListPage = () => {
   const handleDeleteById = (id: string) => () => {
     // eslint-disable-next-line no-restricted-globals
     if (confirm("Are you sure you want to delete!")) {
-      deleteEventCategoryMutation({
-        variables: { deleteEventCategoryId: id },
-      });
+      deleteEventCategoryMutation({ variables: { id } });
     }
   };
 
