@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "892826535808",
-    "project_id": "jugend-eb0c3",
-    "storage_bucket": "jugend-eb0c3.appspot.com"
+    "project_number": "297495776444",
+    "project_id": "jugendwerkstatt-d55de",
+    "storage_bucket": "jugendwerkstatt-d55de.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:892826535808:android:e8c2f327c67f465db5e365",
+        "mobilesdk_app_id": "1:297495776444:android:263173adf2f66e4fc514b9",
         "android_client_info": {
           "package_name": "app.alphaev"
         }
       },
       "oauth_client": [
         {
-          "client_id": "892826535808-ghkspnm25j4bm7bfutd1lo8vv15f8fc5.apps.googleusercontent.com",
+          "client_id": "297495776444-6n4sfhbrdru5b0ta9lb4cnh47q4fju5p.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCyXT70FAoONaQYqti2pfS3ttuW-9pUhFM"
+          "current_key": "AIzaSyD1RKdmVhqZ28oa1BikrI5LmLhfGO2Ji_I"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "892826535808-ghkspnm25j4bm7bfutd1lo8vv15f8fc5.apps.googleusercontent.com",
+              "client_id": "297495776444-6n4sfhbrdru5b0ta9lb4cnh47q4fju5p.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

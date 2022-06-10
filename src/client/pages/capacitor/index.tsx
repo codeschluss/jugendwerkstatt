@@ -7,6 +7,10 @@ import {
   ActionPerformed,
 } from "@capacitor/push-notifications";
 import { Toast } from "@capacitor/toast";
+import {
+  useGetMeBasicQuery,
+  useSaveSubscriptionMutation,
+} from "../../../GraphQl/graphql";
 // import {
 //   useGetMeBasicQuery,
 //   useSaveSubscriptionMutation,
@@ -16,9 +20,9 @@ export default function PushNotificationsContainer() {
   const nullEntry: any[] = [];
   const [notifications, setnotifications] = useState(nullEntry);
 
-  // const { data } = useGetMeBasicQuery();
+  const { data } = useGetMeBasicQuery();
 
-  // const [subs] = useSaveSubscriptionMutation();
+  const [subs] = useSaveSubscriptionMutation();
 
   useEffect(() => {
     PushNotifications.checkPermissions().then((res) => {
@@ -41,20 +45,20 @@ export default function PushNotificationsContainer() {
     PushNotifications.register();
 
     PushNotifications.addListener("registration", (token: Token) => {
-      // const entity = {
-      //   deviceToken: token.value,
-      //   user: {
-      //     id: data?.me?.id,
-      //   },
-      // };
-      // console.log("subs entity", entity);
-      // subs({
-      //   variables: {
-      //     entity,
-      //   },
-      // })
-      //   .then((subs) => alert(subs.data?.saveSubscription?.id))
-      //   .catch((err) => alert(err));
+      const entity = {
+        deviceToken: token.value,
+        user: {
+          id: data?.me?.id,
+        },
+      };
+      console.log("subs entity", entity);
+      subs({
+        variables: {
+          entity,
+        },
+      })
+        .then((subs) => alert(subs.data?.saveSubscription?.id))
+        .catch((err) => alert(err));
       console.log(token);
     });
 

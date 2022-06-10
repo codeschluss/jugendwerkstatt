@@ -49,7 +49,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
           name="Messenger"
           icon={<ChatAltIcon />}
           clicked={clicked}
-          href="/messenger"
+          href="/messenger/chats"
         />
         <Item
           name="Stellenausschreibung"

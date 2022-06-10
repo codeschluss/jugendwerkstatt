@@ -7,13 +7,23 @@ import { API_URL } from "../../../../config/app";
 import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
 import DropDown from "../../ui/DropDown";
 import Avatar from "../sideBar/Avatar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import AuthContext from "../../../../contexts/AuthContext";
 
 interface RightContentProps {}
 
 const RightContent: React.FC<RightContentProps> = () => {
   const isTouch = detectDevice();
   const [toggleSearch, setToggleSearch] = useState<boolean>(false);
+
+  const { setIsLogedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    localStorage.clear();
+    setIsLogedIn(false);
+    navigate("/");
+  };
   const user = useGetMeBasicQuery();
 
   return (
@@ -56,18 +66,20 @@ const RightContent: React.FC<RightContentProps> = () => {
           </div>
           <div className="flex items-center justify-start">
             {" "}
-            <I className="h-8 w-8 text-white md:text-black hidden md:flex">
-              <LogoutIcon />
+            <I className="h-8 w-8 text-white md:text-black hidden md:flex cursor-pointer">
+              <LogoutIcon onClick={logoutHandler} />
             </I>{" "}
-            <p>Logout</p>
+            <p onClick={logoutHandler} className="cursor-pointer">
+              Logout
+            </p>
           </div>
         </div>
       </DropDown>
       <I className="h-6 w-6 text-white md:text-black md:ml-6">
         <BellIcon />
       </I>
-      <I className="h-6 w-6 text-white md:text-black hidden md:flex md:ml-6">
-        <LogoutIcon />
+      <I className="h-6 w-6 text-white md:text-black hidden md:flex md:ml-6 cursor-pointer">
+        <LogoutIcon onClick={logoutHandler} />
       </I>
     </div>
   );

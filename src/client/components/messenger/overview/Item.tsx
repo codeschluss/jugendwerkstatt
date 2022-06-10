@@ -7,6 +7,7 @@ interface ItemProps {
   rightInfo?: React.ReactNode;
   imgUrl: string;
   href: string;
+  clicked?: any;
 }
 
 ///assets/avatarSmall2.png
@@ -17,10 +18,11 @@ const Item: React.FC<ItemProps> = ({
   rightInfo,
   imgUrl,
   href,
+  clicked,
 }) => {
   return (
     <Link to={href}>
-      <div className="flex flex-row w-full my-3">
+      <div className="flex flex-row w-full my-3" onClick={clicked}>
         <img src={imgUrl} className="w-10 h-10" alt={name} />
         <div
           className="flex flex-row border-b w-full
