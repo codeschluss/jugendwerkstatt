@@ -1,5 +1,4 @@
-import jwtDecode from "jwt-decode";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../../../client/components/ui/Button";
 import AuthContext from "../../../../contexts/AuthContext";
@@ -13,8 +12,13 @@ import AuthInput from "../AuthInput";
 import AuthWrapper from "../AuthWrapper";
 
 const Login = () => {
-  const { setTempEmail } = useContext(AuthContext);
-  const [accessToken, setAccessToken] = useState();
+  const {
+    accessToken,
+    setAccessToken,
+    setRefreshToken,
+    setTempEmail
+   } = useContext(AuthContext);
+   
   const {
     value: enteredEmail,
     validity: enteredEmailValidity,
@@ -48,7 +52,6 @@ const Login = () => {
 
   useEffect(() => {
     if (data) {
-      setAccessToken(jwtDecode(data?.createToken?.access || ""));
       result.refetch();
     }
   }, [data, result.data]);

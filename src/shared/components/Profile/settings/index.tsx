@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "../../../../client/components/ui/Button";
 import AuthContext from "../../../../contexts/AuthContext";
 import CustomHeader from "../../header/customHeader/CustomHeader";
-import Button from "../../../../client/components/ui/Button";
 import Items from "./Items";
-import { useLogout } from "../../../../hooks/useLogout";
 
 const ProfileSettings = () => {
   const { setIsLogedIn } = useContext(AuthContext);

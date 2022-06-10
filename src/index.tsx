@@ -4,7 +4,7 @@ import {
   ApolloProvider,
   concat,
   HttpLink,
-  InMemoryCache,
+  InMemoryCache
 } from "@apollo/client";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -14,10 +14,6 @@ import "./shared/styles/index.css";
 import "./shared/styles/SlickSlider.css";
 
 const httpLink = new HttpLink({ uri: API_URL + "graphql" });
-
-// const logoutLink = onError(({ networkError }) => {
-//   if (networkError.statusCode === 401) logout();
-// })
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   // add the authorization to the headers
