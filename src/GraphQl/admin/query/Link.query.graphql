@@ -1,0 +1,42 @@
+query GetLinks($params: FilterSortPaginateInput) {
+  getLinks(params: $params) {
+    total
+    result {
+      id
+      url
+      title
+      category {
+        id
+        name
+      }
+    }
+  }
+}
+
+query GetLink($entity: LinkEntityInput) {
+  getLink(entity: $entity) {
+    id
+    url
+    title
+    category {
+      id
+      name
+    }
+  }
+}
+
+query GetLinkCategoriesAdmin($params: FilterSortPaginateInput) {
+  getLinkCategories(params: $params) {
+    result {
+      id
+      name
+    }
+  }
+}
+
+query GetLinkCategory($entity: LinkCategoryEntityInput) {
+  getLinkCategory(entity: $entity) {
+    id
+    name
+  }
+}

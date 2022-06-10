@@ -30,5 +30,5 @@ export interface OrganizerFormInputs {
   address?: AddressFormInputs;
 }
 export interface CategoryFormInputs {
-  category: string;
+  name: string;
 }

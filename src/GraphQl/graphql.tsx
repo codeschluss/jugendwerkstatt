@@ -2622,6 +2622,34 @@ export type DeleteEventCategoryMutationVariables = Exact<{
 
 export type DeleteEventCategoryMutation = { __typename?: 'Mutation', deleteEventCategory?: boolean | null };
 
+export type SaveLinkMutationVariables = Exact<{
+  entity?: InputMaybe<LinkEntityInput>;
+}>;
+
+
+export type SaveLinkMutation = { __typename?: 'Mutation', link?: { __typename?: 'LinkEntity', id?: string | null, title?: string | null, url?: string | null, category?: { __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null } | null } | null };
+
+export type DeleteLinkMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteLinkMutation = { __typename?: 'Mutation', deleteLink?: boolean | null };
+
+export type SaveLinkCategoryMutationVariables = Exact<{
+  entity?: InputMaybe<LinkCategoryEntityInput>;
+}>;
+
+
+export type SaveLinkCategoryMutation = { __typename?: 'Mutation', linkCategory?: { __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null } | null };
+
+export type DeleteLinkCategoryMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteLinkCategoryMutation = { __typename?: 'Mutation', deleteLinkCategory?: boolean | null };
+
 export type SaveOrganizerMutationVariables = Exact<{
   entity?: InputMaybe<OrganizerEntityInput>;
 }>;
@@ -2647,6 +2675,34 @@ export type GetEventCategoryQueryVariables = Exact<{
 
 
 export type GetEventCategoryQuery = { __typename?: 'Query', category?: { __typename?: 'EventCategoryEntity', id?: string | null, icon?: string | null, name?: string | null } | null };
+
+export type GetLinksQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetLinksQuery = { __typename?: 'Query', getLinks?: { __typename?: 'PageableList_LinkEntity', total: any, result?: Array<{ __typename?: 'LinkEntity', id?: string | null, url?: string | null, title?: string | null, category?: { __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null } | null } | null> | null } | null };
+
+export type GetLinkQueryVariables = Exact<{
+  entity?: InputMaybe<LinkEntityInput>;
+}>;
+
+
+export type GetLinkQuery = { __typename?: 'Query', getLink?: { __typename?: 'LinkEntity', id?: string | null, url?: string | null, title?: string | null, category?: { __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null } | null } | null };
+
+export type GetLinkCategoriesAdminQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetLinkCategoriesAdminQuery = { __typename?: 'Query', getLinkCategories?: { __typename?: 'PageableList_LinkCategoryEntity', result?: Array<{ __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null } | null> | null } | null };
+
+export type GetLinkCategoryQueryVariables = Exact<{
+  entity?: InputMaybe<LinkCategoryEntityInput>;
+}>;
+
+
+export type GetLinkCategoryQuery = { __typename?: 'Query', getLinkCategory?: { __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null } | null };
 
 export type GetOrganizersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2908,6 +2964,141 @@ export function useDeleteEventCategoryMutation(baseOptions?: Apollo.MutationHook
 export type DeleteEventCategoryMutationHookResult = ReturnType<typeof useDeleteEventCategoryMutation>;
 export type DeleteEventCategoryMutationResult = Apollo.MutationResult<DeleteEventCategoryMutation>;
 export type DeleteEventCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteEventCategoryMutation, DeleteEventCategoryMutationVariables>;
+export const SaveLinkDocument = gql`
+    mutation SaveLink($entity: LinkEntityInput) {
+  link: saveLink(entity: $entity) {
+    id
+    title
+    url
+    category {
+      id
+      name
+    }
+  }
+}
+    `;
+export type SaveLinkMutationFn = Apollo.MutationFunction<SaveLinkMutation, SaveLinkMutationVariables>;
+
+/**
+ * __useSaveLinkMutation__
+ *
+ * To run a mutation, you first call `useSaveLinkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveLinkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveLinkMutation, { data, loading, error }] = useSaveLinkMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveLinkMutation(baseOptions?: Apollo.MutationHookOptions<SaveLinkMutation, SaveLinkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveLinkMutation, SaveLinkMutationVariables>(SaveLinkDocument, options);
+      }
+export type SaveLinkMutationHookResult = ReturnType<typeof useSaveLinkMutation>;
+export type SaveLinkMutationResult = Apollo.MutationResult<SaveLinkMutation>;
+export type SaveLinkMutationOptions = Apollo.BaseMutationOptions<SaveLinkMutation, SaveLinkMutationVariables>;
+export const DeleteLinkDocument = gql`
+    mutation DeleteLink($id: String) {
+  deleteLink(id: $id)
+}
+    `;
+export type DeleteLinkMutationFn = Apollo.MutationFunction<DeleteLinkMutation, DeleteLinkMutationVariables>;
+
+/**
+ * __useDeleteLinkMutation__
+ *
+ * To run a mutation, you first call `useDeleteLinkMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteLinkMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteLinkMutation, { data, loading, error }] = useDeleteLinkMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteLinkMutation(baseOptions?: Apollo.MutationHookOptions<DeleteLinkMutation, DeleteLinkMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteLinkMutation, DeleteLinkMutationVariables>(DeleteLinkDocument, options);
+      }
+export type DeleteLinkMutationHookResult = ReturnType<typeof useDeleteLinkMutation>;
+export type DeleteLinkMutationResult = Apollo.MutationResult<DeleteLinkMutation>;
+export type DeleteLinkMutationOptions = Apollo.BaseMutationOptions<DeleteLinkMutation, DeleteLinkMutationVariables>;
+export const SaveLinkCategoryDocument = gql`
+    mutation SaveLinkCategory($entity: LinkCategoryEntityInput) {
+  linkCategory: saveLinkCategory(entity: $entity) {
+    id
+    name
+  }
+}
+    `;
+export type SaveLinkCategoryMutationFn = Apollo.MutationFunction<SaveLinkCategoryMutation, SaveLinkCategoryMutationVariables>;
+
+/**
+ * __useSaveLinkCategoryMutation__
+ *
+ * To run a mutation, you first call `useSaveLinkCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveLinkCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveLinkCategoryMutation, { data, loading, error }] = useSaveLinkCategoryMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveLinkCategoryMutation(baseOptions?: Apollo.MutationHookOptions<SaveLinkCategoryMutation, SaveLinkCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveLinkCategoryMutation, SaveLinkCategoryMutationVariables>(SaveLinkCategoryDocument, options);
+      }
+export type SaveLinkCategoryMutationHookResult = ReturnType<typeof useSaveLinkCategoryMutation>;
+export type SaveLinkCategoryMutationResult = Apollo.MutationResult<SaveLinkCategoryMutation>;
+export type SaveLinkCategoryMutationOptions = Apollo.BaseMutationOptions<SaveLinkCategoryMutation, SaveLinkCategoryMutationVariables>;
+export const DeleteLinkCategoryDocument = gql`
+    mutation DeleteLinkCategory($id: String) {
+  deleteLinkCategory(id: $id)
+}
+    `;
+export type DeleteLinkCategoryMutationFn = Apollo.MutationFunction<DeleteLinkCategoryMutation, DeleteLinkCategoryMutationVariables>;
+
+/**
+ * __useDeleteLinkCategoryMutation__
+ *
+ * To run a mutation, you first call `useDeleteLinkCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteLinkCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteLinkCategoryMutation, { data, loading, error }] = useDeleteLinkCategoryMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteLinkCategoryMutation(baseOptions?: Apollo.MutationHookOptions<DeleteLinkCategoryMutation, DeleteLinkCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteLinkCategoryMutation, DeleteLinkCategoryMutationVariables>(DeleteLinkCategoryDocument, options);
+      }
+export type DeleteLinkCategoryMutationHookResult = ReturnType<typeof useDeleteLinkCategoryMutation>;
+export type DeleteLinkCategoryMutationResult = Apollo.MutationResult<DeleteLinkCategoryMutation>;
+export type DeleteLinkCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteLinkCategoryMutation, DeleteLinkCategoryMutationVariables>;
 export const SaveOrganizerDocument = gql`
     mutation SaveOrganizer($entity: OrganizerEntityInput) {
   organizer: saveOrganizer(entity: $entity) {
@@ -3052,6 +3243,165 @@ export function useGetEventCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetEventCategoryQueryHookResult = ReturnType<typeof useGetEventCategoryQuery>;
 export type GetEventCategoryLazyQueryHookResult = ReturnType<typeof useGetEventCategoryLazyQuery>;
 export type GetEventCategoryQueryResult = Apollo.QueryResult<GetEventCategoryQuery, GetEventCategoryQueryVariables>;
+export const GetLinksDocument = gql`
+    query GetLinks($params: FilterSortPaginateInput) {
+  getLinks(params: $params) {
+    total
+    result {
+      id
+      url
+      title
+      category {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetLinksQuery__
+ *
+ * To run a query within a React component, call `useGetLinksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLinksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLinksQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetLinksQuery(baseOptions?: Apollo.QueryHookOptions<GetLinksQuery, GetLinksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLinksQuery, GetLinksQueryVariables>(GetLinksDocument, options);
+      }
+export function useGetLinksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLinksQuery, GetLinksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLinksQuery, GetLinksQueryVariables>(GetLinksDocument, options);
+        }
+export type GetLinksQueryHookResult = ReturnType<typeof useGetLinksQuery>;
+export type GetLinksLazyQueryHookResult = ReturnType<typeof useGetLinksLazyQuery>;
+export type GetLinksQueryResult = Apollo.QueryResult<GetLinksQuery, GetLinksQueryVariables>;
+export const GetLinkDocument = gql`
+    query GetLink($entity: LinkEntityInput) {
+  getLink(entity: $entity) {
+    id
+    url
+    title
+    category {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetLinkQuery__
+ *
+ * To run a query within a React component, call `useGetLinkQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLinkQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLinkQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetLinkQuery(baseOptions?: Apollo.QueryHookOptions<GetLinkQuery, GetLinkQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLinkQuery, GetLinkQueryVariables>(GetLinkDocument, options);
+      }
+export function useGetLinkLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLinkQuery, GetLinkQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLinkQuery, GetLinkQueryVariables>(GetLinkDocument, options);
+        }
+export type GetLinkQueryHookResult = ReturnType<typeof useGetLinkQuery>;
+export type GetLinkLazyQueryHookResult = ReturnType<typeof useGetLinkLazyQuery>;
+export type GetLinkQueryResult = Apollo.QueryResult<GetLinkQuery, GetLinkQueryVariables>;
+export const GetLinkCategoriesAdminDocument = gql`
+    query GetLinkCategoriesAdmin($params: FilterSortPaginateInput) {
+  getLinkCategories(params: $params) {
+    result {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetLinkCategoriesAdminQuery__
+ *
+ * To run a query within a React component, call `useGetLinkCategoriesAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLinkCategoriesAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLinkCategoriesAdminQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetLinkCategoriesAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetLinkCategoriesAdminQuery, GetLinkCategoriesAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLinkCategoriesAdminQuery, GetLinkCategoriesAdminQueryVariables>(GetLinkCategoriesAdminDocument, options);
+      }
+export function useGetLinkCategoriesAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLinkCategoriesAdminQuery, GetLinkCategoriesAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLinkCategoriesAdminQuery, GetLinkCategoriesAdminQueryVariables>(GetLinkCategoriesAdminDocument, options);
+        }
+export type GetLinkCategoriesAdminQueryHookResult = ReturnType<typeof useGetLinkCategoriesAdminQuery>;
+export type GetLinkCategoriesAdminLazyQueryHookResult = ReturnType<typeof useGetLinkCategoriesAdminLazyQuery>;
+export type GetLinkCategoriesAdminQueryResult = Apollo.QueryResult<GetLinkCategoriesAdminQuery, GetLinkCategoriesAdminQueryVariables>;
+export const GetLinkCategoryDocument = gql`
+    query GetLinkCategory($entity: LinkCategoryEntityInput) {
+  getLinkCategory(entity: $entity) {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useGetLinkCategoryQuery__
+ *
+ * To run a query within a React component, call `useGetLinkCategoryQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetLinkCategoryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetLinkCategoryQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetLinkCategoryQuery(baseOptions?: Apollo.QueryHookOptions<GetLinkCategoryQuery, GetLinkCategoryQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetLinkCategoryQuery, GetLinkCategoryQueryVariables>(GetLinkCategoryDocument, options);
+      }
+export function useGetLinkCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetLinkCategoryQuery, GetLinkCategoryQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetLinkCategoryQuery, GetLinkCategoryQueryVariables>(GetLinkCategoryDocument, options);
+        }
+export type GetLinkCategoryQueryHookResult = ReturnType<typeof useGetLinkCategoryQuery>;
+export type GetLinkCategoryLazyQueryHookResult = ReturnType<typeof useGetLinkCategoryLazyQuery>;
+export type GetLinkCategoryQueryResult = Apollo.QueryResult<GetLinkCategoryQuery, GetLinkCategoryQueryVariables>;
 export const GetOrganizersDocument = gql`
     query GetOrganizers {
   organizers: getOrganizers {

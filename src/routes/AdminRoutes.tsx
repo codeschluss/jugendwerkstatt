@@ -91,9 +91,14 @@ export const AdminRoutes = () => (
         />
         <Route path="medias" element={<MediaListPage />} />
         <Route path="medias/new" element={<CreateMediaPage />} />
+        <Route path="medias/:id" element={<CreateMediaPage />} />
         <Route path="medias/categories" element={<MediaCategoriesListPage />} />
         <Route
           path="medias/categories/new"
+          element={<CreateMediaCategoriesPage />}
+        />
+        <Route
+          path="medias/categories/:id"
           element={<CreateMediaCategoriesPage />}
         />
         <Route path="users/requests" element={<UsersRequestsListPage />} />
