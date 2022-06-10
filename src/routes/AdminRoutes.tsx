@@ -1,9 +1,9 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import {
   GeneralAddressForm,
   PublicPagesForm,
-} from "../admin/components/organisms";
-import { AdminDashboardLayout } from "../admin/components/templates";
+} from '../admin/components/organisms';
+import { AdminDashboardLayout } from '../admin/components/templates';
 import {
   AdminProfileEmailNotificationsPage,
   AdminProfilePage,
@@ -37,8 +37,8 @@ import {
   ChatActivationPage,
   GeneralAddressPage,
   PublicPagesPage,
-} from "../admin/pages";
-import CreateGroupPage from "../admin/pages/Group/CreateGroupPage";
+} from '../admin/pages';
+import CreateGroupPage from '../admin/pages/Group/CreateGroupPage';
 
 export const AdminRoutes = () => (
   <BrowserRouter>
@@ -91,9 +91,11 @@ export const AdminRoutes = () => (
           path="medias/categories/new"
           element={<CreateMediaCategoriesPage />}
         />
-        <Route path="users/requests" element={<UsersRequestsListPage />} />
+
         <Route path="users" element={<UsersListPage />} />
+        <Route path="users/requests" element={<UsersRequestsListPage />} />
         <Route path="users/:id" element={<EditUserPage />} />
+
         <Route path="forms/templates" element={<FormsListPage />} />
         <Route path="forms/templates/new" element={<CreateFormsPage />} />
         <Route path="forms/documents" element={<FormsDocumentsListPage />} />

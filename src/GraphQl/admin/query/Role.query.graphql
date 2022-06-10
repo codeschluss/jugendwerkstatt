@@ -1,0 +1,7 @@
+query GetRoles {
+  roles: getRoles {
+    result {
+      ...Role
+    }
+  }
+}

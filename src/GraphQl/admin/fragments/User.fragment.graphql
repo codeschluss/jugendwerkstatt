@@ -1,0 +1,10 @@
+fragment User on UserEntity {
+  id
+  fullname
+  roles {
+    ...Role
+  }
+  email
+  phone
+  created
+}

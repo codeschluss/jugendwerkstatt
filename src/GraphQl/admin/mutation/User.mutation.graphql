@@ -1,0 +1,9 @@
+mutation ApproveUser($userId: String) {
+  approve(userId: $userId) {
+    id
+  }
+}
+
+mutation DeleteUser($userId: String) {
+  deleteUser(id: $userId)
+}
