@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Button from "../../../../client/components/ui/Button";
 import { useResetPasswordMutation } from "../../../../GraphQl/graphql";
 import useInput from "../../../../hooks/use-input";
-import Button from "../../../../client/components/ui/Button";
 import AuthInput from "../AuthInput";
 
 const Password = () => {
@@ -56,9 +56,9 @@ const Password = () => {
           value={enteredPassword}
           onBlur={passwordBlurHandler}
           onChange={passwordChangeHandler}
-          error={passwordInputError ? "password not strong enough" : ""}
+          error={passwordInputError ? "Passwort nicht stark genug" : ""}
           type="password"
-          placeholder="Neuer Password"
+          placeholder="Neues Passwort"
           inputClassName="w-25 px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"
         />
         <AuthInput
@@ -67,7 +67,7 @@ const Password = () => {
           onChange={cPasswordChangeHandler}
           error={cPasswordInputError ? "must be a valid email address" : ""}
           type="password"
-          placeholder="Neuer Password wiederholen"
+          placeholder="Neues Passwort wiederholen"
           inputClassName="w-25 px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"
         />
         <Button

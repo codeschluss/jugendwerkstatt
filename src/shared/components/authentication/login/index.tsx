@@ -1,17 +1,16 @@
+import jwtDecode from "jwt-decode";
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Button from "../../../../client/components/ui/Button";
 import AuthContext from "../../../../contexts/AuthContext";
 import {
   useCreateTokenMutation,
-  useGetMeBasicQuery,
-  useGetUserQuery,
+  useGetMeBasicQuery
 } from "../../../../GraphQl/graphql";
 import useInput from "../../../../hooks/use-input";
 import useTokenCheck from "../../../../hooks/use-tokenCheck";
-import Button from "../../../../client/components/ui/Button";
 import AuthInput from "../AuthInput";
 import AuthWrapper from "../AuthWrapper";
-import jwtDecode from "jwt-decode";
 
 const Login = () => {
   const { setTempEmail } = useContext(AuthContext);
@@ -72,7 +71,7 @@ const Login = () => {
           onBlur={emailBlurHandler}
           onChange={emailChangeHandler}
           type="text"
-          error={emailInputError ? "must be a valid email address" : ""}
+          error={emailInputError ? "Keine gültige E-Mail Adresse" : ""}
           placeholder="E-Mail Adresse"
           inputClassName="w-full px-4 text-xl p-3 peer focus:outline-none border-2 rounded-md"
         />
@@ -80,16 +79,16 @@ const Login = () => {
           value={enteredPassword}
           onBlur={passwordBlurHandler}
           onChange={passwordChangeHandler}
-          error={passwordInputError ? "password not strong enough" : ""}
+          error={passwordInputError ? "Passwort nicht stark genug" : ""}
           type="password"
-          placeholder="Neuer Password"
+          placeholder="Passwort"
           inputClassName="w-full px-4 text-xl p-3 peer f
           ocus:outline-none border-2 rounded-md"
         />
 
         <Link className="underline my-10" to="/forgot-password/email">
           {" "}
-          <p>Password Vergessen?</p>
+          <p>Passwort vergessen?</p>
         </Link>
         <Button
           isValidated={enteredPasswordValidity && enteredEmailValidity}
