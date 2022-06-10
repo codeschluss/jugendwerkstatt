@@ -1,10 +1,11 @@
 mutation SaveEventCategories($entities: [EventCategoryEntityInput]) {
   saveEventCategories(entities: $entities) {
     id
+    icon
     name
   }
 }
 
-mutation DeleteEventCategory($deleteEventCategoryId: String) {
-  deleteEventCategory(id: $deleteEventCategoryId)
+mutation DeleteEventCategory($id: String) {
+  deleteEventCategory(id: $id)
 }

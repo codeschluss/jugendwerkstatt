@@ -10,8 +10,9 @@ query GetEventCategoriesAdmin {
 }
 
 query GetEventCategory($entity: EventCategoryEntityInput) {
-  getEventCategory(entity: $entity) {
+  category: getEventCategory(entity: $entity) {
     id
+    icon
     name
   }
 }

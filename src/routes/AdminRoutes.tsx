@@ -52,9 +52,14 @@ export const AdminRoutes = () => (
         />
         <Route path="events" element={<EventsListPage />} />
         <Route path="events/new" element={<CreateEventsPage />} />
+        <Route path="events/:id" element={<CreateEventsPage />} />
         <Route path="events/organizers" element={<OrganizersListPage />} />
         <Route
           path="events/organizers/new"
+          element={<CreateOrganizersPage />}
+        />
+        <Route
+          path="events/organizers/:id"
           element={<CreateOrganizersPage />}
         />
         <Route path="events/categories" element={<CategoriesListPage />} />

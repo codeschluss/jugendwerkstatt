@@ -20,10 +20,10 @@ export const BaseOrganizerForm = (): ReactElement => {
       <div className="grid grid-cols-2 gap-8">
         <div className="flex flex-col justify-start w-full space-y-6 col-span-2">
           <InputField
-            id="organizerName"
+            id="name"
             label="Veranstalter Name"
-            {...register("baseData.organizerName")}
-            error={baseData?.organizerName?.message}
+            {...register("baseData.name")}
+            error={baseData?.name?.message}
             placeholder="IHK Wuppertal"
           />
         </div>
@@ -52,11 +52,11 @@ export const BaseOrganizerForm = (): ReactElement => {
         </div>
         <div className="flex flex-col justify-start space-y-6">
           <InputField
-            id="email"
+            id="mail"
             label="E-Mail-Adresse"
             placeholder="mail@alphaev.de"
-            {...register("baseData.email")}
-            error={baseData?.email?.message}
+            {...register("baseData.mail")}
+            error={baseData?.mail?.message}
           />
           <InputField
             id="website"
