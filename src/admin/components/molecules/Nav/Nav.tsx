@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { useSidebarStore } from '../../../store/Sidebar.store';
 import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
@@ -8,6 +7,7 @@ import { NavComposition, NavProps } from './Nav.props';
 import { NavItem } from '../../atoms/NavItem/NavItem';
 import { NavWrapper } from '../../atoms/NavWrapper/NavWrapper';
 import { Icon } from '../../atoms';
+import { useToggle } from '../../../../hooks/useToggle';
 
 const Nav: FC<NavProps> & NavComposition = ({
   data,
@@ -18,12 +18,7 @@ const Nav: FC<NavProps> & NavComposition = ({
   /**
    * global state
    */
-  const { isSidebarToggled, toggleSidebar } = useSidebarStore();
-
-  /**
-   * handlers
-   */
-  const handleSidebarToggler = () => toggleSidebar();
+  const { isToggled, handleToggle } = useToggle(true);
 
   return (
     <>
@@ -32,6 +27,8 @@ const Nav: FC<NavProps> & NavComposition = ({
           <Nav.Item
             key={item.name}
             item={item}
+            isSidebarToggled={isToggled}
+            handleSidebarToggler={handleToggle}
             isLastChild={idx === data.items.length - 1}
           />
         ))}
@@ -39,17 +36,13 @@ const Nav: FC<NavProps> & NavComposition = ({
 
       {showToggler && (
         <button
-          onClick={handleSidebarToggler}
+          onClick={handleToggle}
           className="flex items-center self-end py-4 mx-auto mt-16 space-x-2 text-white"
         >
-          {isSidebarToggled && <span>Menü einklappen</span>}
+          {isToggled && <span>Menü einklappen</span>}
           <Icon
             icon={
-              isSidebarToggled ? (
-                <ChevronDoubleLeftIcon />
-              ) : (
-                <ChevronDoubleRightIcon />
-              )
+              isToggled ? <ChevronDoubleLeftIcon /> : <ChevronDoubleRightIcon />
             }
           />
         </button>

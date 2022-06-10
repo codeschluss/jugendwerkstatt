@@ -1,5 +1,5 @@
 .input-wrapper {
-  @apply flex items-start p-1 text-base h-8 border rounded-sm;
+  @apply flex items-start p-1 text-base border rounded-sm;
 }
 
 .input-wrapper input {
