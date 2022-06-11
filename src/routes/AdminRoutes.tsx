@@ -120,11 +120,11 @@ export const AdminRoutes = () => (
         <Route path="groups/new" element={<CreateGroupPage />} />
         <Route path="groups/:id" element={<EditGroupPage />} />
         <Route
-          path="groups/participants"
+          path="groups/:id/participants"
           element={<GroupParticipantsListPage />}
         />
         <Route
-          path="groups/course-rating"
+          path="groups/:id/course-rating"
           element={<GroupCourseRatingsListPage />}
         />
 

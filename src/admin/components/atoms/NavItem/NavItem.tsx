@@ -45,10 +45,15 @@ export const NavItem: FC<NavItemProps> = ({
    * constants
    */
   const hasChild = !!item.items;
+  const paramIndex = pathname.split('/').findIndex((item) => item === id);
   const activeLink =
     pathname
       .split('/')
-      .filter((item) => item !== id ?? 'new')
+      .filter((item) =>
+        id && paramIndex === pathname.split('/').length - 1
+          ? item !== id
+          : item !== 'new'
+      )
       .join('/') === `${BASE_HREF}/${item.location}`;
 
   return (

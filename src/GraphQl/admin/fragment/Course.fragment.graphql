@@ -1,0 +1,5 @@
+fragment CourseField on CourseEntity {
+  users {
+    ...UserField
+  }
+}

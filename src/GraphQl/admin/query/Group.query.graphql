@@ -1,0 +1,13 @@
+query GetGroups {
+  groups: getGroups {
+    result {
+      ...GroupField
+    }
+  }
+}
+
+query GetGroup($groupId: String) {
+  group: getGroup(entity: { id: $groupId }) {
+    ...GroupField
+  }
+}

@@ -2608,6 +2608,10 @@ export type VerificationEntityInput = {
 
 export type CategoryFieldFragment = { __typename?: 'EventCategoryEntity', id?: string | null, icon?: string | null, name?: string | null };
 
+export type CourseFieldFragment = { __typename?: 'CourseEntity', users?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null };
+
+export type GroupFieldFragment = { __typename?: 'GroupEntity', id?: string | null, name?: string | null, courses?: Array<{ __typename?: 'CourseEntity', users?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null> | null };
+
 export type LinkFieldFragment = { __typename?: 'LinkEntity', id?: string | null, title?: string | null, url?: string | null };
 
 export type LinkCategoryFieldFragment = { __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null };
@@ -2616,11 +2620,11 @@ export type LinkFragment = { __typename?: 'LinkEntity', id?: string | null, titl
 
 export type OrganizerFieldFragment = { __typename?: 'OrganizerEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null };
 
-export type QuestionFragment = { __typename?: 'QuestionEntity', id?: string | null, item?: string | null };
+export type QuestionFieldFragment = { __typename?: 'QuestionEntity', id?: string | null, item?: string | null };
 
-export type RoleFragment = { __typename?: 'RoleEntity', id?: string | null, name?: string | null };
+export type RoleFieldFragment = { __typename?: 'RoleEntity', id?: string | null, name?: string | null };
 
-export type UserFragment = { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null };
+export type UserFieldFragment = { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null };
 
 export type SaveEventCategoriesMutationVariables = Exact<{
   entities?: InputMaybe<Array<InputMaybe<EventCategoryEntityInput>> | InputMaybe<EventCategoryEntityInput>>;
@@ -2635,6 +2639,13 @@ export type DeleteEventCategoryMutationVariables = Exact<{
 
 
 export type DeleteEventCategoryMutation = { __typename?: 'Mutation', deleteEventCategory?: boolean | null };
+
+export type DeleteGroupMutationVariables = Exact<{
+  deleteGroupId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteGroupMutation = { __typename?: 'Mutation', deleteGroup?: boolean | null };
 
 export type SaveLinkMutationVariables = Exact<{
   entity?: InputMaybe<LinkEntityInput>;
@@ -2710,6 +2721,18 @@ export type GetEventCategoryQueryVariables = Exact<{
 
 
 export type GetEventCategoryQuery = { __typename?: 'Query', category?: { __typename?: 'EventCategoryEntity', id?: string | null, icon?: string | null, name?: string | null } | null };
+
+export type GetGroupsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetGroupsQuery = { __typename?: 'Query', groups?: { __typename?: 'PageableList_GroupEntity', result?: Array<{ __typename?: 'GroupEntity', id?: string | null, name?: string | null, courses?: Array<{ __typename?: 'CourseEntity', users?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null> | null } | null> | null } | null };
+
+export type GetGroupQueryVariables = Exact<{
+  groupId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetGroupQuery = { __typename?: 'Query', group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null, courses?: Array<{ __typename?: 'CourseEntity', users?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null> | null } | null };
 
 export type GetLinksQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -2960,6 +2983,40 @@ export const CategoryFieldFragmentDoc = gql`
   name
 }
     `;
+export const RoleFieldFragmentDoc = gql`
+    fragment RoleField on RoleEntity {
+  id
+  name
+}
+    `;
+export const UserFieldFragmentDoc = gql`
+    fragment UserField on UserEntity {
+  id
+  fullname
+  roles {
+    ...RoleField
+  }
+  email
+  phone
+  created
+}
+    ${RoleFieldFragmentDoc}`;
+export const CourseFieldFragmentDoc = gql`
+    fragment CourseField on CourseEntity {
+  users {
+    ...UserField
+  }
+}
+    ${UserFieldFragmentDoc}`;
+export const GroupFieldFragmentDoc = gql`
+    fragment GroupField on GroupEntity {
+  id
+  name
+  courses {
+    ...CourseField
+  }
+}
+    ${CourseFieldFragmentDoc}`;
 export const LinkFieldFragmentDoc = gql`
     fragment LinkField on LinkEntity {
   id
@@ -2991,30 +3048,12 @@ export const OrganizerFieldFragmentDoc = gql`
   website
 }
     `;
-export const QuestionFragmentDoc = gql`
-    fragment Question on QuestionEntity {
+export const QuestionFieldFragmentDoc = gql`
+    fragment QuestionField on QuestionEntity {
   id
   item
 }
     `;
-export const RoleFragmentDoc = gql`
-    fragment Role on RoleEntity {
-  id
-  name
-}
-    `;
-export const UserFragmentDoc = gql`
-    fragment User on UserEntity {
-  id
-  fullname
-  roles {
-    ...Role
-  }
-  email
-  phone
-  created
-}
-    ${RoleFragmentDoc}`;
 export const SaveEventCategoriesDocument = gql`
     mutation SaveEventCategories($entities: [EventCategoryEntityInput]) {
   saveEventCategories(entities: $entities) {
@@ -3079,6 +3118,37 @@ export function useDeleteEventCategoryMutation(baseOptions?: Apollo.MutationHook
 export type DeleteEventCategoryMutationHookResult = ReturnType<typeof useDeleteEventCategoryMutation>;
 export type DeleteEventCategoryMutationResult = Apollo.MutationResult<DeleteEventCategoryMutation>;
 export type DeleteEventCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteEventCategoryMutation, DeleteEventCategoryMutationVariables>;
+export const DeleteGroupDocument = gql`
+    mutation DeleteGroup($deleteGroupId: String) {
+  deleteGroup(id: $deleteGroupId)
+}
+    `;
+export type DeleteGroupMutationFn = Apollo.MutationFunction<DeleteGroupMutation, DeleteGroupMutationVariables>;
+
+/**
+ * __useDeleteGroupMutation__
+ *
+ * To run a mutation, you first call `useDeleteGroupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteGroupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteGroupMutation, { data, loading, error }] = useDeleteGroupMutation({
+ *   variables: {
+ *      deleteGroupId: // value for 'deleteGroupId'
+ *   },
+ * });
+ */
+export function useDeleteGroupMutation(baseOptions?: Apollo.MutationHookOptions<DeleteGroupMutation, DeleteGroupMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteGroupMutation, DeleteGroupMutationVariables>(DeleteGroupDocument, options);
+      }
+export type DeleteGroupMutationHookResult = ReturnType<typeof useDeleteGroupMutation>;
+export type DeleteGroupMutationResult = Apollo.MutationResult<DeleteGroupMutation>;
+export type DeleteGroupMutationOptions = Apollo.BaseMutationOptions<DeleteGroupMutation, DeleteGroupMutationVariables>;
 export const SaveLinkDocument = gql`
     mutation SaveLink($entity: LinkEntityInput) {
   link: saveLink(entity: $entity) {
@@ -3440,6 +3510,77 @@ export function useGetEventCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetEventCategoryQueryHookResult = ReturnType<typeof useGetEventCategoryQuery>;
 export type GetEventCategoryLazyQueryHookResult = ReturnType<typeof useGetEventCategoryLazyQuery>;
 export type GetEventCategoryQueryResult = Apollo.QueryResult<GetEventCategoryQuery, GetEventCategoryQueryVariables>;
+export const GetGroupsDocument = gql`
+    query GetGroups {
+  groups: getGroups {
+    result {
+      ...GroupField
+    }
+  }
+}
+    ${GroupFieldFragmentDoc}`;
+
+/**
+ * __useGetGroupsQuery__
+ *
+ * To run a query within a React component, call `useGetGroupsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetGroupsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetGroupsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetGroupsQuery(baseOptions?: Apollo.QueryHookOptions<GetGroupsQuery, GetGroupsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetGroupsQuery, GetGroupsQueryVariables>(GetGroupsDocument, options);
+      }
+export function useGetGroupsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetGroupsQuery, GetGroupsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetGroupsQuery, GetGroupsQueryVariables>(GetGroupsDocument, options);
+        }
+export type GetGroupsQueryHookResult = ReturnType<typeof useGetGroupsQuery>;
+export type GetGroupsLazyQueryHookResult = ReturnType<typeof useGetGroupsLazyQuery>;
+export type GetGroupsQueryResult = Apollo.QueryResult<GetGroupsQuery, GetGroupsQueryVariables>;
+export const GetGroupDocument = gql`
+    query GetGroup($groupId: String) {
+  group: getGroup(entity: {id: $groupId}) {
+    ...GroupField
+  }
+}
+    ${GroupFieldFragmentDoc}`;
+
+/**
+ * __useGetGroupQuery__
+ *
+ * To run a query within a React component, call `useGetGroupQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetGroupQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetGroupQuery({
+ *   variables: {
+ *      groupId: // value for 'groupId'
+ *   },
+ * });
+ */
+export function useGetGroupQuery(baseOptions?: Apollo.QueryHookOptions<GetGroupQuery, GetGroupQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetGroupQuery, GetGroupQueryVariables>(GetGroupDocument, options);
+      }
+export function useGetGroupLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetGroupQuery, GetGroupQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetGroupQuery, GetGroupQueryVariables>(GetGroupDocument, options);
+        }
+export type GetGroupQueryHookResult = ReturnType<typeof useGetGroupQuery>;
+export type GetGroupLazyQueryHookResult = ReturnType<typeof useGetGroupLazyQuery>;
+export type GetGroupQueryResult = Apollo.QueryResult<GetGroupQuery, GetGroupQueryVariables>;
 export const GetLinksDocument = gql`
     query GetLinks($params: FilterSortPaginateInput) {
   getLinks(params: $params) {
@@ -3661,11 +3802,11 @@ export const GetQuestionsDocument = gql`
     query GetQuestions {
   questions: getQuestions {
     result {
-      ...Question
+      ...QuestionField
     }
   }
 }
-    ${QuestionFragmentDoc}`;
+    ${QuestionFieldFragmentDoc}`;
 
 /**
  * __useGetQuestionsQuery__
@@ -3728,11 +3869,11 @@ export const GetRolesDocument = gql`
     query GetRoles {
   roles: getRoles {
     result {
-      ...Role
+      ...RoleField
     }
   }
 }
-    ${RoleFragmentDoc}`;
+    ${RoleFieldFragmentDoc}`;
 
 /**
  * __useGetRolesQuery__
@@ -3766,11 +3907,11 @@ export const GetApprovedUsersDocument = gql`
     params: {expression: {entity: {operator: EQUAL, path: "roles.name", value: "approved"}}}
   ) {
     result {
-      ...User
+      ...UserField
     }
   }
 }
-    ${UserFragmentDoc}`;
+    ${UserFieldFragmentDoc}`;
 
 /**
  * __useGetApprovedUsersQuery__
@@ -3804,11 +3945,11 @@ export const GetRequestedUsersDocument = gql`
     params: {expression: {entity: {operator: NOT_EQUAL, path: "roles.name", value: "approved"}}}
   ) {
     result {
-      ...User
+      ...UserField
     }
   }
 }
-    ${UserFragmentDoc}`;
+    ${UserFieldFragmentDoc}`;
 
 /**
  * __useGetRequestedUsersQuery__

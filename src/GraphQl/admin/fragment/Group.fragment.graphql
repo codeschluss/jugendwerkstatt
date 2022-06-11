@@ -1,0 +1,7 @@
+fragment GroupField on GroupEntity {
+  id
+  name
+  courses {
+    ...CourseField
+  }
+}

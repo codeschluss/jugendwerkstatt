@@ -7,7 +7,7 @@ query GetApprovedUsers {
     }
   ) {
     result {
-      ...User
+      ...UserField
     }
   }
 }
@@ -21,7 +21,7 @@ query GetRequestedUsers {
     }
   ) {
     result {
-      ...User
+      ...UserField
     }
   }
 }

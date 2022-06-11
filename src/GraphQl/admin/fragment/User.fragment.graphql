@@ -1,8 +1,8 @@
-fragment User on UserEntity {
+fragment UserField on UserEntity {
   id
   fullname
   roles {
-    ...Role
+    ...RoleField
   }
   email
   phone
