@@ -1,0 +1,19 @@
+fragment EventField on EventEntity {
+  id
+  name
+}
+
+fragment CategoryField on EventCategoryEntity {
+  id
+  name
+}
+
+fragment Event on EventEntity {
+  ...EventField
+  category {
+    ...CategoryField
+  }
+  schedules {
+    ...ScheduleField
+  }
+}

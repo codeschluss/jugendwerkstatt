@@ -1,3 +1,18 @@
+query GetEventsAdmin($params: FilterSortPaginateInput) {
+  getEvents(params: $params) {
+    total
+    result {
+      ...Event
+    }
+  }
+}
+
+query GetEventAdmin($entity: EventEntityInput) {
+  getEvent(entity: $entity) {
+    ...Event
+  }
+}
+
 query GetEventCategoriesAdmin {
   categories: getEventCategories {
     total

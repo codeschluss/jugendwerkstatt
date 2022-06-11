@@ -16,43 +16,47 @@ export const AddressForm = (): ReactElement => {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-8">
-        <div className="flex flex-col justify-start w-full space-y-6">
+      <div className="grid grid-cols-auto md:grid-cols-2 md:gap-8">
+        <div className="flex flex-col justify-start w-full md:space-y-6">
           <InputField
             id="street"
             label="Straße"
+            className="my-2"
             {...register("address.street")}
             error={address?.street?.message}
             placeholder="Heinz-Kluncker-Straße"
           />
           <InputField
-            id="city"
+            id="place"
             label="Stadt"
-            {...register("address.city")}
+            className="my-2"
+            {...register("address.place")}
             placeholder="Wuppertal"
-            error={address?.city?.message}
+            error={address?.place?.message}
           />
         </div>
-        <div className="flex flex-col justify-start w-full space-y-6">
+        <div className="flex flex-col justify-start w-full md:space-y-6">
           <InputField
-            inputClassName="w-32"
+            inputClassName="md:w-32"
             placeholder="4"
             id="houseNumber"
             label="Hausnummer"
+            className="my-2"
             {...register("address.houseNumber")}
             error={address?.houseNumber?.message}
           />
           <InputField
-            inputClassName="w-32"
+            inputClassName="md:w-32"
             id="postalCode"
             label="Postleitzahl"
             placeholder="42285"
+            className="my-2"
             {...register("address.postalCode")}
             error={address?.postalCode?.message}
           />
         </div>
       </div>
-      <Button className="mt-6" onClick={handleTrigger}>
+      <Button type="button" className="mt-6" onClick={handleTrigger}>
         Speichern
       </Button>
     </>

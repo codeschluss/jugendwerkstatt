@@ -1,76 +1,50 @@
 import { ReactElement } from "react";
 import { useFormContext } from "react-hook-form";
-import { Button, Select } from "../../atoms";
 import { InputField } from "../../molecules";
 import { OrganizerFormInputs } from "./Events.types";
 
 export const BaseOrganizerForm = (): ReactElement => {
   const {
-    trigger,
     register,
-    formState: {
-      errors: { baseData },
-    },
+    formState: { errors },
   } = useFormContext<OrganizerFormInputs>();
 
-  const handleTrigger = () => trigger("baseData");
-
   return (
-    <>
-      <div className="grid grid-cols-2 gap-8">
-        <div className="flex flex-col justify-start w-full space-y-6 col-span-2">
-          <InputField
-            id="name"
-            label="Veranstalter Name"
-            {...register("baseData.name")}
-            error={baseData?.name?.message}
-            placeholder="IHK Wuppertal"
-          />
-        </div>
-        <div className="flex flex-col justify-start w-full space-y-6">
-          <InputField
-            id="phone"
-            label="Telefonnummer"
-            {...register("baseData.phone")}
-            placeholder="+49 202 - 49 68 94 10"
-            error={baseData?.phone?.message}
-          />
+    <div className="grid grid-cols-2 gap-8">
+      <div className="flex flex-col justify-start w-full space-y-6">
+        <InputField
+          id="name"
+          label="Veranstalter Name"
+          {...register("name")}
+          error={errors?.name?.message}
+          placeholder="IHK Wuppertal"
+        />
 
-          <Select
-            id="category"
-            label="Kategorie"
-            {...register("baseData.category")}
-            defaultValue={1}
-            error={baseData?.category?.message}
-          >
-            {[1, 2, 3].map((i) => (
-              <option key={i} value={i}>
-                test {i}
-              </option>
-            ))}
-          </Select>
-        </div>
-        <div className="flex flex-col justify-start space-y-6">
-          <InputField
-            id="mail"
-            label="E-Mail-Adresse"
-            placeholder="mail@alphaev.de"
-            {...register("baseData.mail")}
-            error={baseData?.mail?.message}
-          />
-          <InputField
-            id="website"
-            label="Webseite"
-            required={false}
-            placeholder="https://www.alphaev.de"
-            {...register("baseData.website")}
-            error={baseData?.website?.message}
-          />
-        </div>
+        <InputField
+          id="phone"
+          label="Telefonnummer"
+          {...register("phone")}
+          placeholder="+49 202 - 49 68 94 10"
+          error={errors?.phone?.message}
+        />
       </div>
-      <Button className="mt-6" onClick={handleTrigger}>
-        Speichern
-      </Button>
-    </>
+      <div className="flex flex-col justify-start space-y-6">
+        <InputField
+          id="mail"
+          label="E-Mail-Adresse"
+          placeholder="mail@alphaev.de"
+          {...register("mail")}
+          error={errors?.mail?.message}
+        />
+        <InputField
+          id="website"
+          label="Webseite"
+          required={false}
+          placeholder="https://www.alphaev.de"
+          {...register("website")}
+          error={errors?.website?.message}
+        />
+      </div>
+    </div>
   );
 };

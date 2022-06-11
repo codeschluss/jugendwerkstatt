@@ -7,9 +7,9 @@ import {
   useGetOrganizerQuery,
   useSaveOrganizerMutation,
 } from "../../../GraphQl/graphql";
+import { Button } from "../../components/atoms";
 import { Accordion } from "../../components/molecules";
 import {
-  AddressForm,
   BaseOrganizerForm,
   OrganizerFormInputs,
 } from "../../components/organisms";
@@ -17,7 +17,7 @@ import { OrganizerFormSchema } from "../../validations";
 
 const CreateOrganizersPage = (): ReactElement => {
   const navigate = useNavigate();
-  const params = useParams();
+  const { id } = useParams();
 
   const methods = useForm<OrganizerFormInputs>({
     resolver: joiResolver(OrganizerFormSchema),
@@ -25,44 +25,45 @@ const CreateOrganizersPage = (): ReactElement => {
 
   const { reset, handleSubmit } = methods;
 
-  const { data } = useGetOrganizerQuery({
-    variables: { entity: { id: params.id } },
-    skip: !params.id,
+  const { data: result } = useGetOrganizerQuery({
+    variables: { entity: { id } },
+    skip: !id,
   });
 
   const [saveEventOrganizer] = useSaveOrganizerMutation({
     onCompleted: () => navigate("/admin/events/organizers"),
   });
 
-  const handleOnSubmit = ({ baseData }: OrganizerFormInputs) => {
+  const handleOnSubmit = (data: OrganizerFormInputs) => {
     saveEventOrganizer({
       variables: {
-        entity: { ...baseData, ...(!!data && { id: data?.organizer?.id }) },
+        entity: {
+          ...data,
+          ...(!!result && { id: result?.organizer?.id }),
+        },
       },
     });
   };
 
   useEffect(() => {
-    if (!!data?.organizer) {
+    if (!!result?.organizer) {
       reset({
-        baseData: {
-          mail: data?.organizer?.mail || "",
-          name: data?.organizer?.name || "",
-          phone: data?.organizer?.phone || "",
-          website: data?.organizer?.website || "",
-        },
+        mail: result?.organizer?.mail || "",
+        name: result?.organizer?.name || "",
+        phone: result?.organizer?.phone || "",
+        website: result?.organizer?.website || "",
       });
     }
-  }, [data, reset]);
+  }, [result, reset]);
 
   return (
     <FormProvider {...methods}>
       <form className="min-h-full" onSubmit={handleSubmit(handleOnSubmit)}>
-        <Accordion title="Stammdaten">
-          <BaseOrganizerForm />
-        </Accordion>
-        <Accordion title="Adresse">
-          <AddressForm />
+        <Accordion title="Stammdaten" open={!!id}>
+          <>
+            <BaseOrganizerForm />
+            <Button className="mt-6">Speichern</Button>
+          </>
         </Accordion>
       </form>
     </FormProvider>

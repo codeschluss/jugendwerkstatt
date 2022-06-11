@@ -1,0 +1,5 @@
+fragment ScheduleField on ScheduleEntity {
+  id
+  startDate
+  endDate
+}

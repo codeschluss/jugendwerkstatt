@@ -72,6 +72,7 @@ export const AdminRoutes = () => (
         />
         <Route path="job-announcements" element={<VacancyListPage />} />
         <Route path="job-announcements/new" element={<CreateVacancyPage />} />
+        <Route path="job-announcements/:id" element={<CreateVacancyPage />} />
         <Route
           path="job-announcements/categories"
           element={<VacancyCategoriesListPage />}
@@ -81,11 +82,19 @@ export const AdminRoutes = () => (
           element={<CreateVacancyCategoriesPage />}
         />
         <Route
+          path="job-announcements/categories/:id"
+          element={<CreateVacancyCategoriesPage />}
+        />
+        <Route
           path="job-announcements/companies"
           element={<VacancyCompaniesListPage />}
         />
         <Route
           path="job-announcements/companies/new"
+          element={<CreateVacancyCompaniesPage />}
+        />
+        <Route
+          path="job-announcements/companies/:id"
           element={<CreateVacancyCompaniesPage />}
         />
         <Route path="medias" element={<MediaListPage />} />

@@ -1,0 +1,11 @@
+fragment CompanyField on CompanyEntity {
+  id
+  mail
+  name
+  phone
+  website
+}
+
+fragment Company on CompanyEntity {
+  ...CompanyField
+}

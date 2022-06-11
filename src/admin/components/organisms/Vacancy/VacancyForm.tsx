@@ -29,11 +29,11 @@ export const VacancyForm = (): ReactElement => {
           />
 
           <Select
-            id="company"
+            id="name"
             label="Unternehmen"
-            {...register("baseData.company")}
+            {...register("baseData.name")}
             defaultValue={2}
-            error={baseData?.company?.message}
+            error={baseData?.name?.message}
           >
             {[1, 2, 3].map((i) => (
               <option key={i} value={i}>
@@ -53,11 +53,11 @@ export const VacancyForm = (): ReactElement => {
           />
 
           <InputField
-            id="email"
+            id="mail"
             label="E-Mail-Adresse"
             placeholder="info@schreinerei-mueller.de"
-            {...register("baseData.email")}
-            error={baseData?.email?.message}
+            {...register("baseData.mail")}
+            error={baseData?.mail?.message}
           />
         </div>
         <div className="grid gap-8 md:grid-cols-2">
@@ -85,7 +85,7 @@ export const VacancyForm = (): ReactElement => {
           />
         </div>
       </div>
-      <Button className="mt-6" onClick={handleTrigger}>
+      <Button type="button" className="mt-6" onClick={handleTrigger}>
         Speichern
       </Button>
     </>

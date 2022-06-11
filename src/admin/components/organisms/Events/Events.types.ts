@@ -1,22 +1,15 @@
 export interface AddressFormInputs {
   street: string;
-  city: string;
+  place: string;
   postalCode: string;
   houseNumber: string;
 }
 export interface BaseDataFormInputs {
-  eventName: string;
-  phone: string;
-  email: string;
+  name: string;
+  phone?: string;
+  email?: string;
   website?: string;
   organizer: string;
-  category: string;
-}
-export interface OrganizerBaseDataFormInputs {
-  name: string;
-  phone: string;
-  mail: string;
-  website?: string;
   category: string;
 }
 
@@ -26,8 +19,10 @@ export interface EventsFormInputs {
   description: string;
 }
 export interface OrganizerFormInputs {
-  baseData: OrganizerBaseDataFormInputs;
-  address?: AddressFormInputs;
+  name: string;
+  phone: string;
+  mail: string;
+  website?: string;
 }
 export interface CategoryFormInputs {
   name: string;
