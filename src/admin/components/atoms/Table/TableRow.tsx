@@ -10,7 +10,7 @@ export const TableRow: FC<TableRowProps> = ({
   <tr
     {...rest}
     className={twClsx(
-      "flex justify-start items-center flex-row mb-2",
+      "flex justify-start items-stretch flex-row mb-2",
       className
     )}
   >
