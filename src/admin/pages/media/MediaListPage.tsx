@@ -39,7 +39,7 @@ const MediaListPage = (): ReactElement => {
             <Table.Row key={item?.id}>
               <Table.Data>{item?.title}</Table.Data>
               <Table.Data>{item?.category?.name}</Table.Data>
-              <Table.Data>{item?.url}</Table.Data>
+              <Table.Data title={item?.url || ""}>{item?.url}</Table.Data>
               <Table.Data>
                 <Action
                   onUpdate={handleUpdateById(item?.id || "")}
