@@ -1,0 +1,17 @@
+fragment LinkField on LinkEntity {
+  id
+  title
+  url
+}
+
+fragment LinkCategoryField on LinkCategoryEntity {
+  id
+  name
+}
+
+fragment Link on LinkEntity {
+  ...LinkField
+  category {
+    ...LinkCategoryField
+  }
+}

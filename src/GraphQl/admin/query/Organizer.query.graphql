@@ -1,11 +1,7 @@
 query GetOrganizers {
   organizers: getOrganizers {
     result {
-      id
-      mail
-      name
-      phone
-      website
+      ...OrganizerField
     }
     total
   }
@@ -13,10 +9,6 @@ query GetOrganizers {
 
 query GetOrganizer($entity: OrganizerEntityInput) {
   organizer: getOrganizer(entity: $entity) {
-    id
-    mail
-    name
-    phone
-    website
+    ...OrganizerField
   }
 }

@@ -1,0 +1,7 @@
+fragment OrganizerField on OrganizerEntity {
+  id
+  mail
+  name
+  phone
+  website
+}

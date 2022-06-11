@@ -1,12 +1,6 @@
 mutation SaveLink($entity: LinkEntityInput) {
   link: saveLink(entity: $entity) {
-    id
-    title
-    url
-    category {
-      id
-      name
-    }
+    ...Link
   }
 }
 
@@ -16,8 +10,7 @@ mutation DeleteLink($id: String) {
 
 mutation SaveLinkCategory($entity: LinkCategoryEntityInput) {
   linkCategory: saveLinkCategory(entity: $entity) {
-    id
-    name
+    ...LinkCategoryField
   }
 }
 

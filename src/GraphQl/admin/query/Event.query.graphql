@@ -2,17 +2,13 @@ query GetEventCategoriesAdmin {
   categories: getEventCategories {
     total
     result {
-      id
-      icon
-      name
+      ...CategoryField
     }
   }
 }
 
 query GetEventCategory($entity: EventCategoryEntityInput) {
   category: getEventCategory(entity: $entity) {
-    id
-    icon
-    name
+    ...CategoryField
   }
 }

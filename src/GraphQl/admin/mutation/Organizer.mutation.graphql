@@ -1,10 +1,6 @@
 mutation SaveOrganizer($entity: OrganizerEntityInput) {
   organizer: saveOrganizer(entity: $entity) {
-    id
-    mail
-    name
-    phone
-    website
+    ...OrganizerField
   }
 }
 

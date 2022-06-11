@@ -2608,6 +2608,14 @@ export type VerificationEntityInput = {
 
 export type CategoryFieldFragment = { __typename?: 'EventCategoryEntity', id?: string | null, icon?: string | null, name?: string | null };
 
+export type LinkFieldFragment = { __typename?: 'LinkEntity', id?: string | null, title?: string | null, url?: string | null };
+
+export type LinkCategoryFieldFragment = { __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null };
+
+export type LinkFragment = { __typename?: 'LinkEntity', id?: string | null, title?: string | null, url?: string | null, category?: { __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null } | null };
+
+export type OrganizerFieldFragment = { __typename?: 'OrganizerEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null };
+
 export type RoleFragment = { __typename?: 'RoleEntity', id?: string | null, name?: string | null };
 
 export type UserFragment = { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null };
@@ -2699,14 +2707,14 @@ export type GetLinksQueryVariables = Exact<{
 }>;
 
 
-export type GetLinksQuery = { __typename?: 'Query', getLinks?: { __typename?: 'PageableList_LinkEntity', total: any, result?: Array<{ __typename?: 'LinkEntity', id?: string | null, url?: string | null, title?: string | null, category?: { __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null } | null } | null> | null } | null };
+export type GetLinksQuery = { __typename?: 'Query', getLinks?: { __typename?: 'PageableList_LinkEntity', total: any, result?: Array<{ __typename?: 'LinkEntity', id?: string | null, title?: string | null, url?: string | null, category?: { __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null } | null } | null> | null } | null };
 
 export type GetLinkQueryVariables = Exact<{
   entity?: InputMaybe<LinkEntityInput>;
 }>;
 
 
-export type GetLinkQuery = { __typename?: 'Query', getLink?: { __typename?: 'LinkEntity', id?: string | null, url?: string | null, title?: string | null, category?: { __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null } | null } | null };
+export type GetLinkQuery = { __typename?: 'Query', getLink?: { __typename?: 'LinkEntity', id?: string | null, title?: string | null, url?: string | null, category?: { __typename?: 'LinkCategoryEntity', id?: string | null, name?: string | null } | null } | null };
 
 export type GetLinkCategoriesAdminQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -2926,6 +2934,37 @@ export const CategoryFieldFragmentDoc = gql`
   name
 }
     `;
+export const LinkFieldFragmentDoc = gql`
+    fragment LinkField on LinkEntity {
+  id
+  title
+  url
+}
+    `;
+export const LinkCategoryFieldFragmentDoc = gql`
+    fragment LinkCategoryField on LinkCategoryEntity {
+  id
+  name
+}
+    `;
+export const LinkFragmentDoc = gql`
+    fragment Link on LinkEntity {
+  ...LinkField
+  category {
+    ...LinkCategoryField
+  }
+}
+    ${LinkFieldFragmentDoc}
+${LinkCategoryFieldFragmentDoc}`;
+export const OrganizerFieldFragmentDoc = gql`
+    fragment OrganizerField on OrganizerEntity {
+  id
+  mail
+  name
+  phone
+  website
+}
+    `;
 export const RoleFragmentDoc = gql`
     fragment Role on RoleEntity {
   id
@@ -2947,12 +2986,10 @@ export const UserFragmentDoc = gql`
 export const SaveEventCategoriesDocument = gql`
     mutation SaveEventCategories($entities: [EventCategoryEntityInput]) {
   saveEventCategories(entities: $entities) {
-    id
-    icon
-    name
+    ...CategoryField
   }
 }
-    `;
+    ${CategoryFieldFragmentDoc}`;
 export type SaveEventCategoriesMutationFn = Apollo.MutationFunction<SaveEventCategoriesMutation, SaveEventCategoriesMutationVariables>;
 
 /**
@@ -3013,16 +3050,10 @@ export type DeleteEventCategoryMutationOptions = Apollo.BaseMutationOptions<Dele
 export const SaveLinkDocument = gql`
     mutation SaveLink($entity: LinkEntityInput) {
   link: saveLink(entity: $entity) {
-    id
-    title
-    url
-    category {
-      id
-      name
-    }
+    ...Link
   }
 }
-    `;
+    ${LinkFragmentDoc}`;
 export type SaveLinkMutationFn = Apollo.MutationFunction<SaveLinkMutation, SaveLinkMutationVariables>;
 
 /**
@@ -3083,11 +3114,10 @@ export type DeleteLinkMutationOptions = Apollo.BaseMutationOptions<DeleteLinkMut
 export const SaveLinkCategoryDocument = gql`
     mutation SaveLinkCategory($entity: LinkCategoryEntityInput) {
   linkCategory: saveLinkCategory(entity: $entity) {
-    id
-    name
+    ...LinkCategoryField
   }
 }
-    `;
+    ${LinkCategoryFieldFragmentDoc}`;
 export type SaveLinkCategoryMutationFn = Apollo.MutationFunction<SaveLinkCategoryMutation, SaveLinkCategoryMutationVariables>;
 
 /**
@@ -3148,14 +3178,10 @@ export type DeleteLinkCategoryMutationOptions = Apollo.BaseMutationOptions<Delet
 export const SaveOrganizerDocument = gql`
     mutation SaveOrganizer($entity: OrganizerEntityInput) {
   organizer: saveOrganizer(entity: $entity) {
-    id
-    mail
-    name
-    phone
-    website
+    ...OrganizerField
   }
 }
-    `;
+    ${OrganizerFieldFragmentDoc}`;
 export type SaveOrganizerMutationFn = Apollo.MutationFunction<SaveOrganizerMutation, SaveOrganizerMutationVariables>;
 
 /**
@@ -3282,13 +3308,11 @@ export const GetEventCategoriesAdminDocument = gql`
   categories: getEventCategories {
     total
     result {
-      id
-      icon
-      name
+      ...CategoryField
     }
   }
 }
-    `;
+    ${CategoryFieldFragmentDoc}`;
 
 /**
  * __useGetEventCategoriesAdminQuery__
@@ -3319,12 +3343,10 @@ export type GetEventCategoriesAdminQueryResult = Apollo.QueryResult<GetEventCate
 export const GetEventCategoryDocument = gql`
     query GetEventCategory($entity: EventCategoryEntityInput) {
   category: getEventCategory(entity: $entity) {
-    id
-    icon
-    name
+    ...CategoryField
   }
 }
-    `;
+    ${CategoryFieldFragmentDoc}`;
 
 /**
  * __useGetEventCategoryQuery__
@@ -3358,17 +3380,11 @@ export const GetLinksDocument = gql`
   getLinks(params: $params) {
     total
     result {
-      id
-      url
-      title
-      category {
-        id
-        name
-      }
+      ...Link
     }
   }
 }
-    `;
+    ${LinkFragmentDoc}`;
 
 /**
  * __useGetLinksQuery__
@@ -3400,16 +3416,10 @@ export type GetLinksQueryResult = Apollo.QueryResult<GetLinksQuery, GetLinksQuer
 export const GetLinkDocument = gql`
     query GetLink($entity: LinkEntityInput) {
   getLink(entity: $entity) {
-    id
-    url
-    title
-    category {
-      id
-      name
-    }
+    ...Link
   }
 }
-    `;
+    ${LinkFragmentDoc}`;
 
 /**
  * __useGetLinkQuery__
@@ -3442,12 +3452,11 @@ export const GetLinkCategoriesAdminDocument = gql`
     query GetLinkCategoriesAdmin($params: FilterSortPaginateInput) {
   getLinkCategories(params: $params) {
     result {
-      id
-      name
+      ...LinkCategoryField
     }
   }
 }
-    `;
+    ${LinkCategoryFieldFragmentDoc}`;
 
 /**
  * __useGetLinkCategoriesAdminQuery__
@@ -3479,11 +3488,10 @@ export type GetLinkCategoriesAdminQueryResult = Apollo.QueryResult<GetLinkCatego
 export const GetLinkCategoryDocument = gql`
     query GetLinkCategory($entity: LinkCategoryEntityInput) {
   getLinkCategory(entity: $entity) {
-    id
-    name
+    ...LinkCategoryField
   }
 }
-    `;
+    ${LinkCategoryFieldFragmentDoc}`;
 
 /**
  * __useGetLinkCategoryQuery__
@@ -3516,16 +3524,12 @@ export const GetOrganizersDocument = gql`
     query GetOrganizers {
   organizers: getOrganizers {
     result {
-      id
-      mail
-      name
-      phone
-      website
+      ...OrganizerField
     }
     total
   }
 }
-    `;
+    ${OrganizerFieldFragmentDoc}`;
 
 /**
  * __useGetOrganizersQuery__
@@ -3556,14 +3560,10 @@ export type GetOrganizersQueryResult = Apollo.QueryResult<GetOrganizersQuery, Ge
 export const GetOrganizerDocument = gql`
     query GetOrganizer($entity: OrganizerEntityInput) {
   organizer: getOrganizer(entity: $entity) {
-    id
-    mail
-    name
-    phone
-    website
+    ...OrganizerField
   }
 }
-    `;
+    ${OrganizerFieldFragmentDoc}`;
 
 /**
  * __useGetOrganizerQuery__

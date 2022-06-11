@@ -1,8 +1,6 @@
 mutation SaveEventCategories($entities: [EventCategoryEntityInput]) {
   saveEventCategories(entities: $entities) {
-    id
-    icon
-    name
+    ...CategoryField
   }
 }
 
