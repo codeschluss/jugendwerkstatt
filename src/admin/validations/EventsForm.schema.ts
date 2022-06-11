@@ -1,9 +1,6 @@
 import Joi from "joi";
 import { AddressFormSchema } from "./AddressForm.schema";
-import {
-  EventBaseDataFormSchema,
-  OrganizerBaseDataFormSchema,
-} from "./EventBaseDataForm.schema";
+import { EventBaseDataFormSchema } from "./EventBaseDataForm.schema";
 
 export const EventsFormSchema = Joi.object({
   address: AddressFormSchema,
@@ -12,7 +9,10 @@ export const EventsFormSchema = Joi.object({
 });
 
 export const OrganizerFormSchema = Joi.object({
-  baseData: OrganizerBaseDataFormSchema,
+  name: Joi.string().required().label("Veranstalter Name"),
+  phone: Joi.string().required().label("Telefonnummer"),
+  website: Joi.string().uri().optional().label("Webseite"),
+  mail: Joi.string().email({ tlds: false }).label("E-Mail-Adresse"),
 });
 
 export const CategoryFormSchema = Joi.object({

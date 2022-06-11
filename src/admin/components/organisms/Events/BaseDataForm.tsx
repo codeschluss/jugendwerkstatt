@@ -1,10 +1,18 @@
 import { ReactElement } from "react";
 import { useFormContext } from "react-hook-form";
+
+import {
+  useGetEventCategoriesAdminQuery,
+  useGetOrganizersQuery,
+} from "../../../../GraphQl/graphql";
 import { Button, Select } from "../../atoms";
 import { InputField } from "../../molecules";
 import { EventsFormInputs } from "./Events.types";
 
 export const BaseDataForm = (): ReactElement => {
+  const { data } = useGetEventCategoriesAdminQuery();
+  const { data: result } = useGetOrganizersQuery();
+
   const {
     trigger,
     register,
@@ -41,9 +49,9 @@ export const BaseDataForm = (): ReactElement => {
             defaultValue={1}
             error={baseData?.category?.message}
           >
-            {[1, 2, 3].map((i) => (
-              <option key={i} value={i}>
-                test {i}
+            {data?.categories?.result?.map((item) => (
+              <option key={item?.id} value={item?.name || ""}>
+                {item?.name}
               </option>
             ))}
           </Select>
@@ -56,9 +64,9 @@ export const BaseDataForm = (): ReactElement => {
             defaultValue={2}
             error={baseData?.organizer?.message}
           >
-            {[1, 2, 3].map((i) => (
-              <option key={i} value={i}>
-                test {i}
+            {result?.organizers?.result?.map((item) => (
+              <option key={item?.id} value={item?.name || ""}>
+                {item?.name}
               </option>
             ))}
           </Select>

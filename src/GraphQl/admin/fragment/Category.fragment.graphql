@@ -1,5 +1,0 @@
-fragment CategoryField on EventCategoryEntity {
-  id
-  icon
-  name
-}

@@ -2606,7 +2606,11 @@ export type VerificationEntityInput = {
   user?: InputMaybe<UserEntityInput>;
 };
 
-export type CategoryFieldFragment = { __typename?: 'EventCategoryEntity', id?: string | null, icon?: string | null, name?: string | null };
+export type EventFieldFragment = { __typename?: 'EventEntity', id?: string | null, name?: string | null };
+
+export type CategoryFieldFragment = { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null };
+
+export type EventFragment = { __typename?: 'EventEntity', id?: string | null, name?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null };
 
 export type LinkFieldFragment = { __typename?: 'LinkEntity', id?: string | null, title?: string | null, url?: string | null };
 
@@ -2620,14 +2624,30 @@ export type QuestionFragment = { __typename?: 'QuestionEntity', id?: string | nu
 
 export type RoleFragment = { __typename?: 'RoleEntity', id?: string | null, name?: string | null };
 
+export type ScheduleFieldFragment = { __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null };
+
 export type UserFragment = { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null };
+
+export type SaveEventMutationVariables = Exact<{
+  entity?: InputMaybe<EventEntityInput>;
+}>;
+
+
+export type SaveEventMutation = { __typename?: 'Mutation', saveEvent?: { __typename?: 'EventEntity', id?: string | null, name?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null } | null };
+
+export type DeleteEventMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteEventMutation = { __typename?: 'Mutation', deleteEvent?: boolean | null };
 
 export type SaveEventCategoriesMutationVariables = Exact<{
   entities?: InputMaybe<Array<InputMaybe<EventCategoryEntityInput>> | InputMaybe<EventCategoryEntityInput>>;
 }>;
 
 
-export type SaveEventCategoriesMutation = { __typename?: 'Mutation', saveEventCategories?: Array<{ __typename?: 'EventCategoryEntity', id?: string | null, icon?: string | null, name?: string | null } | null> | null };
+export type SaveEventCategoriesMutation = { __typename?: 'Mutation', saveEventCategories?: Array<{ __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null> | null };
 
 export type DeleteEventCategoryMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
@@ -2692,17 +2712,31 @@ export type DeleteUserMutationVariables = Exact<{
 
 export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser?: boolean | null };
 
+export type GetEventsAdminQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetEventsAdminQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', total: any, result?: Array<{ __typename?: 'EventEntity', id?: string | null, name?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null } | null> | null } | null };
+
+export type GetEventAdminQueryVariables = Exact<{
+  entity?: InputMaybe<EventEntityInput>;
+}>;
+
+
+export type GetEventAdminQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', id?: string | null, name?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null } | null };
+
 export type GetEventCategoriesAdminQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetEventCategoriesAdminQuery = { __typename?: 'Query', categories?: { __typename?: 'PageableList_EventCategoryEntity', total: any, result?: Array<{ __typename?: 'EventCategoryEntity', id?: string | null, icon?: string | null, name?: string | null } | null> | null } | null };
+export type GetEventCategoriesAdminQuery = { __typename?: 'Query', categories?: { __typename?: 'PageableList_EventCategoryEntity', total: any, result?: Array<{ __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null> | null } | null };
 
 export type GetEventCategoryQueryVariables = Exact<{
   entity?: InputMaybe<EventCategoryEntityInput>;
 }>;
 
 
-export type GetEventCategoryQuery = { __typename?: 'Query', category?: { __typename?: 'EventCategoryEntity', id?: string | null, icon?: string | null, name?: string | null } | null };
+export type GetEventCategoryQuery = { __typename?: 'Query', category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null };
 
 export type GetLinksQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -2941,13 +2975,38 @@ export type VerifyMutationVariables = Exact<{
 
 export type VerifyMutation = { __typename?: 'Mutation', verify?: { __typename?: 'UserEntity', id?: string | null } | null };
 
-export const CategoryFieldFragmentDoc = gql`
-    fragment CategoryField on EventCategoryEntity {
+export const EventFieldFragmentDoc = gql`
+    fragment EventField on EventEntity {
   id
-  icon
   name
 }
     `;
+export const CategoryFieldFragmentDoc = gql`
+    fragment CategoryField on EventCategoryEntity {
+  id
+  name
+}
+    `;
+export const ScheduleFieldFragmentDoc = gql`
+    fragment ScheduleField on ScheduleEntity {
+  id
+  startDate
+  endDate
+}
+    `;
+export const EventFragmentDoc = gql`
+    fragment Event on EventEntity {
+  ...EventField
+  category {
+    ...CategoryField
+  }
+  schedules {
+    ...ScheduleField
+  }
+}
+    ${EventFieldFragmentDoc}
+${CategoryFieldFragmentDoc}
+${ScheduleFieldFragmentDoc}`;
 export const LinkFieldFragmentDoc = gql`
     fragment LinkField on LinkEntity {
   id
@@ -3003,6 +3062,70 @@ export const UserFragmentDoc = gql`
   created
 }
     ${RoleFragmentDoc}`;
+export const SaveEventDocument = gql`
+    mutation SaveEvent($entity: EventEntityInput) {
+  saveEvent(entity: $entity) {
+    ...Event
+  }
+}
+    ${EventFragmentDoc}`;
+export type SaveEventMutationFn = Apollo.MutationFunction<SaveEventMutation, SaveEventMutationVariables>;
+
+/**
+ * __useSaveEventMutation__
+ *
+ * To run a mutation, you first call `useSaveEventMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveEventMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveEventMutation, { data, loading, error }] = useSaveEventMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveEventMutation(baseOptions?: Apollo.MutationHookOptions<SaveEventMutation, SaveEventMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveEventMutation, SaveEventMutationVariables>(SaveEventDocument, options);
+      }
+export type SaveEventMutationHookResult = ReturnType<typeof useSaveEventMutation>;
+export type SaveEventMutationResult = Apollo.MutationResult<SaveEventMutation>;
+export type SaveEventMutationOptions = Apollo.BaseMutationOptions<SaveEventMutation, SaveEventMutationVariables>;
+export const DeleteEventDocument = gql`
+    mutation DeleteEvent($id: String) {
+  deleteEvent(id: $id)
+}
+    `;
+export type DeleteEventMutationFn = Apollo.MutationFunction<DeleteEventMutation, DeleteEventMutationVariables>;
+
+/**
+ * __useDeleteEventMutation__
+ *
+ * To run a mutation, you first call `useDeleteEventMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteEventMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteEventMutation, { data, loading, error }] = useDeleteEventMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteEventMutation(baseOptions?: Apollo.MutationHookOptions<DeleteEventMutation, DeleteEventMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteEventMutation, DeleteEventMutationVariables>(DeleteEventDocument, options);
+      }
+export type DeleteEventMutationHookResult = ReturnType<typeof useDeleteEventMutation>;
+export type DeleteEventMutationResult = Apollo.MutationResult<DeleteEventMutation>;
+export type DeleteEventMutationOptions = Apollo.BaseMutationOptions<DeleteEventMutation, DeleteEventMutationVariables>;
 export const SaveEventCategoriesDocument = gql`
     mutation SaveEventCategories($entities: [EventCategoryEntityInput]) {
   saveEventCategories(entities: $entities) {
@@ -3323,6 +3446,79 @@ export function useDeleteUserMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeleteUserMutationHookResult = ReturnType<typeof useDeleteUserMutation>;
 export type DeleteUserMutationResult = Apollo.MutationResult<DeleteUserMutation>;
 export type DeleteUserMutationOptions = Apollo.BaseMutationOptions<DeleteUserMutation, DeleteUserMutationVariables>;
+export const GetEventsAdminDocument = gql`
+    query GetEventsAdmin($params: FilterSortPaginateInput) {
+  getEvents(params: $params) {
+    total
+    result {
+      ...Event
+    }
+  }
+}
+    ${EventFragmentDoc}`;
+
+/**
+ * __useGetEventsAdminQuery__
+ *
+ * To run a query within a React component, call `useGetEventsAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventsAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEventsAdminQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetEventsAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetEventsAdminQuery, GetEventsAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEventsAdminQuery, GetEventsAdminQueryVariables>(GetEventsAdminDocument, options);
+      }
+export function useGetEventsAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEventsAdminQuery, GetEventsAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEventsAdminQuery, GetEventsAdminQueryVariables>(GetEventsAdminDocument, options);
+        }
+export type GetEventsAdminQueryHookResult = ReturnType<typeof useGetEventsAdminQuery>;
+export type GetEventsAdminLazyQueryHookResult = ReturnType<typeof useGetEventsAdminLazyQuery>;
+export type GetEventsAdminQueryResult = Apollo.QueryResult<GetEventsAdminQuery, GetEventsAdminQueryVariables>;
+export const GetEventAdminDocument = gql`
+    query GetEventAdmin($entity: EventEntityInput) {
+  getEvent(entity: $entity) {
+    ...Event
+  }
+}
+    ${EventFragmentDoc}`;
+
+/**
+ * __useGetEventAdminQuery__
+ *
+ * To run a query within a React component, call `useGetEventAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEventAdminQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetEventAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetEventAdminQuery, GetEventAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEventAdminQuery, GetEventAdminQueryVariables>(GetEventAdminDocument, options);
+      }
+export function useGetEventAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEventAdminQuery, GetEventAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEventAdminQuery, GetEventAdminQueryVariables>(GetEventAdminDocument, options);
+        }
+export type GetEventAdminQueryHookResult = ReturnType<typeof useGetEventAdminQuery>;
+export type GetEventAdminLazyQueryHookResult = ReturnType<typeof useGetEventAdminLazyQuery>;
+export type GetEventAdminQueryResult = Apollo.QueryResult<GetEventAdminQuery, GetEventAdminQueryVariables>;
 export const GetEventCategoriesAdminDocument = gql`
     query GetEventCategoriesAdmin {
   categories: getEventCategories {
