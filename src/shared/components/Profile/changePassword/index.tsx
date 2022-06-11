@@ -47,17 +47,17 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="text-[#676767] absolute md:static w-full z-20 top-0 bg-white ">
+    <div className="text-[#676767] absolute md:static w-full md:w-2/5 m z-20 top-0 bg-white ">
       <CustomHeader>Passwort ändern</CustomHeader>
       <div className="">
         <form
           onSubmit={onSubmitHandler}
-          className="w-full flex flex-col items-center justify-between pb-20 h-screen"
+          className="w-full flex flex-col items-center justify-between md:justify-start pb-20 h-full"
         >
           <div className="flex w-full items-center flex-col  justify-between">
             <Input
               value={passwordOne}
-              title="Passwort"
+              title="Neues Passwort"
               onInput={passwordOneChangeHandler}
               onBlur={passwordOneBlurHandler}
             />
@@ -68,7 +68,7 @@ const ChangePassword = () => {
               onBlur={passwordTwoBlurHandler}
             />
           </div>
-          <span className="w-4/6">
+          <span className="w-4/6 md:w-2/5 md:my-5">
             <Button
               isDisabled={passwordTwoValidity}
               isValidated={passwordTwoValidity}

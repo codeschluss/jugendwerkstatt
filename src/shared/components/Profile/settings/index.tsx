@@ -17,19 +17,19 @@ const ProfileSettings = () => {
   };
 
   return (
-    <div className="absolute md:static bg-white w-full h-screen top-0 z-40 flex flex-col items-center justify-between">
+    <div className="absolute md:static bg-white w-full md:w-2/5 h-full top-0 z-40 flex flex-col items-center justify-between">
       <div className="w-full">
         <CustomHeader>Profileinstellungen</CustomHeader>
         <div className="w-4/5 m-auto">
           {" "}
           <Items text="Personal Data" link="/profile-personal" />
-          <Items text="Benachrichtigungen" link="/#" />
+          {/* <Items text="Benachrichtigungen" link="/#" /> */}
           <Items text="Passwort ändern" link="/profile-password" />
-          <Items text="FAQ" link="/#" />
-          <Items text="Datenschutz" link="/#" />
+          {/* <Items text="FAQ" link="/#" />
+          <Items text="Datenschutz" link="/#" /> */}
         </div>
       </div>
-      <div className="mb-8 flex h-20 flex-col w-3/5 justify-between">
+      <div className="mb-8 flex h-20 flex-col w-3/5 md:w-2/6 justify-between">
         <Button isDisabled={true} isValidated={true} click={logoutHandler}>
           Logout
         </Button>

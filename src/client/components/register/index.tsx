@@ -175,7 +175,7 @@ const Register = () => {
             onChange={cPasswordChangeHandler}
             onBlur={cPasswordBlurHandler}
             value={enteredCPassword}
-            error={cPasswordInputError ? "password not strong enough" : ""}
+            error={cPasswordInputError ? "Password must match" : ""}
             inputClassName={`${
               cPasswordInputError && "border-500-red"
             }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}

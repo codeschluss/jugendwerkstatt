@@ -69,6 +69,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
           clicked={clicked}
           href="/favorites"
         />
+        <Item name="Karte" icon={<CogIcon />} clicked={clicked} href="/map" />
         <Item
           name="Einstellungen"
           icon={<CogIcon />}
