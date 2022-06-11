@@ -2640,6 +2640,13 @@ export type DeleteEventCategoryMutationVariables = Exact<{
 
 export type DeleteEventCategoryMutation = { __typename?: 'Mutation', deleteEventCategory?: boolean | null };
 
+export type SaveGroupMutationVariables = Exact<{
+  groupEntity?: InputMaybe<GroupEntityInput>;
+}>;
+
+
+export type SaveGroupMutation = { __typename?: 'Mutation', saveGroup?: { __typename?: 'GroupEntity', id?: string | null } | null };
+
 export type DeleteGroupMutationVariables = Exact<{
   deleteGroupId?: InputMaybe<Scalars['String']>;
 }>;
@@ -3118,6 +3125,39 @@ export function useDeleteEventCategoryMutation(baseOptions?: Apollo.MutationHook
 export type DeleteEventCategoryMutationHookResult = ReturnType<typeof useDeleteEventCategoryMutation>;
 export type DeleteEventCategoryMutationResult = Apollo.MutationResult<DeleteEventCategoryMutation>;
 export type DeleteEventCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteEventCategoryMutation, DeleteEventCategoryMutationVariables>;
+export const SaveGroupDocument = gql`
+    mutation SaveGroup($groupEntity: GroupEntityInput) {
+  saveGroup(entity: $groupEntity) {
+    id
+  }
+}
+    `;
+export type SaveGroupMutationFn = Apollo.MutationFunction<SaveGroupMutation, SaveGroupMutationVariables>;
+
+/**
+ * __useSaveGroupMutation__
+ *
+ * To run a mutation, you first call `useSaveGroupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveGroupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveGroupMutation, { data, loading, error }] = useSaveGroupMutation({
+ *   variables: {
+ *      groupEntity: // value for 'groupEntity'
+ *   },
+ * });
+ */
+export function useSaveGroupMutation(baseOptions?: Apollo.MutationHookOptions<SaveGroupMutation, SaveGroupMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveGroupMutation, SaveGroupMutationVariables>(SaveGroupDocument, options);
+      }
+export type SaveGroupMutationHookResult = ReturnType<typeof useSaveGroupMutation>;
+export type SaveGroupMutationResult = Apollo.MutationResult<SaveGroupMutation>;
+export type SaveGroupMutationOptions = Apollo.BaseMutationOptions<SaveGroupMutation, SaveGroupMutationVariables>;
 export const DeleteGroupDocument = gql`
     mutation DeleteGroup($deleteGroupId: String) {
   deleteGroup(id: $deleteGroupId)

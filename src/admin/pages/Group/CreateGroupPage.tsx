@@ -6,8 +6,11 @@ import { PanelBody } from '../../components/atoms/Panel/PanelBody';
 import { InputField } from '../../components/molecules';
 import { GroupFormSchema } from '../../validations/GroupForm.schema';
 import { GroupFormInputs } from './GroupForm.props';
+import { useSaveGroupMutation } from '../../../GraphQl/graphql';
+import { useNavigate } from 'react-router-dom';
 
 const CreateGroupPage = (): ReactElement => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -17,8 +20,12 @@ const CreateGroupPage = (): ReactElement => {
   } = useForm<GroupFormInputs>({
     resolver: joiResolver(GroupFormSchema),
   });
+  const [saveGroup] = useSaveGroupMutation({
+    onCompleted: () => navigate('/admin/groups'),
+  });
 
-  const onSubmit = (data: GroupFormInputs) => console.log(data);
+  const onSubmit = (data: GroupFormInputs) =>
+    saveGroup({ variables: { groupEntity: { name: data.name } } });
 
   return (
     <Panel

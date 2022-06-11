@@ -6,10 +6,14 @@ import { PanelBody } from '../../components/atoms/Panel/PanelBody';
 import { InputField } from '../../components/molecules';
 import { GroupFormSchema } from '../../validations/GroupForm.schema';
 import { GroupFormInputs } from './GroupForm.props';
-import { useParams } from 'react-router-dom';
-import { useGetGroupQuery } from '../../../GraphQl/graphql';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  useGetGroupQuery,
+  useSaveGroupMutation,
+} from '../../../GraphQl/graphql';
 
 const CreateGroupPage = (): ReactElement => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const {
     register,
@@ -23,12 +27,16 @@ const CreateGroupPage = (): ReactElement => {
   });
 
   const { data } = useGetGroupQuery({ variables: { groupId: id } });
+  const [saveGroup] = useSaveGroupMutation({
+    onCompleted: () => navigate('/admin/groups'),
+  });
 
   useEffect(() => {
     if (id) reset({ name: data?.group?.name || '' });
   }, [id, reset, data?.group?.name]);
 
-  const onSubmit = (data: GroupFormInputs) => console.log(data);
+  const onSubmit = ({ name }: GroupFormInputs) =>
+    saveGroup({ variables: { groupEntity: { id, name } } });
 
   return (
     <Panel

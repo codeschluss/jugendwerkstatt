@@ -9,7 +9,9 @@ import { CustomTable } from '../../components/molecules';
 const GroupListPage = () => {
   const navigate = useNavigate();
 
-  const { data, refetch: refetchGroups } = useGetGroupsQuery();
+  const { data, refetch: refetchGroups } = useGetGroupsQuery({
+    fetchPolicy: 'cache-and-network',
+  });
   const [deleteGroup] = useDeleteGroupMutation({
     onCompleted: () => refetchGroups(),
   });
