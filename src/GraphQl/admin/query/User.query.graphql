@@ -1,5 +1,25 @@
-query GetUsers {
-  users: getUsers {
+query GetApprovedUsers {
+  approvedUsers: getUsers(
+    params: {
+      expression: {
+        entity: { operator: EQUAL, path: "roles.name", value: "approved" }
+      }
+    }
+  ) {
+    result {
+      ...User
+    }
+  }
+}
+
+query GetRequestedUsers {
+  requestedUsers: getUsers(
+    params: {
+      expression: {
+        entity: { operator: NOT_EQUAL, path: "roles.name", value: "approved" }
+      }
+    }
+  ) {
     result {
       ...User
     }

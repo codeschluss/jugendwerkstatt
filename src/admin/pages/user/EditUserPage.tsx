@@ -1,6 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 import { useGetRolesQuery } from '../../../GraphQl/graphql';
 import { Button, Select } from '../../components/atoms';
 import { Accordion } from '../../components/molecules';
@@ -8,6 +9,7 @@ import { UserFormSchema } from '../../validations/UserForm.schema';
 import { UserFormInputs } from './User.props';
 
 const EditUserPage = (): ReactElement => {
+  // AddRole Mutation will be Added later addRole(userId, roleId)
   const {
     register,
     handleSubmit,

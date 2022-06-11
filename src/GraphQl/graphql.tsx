@@ -2768,10 +2768,15 @@ export type GetRolesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetRolesQuery = { __typename?: 'Query', roles?: { __typename?: 'PageableList_RoleEntity', result?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null };
 
-export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetApprovedUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetUsersQuery = { __typename?: 'Query', users?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null };
+export type GetApprovedUsersQuery = { __typename?: 'Query', approvedUsers?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null };
+
+export type GetRequestedUsersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetRequestedUsersQuery = { __typename?: 'Query', requestedUsers?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null };
 
 export type CreateTokenMutationVariables = Exact<{
   password?: InputMaybe<Scalars['String']>;
@@ -3755,9 +3760,11 @@ export function useGetRolesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetRolesQueryHookResult = ReturnType<typeof useGetRolesQuery>;
 export type GetRolesLazyQueryHookResult = ReturnType<typeof useGetRolesLazyQuery>;
 export type GetRolesQueryResult = Apollo.QueryResult<GetRolesQuery, GetRolesQueryVariables>;
-export const GetUsersDocument = gql`
-    query GetUsers {
-  users: getUsers {
+export const GetApprovedUsersDocument = gql`
+    query GetApprovedUsers {
+  approvedUsers: getUsers(
+    params: {expression: {entity: {operator: EQUAL, path: "roles.name", value: "approved"}}}
+  ) {
     result {
       ...User
     }
@@ -3766,31 +3773,69 @@ export const GetUsersDocument = gql`
     ${UserFragmentDoc}`;
 
 /**
- * __useGetUsersQuery__
+ * __useGetApprovedUsersQuery__
  *
- * To run a query within a React component, call `useGetUsersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetApprovedUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetApprovedUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetUsersQuery({
+ * const { data, loading, error } = useGetApprovedUsersQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGetUsersQuery(baseOptions?: Apollo.QueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
+export function useGetApprovedUsersQuery(baseOptions?: Apollo.QueryHookOptions<GetApprovedUsersQuery, GetApprovedUsersQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options);
+        return Apollo.useQuery<GetApprovedUsersQuery, GetApprovedUsersQueryVariables>(GetApprovedUsersDocument, options);
       }
-export function useGetUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
+export function useGetApprovedUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetApprovedUsersQuery, GetApprovedUsersQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options);
+          return Apollo.useLazyQuery<GetApprovedUsersQuery, GetApprovedUsersQueryVariables>(GetApprovedUsersDocument, options);
         }
-export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
-export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>;
-export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
+export type GetApprovedUsersQueryHookResult = ReturnType<typeof useGetApprovedUsersQuery>;
+export type GetApprovedUsersLazyQueryHookResult = ReturnType<typeof useGetApprovedUsersLazyQuery>;
+export type GetApprovedUsersQueryResult = Apollo.QueryResult<GetApprovedUsersQuery, GetApprovedUsersQueryVariables>;
+export const GetRequestedUsersDocument = gql`
+    query GetRequestedUsers {
+  requestedUsers: getUsers(
+    params: {expression: {entity: {operator: NOT_EQUAL, path: "roles.name", value: "approved"}}}
+  ) {
+    result {
+      ...User
+    }
+  }
+}
+    ${UserFragmentDoc}`;
+
+/**
+ * __useGetRequestedUsersQuery__
+ *
+ * To run a query within a React component, call `useGetRequestedUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRequestedUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRequestedUsersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetRequestedUsersQuery(baseOptions?: Apollo.QueryHookOptions<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>(GetRequestedUsersDocument, options);
+      }
+export function useGetRequestedUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>(GetRequestedUsersDocument, options);
+        }
+export type GetRequestedUsersQueryHookResult = ReturnType<typeof useGetRequestedUsersQuery>;
+export type GetRequestedUsersLazyQueryHookResult = ReturnType<typeof useGetRequestedUsersLazyQuery>;
+export type GetRequestedUsersQueryResult = Apollo.QueryResult<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>;
 export const CreateTokenDocument = gql`
     mutation CreateToken($password: String, $username: String) {
   createToken(password: $password, username: $username) {

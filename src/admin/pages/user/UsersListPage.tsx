@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom';
-import { useGetUsersQuery } from '../../../GraphQl/graphql';
+import { useGetApprovedUsersQuery } from '../../../GraphQl/graphql';
 import { Table, Action, Panel } from '../../components/atoms';
 import { CustomTable } from '../../components/molecules';
 
 const UsersListPage = () => {
   const navigate = useNavigate();
 
-  const { data } = useGetUsersQuery();
+  const { data } = useGetApprovedUsersQuery();
 
   const handleUserUpdate = (userId: string) => () => navigate(userId);
 
@@ -22,8 +22,8 @@ const UsersListPage = () => {
           'Aktionen',
         ]}
         bodyData={
-          (data?.users?.result &&
-            data.users.result.map((user) => (
+          (data?.approvedUsers?.result &&
+            data.approvedUsers.result.map((user) => (
               <Table.Row key={user?.id}>
                 <Table.Data>{user?.fullname}</Table.Data>
                 <Table.Data>
