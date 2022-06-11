@@ -91,6 +91,7 @@ export const navItems: NavModel = {
         },
         {
           name: 'Holz',
+          location: 'groups',
           items: [
             {
               name: 'Kursbewertung',

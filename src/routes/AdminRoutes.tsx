@@ -40,6 +40,7 @@ import {
   PublicPagesPage,
   EvaluationsPage,
   EvaluationsQuestionsPage,
+  GroupCourseRatingsListPage,
 } from '../admin/pages';
 
 export const AdminRoutes = () => (
@@ -120,12 +121,16 @@ export const AdminRoutes = () => (
         />
 
         <Route path="groups" element={<GroupListPage />} />
+        <Route path="groups/new" element={<CreateGroupPage />} />
+        <Route path="groups/:id" element={<EditGroupPage />} />
         <Route
           path="groups/participants"
           element={<GroupParticipantsListPage />}
         />
-        <Route path="groups/new" element={<CreateGroupPage />} />
-        <Route path="groups/:id" element={<EditGroupPage />} />
+        <Route
+          path="groups/course-rating"
+          element={<GroupCourseRatingsListPage />}
+        />
 
         {/* General Settings */}
         <Route path="general-settings">

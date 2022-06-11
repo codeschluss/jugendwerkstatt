@@ -75,11 +75,29 @@ const EvaluationsPage = (): ReactElement => (
 
     <Panel
       title="Kommentare"
-      className="max-w-[48.5rem] mt-5"
+      className="max-w-[50.6rem] mt-5"
       submitButton={false}
     >
       <Panel.Body>
-        <div className="p-2 border border-gray-400">
+        <div className="p-2 my-2 border border-gray-400">
+          <h1>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis
+            deserunt modi explicabo veritatis nisi quod eos velit aspernatur
+            nulla minima eum autem quia similique, reiciendis quaerat placeat
+            tempore harum?
+          </h1>
+        </div>
+
+        <div className="p-2 my-2 border border-gray-400">
+          <h1>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis
+            deserunt modi explicabo veritatis nisi quod eos velit aspernatur
+            nulla minima eum autem quia similique, reiciendis quaerat placeat
+            tempore harum?
+          </h1>
+        </div>
+
+        <div className="p-2 my-2 border border-gray-400">
           <h1>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste quis
             deserunt modi explicabo veritatis nisi quod eos velit aspernatur

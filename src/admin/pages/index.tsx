@@ -227,6 +227,14 @@ export const GroupParticipantsListPage = loadable(
   }
 );
 
+export const GroupCourseRatingsListPage = loadable(
+  () =>
+    timeout(import('./Group/GroupCourseRatingsListPage'), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
 // Evaluations pages
 export const EvaluationsPage = loadable(
   () => timeout(import('./Evaluations/EvaluationsPage'), PAGE_LOAD_TIMEOUT),
