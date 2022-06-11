@@ -12,6 +12,8 @@ export const AddressForm = (): ReactElement => {
     },
   } = useFormContext();
 
+  console.log("first");
+
   const handleTrigger = () => trigger("address");
 
   return (

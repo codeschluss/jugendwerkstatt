@@ -1,6 +1,7 @@
 import { ReactElement, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Accordion } from "../../components/molecules";
 import {
@@ -10,7 +11,6 @@ import {
   EventsFormInputs,
 } from "../../components/organisms";
 import { EventsFormSchema } from "../../validations";
-import { useNavigate, useParams } from "react-router-dom";
 import {
   useGetEventAdminQuery,
   useSaveEventMutation,
@@ -20,16 +20,16 @@ const CreateEventsPage = (): ReactElement => {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const { data: result } = useGetEventAdminQuery({
+    variables: { entity: { id } },
+    skip: !id,
+  });
+
   const methods = useForm<EventsFormInputs>({
     resolver: joiResolver(EventsFormSchema),
   });
 
   const { reset, handleSubmit } = methods;
-
-  const { data: result } = useGetEventAdminQuery({
-    variables: { entity: { id } },
-    skip: !id,
-  });
 
   const [saveEvent] = useSaveEventMutation({
     onCompleted: () => navigate("/admin/events"),
@@ -40,12 +40,19 @@ const CreateEventsPage = (): ReactElement => {
     address,
     description,
   }: EventsFormInputs) => {
-    console.log("data", baseData, address);
+    console.log("first", {
+      description,
+      name: baseData?.name,
+      organizer: { id: baseData?.organizer },
+      category: { id: baseData?.category },
+      ...(!!result && { id: result?.getEvent?.id }),
+    });
+
     saveEvent({
       variables: {
         entity: {
-          ...baseData,
           description,
+          name: baseData?.name,
           organizer: { id: baseData?.organizer },
           category: { id: baseData?.category },
           ...(!!result && { id: result?.getEvent?.id }),
@@ -54,11 +61,11 @@ const CreateEventsPage = (): ReactElement => {
     });
   };
 
-  useEffect(() => {
-    if (!!result) {
-      reset({});
-    }
-  }, [result, reset]);
+  // useEffect(() => {
+  //   if (!!result) {
+  //     reset({});
+  //   }
+  // }, [result, reset]);
 
   return (
     <FormProvider {...methods}>

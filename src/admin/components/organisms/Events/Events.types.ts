@@ -5,9 +5,9 @@ export interface AddressFormInputs {
   houseNumber: string;
 }
 export interface BaseDataFormInputs {
-  eventName: string;
-  phone: string;
-  email: string;
+  name: string;
+  phone?: string;
+  email?: string;
   website?: string;
   organizer: string;
   category: string;

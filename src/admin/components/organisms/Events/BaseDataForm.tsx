@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 import {
@@ -10,10 +10,13 @@ import { InputField } from "../../molecules";
 import { EventsFormInputs } from "./Events.types";
 
 export const BaseDataForm = (): ReactElement => {
-  const { data } = useGetEventCategoriesAdminQuery();
-  const { data: result } = useGetOrganizersQuery();
+  // graphql hooks
+  const { data: organizersData } = useGetOrganizersQuery();
+  const { data: categoriesData } = useGetEventCategoriesAdminQuery();
 
   const {
+    setValue,
+    getValues,
     trigger,
     register,
     formState: {
@@ -23,15 +26,30 @@ export const BaseDataForm = (): ReactElement => {
 
   const handleTrigger = () => trigger("baseData");
 
+  useEffect(() => {
+    if (!getValues("baseData.category") && categoriesData) {
+      setValue(
+        "baseData.category",
+        categoriesData?.categories?.result?.[0]?.name || ""
+      );
+    }
+    if (!getValues("baseData.organizer") && organizersData) {
+      setValue(
+        "baseData.organizer",
+        organizersData?.organizers?.result?.[0]?.name || ""
+      );
+    }
+  }, [organizersData, categoriesData, getValues, setValue]);
+
   return (
     <>
       <div className="grid grid-cols-2 gap-8">
         <div className="flex flex-col justify-start w-full space-y-6">
           <InputField
-            id="eventName"
+            id="name"
             label="Eventname"
-            {...register("baseData.eventName")}
-            error={baseData?.eventName?.message}
+            {...register("baseData.name")}
+            error={baseData?.name?.message}
             placeholder="Das erste Event"
           />
           <InputField
@@ -46,10 +64,9 @@ export const BaseDataForm = (): ReactElement => {
             id="category"
             label="Kategorie"
             {...register("baseData.category")}
-            defaultValue={1}
             error={baseData?.category?.message}
           >
-            {data?.categories?.result?.map((item) => (
+            {categoriesData?.categories?.result?.map((item) => (
               <option key={item?.id} value={item?.name || ""}>
                 {item?.name}
               </option>
@@ -61,10 +78,9 @@ export const BaseDataForm = (): ReactElement => {
             id="organizator"
             label="Veranstalter"
             {...register("baseData.organizer")}
-            defaultValue={2}
             error={baseData?.organizer?.message}
           >
-            {result?.organizers?.result?.map((item) => (
+            {organizersData?.organizers?.result?.map((item) => (
               <option key={item?.id} value={item?.name || ""}>
                 {item?.name}
               </option>
