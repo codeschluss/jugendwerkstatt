@@ -26,7 +26,10 @@ export const AdminProfilePassword = (): ReactElement => {
   const onSubmit = (data: ProfilePasswordFormInputs) => {
     if (data.currentPassword !== user.password)
       setErrorMessage('Falsches aktuelles Passwort');
-    else saveUser({ variables: { user: { password: data.newPassword } } });
+    else
+      saveUser({
+        variables: { user: { id: user.password, password: data.newPassword } },
+      });
   };
 
   return (
