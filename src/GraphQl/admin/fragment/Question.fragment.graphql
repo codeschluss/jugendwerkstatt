@@ -1,0 +1,4 @@
+fragment Question on QuestionEntity {
+  id
+  item
+}

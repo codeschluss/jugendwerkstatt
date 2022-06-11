@@ -227,6 +227,24 @@ export const GroupParticipantsListPage = loadable(
   }
 );
 
+// Evaluations pages
+export const EvaluationsPage = loadable(
+  () => timeout(import('./Evaluations/EvaluationsPage'), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+export const EvaluationsQuestionsPage = loadable(
+  () =>
+    timeout(
+      import('./Evaluations/EvaluationsQuestionsPage'),
+      PAGE_LOAD_TIMEOUT
+    ),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
 // General Settings
 export const PushNotificationsPage = loadable(
   () =>

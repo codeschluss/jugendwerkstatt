@@ -1,9 +1,9 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import {
   GeneralAddressForm,
   PublicPagesForm,
-} from "../admin/components/organisms";
-import { AdminDashboardLayout } from "../admin/components/templates";
+} from '../admin/components/organisms';
+import { AdminDashboardLayout } from '../admin/components/templates';
 import {
   AdminProfileEmailNotificationsPage,
   AdminProfilePage,
@@ -31,14 +31,16 @@ import {
   FormsDocumentsListPage,
   FormsListPage,
   GroupListPage,
+  CreateGroupPage,
   EditGroupPage,
   GroupParticipantsListPage,
   PushNotificationsPage,
   ChatActivationPage,
   GeneralAddressPage,
   PublicPagesPage,
-} from "../admin/pages";
-import CreateGroupPage from "../admin/pages/Group/CreateGroupPage";
+  EvaluationsPage,
+  EvaluationsQuestionsPage,
+} from '../admin/pages';
 
 export const AdminRoutes = () => (
   <BrowserRouter>
@@ -110,11 +112,20 @@ export const AdminRoutes = () => (
         <Route path="forms/templates" element={<FormsListPage />} />
         <Route path="forms/templates/new" element={<CreateFormsPage />} />
         <Route path="forms/documents" element={<FormsDocumentsListPage />} />
-        <Route path="groups" element={<GroupListPage />}>
-          <Route path="participants" element={<GroupParticipantsListPage />} />
-          <Route path="new" element={<CreateGroupPage />} />
-          <Route path=":id" element={<EditGroupPage />} />
-        </Route>
+
+        <Route path="evaluations" element={<EvaluationsPage />} />
+        <Route
+          path="evaluations/questions"
+          element={<EvaluationsQuestionsPage />}
+        />
+
+        <Route path="groups" element={<GroupListPage />} />
+        <Route
+          path="groups/participants"
+          element={<GroupParticipantsListPage />}
+        />
+        <Route path="groups/new" element={<CreateGroupPage />} />
+        <Route path="groups/:id" element={<EditGroupPage />} />
 
         {/* General Settings */}
         <Route path="general-settings">
