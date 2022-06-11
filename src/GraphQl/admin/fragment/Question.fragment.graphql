@@ -1,4 +1,4 @@
-fragment Question on QuestionEntity {
+fragment QuestionField on QuestionEntity {
   id
   item
 }

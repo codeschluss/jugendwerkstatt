@@ -5,7 +5,6 @@ import {
 } from "../admin/components/organisms";
 import { AdminDashboardLayout } from "../admin/components/templates";
 import {
-  AdminProfileEmailNotificationsPage,
   AdminProfilePage,
   AdminProfilePasswordPage,
   EventsListPage,
@@ -40,6 +39,7 @@ import {
   PublicPagesPage,
   EvaluationsPage,
   EvaluationsQuestionsPage,
+  GroupCourseRatingsListPage,
 } from "../admin/pages";
 
 export const AdminRoutes = () => (
@@ -48,10 +48,7 @@ export const AdminRoutes = () => (
       <Route path="/admin" element={<AdminDashboardLayout />}>
         <Route path="profile" element={<AdminProfilePage />} />
         <Route path="profile-password" element={<AdminProfilePasswordPage />} />
-        <Route
-          path="email-notifications"
-          element={<AdminProfileEmailNotificationsPage />}
-        />
+
         <Route path="events" element={<EventsListPage />} />
         <Route path="events/new" element={<CreateEventsPage />} />
         <Route path="events/:id" element={<CreateEventsPage />} />
@@ -129,12 +126,16 @@ export const AdminRoutes = () => (
         />
 
         <Route path="groups" element={<GroupListPage />} />
-        <Route
-          path="groups/participants"
-          element={<GroupParticipantsListPage />}
-        />
         <Route path="groups/new" element={<CreateGroupPage />} />
         <Route path="groups/:id" element={<EditGroupPage />} />
+        <Route
+          path="groups/:id/participants"
+          element={<GroupParticipantsListPage />}
+        />
+        <Route
+          path="groups/:id/course-rating"
+          element={<GroupCourseRatingsListPage />}
+        />
 
         {/* General Settings */}
         <Route path="general-settings">

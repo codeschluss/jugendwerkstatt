@@ -1,6 +1,7 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSaveUserAdminMutation } from '../../../../GraphQl/graphql';
 import Avatar from '../../../../shared/components/header/sideBar/Avatar';
 import { ProfileFormSchema } from '../../../validations';
 import { Button, Panel } from '../../atoms';
@@ -12,13 +13,16 @@ export const AdminProfile = (): ReactElement => {
     register,
     handleSubmit,
     formState: {
-      errors: { name, email, phone },
+      errors: { fullname, email, phone },
     },
   } = useForm<ProfileFormInputs>({
     resolver: joiResolver(ProfileFormSchema),
   });
 
-  const onSubmit = (data: ProfileFormInputs) => console.log(data);
+  const [saveUser] = useSaveUserAdminMutation();
+
+  const onSubmit = (data: ProfileFormInputs) =>
+    saveUser({ variables: { user: { ...data } } });
 
   return (
     <Panel
@@ -34,11 +38,11 @@ export const AdminProfile = (): ReactElement => {
 
         <div className="flex flex-col flex-1 gap-y-10">
           <InputField
-            id="name"
+            id="fullname"
             label="Name"
-            labelProps={{ htmlFor: 'name' }}
-            {...register('name')}
-            error={name?.message}
+            labelProps={{ htmlFor: 'fullname' }}
+            {...register('fullname')}
+            error={fullname?.message}
           />
           <InputField
             id="email"

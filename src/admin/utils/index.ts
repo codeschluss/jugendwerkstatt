@@ -1,1 +1,2 @@
-export * from "./twClsx";
+export * from './capitalize';
+export * from './twClsx';

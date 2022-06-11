@@ -1,4 +1,4 @@
-fragment Role on RoleEntity {
+fragment RoleField on RoleEntity {
   id
   name
 }

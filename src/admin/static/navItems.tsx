@@ -91,14 +91,57 @@ export const navItems: NavModel = {
         },
         {
           name: 'Holz',
+          location: 'groups/wood',
           items: [
             {
               name: 'Kursbewertung',
-              location: 'groups/course-rating',
+              location: 'groups/wood/course-rating',
             },
             {
               name: 'Teilnehmer',
-              location: 'groups/participants',
+              location: 'groups/wood/participants',
+            },
+          ],
+        },
+        {
+          name: 'Metall',
+          location: 'groups/metall',
+          items: [
+            {
+              name: 'Kursbewertung',
+              location: 'groups/metall/course-rating',
+            },
+            {
+              name: 'Teilnehmer',
+              location: 'groups/metall/participants',
+            },
+          ],
+        },
+        {
+          name: 'Deko',
+          location: 'groups/deco',
+          items: [
+            {
+              name: 'Kursbewertung',
+              location: 'groups/deco/course-rating',
+            },
+            {
+              name: 'Teilnehmer',
+              location: 'groups/deco/participants',
+            },
+          ],
+        },
+        {
+          name: 'Mobil',
+          location: 'groups/mobil',
+          items: [
+            {
+              name: 'Kursbewertung',
+              location: 'groups/mobil/course-rating',
+            },
+            {
+              name: 'Teilnehmer',
+              location: 'groups/mobil/participants',
             },
           ],
         },

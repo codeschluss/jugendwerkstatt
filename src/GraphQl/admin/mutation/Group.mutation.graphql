@@ -1,0 +1,9 @@
+mutation SaveGroup($groupEntity: GroupEntityInput) {
+  saveGroup(entity: $groupEntity) {
+    id
+  }
+}
+
+mutation DeleteGroup($deleteGroupId: String) {
+  deleteGroup(id: $deleteGroupId)
+}

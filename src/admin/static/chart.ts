@@ -13,6 +13,11 @@ export const labels = [
   'Dezember',
 ];
 
+export const evaluationLabels = Array.from(
+  { length: 22 },
+  (_, i) => `Frage ${i + 1}`
+);
+
 export const options = {
   responsive: true,
 };

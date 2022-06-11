@@ -23,17 +23,6 @@ export const AdminProfilePasswordPage = loadable(
   }
 );
 
-export const AdminProfileEmailNotificationsPage = loadable(
-  () =>
-    timeout(
-      import('./Profile/AdminProfileEmailNotificationsPage'),
-      PAGE_LOAD_TIMEOUT
-    ),
-  {
-    fallback: <PageLoader />,
-  }
-);
-
 // Events pages
 export const EventsListPage = loadable(
   () => timeout(import('./Events/EventsListPage'), PAGE_LOAD_TIMEOUT),
@@ -222,6 +211,14 @@ export const EditGroupPage = loadable(
 
 export const GroupParticipantsListPage = loadable(
   () => timeout(import('./Group/GroupParticipantsListPage'), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const GroupCourseRatingsListPage = loadable(
+  () =>
+    timeout(import('./Group/GroupCourseRatingsListPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }

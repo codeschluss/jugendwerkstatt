@@ -1,12 +1,15 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement } from 'react';
+import { ReactElement, useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import AuthContext from '../../../../contexts/AuthContext';
+import { useSaveUserAdminMutation } from '../../../../GraphQl/graphql';
 import { ProfilePasswordFormSchema } from '../../../validations';
 import { Panel } from '../../atoms';
 import { PasswordField } from '../../molecules';
 import { ProfilePasswordFormInputs } from './AdminProfile.props';
 
 export const AdminProfilePassword = (): ReactElement => {
+  const user = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -16,8 +19,15 @@ export const AdminProfilePassword = (): ReactElement => {
   } = useForm<ProfilePasswordFormInputs>({
     resolver: joiResolver(ProfilePasswordFormSchema),
   });
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const onSubmit = (data: ProfilePasswordFormInputs) => console.log(data);
+  const [saveUser] = useSaveUserAdminMutation();
+
+  const onSubmit = (data: ProfilePasswordFormInputs) => {
+    if (data.currentPassword !== user.password)
+      setErrorMessage('Falsches aktuelles Passwort');
+    else saveUser({ variables: { user: { password: data.newPassword } } });
+  };
 
   return (
     <Panel
@@ -26,6 +36,11 @@ export const AdminProfilePassword = (): ReactElement => {
       className="max-w-md"
     >
       <Panel.Body className="space-y-12">
+        {errorMessage && (
+          <div className="p-4 mt-2 text-white bg-primary">
+            <h1>{errorMessage}</h1>
+          </div>
+        )}
         <PasswordField
           id="currentPassword"
           label="Aktuelles Passwort"

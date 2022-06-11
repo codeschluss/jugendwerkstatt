@@ -1,13 +1,13 @@
 import {
   useApproveUserMutation,
   useDeleteUserMutation,
-  useGetUsersQuery,
+  useGetRequestedUsersQuery,
 } from '../../../GraphQl/graphql';
 import { Table, Action, Panel } from '../../components/atoms';
 import { CustomTable } from '../../components/molecules';
 
 const UsersRequestsListPage = () => {
-  const { data, refetch: refetchUsers } = useGetUsersQuery();
+  const { data, refetch: refetchUsers } = useGetRequestedUsersQuery();
 
   const [approveUser] = useApproveUserMutation({
     onCompleted: () => refetchUsers(),
@@ -36,8 +36,8 @@ const UsersRequestsListPage = () => {
           'Aktionen',
         ]}
         bodyData={
-          (data?.users?.result &&
-            data.users.result.map((user) => (
+          (data?.requestedUsers?.result &&
+            data.requestedUsers.result.map((user) => (
               <Table.Row key={user?.id}>
                 <Table.Data>{user?.fullname}</Table.Data>
                 <Table.Data>{user?.email}</Table.Data>
