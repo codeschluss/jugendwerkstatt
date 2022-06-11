@@ -103,7 +103,7 @@ export const BaseDataForm = (): ReactElement => {
           />
         </div>
       </div>
-      <Button className="mt-6" onClick={handleTrigger}>
+      <Button type="button" className="mt-6" onClick={handleTrigger}>
         Speichern
       </Button>
     </>

@@ -3,20 +3,20 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Button } from "../../components/atoms";
-import { Accordion, InputField } from "../../components/molecules";
+import { Accordion, FormActions, InputField } from "../../components/molecules";
 import { CategoryFormInputs } from "../../components/organisms";
 import { CategoryFormSchema } from "../../validations";
 import {
   useGetEventCategoryQuery,
-  useSaveEventCategoriesMutation,
+  useSaveEventCategoryMutation,
 } from "../../../GraphQl/graphql";
 
 const CreateCategoriesPage = (): ReactElement => {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const params = useParams();
 
   const {
+    reset,
     setValue,
     register,
     handleSubmit,
@@ -26,25 +26,26 @@ const CreateCategoriesPage = (): ReactElement => {
   });
 
   const { data } = useGetEventCategoryQuery({
-    variables: { entity: { id: params.id } },
-    skip: !params.id,
+    variables: { entity: { id } },
+    skip: !id,
   });
 
-  const [saveEventCategories] = useSaveEventCategoriesMutation({
+  const [saveEventCategory] = useSaveEventCategoryMutation({
     onCompleted: () => navigate("/admin/events/categories"),
   });
 
   const handleOnSubmit = ({ name }: CategoryFormInputs) => {
-    saveEventCategories({
+    saveEventCategory({
       variables: {
-        entities: {
+        entity: {
           name,
-          icon: "icon name",
           ...(!!data && { id: data?.category?.id }),
         },
       },
     });
   };
+
+  const handleReset = () => reset();
 
   useEffect(() => {
     if (!!data) {
@@ -53,8 +54,8 @@ const CreateCategoriesPage = (): ReactElement => {
   }, [data, setValue]);
 
   return (
-    <form className="min-h-full" onSubmit={handleSubmit(handleOnSubmit)}>
-      <Accordion open={!!params?.id} title="Kategorie">
+    <form className="min-h-full">
+      <Accordion open={!!id} title="Kategorie">
         <InputField
           id="name"
           label="Kategoriename"
@@ -62,8 +63,11 @@ const CreateCategoriesPage = (): ReactElement => {
           {...register("name")}
           error={errors?.name?.message}
         />
-        <Button className="mt-6">Speichern</Button>
       </Accordion>
+      <FormActions
+        onReset={handleReset}
+        onSubmit={handleSubmit(handleOnSubmit)}
+      />
     </form>
   );
 };

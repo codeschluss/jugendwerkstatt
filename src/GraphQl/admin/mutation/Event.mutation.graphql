@@ -8,8 +8,8 @@ mutation DeleteEvent($id: String) {
   deleteEvent(id: $id)
 }
 
-mutation SaveEventCategories($entities: [EventCategoryEntityInput]) {
-  saveEventCategories(entities: $entities) {
+mutation SaveEventCategory($entity: EventCategoryEntityInput) {
+  saveEventCategory(entity: $entity) {
     ...CategoryField
   }
 }

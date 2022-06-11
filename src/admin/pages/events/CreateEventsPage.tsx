@@ -1,9 +1,9 @@
-import { ReactElement, useEffect } from "react";
+import { ReactElement } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Accordion } from "../../components/molecules";
+import { Accordion, FormActions } from "../../components/molecules";
 import {
   AddressForm,
   BaseDataForm,
@@ -25,32 +25,25 @@ const CreateEventsPage = (): ReactElement => {
     skip: !id,
   });
 
+  const [saveEvent] = useSaveEventMutation({
+    onCompleted: () => navigate("/admin/events"),
+  });
+
   const methods = useForm<EventsFormInputs>({
     resolver: joiResolver(EventsFormSchema),
   });
 
   const { reset, handleSubmit } = methods;
 
-  const [saveEvent] = useSaveEventMutation({
-    onCompleted: () => navigate("/admin/events"),
-  });
-
   const handleOnSubmit = ({
     baseData,
     address,
     description,
   }: EventsFormInputs) => {
-    console.log("first", {
-      description,
-      name: baseData?.name,
-      organizer: { id: baseData?.organizer },
-      category: { id: baseData?.category },
-      ...(!!result && { id: result?.getEvent?.id }),
-    });
-
     saveEvent({
       variables: {
         entity: {
+          address,
           description,
           name: baseData?.name,
           organizer: { id: baseData?.organizer },
@@ -61,6 +54,8 @@ const CreateEventsPage = (): ReactElement => {
     });
   };
 
+  const handleReset = () => reset();
+
   // useEffect(() => {
   //   if (!!result) {
   //     reset({});
@@ -69,7 +64,7 @@ const CreateEventsPage = (): ReactElement => {
 
   return (
     <FormProvider {...methods}>
-      <form className="min-h-full" onSubmit={handleSubmit(handleOnSubmit)}>
+      <form className="min-h-full">
         <Accordion title="Stammdaten" open={!!id}>
           <BaseDataForm />
         </Accordion>
@@ -85,6 +80,11 @@ const CreateEventsPage = (): ReactElement => {
         <Accordion title="Termine">
           <p>lorem ispum</p>
         </Accordion>
+
+        <FormActions
+          onReset={handleReset}
+          onSubmit={handleSubmit(handleOnSubmit)}
+        />
       </form>
     </FormProvider>
   );

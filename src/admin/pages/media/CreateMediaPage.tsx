@@ -2,15 +2,15 @@ import { ReactElement, useEffect } from "react";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { Accordion } from "../../components/molecules";
+import { Accordion, FormActions } from "../../components/molecules";
 import { MediaForm, MediaFormInputs } from "../../components/organisms";
 import { VideoFormSchema } from "../../validations/VideoForm.schema";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetLinkQuery, useSaveLinkMutation } from "../../../GraphQl/graphql";
 
 const CreateMediaPage = (): ReactElement => {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const params = useParams();
 
   const methods = useForm<MediaFormInputs>({
     resolver: joiResolver(VideoFormSchema),
@@ -19,8 +19,8 @@ const CreateMediaPage = (): ReactElement => {
   const { reset, handleSubmit } = methods;
 
   const { data } = useGetLinkQuery({
-    variables: { entity: { id: params.id } },
-    skip: !params.id,
+    variables: { entity: { id } },
+    skip: !id,
   });
 
   const [saveLink] = useSaveLinkMutation({
@@ -40,6 +40,8 @@ const CreateMediaPage = (): ReactElement => {
     });
   };
 
+  const handleReset = () => reset();
+
   useEffect(() => {
     if (!!data) {
       reset({
@@ -52,10 +54,14 @@ const CreateMediaPage = (): ReactElement => {
 
   return (
     <FormProvider {...methods}>
-      <form className="min-h-full" onSubmit={handleSubmit(handleOnSubmit)}>
-        <Accordion title="Neues Video hinzufügen">
+      <form className="min-h-full">
+        <Accordion title="Neues Video hinzufügen" open={!!id}>
           <MediaForm />
         </Accordion>
+        <FormActions
+          onReset={handleReset}
+          onSubmit={handleSubmit(handleOnSubmit)}
+        />
       </form>
     </FormProvider>
   );

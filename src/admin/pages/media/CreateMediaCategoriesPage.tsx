@@ -1,22 +1,22 @@
 import { ReactElement, useEffect } from "react";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { Button } from "../../components/atoms";
-import { Accordion, InputField } from "../../components/molecules";
+import { Accordion, FormActions, InputField } from "../../components/molecules";
 import { CategoryFormInputs } from "../../components/organisms";
 import { CategoryFormSchema } from "../../validations";
-import { useNavigate, useParams } from "react-router-dom";
 import {
   useGetLinkCategoryQuery,
   useSaveLinkCategoryMutation,
 } from "../../../GraphQl/graphql";
 
 const CreateMediaCategoriesPage = (): ReactElement => {
+  const { id } = useParams();
   const navigate = useNavigate();
-  const params = useParams();
 
   const {
+    reset,
     setValue,
     register,
     handleSubmit,
@@ -26,8 +26,8 @@ const CreateMediaCategoriesPage = (): ReactElement => {
   });
 
   const { data } = useGetLinkCategoryQuery({
-    variables: { entity: { id: params.id } },
-    skip: !params.id,
+    variables: { entity: { id } },
+    skip: !id,
   });
 
   const [saveLinkCategory] = useSaveLinkCategoryMutation({
@@ -45,6 +45,8 @@ const CreateMediaCategoriesPage = (): ReactElement => {
     });
   };
 
+  const handleReset = () => reset();
+
   useEffect(() => {
     if (!!data) {
       setValue("name", data?.getLinkCategory?.name || "");
@@ -52,8 +54,8 @@ const CreateMediaCategoriesPage = (): ReactElement => {
   }, [data, setValue]);
 
   return (
-    <form className="min-h-full" onSubmit={handleSubmit(handleOnSubmit)}>
-      <Accordion title="Neue Kategorie hinzufügen">
+    <form className="min-h-full">
+      <Accordion title="Neue Kategorie hinzufügen" open={!!id}>
         <InputField
           id="name"
           label="Kategoriename"
@@ -61,8 +63,11 @@ const CreateMediaCategoriesPage = (): ReactElement => {
           {...register("name")}
           error={errors?.name?.message}
         />
-        <Button className="mt-6">Speichern</Button>
       </Accordion>
+      <FormActions
+        onReset={handleReset}
+        onSubmit={handleSubmit(handleOnSubmit)}
+      />
     </form>
   );
 };

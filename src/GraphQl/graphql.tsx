@@ -2668,12 +2668,12 @@ export type DeleteEventMutationVariables = Exact<{
 
 export type DeleteEventMutation = { __typename?: 'Mutation', deleteEvent?: boolean | null };
 
-export type SaveEventCategoriesMutationVariables = Exact<{
-  entities?: InputMaybe<Array<InputMaybe<EventCategoryEntityInput>> | InputMaybe<EventCategoryEntityInput>>;
+export type SaveEventCategoryMutationVariables = Exact<{
+  entity?: InputMaybe<EventCategoryEntityInput>;
 }>;
 
 
-export type SaveEventCategoriesMutation = { __typename?: 'Mutation', saveEventCategories?: Array<{ __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null> | null };
+export type SaveEventCategoryMutation = { __typename?: 'Mutation', saveEventCategory?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null };
 
 export type DeleteEventCategoryMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
@@ -3348,39 +3348,39 @@ export function useDeleteEventMutation(baseOptions?: Apollo.MutationHookOptions<
 export type DeleteEventMutationHookResult = ReturnType<typeof useDeleteEventMutation>;
 export type DeleteEventMutationResult = Apollo.MutationResult<DeleteEventMutation>;
 export type DeleteEventMutationOptions = Apollo.BaseMutationOptions<DeleteEventMutation, DeleteEventMutationVariables>;
-export const SaveEventCategoriesDocument = gql`
-    mutation SaveEventCategories($entities: [EventCategoryEntityInput]) {
-  saveEventCategories(entities: $entities) {
+export const SaveEventCategoryDocument = gql`
+    mutation SaveEventCategory($entity: EventCategoryEntityInput) {
+  saveEventCategory(entity: $entity) {
     ...CategoryField
   }
 }
     ${CategoryFieldFragmentDoc}`;
-export type SaveEventCategoriesMutationFn = Apollo.MutationFunction<SaveEventCategoriesMutation, SaveEventCategoriesMutationVariables>;
+export type SaveEventCategoryMutationFn = Apollo.MutationFunction<SaveEventCategoryMutation, SaveEventCategoryMutationVariables>;
 
 /**
- * __useSaveEventCategoriesMutation__
+ * __useSaveEventCategoryMutation__
  *
- * To run a mutation, you first call `useSaveEventCategoriesMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSaveEventCategoriesMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useSaveEventCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveEventCategoryMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [saveEventCategoriesMutation, { data, loading, error }] = useSaveEventCategoriesMutation({
+ * const [saveEventCategoryMutation, { data, loading, error }] = useSaveEventCategoryMutation({
  *   variables: {
- *      entities: // value for 'entities'
+ *      entity: // value for 'entity'
  *   },
  * });
  */
-export function useSaveEventCategoriesMutation(baseOptions?: Apollo.MutationHookOptions<SaveEventCategoriesMutation, SaveEventCategoriesMutationVariables>) {
+export function useSaveEventCategoryMutation(baseOptions?: Apollo.MutationHookOptions<SaveEventCategoryMutation, SaveEventCategoryMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SaveEventCategoriesMutation, SaveEventCategoriesMutationVariables>(SaveEventCategoriesDocument, options);
+        return Apollo.useMutation<SaveEventCategoryMutation, SaveEventCategoryMutationVariables>(SaveEventCategoryDocument, options);
       }
-export type SaveEventCategoriesMutationHookResult = ReturnType<typeof useSaveEventCategoriesMutation>;
-export type SaveEventCategoriesMutationResult = Apollo.MutationResult<SaveEventCategoriesMutation>;
-export type SaveEventCategoriesMutationOptions = Apollo.BaseMutationOptions<SaveEventCategoriesMutation, SaveEventCategoriesMutationVariables>;
+export type SaveEventCategoryMutationHookResult = ReturnType<typeof useSaveEventCategoryMutation>;
+export type SaveEventCategoryMutationResult = Apollo.MutationResult<SaveEventCategoryMutation>;
+export type SaveEventCategoryMutationOptions = Apollo.BaseMutationOptions<SaveEventCategoryMutation, SaveEventCategoryMutationVariables>;
 export const DeleteEventCategoryDocument = gql`
     mutation DeleteEventCategory($id: String) {
   deleteEventCategory(id: $id)

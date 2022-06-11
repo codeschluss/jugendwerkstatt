@@ -85,11 +85,11 @@ const CreateVacancyCategoriesPage = (): ReactElement => {
             error={errors?.color?.message}
           />
         </div>
-        <FormActions
-          onReset={handleReset}
-          onSubmit={handleSubmit(handleOnSubmit)}
-        />
       </Accordion>
+      <FormActions
+        onReset={handleReset}
+        onSubmit={handleSubmit(handleOnSubmit)}
+      />
     </form>
   );
 };
