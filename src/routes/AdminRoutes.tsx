@@ -1,9 +1,9 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
   GeneralAddressForm,
   PublicPagesForm,
-} from '../admin/components/organisms';
-import { AdminDashboardLayout } from '../admin/components/templates';
+} from "../admin/components/organisms";
+import { AdminDashboardLayout } from "../admin/components/templates";
 import {
   AdminProfileEmailNotificationsPage,
   AdminProfilePage,
@@ -40,7 +40,7 @@ import {
   PublicPagesPage,
   EvaluationsPage,
   EvaluationsQuestionsPage,
-} from '../admin/pages';
+} from "../admin/pages";
 
 export const AdminRoutes = () => (
   <BrowserRouter>
@@ -75,6 +75,7 @@ export const AdminRoutes = () => (
         />
         <Route path="job-announcements" element={<VacancyListPage />} />
         <Route path="job-announcements/new" element={<CreateVacancyPage />} />
+        <Route path="job-announcements/:id" element={<CreateVacancyPage />} />
         <Route
           path="job-announcements/categories"
           element={<VacancyCategoriesListPage />}
@@ -84,11 +85,19 @@ export const AdminRoutes = () => (
           element={<CreateVacancyCategoriesPage />}
         />
         <Route
+          path="job-announcements/categories/:id"
+          element={<CreateVacancyCategoriesPage />}
+        />
+        <Route
           path="job-announcements/companies"
           element={<VacancyCompaniesListPage />}
         />
         <Route
           path="job-announcements/companies/new"
+          element={<CreateVacancyCompaniesPage />}
+        />
+        <Route
+          path="job-announcements/companies/:id"
           element={<CreateVacancyCompaniesPage />}
         />
         <Route path="medias" element={<MediaListPage />} />

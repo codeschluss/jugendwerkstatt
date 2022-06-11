@@ -20,7 +20,7 @@ const MediaCategoriesListPage = (): ReactElement => {
 
   const handleDeleteById = (id: string) => () => {
     // eslint-disable-next-line no-restricted-globals
-    if (confirm("Are you sure you want to delete!")) {
+    if (confirm("Möchten Sie dies löschen?")) {
       deleteLinkCategory({ variables: { id } });
     }
   };

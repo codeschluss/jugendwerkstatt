@@ -1,9 +1,9 @@
 import { AddressFormInputs } from "../Events/Events.types";
 
 export interface VacancyBaseDataFormInputs {
-  company: string;
+  name: string;
   phone: string;
-  email: string;
+  mail: string;
   website?: string;
   category: string;
   title: string;
@@ -15,7 +15,7 @@ export interface VacancyCategoryFormInputs {
 }
 
 export interface VacancyCompaniesFormInputs {
-  baseData: Omit<VacancyBaseDataFormInputs, "title">;
+  baseData: Omit<VacancyBaseDataFormInputs, "title" | "category">;
   address: AddressFormInputs;
 }
 export interface VacancyFormInputs {

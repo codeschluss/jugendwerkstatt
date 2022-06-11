@@ -22,7 +22,7 @@ export const Accordion: FC<AccordionProps> & AccordionComposition = ({
   const handleAccordion = () => setOpenAccordion(!openAccordion);
 
   return (
-    <div className="grid grid-cols-3 gap-4 my-4">
+    <div className="grid md:grid-cols-3 gap-4 my-2 md:my-4">
       <div
         className={twClsx(
           "flex justify-start flex-col bg-white rounded-sm p-4 col-span-2",

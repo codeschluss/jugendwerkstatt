@@ -1,6 +1,6 @@
 export interface AddressFormInputs {
   street: string;
-  city: string;
+  place: string;
   postalCode: string;
   houseNumber: string;
 }

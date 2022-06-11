@@ -1,0 +1,14 @@
+query GetCompanies($params: FilterSortPaginateInput) {
+  getCompanies(params: $params) {
+    total
+    result {
+      ...Company
+    }
+  }
+}
+
+query GetCompany($entity: CompanyEntityInput) {
+  getCompany(entity: $entity) {
+    ...Company
+  }
+}

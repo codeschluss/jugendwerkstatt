@@ -1,0 +1,9 @@
+mutation SaveCompany($entity: CompanyEntityInput) {
+  saveCompany(entity: $entity) {
+    ...Company
+  }
+}
+
+mutation DeleteCompany($id: String) {
+  deleteCompany(id: $id)
+}

@@ -14,11 +14,11 @@
 }
 
 .dashboard-sidebar {
-  @apply flex flex-col justify-between bg-primary ;
+  @apply flex flex-col justify-between bg-primary;
   grid-area: sidebar;
 }
 
 .dashboard-content {
-  @apply p-12;
+  @apply p-4 lg:p-12;
   grid-area: content;
 }
