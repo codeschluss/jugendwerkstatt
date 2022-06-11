@@ -13,6 +13,7 @@ import {
   useGetJobTypeQuery,
   useSaveJobTypeMutation,
 } from "../../../GraphQl/graphql";
+import { gqlVar } from "../../utils";
 
 const CreateVacancyCategoriesPage = (): ReactElement => {
   const { id } = useParams();
@@ -33,35 +34,30 @@ const CreateVacancyCategoriesPage = (): ReactElement => {
     onCompleted: () => navigate("/admin/job-announcements/categories"),
   });
 
-  const { data: jobTypeData } = useGetJobTypeQuery({
+  const { data: { getJobType = null } = {} } = useGetJobTypeQuery({
     variables: { entity: { id } },
     skip: !id,
   });
 
   const handleOnSubmit = (data: VacancyCategoryFormInputs) => {
-    saveJobType({
-      variables: {
-        entity: {
-          ...data,
-          ...(!!jobTypeData && { id: jobTypeData?.getJobType?.id }),
-        },
-      },
-    });
+    saveJobType(
+      gqlVar({ ...data, ...(!!getJobType && { id: getJobType?.id }) })
+    );
   };
 
   const handleReset = () => reset();
 
   useEffect(() => {
-    if (!!jobTypeData) {
+    if (!!getJobType) {
       reset({
-        name: jobTypeData?.getJobType?.name || "",
-        color: jobTypeData?.getJobType?.color || "",
+        name: getJobType?.name || "",
+        color: getJobType?.color || "",
       });
     }
-  }, [jobTypeData, reset]);
+  }, [getJobType, reset]);
 
   return (
-    <form className="min-h-full" onSubmit={handleSubmit(handleOnSubmit)}>
+    <form className="min-h-full">
       <Accordion
         title="Kategorie"
         showSide

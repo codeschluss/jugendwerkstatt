@@ -10,6 +10,7 @@ import {
   useGetEventCategoryQuery,
   useSaveEventCategoryMutation,
 } from "../../../GraphQl/graphql";
+import { gqlVar } from "../../utils";
 
 const CreateCategoriesPage = (): ReactElement => {
   const { id } = useParams();
@@ -25,7 +26,7 @@ const CreateCategoriesPage = (): ReactElement => {
     resolver: joiResolver(CategoryFormSchema),
   });
 
-  const { data } = useGetEventCategoryQuery({
+  const { data: { category = null } = {} } = useGetEventCategoryQuery({
     variables: { entity: { id } },
     skip: !id,
   });
@@ -35,23 +36,18 @@ const CreateCategoriesPage = (): ReactElement => {
   });
 
   const handleOnSubmit = ({ name }: CategoryFormInputs) => {
-    saveEventCategory({
-      variables: {
-        entity: {
-          name,
-          ...(!!data && { id: data?.category?.id }),
-        },
-      },
-    });
+    saveEventCategory(
+      gqlVar({ name, ...(!!category && { id: category?.id }) })
+    );
   };
 
   const handleReset = () => reset();
 
   useEffect(() => {
-    if (!!data) {
-      setValue("name", data?.category?.name || "");
+    if (!!category) {
+      setValue("name", category?.name || "");
     }
-  }, [data, setValue]);
+  }, [category, setValue]);
 
   return (
     <form className="min-h-full">

@@ -10,7 +10,7 @@ import { CustomTable } from "../../components/molecules";
 const VacancyCategoriesListPage = (): ReactElement => {
   const navigate = useNavigate();
 
-  const { data, refetch } = useGetJobTypesQuery({
+  const { data: { getJobTypes = null } = {}, refetch } = useGetJobTypesQuery({
     fetchPolicy: "cache-and-network",
   });
 
@@ -37,7 +37,7 @@ const VacancyCategoriesListPage = (): ReactElement => {
       <CustomTable
         headerData={["Kategorie", "Farbe", "Aktionen"]}
         bodyData={
-          data?.getJobTypes?.result?.map((item) => (
+          getJobTypes?.result?.map((item) => (
             <Table.Row key={item?.id}>
               <Table.Data>{item?.name}</Table.Data>
               <Table.Data style={{ color: item?.color || "" }}>

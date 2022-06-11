@@ -25,7 +25,7 @@ const CreateVacancyPage = (): ReactElement => {
 
   return (
     <FormProvider {...methods}>
-      <form className="min-h-full" onSubmit={handleSubmit(handleOnSubmit)}>
+      <form className="min-h-full">
         <Accordion title="Stammdaten">
           <VacancyForm />
         </Accordion>

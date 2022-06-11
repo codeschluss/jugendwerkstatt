@@ -14,6 +14,7 @@ import {
   VacancyCompanyForm,
 } from "../../components/organisms";
 import { VacancyCompaiesFormSchema } from "../../validations";
+import { gqlVar } from "../../utils";
 
 const CreateVacancyCompaniesPage = (): ReactElement => {
   const { id } = useParams();
@@ -25,7 +26,7 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
 
   const { reset, handleSubmit } = methods;
 
-  const { data: companyData } = useGetCompanyQuery({
+  const { data: { getCompany = null } = {} } = useGetCompanyQuery({
     variables: { entity: { id } },
     skip: !id,
   });
@@ -40,15 +41,13 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
     baseData,
     address,
   }: VacancyCompaniesFormInputs) => {
-    saveCompany({
-      variables: {
-        entity: {
-          ...baseData,
-          address: { ...address, latitude: 0, longitude: 0 },
-          ...(!!companyData && { id: companyData?.getCompany?.id }),
-        },
-      },
-    });
+    saveCompany(
+      gqlVar({
+        ...baseData,
+        address: { ...address, latitude: 0, longitude: 0 },
+        ...(!!getCompany && { id: getCompany?.id }),
+      })
+    );
   };
 
   return (

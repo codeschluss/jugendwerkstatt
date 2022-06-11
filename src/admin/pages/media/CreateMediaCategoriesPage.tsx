@@ -10,6 +10,7 @@ import {
   useGetLinkCategoryQuery,
   useSaveLinkCategoryMutation,
 } from "../../../GraphQl/graphql";
+import { gqlVar } from "../../utils";
 
 const CreateMediaCategoriesPage = (): ReactElement => {
   const { id } = useParams();
@@ -25,7 +26,7 @@ const CreateMediaCategoriesPage = (): ReactElement => {
     resolver: joiResolver(CategoryFormSchema),
   });
 
-  const { data } = useGetLinkCategoryQuery({
+  const { data: { getLinkCategory = null } = {} } = useGetLinkCategoryQuery({
     variables: { entity: { id } },
     skip: !id,
   });
@@ -35,23 +36,18 @@ const CreateMediaCategoriesPage = (): ReactElement => {
   });
 
   const handleOnSubmit = ({ name }: CategoryFormInputs) => {
-    saveLinkCategory({
-      variables: {
-        entity: {
-          name,
-          ...(!!data && { id: data?.getLinkCategory?.id }),
-        },
-      },
-    });
+    saveLinkCategory(
+      gqlVar({ name, ...(!!getLinkCategory && { id: getLinkCategory?.id }) })
+    );
   };
 
   const handleReset = () => reset();
 
   useEffect(() => {
-    if (!!data) {
-      setValue("name", data?.getLinkCategory?.name || "");
+    if (!!getLinkCategory) {
+      setValue("name", getLinkCategory?.name || "");
     }
-  }, [data, setValue]);
+  }, [getLinkCategory, setValue]);
 
   return (
     <form className="min-h-full">

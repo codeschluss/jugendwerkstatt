@@ -10,9 +10,10 @@ import { CustomTable } from "../../components/molecules";
 const MediaCategoriesListPage = (): ReactElement => {
   const navigate = useNavigate();
 
-  const { data, refetch } = useGetLinkCategoriesAdminQuery({
-    fetchPolicy: "cache-and-network",
-  });
+  const { data: { getLinkCategories = null } = {}, refetch } =
+    useGetLinkCategoriesAdminQuery({
+      fetchPolicy: "cache-and-network",
+    });
 
   const [deleteLinkCategory] = useDeleteLinkCategoryMutation({
     onCompleted: () => refetch(),
@@ -37,7 +38,7 @@ const MediaCategoriesListPage = (): ReactElement => {
       <CustomTable
         headerData={["Kategorie", "Aktionen"]}
         bodyData={
-          data?.getLinkCategories?.result?.map((item) => (
+          getLinkCategories?.result?.map((item) => (
             <Table.Row key={item?.id}>
               <Table.Data>{item?.name}</Table.Data>
               <Table.Data>

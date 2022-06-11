@@ -7,6 +7,7 @@ import { MediaForm, MediaFormInputs } from "../../components/organisms";
 import { VideoFormSchema } from "../../validations/VideoForm.schema";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetLinkQuery, useSaveLinkMutation } from "../../../GraphQl/graphql";
+import { gqlVar } from "../../utils";
 
 const CreateMediaPage = (): ReactElement => {
   const { id } = useParams();
@@ -18,7 +19,7 @@ const CreateMediaPage = (): ReactElement => {
 
   const { reset, handleSubmit } = methods;
 
-  const { data } = useGetLinkQuery({
+  const { data: { getLink = null } = {} } = useGetLinkQuery({
     variables: { entity: { id } },
     skip: !id,
   });
@@ -28,29 +29,27 @@ const CreateMediaPage = (): ReactElement => {
   });
 
   const handleOnSubmit = ({ category, url, title }: MediaFormInputs) => {
-    saveLink({
-      variables: {
-        entity: {
-          url,
-          title,
-          category: { name: category },
-          ...(!!data && { id: data?.getLink?.id }),
-        },
-      },
-    });
+    saveLink(
+      gqlVar({
+        url,
+        title,
+        category: { name: category },
+        ...(!!getLink && { id: getLink?.id }),
+      })
+    );
   };
 
   const handleReset = () => reset();
 
   useEffect(() => {
-    if (!!data) {
+    if (!!getLink) {
       reset({
-        url: data?.getLink?.url || "",
-        title: data?.getLink?.title || "",
-        category: data?.getLink?.category?.name || "",
+        url: getLink?.url || "",
+        title: getLink?.title || "",
+        category: getLink?.category?.name || "",
       });
     }
-  }, [data, reset]);
+  }, [getLink, reset]);
 
   return (
     <FormProvider {...methods}>

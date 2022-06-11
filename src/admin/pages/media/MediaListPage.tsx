@@ -11,7 +11,7 @@ import { CustomTable } from "../../components/molecules";
 const MediaListPage = (): ReactElement => {
   const navigate = useNavigate();
 
-  const { data, refetch } = useGetLinksQuery({
+  const { data: { getLinks = null } = {}, refetch } = useGetLinksQuery({
     fetchPolicy: "cache-and-network",
   });
 
@@ -35,7 +35,7 @@ const MediaListPage = (): ReactElement => {
       <CustomTable
         headerData={["Videoname", "Kategorie", "Link", "Aktionen"]}
         bodyData={
-          data?.getLinks?.result?.map((item) => (
+          getLinks?.result?.map((item) => (
             <Table.Row key={item?.id}>
               <Table.Data>{item?.title}</Table.Data>
               <Table.Data>{item?.category?.name}</Table.Data>
