@@ -1,7 +1,10 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement } from 'react';
+import { ReactElement, useContext, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSaveUserAdminMutation } from '../../../../GraphQl/graphql';
+import {
+  useGetMeBasicQuery,
+  useSaveUserAdminMutation,
+} from '../../../../GraphQl/graphql';
 import Avatar from '../../../../shared/components/header/sideBar/Avatar';
 import { ProfileFormSchema } from '../../../validations';
 import { Button, Panel } from '../../atoms';
@@ -9,9 +12,11 @@ import { InputField } from '../../molecules';
 import { ProfileFormInputs } from './AdminProfile.props';
 
 export const AdminProfile = (): ReactElement => {
+  const { data: user } = useGetMeBasicQuery();
   const {
     register,
     handleSubmit,
+    reset,
     formState: {
       errors: { fullname, email, phone },
     },
@@ -21,8 +26,18 @@ export const AdminProfile = (): ReactElement => {
 
   const [saveUser] = useSaveUserAdminMutation();
 
+  useEffect(() => {
+    if (user?.me) {
+      reset({
+        fullname: user?.me?.fullname || '',
+        email: user?.me?.email || '',
+        phone: user?.me?.phone || '',
+      });
+    }
+  }, [user?.me, reset]);
+
   const onSubmit = (data: ProfileFormInputs) =>
-    saveUser({ variables: { user: { ...data } } });
+    saveUser({ variables: { user: { id: user?.me?.id, ...data } } });
 
   return (
     <Panel
