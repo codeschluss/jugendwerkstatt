@@ -20,7 +20,7 @@ const UsersRequestsListPage = () => {
     approveUser({ variables: { userId } });
   const handleDeleteUser = (userId: string) => () => {
     // eslint-disable-next-line no-restricted-globals
-    if (confirm('Möchten Sie diesen Benutzer wirklich löschen?')) {
+    if (confirm('Möchten Sie dies löschen?')) {
       deleteUser({ variables: { userId } });
     }
   };

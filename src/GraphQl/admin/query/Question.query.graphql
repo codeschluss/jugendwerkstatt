@@ -1,0 +1,11 @@
+query GetQuestions {
+  questions: getQuestions {
+    result {
+      ...Question
+    }
+  }
+}
+
+mutation DeleteQuestion($questionId: String) {
+  deleteQuestion(id: $questionId)
+}

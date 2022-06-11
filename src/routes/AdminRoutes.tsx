@@ -37,6 +37,8 @@ import {
   ChatActivationPage,
   GeneralAddressPage,
   PublicPagesPage,
+  EvaluationsPage,
+  EvaluationsQuestionsPage,
 } from '../admin/pages';
 import CreateGroupPage from '../admin/pages/Group/CreateGroupPage';
 
@@ -104,11 +106,20 @@ export const AdminRoutes = () => (
         <Route path="forms/templates" element={<FormsListPage />} />
         <Route path="forms/templates/new" element={<CreateFormsPage />} />
         <Route path="forms/documents" element={<FormsDocumentsListPage />} />
-        <Route path="groups" element={<GroupListPage />}>
-          <Route path="participants" element={<GroupParticipantsListPage />} />
-          <Route path="new" element={<CreateGroupPage />} />
-          <Route path=":id" element={<EditGroupPage />} />
-        </Route>
+
+        <Route path="evaluations" element={<EvaluationsPage />} />
+        <Route
+          path="evaluations/questions"
+          element={<EvaluationsQuestionsPage />}
+        />
+
+        <Route path="groups" element={<GroupListPage />} />
+        <Route
+          path="groups/participants"
+          element={<GroupParticipantsListPage />}
+        />
+        <Route path="groups/new" element={<CreateGroupPage />} />
+        <Route path="groups/:id" element={<EditGroupPage />} />
 
         {/* General Settings */}
         <Route path="general-settings">

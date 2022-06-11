@@ -1,17 +1,17 @@
-import { ReactElement } from "react";
-import { useNavigate } from "react-router-dom";
+import { ReactElement } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   useDeleteOrganizerMutation,
   useGetOrganizersQuery,
-} from "../../../GraphQl/graphql";
-import { Table, Action, Panel } from "../../components/atoms";
-import { CustomTable } from "../../components/molecules";
+} from '../../../GraphQl/graphql';
+import { Table, Action, Panel } from '../../components/atoms';
+import { CustomTable } from '../../components/molecules';
 
 const OrganizersListPage = (): ReactElement => {
   const navigate = useNavigate();
 
   const { data, refetch } = useGetOrganizersQuery({
-    fetchPolicy: "cache-and-network",
+    fetchPolicy: 'cache-and-network',
   });
 
   const [deleteOrganizer] = useDeleteOrganizerMutation({
@@ -20,7 +20,7 @@ const OrganizersListPage = (): ReactElement => {
 
   const handleDeleteById = (id: string) => () => {
     // eslint-disable-next-line no-restricted-globals
-    if (confirm("Are you sure you want to delete!")) {
+    if (confirm('Möchten Sie dies löschen?')) {
       deleteOrganizer({ variables: { id } });
     }
   };
@@ -30,17 +30,17 @@ const OrganizersListPage = (): ReactElement => {
   return (
     <Panel.Wrapper
       action={{
-        to: "/admin/events/organizers/new",
-        label: "Neuen Veranstalter hinzufügen",
+        to: '/admin/events/organizers/new',
+        label: 'Neuen Veranstalter hinzufügen',
       }}
     >
       <CustomTable
         headerData={[
-          "Veranstaltername",
-          "Kategorie",
-          "E-Mail-Adresse",
-          "Adresse",
-          "Aktionen",
+          'Veranstaltername',
+          'Kategorie',
+          'E-Mail-Adresse',
+          'Adresse',
+          'Aktionen',
         ]}
         bodyData={
           data?.organizers?.result?.map((item) => (
@@ -51,8 +51,8 @@ const OrganizersListPage = (): ReactElement => {
               <Table.Data>{item?.website}</Table.Data>
               <Table.Data>
                 <Action
-                  onUpdate={handleUpdateById(item?.id || "")}
-                  onDelete={handleDeleteById(item?.id || "")}
+                  onUpdate={handleUpdateById(item?.id || '')}
+                  onDelete={handleDeleteById(item?.id || '')}
                 />
               </Table.Data>
             </Table.Row>
