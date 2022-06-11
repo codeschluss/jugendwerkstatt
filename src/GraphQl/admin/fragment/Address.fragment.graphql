@@ -1,0 +1,9 @@
+fragment AddressField on AddressEntity {
+  id
+  houseNumber
+  place
+  postalCode
+  street
+  longitude
+  latitude
+}

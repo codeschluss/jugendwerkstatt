@@ -1,0 +1,14 @@
+query GetJobTypesAdmin($params: FilterSortPaginateInput) {
+  getJobTypes(params: $params) {
+    total
+    result {
+      ...JobTypeField
+    }
+  }
+}
+
+query GetJobType($entity: JobTypeEntityInput) {
+  getJobType(entity: $entity) {
+    ...JobTypeField
+  }
+}

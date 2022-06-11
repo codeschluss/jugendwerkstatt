@@ -8,4 +8,7 @@ fragment CompanyField on CompanyEntity {
 
 fragment Company on CompanyEntity {
   ...CompanyField
+  address {
+    ...AddressField
+  }
 }

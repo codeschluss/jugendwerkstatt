@@ -27,7 +27,7 @@ export const DescriptionFrom = (): ReactElement => {
         onBlur={handleSetValue}
         onReady={handleGetValue}
       />
-      <Button className="mt-6" onClick={handleTrigger}>
+      <Button type="button" className="mt-6" onClick={handleTrigger}>
         Speichern
       </Button>
     </div>

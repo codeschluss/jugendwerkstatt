@@ -1,0 +1,9 @@
+mutation SaveJobType($entity: JobTypeEntityInput) {
+  saveJobType(entity: $entity) {
+    ...JobTypeField
+  }
+}
+
+mutation DeleteJobType($id: String) {
+  deleteJobType(id: $id)
+}

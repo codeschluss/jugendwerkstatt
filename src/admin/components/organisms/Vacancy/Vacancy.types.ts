@@ -1,3 +1,4 @@
+import { Control, UseFormSetValue } from "react-hook-form";
 import { AddressFormInputs } from "../Events/Events.types";
 
 export interface VacancyBaseDataFormInputs {
@@ -11,7 +12,7 @@ export interface VacancyBaseDataFormInputs {
 
 export interface VacancyCategoryFormInputs {
   color: string;
-  category: string;
+  name: string;
 }
 
 export interface VacancyCompaniesFormInputs {
@@ -21,4 +22,8 @@ export interface VacancyCompaniesFormInputs {
 export interface VacancyFormInputs {
   baseData: VacancyBaseDataFormInputs;
   address: AddressFormInputs;
+}
+export interface SketchColorProps {
+  control: Control<VacancyCategoryFormInputs, any>;
+  setValue: UseFormSetValue<VacancyCategoryFormInputs>;
 }

@@ -1,16 +1,26 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement } from 'react';
-import { useForm } from 'react-hook-form';
-import { SketchPicker } from 'react-color';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { ReactElement, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { Button } from '../../components/atoms';
-import { Accordion, InputField } from '../../components/molecules';
-import { VacancyCategoryFormInputs } from '../../components/organisms';
-import { VacancyCategoryFormSchema } from '../../validations';
+import { Accordion, FormActions, InputField } from "../../components/molecules";
+import {
+  SketchColor,
+  VacancyCategoryFormInputs,
+} from "../../components/organisms";
+import { VacancyCategoryFormSchema } from "../../validations";
+import {
+  useGetJobTypeQuery,
+  useSaveJobTypeMutation,
+} from "../../../GraphQl/graphql";
 
 const CreateVacancyCategoriesPage = (): ReactElement => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const {
-    watch,
+    control,
+    reset,
     setValue,
     register,
     handleSubmit,
@@ -19,42 +29,66 @@ const CreateVacancyCategoriesPage = (): ReactElement => {
     resolver: joiResolver(VacancyCategoryFormSchema),
   });
 
+  const [saveJobType] = useSaveJobTypeMutation({
+    onCompleted: () => navigate("/admin/job-announcements/categories"),
+  });
+
+  const { data: jobTypeData } = useGetJobTypeQuery({
+    variables: { entity: { id } },
+    skip: !id,
+  });
+
   const handleOnSubmit = (data: VacancyCategoryFormInputs) => {
-    console.log('data', data);
+    saveJobType({
+      variables: {
+        entity: {
+          ...data,
+          ...(!!jobTypeData && { id: jobTypeData?.getJobType?.id }),
+        },
+      },
+    });
   };
+
+  const handleReset = () => reset();
+
+  useEffect(() => {
+    if (!!jobTypeData) {
+      reset({
+        name: jobTypeData?.getJobType?.name || "",
+        color: jobTypeData?.getJobType?.color || "",
+      });
+    }
+  }, [jobTypeData, reset]);
 
   return (
     <form className="min-h-full" onSubmit={handleSubmit(handleOnSubmit)}>
       <Accordion
         title="Kategorie"
         showSide
+        open={!!id}
         sideClassName="bg-transparent"
-        sideContent={
-          <div className="p-3 bg-white w-fit">
-            <SketchPicker
-              onChange={(data: any) => setValue('color', data.hex)}
-              color={watch('color')}
-            />
-          </div>
-        }
+        sideContent={<SketchColor control={control} setValue={setValue} />}
       >
         <div className="flex flex-col justify-start w-full space-y-6">
           <InputField
-            id="category"
+            id="name"
             label="Kategoriename"
             placeholder="Metallhandwerk"
-            {...register('category')}
-            error={errors?.category?.message}
+            {...register("name")}
+            error={errors?.name?.message}
           />
           <InputField
             id="color"
             label="Farbe"
             placeholder="#FFFFFF"
-            {...register('color')}
+            {...register("color")}
             error={errors?.color?.message}
           />
         </div>
-        <Button className="mt-6">Speichern</Button>
+        <FormActions
+          onReset={handleReset}
+          onSubmit={handleSubmit(handleOnSubmit)}
+        />
       </Accordion>
     </form>
   );

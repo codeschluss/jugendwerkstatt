@@ -1,7 +1,7 @@
 import { joiResolver } from "@hookform/resolvers/joi";
 import { ReactElement } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { Accordion } from "../../components/molecules";
+import { Accordion, FormActions } from "../../components/molecules";
 import {
   AddressForm,
   DescriptionFrom,
@@ -15,16 +15,17 @@ const CreateVacancyPage = (): ReactElement => {
     resolver: joiResolver(VacancyFormSchema),
   });
 
+  const { reset, handleSubmit } = methods;
+
   const handleOnSubmit = (data: VacancyFormInputs) => {
     console.log("data", data);
   };
 
+  const handleReset = () => reset();
+
   return (
     <FormProvider {...methods}>
-      <form
-        className="min-h-full"
-        onSubmit={methods.handleSubmit(handleOnSubmit)}
-      >
+      <form className="min-h-full" onSubmit={handleSubmit(handleOnSubmit)}>
         <Accordion title="Stammdaten">
           <VacancyForm />
         </Accordion>
@@ -40,6 +41,10 @@ const CreateVacancyPage = (): ReactElement => {
         <Accordion title="Termine">
           <p>lorem ispum</p>
         </Accordion>
+        <FormActions
+          onReset={handleReset}
+          onSubmit={handleSubmit(handleOnSubmit)}
+        />
       </form>
     </FormProvider>
   );

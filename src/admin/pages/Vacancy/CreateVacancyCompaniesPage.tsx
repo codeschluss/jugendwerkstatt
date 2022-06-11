@@ -1,14 +1,13 @@
-import { joiResolver } from "@hookform/resolvers/joi";
 import { ReactElement } from "react";
+import { joiResolver } from "@hookform/resolvers/joi";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   useGetCompanyQuery,
   useSaveCompanyMutation,
 } from "../../../GraphQl/graphql";
-import { Button } from "../../components/atoms";
 
-import { Accordion } from "../../components/molecules";
+import { Accordion, FormActions } from "../../components/molecules";
 import {
   AddressForm,
   VacancyCompaniesFormInputs,
@@ -31,8 +30,6 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
     skip: !id,
   });
 
-  console.log("companyData", companyData);
-
   const [saveCompany] = useSaveCompanyMutation({
     onCompleted: () => navigate("/admin/job-announcements/companies"),
   });
@@ -43,7 +40,6 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
     baseData,
     address,
   }: VacancyCompaniesFormInputs) => {
-    console.log("data", baseData, address);
     saveCompany({
       variables: {
         entity: {
@@ -64,18 +60,10 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
         <Accordion title="Adresse">
           <AddressForm />
         </Accordion>
-        <div className="flex md:justify-start justify-between flex-row mt-4">
-          <Button
-            onClick={handleReset}
-            className="md:mr-6 border-[#424242] text-[#424242]"
-            type="button"
-          >
-            Zurücksetzen
-          </Button>
-          <Button className="md:mr-6" onClick={handleSubmit(handleOnSubmit)}>
-            Absenden
-          </Button>
-        </div>
+        <FormActions
+          onReset={handleReset}
+          onSubmit={handleSubmit(handleOnSubmit)}
+        />
       </form>
     </FormProvider>
   );

@@ -41,7 +41,9 @@ const VacancyCompaniesListPage = (): ReactElement => {
             <Table.Row key={item?.id}>
               <Table.Data>{item?.name}</Table.Data>
               <Table.Data>{item?.mail}</Table.Data>
-              <Table.Data>{item?.website}</Table.Data>
+              <Table.Data>
+                {`${item?.address?.street} ${item?.address?.houseNumber}, ${item?.address?.place} ${item?.address?.postalCode}`}
+              </Table.Data>
               <Table.Data>
                 <Action
                   onUpdate={handleUpdateById(item?.id || "")}

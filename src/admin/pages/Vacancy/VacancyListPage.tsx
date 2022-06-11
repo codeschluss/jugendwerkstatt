@@ -1,7 +1,8 @@
+import { ReactElement } from "react";
 import { Table, Action, Panel } from "../../components/atoms";
 import { CustomTable } from "../../components/molecules";
 
-const CreateVacancyPage = () => {
+const CreateVacancyPage = (): ReactElement => {
   return (
     <Panel.Wrapper
       action={{

@@ -24,6 +24,6 @@ export const VacancyCompaiesFormSchema = Joi.object({
 });
 
 export const VacancyCategoryFormSchema = Joi.object({
-  category: Joi.string().required().label("Kategorie"),
+  name: Joi.string().required().label("Kategorie"),
   color: Joi.string().required().label("Farbe"),
 });

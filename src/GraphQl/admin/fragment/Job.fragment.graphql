@@ -1,0 +1,5 @@
+fragment JobTypeField on JobTypeEntity {
+  id
+  color
+  name
+}
