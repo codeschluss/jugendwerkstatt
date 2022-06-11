@@ -1,5 +1,5 @@
 export interface ProfileFormInputs {
-  name: string;
+  fullname: string;
   email: string;
   phone: string;
 }

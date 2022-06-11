@@ -23,17 +23,6 @@ export const AdminProfilePasswordPage = loadable(
   }
 );
 
-export const AdminProfileEmailNotificationsPage = loadable(
-  () =>
-    timeout(
-      import('./Profile/AdminProfileEmailNotificationsPage'),
-      PAGE_LOAD_TIMEOUT
-    ),
-  {
-    fallback: <PageLoader />,
-  }
-);
-
 // Events pages
 export const EventsListPage = loadable(
   () => timeout(import('./Events/EventsListPage'), PAGE_LOAD_TIMEOUT),
