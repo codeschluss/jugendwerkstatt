@@ -58,7 +58,7 @@ const Login = () => {
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
-    await createToken();
+    createToken();
     resetEmailInput();
     resetPasswordInput();
     setTempEmail(enteredEmail);
