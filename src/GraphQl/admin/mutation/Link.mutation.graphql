@@ -1,0 +1,26 @@
+mutation SaveLink($entity: LinkEntityInput) {
+  link: saveLink(entity: $entity) {
+    id
+    title
+    url
+    category {
+      id
+      name
+    }
+  }
+}
+
+mutation DeleteLink($id: String) {
+  deleteLink(id: $id)
+}
+
+mutation SaveLinkCategory($entity: LinkCategoryEntityInput) {
+  linkCategory: saveLinkCategory(entity: $entity) {
+    id
+    name
+  }
+}
+
+mutation DeleteLinkCategory($id: String) {
+  deleteLinkCategory(id: $id)
+}

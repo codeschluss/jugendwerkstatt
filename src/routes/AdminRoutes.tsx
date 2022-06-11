@@ -31,6 +31,7 @@ import {
   FormsDocumentsListPage,
   FormsListPage,
   GroupListPage,
+  CreateGroupPage,
   EditGroupPage,
   GroupParticipantsListPage,
   PushNotificationsPage,
@@ -40,7 +41,6 @@ import {
   EvaluationsPage,
   EvaluationsQuestionsPage,
 } from '../admin/pages';
-import CreateGroupPage from '../admin/pages/Group/CreateGroupPage';
 
 export const AdminRoutes = () => (
   <BrowserRouter>
@@ -93,11 +93,17 @@ export const AdminRoutes = () => (
         />
         <Route path="medias" element={<MediaListPage />} />
         <Route path="medias/new" element={<CreateMediaPage />} />
+        <Route path="medias/:id" element={<CreateMediaPage />} />
         <Route path="medias/categories" element={<MediaCategoriesListPage />} />
         <Route
           path="medias/categories/new"
           element={<CreateMediaCategoriesPage />}
         />
+        <Route
+          path="medias/categories/:id"
+          element={<CreateMediaCategoriesPage />}
+        />
+        <Route path="users/requests" element={<UsersRequestsListPage />} />
 
         <Route path="users" element={<UsersListPage />} />
         <Route path="users/requests" element={<UsersRequestsListPage />} />

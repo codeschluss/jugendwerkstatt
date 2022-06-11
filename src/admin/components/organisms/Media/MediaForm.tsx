@@ -1,10 +1,13 @@
 import { ReactElement } from "react";
 import { useFormContext } from "react-hook-form";
+import { useGetLinkCategoriesAdminQuery } from "../../../../GraphQl/graphql";
 import { Button, Select } from "../../atoms";
 import { InputField } from "../../molecules";
 import { MediaFormInputs } from "./Media.types";
 
 export const MediaForm = (): ReactElement => {
+  const { data } = useGetLinkCategoriesAdminQuery();
+
   const {
     register,
     formState: { errors },
@@ -14,18 +17,18 @@ export const MediaForm = (): ReactElement => {
     <>
       <div className="flex flex-col justify-start w-full space-y-6">
         <InputField
-          id="video"
+          id="title"
           label="Videoname"
-          {...register("video")}
+          {...register("title")}
           placeholder="How to...Bewerbungsvideo drehen"
-          error={errors?.video?.message}
+          error={errors?.title?.message}
         />
 
         <InputField
-          id="link"
+          id="url"
           label="Link"
-          {...register("link")}
-          error={errors?.link?.message}
+          {...register("url")}
+          error={errors?.url?.message}
           placeholder="https://planet-beruf.de/schuelerinnen/video/video-how-to-bewerbungsvideos-drehen"
         />
 
@@ -36,11 +39,14 @@ export const MediaForm = (): ReactElement => {
           defaultValue={1}
           error={errors?.category?.message}
         >
-          {[1, 2, 3].map((i) => (
-            <option key={i} value={i}>
-              test {i}
-            </option>
-          ))}
+          {data?.getLinkCategories?.result?.map(
+            (item) =>
+              item?.name && (
+                <option key={item.id} value={item.name}>
+                  {item.name}
+                </option>
+              )
+          )}
         </Select>
       </div>
       <Button className="mt-6">Speichern</Button>

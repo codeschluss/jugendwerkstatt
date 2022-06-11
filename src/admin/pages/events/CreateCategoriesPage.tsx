@@ -34,11 +34,11 @@ const CreateCategoriesPage = (): ReactElement => {
     onCompleted: () => navigate("/admin/events/categories"),
   });
 
-  const handleOnSubmit = ({ category }: CategoryFormInputs) => {
+  const handleOnSubmit = ({ name }: CategoryFormInputs) => {
     saveEventCategories({
       variables: {
         entities: {
-          name: category,
+          name,
           icon: "icon name",
           ...(!!data && { id: data?.category?.id }),
         },
@@ -48,7 +48,7 @@ const CreateCategoriesPage = (): ReactElement => {
 
   useEffect(() => {
     if (!!data) {
-      setValue("category", data?.category?.name || "");
+      setValue("name", data?.category?.name || "");
     }
   }, [data, setValue]);
 
@@ -56,11 +56,11 @@ const CreateCategoriesPage = (): ReactElement => {
     <form className="min-h-full" onSubmit={handleSubmit(handleOnSubmit)}>
       <Accordion open={!!params?.id} title="Kategorie">
         <InputField
-          id="category"
+          id="name"
           label="Kategoriename"
           placeholder="Metallhandwerk"
-          {...register("category")}
-          error={errors?.category?.message}
+          {...register("name")}
+          error={errors?.name?.message}
         />
         <Button className="mt-6">Speichern</Button>
       </Accordion>

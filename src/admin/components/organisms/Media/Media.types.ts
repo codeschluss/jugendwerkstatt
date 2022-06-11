@@ -1,5 +1,5 @@
 export interface MediaFormInputs {
-  video: string;
-  link: string;
+  title: string;
+  url: string;
   category: string;
 }
