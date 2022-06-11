@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "../../../../client/components/ui/Button";
 import AuthContext from "../../../../contexts/AuthContext";
 import { useSendPasswordResetMutation } from "../../../../GraphQl/graphql";
 import useInput from "../../../../hooks/use-input";
-import Button from "../../../../client/components/ui/Button";
 import AuthInput from "../AuthInput";
 
 const Email: React.FC = () => {
@@ -55,14 +55,14 @@ const Email: React.FC = () => {
           onBlur={emailBlurHandler}
           onChange={emailChangeHandler}
           type="text"
-          error={emailInputError ? "must be a valid email address" : ""}
+          error={emailInputError ? "Keine gültige E-Mail Adresse" : ""}
           placeholder="E-Mail Adresse"
           inputClassName="w-25 px-4  text-xl p-3 peer focus:outline-none border-2 rounded-md"
         />
         {errorText && (
           <p className="text-primary">
             {" "}
-            Email is wrong! please provide a valid email
+            E-Mail Adresse nicht gültig. Bitte valide E-Mail Adresse angeben.
           </p>
         )}
         <Button

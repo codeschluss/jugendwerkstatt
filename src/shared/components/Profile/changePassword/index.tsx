@@ -1,13 +1,12 @@
-import React, { useContext } from "react";
-import AuthContext from "../../../../contexts/AuthContext";
-import useInput from "../../../../hooks/use-input";
-import Button from "../../../../client/components/ui/Button";
-import Input from "./Input";
-import CustomHeader from "../../header/customHeader/CustomHeader";
-import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { SAVE_USER } from "../../../../GraphQl/mutation";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "../../../../client/components/ui/Button";
 import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
+import { SAVE_USER } from "../../../../GraphQl/mutation";
+import useInput from "../../../../hooks/use-input";
+import CustomHeader from "../../header/customHeader/CustomHeader";
+import Input from "./Input";
 
 const ChangePassword = () => {
   const user = useGetMeBasicQuery();
@@ -63,7 +62,7 @@ const ChangePassword = () => {
             />
             <Input
               value={passwordTwo}
-              title="Password Wiederholen"
+              title="Passwort wiederholen"
               onInput={passwordTwoChangeHandler}
               onBlur={passwordTwoBlurHandler}
             />

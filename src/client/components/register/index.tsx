@@ -3,13 +3,11 @@ import { useMutation } from "@apollo/client";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../contexts/AuthContext";
-import { useSendVerificationMutation } from "../../../GraphQl/graphql";
 import { SAVE_USER } from "../../../GraphQl/mutation";
 import useInput from "../../../hooks/use-input";
 import AuthInput from "../../../shared/components/authentication/AuthInput";
 import AuthWrapper from "../../../shared/components/authentication/AuthWrapper";
 import Button from "../ui/Button";
-import { RegisterFooter } from "./registerfooter/RegisterFooter";
 import { RegisterValidations } from "./registerfooter/RegisterValidations";
 
 const Register = () => {
@@ -145,37 +143,41 @@ const Register = () => {
             onChange={usernameChangeHandler}
             onBlur={usernameBlurHandler}
             value={enteredUsername}
-            error={usernameInputError ? "Cannot be left empty" : ""}
+            error={usernameInputError ? "Darf nicht leer sein" : ""}
           />
           <AuthInput
-            id="Email"
+            id="Email-Adresse"
             type="text"
             onChange={emailChangeHandler}
             onBlur={emailBlurHandler}
             value={enteredEmail}
-            error={emailInputError ? "must be a valid email address" : ""}
+            error={emailInputError ? "E-Mail Adresse nicht gültig" : ""}
             inputClassName={`${
               emailInputError && "border-500-red"
             }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
           />
           <AuthInput
-            id="Password"
+            id="Passwort"
             type="password"
             onChange={twoCalls}
             onBlur={passwordBlurHandler}
             value={enteredPassword}
-            error={passwordInputError ? "password not strong enough" : ""}
+            error={passwordInputError ? "Passwort nicht stark genug" : ""}
             inputClassName={`${
               passwordInputError && "border-500-red"
             }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
           />
           <AuthInput
-            id="Repeat-Password"
+            id="Passwort wiederholen"
             type="password"
             onChange={cPasswordChangeHandler}
             onBlur={cPasswordBlurHandler}
             value={enteredCPassword}
+<<<<<<< HEAD
             error={cPasswordInputError ? "Password must match" : ""}
+=======
+            error={cPasswordInputError ? "Passwort nicht stark genug" : ""}
+>>>>>>> c893642530e51e62509c8926abbc81ab734e6249
             inputClassName={`${
               cPasswordInputError && "border-500-red"
             }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
