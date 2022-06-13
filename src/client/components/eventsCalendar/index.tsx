@@ -9,12 +9,23 @@ import "moment/locale/de";
 import "./eventsCalendarAndTimeStyle.css";
 
 const EventsCalendar: React.FC = () => {
-  const currentDate = new Date();
+  let currentDate = new Date();
+
+  const currentUrl = window.location.href;
+  if(currentUrl.indexOf('?date=')!==-1){
+    const currentListStringDate =  currentUrl.split("?date=")[1].split(".");
+    currentDate = new Date(parseInt(currentListStringDate[0]), (parseInt(currentListStringDate[1])-1), parseInt(currentListStringDate[2]));
+  }
 
   const navigate = useNavigate();
   function goBack() {
     navigate(-1);
   }
+
+  
+
+  
+  
 
   const localizer = momentLocalizer(moment);
 
@@ -36,6 +47,8 @@ const EventsCalendar: React.FC = () => {
         datesOnEvents[temmmpCounter] = {
           id: temmmpCounter,
           eventId: singleEvent.id,
+          name: singleEvent.name,
+          description: singleEvent.description,
           start: new Date(tempSchedules[i]?.startDate),
           end: new Date(tempSchedules[i]?.endDate),
           allDay: true,
@@ -125,10 +138,12 @@ const EventsCalendar: React.FC = () => {
       dateParameter.getDate();
     if (window.innerWidth >= 1024) {
       return (
-        <span className="anchor-number-of-events ">
+        <Link className="anchor-number-of-events "
+          to={"/EventsCalendar?date=" + dateParameter}
+          >
           {event.numberOfEvents}{" "}
           V&shy;e&shy;r&shy;a&shy;n&shy;s&shy;t&shy;a&shy;l&shy;t&shy;u&shy;n&shy;g&shy;e&shy;n
-        </span>
+        </Link>
       );
     } else {
       return (
@@ -278,7 +293,7 @@ const EventsCalendar: React.FC = () => {
       </div>
       <div className="flex items-center justify-center lg:justify-start mt-0 lg:mt-5">
         <Calendar
-          className="max-w-2xl w-full mx-auto lg:mx-0 customized-monthly-calendar bg-white pb-10"
+          className="customized-monthly-calendar max-w-2xl w-full mx-auto lg:mx-0 bg-white pb-10"
           localizer={localizer}
           events={finalDatesEvents}
           components={{ event: event_dates }}
@@ -288,10 +303,11 @@ const EventsCalendar: React.FC = () => {
           endAccessor="end"
           style={{ maxHeight: 520 }}
           dayLayoutAlgorithm={"no-overlap"}
+          defaultDate={currentDate}
         />
 
         <Calendar
-          className="max-w-2xl min-w-[400px] ml-14 overflow-y-scroll hidden lg:inline "
+          className="customized-daily-calendar max-w-2xl min-w-[400px] ml-14 overflow-y-scroll hidden lg:inline "
           localizer={localizer}
           events={finalHourlyEvents}
           components={{ event: event_hourly }}
@@ -301,7 +317,9 @@ const EventsCalendar: React.FC = () => {
           endAccessor="end"
           style={{ maxHeight: 500, backgroundColor: "white" }}
           dayLayoutAlgorithm={"no-overlap"}
-          // scrollToTime={minHourToScrollForToday}
+          showMultiDayTimes={false}
+          // defaultDate={currentDate} //if this parameter is used and not date, then it doesn't change the date of this calendar when a date is clicked on the previous calendar
+          date={currentDate} //if this parameter is used and not defaultDate, then the date of this calndar changes when a date is click in the previous calendar BUT you can't use the buttons on toolbar
         />
       </div>
     </div>

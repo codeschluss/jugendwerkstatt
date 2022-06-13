@@ -16,6 +16,7 @@ const EventsTime: React.FC = () => {
     const currentListStringDate = window.location.href.split("?date=")[1].split(".");
     const currentDate = new Date(parseInt(currentListStringDate[0]), (parseInt(currentListStringDate[1])-1), parseInt(currentListStringDate[2]));
 
+    
     const localizer = momentLocalizer(moment);
 
     const [eventsData, setEventsData] = useState<EventEntity | any>();
@@ -45,38 +46,7 @@ const EventsTime: React.FC = () => {
             temmmpCounter = temmmpCounter+1;
         }
     })};
-
-    // const eventsInfo = [
-    //     {
-    //         id: 0,
-    //         name: "First Event",
-    //         allDay: false,
-    //         start: new Date(2022,4,10,10),
-    //         end: new Date(2022,4,10,13)
-    //     },
-    //     {
-    //         id: 1,
-    //         name: "Second Event",
-    //         allDay: false,
-    //         start: new Date(2022,4,10,11),
-    //         end: new Date(2022,4,10,14)
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "Third Event",
-    //         allDay: false,
-    //         start: new Date(2022,4,10,11),
-    //         end: new Date(2022,4,10,14)
-    //     },
-    //     {
-    //         id: 3,
-    //         name: "Fourth Event",
-    //         allDay: false,
-    //         start: new Date(2022,4,9,11),
-    //         end: new Date(2022,4,10,14)
-    //     }
-    // ];
-
+    
     var endTempDate =  moment(currentDate).add(1, 'd').toDate();
     var tempEventsInfo = []
     
