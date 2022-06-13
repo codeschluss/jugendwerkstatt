@@ -1,22 +1,17 @@
-query GetApprovedUsers {
-  approvedUsers: getUsers(
-    params: {
-      expression: {
-        entity: { operator: EQUAL, path: "approved", value: "true" }
-      }
-    }
-  ) {
-    result {
-      ...UserField
+query GetUserAdmin($id: String) {
+  user: getUser(entity: { id: $id }) {
+    id
+    roles {
+      ...RoleField
     }
   }
 }
 
-query GetRequestedUsers {
-  requestedUsers: getUsers(
+query GetUsersAdmin($value: String) {
+  users: getUsers(
     params: {
       expression: {
-        entity: { operator: EQUAL, path: "approved", value: "false" }
+        entity: { operator: EQUAL, path: "approved", value: $value }
       }
     }
   ) {

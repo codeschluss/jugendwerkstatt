@@ -2821,21 +2821,14 @@ export type AddRolesMutationVariables = Exact<{
 export type AddRolesMutation = { __typename?: 'Mutation', addRoles?: { __typename?: 'UserEntity', id?: string | null } | null };
 
 export type SaveUserAdminMutationVariables = Exact<{
-  user?: InputMaybe<UserEntityInput>;
+  entity?: InputMaybe<UserEntityInput>;
 }>;
 
 
 export type SaveUserAdminMutation = { __typename?: 'Mutation', saveUser?: { __typename?: 'UserEntity', id?: string | null } | null };
 
-export type ApproveUserMutationVariables = Exact<{
-  entity?: InputMaybe<UserEntityInput>;
-}>;
-
-
-export type ApproveUserMutation = { __typename?: 'Mutation', saveUser?: { __typename?: 'UserEntity', id?: string | null } | null };
-
 export type DeleteUserMutationVariables = Exact<{
-  userId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -2978,15 +2971,19 @@ export type GetRolesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetRolesQuery = { __typename?: 'Query', roles?: { __typename?: 'PageableList_RoleEntity', result?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null };
 
-export type GetApprovedUsersQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetUserAdminQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
 
 
-export type GetApprovedUsersQuery = { __typename?: 'Query', approvedUsers?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null };
+export type GetUserAdminQuery = { __typename?: 'Query', user?: { __typename?: 'UserEntity', id?: string | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null };
 
-export type GetRequestedUsersQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetUsersAdminQueryVariables = Exact<{
+  value?: InputMaybe<Scalars['String']>;
+}>;
 
 
-export type GetRequestedUsersQuery = { __typename?: 'Query', requestedUsers?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null };
+export type GetUsersAdminQuery = { __typename?: 'Query', users?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null };
 
 export type CreateTokenMutationVariables = Exact<{
   password?: InputMaybe<Scalars['String']>;
@@ -3924,8 +3921,8 @@ export type AddRolesMutationHookResult = ReturnType<typeof useAddRolesMutation>;
 export type AddRolesMutationResult = Apollo.MutationResult<AddRolesMutation>;
 export type AddRolesMutationOptions = Apollo.BaseMutationOptions<AddRolesMutation, AddRolesMutationVariables>;
 export const SaveUserAdminDocument = gql`
-    mutation SaveUserAdmin($user: UserEntityInput) {
-  saveUser(entity: $user) {
+    mutation SaveUserAdmin($entity: UserEntityInput) {
+  saveUser(entity: $entity) {
     id
   }
 }
@@ -3945,7 +3942,7 @@ export type SaveUserAdminMutationFn = Apollo.MutationFunction<SaveUserAdminMutat
  * @example
  * const [saveUserAdminMutation, { data, loading, error }] = useSaveUserAdminMutation({
  *   variables: {
- *      user: // value for 'user'
+ *      entity: // value for 'entity'
  *   },
  * });
  */
@@ -3956,42 +3953,9 @@ export function useSaveUserAdminMutation(baseOptions?: Apollo.MutationHookOption
 export type SaveUserAdminMutationHookResult = ReturnType<typeof useSaveUserAdminMutation>;
 export type SaveUserAdminMutationResult = Apollo.MutationResult<SaveUserAdminMutation>;
 export type SaveUserAdminMutationOptions = Apollo.BaseMutationOptions<SaveUserAdminMutation, SaveUserAdminMutationVariables>;
-export const ApproveUserDocument = gql`
-    mutation ApproveUser($entity: UserEntityInput) {
-  saveUser(entity: $entity) {
-    id
-  }
-}
-    `;
-export type ApproveUserMutationFn = Apollo.MutationFunction<ApproveUserMutation, ApproveUserMutationVariables>;
-
-/**
- * __useApproveUserMutation__
- *
- * To run a mutation, you first call `useApproveUserMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useApproveUserMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [approveUserMutation, { data, loading, error }] = useApproveUserMutation({
- *   variables: {
- *      entity: // value for 'entity'
- *   },
- * });
- */
-export function useApproveUserMutation(baseOptions?: Apollo.MutationHookOptions<ApproveUserMutation, ApproveUserMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ApproveUserMutation, ApproveUserMutationVariables>(ApproveUserDocument, options);
-      }
-export type ApproveUserMutationHookResult = ReturnType<typeof useApproveUserMutation>;
-export type ApproveUserMutationResult = Apollo.MutationResult<ApproveUserMutation>;
-export type ApproveUserMutationOptions = Apollo.BaseMutationOptions<ApproveUserMutation, ApproveUserMutationVariables>;
 export const DeleteUserDocument = gql`
-    mutation DeleteUser($userId: String) {
-  deleteUser(id: $userId)
+    mutation DeleteUser($id: String) {
+  deleteUser(id: $id)
 }
     `;
 export type DeleteUserMutationFn = Apollo.MutationFunction<DeleteUserMutation, DeleteUserMutationVariables>;
@@ -4009,7 +3973,7 @@ export type DeleteUserMutationFn = Apollo.MutationFunction<DeleteUserMutation, D
  * @example
  * const [deleteUserMutation, { data, loading, error }] = useDeleteUserMutation({
  *   variables: {
- *      userId: // value for 'userId'
+ *      id: // value for 'id'
  *   },
  * });
  */
@@ -4775,10 +4739,48 @@ export function useGetRolesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetRolesQueryHookResult = ReturnType<typeof useGetRolesQuery>;
 export type GetRolesLazyQueryHookResult = ReturnType<typeof useGetRolesLazyQuery>;
 export type GetRolesQueryResult = Apollo.QueryResult<GetRolesQuery, GetRolesQueryVariables>;
-export const GetApprovedUsersDocument = gql`
-    query GetApprovedUsers {
-  approvedUsers: getUsers(
-    params: {expression: {entity: {operator: EQUAL, path: "approved", value: "true"}}}
+export const GetUserAdminDocument = gql`
+    query GetUserAdmin($id: String) {
+  user: getUser(entity: {id: $id}) {
+    id
+    roles {
+      ...RoleField
+    }
+  }
+}
+    ${RoleFieldFragmentDoc}`;
+
+/**
+ * __useGetUserAdminQuery__
+ *
+ * To run a query within a React component, call `useGetUserAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserAdminQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUserAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetUserAdminQuery, GetUserAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserAdminQuery, GetUserAdminQueryVariables>(GetUserAdminDocument, options);
+      }
+export function useGetUserAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserAdminQuery, GetUserAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserAdminQuery, GetUserAdminQueryVariables>(GetUserAdminDocument, options);
+        }
+export type GetUserAdminQueryHookResult = ReturnType<typeof useGetUserAdminQuery>;
+export type GetUserAdminLazyQueryHookResult = ReturnType<typeof useGetUserAdminLazyQuery>;
+export type GetUserAdminQueryResult = Apollo.QueryResult<GetUserAdminQuery, GetUserAdminQueryVariables>;
+export const GetUsersAdminDocument = gql`
+    query GetUsersAdmin($value: String) {
+  users: getUsers(
+    params: {expression: {entity: {operator: EQUAL, path: "approved", value: $value}}}
   ) {
     result {
       ...UserField
@@ -4788,69 +4790,32 @@ export const GetApprovedUsersDocument = gql`
     ${UserFieldFragmentDoc}`;
 
 /**
- * __useGetApprovedUsersQuery__
+ * __useGetUsersAdminQuery__
  *
- * To run a query within a React component, call `useGetApprovedUsersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetApprovedUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetUsersAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUsersAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetApprovedUsersQuery({
+ * const { data, loading, error } = useGetUsersAdminQuery({
  *   variables: {
+ *      value: // value for 'value'
  *   },
  * });
  */
-export function useGetApprovedUsersQuery(baseOptions?: Apollo.QueryHookOptions<GetApprovedUsersQuery, GetApprovedUsersQueryVariables>) {
+export function useGetUsersAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetUsersAdminQuery, GetUsersAdminQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetApprovedUsersQuery, GetApprovedUsersQueryVariables>(GetApprovedUsersDocument, options);
+        return Apollo.useQuery<GetUsersAdminQuery, GetUsersAdminQueryVariables>(GetUsersAdminDocument, options);
       }
-export function useGetApprovedUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetApprovedUsersQuery, GetApprovedUsersQueryVariables>) {
+export function useGetUsersAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUsersAdminQuery, GetUsersAdminQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetApprovedUsersQuery, GetApprovedUsersQueryVariables>(GetApprovedUsersDocument, options);
+          return Apollo.useLazyQuery<GetUsersAdminQuery, GetUsersAdminQueryVariables>(GetUsersAdminDocument, options);
         }
-export type GetApprovedUsersQueryHookResult = ReturnType<typeof useGetApprovedUsersQuery>;
-export type GetApprovedUsersLazyQueryHookResult = ReturnType<typeof useGetApprovedUsersLazyQuery>;
-export type GetApprovedUsersQueryResult = Apollo.QueryResult<GetApprovedUsersQuery, GetApprovedUsersQueryVariables>;
-export const GetRequestedUsersDocument = gql`
-    query GetRequestedUsers {
-  requestedUsers: getUsers(
-    params: {expression: {entity: {operator: EQUAL, path: "approved", value: "false"}}}
-  ) {
-    result {
-      ...UserField
-    }
-  }
-}
-    ${UserFieldFragmentDoc}`;
-
-/**
- * __useGetRequestedUsersQuery__
- *
- * To run a query within a React component, call `useGetRequestedUsersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetRequestedUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetRequestedUsersQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetRequestedUsersQuery(baseOptions?: Apollo.QueryHookOptions<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>(GetRequestedUsersDocument, options);
-      }
-export function useGetRequestedUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>(GetRequestedUsersDocument, options);
-        }
-export type GetRequestedUsersQueryHookResult = ReturnType<typeof useGetRequestedUsersQuery>;
-export type GetRequestedUsersLazyQueryHookResult = ReturnType<typeof useGetRequestedUsersLazyQuery>;
-export type GetRequestedUsersQueryResult = Apollo.QueryResult<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>;
+export type GetUsersAdminQueryHookResult = ReturnType<typeof useGetUsersAdminQuery>;
+export type GetUsersAdminLazyQueryHookResult = ReturnType<typeof useGetUsersAdminLazyQuery>;
+export type GetUsersAdminQueryResult = Apollo.QueryResult<GetUsersAdminQuery, GetUsersAdminQueryVariables>;
 export const CreateTokenDocument = gql`
     mutation CreateToken($password: String, $username: String) {
   createToken(password: $password, username: $username) {

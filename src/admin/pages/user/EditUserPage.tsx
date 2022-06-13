@@ -1,7 +1,13 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { FieldError, useForm } from 'react-hook-form';
-import { useGetRolesQuery } from '../../../GraphQl/graphql';
+import { useParams } from 'react-router-dom';
+import {
+  useAddRolesMutation,
+  useGetRolesQuery,
+  useGetUserAdminQuery,
+  useSaveUserAdminMutation,
+} from '../../../GraphQl/graphql';
 import { Button } from '../../components/atoms';
 import { MultiSelect } from '../../components/atoms/Form/MultiSelect/MultiSelect';
 import { OptionType } from '../../components/atoms/Form/MultiSelect/MultiSelect.props';
@@ -10,36 +16,55 @@ import { UserFormSchema } from '../../validations/UserForm.schema';
 import { UserFormInputs } from './User.props';
 
 const EditUserPage = (): ReactElement => {
-  // AddRole Mutation will be Added later addRole(userId, roleId)
+  const { id } = useParams();
   const {
-    handleSubmit,
+    reset,
     setValue,
+    getValues,
+    handleSubmit,
     formState: { errors },
   } = useForm<UserFormInputs>({
     resolver: joiResolver(UserFormSchema),
+    defaultValues: { roles: [] },
   });
-  const { data } = useGetRolesQuery();
-  console.log(data);
-  console.log('here');
+  const { data: roles } = useGetRolesQuery();
+  const { data: user } = useGetUserAdminQuery({ variables: { id } });
+  const [addUserRoles] = useAddRolesMutation();
 
-  const handleChange = (values: OptionType[]) => {
-    console.log(values);
+  useEffect(() => {
+    if (user)
+      reset({
+        roles: user.user?.roles?.map((role) => ({
+          value: role?.id,
+          label: role?.name,
+        })),
+      });
+  }, [user, reset]);
+
+  const handleChange = (values: OptionType[]) =>
     setValue('roles', values, { shouldValidate: true });
+  const onSubmit = (data: UserFormInputs) => {
+    const roles = data.roles as OptionType[];
+    addUserRoles({
+      variables: {
+        userId: user?.user?.id || '',
+        roleIds: Object.values(roles.map((role) => role.value)),
+      },
+    });
   };
-  const onSubmit = (data: UserFormInputs) => console.log(data);
+
+  const roleOptions =
+    roles?.roles?.result?.map((role) => ({
+      label: role?.name,
+      value: role?.id,
+    })) || [];
 
   return (
     <div className="min-h-full">
       <Accordion title="Max Müller Rolle zuweisen">
         <MultiSelect
-          options={
-            data?.roles?.result?.map((role) => {
-              return {
-                id: role?.id,
-                label: role?.name,
-              };
-            }) || []
-          }
+          options={roleOptions}
+          defaultValue={getValues('roles')}
           isSearchable={false}
           onGetValues={handleChange}
         />
