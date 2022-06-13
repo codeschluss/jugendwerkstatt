@@ -4,21 +4,17 @@ import Button from "../../../../client/components/ui/Button";
 import AuthContext from "../../../../contexts/AuthContext";
 import {
   useCreateTokenMutation,
-  useGetMeBasicQuery
+  useGetMeBasicQuery,
 } from "../../../../GraphQl/graphql";
 import useInput from "../../../../hooks/use-input";
-import useTokenCheck from "../../../../hooks/use-tokenCheck";
+import useAuth from "../../../../hooks/useAuth";
 import AuthInput from "../AuthInput";
 import AuthWrapper from "../AuthWrapper";
 
 const Login = () => {
-  const {
-    accessToken,
-    setAccessToken,
-    setRefreshToken,
-    setTempEmail
-   } = useContext(AuthContext);
-   
+  const { accessToken, setAccessToken, setRefreshToken, setTempEmail } =
+    useContext(AuthContext);
+
   const {
     value: enteredEmail,
     validity: enteredEmailValidity,
@@ -39,32 +35,15 @@ const Login = () => {
     resetValue: resetPasswordInput,
   } = useInput((value: any) => value.trim().length !== 0);
 
-  const [createToken, { data, loading, error }] = useCreateTokenMutation({
-    variables: {
-      username: enteredEmail,
-      password: enteredPassword,
-    },
-  });
-
-  const result = useGetMeBasicQuery({
-    skip: !accessToken ? true : false,
-  });
-
-  useEffect(() => {
-    if (data) {
-      result.refetch();
-    }
-  }, [data, result.data]);
+  const { handleLogin } = useAuth();
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
-    createToken();
+    handleLogin(enteredEmail, enteredPassword);
     resetEmailInput();
     resetPasswordInput();
     setTempEmail(enteredEmail);
   };
-
-  useTokenCheck(data?.createToken?.access, data?.createToken?.refresh);
 
   return (
     <AuthWrapper title="Anmelden">
