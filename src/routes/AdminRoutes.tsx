@@ -43,12 +43,13 @@ import {
   FormsCategoriesListPage,
   CreateFormsCategories,
 } from "../admin/pages";
-import { RequireAuthRoute } from "../shared/components/RequireAuthRoute/RequireAuthRoute";
 
-export const AdminRoutes = () => (
-  <Routes>
-    <Route path="/admin" element={<AdminDashboardLayout />}>
-      <Route element={<RequireAuthRoute />}>
+export const AdminRoutes = () => {
+  console.log("admin");
+  return (
+    <Routes>
+      <Route path="/admin" element={<div>admin</div>} />
+      {/* <Route path="/admin" element={<AdminDashboardLayout />}>
         <Route path="profile" element={<AdminProfilePage />} />
         <Route path="profile-password" element={<AdminProfilePasswordPage />} />
 
@@ -159,7 +160,7 @@ export const AdminRoutes = () => (
           element={<GroupCourseRatingsListPage />}
         />
 
-        {/* General Settings */}
+    
         <Route path="general-settings">
           <Route
             path="push-notifications"
@@ -172,10 +173,10 @@ export const AdminRoutes = () => (
 
           <Route path="public-pages" element={<PublicPagesPage />} />
           <Route path="public-pages/new" element={<PublicPagesForm />} />
-        </Route>
-      </Route>
+        </Route> 
 
-      <Route path="*" element={<h1>Page Not Found!</h1>} />
-    </Route>
-  </Routes>
-);
+      </Route> 
+      {/* <Route path="*" element={<h1>Page Not Found!</h1>} /> */}
+    </Routes>
+  );
+};

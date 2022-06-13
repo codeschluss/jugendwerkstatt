@@ -1,19 +1,13 @@
-import { ReactElement } from "react";
 import { Route, Routes } from "react-router-dom";
-import ForgotPassword from "../shared/components/authentication/forgotPassword";
-import Email from "../shared/components/authentication/forgotPassword/Email";
-import Password from "../shared/components/authentication/forgotPassword/Password";
 import Calls from "../client/components/messenger/overview/calls";
 import Chats from "../client/components/messenger/overview/chats";
 import Contacts from "../client/components/messenger/overview/contacts";
-import RegisteredSuccessfully from "../client/components/register/success/registeredSuccessfully";
 import Layout from "../containers/Layout";
 import Forms from "../client/pages/forms";
 import Templates from "../client/pages/forms/Templates";
 import TemplateEdit from "../client/pages/forms/TemplateEdit";
 import Map from "../client/components/map";
 import EventDetail from "../client/pages/eventDetail";
-import Home from "../client/pages/home";
 import MediaLibrary from "../client/pages/mediaLibrary";
 import EventsCalendar from "../client/pages/eventsCalendar";
 import EventsTime from "../client/pages/eventsTime";
@@ -26,39 +20,17 @@ import Jobs from "../client/pages/jobs";
 import PushNotificationsContainer from "../client/pages/capacitor";
 import ProfileSettings from "../client/pages/Profile/ProfileSettings";
 import PersonalData from "../client/pages/Profile/PersonalData";
-import ToVerifyUser from "../client/pages/verify/ToVerifyUser";
-import AlreadyVerifiedUser from "../client/pages/verify/AlreadyVerifiedUser";
-import ReVerifyUser from "../client/pages/verify/ReVerifyUser";
 import ChangePassword from "../client/pages/Profile/ChangePassword";
 import UploadData from "../client/pages/forms/UploadData";
 import Feedback from "../client/components/Feedback";
 import ProfileImageUpload from "../client/pages/Profile/ProfileImageUpload";
-import LoginPage from "../client/pages/authentication/LoginPage";
-import RegisterPage from "../client/pages/authentication/Register";
-import { RequireAuthRoute } from "../shared/components/RequireAuthRoute/RequireAuthRoute";
-import { RequireNonAuthRoute } from "../shared/components/RequireAuthRoute/RequireNonAuthRoute";
 import Homepage from "../client/components/home/Homepage";
-import DefaultHome from "../client/components/home/defaultHome";
 
-export const UserRoutes = (): ReactElement => (
-  <Routes>
-    <Route element={<RequireNonAuthRoute />}>
-      <Route path="/" element={<DefaultHome />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/verification/:id" element={<RegisteredSuccessfully />} />
-      <Route path="/forgot-password" element={<ForgotPassword />}>
-        <Route path="email" element={<Email />} />
-        <Route path="password/:id" element={<Password />} />
-      </Route>
-
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/toVerifyEmail" element={<ToVerifyUser />} />
-      <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />
-      <Route path="/reVerifyEmail" element={<ReVerifyUser />} />
-    </Route>
-
-    <Route element={<RequireAuthRoute />}>
-      <Route element={<Layout />}>
+export const UserRoutes = () => {
+  console.log("user");
+  return (
+    <Routes>
+      <Route path="/" element={<Layout />}>
         <Route path="/" element={<Homepage />} />
         <Route path="/messenger" element={<PushNotificationsContainer />}>
           <Route path="chats" element={<Chats />} />
@@ -82,7 +54,6 @@ export const UserRoutes = (): ReactElement => (
         />
 
         <Route path="/upload-file" element={<UploadData />} />
-
         <Route path="/map" element={<Map />} />
         <Route path="/MediaLibrary" element={<MediaLibrary />} />
         <Route path="/EventsCalendar" element={<EventsCalendar />} />
@@ -95,6 +66,6 @@ export const UserRoutes = (): ReactElement => (
         <Route path="/feedback" element={<Feedback />} />
         <Route path="*" element={<h1>Page not found!</h1>} />
       </Route>
-    </Route>
-  </Routes>
-);
+    </Routes>
+  );
+};

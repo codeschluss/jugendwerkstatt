@@ -8,9 +8,13 @@ export const RequireAuthRoute = (): ReactElement => {
   const location = useLocation();
   const { isLogedIn } = useContext(AuthContext);
 
-  return isLogedIn ? (
-    <Outlet />
-  ) : (
-    <Navigate to={{ pathname: "/" }} state={{ from: location }} />
-  );
+  console.log("isLogedIn", isLogedIn);
+
+  // return isLogedIn ? (
+  //   <Outlet />
+  // ) : (
+  //   <Navigate to={{ pathname: "/" }} state={{ from: location }} />
+  // );
+
+  return <Outlet />;
 };

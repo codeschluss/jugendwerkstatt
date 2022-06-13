@@ -1,20 +1,22 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, FunctionComponent, useEffect, useState } from "react";
 
 export const AuthContext = createContext<any>(null);
 
-export const AuthProvider: React.FunctionComponent = ({ children }) => {
+export const AuthProvider: FunctionComponent = ({ children }) => {
   const [isLogedIn, setIsLogedIn] = useState<boolean>();
-  const [username, setUsername] = useState();
+  const [userRole, setUserRole] = useState<string>("");
   const [passwordBits, setPasswordBits] = useState<number>();
   const [tempEmail, setTempEmail] = useState<number>();
   const [bgColor, setBgColor] = useState<string>();
 
+  console.log("userRole", userRole);
+
   const colors = [
-    'bg-green-600',
-    'bg-purple-600',
-    'bg-red-500',
-    'bg-blue-600',
-    'bg-yellow-400',
+    "bg-green-600",
+    "bg-purple-600",
+    "bg-red-500",
+    "bg-blue-600",
+    "bg-yellow-400",
   ];
 
   useEffect(() => {
@@ -27,8 +29,8 @@ export const AuthProvider: React.FunctionComponent = ({ children }) => {
       value={{
         isLogedIn,
         setIsLogedIn,
-        username,
-        setUsername,
+        userRole,
+        setUserRole,
         passwordBits,
         setPasswordBits,
         tempEmail,

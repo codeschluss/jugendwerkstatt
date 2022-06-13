@@ -15,7 +15,7 @@ export const useAuth = () => {
   const { setAccessToken, refreshToken, setRefreshToken } =
     useContext(TokenStorageContext);
 
-  const { setIsLogedIn } = useContext(AuthContext);
+  const { setIsLogedIn, setUserRole } = useContext(AuthContext);
 
   const [accessTimer, setAccessTimer] = useState<any>(null);
   const [refreshTimer, setRefreshTimer] = useState<any>(null);
@@ -52,6 +52,7 @@ export const useAuth = () => {
         const recievedToken: [string] | any = jwt_decode(
           response.data?.createToken?.access || ""
         );
+
         if (!recievedToken.verified) {
           navigate("/reVerifyEmail");
           return;
@@ -69,12 +70,14 @@ export const useAuth = () => {
       })
       .catch((err) => {
         setHasError(err);
-        console.log(true);
       });
   };
 
   const store = (token: TokenDto | null | undefined) => {
     if (token) {
+      const recievedToken: [string] | any = jwt_decode(token?.access || "");
+
+      setUserRole(recievedToken.roles[0]);
       setAccessToken(token.access);
       setRefreshToken(token.refresh);
       setIsLogedIn(true);
@@ -92,9 +95,6 @@ export const useAuth = () => {
 
   const expiration = (token: string): number => {
     const decoded = JSON.parse(atob(token.split(".")[1]));
-    console.log("exp", decoded.exp * 1000);
-    console.log("Date.now()", Date.now());
-    console.log("expiration", decoded.exp * 1000 - Date.now());
     return decoded.exp * 1000 - Date.now();
   };
 

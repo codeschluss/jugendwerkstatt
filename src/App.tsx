@@ -7,6 +7,7 @@ import {
   InMemoryCache,
 } from "@apollo/client";
 import { useContext } from "react";
+import { BrowserRouter } from "react-router-dom";
 import { API_URL } from "./config/app";
 import { AuthProvider } from "./contexts/AuthContext";
 import { SideBarProvider } from "./contexts/SideBarContext";
@@ -38,7 +39,9 @@ function App() {
     <ApolloProvider client={client}>
       <AuthProvider>
         <SideBarProvider>
-          <Router />
+          <BrowserRouter basename="/">
+            <Router />
+          </BrowserRouter>
         </SideBarProvider>
       </AuthProvider>
     </ApolloProvider>
