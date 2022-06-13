@@ -2,7 +2,10 @@ import { ShareIcon, HeartIcon } from "@heroicons/react/outline";
 import I from "../../../shared/components/ui/IconWrapper";
 import { useState } from "react";
 
-export const ShareButton = () => {
+export const ShareButton: React.FC<{ footer?: any }> = ({
+  children,
+  footer,
+}) => {
   const [showModal, setShowModal] = useState(false);
   return (
     <>
@@ -30,7 +33,7 @@ export const ShareButton = () => {
                     </span>
                   </button>
                 </div>
-                {/*body*/}
+                {children}
                 <div className="relative p-6 flex-auto"></div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
