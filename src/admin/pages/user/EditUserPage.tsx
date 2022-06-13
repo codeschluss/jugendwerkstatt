@@ -1,9 +1,10 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { ReactElement } from 'react';
-import { useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { FieldError, useForm } from 'react-hook-form';
 import { useGetRolesQuery } from '../../../GraphQl/graphql';
-import { Button, Select } from '../../components/atoms';
+import { Button } from '../../components/atoms';
+import { MultiSelect } from '../../components/atoms/Form/MultiSelect/MultiSelect';
+import { OptionType } from '../../components/atoms/Form/MultiSelect/MultiSelect.props';
 import { Accordion } from '../../components/molecules';
 import { UserFormSchema } from '../../validations/UserForm.schema';
 import { UserFormInputs } from './User.props';
@@ -11,30 +12,42 @@ import { UserFormInputs } from './User.props';
 const EditUserPage = (): ReactElement => {
   // AddRole Mutation will be Added later addRole(userId, roleId)
   const {
-    register,
     handleSubmit,
-    formState: {
-      errors: { role },
-    },
+    setValue,
+    formState: { errors },
   } = useForm<UserFormInputs>({
     resolver: joiResolver(UserFormSchema),
   });
   const { data } = useGetRolesQuery();
+  console.log(data);
+  console.log('here');
 
+  const handleChange = (values: OptionType[]) => {
+    console.log(values);
+    setValue('roles', values, { shouldValidate: true });
+  };
   const onSubmit = (data: UserFormInputs) => console.log(data);
 
   return (
     <div className="min-h-full">
       <Accordion title="Max Müller Rolle zuweisen">
-        <Select label="Rolle" {...register('role')} error={role?.message}>
-          <option value="" selected disabled>
-            Wähle eine Rolle
-          </option>
-          {data?.roles?.result &&
-            data.roles.result.map((role) => (
-              <option value={role?.id || 1}>{role?.name}</option>
-            ))}
-        </Select>
+        <MultiSelect
+          options={
+            data?.roles?.result?.map((role) => {
+              return {
+                id: role?.id,
+                label: role?.name,
+              };
+            }) || []
+          }
+          isSearchable={false}
+          onGetValues={handleChange}
+        />
+        {errors && (
+          <span className="text-primary">
+            {(errors.roles as FieldError)?.message}
+          </span>
+        )}
         <Button className="mt-6" onClick={handleSubmit(onSubmit)}>
           Speichern
         </Button>

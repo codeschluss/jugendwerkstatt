@@ -1,3 +1,3 @@
 export interface UserFormInputs {
-  role: string;
+  roles: unknown;
 }

@@ -4,12 +4,12 @@ mutation SaveUserAdmin($user: UserEntityInput) {
   }
 }
 
-mutation DeleteUser($userId: String) {
-  deleteUser(id: $userId)
-}
-
-mutation ApproveUser($userId: String) {
-  approve(userId: $userId) {
+mutation ApproveUser($entity: UserEntityInput) {
+  saveUser(entity: $entity) {
     id
   }
+}
+
+mutation DeleteUser($userId: String) {
+  deleteUser(id: $userId)
 }

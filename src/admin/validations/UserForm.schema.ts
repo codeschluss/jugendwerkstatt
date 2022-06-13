@@ -1,5 +1,10 @@
 import Joi from 'joi';
 
 export const UserFormSchema = Joi.object({
-  role: Joi.string().required().label('Rolle'),
+  roles: Joi.array()
+    .items(Joi.object({ id: Joi.string(), label: Joi.string() }))
+    .required()
+    .messages({
+      'any.required': 'Mindestens eine Rolle sollte ausgewählt werden',
+    }),
 });
