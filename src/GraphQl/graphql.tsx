@@ -2880,7 +2880,7 @@ export type GetGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetGroupsQuery = { __typename?: 'Query', groups?: { __typename?: 'PageableList_GroupEntity', result?: Array<{ __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null> | null } | null };
 
 export type GetGroupQueryVariables = Exact<{
-  groupId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -4239,8 +4239,8 @@ export type GetGroupsQueryHookResult = ReturnType<typeof useGetGroupsQuery>;
 export type GetGroupsLazyQueryHookResult = ReturnType<typeof useGetGroupsLazyQuery>;
 export type GetGroupsQueryResult = Apollo.QueryResult<GetGroupsQuery, GetGroupsQueryVariables>;
 export const GetGroupDocument = gql`
-    query GetGroup($groupId: String) {
-  group: getGroup(entity: {id: $groupId}) {
+    query GetGroup($id: String) {
+  group: getGroup(entity: {id: $id}) {
     ...GroupField
   }
 }
@@ -4258,7 +4258,7 @@ export const GetGroupDocument = gql`
  * @example
  * const { data, loading, error } = useGetGroupQuery({
  *   variables: {
- *      groupId: // value for 'groupId'
+ *      id: // value for 'id'
  *   },
  * });
  */

@@ -12,6 +12,8 @@ const GroupListPage = () => {
   const { data, refetch: refetchGroups } = useGetGroupsQuery({
     fetchPolicy: 'cache-and-network',
   });
+
+  console.log('groups', data);
   const [deleteGroup] = useDeleteGroupMutation({
     onCompleted: () => refetchGroups(),
   });
