@@ -1,13 +1,12 @@
-import React, { useContext } from "react";
-import logo from "../../images/jugendwerkstatt-logo.png";
 import { CheckIcon, MailIcon } from "@heroicons/react/outline";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import Button from "../../../client/components/ui/Button";
 import AuthContext from "../../../contexts/AuthContext";
 import {
-  useSendVerificationMutation,
-  useVerifyMutation,
+  useSendVerificationMutation
 } from "../../../GraphQl/graphql";
-import Button from "../../../client/components/ui/Button";
+import logo from "../../images/jugendwerkstatt-logo.png";
 
 interface CheckingProps {
   verified?: boolean;
@@ -51,17 +50,17 @@ const RegistrationOrVerification: React.FC<CheckingProps> = ({
         </div>
         <div className="text-gray-500 row-span-6 text-center text-xs px- -mt-10 flex flex-col ">
           <span className="text-xl">
-            {(verified || toVerify) && "Gluckwunsch"}
+            {(verified || toVerify) && "Glückwunsch"}
           </span>
           <span className="text-xl">
-            {reVerify && "Uberprufe deine E-Mail"}
+            {reVerify && "Überprüfe deine E-Mails"}
           </span>
 
           {toVerify && (
             <>
               <span className="my-5">Du wurdest erfolgreich registriert.</span>
               <span>
-                Wir haben einen Link an deine E-Mail-Adresse gesendet, damit du
+                Wir haben einen Link an deine E-Mail Adresse gesendet, damit du
                 diese verifizieren kannst.
               </span>
             </>

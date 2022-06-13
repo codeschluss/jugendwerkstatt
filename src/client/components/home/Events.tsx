@@ -15,7 +15,7 @@ const Events: React.FC<EventsProps> = () => {
   ];
 
   return (
-    <Slider title="Events">
+    <Slider title="Events" link={"/events"}>
       {fetchedData?.map((el: any) => {
         return (
           <SlideCard

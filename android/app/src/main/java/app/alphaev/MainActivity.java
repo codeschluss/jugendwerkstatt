@@ -1,4 +1,4 @@
-package com.jugendwerkstatt.app;
+package app.alphaev;
 
 import com.getcapacitor.BridgeActivity;
 

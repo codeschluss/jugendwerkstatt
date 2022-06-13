@@ -22,7 +22,7 @@ const PersonalData = () => {
     valueChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurHandler,
     resetValue: resetNameInput,
-  } = useInput((value: string) => value !== "");
+  } = useInput((value: string) => value !== "", user.data?.me?.fullname);
   const {
     value: enteredEmail,
     validity: enteredEmailValidity,
@@ -32,7 +32,8 @@ const PersonalData = () => {
     resetValue: resetEmailInput,
   } = useInput(
     (value: string) =>
-      value.includes("@") && value !== "" && value.includes(".")
+      value.includes("@") && value !== "" && value.includes("."),
+    user.data?.me?.email
   );
   const {
     value: enteredPhone,
@@ -43,7 +44,8 @@ const PersonalData = () => {
     resetValue: resetPhoneInput,
   } = useInput(
     (value: string) =>
-      value.includes("@") && value !== "" && value.includes(".")
+      value.includes("@") && value !== "" && value.includes("."),
+    user?.data?.me?.phone
   );
 
   let letter;
@@ -70,12 +72,12 @@ const PersonalData = () => {
   };
 
   return (
-    <div className="text-[#676767] absolute md:static w-full z-20 top-0 bg-white">
+    <div className="text-[#676767] absolute  md:static w-full md:w-2/5  z-20 top-0 bg-white">
       <CustomHeader>Personal Data</CustomHeader>
       <div className="">
         <form
           onSubmit={onSubmitHandler}
-          className="w-full flex flex-col items-center justify-between pb-20 h-screen"
+          className="w-full flex flex-col items-center justify-between md:justify-start pb-20 h-full "
         >
           <div className="flex w-full items-center flex-col  justify-between">
             <div className="w-full flex flex-row pt-5 justify-end pr-10 relative">
@@ -121,7 +123,7 @@ const PersonalData = () => {
               onBlur={phoneBlurHandler}
             />
           </div>
-          <span className="w-4/6">
+          <span className="w-4/6 md:w-2/5 md:mt-5">
             <Button
               isDisabled={enteredNameValidity || enteredEmailValidity}
               isValidated={enteredEmailValidity || enteredNameValidity}

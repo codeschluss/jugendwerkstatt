@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   useGetMeBasicQuery,
-  useSaveUploadsMutation,
+  useSaveUserMutation,
 } from "../../../../../GraphQl/graphql";
 import TypeInput from "./TypeInput";
 
@@ -47,15 +47,16 @@ const UploadImg = () => {
     });
   };
 
-  const [saveUpload, { data, loading, error }] = useSaveUploadsMutation({
+  const [saveUpload, { data }] = useSaveUserMutation({
     variables: {
-      uploads: [
-        {
+      entity: {
+        id: user.data?.me?.id,
+        profilePicture: {
           base64: fileData.base64.split(",")[1],
           mimeType: fileData.mimeType,
           name: fileData.name,
         },
-      ],
+      },
     },
     onCompleted: () => {
       setFileData({

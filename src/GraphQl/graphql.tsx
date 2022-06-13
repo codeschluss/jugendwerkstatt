@@ -3211,6 +3211,13 @@ export type ResetPasswordMutationVariables = Exact<{
 
 export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword?: boolean | null };
 
+export type SaveSubscriptionMutationVariables = Exact<{
+  entity?: InputMaybe<SubscriptionEntityInput>;
+}>;
+
+
+export type SaveSubscriptionMutation = { __typename?: 'Mutation', saveSubscription?: { __typename?: 'SubscriptionEntity', id?: string | null } | null };
+
 export type SaveUploadsMutationVariables = Exact<{
   uploads?: InputMaybe<Array<InputMaybe<MediaEntityInput>> | InputMaybe<MediaEntityInput>>;
 }>;
@@ -6347,6 +6354,39 @@ export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOption
 export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
 export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const SaveSubscriptionDocument = gql`
+    mutation SaveSubscription($entity: SubscriptionEntityInput) {
+  saveSubscription(entity: $entity) {
+    id
+  }
+}
+    `;
+export type SaveSubscriptionMutationFn = Apollo.MutationFunction<SaveSubscriptionMutation, SaveSubscriptionMutationVariables>;
+
+/**
+ * __useSaveSubscriptionMutation__
+ *
+ * To run a mutation, you first call `useSaveSubscriptionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveSubscriptionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveSubscriptionMutation, { data, loading, error }] = useSaveSubscriptionMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveSubscriptionMutation(baseOptions?: Apollo.MutationHookOptions<SaveSubscriptionMutation, SaveSubscriptionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveSubscriptionMutation, SaveSubscriptionMutationVariables>(SaveSubscriptionDocument, options);
+      }
+export type SaveSubscriptionMutationHookResult = ReturnType<typeof useSaveSubscriptionMutation>;
+export type SaveSubscriptionMutationResult = Apollo.MutationResult<SaveSubscriptionMutation>;
+export type SaveSubscriptionMutationOptions = Apollo.BaseMutationOptions<SaveSubscriptionMutation, SaveSubscriptionMutationVariables>;
 export const SaveUploadsDocument = gql`
     mutation SaveUploads($uploads: [MediaEntityInput]) {
   addUploads(uploads: $uploads) {

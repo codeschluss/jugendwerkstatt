@@ -5,11 +5,9 @@ interface SliderProps {
 
 const Slider: React.FC<SliderProps> = ({ children, topicTitle }) => {
   return (
-    <div className="my-3">
-      <p className="opacity-90 px-4 mb-4 text-xl">{topicTitle}</p>
-      <div
-        className="relative w-full flex gap-4 snap-x px-4 snap-mandatory overflow-x-auto scroll-container pb-3"
-      >
+    <div className="my-3 bg-white"> 
+      <p className="opacity-90 px-4 mb-4 text-xl lg:pl-14">{topicTitle}</p>
+      <div className="flex gap-4 px-4 pb-3 overflow-x-auto lg:overflow-x-hidden possiblyOverflowing">
         {children}
       </div>
     </div>

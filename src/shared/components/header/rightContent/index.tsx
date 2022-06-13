@@ -1,19 +1,21 @@
-import { BellIcon, SearchIcon, LogoutIcon } from "@heroicons/react/outline";
-import { useContext, useState } from "react";
-import Search from "./Search";
-import I from "../../ui/IconWrapper";
-import detectDevice from "../../../utils/isTouch";
-import { API_URL } from "../../../../config/app";
-import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
-import DropDown from "../../ui/DropDown";
-import Avatar from "../sideBar/Avatar";
+import { BellIcon, LogoutIcon, SearchIcon } from "@heroicons/react/outline";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
+import useAuth from "../../../../hooks/useAuth";
+import detectDevice from "../../../utils/isTouch";
+import DropDown from "../../ui/DropDown";
+import I from "../../ui/IconWrapper";
+import Avatar from "../sideBar/Avatar";
+import Search from "./Search";
 
 interface RightContentProps {}
 
 const RightContent: React.FC<RightContentProps> = () => {
   const isTouch = detectDevice();
   const [toggleSearch, setToggleSearch] = useState<boolean>(false);
+
+  const { logout } = useAuth();
   const user = useGetMeBasicQuery();
 
   return (
@@ -56,18 +58,20 @@ const RightContent: React.FC<RightContentProps> = () => {
           </div>
           <div className="flex items-center justify-start">
             {" "}
-            <I className="h-8 w-8 text-white md:text-black hidden md:flex">
-              <LogoutIcon />
+            <I className="h-8 w-8 text-white md:text-black hidden md:flex cursor-pointer">
+              <LogoutIcon onClick={logout} />
             </I>{" "}
-            <p>Logout</p>
+            <p onClick={logout} className="cursor-pointer">
+              Logout
+            </p>
           </div>
         </div>
       </DropDown>
       <I className="h-6 w-6 text-white md:text-black md:ml-6">
         <BellIcon />
       </I>
-      <I className="h-6 w-6 text-white md:text-black hidden md:flex md:ml-6">
-        <LogoutIcon />
+      <I className="h-6 w-6 text-white md:text-black hidden md:flex md:ml-6 cursor-pointer">
+        <LogoutIcon onClick={logout} />
       </I>
     </div>
   );

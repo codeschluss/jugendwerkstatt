@@ -1,5 +1,3 @@
-import { ShareIcon, HeartIcon } from "@heroicons/react/solid";
-
 interface SlideCardProps {
   key: string;
   videoTitle: string;
@@ -10,10 +8,10 @@ const SlideCard: React.FC<SlideCardProps> = ({ videoUrl, videoTitle }) => {
   return (
     <a
       href={videoUrl}
-      className="snap-center w-[230px] h-[88px] overflow-hidden bg-[#C20639] rounded-md flex-none relative p-2
+      className="snap-center w-[14.375rem] h-[5.5rem] lg:h-[6rem] overflow-hidden bg-[#C20639] rounded-md flex-none relative p-2
       shadow-inner-2xl
       "
-      style={{ boxShadow: "inset 0 0 40px 0 #841c1c"}}
+      style={{ boxShadow: "inset 0 0 2.5rem 0 #841c1c"}}
     >
       <div className="w-full max-h-[3rem] text-white text-center"
       style={{display:"-webkit-box", WebkitLineClamp: "2", WebkitBoxOrient:"vertical", overflow: "hidden", textOverflow: "ellipsis"}}

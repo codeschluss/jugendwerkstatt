@@ -11,7 +11,6 @@ export const RegisterFooter: React.FunctionComponent<{ type?: string }> = ({
           <div className="mx-12 pl-1 pb-2">
             <span className="text-sm ">Du hast bereits einen Account?</span>
             <br />
-            <br />
             <Link to="/login">
               {" "}
               <p className="underline font-bold">Jetzt anmelden!</p>
@@ -20,7 +19,6 @@ export const RegisterFooter: React.FunctionComponent<{ type?: string }> = ({
         ) : (
           <div className="mx-12 pl-1 pb-2">
             <span className="text-sm ">Noch keinen Account?</span>
-            <br />
             <br />
             <Link to="/register">
               {" "}
