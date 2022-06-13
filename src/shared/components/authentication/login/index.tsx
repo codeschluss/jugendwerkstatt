@@ -1,20 +1,20 @@
-import jwtDecode from "jwt-decode";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../../../client/components/ui/Button";
 import AuthContext from "../../../../contexts/AuthContext";
 import {
   useCreateTokenMutation,
-  useGetMeBasicQuery
+  useGetMeBasicQuery,
 } from "../../../../GraphQl/graphql";
 import useInput from "../../../../hooks/use-input";
-import useTokenCheck from "../../../../hooks/use-tokenCheck";
+import useAuth from "../../../../hooks/useAuth";
 import AuthInput from "../AuthInput";
 import AuthWrapper from "../AuthWrapper";
 
 const Login = () => {
-  const { setTempEmail } = useContext(AuthContext);
-  const [accessToken, setAccessToken] = useState();
+  const { accessToken, setAccessToken, setRefreshToken, setTempEmail } =
+    useContext(AuthContext);
+
   const {
     value: enteredEmail,
     validity: enteredEmailValidity,
@@ -35,33 +35,15 @@ const Login = () => {
     resetValue: resetPasswordInput,
   } = useInput((value: any) => value.trim().length !== 0);
 
-  const [createToken, { data, loading, error }] = useCreateTokenMutation({
-    variables: {
-      username: enteredEmail,
-      password: enteredPassword,
-    },
-  });
-
-  const result = useGetMeBasicQuery({
-    skip: !accessToken ? true : false,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setAccessToken(jwtDecode(data?.createToken?.access || ""));
-      result.refetch();
-    }
-  }, [data, result.data]);
+  const { handleLogin } = useAuth();
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
-    await createToken();
+    handleLogin(enteredEmail, enteredPassword);
     resetEmailInput();
     resetPasswordInput();
     setTempEmail(enteredEmail);
   };
-
-  useTokenCheck(data?.createToken?.access, data?.createToken?.refresh);
 
   return (
     <AuthWrapper title="Anmelden">
