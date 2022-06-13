@@ -16,8 +16,8 @@ const UsersRequestsListPage = () => {
     onCompleted: () => refetchUsers(),
   });
 
-  const handleApproveUser = (userId: string) => () =>
-    approveUser({ variables: { userId } });
+  // const handleApproveUser = (userId: string) => () =>
+  //   approveUser({ variables: { userId } });
   const handleDeleteUser = (userId: string) => () => {
     // eslint-disable-next-line no-restricted-globals
     if (confirm('Möchten Sie dies löschen?')) {
@@ -45,7 +45,7 @@ const UsersRequestsListPage = () => {
                 <Table.Data>{user?.created}</Table.Data>
                 <Table.Data>
                   <Action
-                    onApprove={handleApproveUser(user?.id || '')}
+                    // onApprove={handleApproveUser(user?.id || '')}
                     onDelete={handleDeleteUser(user?.id || '')}
                   />
                 </Table.Data>

@@ -38,9 +38,9 @@ const GroupListPage = () => {
             data.groups.result.map((group) => (
               <Table.Row key={group?.id}>
                 <Table.Data>{group?.name}</Table.Data>
-                <Table.Data>
+                {/* <Table.Data>
                   {(group?.courses && group.courses[0]?.users?.length) || 0}
-                </Table.Data>
+                </Table.Data> */}
                 <Table.Data>
                   <Action onUpdate={handleGroupUpdate(group?.id || '')} />
                   <Action onDelete={handleGroupDelete(group?.id || '')} />

@@ -2816,12 +2816,27 @@ export type DeleteOrganizerMutationVariables = Exact<{
 
 export type DeleteOrganizerMutation = { __typename?: 'Mutation', deleteOrganizer?: boolean | null };
 
+export type AddRolesMutationVariables = Exact<{
+  userId?: InputMaybe<Scalars['String']>;
+  roleIds?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
+}>;
+
+
+export type AddRolesMutation = { __typename?: 'Mutation', addRoles?: { __typename?: 'UserEntity', id?: string | null } | null };
+
 export type SaveUserAdminMutationVariables = Exact<{
   user?: InputMaybe<UserEntityInput>;
 }>;
 
 
 export type SaveUserAdminMutation = { __typename?: 'Mutation', saveUser?: { __typename?: 'UserEntity', id?: string | null } | null };
+
+export type ApproveUserMutationVariables = Exact<{
+  entity?: InputMaybe<UserEntityInput>;
+}>;
+
+
+export type ApproveUserMutation = { __typename?: 'Mutation', saveUser?: { __typename?: 'UserEntity', id?: string | null } | null };
 
 export type DeleteUserMutationVariables = Exact<{
   userId?: InputMaybe<Scalars['String']>;
@@ -3919,6 +3934,40 @@ export function useDeleteOrganizerMutation(baseOptions?: Apollo.MutationHookOpti
 export type DeleteOrganizerMutationHookResult = ReturnType<typeof useDeleteOrganizerMutation>;
 export type DeleteOrganizerMutationResult = Apollo.MutationResult<DeleteOrganizerMutation>;
 export type DeleteOrganizerMutationOptions = Apollo.BaseMutationOptions<DeleteOrganizerMutation, DeleteOrganizerMutationVariables>;
+export const AddRolesDocument = gql`
+    mutation AddRoles($userId: String, $roleIds: [String]) {
+  addRoles(userId: $userId, roleIds: $roleIds) {
+    id
+  }
+}
+    `;
+export type AddRolesMutationFn = Apollo.MutationFunction<AddRolesMutation, AddRolesMutationVariables>;
+
+/**
+ * __useAddRolesMutation__
+ *
+ * To run a mutation, you first call `useAddRolesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddRolesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addRolesMutation, { data, loading, error }] = useAddRolesMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      roleIds: // value for 'roleIds'
+ *   },
+ * });
+ */
+export function useAddRolesMutation(baseOptions?: Apollo.MutationHookOptions<AddRolesMutation, AddRolesMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddRolesMutation, AddRolesMutationVariables>(AddRolesDocument, options);
+      }
+export type AddRolesMutationHookResult = ReturnType<typeof useAddRolesMutation>;
+export type AddRolesMutationResult = Apollo.MutationResult<AddRolesMutation>;
+export type AddRolesMutationOptions = Apollo.BaseMutationOptions<AddRolesMutation, AddRolesMutationVariables>;
 export const SaveUserAdminDocument = gql`
     mutation SaveUserAdmin($user: UserEntityInput) {
   saveUser(entity: $user) {
@@ -3952,6 +4001,39 @@ export function useSaveUserAdminMutation(baseOptions?: Apollo.MutationHookOption
 export type SaveUserAdminMutationHookResult = ReturnType<typeof useSaveUserAdminMutation>;
 export type SaveUserAdminMutationResult = Apollo.MutationResult<SaveUserAdminMutation>;
 export type SaveUserAdminMutationOptions = Apollo.BaseMutationOptions<SaveUserAdminMutation, SaveUserAdminMutationVariables>;
+export const ApproveUserDocument = gql`
+    mutation ApproveUser($entity: UserEntityInput) {
+  saveUser(entity: $entity) {
+    id
+  }
+}
+    `;
+export type ApproveUserMutationFn = Apollo.MutationFunction<ApproveUserMutation, ApproveUserMutationVariables>;
+
+/**
+ * __useApproveUserMutation__
+ *
+ * To run a mutation, you first call `useApproveUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useApproveUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [approveUserMutation, { data, loading, error }] = useApproveUserMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useApproveUserMutation(baseOptions?: Apollo.MutationHookOptions<ApproveUserMutation, ApproveUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ApproveUserMutation, ApproveUserMutationVariables>(ApproveUserDocument, options);
+      }
+export type ApproveUserMutationHookResult = ReturnType<typeof useApproveUserMutation>;
+export type ApproveUserMutationResult = Apollo.MutationResult<ApproveUserMutation>;
+export type ApproveUserMutationOptions = Apollo.BaseMutationOptions<ApproveUserMutation, ApproveUserMutationVariables>;
 export const DeleteUserDocument = gql`
     mutation DeleteUser($userId: String) {
   deleteUser(id: $userId)
@@ -4887,7 +4969,7 @@ export type GetTemplateTypeAdminQueryResult = Apollo.QueryResult<GetTemplateType
 export const GetApprovedUsersDocument = gql`
     query GetApprovedUsers {
   approvedUsers: getUsers(
-    params: {expression: {entity: {operator: EQUAL, path: "roles.name", value: "approved"}}}
+    params: {expression: {entity: {operator: EQUAL, path: "approved", value: "true"}}}
   ) {
     result {
       ...UserField
@@ -4925,7 +5007,7 @@ export type GetApprovedUsersQueryResult = Apollo.QueryResult<GetApprovedUsersQue
 export const GetRequestedUsersDocument = gql`
     query GetRequestedUsers {
   requestedUsers: getUsers(
-    params: {expression: {entity: {operator: NOT_EQUAL, path: "roles.name", value: "approved"}}}
+    params: {expression: {entity: {operator: EQUAL, path: "approved", value: "false"}}}
   ) {
     result {
       ...UserField
