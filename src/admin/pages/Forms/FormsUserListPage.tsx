@@ -29,14 +29,20 @@ const FormsUserListPage = () => {
   return (
     <Panel.Wrapper>
       <CustomTable
-        headerData={["Schüler/in", "Formular", "Dokument", "Datum", "Aktionen"]}
+        headerData={[
+          "Schüler/in",
+          "Kategorie",
+          "Dokument",
+          "Datum",
+          "Aktionen",
+        ]}
         bodyData={
           getUserTemplates?.result?.map((item) => (
             <Table.Row key={item?.id}>
               <Table.Data>{item?.name}</Table.Data>
+              <Table.Data>{item?.templateType?.name}</Table.Data>
               <Table.Data>{item?.name}</Table.Data>
-              <Table.Data>{item?.name}</Table.Data>
-              <Table.Data>{item?.name}</Table.Data>
+              <Table.Data>{item?.user?.fullname}</Table.Data>
               <Table.Data>
                 <Action
                   onUpdate={handleUpdateById(item?.id || "")}

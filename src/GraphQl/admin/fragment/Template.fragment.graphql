@@ -21,3 +21,14 @@ fragment Template on TemplateEntity {
     ...TemplateTypeField
   }
 }
+
+fragment UserTemplate on UserTemplateEntity {
+  ...UserTemplateField
+  templateType {
+    ...TemplateTypeField
+  }
+  user {
+    id
+    fullname
+  }
+}

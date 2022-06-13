@@ -32,13 +32,13 @@ query GetUserTemplatesAdmin($params: FilterSortPaginateInput) {
   getUserTemplates(params: $params) {
     total
     result {
-      ...UserTemplateField
+      ...UserTemplate
     }
   }
 }
 
 query GetUserTemplateAdmin($entity: UserTemplateEntityInput) {
   getUserTemplate(entity: $entity) {
-    ...UserTemplateField
+    ...UserTemplate
   }
 }

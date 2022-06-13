@@ -2692,6 +2692,8 @@ export type UserTemplateFieldFragment = { __typename?: 'UserTemplateEntity', id?
 
 export type TemplateFragment = { __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null };
 
+export type UserTemplateFragment = { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null };
+
 export type UserFieldFragment = { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null };
 
 export type SaveCompanyMutationVariables = Exact<{
@@ -3061,14 +3063,14 @@ export type GetUserTemplatesAdminQueryVariables = Exact<{
 }>;
 
 
-export type GetUserTemplatesAdminQuery = { __typename?: 'Query', getUserTemplates?: { __typename?: 'PageableList_UserTemplateEntity', total: any, result?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null> | null } | null };
+export type GetUserTemplatesAdminQuery = { __typename?: 'Query', getUserTemplates?: { __typename?: 'PageableList_UserTemplateEntity', total: any, result?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null> | null } | null };
 
 export type GetUserTemplateAdminQueryVariables = Exact<{
   entity?: InputMaybe<UserTemplateEntityInput>;
 }>;
 
 
-export type GetUserTemplateAdminQuery = { __typename?: 'Query', getUserTemplate?: { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null };
+export type GetUserTemplateAdminQuery = { __typename?: 'Query', getUserTemplate?: { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null };
 
 export type GetApprovedUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3387,13 +3389,6 @@ export const QuestionFieldFragmentDoc = gql`
   item
 }
     `;
-export const UserTemplateFieldFragmentDoc = gql`
-    fragment UserTemplateField on UserTemplateEntity {
-  id
-  name
-  content
-}
-    `;
 export const TemplateFieldFragmentDoc = gql`
     fragment TemplateField on TemplateEntity {
   id
@@ -3415,6 +3410,26 @@ export const TemplateFragmentDoc = gql`
   }
 }
     ${TemplateFieldFragmentDoc}
+${TemplateTypeFieldFragmentDoc}`;
+export const UserTemplateFieldFragmentDoc = gql`
+    fragment UserTemplateField on UserTemplateEntity {
+  id
+  name
+  content
+}
+    `;
+export const UserTemplateFragmentDoc = gql`
+    fragment UserTemplate on UserTemplateEntity {
+  ...UserTemplateField
+  templateType {
+    ...TemplateTypeField
+  }
+  user {
+    id
+    fullname
+  }
+}
+    ${UserTemplateFieldFragmentDoc}
 ${TemplateTypeFieldFragmentDoc}`;
 export const RoleFieldFragmentDoc = gql`
     fragment RoleField on RoleEntity {
@@ -5239,11 +5254,11 @@ export const GetUserTemplatesAdminDocument = gql`
   getUserTemplates(params: $params) {
     total
     result {
-      ...UserTemplateField
+      ...UserTemplate
     }
   }
 }
-    ${UserTemplateFieldFragmentDoc}`;
+    ${UserTemplateFragmentDoc}`;
 
 /**
  * __useGetUserTemplatesAdminQuery__
@@ -5275,10 +5290,10 @@ export type GetUserTemplatesAdminQueryResult = Apollo.QueryResult<GetUserTemplat
 export const GetUserTemplateAdminDocument = gql`
     query GetUserTemplateAdmin($entity: UserTemplateEntityInput) {
   getUserTemplate(entity: $entity) {
-    ...UserTemplateField
+    ...UserTemplate
   }
 }
-    ${UserTemplateFieldFragmentDoc}`;
+    ${UserTemplateFragmentDoc}`;
 
 /**
  * __useGetUserTemplateAdminQuery__
