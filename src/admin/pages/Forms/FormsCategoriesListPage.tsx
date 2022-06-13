@@ -1,46 +1,44 @@
 import { useNavigate } from "react-router-dom";
 import {
-  useDeleteTemplateMutation,
-  useGetTemplatesAdminQuery,
+  useDeleteTemplateTypeMutation,
+  useGetTemplateTypesAdminQuery,
 } from "../../../GraphQl/graphql";
 import { Table, Action, Panel } from "../../components/atoms";
 import { CustomTable } from "../../components/molecules";
 
-const FormsListPage = () => {
+const FormsCategoriesListPage = () => {
   const navigate = useNavigate();
 
-  const { data: { getTemplates = null } = {}, refetch } =
-    useGetTemplatesAdminQuery({
+  const { data: { getTemplateTypes = null } = {}, refetch } =
+    useGetTemplateTypesAdminQuery({
       fetchPolicy: "cache-and-network",
     });
 
-  const [deleteTemplate] = useDeleteTemplateMutation({
+  const [deleteTemplateType] = useDeleteTemplateTypeMutation({
     onCompleted: () => refetch(),
   });
 
   const handleDeleteById = (id: string) => () => {
     // eslint-disable-next-line no-restricted-globals
     if (confirm("Möchten Sie dies löschen?")) {
-      deleteTemplate({ variables: { id } });
+      deleteTemplateType({ variables: { id } });
     }
   };
 
   const handleUpdateById = (id: string) => () => navigate(id);
-
   return (
     <Panel.Wrapper
       action={{
-        to: "/admin/forms/templates/new",
-        label: "Neues Formular erstellen",
+        to: "/admin/forms/categories/new",
+        label: "Neue Kategorie erstellen",
       }}
     >
       <CustomTable
-        headerData={["Formularname", "Kategorie", "Aktionen"]}
+        headerData={["Kategorie", "Aktionen"]}
         bodyData={
-          getTemplates?.result?.map((item) => (
+          getTemplateTypes?.result?.map((item) => (
             <Table.Row key={item?.id}>
               <Table.Data>{item?.name}</Table.Data>
-              <Table.Data>{item?.templateType?.name}</Table.Data>
               <Table.Data>
                 <Action
                   onUpdate={handleUpdateById(item?.id || "")}
@@ -55,4 +53,4 @@ const FormsListPage = () => {
   );
 };
 
-export default FormsListPage;
+export default FormsCategoriesListPage;

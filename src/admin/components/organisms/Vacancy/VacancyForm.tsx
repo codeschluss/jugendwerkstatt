@@ -10,6 +10,8 @@ import { InputField } from "../../molecules";
 import { VacancyFormInputs } from "./Vacancy.types";
 
 export const VacancyForm = (): ReactElement => {
+  const { data: { getJobTypes = null } = {} } = useGetJobTypesQuery();
+  const { data: { getCompanies = null } = {} } = useGetCompaniesQuery();
   const {
     trigger,
     register,
@@ -17,14 +19,6 @@ export const VacancyForm = (): ReactElement => {
       errors: { baseData },
     },
   } = useFormContext<VacancyFormInputs>();
-
-  const { data: { getJobTypes = null } = {} } = useGetJobTypesQuery({
-    fetchPolicy: "cache-and-network",
-  });
-
-  const { data: { getCompanies = null } = {} } = useGetCompaniesQuery({
-    fetchPolicy: "cache-and-network",
-  });
 
   const handleTrigger = () => trigger("baseData");
 
@@ -46,7 +40,6 @@ export const VacancyForm = (): ReactElement => {
             id="company"
             label="Unternehmen"
             {...register("baseData.company")}
-            defaultValue={2}
             error={baseData?.company?.message}
           >
             {getCompanies?.result?.map((item) => (
@@ -60,7 +53,6 @@ export const VacancyForm = (): ReactElement => {
             id="category"
             label="Kategorie"
             {...register("baseData.category")}
-            defaultValue={1}
             error={baseData?.category?.message}
           >
             {getJobTypes?.result?.map((item) => (

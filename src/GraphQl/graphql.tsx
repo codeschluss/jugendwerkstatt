@@ -2686,7 +2686,11 @@ export type ScheduleFieldFragment = { __typename?: 'ScheduleEntity', id?: string
 
 export type TemplateFieldFragment = { __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null };
 
-export type TemplateTypesFieldFragment = { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null };
+export type TemplateTypeFieldFragment = { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null };
+
+export type UserTemplateFieldFragment = { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null };
+
+export type TemplateFragment = { __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null };
 
 export type UserFieldFragment = { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null };
 
@@ -2823,6 +2827,48 @@ export type AddRolesMutationVariables = Exact<{
 
 
 export type AddRolesMutation = { __typename?: 'Mutation', addRoles?: { __typename?: 'UserEntity', id?: string | null } | null };
+
+export type SaveTemplateAdminMutationVariables = Exact<{
+  entity?: InputMaybe<TemplateEntityInput>;
+}>;
+
+
+export type SaveTemplateAdminMutation = { __typename?: 'Mutation', saveTemplate?: { __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null } | null };
+
+export type DeleteTemplateMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteTemplateMutation = { __typename?: 'Mutation', deleteTemplate?: boolean | null };
+
+export type SaveTemplateTypeAdminMutationVariables = Exact<{
+  entity?: InputMaybe<TemplateTypeEntityInput>;
+}>;
+
+
+export type SaveTemplateTypeAdminMutation = { __typename?: 'Mutation', saveTemplateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null };
+
+export type DeleteTemplateTypeMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteTemplateTypeMutation = { __typename?: 'Mutation', deleteTemplateType?: boolean | null };
+
+export type SaveUserTemplateAdminMutationVariables = Exact<{
+  entity?: InputMaybe<UserTemplateEntityInput>;
+}>;
+
+
+export type SaveUserTemplateAdminMutation = { __typename?: 'Mutation', saveUserTemplate?: { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null };
+
+export type DeleteUserTemplateMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteUserTemplateMutation = { __typename?: 'Mutation', deleteUserTemplate?: boolean | null };
 
 export type SaveUserAdminMutationVariables = Exact<{
   user?: InputMaybe<UserEntityInput>;
@@ -2987,14 +3033,14 @@ export type GetTemplatesAdminQueryVariables = Exact<{
 }>;
 
 
-export type GetTemplatesAdminQuery = { __typename?: 'Query', getTemplates?: { __typename?: 'PageableList_TemplateEntity', total: any, result?: Array<{ __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null> | null } | null };
+export type GetTemplatesAdminQuery = { __typename?: 'Query', getTemplates?: { __typename?: 'PageableList_TemplateEntity', total: any, result?: Array<{ __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null } | null> | null } | null };
 
 export type GetTemplateAdminQueryVariables = Exact<{
   entity?: InputMaybe<TemplateEntityInput>;
 }>;
 
 
-export type GetTemplateAdminQuery = { __typename?: 'Query', getTemplate?: { __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null };
+export type GetTemplateAdminQuery = { __typename?: 'Query', getTemplate?: { __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null } | null };
 
 export type GetTemplateTypesAdminQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3009,6 +3055,20 @@ export type GetTemplateTypeAdminQueryVariables = Exact<{
 
 
 export type GetTemplateTypeAdminQuery = { __typename?: 'Query', getTemplateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null };
+
+export type GetUserTemplatesAdminQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetUserTemplatesAdminQuery = { __typename?: 'Query', getUserTemplates?: { __typename?: 'PageableList_UserTemplateEntity', total: any, result?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null> | null } | null };
+
+export type GetUserTemplateAdminQueryVariables = Exact<{
+  entity?: InputMaybe<UserTemplateEntityInput>;
+}>;
+
+
+export type GetUserTemplateAdminQuery = { __typename?: 'Query', getUserTemplate?: { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null };
 
 export type GetApprovedUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3327,6 +3387,13 @@ export const QuestionFieldFragmentDoc = gql`
   item
 }
     `;
+export const UserTemplateFieldFragmentDoc = gql`
+    fragment UserTemplateField on UserTemplateEntity {
+  id
+  name
+  content
+}
+    `;
 export const TemplateFieldFragmentDoc = gql`
     fragment TemplateField on TemplateEntity {
   id
@@ -3334,12 +3401,21 @@ export const TemplateFieldFragmentDoc = gql`
   content
 }
     `;
-export const TemplateTypesFieldFragmentDoc = gql`
-    fragment TemplateTypesField on TemplateTypeEntity {
+export const TemplateTypeFieldFragmentDoc = gql`
+    fragment TemplateTypeField on TemplateTypeEntity {
   id
   name
 }
     `;
+export const TemplateFragmentDoc = gql`
+    fragment Template on TemplateEntity {
+  ...TemplateField
+  templateType {
+    ...TemplateTypeField
+  }
+}
+    ${TemplateFieldFragmentDoc}
+${TemplateTypeFieldFragmentDoc}`;
 export const RoleFieldFragmentDoc = gql`
     fragment RoleField on RoleEntity {
   id
@@ -3968,6 +4044,198 @@ export function useAddRolesMutation(baseOptions?: Apollo.MutationHookOptions<Add
 export type AddRolesMutationHookResult = ReturnType<typeof useAddRolesMutation>;
 export type AddRolesMutationResult = Apollo.MutationResult<AddRolesMutation>;
 export type AddRolesMutationOptions = Apollo.BaseMutationOptions<AddRolesMutation, AddRolesMutationVariables>;
+export const SaveTemplateAdminDocument = gql`
+    mutation SaveTemplateAdmin($entity: TemplateEntityInput) {
+  saveTemplate(entity: $entity) {
+    ...Template
+  }
+}
+    ${TemplateFragmentDoc}`;
+export type SaveTemplateAdminMutationFn = Apollo.MutationFunction<SaveTemplateAdminMutation, SaveTemplateAdminMutationVariables>;
+
+/**
+ * __useSaveTemplateAdminMutation__
+ *
+ * To run a mutation, you first call `useSaveTemplateAdminMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveTemplateAdminMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveTemplateAdminMutation, { data, loading, error }] = useSaveTemplateAdminMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveTemplateAdminMutation(baseOptions?: Apollo.MutationHookOptions<SaveTemplateAdminMutation, SaveTemplateAdminMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveTemplateAdminMutation, SaveTemplateAdminMutationVariables>(SaveTemplateAdminDocument, options);
+      }
+export type SaveTemplateAdminMutationHookResult = ReturnType<typeof useSaveTemplateAdminMutation>;
+export type SaveTemplateAdminMutationResult = Apollo.MutationResult<SaveTemplateAdminMutation>;
+export type SaveTemplateAdminMutationOptions = Apollo.BaseMutationOptions<SaveTemplateAdminMutation, SaveTemplateAdminMutationVariables>;
+export const DeleteTemplateDocument = gql`
+    mutation DeleteTemplate($id: String) {
+  deleteTemplate(id: $id)
+}
+    `;
+export type DeleteTemplateMutationFn = Apollo.MutationFunction<DeleteTemplateMutation, DeleteTemplateMutationVariables>;
+
+/**
+ * __useDeleteTemplateMutation__
+ *
+ * To run a mutation, you first call `useDeleteTemplateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteTemplateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteTemplateMutation, { data, loading, error }] = useDeleteTemplateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteTemplateMutation(baseOptions?: Apollo.MutationHookOptions<DeleteTemplateMutation, DeleteTemplateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteTemplateMutation, DeleteTemplateMutationVariables>(DeleteTemplateDocument, options);
+      }
+export type DeleteTemplateMutationHookResult = ReturnType<typeof useDeleteTemplateMutation>;
+export type DeleteTemplateMutationResult = Apollo.MutationResult<DeleteTemplateMutation>;
+export type DeleteTemplateMutationOptions = Apollo.BaseMutationOptions<DeleteTemplateMutation, DeleteTemplateMutationVariables>;
+export const SaveTemplateTypeAdminDocument = gql`
+    mutation SaveTemplateTypeAdmin($entity: TemplateTypeEntityInput) {
+  saveTemplateType(entity: $entity) {
+    ...TemplateTypeField
+  }
+}
+    ${TemplateTypeFieldFragmentDoc}`;
+export type SaveTemplateTypeAdminMutationFn = Apollo.MutationFunction<SaveTemplateTypeAdminMutation, SaveTemplateTypeAdminMutationVariables>;
+
+/**
+ * __useSaveTemplateTypeAdminMutation__
+ *
+ * To run a mutation, you first call `useSaveTemplateTypeAdminMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveTemplateTypeAdminMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveTemplateTypeAdminMutation, { data, loading, error }] = useSaveTemplateTypeAdminMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveTemplateTypeAdminMutation(baseOptions?: Apollo.MutationHookOptions<SaveTemplateTypeAdminMutation, SaveTemplateTypeAdminMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveTemplateTypeAdminMutation, SaveTemplateTypeAdminMutationVariables>(SaveTemplateTypeAdminDocument, options);
+      }
+export type SaveTemplateTypeAdminMutationHookResult = ReturnType<typeof useSaveTemplateTypeAdminMutation>;
+export type SaveTemplateTypeAdminMutationResult = Apollo.MutationResult<SaveTemplateTypeAdminMutation>;
+export type SaveTemplateTypeAdminMutationOptions = Apollo.BaseMutationOptions<SaveTemplateTypeAdminMutation, SaveTemplateTypeAdminMutationVariables>;
+export const DeleteTemplateTypeDocument = gql`
+    mutation DeleteTemplateType($id: String) {
+  deleteTemplateType(id: $id)
+}
+    `;
+export type DeleteTemplateTypeMutationFn = Apollo.MutationFunction<DeleteTemplateTypeMutation, DeleteTemplateTypeMutationVariables>;
+
+/**
+ * __useDeleteTemplateTypeMutation__
+ *
+ * To run a mutation, you first call `useDeleteTemplateTypeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteTemplateTypeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteTemplateTypeMutation, { data, loading, error }] = useDeleteTemplateTypeMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteTemplateTypeMutation(baseOptions?: Apollo.MutationHookOptions<DeleteTemplateTypeMutation, DeleteTemplateTypeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteTemplateTypeMutation, DeleteTemplateTypeMutationVariables>(DeleteTemplateTypeDocument, options);
+      }
+export type DeleteTemplateTypeMutationHookResult = ReturnType<typeof useDeleteTemplateTypeMutation>;
+export type DeleteTemplateTypeMutationResult = Apollo.MutationResult<DeleteTemplateTypeMutation>;
+export type DeleteTemplateTypeMutationOptions = Apollo.BaseMutationOptions<DeleteTemplateTypeMutation, DeleteTemplateTypeMutationVariables>;
+export const SaveUserTemplateAdminDocument = gql`
+    mutation SaveUserTemplateAdmin($entity: UserTemplateEntityInput) {
+  saveUserTemplate(entity: $entity) {
+    ...UserTemplateField
+  }
+}
+    ${UserTemplateFieldFragmentDoc}`;
+export type SaveUserTemplateAdminMutationFn = Apollo.MutationFunction<SaveUserTemplateAdminMutation, SaveUserTemplateAdminMutationVariables>;
+
+/**
+ * __useSaveUserTemplateAdminMutation__
+ *
+ * To run a mutation, you first call `useSaveUserTemplateAdminMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveUserTemplateAdminMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveUserTemplateAdminMutation, { data, loading, error }] = useSaveUserTemplateAdminMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveUserTemplateAdminMutation(baseOptions?: Apollo.MutationHookOptions<SaveUserTemplateAdminMutation, SaveUserTemplateAdminMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveUserTemplateAdminMutation, SaveUserTemplateAdminMutationVariables>(SaveUserTemplateAdminDocument, options);
+      }
+export type SaveUserTemplateAdminMutationHookResult = ReturnType<typeof useSaveUserTemplateAdminMutation>;
+export type SaveUserTemplateAdminMutationResult = Apollo.MutationResult<SaveUserTemplateAdminMutation>;
+export type SaveUserTemplateAdminMutationOptions = Apollo.BaseMutationOptions<SaveUserTemplateAdminMutation, SaveUserTemplateAdminMutationVariables>;
+export const DeleteUserTemplateDocument = gql`
+    mutation DeleteUserTemplate($id: String) {
+  deleteUserTemplate(id: $id)
+}
+    `;
+export type DeleteUserTemplateMutationFn = Apollo.MutationFunction<DeleteUserTemplateMutation, DeleteUserTemplateMutationVariables>;
+
+/**
+ * __useDeleteUserTemplateMutation__
+ *
+ * To run a mutation, you first call `useDeleteUserTemplateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteUserTemplateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteUserTemplateMutation, { data, loading, error }] = useDeleteUserTemplateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteUserTemplateMutation(baseOptions?: Apollo.MutationHookOptions<DeleteUserTemplateMutation, DeleteUserTemplateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteUserTemplateMutation, DeleteUserTemplateMutationVariables>(DeleteUserTemplateDocument, options);
+      }
+export type DeleteUserTemplateMutationHookResult = ReturnType<typeof useDeleteUserTemplateMutation>;
+export type DeleteUserTemplateMutationResult = Apollo.MutationResult<DeleteUserTemplateMutation>;
+export type DeleteUserTemplateMutationOptions = Apollo.BaseMutationOptions<DeleteUserTemplateMutation, DeleteUserTemplateMutationVariables>;
 export const SaveUserAdminDocument = gql`
     mutation SaveUserAdmin($user: UserEntityInput) {
   saveUser(entity: $user) {
@@ -4825,11 +5093,11 @@ export const GetTemplatesAdminDocument = gql`
   getTemplates(params: $params) {
     total
     result {
-      ...TemplateField
+      ...Template
     }
   }
 }
-    ${TemplateFieldFragmentDoc}`;
+    ${TemplateFragmentDoc}`;
 
 /**
  * __useGetTemplatesAdminQuery__
@@ -4861,10 +5129,10 @@ export type GetTemplatesAdminQueryResult = Apollo.QueryResult<GetTemplatesAdminQ
 export const GetTemplateAdminDocument = gql`
     query GetTemplateAdmin($entity: TemplateEntityInput) {
   getTemplate(entity: $entity) {
-    ...TemplateField
+    ...Template
   }
 }
-    ${TemplateFieldFragmentDoc}`;
+    ${TemplateFragmentDoc}`;
 
 /**
  * __useGetTemplateAdminQuery__
@@ -4898,11 +5166,11 @@ export const GetTemplateTypesAdminDocument = gql`
   getTemplateTypes(params: $params) {
     total
     result {
-      ...TemplateTypesField
+      ...TemplateTypeField
     }
   }
 }
-    ${TemplateTypesFieldFragmentDoc}`;
+    ${TemplateTypeFieldFragmentDoc}`;
 
 /**
  * __useGetTemplateTypesAdminQuery__
@@ -4934,10 +5202,10 @@ export type GetTemplateTypesAdminQueryResult = Apollo.QueryResult<GetTemplateTyp
 export const GetTemplateTypeAdminDocument = gql`
     query GetTemplateTypeAdmin($entity: TemplateTypeEntityInput) {
   getTemplateType(entity: $entity) {
-    ...TemplateTypesField
+    ...TemplateTypeField
   }
 }
-    ${TemplateTypesFieldFragmentDoc}`;
+    ${TemplateTypeFieldFragmentDoc}`;
 
 /**
  * __useGetTemplateTypeAdminQuery__
@@ -4966,6 +5234,79 @@ export function useGetTemplateTypeAdminLazyQuery(baseOptions?: Apollo.LazyQueryH
 export type GetTemplateTypeAdminQueryHookResult = ReturnType<typeof useGetTemplateTypeAdminQuery>;
 export type GetTemplateTypeAdminLazyQueryHookResult = ReturnType<typeof useGetTemplateTypeAdminLazyQuery>;
 export type GetTemplateTypeAdminQueryResult = Apollo.QueryResult<GetTemplateTypeAdminQuery, GetTemplateTypeAdminQueryVariables>;
+export const GetUserTemplatesAdminDocument = gql`
+    query GetUserTemplatesAdmin($params: FilterSortPaginateInput) {
+  getUserTemplates(params: $params) {
+    total
+    result {
+      ...UserTemplateField
+    }
+  }
+}
+    ${UserTemplateFieldFragmentDoc}`;
+
+/**
+ * __useGetUserTemplatesAdminQuery__
+ *
+ * To run a query within a React component, call `useGetUserTemplatesAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserTemplatesAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserTemplatesAdminQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetUserTemplatesAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetUserTemplatesAdminQuery, GetUserTemplatesAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserTemplatesAdminQuery, GetUserTemplatesAdminQueryVariables>(GetUserTemplatesAdminDocument, options);
+      }
+export function useGetUserTemplatesAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserTemplatesAdminQuery, GetUserTemplatesAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserTemplatesAdminQuery, GetUserTemplatesAdminQueryVariables>(GetUserTemplatesAdminDocument, options);
+        }
+export type GetUserTemplatesAdminQueryHookResult = ReturnType<typeof useGetUserTemplatesAdminQuery>;
+export type GetUserTemplatesAdminLazyQueryHookResult = ReturnType<typeof useGetUserTemplatesAdminLazyQuery>;
+export type GetUserTemplatesAdminQueryResult = Apollo.QueryResult<GetUserTemplatesAdminQuery, GetUserTemplatesAdminQueryVariables>;
+export const GetUserTemplateAdminDocument = gql`
+    query GetUserTemplateAdmin($entity: UserTemplateEntityInput) {
+  getUserTemplate(entity: $entity) {
+    ...UserTemplateField
+  }
+}
+    ${UserTemplateFieldFragmentDoc}`;
+
+/**
+ * __useGetUserTemplateAdminQuery__
+ *
+ * To run a query within a React component, call `useGetUserTemplateAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserTemplateAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserTemplateAdminQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetUserTemplateAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetUserTemplateAdminQuery, GetUserTemplateAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserTemplateAdminQuery, GetUserTemplateAdminQueryVariables>(GetUserTemplateAdminDocument, options);
+      }
+export function useGetUserTemplateAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserTemplateAdminQuery, GetUserTemplateAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserTemplateAdminQuery, GetUserTemplateAdminQueryVariables>(GetUserTemplateAdminDocument, options);
+        }
+export type GetUserTemplateAdminQueryHookResult = ReturnType<typeof useGetUserTemplateAdminQuery>;
+export type GetUserTemplateAdminLazyQueryHookResult = ReturnType<typeof useGetUserTemplateAdminLazyQuery>;
+export type GetUserTemplateAdminQueryResult = Apollo.QueryResult<GetUserTemplateAdminQuery, GetUserTemplateAdminQueryVariables>;
 export const GetApprovedUsersDocument = gql`
     query GetApprovedUsers {
   approvedUsers: getUsers(

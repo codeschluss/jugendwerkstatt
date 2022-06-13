@@ -1,5 +1,5 @@
 export interface FormsBaseDataInputs {
-  dateName: string;
+  name: string;
   category: string;
 }
 

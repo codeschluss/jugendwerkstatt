@@ -27,7 +27,7 @@ import {
   UsersRequestsListPage,
   EditUserPage,
   CreateFormsPage,
-  FormsDocumentsListPage,
+  FormsUserListPage,
   FormsListPage,
   GroupListPage,
   CreateGroupPage,
@@ -40,6 +40,8 @@ import {
   EvaluationsPage,
   EvaluationsQuestionsPage,
   GroupCourseRatingsListPage,
+  FormsCategoriesListPage,
+  CreateFormsCategories,
 } from "../admin/pages";
 
 export const AdminRoutes = () => (
@@ -117,7 +119,26 @@ export const AdminRoutes = () => (
 
         <Route path="forms/templates" element={<FormsListPage />} />
         <Route path="forms/templates/new" element={<CreateFormsPage />} />
-        <Route path="forms/documents" element={<FormsDocumentsListPage />} />
+        <Route path="forms/templates/:id" element={<CreateFormsPage />} />
+        <Route path="forms/user-templates" element={<FormsUserListPage />} />
+        <Route
+          path="forms/user-templates/new"
+          element={<FormsUserListPage />}
+        />
+        <Route
+          path="forms/user-templates/:id"
+          element={<FormsUserListPage />}
+        />
+
+        <Route path="forms/categories" element={<FormsCategoriesListPage />} />
+        <Route
+          path="forms/categories/new"
+          element={<CreateFormsCategories />}
+        />
+        <Route
+          path="forms/categories/:id"
+          element={<CreateFormsCategories />}
+        />
 
         <Route path="evaluations" element={<EvaluationsPage />} />
         <Route

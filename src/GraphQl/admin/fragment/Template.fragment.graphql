@@ -4,7 +4,20 @@ fragment TemplateField on TemplateEntity {
   content
 }
 
-fragment TemplateTypesField on TemplateTypeEntity {
+fragment TemplateTypeField on TemplateTypeEntity {
   id
   name
+}
+
+fragment UserTemplateField on UserTemplateEntity {
+  id
+  name
+  content
+}
+
+fragment Template on TemplateEntity {
+  ...TemplateField
+  templateType {
+    ...TemplateTypeField
+  }
 }

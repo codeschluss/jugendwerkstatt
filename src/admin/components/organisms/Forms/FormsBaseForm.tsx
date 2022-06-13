@@ -1,10 +1,14 @@
 import { ReactElement } from "react";
 import { useFormContext } from "react-hook-form";
+import { useGetTemplateTypesAdminQuery } from "../../../../GraphQl/graphql";
 import { Button, Select } from "../../atoms";
 import { InputField } from "../../molecules";
 import { FormsFormInputs } from "./Forms.types";
 
 export const FormsBaseForm = (): ReactElement => {
+  const { data: { getTemplateTypes = null } = {} } =
+    useGetTemplateTypesAdminQuery();
+
   const {
     trigger,
     register,
@@ -19,28 +23,27 @@ export const FormsBaseForm = (): ReactElement => {
     <>
       <div className="flex flex-col justify-start w-full space-y-6">
         <InputField
-          id="dateName"
+          id="name"
           label="Dateiname"
-          {...register("baseData.dateName")}
+          {...register("baseData.name")}
           placeholder="Vorlage 4"
-          error={baseData?.dateName?.message}
+          error={baseData?.name?.message}
         />
 
         <Select
           id="category"
           label="Kategorie"
           {...register("baseData.category")}
-          defaultValue={1}
           error={baseData?.category?.message}
         >
-          {[1, 2, 3].map((i) => (
-            <option key={i} value={i}>
-              test {i}
+          {getTemplateTypes?.result?.map((item) => (
+            <option key={item?.id} value={item?.id || ""}>
+              {item?.name}
             </option>
           ))}
         </Select>
       </div>
-      <Button className="mt-6" onClick={handleTrigger}>
+      <Button className="mt-6" type="button" onClick={handleTrigger}>
         Speichern
       </Button>
     </>
