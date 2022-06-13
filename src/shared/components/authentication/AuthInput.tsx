@@ -13,7 +13,7 @@ interface AuthInputProps {
   repeatPassword?: string;
   onBlur?: () => void;
   onChange?: any;
-  error?: string;
+  error?: string | boolean;
   placeholder?: string;
 }
 

@@ -4,15 +4,10 @@ import Button from "../../ui/Button";
 const DefaultHome: React.FC = () => {
   return (
     <>
-      <div className="w-full sm:hidden md:block h-full relative">
+      <div className="w-full sm:hidden md:block h-full absolute top-0  left-0">
         <img
-          className="absolute left-0 top-0 w-72"
-          src="/assets/desktop-top-left-bg.png"
-          alt=""
-        />
-        <img
-          className="absolute right-0 bottom-0 w-72"
-          src="/assets/desktop-bottom-right-bg.png"
+          className="absolute w-full "
+          src="/assets/Background1.png"
           alt=""
         />
       </div>

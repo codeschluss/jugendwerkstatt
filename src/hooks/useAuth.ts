@@ -19,6 +19,7 @@ export const useAuth = () => {
 
   const [accessTimer, setAccessTimer] = useState<any>(null);
   const [refreshTimer, setRefreshTimer] = useState<any>(null);
+  const [hasError, setHasError] = useState<boolean>(false);
 
   const init = () => {
     refreshToken && expiration(refreshToken) > 0 ? refresh() : logout();
@@ -45,25 +46,31 @@ export const useAuth = () => {
         username: email,
         password: password,
       },
-    }).then((response) => {
-      const recievedToken: [string] | any = jwt_decode(
-        response.data?.createToken?.access || ""
-      );
-      if (!recievedToken.verified) {
-        navigate("/reVerifyEmail");
-        return;
-      }
+    })
+      .then((response) => {
+        // response.errors ? setHasError(true) : setHasError(false);
+        const recievedToken: [string] | any = jwt_decode(
+          response.data?.createToken?.access || ""
+        );
+        if (!recievedToken.verified) {
+          navigate("/reVerifyEmail");
+          return;
+        }
 
-      //TODO: pending approved view
-      if (!recievedToken.approved) {
-        navigate("/pending-approval");
-        return;
-      }
+        //TODO: pending approved view
+        if (!recievedToken.approved) {
+          navigate("/pending-approval");
+          return;
+        }
 
-      store(response.data?.createToken);
-      timers(response.data?.createToken);
-      navigate("/");
-    });
+        store(response.data?.createToken);
+        timers(response.data?.createToken);
+        navigate("/");
+      })
+      .catch((err) => {
+        setHasError(err);
+        console.log(true);
+      });
   };
 
   const store = (token: TokenDto | null | undefined) => {
@@ -104,6 +111,7 @@ export const useAuth = () => {
     handleLogin,
     init,
     logout,
+    hasError,
   };
 };
 
