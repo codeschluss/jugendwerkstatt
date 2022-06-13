@@ -40,7 +40,7 @@ export const MediaForm = (): ReactElement => {
         error={errors?.category?.message}
       >
         {data?.getLinkCategories?.result?.map((item) => (
-          <option key={item?.id} value={item?.name || ""}>
+          <option key={item?.id} value={item?.id || ""}>
             {item?.name}
           </option>
         ))}

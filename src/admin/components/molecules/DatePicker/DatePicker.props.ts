@@ -1,4 +1,4 @@
-import { ReactDatePickerProps } from 'react-datepicker';
+import { ReactDatePickerProps } from "react-datepicker";
 
 export interface DatePickerProps extends ReactDatePickerProps {
   label: string;

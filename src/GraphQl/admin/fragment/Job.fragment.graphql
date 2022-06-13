@@ -1,5 +1,23 @@
+fragment JobAdField on JobAdEntity {
+  id
+  title
+  startDate
+  dueDate
+}
+
 fragment JobTypeField on JobTypeEntity {
   id
   color
   name
+}
+
+fragment JobAd on JobAdEntity {
+  ...JobAdField
+  type {
+    ...JobTypeField
+  }
+  company {
+    id
+    name
+  }
 }

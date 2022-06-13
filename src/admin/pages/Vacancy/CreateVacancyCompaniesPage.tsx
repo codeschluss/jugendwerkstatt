@@ -41,13 +41,20 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
     baseData,
     address,
   }: VacancyCompaniesFormInputs) => {
-    saveCompany(
-      gqlVar({
-        ...baseData,
-        address: { ...address, latitude: 0, longitude: 0 },
-        ...(!!getCompany && { id: getCompany?.id }),
-      })
-    );
+    saveCompany({
+      variables: {
+        entity: {
+          ...baseData,
+          address: { id: "ff656406-89af-4835-a9bf-571fd978f78f" },
+          // jobAd: [
+          //   {
+          //     id: "2a592f70-9ffe-404a-b8dc-2c95ca4799ec",
+          //   },
+          // ],
+          ...(!!getCompany && { id: getCompany?.id }),
+        },
+      },
+    });
   };
 
   return (

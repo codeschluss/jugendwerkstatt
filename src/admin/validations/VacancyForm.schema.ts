@@ -3,19 +3,19 @@ import { AddressFormSchema } from "./AddressForm.schema";
 
 export const VacancyFormSchema = Joi.object({
   baseData: Joi.object({
-    name: Joi.string().required().label("Unternehmen Name"),
-    phone: Joi.string().required().label("Telefonnummer"),
+    company: Joi.string().min(3).max(50).required().label("Unternehmen Name"),
     category: Joi.string().required().label("Kategorie"),
-    website: Joi.string().uri().optional().label("Webseite"),
-    mail: Joi.string().email({ tlds: false }).label("E-Mail-Adresse"),
     title: Joi.string().required().label("Titel"),
   }),
-  address: AddressFormSchema,
+  date: Joi.object({
+    startDate: Joi.string().isoDate().required().label("Bewerbungsfrist"),
+    dueDate: Joi.string().isoDate().required().label("Berufsstart"),
+  }),
 });
 
 export const VacancyCompaiesFormSchema = Joi.object({
   baseData: Joi.object({
-    name: Joi.string().required().label("Unternehmen Name"),
+    name: Joi.string().min(3).max(50).required().label("Unternehmen Name"),
     phone: Joi.string().required().label("Telefonnummer"),
     website: Joi.string().uri().optional().label("Webseite"),
     mail: Joi.string().email({ tlds: false }).label("E-Mail-Adresse"),
@@ -24,6 +24,9 @@ export const VacancyCompaiesFormSchema = Joi.object({
 });
 
 export const VacancyCategoryFormSchema = Joi.object({
-  name: Joi.string().required().label("Kategorie"),
-  color: Joi.string().required().label("Farbe"),
+  name: Joi.string().min(3).max(50).required().label("Kategorie"),
+  color: Joi.string()
+    .pattern(/^#(?:[0-9a-fA-F]{3,4}){1,2}$/, { name: "Hex-Farbcode" })
+    .required()
+    .label("Farbe"),
 });

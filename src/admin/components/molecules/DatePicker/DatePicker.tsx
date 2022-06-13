@@ -1,8 +1,8 @@
-import { CalendarIcon } from '@heroicons/react/outline';
-import { FC, ReactElement } from 'react';
-import ReactDatePicker from 'react-datepicker';
-import { InputField } from '../../molecules';
-import { DatePickerProps } from './DatePicker.props';
+import { CalendarIcon } from "@heroicons/react/outline";
+import { FC, ReactElement } from "react";
+import ReactDatePicker from "react-datepicker";
+import { InputField } from "..";
+import { DatePickerProps } from "./DatePicker.props";
 
 export const DatePicker: FC<DatePickerProps> = ({
   label,

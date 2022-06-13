@@ -30,13 +30,13 @@ const CreateVacancyCategoriesPage = (): ReactElement => {
     resolver: joiResolver(VacancyCategoryFormSchema),
   });
 
-  const [saveJobType] = useSaveJobTypeMutation({
-    onCompleted: () => navigate("/admin/job-announcements/categories"),
-  });
-
   const { data: { getJobType = null } = {} } = useGetJobTypeQuery({
     variables: { entity: { id } },
     skip: !id,
+  });
+
+  const [saveJobType] = useSaveJobTypeMutation({
+    onCompleted: () => navigate("/admin/job-announcements/categories"),
   });
 
   const handleOnSubmit = (data: VacancyCategoryFormInputs) => {

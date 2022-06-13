@@ -1,3 +1,13 @@
+mutation SaveJobAd($entity: JobAdEntityInput) {
+  saveJobAd(entity: $entity) {
+    ...JobAd
+  }
+}
+
+mutation DeleteJobAd($id: String) {
+  deleteJobAd(id: $id)
+}
+
 mutation SaveJobType($entity: JobTypeEntityInput) {
   saveJobType(entity: $entity) {
     ...JobTypeField

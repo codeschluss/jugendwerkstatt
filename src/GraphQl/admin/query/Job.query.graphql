@@ -1,3 +1,18 @@
+query GetJobAdsAdmin($params: FilterSortPaginateInput) {
+  getJobAds(params: $params) {
+    total
+    result {
+      ...JobAd
+    }
+  }
+}
+
+query GetJobAdAdmin($entity: JobAdEntityInput) {
+  getJobAd(entity: $entity) {
+    ...JobAd
+  }
+}
+
 query GetJobTypesAdmin($params: FilterSortPaginateInput) {
   getJobTypes(params: $params) {
     total

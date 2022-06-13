@@ -12,12 +12,10 @@ export * from "./GeneralSettings/PublicPagesForm";
 export * from "./Media/MediaForm";
 export * from "./Vacancy/VacancyCompanyForm";
 export * from "./Vacancy/VacancyForm";
+export * from "./Vacancy/VacancyTerminForm";
 export * from "./Vacancy/SketchColor";
-export * from "./DatePicker/DatePicker";
-export * from "./DatePicker/TimePicker";
 
 // export all types
-export * from "./DatePicker/DatePicker.props";
 export * from "./GeneralSettings/GeneralAddressForm.props";
 export * from "./Events/Events.types";
 export * from "./Forms/Forms.types";

@@ -2622,7 +2622,11 @@ export type EventFragment = { __typename?: 'EventEntity', id?: string | null, na
 
 export type GroupFieldFragment = { __typename?: 'GroupEntity', id?: string | null, name?: string | null, courses?: Array<{ __typename?: 'CourseEntity', users?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null> | null };
 
+export type JobAdFieldFragment = { __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null };
+
 export type JobTypeFieldFragment = { __typename?: 'JobTypeEntity', id?: string | null, color?: string | null, name?: string | null };
+
+export type JobAdFragment = { __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null, type?: { __typename?: 'JobTypeEntity', id?: string | null, color?: string | null, name?: string | null } | null, company?: { __typename?: 'CompanyEntity', id?: string | null, name?: string | null } | null };
 
 export type LinkFieldFragment = { __typename?: 'LinkEntity', id?: string | null, title?: string | null, url?: string | null };
 
@@ -2695,6 +2699,20 @@ export type DeleteGroupMutationVariables = Exact<{
 
 
 export type DeleteGroupMutation = { __typename?: 'Mutation', deleteGroup?: boolean | null };
+
+export type SaveJobAdMutationVariables = Exact<{
+  entity?: InputMaybe<JobAdEntityInput>;
+}>;
+
+
+export type SaveJobAdMutation = { __typename?: 'Mutation', saveJobAd?: { __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null, type?: { __typename?: 'JobTypeEntity', id?: string | null, color?: string | null, name?: string | null } | null, company?: { __typename?: 'CompanyEntity', id?: string | null, name?: string | null } | null } | null };
+
+export type DeleteJobAdMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteJobAdMutation = { __typename?: 'Mutation', deleteJobAd?: boolean | null };
 
 export type SaveJobTypeMutationVariables = Exact<{
   entity?: InputMaybe<JobTypeEntityInput>;
@@ -2824,6 +2842,20 @@ export type GetGroupQueryVariables = Exact<{
 
 
 export type GetGroupQuery = { __typename?: 'Query', group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null, courses?: Array<{ __typename?: 'CourseEntity', users?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null> | null } | null };
+
+export type GetJobAdsAdminQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetJobAdsAdminQuery = { __typename?: 'Query', getJobAds?: { __typename?: 'PageableList_JobAdEntity', total: any, result?: Array<{ __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null, type?: { __typename?: 'JobTypeEntity', id?: string | null, color?: string | null, name?: string | null } | null, company?: { __typename?: 'CompanyEntity', id?: string | null, name?: string | null } | null } | null> | null } | null };
+
+export type GetJobAdAdminQueryVariables = Exact<{
+  entity?: InputMaybe<JobAdEntityInput>;
+}>;
+
+
+export type GetJobAdAdminQuery = { __typename?: 'Query', getJobAd?: { __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null, type?: { __typename?: 'JobTypeEntity', id?: string | null, color?: string | null, name?: string | null } | null, company?: { __typename?: 'CompanyEntity', id?: string | null, name?: string | null } | null } | null };
 
 export type GetJobTypesAdminQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3176,6 +3208,14 @@ export const GroupFieldFragmentDoc = gql`
   }
 }
     ${CourseFieldFragmentDoc}`;
+export const JobAdFieldFragmentDoc = gql`
+    fragment JobAdField on JobAdEntity {
+  id
+  title
+  startDate
+  dueDate
+}
+    `;
 export const JobTypeFieldFragmentDoc = gql`
     fragment JobTypeField on JobTypeEntity {
   id
@@ -3183,6 +3223,19 @@ export const JobTypeFieldFragmentDoc = gql`
   name
 }
     `;
+export const JobAdFragmentDoc = gql`
+    fragment JobAd on JobAdEntity {
+  ...JobAdField
+  type {
+    ...JobTypeField
+  }
+  company {
+    id
+    name
+  }
+}
+    ${JobAdFieldFragmentDoc}
+${JobTypeFieldFragmentDoc}`;
 export const LinkFieldFragmentDoc = gql`
     fragment LinkField on LinkEntity {
   id
@@ -3476,6 +3529,70 @@ export function useDeleteGroupMutation(baseOptions?: Apollo.MutationHookOptions<
 export type DeleteGroupMutationHookResult = ReturnType<typeof useDeleteGroupMutation>;
 export type DeleteGroupMutationResult = Apollo.MutationResult<DeleteGroupMutation>;
 export type DeleteGroupMutationOptions = Apollo.BaseMutationOptions<DeleteGroupMutation, DeleteGroupMutationVariables>;
+export const SaveJobAdDocument = gql`
+    mutation SaveJobAd($entity: JobAdEntityInput) {
+  saveJobAd(entity: $entity) {
+    ...JobAd
+  }
+}
+    ${JobAdFragmentDoc}`;
+export type SaveJobAdMutationFn = Apollo.MutationFunction<SaveJobAdMutation, SaveJobAdMutationVariables>;
+
+/**
+ * __useSaveJobAdMutation__
+ *
+ * To run a mutation, you first call `useSaveJobAdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveJobAdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveJobAdMutation, { data, loading, error }] = useSaveJobAdMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveJobAdMutation(baseOptions?: Apollo.MutationHookOptions<SaveJobAdMutation, SaveJobAdMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveJobAdMutation, SaveJobAdMutationVariables>(SaveJobAdDocument, options);
+      }
+export type SaveJobAdMutationHookResult = ReturnType<typeof useSaveJobAdMutation>;
+export type SaveJobAdMutationResult = Apollo.MutationResult<SaveJobAdMutation>;
+export type SaveJobAdMutationOptions = Apollo.BaseMutationOptions<SaveJobAdMutation, SaveJobAdMutationVariables>;
+export const DeleteJobAdDocument = gql`
+    mutation DeleteJobAd($id: String) {
+  deleteJobAd(id: $id)
+}
+    `;
+export type DeleteJobAdMutationFn = Apollo.MutationFunction<DeleteJobAdMutation, DeleteJobAdMutationVariables>;
+
+/**
+ * __useDeleteJobAdMutation__
+ *
+ * To run a mutation, you first call `useDeleteJobAdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteJobAdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteJobAdMutation, { data, loading, error }] = useDeleteJobAdMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteJobAdMutation(baseOptions?: Apollo.MutationHookOptions<DeleteJobAdMutation, DeleteJobAdMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteJobAdMutation, DeleteJobAdMutationVariables>(DeleteJobAdDocument, options);
+      }
+export type DeleteJobAdMutationHookResult = ReturnType<typeof useDeleteJobAdMutation>;
+export type DeleteJobAdMutationResult = Apollo.MutationResult<DeleteJobAdMutation>;
+export type DeleteJobAdMutationOptions = Apollo.BaseMutationOptions<DeleteJobAdMutation, DeleteJobAdMutationVariables>;
 export const SaveJobTypeDocument = gql`
     mutation SaveJobType($entity: JobTypeEntityInput) {
   saveJobType(entity: $entity) {
@@ -4118,6 +4235,79 @@ export function useGetGroupLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetGroupQueryHookResult = ReturnType<typeof useGetGroupQuery>;
 export type GetGroupLazyQueryHookResult = ReturnType<typeof useGetGroupLazyQuery>;
 export type GetGroupQueryResult = Apollo.QueryResult<GetGroupQuery, GetGroupQueryVariables>;
+export const GetJobAdsAdminDocument = gql`
+    query GetJobAdsAdmin($params: FilterSortPaginateInput) {
+  getJobAds(params: $params) {
+    total
+    result {
+      ...JobAd
+    }
+  }
+}
+    ${JobAdFragmentDoc}`;
+
+/**
+ * __useGetJobAdsAdminQuery__
+ *
+ * To run a query within a React component, call `useGetJobAdsAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetJobAdsAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetJobAdsAdminQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetJobAdsAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetJobAdsAdminQuery, GetJobAdsAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetJobAdsAdminQuery, GetJobAdsAdminQueryVariables>(GetJobAdsAdminDocument, options);
+      }
+export function useGetJobAdsAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetJobAdsAdminQuery, GetJobAdsAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetJobAdsAdminQuery, GetJobAdsAdminQueryVariables>(GetJobAdsAdminDocument, options);
+        }
+export type GetJobAdsAdminQueryHookResult = ReturnType<typeof useGetJobAdsAdminQuery>;
+export type GetJobAdsAdminLazyQueryHookResult = ReturnType<typeof useGetJobAdsAdminLazyQuery>;
+export type GetJobAdsAdminQueryResult = Apollo.QueryResult<GetJobAdsAdminQuery, GetJobAdsAdminQueryVariables>;
+export const GetJobAdAdminDocument = gql`
+    query GetJobAdAdmin($entity: JobAdEntityInput) {
+  getJobAd(entity: $entity) {
+    ...JobAd
+  }
+}
+    ${JobAdFragmentDoc}`;
+
+/**
+ * __useGetJobAdAdminQuery__
+ *
+ * To run a query within a React component, call `useGetJobAdAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetJobAdAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetJobAdAdminQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetJobAdAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetJobAdAdminQuery, GetJobAdAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetJobAdAdminQuery, GetJobAdAdminQueryVariables>(GetJobAdAdminDocument, options);
+      }
+export function useGetJobAdAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetJobAdAdminQuery, GetJobAdAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetJobAdAdminQuery, GetJobAdAdminQueryVariables>(GetJobAdAdminDocument, options);
+        }
+export type GetJobAdAdminQueryHookResult = ReturnType<typeof useGetJobAdAdminQuery>;
+export type GetJobAdAdminLazyQueryHookResult = ReturnType<typeof useGetJobAdAdminLazyQuery>;
+export type GetJobAdAdminQueryResult = Apollo.QueryResult<GetJobAdAdminQuery, GetJobAdAdminQueryVariables>;
 export const GetJobTypesAdminDocument = gql`
     query GetJobTypesAdmin($params: FilterSortPaginateInput) {
   getJobTypes(params: $params) {
