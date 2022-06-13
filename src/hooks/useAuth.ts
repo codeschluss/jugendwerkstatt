@@ -1,25 +1,50 @@
-import { AuthContext } from "../contexts/AuthContext";
-import { useContext, useEffect } from "react";
+import { default as jwt_decode } from "jwt-decode";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
 import TokenStorageContext from "../contexts/TokenStorageContext";
 import {
-  useCreateTokenMutation,
-  useGetMeBasicQuery,
-  useRefreshTokenMutation,
+  TokenDto,
+  useCreateTokenMutation, useRefreshTokenMutation
 } from "../GraphQl/graphql";
-import jwt_decode from "jwt-decode";
-import jwtDecode from "jwt-decode";
 
 export const useAuth = () => {
   const navigate = useNavigate();
 
-  const { accessToken, setAccessToken, refreshToken, setRefreshToken } =
-    useContext(TokenStorageContext);
-  const { setIsLogedIn } = useContext(AuthContext);
+  const {
+    setAccessToken,
+    refreshToken,
+    setRefreshToken
+  } = useContext(TokenStorageContext);
+
+  const { 
+    setIsLogedIn
+  } = useContext(AuthContext);
+
+  const [accessTimer, setAccessTimer] = useState<any>(null);
+  const [refreshTimer, setRefreshTimer] = useState<any>(null);
+
+  const init = () => {
+    refreshToken && expiration(refreshToken) > 0
+      ? refresh()
+      : logout();
+  };
+
+  const [refreshTokenMutation] = useRefreshTokenMutation();
+  const refresh = () => {
+    if (refreshToken) {
+      refreshTokenMutation({
+        variables: {
+          refreshToken: refreshToken || "",
+        },
+      }).then((response) => {
+        store(response.data?.refreshToken);
+        timers(response.data?.refreshToken);
+      });
+    }
+  };
 
   const [createToken] = useCreateTokenMutation();
-  const [refreshTokenMutation] = useRefreshTokenMutation();
-
   const handleLogin = (email: string, password: string) => {
     createToken({
       variables: {
@@ -30,70 +55,61 @@ export const useAuth = () => {
       const recievedToken: [string] | any = jwt_decode(
         response.data?.createToken?.access || ""
       );
-      if (recievedToken.roles.includes("verified")) {
-        localStorage.setItem(
-          "accessToken",
-          response.data?.createToken?.access || ""
-        );
-        localStorage.setItem(
-          "refreshToken",
-          response.data?.createToken?.refresh || ""
-        );
-        setAccessToken(response.data?.createToken?.access);
-        setRefreshToken(response.data?.createToken?.refresh);
-        setIsLogedIn(true);
-        navigate("/");
-      } else {
+      if (!recievedToken.verified) {
         navigate("/reVerifyEmail");
         return;
       }
+
+      //TODO: pending approved view
+      if (!recievedToken.approved) {
+        navigate("/pending-approval");
+        return;
+      }
+
+      store(response.data?.createToken);
+      timers(response.data?.createToken);
+      navigate("/");
     });
   };
 
-  const authOnInit = () => {
-    const refresh = () => {
-      refreshTokenMutation({
-        variables: {
-          refreshToken: localStorage.getItem("refreshToken") || "",
-        },
-      }).then((tokens) => {
-        localStorage.setItem(
-          "accessToken",
-          tokens.data?.refreshToken?.access || ""
-        );
-        localStorage.setItem(
-          "refreshToken",
-          tokens.data?.refreshToken?.refresh || ""
-        );
-        setAccessToken(tokens.data?.refreshToken?.access || "");
-        setRefreshToken(tokens.data?.refreshToken?.access || "");
-        setIsLogedIn(true);
-      });
-    };
-
-    const refreshAccessToken = () => {
-      if (!accessToken) {
-        return;
-      } else {
-        setTimeout(() => {
-          refresh();
-        }, jwtDecode<any>(accessToken).exp * 1000 - Date.now());
-      }
-    };
-
-    if (localStorage.getItem("refreshToken")) {
-      refresh();
+  const store = (token: TokenDto | null | undefined) => {
+    if (token) {
+      setAccessToken(token.access);
+      setRefreshToken(token.refresh);
+      setIsLogedIn(true);
     }
-
-    refreshAccessToken();
   };
 
-  // localStorage.clear();
-  // setIsLogedIn(false);
-  // navigate("/");
+  const timers = (token: TokenDto | null | undefined) => {
+    if (token) {
+      accessTimer && clearTimeout(accessTimer);
+      refreshTimer && clearTimeout(refreshTimer);
+      setAccessTimer(setTimeout(() => refresh(), expiration(token.access!)));
+      setRefreshTimer(setTimeout(() => logout(), expiration(token.refresh!)));
+    }
+  };
+
+  const expiration = (token: string): number => {
+    const decoded = JSON.parse(atob(token.split('.')[1]));
+    console.log("exp", decoded.exp * 1000);
+    console.log("Date.now()", Date.now());
+    console.log("expiration", decoded.exp * 1000 - Date.now());
+    return decoded.exp * 1000 - Date.now();
+  };
+
+  const logout = () => {
+    accessTimer && clearTimeout(accessTimer);
+    refreshTimer && clearTimeout(refreshTimer);
+    setAccessToken(null);
+    setRefreshToken(null);
+    setIsLogedIn(false);
+    navigate("/");
+  };
+
   return {
     handleLogin,
-    authOnInit,
+    init,
+    logout
   };
 };
 

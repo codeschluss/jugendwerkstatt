@@ -9,10 +9,10 @@ const Layout: React.FC = ({ children }) => {
   const { sideBar } = useContext(SideBarContext);
   const { isLogedIn } = useContext(AuthContext);
 
-  const { authOnInit } = useAuth();
+  const { init } = useAuth();
   useEffect(() => {
-    authOnInit();
-  }, []);
+    init();
+  }, []); 
 
   return (
     <main

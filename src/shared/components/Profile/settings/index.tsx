@@ -1,20 +1,12 @@
-import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import Button from "../../../../client/components/ui/Button";
-import AuthContext from "../../../../contexts/AuthContext";
+import useAuth from "../../../../hooks/useAuth";
 import CustomHeader from "../../header/customHeader/CustomHeader";
 import Items from "./Items";
 
 const ProfileSettings = () => {
-  const { setIsLogedIn } = useContext(AuthContext);
-  const navigate = useNavigate();
 
-  const logoutHandler = () => {
-    localStorage.clear();
-    setIsLogedIn(false);
-    navigate("/");
-  };
-
+  const { logout } = useAuth();
+  
   return (
     <div className="absolute md:static bg-white w-full h-screen top-0 z-40 flex flex-col items-center justify-between">
       <div className="w-full">
@@ -29,7 +21,7 @@ const ProfileSettings = () => {
         </div>
       </div>
       <div className="mb-8 flex h-20 flex-col w-3/5 justify-between">
-        <Button isDisabled={true} isValidated={true} click={logoutHandler}>
+        <Button isDisabled={true} isValidated={true} click={logout}>
           Logout
         </Button>
         <Button isDisabled={true} isValidated={true} click={() => alert("awd")}>

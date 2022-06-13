@@ -1,14 +1,13 @@
-import { BellIcon, SearchIcon, LogoutIcon } from "@heroicons/react/outline";
-import { useContext, useState } from "react";
-import Search from "./Search";
-import I from "../../ui/IconWrapper";
-import detectDevice from "../../../utils/isTouch";
-import { API_URL } from "../../../../config/app";
+import { BellIcon, LogoutIcon, SearchIcon } from "@heroicons/react/outline";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
+import useAuth from "../../../../hooks/useAuth";
+import detectDevice from "../../../utils/isTouch";
 import DropDown from "../../ui/DropDown";
+import I from "../../ui/IconWrapper";
 import Avatar from "../sideBar/Avatar";
-import { Link, useNavigate } from "react-router-dom";
-import AuthContext from "../../../../contexts/AuthContext";
+import Search from "./Search";
 
 interface RightContentProps {}
 
@@ -16,14 +15,7 @@ const RightContent: React.FC<RightContentProps> = () => {
   const isTouch = detectDevice();
   const [toggleSearch, setToggleSearch] = useState<boolean>(false);
 
-  const { setIsLogedIn } = useContext(AuthContext);
-  const navigate = useNavigate();
-
-  const logoutHandler = () => {
-    localStorage.clear();
-    setIsLogedIn(false);
-    navigate("/");
-  };
+  const { logout } = useAuth();
   const user = useGetMeBasicQuery();
 
   return (
@@ -67,9 +59,9 @@ const RightContent: React.FC<RightContentProps> = () => {
           <div className="flex items-center justify-start">
             {" "}
             <I className="h-8 w-8 text-white md:text-black hidden md:flex cursor-pointer">
-              <LogoutIcon onClick={logoutHandler} />
+              <LogoutIcon onClick={logout} />
             </I>{" "}
-            <p onClick={logoutHandler} className="cursor-pointer">
+            <p onClick={logout} className="cursor-pointer">
               Logout
             </p>
           </div>
@@ -79,7 +71,7 @@ const RightContent: React.FC<RightContentProps> = () => {
         <BellIcon />
       </I>
       <I className="h-6 w-6 text-white md:text-black hidden md:flex md:ml-6 cursor-pointer">
-        <LogoutIcon onClick={logoutHandler} />
+        <LogoutIcon onClick={logout} />
       </I>
     </div>
   );
