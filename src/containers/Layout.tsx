@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import Footer from "../client/components/footer";
 import Header from "../shared/components/header";
 import Loader from "../shared/components/ui/Loader";
@@ -84,7 +84,14 @@ const Layout: React.FC = ({ children }) => {
 
       <div className="md:p-12">
         <Modal visible={false} course={"Holz 1"}></Modal>
-        {result.loading ? <Loader /> : <div>{children}</div>}
+        {result.loading ? (
+          <Loader />
+        ) : (
+          <div>
+            {" "}
+            <Outlet />{" "}
+          </div>
+        )}
       </div>
       {/* <Footer /> */}
     </main>

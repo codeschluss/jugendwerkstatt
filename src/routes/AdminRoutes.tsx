@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import {
   GeneralAddressForm,
   PublicPagesForm,
@@ -43,11 +43,12 @@ import {
   FormsCategoriesListPage,
   CreateFormsCategories,
 } from "../admin/pages";
+import { RequireAuthRoute } from "../shared/components/RequireAuthRoute/RequireAuthRoute";
 
 export const AdminRoutes = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route path="/admin" element={<AdminDashboardLayout />}>
+  <Routes>
+    <Route path="/admin" element={<AdminDashboardLayout />}>
+      <Route element={<RequireAuthRoute />}>
         <Route path="profile" element={<AdminProfilePage />} />
         <Route path="profile-password" element={<AdminProfilePasswordPage />} />
 
@@ -175,6 +176,6 @@ export const AdminRoutes = () => (
       </Route>
 
       <Route path="*" element={<h1>Page Not Found!</h1>} />
-    </Routes>
-  </BrowserRouter>
+    </Route>
+  </Routes>
 );
