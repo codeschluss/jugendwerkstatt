@@ -29,6 +29,7 @@ export interface VacancyCompaniesFormInputs {
 export interface VacancyFormInputs {
   baseData: VacancyBaseDataFormInputs;
   date: VacancyDateFormInputs;
+  description: string;
 }
 
 export interface SketchColorProps {

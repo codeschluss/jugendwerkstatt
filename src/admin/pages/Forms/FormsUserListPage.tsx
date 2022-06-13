@@ -1,46 +1,42 @@
 import { useNavigate } from "react-router-dom";
 import {
-  useDeleteTemplateMutation,
-  useGetTemplatesAdminQuery,
+  useDeleteUserTemplateMutation,
+  useGetUserTemplatesAdminQuery,
 } from "../../../GraphQl/graphql";
 import { Table, Action, Panel } from "../../components/atoms";
 import { CustomTable } from "../../components/molecules";
 
-const FormsListPage = () => {
+const FormsUserListPage = () => {
   const navigate = useNavigate();
 
-  const { data: { getTemplates = null } = {}, refetch } =
-    useGetTemplatesAdminQuery({
+  const { data: { getUserTemplates = null } = {}, refetch } =
+    useGetUserTemplatesAdminQuery({
       fetchPolicy: "cache-and-network",
     });
 
-  const [deleteTemplate] = useDeleteTemplateMutation({
+  const [deleteUserTemplate] = useDeleteUserTemplateMutation({
     onCompleted: () => refetch(),
   });
 
   const handleDeleteById = (id: string) => () => {
     // eslint-disable-next-line no-restricted-globals
     if (confirm("Möchten Sie dies löschen?")) {
-      deleteTemplate({ variables: { id } });
+      deleteUserTemplate({ variables: { id } });
     }
   };
 
   const handleUpdateById = (id: string) => () => navigate(id);
-
   return (
-    <Panel.Wrapper
-      action={{
-        to: "/admin/forms/templates/new",
-        label: "Neues Formular erstellen",
-      }}
-    >
+    <Panel.Wrapper>
       <CustomTable
-        headerData={["Formularname", "Kategorie", "Aktionen"]}
+        headerData={["Schüler/in", "Formular", "Dokument", "Datum", "Aktionen"]}
         bodyData={
-          getTemplates?.result?.map((item) => (
+          getUserTemplates?.result?.map((item) => (
             <Table.Row key={item?.id}>
               <Table.Data>{item?.name}</Table.Data>
-              <Table.Data>{item?.templateType?.name}</Table.Data>
+              <Table.Data>{item?.name}</Table.Data>
+              <Table.Data>{item?.name}</Table.Data>
+              <Table.Data>{item?.name}</Table.Data>
               <Table.Data>
                 <Action
                   onUpdate={handleUpdateById(item?.id || "")}
@@ -55,4 +51,4 @@ const FormsListPage = () => {
   );
 };
 
-export default FormsListPage;
+export default FormsUserListPage;

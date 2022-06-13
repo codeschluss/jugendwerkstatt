@@ -1,0 +1,29 @@
+mutation SaveTemplateAdmin($entity: TemplateEntityInput) {
+  saveTemplate(entity: $entity) {
+    ...Template
+  }
+}
+
+mutation DeleteTemplate($id: String) {
+  deleteTemplate(id: $id)
+}
+
+mutation SaveTemplateTypeAdmin($entity: TemplateTypeEntityInput) {
+  saveTemplateType(entity: $entity) {
+    ...TemplateTypeField
+  }
+}
+
+mutation DeleteTemplateType($id: String) {
+  deleteTemplateType(id: $id)
+}
+
+mutation SaveUserTemplateAdmin($entity: UserTemplateEntityInput) {
+  saveUserTemplate(entity: $entity) {
+    ...UserTemplateField
+  }
+}
+
+mutation DeleteUserTemplate($id: String) {
+  deleteUserTemplate(id: $id)
+}

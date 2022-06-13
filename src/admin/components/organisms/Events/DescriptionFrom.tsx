@@ -28,7 +28,7 @@ export const DescriptionFrom = (): ReactElement => {
         onReady={handleGetValue}
       />
       <Button type="button" className="mt-6" onClick={handleTrigger}>
-        Speichern
+        Vorlage erstellen
       </Button>
     </div>
   );

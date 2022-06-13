@@ -1,0 +1,23 @@
+fragment TemplateField on TemplateEntity {
+  id
+  name
+  content
+}
+
+fragment TemplateTypeField on TemplateTypeEntity {
+  id
+  name
+}
+
+fragment UserTemplateField on UserTemplateEntity {
+  id
+  name
+  content
+}
+
+fragment Template on TemplateEntity {
+  ...TemplateField
+  templateType {
+    ...TemplateTypeField
+  }
+}

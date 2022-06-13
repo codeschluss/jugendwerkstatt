@@ -9,6 +9,7 @@ import {
 } from "../../../GraphQl/graphql";
 import { Accordion, FormActions } from "../../components/molecules";
 import {
+  DescriptionFrom,
   VacancyForm,
   VacancyFormInputs,
   VacancyTerminForm,
@@ -42,14 +43,16 @@ const CreateVacancyPage = (): ReactElement => {
   });
 
   const handleOnSubmit = ({
-    baseData: { title, company, category },
+    description,
     date: { dueDate, startDate },
+    baseData: { title, company, category },
   }: VacancyFormInputs) => {
     saveJobAd(
       gqlVar({
         title,
         dueDate,
         startDate,
+        content: description,
         company: { id: company },
         type: { id: category },
         ...(!!getJobAd && { id: getJobAd?.id }),
@@ -80,6 +83,9 @@ const CreateVacancyPage = (): ReactElement => {
       <form className="min-h-full">
         <Accordion title="Stammdaten" open={!!id}>
           <VacancyForm />
+        </Accordion>
+        <Accordion title="Beschreibung">
+          <DescriptionFrom />
         </Accordion>
         <Accordion title="Termine">
           <VacancyTerminForm />
