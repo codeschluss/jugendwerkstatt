@@ -1,4 +1,4 @@
-import { NavModel } from '../interfaces/models/Nav.model';
+import { NavModel } from "../interfaces/models/Nav.model";
 import {
   BookOpenIcon,
   CalendarIcon,
@@ -8,204 +8,208 @@ import {
   UserIcon,
   UsersIcon,
   ViewListIcon,
-} from '@heroicons/react/solid';
+} from "@heroicons/react/solid";
 
 export const navItems: NavModel = {
   items: [
     {
-      name: 'Events',
+      name: "Events",
       icon: <CalendarIcon />,
-      location: 'events',
+      location: "events",
       items: [
         {
-          name: 'Events',
-          location: 'events',
+          name: "Events",
+          location: "events",
         },
         {
-          name: 'Veranstalter',
-          location: 'events/organizers',
+          name: "Veranstalter",
+          location: "events/organizers",
         },
         {
-          name: 'Kategorien',
-          location: 'events/categories',
+          name: "Kategorien",
+          location: "events/categories",
         },
       ],
     },
     {
-      name: 'Stellenausschreibungen',
+      name: "Stellenausschreibungen",
       icon: <BookOpenIcon />,
-      location: 'job-announcements',
+      location: "job-announcements",
       items: [
         {
-          name: 'Stellenausschreibungen',
-          location: 'job-announcements',
+          name: "Stellenausschreibungen",
+          location: "job-announcements",
         },
         {
-          name: 'Kategorien',
-          location: 'job-announcements/categories',
+          name: "Kategorien",
+          location: "job-announcements/categories",
         },
         {
-          name: 'Unternehmen',
-          location: 'job-announcements/companies',
+          name: "Unternehmen",
+          location: "job-announcements/companies",
         },
       ],
     },
     {
-      name: 'Mediathek',
+      name: "Mediathek",
       icon: <PlayIcon />,
-      location: 'medias',
+      location: "medias",
       items: [
         {
-          name: 'Inhalte',
-          location: 'medias',
+          name: "Inhalte",
+          location: "medias",
         },
         {
-          name: 'Kategorien',
-          location: 'medias/categories',
+          name: "Kategorien",
+          location: "medias/categories",
         },
       ],
     },
     {
-      name: 'Formulare',
+      name: "Formulare",
       icon: <DocumentTextIcon />,
-      location: 'forms',
+      location: "forms",
       items: [
         {
-          name: 'Vorlagen',
-          location: 'forms/templates',
+          name: "Vorlagen",
+          location: "forms/templates",
         },
         {
-          name: 'Dokumente',
-          location: 'forms/documents',
+          name: "Kategorien",
+          location: "forms/categories",
+        },
+        {
+          name: "Benutzerformulare",
+          location: "forms/user-templates",
         },
       ],
     },
     {
-      name: 'Gruppen',
+      name: "Gruppen",
       icon: <UsersIcon />,
-      location: 'groups',
+      location: "groups",
       items: [
         {
-          name: 'Übersicht',
-          location: 'groups',
+          name: "Übersicht",
+          location: "groups",
         },
         {
-          name: 'Holz',
-          location: 'groups/wood',
+          name: "Holz",
+          location: "groups/wood",
           items: [
             {
-              name: 'Kursbewertung',
-              location: 'groups/wood/course-rating',
+              name: "Kursbewertung",
+              location: "groups/wood/course-rating",
             },
             {
-              name: 'Teilnehmer',
-              location: 'groups/wood/participants',
+              name: "Teilnehmer",
+              location: "groups/wood/participants",
             },
           ],
         },
         {
-          name: 'Metall',
-          location: 'groups/metall',
+          name: "Metall",
+          location: "groups/metall",
           items: [
             {
-              name: 'Kursbewertung',
-              location: 'groups/metall/course-rating',
+              name: "Kursbewertung",
+              location: "groups/metall/course-rating",
             },
             {
-              name: 'Teilnehmer',
-              location: 'groups/metall/participants',
+              name: "Teilnehmer",
+              location: "groups/metall/participants",
             },
           ],
         },
         {
-          name: 'Deko',
-          location: 'groups/deco',
+          name: "Deko",
+          location: "groups/deco",
           items: [
             {
-              name: 'Kursbewertung',
-              location: 'groups/deco/course-rating',
+              name: "Kursbewertung",
+              location: "groups/deco/course-rating",
             },
             {
-              name: 'Teilnehmer',
-              location: 'groups/deco/participants',
+              name: "Teilnehmer",
+              location: "groups/deco/participants",
             },
           ],
         },
         {
-          name: 'Mobil',
-          location: 'groups/mobil',
+          name: "Mobil",
+          location: "groups/mobil",
           items: [
             {
-              name: 'Kursbewertung',
-              location: 'groups/mobil/course-rating',
+              name: "Kursbewertung",
+              location: "groups/mobil/course-rating",
             },
             {
-              name: 'Teilnehmer',
-              location: 'groups/mobil/participants',
+              name: "Teilnehmer",
+              location: "groups/mobil/participants",
             },
           ],
         },
       ],
     },
     {
-      name: 'Evaluierung',
+      name: "Evaluierung",
       icon: <ViewListIcon />,
-      location: 'evaluations',
+      location: "evaluations",
       items: [
         {
-          name: 'Auswertung',
-          location: 'evaluations',
+          name: "Auswertung",
+          location: "evaluations",
         },
         {
-          name: 'Fragen',
-          location: 'evaluations/questions',
+          name: "Fragen",
+          location: "evaluations/questions",
         },
       ],
     },
     {
-      name: 'Benutzer',
+      name: "Benutzer",
       icon: <UserIcon />,
-      location: 'users',
+      location: "users",
       items: [
         {
-          name: 'Anfragen',
-          location: 'users/requests',
+          name: "Anfragen",
+          location: "users/requests",
         },
         {
-          name: 'Benutzer',
-          location: 'users',
+          name: "Benutzer",
+          location: "users",
         },
       ],
     },
     {
-      name: 'Allgemein',
+      name: "Allgemein",
       icon: <CogIcon />,
-      location: 'general-settings',
+      location: "general-settings",
       items: [
         {
-          name: 'App',
+          name: "App",
           items: [
             {
-              name: 'Push-Nachrichten',
-              location: 'general-settings/push-messages',
+              name: "Push-Nachrichten",
+              location: "general-settings/push-messages",
             },
             {
-              name: 'Chat Aktivierung',
-              location: 'general-settings/chat-activation',
+              name: "Chat Aktivierung",
+              location: "general-settings/chat-activation",
             },
           ],
         },
         {
-          name: 'Öffentliche Seiten',
+          name: "Öffentliche Seiten",
           items: [
-            { name: 'Startseite' },
-            { name: 'Impressum' },
-            { name: 'Datenschutz' },
+            { name: "Startseite" },
+            { name: "Impressum" },
+            { name: "Datenschutz" },
           ],
         },
         {
-          name: 'Adressen',
-          location: 'general-settings/address',
+          name: "Adressen",
+          location: "general-settings/address",
         },
       ],
     },

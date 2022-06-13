@@ -85,6 +85,7 @@ export type AssignmentEntity = {
   __typename?: 'AssignmentEntity';
   answers?: Maybe<Array<Maybe<AnswerEntity>>>;
   assignmentState?: Maybe<AssignmentStateEntity>;
+  comment?: Maybe<Scalars['String']>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
@@ -95,6 +96,7 @@ export type AssignmentEntity = {
 export type AssignmentEntityInput = {
   answers?: InputMaybe<Array<InputMaybe<AnswerEntityInput>>>;
   assignmentState?: InputMaybe<AssignmentStateEntityInput>;
+  comment?: InputMaybe<Scalars['String']>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
@@ -177,23 +179,25 @@ export type CoordinateInput = {
 
 export type CourseEntity = {
   __typename?: 'CourseEntity';
+  active?: Maybe<Scalars['Boolean']>;
+  activeOrder?: Maybe<Scalars['Int']>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   feedbacks?: Maybe<Array<Maybe<FeedbackEntity>>>;
-  group?: Maybe<CourseEntity>;
+  group?: Maybe<GroupEntity>;
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   name?: Maybe<Scalars['String']>;
-  users?: Maybe<Array<Maybe<UserEntity>>>;
 };
 
 export type CourseEntityInput = {
+  active?: InputMaybe<Scalars['Boolean']>;
+  activeOrder?: InputMaybe<Scalars['Int']>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   feedbacks?: InputMaybe<Array<InputMaybe<FeedbackEntityInput>>>;
-  group?: InputMaybe<CourseEntityInput>;
+  group?: InputMaybe<GroupEntityInput>;
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   name?: InputMaybe<Scalars['String']>;
-  users?: InputMaybe<Array<InputMaybe<UserEntityInput>>>;
 };
 
 export type Detail = {
@@ -321,6 +325,7 @@ export type GroupEntity = {
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   name?: Maybe<Scalars['String']>;
+  users?: Maybe<Array<Maybe<UserEntity>>>;
 };
 
 export type GroupEntityInput = {
@@ -329,6 +334,7 @@ export type GroupEntityInput = {
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   name?: InputMaybe<Scalars['String']>;
+  users?: InputMaybe<Array<InputMaybe<UserEntityInput>>>;
 };
 
 export type Hint = {
@@ -367,6 +373,7 @@ export type ItineraryItem = {
 export type JobAdEntity = {
   __typename?: 'JobAdEntity';
   company?: Maybe<CompanyEntity>;
+  content?: Maybe<Scalars['String']>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   dueDate?: Maybe<Scalars['OffsetDateTime']>;
   id?: Maybe<Scalars['String']>;
@@ -378,6 +385,7 @@ export type JobAdEntity = {
 
 export type JobAdEntityInput = {
   company?: InputMaybe<CompanyEntityInput>;
+  content?: InputMaybe<Scalars['String']>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   dueDate?: InputMaybe<Scalars['OffsetDateTime']>;
   id?: InputMaybe<Scalars['String']>;
@@ -543,8 +551,8 @@ export type Mutation = {
   addAssignments?: Maybe<UserEntity>;
   addEventFavorite?: Maybe<UserEntity>;
   addJobAdFavorite?: Maybe<UserEntity>;
+  addRoles?: Maybe<UserEntity>;
   addUploads?: Maybe<UserEntity>;
-  approve?: Maybe<UserEntity>;
   createToken?: Maybe<TokenDto>;
   deleteAddress?: Maybe<Scalars['Boolean']>;
   deleteAddresss?: Maybe<Scalars['Boolean']>;
@@ -659,6 +667,7 @@ export type Mutation = {
   saveRoles?: Maybe<Array<Maybe<RoleEntity>>>;
   saveSchedule?: Maybe<ScheduleEntity>;
   saveSchedules?: Maybe<Array<Maybe<ScheduleEntity>>>;
+  saveSettings?: Maybe<SettingsEntity>;
   saveSubscription?: Maybe<SubscriptionEntity>;
   saveSubscriptionType?: Maybe<SubscriptionTypeEntity>;
   saveSubscriptionTypes?: Maybe<Array<Maybe<SubscriptionTypeEntity>>>;
@@ -698,14 +707,15 @@ export type MutationAddJobAdFavoriteArgs = {
 
 
 /** Mutation root */
-export type MutationAddUploadsArgs = {
-  uploads?: InputMaybe<Array<InputMaybe<MediaEntityInput>>>;
+export type MutationAddRolesArgs = {
+  roleIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  userId?: InputMaybe<Scalars['String']>;
 };
 
 
 /** Mutation root */
-export type MutationApproveArgs = {
-  userId?: InputMaybe<Scalars['String']>;
+export type MutationAddUploadsArgs = {
+  uploads?: InputMaybe<Array<InputMaybe<MediaEntityInput>>>;
 };
 
 
@@ -1397,6 +1407,12 @@ export type MutationSaveSchedulesArgs = {
 
 
 /** Mutation root */
+export type MutationSaveSettingsArgs = {
+  entity?: InputMaybe<SettingsEntityInput>;
+};
+
+
+/** Mutation root */
 export type MutationSaveSubscriptionArgs = {
   entity?: InputMaybe<SubscriptionEntityInput>;
 };
@@ -1555,24 +1571,22 @@ export type PageEntity = {
   content?: Maybe<Scalars['String']>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   id?: Maybe<Scalars['String']>;
-  image_media?: Maybe<Array<Maybe<MediaEntity>>>;
+  images?: Maybe<Array<Maybe<MediaEntity>>>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   slug?: Maybe<Scalars['String']>;
   titleImage?: Maybe<MediaEntity>;
   video?: Maybe<MediaEntity>;
-  video_media?: Maybe<Array<Maybe<MediaEntity>>>;
 };
 
 export type PageEntityInput = {
   content?: InputMaybe<Scalars['String']>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   id?: InputMaybe<Scalars['String']>;
-  image_media?: InputMaybe<Array<InputMaybe<MediaEntityInput>>>;
+  images?: InputMaybe<Array<InputMaybe<MediaEntityInput>>>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   slug?: InputMaybe<Scalars['String']>;
   titleImage?: InputMaybe<MediaEntityInput>;
   video?: InputMaybe<MediaEntityInput>;
-  video_media?: InputMaybe<Array<InputMaybe<MediaEntityInput>>>;
 };
 
 export type PageableList_AddressEntity = {
@@ -1851,6 +1865,7 @@ export type Query = {
   getRoles?: Maybe<PageableList_RoleEntity>;
   getSchedule?: Maybe<ScheduleEntity>;
   getSchedules?: Maybe<PageableList_ScheduleEntity>;
+  getSettings?: Maybe<SettingsEntity>;
   getSubscription?: Maybe<SubscriptionEntity>;
   getSubscriptionType?: Maybe<SubscriptionTypeEntity>;
   getSubscriptionTypes?: Maybe<PageableList_SubscriptionTypeEntity>;
@@ -2175,6 +2190,12 @@ export type QueryGetSchedulesArgs = {
 
 
 /** Query root */
+export type QueryGetSettingsArgs = {
+  entity?: InputMaybe<SettingsEntityInput>;
+};
+
+
+/** Query root */
 export type QueryGetSubscriptionArgs = {
   entity?: InputMaybe<SubscriptionEntityInput>;
 };
@@ -2285,6 +2306,7 @@ export type QuestionEntity = {
   item?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   questionnaire?: Maybe<QuestionnaireEntity>;
+  sequenceOrder?: Maybe<Scalars['Int']>;
 };
 
 export type QuestionEntityInput = {
@@ -2294,6 +2316,7 @@ export type QuestionEntityInput = {
   item?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   questionnaire?: InputMaybe<QuestionnaireEntityInput>;
+  sequenceOrder?: InputMaybe<Scalars['Int']>;
 };
 
 export type QuestionnaireEntity = {
@@ -2336,6 +2359,7 @@ export type RoleEntity = {
   __typename?: 'RoleEntity';
   created?: Maybe<Scalars['OffsetDateTime']>;
   id?: Maybe<Scalars['String']>;
+  key?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   name?: Maybe<Scalars['String']>;
   users?: Maybe<Array<Maybe<UserEntity>>>;
@@ -2344,6 +2368,7 @@ export type RoleEntity = {
 export type RoleEntityInput = {
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   id?: InputMaybe<Scalars['String']>;
+  key?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   name?: InputMaybe<Scalars['String']>;
   users?: InputMaybe<Array<InputMaybe<UserEntityInput>>>;
@@ -2411,6 +2436,21 @@ export type ScheduleEntityInput = {
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   startDate?: InputMaybe<Scalars['OffsetDateTime']>;
+};
+
+export type SettingsEntity = {
+  __typename?: 'SettingsEntity';
+  chatActive?: Maybe<Scalars['Boolean']>;
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  id?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+};
+
+export type SettingsEntityInput = {
+  chatActive?: InputMaybe<Scalars['Boolean']>;
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
 };
 
 export type StartWaypoint = {
@@ -2521,14 +2561,15 @@ export enum TravelMode {
 
 export type UserEntity = {
   __typename?: 'UserEntity';
+  approved?: Maybe<Scalars['Boolean']>;
   assignments?: Maybe<Array<Maybe<AssignmentEntity>>>;
-  course?: Maybe<CourseEntity>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   email?: Maybe<Scalars['String']>;
   evaluateCourse?: Maybe<Scalars['Boolean']>;
   favoriteEvents?: Maybe<Array<Maybe<EventEntity>>>;
   favoriteJobAds?: Maybe<Array<Maybe<JobAdEntity>>>;
   fullname?: Maybe<Scalars['String']>;
+  group?: Maybe<GroupEntity>;
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   notifications?: Maybe<Array<Maybe<NotificationEntity>>>;
@@ -2542,17 +2583,19 @@ export type UserEntity = {
   uploads?: Maybe<Array<Maybe<MediaEntity>>>;
   userTemplates?: Maybe<Array<Maybe<UserTemplateEntity>>>;
   verification?: Maybe<VerificationEntity>;
+  verified?: Maybe<Scalars['Boolean']>;
 };
 
 export type UserEntityInput = {
+  approved?: InputMaybe<Scalars['Boolean']>;
   assignments?: InputMaybe<Array<InputMaybe<AssignmentEntityInput>>>;
-  course?: InputMaybe<CourseEntityInput>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   email?: InputMaybe<Scalars['String']>;
   evaluateCourse?: InputMaybe<Scalars['Boolean']>;
   favoriteEvents?: InputMaybe<Array<InputMaybe<EventEntityInput>>>;
   favoriteJobAds?: InputMaybe<Array<InputMaybe<JobAdEntityInput>>>;
   fullname?: InputMaybe<Scalars['String']>;
+  group?: InputMaybe<GroupEntityInput>;
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   notifications?: InputMaybe<Array<InputMaybe<NotificationEntityInput>>>;
@@ -2566,6 +2609,7 @@ export type UserEntityInput = {
   uploads?: InputMaybe<Array<InputMaybe<MediaEntityInput>>>;
   userTemplates?: InputMaybe<Array<InputMaybe<UserTemplateEntityInput>>>;
   verification?: InputMaybe<VerificationEntityInput>;
+  verified?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type UserTemplateEntity = {
@@ -2612,15 +2656,13 @@ export type CompanyFieldFragment = { __typename?: 'CompanyEntity', id?: string |
 
 export type CompanyFragment = { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', id?: string | null, houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null, longitude?: number | null, latitude?: number | null } | null };
 
-export type CourseFieldFragment = { __typename?: 'CourseEntity', users?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null };
-
 export type EventFieldFragment = { __typename?: 'EventEntity', id?: string | null, name?: string | null };
 
 export type CategoryFieldFragment = { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null };
 
 export type EventFragment = { __typename?: 'EventEntity', id?: string | null, name?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null };
 
-export type GroupFieldFragment = { __typename?: 'GroupEntity', id?: string | null, name?: string | null, courses?: Array<{ __typename?: 'CourseEntity', users?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null> | null };
+export type GroupFieldFragment = { __typename?: 'GroupEntity', id?: string | null, name?: string | null };
 
 export type JobAdFieldFragment = { __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null };
 
@@ -2641,6 +2683,10 @@ export type QuestionFieldFragment = { __typename?: 'QuestionEntity', id?: string
 export type RoleFieldFragment = { __typename?: 'RoleEntity', id?: string | null, name?: string | null };
 
 export type ScheduleFieldFragment = { __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null };
+
+export type TemplateFieldFragment = { __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null };
+
+export type TemplateTypesFieldFragment = { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null };
 
 export type UserFieldFragment = { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null };
 
@@ -2784,13 +2830,6 @@ export type DeleteUserMutationVariables = Exact<{
 
 export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser?: boolean | null };
 
-export type ApproveUserMutationVariables = Exact<{
-  userId?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type ApproveUserMutation = { __typename?: 'Mutation', approve?: { __typename?: 'UserEntity', id?: string | null } | null };
-
 export type GetCompaniesQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
 }>;
@@ -2834,14 +2873,14 @@ export type GetEventCategoryQuery = { __typename?: 'Query', category?: { __typen
 export type GetGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetGroupsQuery = { __typename?: 'Query', groups?: { __typename?: 'PageableList_GroupEntity', result?: Array<{ __typename?: 'GroupEntity', id?: string | null, name?: string | null, courses?: Array<{ __typename?: 'CourseEntity', users?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null> | null } | null> | null } | null };
+export type GetGroupsQuery = { __typename?: 'Query', groups?: { __typename?: 'PageableList_GroupEntity', result?: Array<{ __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null> | null } | null };
 
 export type GetGroupQueryVariables = Exact<{
   groupId?: InputMaybe<Scalars['String']>;
 }>;
 
 
-export type GetGroupQuery = { __typename?: 'Query', group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null, courses?: Array<{ __typename?: 'CourseEntity', users?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null> | null } | null };
+export type GetGroupQuery = { __typename?: 'Query', group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null };
 
 export type GetJobAdsAdminQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -2927,6 +2966,34 @@ export type GetRolesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetRolesQuery = { __typename?: 'Query', roles?: { __typename?: 'PageableList_RoleEntity', result?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null };
+
+export type GetTemplatesAdminQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetTemplatesAdminQuery = { __typename?: 'Query', getTemplates?: { __typename?: 'PageableList_TemplateEntity', total: any, result?: Array<{ __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null> | null } | null };
+
+export type GetTemplateAdminQueryVariables = Exact<{
+  entity?: InputMaybe<TemplateEntityInput>;
+}>;
+
+
+export type GetTemplateAdminQuery = { __typename?: 'Query', getTemplate?: { __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null };
+
+export type GetTemplateTypesAdminQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetTemplateTypesAdminQuery = { __typename?: 'Query', getTemplateTypes?: { __typename?: 'PageableList_TemplateTypeEntity', total: any, result?: Array<{ __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null> | null } | null };
+
+export type GetTemplateTypeAdminQueryVariables = Exact<{
+  entity?: InputMaybe<TemplateTypeEntityInput>;
+}>;
+
+
+export type GetTemplateTypeAdminQuery = { __typename?: 'Query', getTemplateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null };
 
 export type GetApprovedUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3036,7 +3103,7 @@ export type GetUserQueryVariables = Exact<{
 }>;
 
 
-export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, uploads?: Array<{ __typename?: 'MediaEntity', id?: string | null, name?: string | null } | null> | null, roles?: Array<{ __typename?: 'RoleEntity', name?: string | null, id?: string | null } | null> | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null, course?: { __typename?: 'CourseEntity', id?: string | null, name?: string | null } | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, content?: string | null, name?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', name?: string | null, id?: string | null } | null } | null> | null, verification?: { __typename?: 'VerificationEntity', id?: string | null } | null } | null };
+export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, uploads?: Array<{ __typename?: 'MediaEntity', id?: string | null, name?: string | null } | null> | null, roles?: Array<{ __typename?: 'RoleEntity', name?: string | null, id?: string | null } | null> | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, content?: string | null, name?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', name?: string | null, id?: string | null } | null } | null> | null, verification?: { __typename?: 'VerificationEntity', id?: string | null } | null } | null };
 
 export type GetUserTemplateQueryVariables = Exact<{
   id: Scalars['String'];
@@ -3079,7 +3146,7 @@ export type SaveUserMutationVariables = Exact<{
 }>;
 
 
-export type SaveUserMutation = { __typename?: 'Mutation', saveUser?: { __typename?: 'UserEntity', email?: string | null, fullname?: string | null, id?: string | null, phone?: string | null, assignments?: Array<{ __typename?: 'AssignmentEntity', id?: string | null, questionnaire?: { __typename?: 'QuestionnaireEntity', name?: string | null, id?: string | null, questions?: Array<{ __typename?: 'QuestionEntity', id?: string | null, item?: string | null, answers?: Array<{ __typename?: 'AnswerEntity', rating?: number | null, id?: string | null } | null> | null } | null> | null } | null } | null> | null, course?: { __typename?: 'CourseEntity', id?: string | null, name?: string | null } | null, favoriteEvents?: Array<{ __typename?: 'EventEntity', id?: string | null, name?: string | null, titleImage?: { __typename?: 'MediaEntity', base64?: string | null, id?: string | null, modified?: any | null, name?: string | null } | null, images?: Array<{ __typename?: 'MediaEntity', base64?: string | null, id?: string | null, mimeType?: string | null, name?: string | null } | null> | null, nextSchedule?: { __typename?: 'ScheduleEntity', endDate?: any | null, id?: string | null, startDate?: any | null } | null } | null> | null, favoriteJobAds?: Array<{ __typename?: 'JobAdEntity', startDate?: any | null, dueDate?: any | null, title?: string | null, type?: { __typename?: 'JobTypeEntity', color?: string | null } | null, company?: { __typename?: 'CompanyEntity', mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, id?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, street?: string | null, postalCode?: string | null } | null } | null } | null> | null, profilePicture?: { __typename?: 'MediaEntity', base64?: string | null, id?: string | null, mimeType?: string | null, name?: string | null } | null, uploads?: Array<{ __typename?: 'MediaEntity', base64?: string | null, id?: string | null, mimeType?: string | null, name?: string | null } | null> | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', name?: string | null, id?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null } | null> | null, verification?: { __typename?: 'VerificationEntity', id?: string | null, key?: string | null } | null } | null };
+export type SaveUserMutation = { __typename?: 'Mutation', saveUser?: { __typename?: 'UserEntity', email?: string | null, fullname?: string | null, id?: string | null, phone?: string | null, assignments?: Array<{ __typename?: 'AssignmentEntity', id?: string | null, questionnaire?: { __typename?: 'QuestionnaireEntity', name?: string | null, id?: string | null, questions?: Array<{ __typename?: 'QuestionEntity', id?: string | null, item?: string | null, answers?: Array<{ __typename?: 'AnswerEntity', rating?: number | null, id?: string | null } | null> | null } | null> | null } | null } | null> | null, favoriteEvents?: Array<{ __typename?: 'EventEntity', id?: string | null, name?: string | null, titleImage?: { __typename?: 'MediaEntity', base64?: string | null, id?: string | null, modified?: any | null, name?: string | null } | null, images?: Array<{ __typename?: 'MediaEntity', base64?: string | null, id?: string | null, mimeType?: string | null, name?: string | null } | null> | null, nextSchedule?: { __typename?: 'ScheduleEntity', endDate?: any | null, id?: string | null, startDate?: any | null } | null } | null> | null, favoriteJobAds?: Array<{ __typename?: 'JobAdEntity', startDate?: any | null, dueDate?: any | null, title?: string | null, type?: { __typename?: 'JobTypeEntity', color?: string | null } | null, company?: { __typename?: 'CompanyEntity', mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, id?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, street?: string | null, postalCode?: string | null } | null } | null } | null> | null, profilePicture?: { __typename?: 'MediaEntity', base64?: string | null, id?: string | null, mimeType?: string | null, name?: string | null } | null, uploads?: Array<{ __typename?: 'MediaEntity', base64?: string | null, id?: string | null, mimeType?: string | null, name?: string | null } | null> | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', name?: string | null, id?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null } | null> | null, verification?: { __typename?: 'VerificationEntity', id?: string | null, key?: string | null } | null } | null };
 
 export type SaveUserTemplateMutationVariables = Exact<{
   name?: InputMaybe<Scalars['String']>;
@@ -3174,40 +3241,12 @@ export const EventFragmentDoc = gql`
     ${EventFieldFragmentDoc}
 ${CategoryFieldFragmentDoc}
 ${ScheduleFieldFragmentDoc}`;
-export const RoleFieldFragmentDoc = gql`
-    fragment RoleField on RoleEntity {
-  id
-  name
-}
-    `;
-export const UserFieldFragmentDoc = gql`
-    fragment UserField on UserEntity {
-  id
-  fullname
-  roles {
-    ...RoleField
-  }
-  email
-  phone
-  created
-}
-    ${RoleFieldFragmentDoc}`;
-export const CourseFieldFragmentDoc = gql`
-    fragment CourseField on CourseEntity {
-  users {
-    ...UserField
-  }
-}
-    ${UserFieldFragmentDoc}`;
 export const GroupFieldFragmentDoc = gql`
     fragment GroupField on GroupEntity {
   id
   name
-  courses {
-    ...CourseField
-  }
 }
-    ${CourseFieldFragmentDoc}`;
+    `;
 export const JobAdFieldFragmentDoc = gql`
     fragment JobAdField on JobAdEntity {
   id
@@ -3273,6 +3312,37 @@ export const QuestionFieldFragmentDoc = gql`
   item
 }
     `;
+export const TemplateFieldFragmentDoc = gql`
+    fragment TemplateField on TemplateEntity {
+  id
+  name
+  content
+}
+    `;
+export const TemplateTypesFieldFragmentDoc = gql`
+    fragment TemplateTypesField on TemplateTypeEntity {
+  id
+  name
+}
+    `;
+export const RoleFieldFragmentDoc = gql`
+    fragment RoleField on RoleEntity {
+  id
+  name
+}
+    `;
+export const UserFieldFragmentDoc = gql`
+    fragment UserField on UserEntity {
+  id
+  fullname
+  roles {
+    ...RoleField
+  }
+  email
+  phone
+  created
+}
+    ${RoleFieldFragmentDoc}`;
 export const SaveCompanyDocument = gql`
     mutation SaveCompany($entity: CompanyEntityInput) {
   saveCompany(entity: $entity) {
@@ -3913,39 +3983,6 @@ export function useDeleteUserMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeleteUserMutationHookResult = ReturnType<typeof useDeleteUserMutation>;
 export type DeleteUserMutationResult = Apollo.MutationResult<DeleteUserMutation>;
 export type DeleteUserMutationOptions = Apollo.BaseMutationOptions<DeleteUserMutation, DeleteUserMutationVariables>;
-export const ApproveUserDocument = gql`
-    mutation ApproveUser($userId: String) {
-  approve(userId: $userId) {
-    id
-  }
-}
-    `;
-export type ApproveUserMutationFn = Apollo.MutationFunction<ApproveUserMutation, ApproveUserMutationVariables>;
-
-/**
- * __useApproveUserMutation__
- *
- * To run a mutation, you first call `useApproveUserMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useApproveUserMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [approveUserMutation, { data, loading, error }] = useApproveUserMutation({
- *   variables: {
- *      userId: // value for 'userId'
- *   },
- * });
- */
-export function useApproveUserMutation(baseOptions?: Apollo.MutationHookOptions<ApproveUserMutation, ApproveUserMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ApproveUserMutation, ApproveUserMutationVariables>(ApproveUserDocument, options);
-      }
-export type ApproveUserMutationHookResult = ReturnType<typeof useApproveUserMutation>;
-export type ApproveUserMutationResult = Apollo.MutationResult<ApproveUserMutation>;
-export type ApproveUserMutationOptions = Apollo.BaseMutationOptions<ApproveUserMutation, ApproveUserMutationVariables>;
 export const GetCompaniesDocument = gql`
     query GetCompanies($params: FilterSortPaginateInput) {
   getCompanies(params: $params) {
@@ -4701,6 +4738,152 @@ export function useGetRolesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetRolesQueryHookResult = ReturnType<typeof useGetRolesQuery>;
 export type GetRolesLazyQueryHookResult = ReturnType<typeof useGetRolesLazyQuery>;
 export type GetRolesQueryResult = Apollo.QueryResult<GetRolesQuery, GetRolesQueryVariables>;
+export const GetTemplatesAdminDocument = gql`
+    query GetTemplatesAdmin($params: FilterSortPaginateInput) {
+  getTemplates(params: $params) {
+    total
+    result {
+      ...TemplateField
+    }
+  }
+}
+    ${TemplateFieldFragmentDoc}`;
+
+/**
+ * __useGetTemplatesAdminQuery__
+ *
+ * To run a query within a React component, call `useGetTemplatesAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTemplatesAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTemplatesAdminQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetTemplatesAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetTemplatesAdminQuery, GetTemplatesAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTemplatesAdminQuery, GetTemplatesAdminQueryVariables>(GetTemplatesAdminDocument, options);
+      }
+export function useGetTemplatesAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTemplatesAdminQuery, GetTemplatesAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTemplatesAdminQuery, GetTemplatesAdminQueryVariables>(GetTemplatesAdminDocument, options);
+        }
+export type GetTemplatesAdminQueryHookResult = ReturnType<typeof useGetTemplatesAdminQuery>;
+export type GetTemplatesAdminLazyQueryHookResult = ReturnType<typeof useGetTemplatesAdminLazyQuery>;
+export type GetTemplatesAdminQueryResult = Apollo.QueryResult<GetTemplatesAdminQuery, GetTemplatesAdminQueryVariables>;
+export const GetTemplateAdminDocument = gql`
+    query GetTemplateAdmin($entity: TemplateEntityInput) {
+  getTemplate(entity: $entity) {
+    ...TemplateField
+  }
+}
+    ${TemplateFieldFragmentDoc}`;
+
+/**
+ * __useGetTemplateAdminQuery__
+ *
+ * To run a query within a React component, call `useGetTemplateAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTemplateAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTemplateAdminQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetTemplateAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetTemplateAdminQuery, GetTemplateAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTemplateAdminQuery, GetTemplateAdminQueryVariables>(GetTemplateAdminDocument, options);
+      }
+export function useGetTemplateAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTemplateAdminQuery, GetTemplateAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTemplateAdminQuery, GetTemplateAdminQueryVariables>(GetTemplateAdminDocument, options);
+        }
+export type GetTemplateAdminQueryHookResult = ReturnType<typeof useGetTemplateAdminQuery>;
+export type GetTemplateAdminLazyQueryHookResult = ReturnType<typeof useGetTemplateAdminLazyQuery>;
+export type GetTemplateAdminQueryResult = Apollo.QueryResult<GetTemplateAdminQuery, GetTemplateAdminQueryVariables>;
+export const GetTemplateTypesAdminDocument = gql`
+    query GetTemplateTypesAdmin($params: FilterSortPaginateInput) {
+  getTemplateTypes(params: $params) {
+    total
+    result {
+      ...TemplateTypesField
+    }
+  }
+}
+    ${TemplateTypesFieldFragmentDoc}`;
+
+/**
+ * __useGetTemplateTypesAdminQuery__
+ *
+ * To run a query within a React component, call `useGetTemplateTypesAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTemplateTypesAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTemplateTypesAdminQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetTemplateTypesAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetTemplateTypesAdminQuery, GetTemplateTypesAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTemplateTypesAdminQuery, GetTemplateTypesAdminQueryVariables>(GetTemplateTypesAdminDocument, options);
+      }
+export function useGetTemplateTypesAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTemplateTypesAdminQuery, GetTemplateTypesAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTemplateTypesAdminQuery, GetTemplateTypesAdminQueryVariables>(GetTemplateTypesAdminDocument, options);
+        }
+export type GetTemplateTypesAdminQueryHookResult = ReturnType<typeof useGetTemplateTypesAdminQuery>;
+export type GetTemplateTypesAdminLazyQueryHookResult = ReturnType<typeof useGetTemplateTypesAdminLazyQuery>;
+export type GetTemplateTypesAdminQueryResult = Apollo.QueryResult<GetTemplateTypesAdminQuery, GetTemplateTypesAdminQueryVariables>;
+export const GetTemplateTypeAdminDocument = gql`
+    query GetTemplateTypeAdmin($entity: TemplateTypeEntityInput) {
+  getTemplateType(entity: $entity) {
+    ...TemplateTypesField
+  }
+}
+    ${TemplateTypesFieldFragmentDoc}`;
+
+/**
+ * __useGetTemplateTypeAdminQuery__
+ *
+ * To run a query within a React component, call `useGetTemplateTypeAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTemplateTypeAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTemplateTypeAdminQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetTemplateTypeAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetTemplateTypeAdminQuery, GetTemplateTypeAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTemplateTypeAdminQuery, GetTemplateTypeAdminQueryVariables>(GetTemplateTypeAdminDocument, options);
+      }
+export function useGetTemplateTypeAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTemplateTypeAdminQuery, GetTemplateTypeAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTemplateTypeAdminQuery, GetTemplateTypeAdminQueryVariables>(GetTemplateTypeAdminDocument, options);
+        }
+export type GetTemplateTypeAdminQueryHookResult = ReturnType<typeof useGetTemplateTypeAdminQuery>;
+export type GetTemplateTypeAdminLazyQueryHookResult = ReturnType<typeof useGetTemplateTypeAdminLazyQuery>;
+export type GetTemplateTypeAdminQueryResult = Apollo.QueryResult<GetTemplateTypeAdminQuery, GetTemplateTypeAdminQueryVariables>;
 export const GetApprovedUsersDocument = gql`
     query GetApprovedUsers {
   approvedUsers: getUsers(
@@ -5539,10 +5722,6 @@ export const GetUserDocument = gql`
     id
     fullname
     email
-    course {
-      id
-      name
-    }
     userTemplates {
       id
       content
@@ -5780,10 +5959,6 @@ export const SaveUserDocument = gql`
         id
       }
       id
-    }
-    course {
-      id
-      name
     }
     email
     favoriteEvents {

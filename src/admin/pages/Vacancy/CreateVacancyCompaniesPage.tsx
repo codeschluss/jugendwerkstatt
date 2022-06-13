@@ -14,7 +14,6 @@ import {
   VacancyCompanyForm,
 } from "../../components/organisms";
 import { VacancyCompaiesFormSchema } from "../../validations";
-import { gqlVar } from "../../utils";
 
 const CreateVacancyCompaniesPage = (): ReactElement => {
   const { id } = useParams();

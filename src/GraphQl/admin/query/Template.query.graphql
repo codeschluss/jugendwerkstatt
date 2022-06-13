@@ -1,0 +1,29 @@
+query GetTemplatesAdmin($params: FilterSortPaginateInput) {
+  getTemplates(params: $params) {
+    total
+    result {
+      ...TemplateField
+    }
+  }
+}
+
+query GetTemplateAdmin($entity: TemplateEntityInput) {
+  getTemplate(entity: $entity) {
+    ...TemplateField
+  }
+}
+
+query GetTemplateTypesAdmin($params: FilterSortPaginateInput) {
+  getTemplateTypes(params: $params) {
+    total
+    result {
+      ...TemplateTypesField
+    }
+  }
+}
+
+query GetTemplateTypeAdmin($entity: TemplateTypeEntityInput) {
+  getTemplateType(entity: $entity) {
+    ...TemplateTypesField
+  }
+}

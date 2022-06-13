@@ -14,10 +14,6 @@ query GetUser($entity: UserEntityInput) {
     id
     fullname
     email
-    course {
-      id
-      name
-    }
     userTemplates {
       id
       content

@@ -1,0 +1,10 @@
+fragment TemplateField on TemplateEntity {
+  id
+  name
+  content
+}
+
+fragment TemplateTypesField on TemplateTypeEntity {
+  id
+  name
+}

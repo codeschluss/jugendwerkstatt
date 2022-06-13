@@ -7,9 +7,3 @@ mutation SaveUserAdmin($user: UserEntityInput) {
 mutation DeleteUser($userId: String) {
   deleteUser(id: $userId)
 }
-
-mutation ApproveUser($userId: String) {
-  approve(userId: $userId) {
-    id
-  }
-}

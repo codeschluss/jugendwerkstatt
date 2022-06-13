@@ -11,6 +11,7 @@ export const VacancyFormSchema = Joi.object({
     startDate: Joi.string().isoDate().required().label("Bewerbungsfrist"),
     dueDate: Joi.string().isoDate().required().label("Berufsstart"),
   }),
+  description: Joi.string().required().label("Beschreibung"),
 });
 
 export const VacancyCompaiesFormSchema = Joi.object({
