@@ -12,7 +12,7 @@ import { API_URL } from "./config/app";
 import { AuthProvider } from "./contexts/AuthContext";
 import { SideBarProvider } from "./contexts/SideBarContext";
 import TokenStorageContext from "./contexts/TokenStorageContext";
-import { Router } from "./routes/Router";
+import Router from "./routes/Router";
 
 function App() {
   const { accessToken } = useContext(TokenStorageContext);
@@ -39,9 +39,7 @@ function App() {
     <ApolloProvider client={client}>
       <AuthProvider>
         <SideBarProvider>
-          <BrowserRouter basename="/">
-            <Router />
-          </BrowserRouter>
+          <Router />
         </SideBarProvider>
       </AuthProvider>
     </ApolloProvider>

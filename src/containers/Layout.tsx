@@ -1,17 +1,22 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Modal from "../client/components/modals/courseReviewPopUp";
 import AuthContext from "../contexts/AuthContext";
 import SideBarContext from "../contexts/SideBarContext";
+import useAuth from "../hooks/useAuth";
 import Header from "../shared/components/header";
 
 const Layout: React.FC = ({ children }) => {
   const { sideBar } = useContext(SideBarContext);
   const { isLogedIn } = useContext(AuthContext);
+  const { init } = useAuth();
+  useEffect(() => {
+    init();
+  }, []);
 
   return (
     <main
-      className={`flex flex-col  min-h-screen transition-all duration-500 ${
+      className={`flex flex-col  min-h-screen transition-all duration-500 md:transition-none ${
         sideBar && isLogedIn ? "md:pl-60" : "md:pl-20"
       }`}
     >
@@ -19,9 +24,7 @@ const Layout: React.FC = ({ children }) => {
 
       <div className="md:p-12">
         <Modal visible={false} course={"Holz 1"}></Modal>
-        <div>
-          <Outlet />
-        </div>
+        <div>{children}</div>
       </div>
       {/* <Footer /> */}
     </main>

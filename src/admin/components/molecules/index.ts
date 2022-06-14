@@ -1,4 +1,4 @@
-export * from "./Accordion/Accordion";
+export * from "./accordion/Accordion";
 export * from "./CustomTable/CustomTable";
 export * from "./Form/InputField/InputField";
 export * from "./Form/PasswordField/PasswordField";
@@ -7,5 +7,5 @@ export * from "./DatePicker/DatePicker";
 export * from "./DatePicker/TimePicker";
 
 // types
-export * from "./Accordion/Accordion.props";
+export * from "./accordion/Accordion.props";
 export * from "./CustomTable/CustomTable.types";

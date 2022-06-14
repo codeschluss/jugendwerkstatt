@@ -2,7 +2,7 @@ import { HeartIcon, ShareIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
 import { AddressEntity, EventEntity } from "../../../GraphQl/graphql";
 import { API_URL } from "../../../config/app";
-
+import { ShareButton } from "../ui/ShareButton";
 export interface SlideCardProps {
   className?: string;
   imgUrl?: any;
@@ -68,7 +68,7 @@ const SlideCard: React.FC<SlideCardProps> = ({
         >
           <small className="font-bold">{eventName}</small>
           <div className="flex items-center">
-            <ShareIcon className="w-4 h-4 mr-2" />
+            <ShareButton />
             <HeartIcon className="w-4 h-4" />
           </div>
         </div>
