@@ -3,7 +3,7 @@ query GetEventCategories($params: FilterSortPaginateInput) {
     result {
       name
       id
-      icon
+      # icon
       events {
         titleImage {
           name

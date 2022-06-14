@@ -1,9 +1,9 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import {
   GeneralAddressForm,
   PublicPagesForm,
-} from "../admin/components/organisms";
-import { AdminDashboardLayout } from "../admin/components/templates";
+} from '../admin/components/organisms';
+import { AdminDashboardLayout } from '../admin/components/templates';
 import {
   AdminProfilePage,
   AdminProfilePasswordPage,
@@ -32,17 +32,18 @@ import {
   GroupListPage,
   CreateGroupPage,
   EditGroupPage,
-  GroupParticipantsListPage,
   PushNotificationsPage,
   ChatActivationPage,
   GeneralAddressPage,
   PublicPagesPage,
   EvaluationsPage,
   EvaluationsQuestionsPage,
-  GroupCourseRatingsListPage,
   FormsCategoriesListPage,
   CreateFormsCategories,
-} from "../admin/pages";
+  GroupCoursesPage,
+  GroupMembersPage,
+  // GroupPage,
+} from '../admin/pages';
 
 export const AdminRoutes = () => (
   <BrowserRouter>
@@ -148,15 +149,9 @@ export const AdminRoutes = () => (
 
         <Route path="groups" element={<GroupListPage />} />
         <Route path="groups/new" element={<CreateGroupPage />} />
-        <Route path="groups/:id" element={<EditGroupPage />} />
-        <Route
-          path="groups/:id/participants"
-          element={<GroupParticipantsListPage />}
-        />
-        <Route
-          path="groups/:id/course-rating"
-          element={<GroupCourseRatingsListPage />}
-        />
+        <Route path="groups/:id/members" element={<GroupMembersPage />} />
+        <Route path="groups/:id/courses" element={<GroupCoursesPage />} />
+        <Route path="groups/:id/edit" element={<EditGroupPage />} />
 
         {/* General Settings */}
         <Route path="general-settings">

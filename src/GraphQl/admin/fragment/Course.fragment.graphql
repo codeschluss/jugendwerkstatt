@@ -1,0 +1,5 @@
+fragment CourseField on CourseEntity {
+  id
+  name
+  active
+}
