@@ -11,7 +11,7 @@ export const EventHeader: React.FC<EventHeaderProps> = ({ eventName }) => {
       <div className="flex justify-between text-2xl">
         <h1>{eventName}</h1>
         <div className="flex">
-          <ShareButton />
+          <ShareButton url="#" />
           <FavoriteButton />
         </div>
       </div>

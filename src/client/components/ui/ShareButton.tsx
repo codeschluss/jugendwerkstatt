@@ -12,8 +12,9 @@ import {
   TwitterIcon,
   LinkedinIcon,
 } from "react-share";
+import { BASE_URL } from "../../../config/app";
 
-export const ShareButton: React.FC = () => {
+export const ShareButton: React.FC<{ url: any }> = ({ url }) => {
   return (
     <DropDown
       position="right"
@@ -24,7 +25,10 @@ export const ShareButton: React.FC = () => {
       <div>
         <ul>
           <li>
-            <FacebookShareButton url="#" className="flex  items-center">
+            <FacebookShareButton
+              url={`${BASE_URL}`}
+              className="flex  items-center"
+            >
               <FacebookIcon className="w-10 mr-1" /> <p>Facebook</p>
             </FacebookShareButton>
           </li>

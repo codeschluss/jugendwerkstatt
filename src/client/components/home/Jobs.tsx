@@ -1,4 +1,8 @@
-import { JobAdEntity, useGetJobAdsQuery } from "../../../GraphQl/graphql";
+import {
+  JobAdEntity,
+  useAddJobAdFavoriteMutation,
+  useGetJobAdsQuery,
+} from "../../../GraphQl/graphql";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
 
@@ -16,7 +20,7 @@ const Events: React.FC<EventsProps> = () => {
   const fetchedData: [JobAdEntity] = result.data?.getJobAds?.result as [
     JobAdEntity
   ];
-
+  const [jobFavorites] = useAddJobAdFavoriteMutation();
   return (
     <Slider title="Jobs" link={"/jobs"}>
       {fetchedData?.map((el: any) => {
@@ -30,6 +34,13 @@ const Events: React.FC<EventsProps> = () => {
             date={el?.startDate}
             // imgUrl={el?.titleImage?.id}
             color={el?.type?.color}
+            setFavorite={() => {
+              jobFavorites({
+                variables: {
+                  jobAdId: el.id,
+                },
+              });
+            }}
           />
         );
       })}

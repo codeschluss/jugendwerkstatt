@@ -11,6 +11,7 @@ import Input from "./Input";
 const ChangePassword = () => {
   const user = useGetMeBasicQuery();
   const navigate = useNavigate();
+  const regex = /[^A-Za-z0-9_.]/g;
   const {
     value: passwordOne,
     validity: passwordOneValidity,
@@ -18,7 +19,7 @@ const ChangePassword = () => {
     valueChangeHandler: passwordOneChangeHandler,
     inputBlurHandler: passwordOneBlurHandler,
     resetValue: resetPasswordOneInput,
-  } = useInput((value: string) => value !== "");
+  } = useInput((value: any) => value.match(regex) && value.trim().length > 6);
   const {
     value: passwordTwo,
     validity: passwordTwoValidity,
@@ -59,12 +60,14 @@ const ChangePassword = () => {
               title="Neues Passwort"
               onInput={passwordOneChangeHandler}
               onBlur={passwordOneBlurHandler}
+              error={passwordOneError ? "Password nicht stark Genug" : false}
             />
             <Input
               value={passwordTwo}
               title="Passwort wiederholen"
               onInput={passwordTwoChangeHandler}
               onBlur={passwordTwoBlurHandler}
+              error={passwordTwoError ? "Password must match" : false}
             />
           </div>
           <span className="w-4/6 md:w-2/5 md:my-5">

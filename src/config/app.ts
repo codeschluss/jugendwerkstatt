@@ -1,11 +1,13 @@
 export const DEFAULT_DATE_FORMAT = "DD.MM.YYYY";
 
 export let API_URL: string;
+export let BASE_URL: string = "";
 switch (process.env.NODE_ENV) {
   case "production":
-    API_URL = "https://www.alphaev.app/api/";
+    BASE_URL = "https://www.alphaev.app/";
     break;
   case "development":
   default:
-    API_URL = "http://localhost:8061/api/";
+    BASE_URL = "http://localhost:8061/";
 }
+API_URL = BASE_URL + "api/";

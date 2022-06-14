@@ -2650,6 +2650,20 @@ export type VerificationEntityInput = {
   user?: InputMaybe<UserEntityInput>;
 };
 
+export type AddEventFavoriteMutationVariables = Exact<{
+  jobAdId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type AddEventFavoriteMutation = { __typename?: 'Mutation', addEventFavorite?: { __typename?: 'UserEntity', id?: string | null } | null };
+
+export type AddJobAdFavoriteMutationVariables = Exact<{
+  jobAdId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type AddJobAdFavoriteMutation = { __typename?: 'Mutation', addJobAdFavorite?: { __typename?: 'UserEntity', id?: string | null } | null };
+
 export type AddressFieldFragment = { __typename?: 'AddressEntity', id?: string | null, houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null, longitude?: number | null, latitude?: number | null };
 
 export type CompanyFieldFragment = { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null };
@@ -3456,6 +3470,72 @@ export const UserFieldFragmentDoc = gql`
   created
 }
     ${RoleFieldFragmentDoc}`;
+export const AddEventFavoriteDocument = gql`
+    mutation AddEventFavorite($jobAdId: String) {
+  addEventFavorite(jobAdId: $jobAdId) {
+    id
+  }
+}
+    `;
+export type AddEventFavoriteMutationFn = Apollo.MutationFunction<AddEventFavoriteMutation, AddEventFavoriteMutationVariables>;
+
+/**
+ * __useAddEventFavoriteMutation__
+ *
+ * To run a mutation, you first call `useAddEventFavoriteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddEventFavoriteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addEventFavoriteMutation, { data, loading, error }] = useAddEventFavoriteMutation({
+ *   variables: {
+ *      jobAdId: // value for 'jobAdId'
+ *   },
+ * });
+ */
+export function useAddEventFavoriteMutation(baseOptions?: Apollo.MutationHookOptions<AddEventFavoriteMutation, AddEventFavoriteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddEventFavoriteMutation, AddEventFavoriteMutationVariables>(AddEventFavoriteDocument, options);
+      }
+export type AddEventFavoriteMutationHookResult = ReturnType<typeof useAddEventFavoriteMutation>;
+export type AddEventFavoriteMutationResult = Apollo.MutationResult<AddEventFavoriteMutation>;
+export type AddEventFavoriteMutationOptions = Apollo.BaseMutationOptions<AddEventFavoriteMutation, AddEventFavoriteMutationVariables>;
+export const AddJobAdFavoriteDocument = gql`
+    mutation AddJobAdFavorite($jobAdId: String) {
+  addJobAdFavorite(jobAdId: $jobAdId) {
+    id
+  }
+}
+    `;
+export type AddJobAdFavoriteMutationFn = Apollo.MutationFunction<AddJobAdFavoriteMutation, AddJobAdFavoriteMutationVariables>;
+
+/**
+ * __useAddJobAdFavoriteMutation__
+ *
+ * To run a mutation, you first call `useAddJobAdFavoriteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddJobAdFavoriteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addJobAdFavoriteMutation, { data, loading, error }] = useAddJobAdFavoriteMutation({
+ *   variables: {
+ *      jobAdId: // value for 'jobAdId'
+ *   },
+ * });
+ */
+export function useAddJobAdFavoriteMutation(baseOptions?: Apollo.MutationHookOptions<AddJobAdFavoriteMutation, AddJobAdFavoriteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddJobAdFavoriteMutation, AddJobAdFavoriteMutationVariables>(AddJobAdFavoriteDocument, options);
+      }
+export type AddJobAdFavoriteMutationHookResult = ReturnType<typeof useAddJobAdFavoriteMutation>;
+export type AddJobAdFavoriteMutationResult = Apollo.MutationResult<AddJobAdFavoriteMutation>;
+export type AddJobAdFavoriteMutationOptions = Apollo.BaseMutationOptions<AddJobAdFavoriteMutation, AddJobAdFavoriteMutationVariables>;
 export const SaveCompanyDocument = gql`
     mutation SaveCompany($entity: CompanyEntityInput) {
   saveCompany(entity: $entity) {

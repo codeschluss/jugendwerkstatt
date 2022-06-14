@@ -1,6 +1,11 @@
 import { HeartIcon, ShareIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
-import { AddressEntity, EventEntity } from "../../../GraphQl/graphql";
+import {
+  AddressEntity,
+  EventEntity,
+  useAddEventFavoriteMutation,
+  useAddJobAdFavoriteMutation,
+} from "../../../GraphQl/graphql";
 import { API_URL } from "../../../config/app";
 import { ShareButton } from "../ui/ShareButton";
 export interface SlideCardProps {
@@ -13,6 +18,7 @@ export interface SlideCardProps {
   width?: string;
   color?: string | undefined | null;
   gradient?: boolean;
+  setFavorite?: () => void;
 }
 
 const SlideCard: React.FC<SlideCardProps> = ({
@@ -25,6 +31,7 @@ const SlideCard: React.FC<SlideCardProps> = ({
   route,
   color,
   width = "w-9/12 md:w-full",
+  setFavorite,
 }) => {
   const theDate = new Date(date);
   const year = theDate.getFullYear();
@@ -68,8 +75,8 @@ const SlideCard: React.FC<SlideCardProps> = ({
         >
           <small className="font-bold">{eventName}</small>
           <div className="flex items-center">
-            <ShareButton />
-            <HeartIcon className="w-4 h-4" />
+            <ShareButton url="#" />
+            <HeartIcon className="w-4 h-4" onClick={setFavorite} />
           </div>
         </div>
         <div

@@ -67,7 +67,7 @@ const Templates: React.FC = () => {
           );
         })}
       </ul>
-      <h5 className="text-xl font-bold pt-4">Eigene {templateType.name}</h5>
+      <h5 className="text-xl font-bold pt-4">Eigene Vorlagen "</h5>
       <ul className="list-none text-base font-normal pl-4 text-gray-600">
         {fetchedUserTemplates?.map((template, index) => {
           return (
