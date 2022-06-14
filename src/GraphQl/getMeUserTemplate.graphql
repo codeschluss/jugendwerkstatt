@@ -1,0 +1,14 @@
+query GetMeUserTemplates {
+  me {
+    id
+    userTemplates {
+      id
+      content
+      name
+      templateType {
+        name
+        id
+      }
+    }
+  }
+}

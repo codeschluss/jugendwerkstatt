@@ -1,21 +1,17 @@
-import React, { useContext } from "react";
+import { ChevronRightIcon } from "@heroicons/react/outline";
 import UploadIcon from "@heroicons/react/solid/UploadIcon";
-import I from "../../../shared/components/ui/IconWrapper";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
   MediaEntity,
-  TemplateTypeEntity,
-  useGetMeBasicQuery,
-  useGetMeUploadsQuery,
-  useGetTemplateTypesQuery,
-  useGetUserQuery,
+  TemplateTypeEntity, useGetMeUploadsQuery,
+  useGetTemplateTypesQuery
 } from "../../../GraphQl/graphql";
-import AuthContext from "../../../contexts/AuthContext";
-import detectDevice from "../../../shared/utils/isTouch";
-import { ChevronRightIcon } from "@heroicons/react/outline";
+import Action from "../../../shared/components/table/Action";
 import Row from "../../../shared/components/table/Row";
 import TableName from "../../../shared/components/table/TableName";
-import Action from "../../../shared/components/table/Action";
+import I from "../../../shared/components/ui/IconWrapper";
+import detectDevice from "../../../shared/utils/isTouch";
 
 const Forms: React.FC = () => {
   const isTouch = detectDevice();

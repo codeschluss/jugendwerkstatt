@@ -181,6 +181,7 @@ export type CourseEntity = {
   __typename?: 'CourseEntity';
   active?: Maybe<Scalars['Boolean']>;
   activeOrder?: Maybe<Scalars['Int']>;
+  averageRating?: Maybe<Scalars['Float']>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   feedbacks?: Maybe<Array<Maybe<FeedbackEntity>>>;
   group?: Maybe<GroupEntity>;
@@ -3168,6 +3169,11 @@ export type GetMeUploadsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetMeUploadsQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, uploads?: Array<{ __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null } | null> | null } | null };
 
+export type GetMeUserTemplatesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMeUserTemplatesQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, content?: string | null, name?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', name?: string | null, id?: string | null } | null } | null> | null } | null };
+
 export type GetTemplateQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -3188,13 +3194,6 @@ export type GetTemplatesQueryVariables = Exact<{
 
 
 export type GetTemplatesQuery = { __typename?: 'Query', getTemplates?: { __typename?: 'PageableList_TemplateEntity', result?: Array<{ __typename?: 'TemplateEntity', id?: string | null, name?: string | null } | null> | null } | null };
-
-export type GetUserQueryVariables = Exact<{
-  entity?: InputMaybe<UserEntityInput>;
-}>;
-
-
-export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, uploads?: Array<{ __typename?: 'MediaEntity', id?: string | null, name?: string | null } | null> | null, roles?: Array<{ __typename?: 'RoleEntity', name?: string | null, id?: string | null } | null> | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, content?: string | null, name?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', name?: string | null, id?: string | null } | null } | null> | null, verification?: { __typename?: 'VerificationEntity', id?: string | null } | null } | null };
 
 export type GetUserTemplateQueryVariables = Exact<{
   id: Scalars['String'];
@@ -6115,6 +6114,49 @@ export function useGetMeUploadsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetMeUploadsQueryHookResult = ReturnType<typeof useGetMeUploadsQuery>;
 export type GetMeUploadsLazyQueryHookResult = ReturnType<typeof useGetMeUploadsLazyQuery>;
 export type GetMeUploadsQueryResult = Apollo.QueryResult<GetMeUploadsQuery, GetMeUploadsQueryVariables>;
+export const GetMeUserTemplatesDocument = gql`
+    query GetMeUserTemplates {
+  me {
+    id
+    userTemplates {
+      id
+      content
+      name
+      templateType {
+        name
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMeUserTemplatesQuery__
+ *
+ * To run a query within a React component, call `useGetMeUserTemplatesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMeUserTemplatesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMeUserTemplatesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMeUserTemplatesQuery(baseOptions?: Apollo.QueryHookOptions<GetMeUserTemplatesQuery, GetMeUserTemplatesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMeUserTemplatesQuery, GetMeUserTemplatesQueryVariables>(GetMeUserTemplatesDocument, options);
+      }
+export function useGetMeUserTemplatesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMeUserTemplatesQuery, GetMeUserTemplatesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMeUserTemplatesQuery, GetMeUserTemplatesQueryVariables>(GetMeUserTemplatesDocument, options);
+        }
+export type GetMeUserTemplatesQueryHookResult = ReturnType<typeof useGetMeUserTemplatesQuery>;
+export type GetMeUserTemplatesLazyQueryHookResult = ReturnType<typeof useGetMeUserTemplatesLazyQuery>;
+export type GetMeUserTemplatesQueryResult = Apollo.QueryResult<GetMeUserTemplatesQuery, GetMeUserTemplatesQueryVariables>;
 export const GetTemplateDocument = gql`
     query GetTemplate($id: String!) {
   getTemplate(entity: {id: $id}) {
@@ -6230,66 +6272,6 @@ export function useGetTemplatesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetTemplatesQueryHookResult = ReturnType<typeof useGetTemplatesQuery>;
 export type GetTemplatesLazyQueryHookResult = ReturnType<typeof useGetTemplatesLazyQuery>;
 export type GetTemplatesQueryResult = Apollo.QueryResult<GetTemplatesQuery, GetTemplatesQueryVariables>;
-export const GetUserDocument = gql`
-    query GetUser($entity: UserEntityInput) {
-  getUser(entity: $entity) {
-    uploads {
-      id
-      name
-    }
-    roles {
-      name
-      id
-    }
-    profilePicture {
-      id
-    }
-    id
-    fullname
-    email
-    userTemplates {
-      id
-      content
-      name
-      templateType {
-        name
-        id
-      }
-    }
-    verification {
-      id
-    }
-  }
-}
-    `;
-
-/**
- * __useGetUserQuery__
- *
- * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetUserQuery({
- *   variables: {
- *      entity: // value for 'entity'
- *   },
- * });
- */
-export function useGetUserQuery(baseOptions?: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-      }
-export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-        }
-export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
-export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
-export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const GetUserTemplateDocument = gql`
     query GetUserTemplate($id: String!) {
   getUserTemplate(entity: {id: $id}) {
