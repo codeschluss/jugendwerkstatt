@@ -20,3 +20,13 @@ query GetUsersAdmin($value: String) {
     }
   }
 }
+
+query GetUsersList($params: FilterSortPaginateInput) {
+  getUsers(params: $params) {
+    total
+    result {
+      id
+      fullname
+    }
+  }
+}

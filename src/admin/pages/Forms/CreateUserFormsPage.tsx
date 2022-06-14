@@ -3,30 +3,28 @@ import { ReactElement, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  useGetMeBasicQuery,
   useGetUserTemplateAdminQuery,
   useSaveUserTemplateAdminMutation,
 } from "../../../GraphQl/graphql";
 import { Accordion, FormActions } from "../../components/molecules";
 import {
   DescriptionFrom,
-  FormsBaseForm,
+  UserFormsForm,
   UserFormsFormInputs,
 } from "../../components/organisms";
 import { gqlVar } from "../../utils";
-import { FormsFormSchema } from "../../validations";
+import { UserFormsFormSchema } from "../../validations";
 
 const CreateUserFormsPage = (): ReactElement => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const methods = useForm<UserFormsFormInputs>({
-    resolver: joiResolver(FormsFormSchema),
+    resolver: joiResolver(UserFormsFormSchema),
   });
 
   const { reset, handleSubmit } = methods;
 
-  const { data: { me = null } = {} } = useGetMeBasicQuery();
   const { data: { getUserTemplate = null } = {} } =
     useGetUserTemplateAdminQuery({
       variables: { entity: { id } },
@@ -60,7 +58,7 @@ const CreateUserFormsPage = (): ReactElement => {
         baseData: {
           name: getUserTemplate?.name || "",
           category: getUserTemplate?.templateType?.id || "",
-          user: getUserTemplate?.templateType?.id || "",
+          user: getUserTemplate?.user?.id || "",
         },
         description: getUserTemplate?.content || "",
       });
@@ -71,7 +69,7 @@ const CreateUserFormsPage = (): ReactElement => {
     <FormProvider {...methods}>
       <form className="min-h-full">
         <Accordion title="Stammdaten" open={!!id}>
-          <FormsBaseForm />
+          <UserFormsForm />
         </Accordion>
         <Accordion title="Beschreibung">
           <DescriptionFrom />

@@ -28,7 +28,12 @@ const FormsUserListPage = () => {
 
   const handleUpdateById = (id: string) => () => navigate(id);
   return (
-    <Panel.Wrapper>
+    <Panel.Wrapper
+      action={{
+        to: "/admin/forms/user-templates/new",
+        label: "Neues Formular erstellen",
+      }}
+    >
       <CustomTable
         headerData={[
           "Schüler/in",
@@ -40,9 +45,9 @@ const FormsUserListPage = () => {
         bodyData={
           getUserTemplates?.result?.map((item) => (
             <Table.Row key={item?.id}>
-              <Table.Data>{item?.name}</Table.Data>
+              <Table.Data>{item?.user?.fullname}</Table.Data>
               <Table.Data>{item?.templateType?.name}</Table.Data>
-              <Table.Data>{item?.content}</Table.Data>
+              <Table.Data>{item?.name}</Table.Data>
               <Table.Data>{formatDate(item?.created)}</Table.Data>
               <Table.Data>
                 <Action

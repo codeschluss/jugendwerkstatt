@@ -1,13 +1,17 @@
 import { ReactElement } from "react";
 import { useFormContext } from "react-hook-form";
-import { useGetTemplateTypesAdminQuery } from "../../../../GraphQl/graphql";
+import {
+  useGetTemplateTypesAdminQuery,
+  useGetUsersListQuery,
+} from "../../../../GraphQl/graphql";
 import { Button, Select } from "../../atoms";
 import { InputField } from "../../molecules";
 import { UserFormsFormInputs } from "./Forms.types";
 
-export const FormsBaseForm = (): ReactElement => {
+export const UserFormsForm = (): ReactElement => {
   const { data: { getTemplateTypes = null } = {} } =
     useGetTemplateTypesAdminQuery();
+  const { data: { getUsers = null } = {} } = useGetUsersListQuery();
 
   const {
     trigger,
@@ -24,9 +28,9 @@ export const FormsBaseForm = (): ReactElement => {
       <div className="flex flex-col justify-start w-full space-y-6">
         <InputField
           id="name"
-          label="Dateiname"
+          label="Benutzerformulare"
           {...register("baseData.name")}
-          placeholder="Vorlage 4"
+          placeholder="Benutzerformulare 1"
           error={baseData?.name?.message}
         />
 
@@ -36,9 +40,9 @@ export const FormsBaseForm = (): ReactElement => {
           {...register("baseData.user")}
           error={baseData?.user?.message}
         >
-          {getTemplateTypes?.result?.map((item) => (
+          {getUsers?.result?.map((item) => (
             <option key={item?.id} value={item?.id || ""}>
-              {item?.name}
+              {item?.fullname}
             </option>
           ))}
         </Select>
