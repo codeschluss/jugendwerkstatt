@@ -43,6 +43,7 @@ import {
   GroupCourseRatingsListPage,
   FormsCategoriesListPage,
   CreateFormsCategories,
+  CreateUserFormsPage,
 } from "../admin/pages";
 import ForgotPassword from "../shared/components/authentication/forgotPassword";
 import Email from "../shared/components/authentication/forgotPassword/Email";
@@ -230,12 +231,8 @@ export const Router = () => {
           <Route path="forms/templates/:id" element={<CreateFormsPage />} />
           <Route path="forms/user-templates" element={<FormsUserListPage />} />
           <Route
-            path="forms/user-templates/new"
-            element={<FormsUserListPage />}
-          />
-          <Route
             path="forms/user-templates/:id"
-            element={<FormsUserListPage />}
+            element={<CreateUserFormsPage />}
           />
 
           <Route

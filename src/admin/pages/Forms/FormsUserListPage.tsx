@@ -5,6 +5,7 @@ import {
 } from "../../../GraphQl/graphql";
 import { Table, Action, Panel } from "../../components/atoms";
 import { CustomTable } from "../../components/molecules";
+import { formatDate } from "../../utils";
 
 const FormsUserListPage = () => {
   const navigate = useNavigate();
@@ -41,8 +42,8 @@ const FormsUserListPage = () => {
             <Table.Row key={item?.id}>
               <Table.Data>{item?.name}</Table.Data>
               <Table.Data>{item?.templateType?.name}</Table.Data>
-              <Table.Data>{item?.name}</Table.Data>
-              <Table.Data>{item?.user?.fullname}</Table.Data>
+              <Table.Data>{item?.content}</Table.Data>
+              <Table.Data>{formatDate(item?.created)}</Table.Data>
               <Table.Data>
                 <Action
                   onUpdate={handleUpdateById(item?.id || "")}

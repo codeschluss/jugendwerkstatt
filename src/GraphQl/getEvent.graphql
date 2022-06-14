@@ -24,7 +24,6 @@ query GetEvent($id: String!) {
     category {
       id
       name
-      icon
     }
     organizer {
       id
