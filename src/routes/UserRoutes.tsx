@@ -25,46 +25,49 @@ import UploadData from "../client/pages/forms/UploadData";
 import Feedback from "../client/components/Feedback";
 import ProfileImageUpload from "../client/pages/Profile/ProfileImageUpload";
 import Homepage from "../client/components/home/Homepage";
+import { RequireAuthRoute } from "../shared/components/RequireAuthRoute/RequireAuthRoute";
 
 export const UserRoutes = () => {
   console.log("user");
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route path="/" element={<Homepage />} />
-        <Route path="/messenger" element={<PushNotificationsContainer />}>
-          <Route path="chats" element={<Chats />} />
-          <Route path="calls" element={<Calls />} />
-          <Route path="contacts" element={<Contacts />} />
+      <Route element={<RequireAuthRoute />}>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/messenger" element={<PushNotificationsContainer />}>
+            <Route path="chats" element={<Chats />} />
+            <Route path="calls" element={<Calls />} />
+            <Route path="contacts" element={<Contacts />} />
+          </Route>
+
+          <Route path="/messenger/chat/:id" element={<Chat />} />
+          <Route path="/event/:id" element={<EventDetail />} />
+          <Route path="/job-ad/:id" element={<JobDetails />} />
+
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/events" element={<Events />} />
+          <Route path="/jobs" element={<Jobs />} />
+          <Route path="/profile" element={<ProfileSettings />} />
+          <Route path="/profile-personal" element={<PersonalData />} />
+          <Route path="/profile-password" element={<ChangePassword />} />
+          <Route
+            path="/profile-upload-picture"
+            element={<ProfileImageUpload />}
+          />
+
+          <Route path="/upload-file" element={<UploadData />} />
+          <Route path="/map" element={<Map />} />
+          <Route path="/MediaLibrary" element={<MediaLibrary />} />
+          <Route path="/EventsCalendar" element={<EventsCalendar />} />
+          <Route path="/EventsTime" element={<EventsTime />} />
+          <Route path="/Forms" element={<Forms />} />
+          <Route path="/Forms/Templates" element={<Templates />} />
+          <Route path="/Forms/Templates/:id" element={<TemplateView />} />
+          <Route path="/Forms/Templates/Edit/:id" element={<TemplateEdit />} />
+
+          <Route path="/feedback" element={<Feedback />} />
+          <Route path="*" element={<h1>Page not found!</h1>} />
         </Route>
-
-        <Route path="/messenger/chat/:id" element={<Chat />} />
-        <Route path="/event/:id" element={<EventDetail />} />
-        <Route path="/job-ad/:id" element={<JobDetails />} />
-
-        <Route path="/favorites" element={<Favorites />} />
-        <Route path="/events" element={<Events />} />
-        <Route path="/jobs" element={<Jobs />} />
-        <Route path="/profile" element={<ProfileSettings />} />
-        <Route path="/profile-personal" element={<PersonalData />} />
-        <Route path="/profile-password" element={<ChangePassword />} />
-        <Route
-          path="/profile-upload-picture"
-          element={<ProfileImageUpload />}
-        />
-
-        <Route path="/upload-file" element={<UploadData />} />
-        <Route path="/map" element={<Map />} />
-        <Route path="/MediaLibrary" element={<MediaLibrary />} />
-        <Route path="/EventsCalendar" element={<EventsCalendar />} />
-        <Route path="/EventsTime" element={<EventsTime />} />
-        <Route path="/Forms" element={<Forms />} />
-        <Route path="/Forms/Templates" element={<Templates />} />
-        <Route path="/Forms/Templates/:id" element={<TemplateView />} />
-        <Route path="/Forms/Templates/Edit/:id" element={<TemplateEdit />} />
-
-        <Route path="/feedback" element={<Feedback />} />
-        <Route path="*" element={<h1>Page not found!</h1>} />
       </Route>
     </Routes>
   );

@@ -9,8 +9,6 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
   const [tempEmail, setTempEmail] = useState<number>();
   const [bgColor, setBgColor] = useState<string>();
 
-  console.log("userRole", userRole);
-
   const colors = [
     "bg-green-600",
     "bg-purple-600",

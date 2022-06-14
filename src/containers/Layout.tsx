@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { Outlet } from "react-router-dom";
 import Modal from "../client/components/modals/courseReviewPopUp";
 import AuthContext from "../contexts/AuthContext";
 import SideBarContext from "../contexts/SideBarContext";
@@ -18,7 +19,9 @@ const Layout: React.FC = ({ children }) => {
 
       <div className="md:p-12">
         <Modal visible={false} course={"Holz 1"}></Modal>
-        <div>{children}</div>
+        <div>
+          <Outlet />
+        </div>
       </div>
       {/* <Footer /> */}
     </main>
