@@ -37,7 +37,7 @@ export const AdminProfile = (): ReactElement => {
   }, [user?.me, reset]);
 
   const onSubmit = (data: ProfileFormInputs) =>
-    saveUser({ variables: { user: { id: user?.me?.id, ...data } } });
+    saveUser({ variables: { entity: { id: user?.me?.id, ...data } } });
 
   return (
     <Panel

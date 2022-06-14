@@ -26,7 +26,7 @@ const CreateGroupPage = (): ReactElement => {
     resolver: joiResolver(GroupFormSchema),
   });
 
-  const { data } = useGetGroupQuery({ variables: { groupId: id } });
+  const { data } = useGetGroupQuery({ variables: { entity: { id } } });
   const [saveGroup] = useSaveGroupMutation({
     onCompleted: () => navigate('/admin/groups'),
   });

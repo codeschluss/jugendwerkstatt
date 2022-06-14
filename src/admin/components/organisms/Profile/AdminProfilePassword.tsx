@@ -28,7 +28,9 @@ export const AdminProfilePassword = (): ReactElement => {
       setErrorMessage('Falsches aktuelles Passwort');
     else
       saveUser({
-        variables: { user: { id: user.password, password: data.newPassword } },
+        variables: {
+          entity: { id: user.password, password: data.newPassword },
+        },
       });
   };
 

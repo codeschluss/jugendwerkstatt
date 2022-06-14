@@ -4,7 +4,7 @@ import {
   ElementType,
   FC,
   HTMLAttributes,
-} from "react";
+} from 'react';
 
 export type TableProps = DetailedHTMLProps<
   HTMLAttributes<HTMLTableElement>,
@@ -30,8 +30,9 @@ export interface TableDataBaseProps
 }
 
 export interface ActionProps {
-  onApprove?: () => void;
   onSend?: () => void;
+  onApprove?: () => void;
+  onNavigate?: () => void;
   onDelete?: () => void;
   onUpdate?: () => void;
 }
@@ -42,7 +43,7 @@ export type MergeElementProps<
   P extends object = {}
 > = Omit<ComponentPropsWithRef<T>, keyof P> & P;
 
-export type TableDataProps<P extends ElementType = "th"> = {
+export type TableDataProps<P extends ElementType = 'th'> = {
   as?: P;
 } & MergeElementProps<P, TableDataBaseProps>;
 
