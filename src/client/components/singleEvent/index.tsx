@@ -16,7 +16,10 @@ export const SingleEvent = () => {
       <div className="flex flex-col md:flex-row">
         <Slider imgUrl={data?.getEvent?.titleImage?.id} />
         <div className="p-5 md:w-1/2 md:ml-8 md:flex-grow rounded-md bg-white">
-          <EventHeader eventName={data?.getEvent?.name || null || undefined} />
+          <EventHeader
+            url={`event/${params.id}`}
+            eventName={data?.getEvent?.name || null || undefined}
+          />
           <EventDetails
             street={data?.getEvent?.address?.street || null || undefined}
             houseNr={data?.getEvent?.address?.houseNumber || null || undefined}

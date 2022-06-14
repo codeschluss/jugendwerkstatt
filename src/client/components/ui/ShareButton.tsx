@@ -15,6 +15,8 @@ import {
 import { BASE_URL } from "../../../config/app";
 
 export const ShareButton: React.FC<{ url: any }> = ({ url }) => {
+  console.log(BASE_URL + url, "theUrl");
+
   return (
     <DropDown
       position="right"
@@ -26,30 +28,42 @@ export const ShareButton: React.FC<{ url: any }> = ({ url }) => {
         <ul>
           <li>
             <FacebookShareButton
-              url={`${BASE_URL}`}
+              url={`${BASE_URL}${url}`}
               className="flex  items-center"
             >
               <FacebookIcon className="w-10 mr-1" /> <p>Facebook</p>
             </FacebookShareButton>
           </li>
           <li>
-            <TwitterShareButton url="#" className="flex  items-center">
+            <TwitterShareButton
+              url={`${BASE_URL}${url}`}
+              className="flex  items-center"
+            >
               <TwitterIcon className="w-10 mr-1" /> Twitter
             </TwitterShareButton>
           </li>
 
           <li>
-            <WhatsappShareButton url="#" className="flex  items-center">
+            <WhatsappShareButton
+              url={`${BASE_URL}${url}`}
+              className="flex  items-center"
+            >
               <WhatsappIcon className="w-10 mr-1" /> WhatsApp
             </WhatsappShareButton>
           </li>
           <li>
-            <ViberShareButton url="#" className="flex  items-center">
+            <ViberShareButton
+              url={`${BASE_URL}${url}`}
+              className="flex  items-center"
+            >
               <ViberIcon className="w-10 mr-1" /> Viber
             </ViberShareButton>
           </li>
           <li>
-            <LinkedinShareButton url="#" className="flex  items-center">
+            <LinkedinShareButton
+              url={`${BASE_URL}${url}`}
+              className="flex  items-center"
+            >
               <LinkedinIcon className="w-10 mr-1" /> LinkedIn
             </LinkedinShareButton>
           </li>

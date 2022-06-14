@@ -24,6 +24,7 @@ export const SingleJobAdd = () => {
         />
         <div className="p-5 md:w-1/2 md:ml-8 md:flex-grow rounded-md bg-white">
           <EventHeader
+            url={`job/${params.id}`}
             eventName={data?.getJobAd?.company?.name || null || undefined}
           />
           <EventDetails

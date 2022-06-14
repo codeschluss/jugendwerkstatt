@@ -1,7 +1,10 @@
 import { BellIcon, LogoutIcon, SearchIcon } from "@heroicons/react/outline";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
+import {
+  useGetMeBasicQuery,
+  useGetNotificationsQuery,
+} from "../../../../GraphQl/graphql";
 import useAuth from "../../../../hooks/useAuth";
 import detectDevice from "../../../utils/isTouch";
 import DropDown from "../../ui/DropDown";
@@ -17,7 +20,8 @@ const RightContent: React.FC<RightContentProps> = () => {
 
   const { logout } = useAuth();
   const user = useGetMeBasicQuery();
-
+  const notifications = useGetNotificationsQuery();
+  console.log(notifications.data?.me, "noti");
   return (
     <div className="flex items-center flex-grow justify-end relative">
       <Search
@@ -67,9 +71,33 @@ const RightContent: React.FC<RightContentProps> = () => {
           </div>
         </div>
       </DropDown>
-      <I className="h-6 w-6 text-white md:text-black md:ml-6">
-        <BellIcon />
-      </I>
+
+      <DropDown
+        position="right"
+        className="mr-3 ml-3 border-r border-gray-200 pr-3 hidden md:block"
+        boxClassName=" mt-3 py-2.5 px-4"
+        name={
+          <I className="h-6 w-6 text-white md:text-black md:ml-6">
+            <BellIcon />
+          </I>
+        }
+      >
+        <div>
+          <ul>
+            {notifications.data?.me?.notifications?.map((el: any) => {
+              return (
+                <li className="border-b-[1px] border-gray-500">
+                  <p className="text-sm">TITLE</p>
+                  <p className="text-xs py-3">
+                    ContContentContentContentContentent
+                  </p>
+                  <p className="text-xs">Date</p>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </DropDown>
       <I className="h-6 w-6 text-white md:text-black hidden md:flex md:ml-6 cursor-pointer">
         <LogoutIcon onClick={logout} />
       </I>
