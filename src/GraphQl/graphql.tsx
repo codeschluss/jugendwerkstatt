@@ -2786,6 +2786,13 @@ export type DeleteEventCategoryMutationVariables = Exact<{
 
 export type DeleteEventCategoryMutation = { __typename?: 'Mutation', deleteEventCategory?: boolean | null };
 
+export type SendGlobalPushMutationVariables = Exact<{
+  message?: InputMaybe<MessageDtoInput>;
+}>;
+
+
+export type SendGlobalPushMutation = { __typename?: 'Mutation', sendGlobalPush?: boolean | null };
+
 export type SaveGroupMutationVariables = Exact<{
   groupEntity?: InputMaybe<GroupEntityInput>;
 }>;
@@ -3798,6 +3805,37 @@ export function useDeleteEventCategoryMutation(baseOptions?: Apollo.MutationHook
 export type DeleteEventCategoryMutationHookResult = ReturnType<typeof useDeleteEventCategoryMutation>;
 export type DeleteEventCategoryMutationResult = Apollo.MutationResult<DeleteEventCategoryMutation>;
 export type DeleteEventCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteEventCategoryMutation, DeleteEventCategoryMutationVariables>;
+export const SendGlobalPushDocument = gql`
+    mutation SendGlobalPush($message: MessageDtoInput) {
+  sendGlobalPush(message: $message)
+}
+    `;
+export type SendGlobalPushMutationFn = Apollo.MutationFunction<SendGlobalPushMutation, SendGlobalPushMutationVariables>;
+
+/**
+ * __useSendGlobalPushMutation__
+ *
+ * To run a mutation, you first call `useSendGlobalPushMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendGlobalPushMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendGlobalPushMutation, { data, loading, error }] = useSendGlobalPushMutation({
+ *   variables: {
+ *      message: // value for 'message'
+ *   },
+ * });
+ */
+export function useSendGlobalPushMutation(baseOptions?: Apollo.MutationHookOptions<SendGlobalPushMutation, SendGlobalPushMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendGlobalPushMutation, SendGlobalPushMutationVariables>(SendGlobalPushDocument, options);
+      }
+export type SendGlobalPushMutationHookResult = ReturnType<typeof useSendGlobalPushMutation>;
+export type SendGlobalPushMutationResult = Apollo.MutationResult<SendGlobalPushMutation>;
+export type SendGlobalPushMutationOptions = Apollo.BaseMutationOptions<SendGlobalPushMutation, SendGlobalPushMutationVariables>;
 export const SaveGroupDocument = gql`
     mutation SaveGroup($groupEntity: GroupEntityInput) {
   saveGroup(entity: $groupEntity) {

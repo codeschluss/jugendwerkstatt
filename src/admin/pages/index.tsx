@@ -261,12 +261,9 @@ export const EvaluationsQuestionsPage = loadable(
 );
 
 // General Settings
-export const PushNotificationsPage = loadable(
+export const PushMessagesPage = loadable(
   () =>
-    timeout(
-      import('./GeneralSettings/PushNotificationsPage'),
-      PAGE_LOAD_TIMEOUT
-    ),
+    timeout(import('./GeneralSettings/PushMessagesPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }

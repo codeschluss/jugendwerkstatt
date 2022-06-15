@@ -32,7 +32,7 @@ import {
   GroupListPage,
   CreateGroupPage,
   EditGroupPage,
-  PushNotificationsPage,
+  PushMessagesPage,
   ChatActivationPage,
   GeneralAddressPage,
   PublicPagesPage,
@@ -160,8 +160,8 @@ export const AdminRoutes = () => (
 
         {/* General Settings */}
         <Route
-          path="general-settings/push-notifications"
-          element={<PushNotificationsPage />}
+          path="general-settings/push-messages"
+          element={<PushMessagesPage />}
         />
         <Route
           path="general-settings/chat-activation"
