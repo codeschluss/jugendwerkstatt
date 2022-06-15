@@ -20,7 +20,7 @@ const CreatePublicPagesPage = (): ReactElement => {
     <FormProvider {...methods}>
       <form className="min-h-full">
         <Accordion title="Stammdaten">
-          <InputField id="name" label="Seitenname" {...register('name')} />
+          {/* <InputField id="name" label="Seitenname" {...register('name')} /> */}
         </Accordion>
         {/* <Accordion title="Beschreibung">
           <DescriptionFrom />
