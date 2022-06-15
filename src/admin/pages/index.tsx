@@ -284,6 +284,17 @@ export const PublicPagesPage = loadable(
   }
 );
 
+export const CreatePublicPagesPage = loadable(
+  () =>
+    timeout(
+      import('./GeneralSettings/CreatePublicPagesPage'),
+      PAGE_LOAD_TIMEOUT
+    ),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
 export const GeneralAddressPage = loadable(
   () =>
     timeout(import('./GeneralSettings/GeneralAddressPage'), PAGE_LOAD_TIMEOUT),

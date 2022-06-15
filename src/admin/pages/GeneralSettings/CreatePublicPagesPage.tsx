@@ -1,20 +1,16 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { ButtonVariantsEnum } from '../../../interfaces/enums/ButtonVariants.enum';
-import { PublicPagesFormSchema } from '../../../validations';
-import { Button, Select } from '../../atoms';
-import { Accordion, FormActions, InputField } from '../../molecules';
-import { DescriptionFrom } from '../Events/DescriptionFrom';
-import { FormsBaseForm } from '../Forms/FormsBaseForm';
-import { PublicPagesFormProps } from './PublicPagesForm.props';
+import { Accordion, FormActions, InputField } from '../../components/molecules';
+import { PublicPagesFormProps } from '../../components/organisms/GeneralSettings/PublicPagesForm.props';
+import { PublicPagesFormSchema } from '../../validations';
 
-export const PublicPagesForm = (): ReactElement => {
+const CreatePublicPagesPage = (): ReactElement => {
   const methods = useForm<PublicPagesFormProps>({
     resolver: joiResolver(PublicPagesFormSchema),
   });
 
-  const { reset, handleSubmit } = methods;
+  const { register, reset, handleSubmit } = methods;
 
   const onSubmit = (data: PublicPagesFormProps) => console.log(data);
 
@@ -24,7 +20,7 @@ export const PublicPagesForm = (): ReactElement => {
     <FormProvider {...methods}>
       <form className="min-h-full">
         <Accordion title="Stammdaten">
-          <FormsBaseForm />
+          <InputField id="name" label="Seitenname" {...register('name')} />
         </Accordion>
         {/* <Accordion title="Beschreibung">
           <DescriptionFrom />
@@ -67,3 +63,5 @@ export const PublicPagesForm = (): ReactElement => {
     // </Accordion>
   );
 };
+
+export default CreatePublicPagesPage;
