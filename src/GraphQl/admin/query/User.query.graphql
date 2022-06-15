@@ -14,3 +14,13 @@ query GetUsersAdmin($params: FilterSortPaginateInput) {
     }
   }
 }
+
+query GetUsersList($params: FilterSortPaginateInput) {
+  getUsers(params: $params) {
+    total
+    result {
+      id
+      fullname
+    }
+  }
+}

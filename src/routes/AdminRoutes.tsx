@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import {
   GeneralAddressForm,
   PublicPagesForm,
@@ -40,14 +40,15 @@ import {
   EvaluationsQuestionsPage,
   FormsCategoriesListPage,
   CreateFormsCategories,
-  GroupCoursesPage,
   GroupMembersPage,
   CreateGroupMembersPage,
   EditGeneralAddressPage,
+  GroupCoursesPage,
 } from '../admin/pages';
 
-export const AdminRoutes = () => (
-  <BrowserRouter>
+export const AdminRoutes = () => {
+  console.log('admin');
+  return (
     <Routes>
       <Route path="/admin" element={<AdminDashboardLayout />}>
         <Route path="profile" element={<AdminProfilePage />} />
@@ -190,8 +191,6 @@ export const AdminRoutes = () => (
           element={<PublicPagesForm />}
         />
       </Route>
-
-      <Route path="*" element={<h1>Page Not Found!</h1>} />
     </Routes>
-  </BrowserRouter>
-);
+  );
+};

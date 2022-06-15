@@ -13,11 +13,23 @@ fragment UserTemplateField on UserTemplateEntity {
   id
   name
   content
+  created
 }
 
 fragment Template on TemplateEntity {
   ...TemplateField
   templateType {
     ...TemplateTypeField
+  }
+}
+
+fragment UserTemplate on UserTemplateEntity {
+  ...UserTemplateField
+  templateType {
+    ...TemplateTypeField
+  }
+  user {
+    id
+    fullname
   }
 }

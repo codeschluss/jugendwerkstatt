@@ -9,7 +9,7 @@ const Modal: FunctionComponent<ModalProps> = ({ visible, course}) => {
   return (
     <div className={`${visible ? "inline-block" : "hidden"}
     absolute backdrop-blur-sm bg-white/30 w-screen h-screen z-50 grid place-items-center`}> 
-      <div className="w-[90vw] h-[50vh] mx-auto bg-white border-[3px] rounded-md border-[#C20639]">
+      <div className="w-[90vw] max-w-lg h-[50vh] mx-auto bg-white border-[3px] rounded-md border-[#C20639]">
         <div className="w-full h-[80%] text-center grid grid-rows-4">
           <span className="text-xl font-semibold mt-3">Glückwunsch!</span>
           <span className="">Du hast den Kurs</span>

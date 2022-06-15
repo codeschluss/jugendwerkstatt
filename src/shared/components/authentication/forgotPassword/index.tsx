@@ -4,7 +4,7 @@ import AuthWrapper from "../AuthWrapper";
 
 const ForgotPassword: React.FC = () => {
   return (
-    <AuthWrapper title="Passwort Vergessen">
+    <AuthWrapper title="Passwort vergessen">
       <Outlet />
     </AuthWrapper>
   );

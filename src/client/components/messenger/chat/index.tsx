@@ -35,10 +35,11 @@ const Chat = () => {
   };
 
   return (
-    <div className=" overflow-scroll flex flex-col ">
+    <div className=" overflow-scroll flex flex-col bg-yellow-100 ">
       {data?.map((el: any) => {
         return (
           <ChatText
+            group={true}
             sender={el.senderId}
             content={el.content}
             key={Math.floor(Math.random() * 1000)}

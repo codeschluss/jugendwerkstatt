@@ -1,39 +1,90 @@
-import { ReactElement } from 'react';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { ReactElement, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useGetQuestionsQuery } from "../../../GraphQl/graphql";
+import { Button } from "../../components/atoms";
+import { Accordion, FormActions, InputField } from "../../components/molecules";
 import {
-  useDeleteQuestionMutation,
-  useGetQuestionsQuery,
-} from '../../../GraphQl/graphql';
-import List from '../../components/molecules/List/List';
+  EvaluationQuestionList,
+  QuestionsInput,
+} from "../../components/organisms";
+import { EvaluationsQuestionsFormSchema } from "../../validations";
 
 const EvaluationsQuestionsPage = (): ReactElement => {
-  const { data, refetch: refetchQuestions } = useGetQuestionsQuery();
+  const { data: { questions = null } = {} } = useGetQuestionsQuery();
 
-  const [deleteQuestion] = useDeleteQuestionMutation({
-    onCompleted: () => refetchQuestions(),
+  // const [deleteQuestion] = useDeleteQuestionMutation({
+  //   onCompleted: () => refetch(),
+  // });
+
+  const {
+    control,
+    formState: { errors },
+    reset,
+    trigger,
+    register,
+    handleSubmit,
+  } = useForm<QuestionsInput>({
+    resolver: joiResolver(EvaluationsQuestionsFormSchema),
   });
 
-  const handleEditQuestion = () =>
-    console.log('We need a view for editing questions!');
-  const handleDeleteQuestion = (questionId: string) => () => {
-    // eslint-disable-next-line no-restricted-globals
-    if (confirm('Möchten Sie dies löschen?')) {
-      deleteQuestion({ variables: { questionId } });
-    }
+  // const handleEditQuestion = () => {
+  //   console.log("We need a view for editing questions!");
+  // };
+
+  // const handleDeleteQuestion = (questionId: string) => () => {
+  //   // eslint-disable-next-line no-restricted-globals
+  //   if (confirm("Möchten Sie dies löschen?")) {
+  //     deleteQuestion({ variables: { questionId } });
+  //   }
+  // };
+
+  const handleOnSubmit = (data: QuestionsInput) => {
+    console.log("data", data);
   };
 
+  const handleTrigger = () => trigger("name");
+
+  const handleReset = () => reset();
+
+  useEffect(() => {
+    if (!!questions?.result) {
+      reset({
+        questions: questions?.result?.map((question) => ({
+          questionId: question?.id || "",
+          name: question?.item || "",
+        })),
+      });
+    }
+  }, [questions, reset]);
+
   return (
-    <List title="Teilnehmerbefragung - Fragen">
-      {data?.questions?.result &&
-        data.questions.result.map((question) => (
-          <List.Item
-            key={question?.id}
-            onUpdate={handleEditQuestion}
-            onDelete={handleDeleteQuestion(question?.id || '')}
-          >
-            {question?.item}
-          </List.Item>
-        ))}
-    </List>
+    <form className="min-h-full ">
+      <Accordion title="Stammdaten">
+        <InputField
+          id="name"
+          label="Name"
+          placeholder="Evaluierungsbogen 1"
+          {...register("name")}
+          error={errors?.name?.message}
+        />
+
+        <Button className="mt-6" type="button" onClick={handleTrigger}>
+          Speichern
+        </Button>
+      </Accordion>
+      <Accordion title="Teilnehmerbefragung - Fragen">
+        <EvaluationQuestionList
+          errors={errors?.questions}
+          control={control}
+          register={register}
+        />
+      </Accordion>
+      <FormActions
+        onReset={handleReset}
+        onSubmit={handleSubmit(handleOnSubmit)}
+      />
+    </form>
   );
 };
 

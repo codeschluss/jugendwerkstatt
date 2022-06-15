@@ -49,7 +49,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
           name="Messenger"
           icon={<ChatAltIcon />}
           clicked={clicked}
-          href="/messenger"
+          href="/messenger/chats"
         />
         <Item
           name="Stellenausschreibung"
@@ -69,6 +69,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
           clicked={clicked}
           href="/favorites"
         />
+        <Item name="Karte" icon={<CogIcon />} clicked={clicked} href="/map" />
         <Item
           name="Einstellungen"
           icon={<CogIcon />}

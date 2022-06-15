@@ -72,6 +72,8 @@ const Map: FunctionComponent = () => {
               slidesPerView={1.5}
             >
               {allEvents?.map((el: any, index: number) => {
+                console.log(el);
+
                 return (
                   <SwiperSlide key={el.id}>
                     <div>

@@ -178,6 +178,12 @@ export const FormsUserListPage = loadable(
     fallback: <PageLoader />,
   }
 );
+export const CreateUserFormsPage = loadable(
+  () => timeout(import("./Forms/CreateUserFormsPage"), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
 export const FormsCategoriesListPage = loadable(
   () => timeout(import('./Forms/FormsCategoriesListPage'), PAGE_LOAD_TIMEOUT),
   {
