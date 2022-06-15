@@ -1,9 +1,7 @@
 import { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Panel } from '../../components/atoms';
-import { PanelBody } from '../../components/atoms/Panel/PanelBody';
-import { InputField } from '../../components/molecules';
+import { Accordion, FormActions, InputField } from '../../components/molecules';
 import { GroupFormSchema } from '../../validations/GroupForm.schema';
 import { GroupFormInputs } from './GroupForm.props';
 import { useSaveGroupMutation } from '../../../GraphQl/graphql';
@@ -14,6 +12,7 @@ const CreateGroupPage = (): ReactElement => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: {
       errors: { name },
     },
@@ -24,24 +23,20 @@ const CreateGroupPage = (): ReactElement => {
     onCompleted: () => navigate('/admin/groups'),
   });
 
+  const handleReset = () => reset();
   const onSubmit = (data: GroupFormInputs) =>
     saveGroup({ variables: { groupEntity: { name: data.name } } });
 
   return (
-    <Panel
-      onSubmit={handleSubmit(onSubmit)}
-      title="Stammdaten"
-      className="max-w-4xl"
-    >
-      <PanelBody>
-        <InputField
-          id="name"
-          label="Gruppenname"
-          {...register('name')}
-          error={name?.message}
-        />
-      </PanelBody>
-    </Panel>
+    <Accordion title="Stammdaten" className="max-w-4xl">
+      <InputField
+        id="name"
+        label="Gruppenname"
+        {...register('name')}
+        error={name?.message}
+      />
+      <FormActions onReset={handleReset} onSubmit={handleSubmit(onSubmit)} />
+    </Accordion>
   );
 };
 

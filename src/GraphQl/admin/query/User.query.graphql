@@ -7,14 +7,8 @@ query GetUserAdmin($id: String) {
   }
 }
 
-query GetUsersAdmin($value: String) {
-  users: getUsers(
-    params: {
-      expression: {
-        entity: { operator: EQUAL, path: "approved", value: $value }
-      }
-    }
-  ) {
+query GetUsersAdmin($params: FilterSortPaginateInput) {
+  users: getUsers(params: $params) {
     result {
       ...UserField
     }

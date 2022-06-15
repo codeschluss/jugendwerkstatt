@@ -6,7 +6,6 @@ import {
   useAddRolesMutation,
   useGetRolesQuery,
   useGetUserAdminQuery,
-  useSaveUserAdminMutation,
 } from '../../../GraphQl/graphql';
 import { Button } from '../../components/atoms';
 import { MultiSelect } from '../../components/atoms/Form/MultiSelect/MultiSelect';

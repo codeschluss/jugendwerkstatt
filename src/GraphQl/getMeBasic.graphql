@@ -3,6 +3,7 @@ query GetMeBasic {
     id
     fullname
     phone
+    password
     email
     profilePicture {
       id

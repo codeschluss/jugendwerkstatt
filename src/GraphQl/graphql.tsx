@@ -2784,6 +2784,14 @@ export type DeleteGroupMutationVariables = Exact<{
 
 export type DeleteGroupMutation = { __typename?: 'Mutation', deleteGroup?: boolean | null };
 
+export type AddGroupMemberMutationVariables = Exact<{
+  userId?: InputMaybe<Scalars['String']>;
+  groupId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type AddGroupMemberMutation = { __typename?: 'Mutation', addMember: boolean };
+
 export type DeleteGroupMemberMutationVariables = Exact<{
   userId?: InputMaybe<Scalars['String']>;
   groupId?: InputMaybe<Scalars['String']>;
@@ -3121,7 +3129,7 @@ export type GetUserAdminQueryVariables = Exact<{
 export type GetUserAdminQuery = { __typename?: 'Query', user?: { __typename?: 'UserEntity', id?: string | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null };
 
 export type GetUsersAdminQueryVariables = Exact<{
-  value?: InputMaybe<Scalars['String']>;
+  params?: InputMaybe<FilterSortPaginateInput>;
 }>;
 
 
@@ -3187,7 +3195,7 @@ export type GetLinkCategoriesQuery = { __typename?: 'Query', getLinkCategories?:
 export type GetMeBasicQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMeBasicQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, phone?: string | null, email?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null };
+export type GetMeBasicQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, phone?: string | null, password?: string | null, email?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null };
 
 export type GetMeFavoritesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3744,6 +3752,38 @@ export function useDeleteGroupMutation(baseOptions?: Apollo.MutationHookOptions<
 export type DeleteGroupMutationHookResult = ReturnType<typeof useDeleteGroupMutation>;
 export type DeleteGroupMutationResult = Apollo.MutationResult<DeleteGroupMutation>;
 export type DeleteGroupMutationOptions = Apollo.BaseMutationOptions<DeleteGroupMutation, DeleteGroupMutationVariables>;
+export const AddGroupMemberDocument = gql`
+    mutation AddGroupMember($userId: String, $groupId: String) {
+  addMember(userId: $userId, groupId: $groupId)
+}
+    `;
+export type AddGroupMemberMutationFn = Apollo.MutationFunction<AddGroupMemberMutation, AddGroupMemberMutationVariables>;
+
+/**
+ * __useAddGroupMemberMutation__
+ *
+ * To run a mutation, you first call `useAddGroupMemberMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddGroupMemberMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addGroupMemberMutation, { data, loading, error }] = useAddGroupMemberMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      groupId: // value for 'groupId'
+ *   },
+ * });
+ */
+export function useAddGroupMemberMutation(baseOptions?: Apollo.MutationHookOptions<AddGroupMemberMutation, AddGroupMemberMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddGroupMemberMutation, AddGroupMemberMutationVariables>(AddGroupMemberDocument, options);
+      }
+export type AddGroupMemberMutationHookResult = ReturnType<typeof useAddGroupMemberMutation>;
+export type AddGroupMemberMutationResult = Apollo.MutationResult<AddGroupMemberMutation>;
+export type AddGroupMemberMutationOptions = Apollo.BaseMutationOptions<AddGroupMemberMutation, AddGroupMemberMutationVariables>;
 export const DeleteGroupMemberDocument = gql`
     mutation DeleteGroupMember($userId: String, $groupId: String) {
   deleteMember(userId: $userId, groupId: $groupId)
@@ -5452,10 +5492,8 @@ export type GetUserAdminQueryHookResult = ReturnType<typeof useGetUserAdminQuery
 export type GetUserAdminLazyQueryHookResult = ReturnType<typeof useGetUserAdminLazyQuery>;
 export type GetUserAdminQueryResult = Apollo.QueryResult<GetUserAdminQuery, GetUserAdminQueryVariables>;
 export const GetUsersAdminDocument = gql`
-    query GetUsersAdmin($value: String) {
-  users: getUsers(
-    params: {expression: {entity: {operator: EQUAL, path: "approved", value: $value}}}
-  ) {
+    query GetUsersAdmin($params: FilterSortPaginateInput) {
+  users: getUsers(params: $params) {
     result {
       ...UserField
     }
@@ -5475,7 +5513,7 @@ export const GetUsersAdminDocument = gql`
  * @example
  * const { data, loading, error } = useGetUsersAdminQuery({
  *   variables: {
- *      value: // value for 'value'
+ *      params: // value for 'params'
  *   },
  * });
  */
@@ -5965,6 +6003,7 @@ export const GetMeBasicDocument = gql`
     id
     fullname
     phone
+    password
     email
     profilePicture {
       id

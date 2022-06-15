@@ -42,6 +42,7 @@ import {
   CreateFormsCategories,
   GroupCoursesPage,
   GroupMembersPage,
+  CreateGroupMembersPage,
   // GroupPage,
 } from '../admin/pages';
 
@@ -150,6 +151,10 @@ export const AdminRoutes = () => (
         <Route path="groups" element={<GroupListPage />} />
         <Route path="groups/new" element={<CreateGroupPage />} />
         <Route path="groups/:id/members" element={<GroupMembersPage />} />
+        <Route
+          path="groups/:id/members/new"
+          element={<CreateGroupMembersPage />}
+        />
         <Route path="groups/:id/courses" element={<GroupCoursesPage />} />
         <Route path="groups/:id/edit" element={<EditGroupPage />} />
 

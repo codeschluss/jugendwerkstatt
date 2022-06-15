@@ -228,6 +228,13 @@ export const CreateGroupPage = loadable(
   }
 );
 
+export const CreateGroupMembersPage = loadable(
+  () => timeout(import('./Group/CreateGroupMembersPage'), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
 export const EditGroupPage = loadable(
   () => timeout(import('./Group/EditGroupPage'), PAGE_LOAD_TIMEOUT),
   {

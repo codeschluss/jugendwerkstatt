@@ -1,4 +1,3 @@
-import { useMutation } from '@apollo/client';
 import { ReactElement } from 'react';
 import { useParams } from 'react-router-dom';
 import {
@@ -18,7 +17,7 @@ const GroupMembersPage = (): ReactElement => {
     onCompleted: () => refetchGroups(),
   });
 
-  const handleGroupMemberDelete = (userId: string) => () =>
+  const handleDeleteGroupMember = (userId: string) => () =>
     deleteMember({ variables: { userId, groupId: group?.id || '' } });
 
   const groupUsers = group?.users || [];
@@ -26,8 +25,8 @@ const GroupMembersPage = (): ReactElement => {
   return (
     <Panel.Wrapper
       action={{
-        to: '/admin/groups/new',
-        label: 'Neue Gruppen',
+        to: `/admin/groups/${group?.id || ''}/members/new`,
+        label: 'Teilnehmer hinzufügen',
       }}
     >
       <CustomTable
@@ -37,7 +36,7 @@ const GroupMembersPage = (): ReactElement => {
             <Table.Data>{user?.fullname}</Table.Data>
             <Table.Data>{group?.name}</Table.Data>
             <Table.Data>
-              <Action onDelete={handleGroupMemberDelete(user?.id || '')} />
+              <Action onDelete={handleDeleteGroupMember(user?.id || '')} />
             </Table.Data>
           </Table.Row>
         ))}

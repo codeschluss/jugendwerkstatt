@@ -1,11 +1,23 @@
 import { useNavigate } from 'react-router-dom';
-import { useGetUsersAdminQuery } from '../../../GraphQl/graphql';
+import { QueryOperator, useGetUsersAdminQuery } from '../../../GraphQl/graphql';
 import { Table, Action, Panel } from '../../components/atoms';
 import { CustomTable } from '../../components/molecules';
 
 const UsersListPage = () => {
   const navigate = useNavigate();
-  const { data } = useGetUsersAdminQuery({ variables: { value: 'true' } });
+  const { data } = useGetUsersAdminQuery({
+    variables: {
+      params: {
+        expression: {
+          entity: {
+            operator: QueryOperator.Equal,
+            path: 'approved',
+            value: 'true',
+          },
+        },
+      },
+    },
+  });
 
   const handleUserUpdate = (userId: string) => () => navigate(userId);
 

@@ -1,4 +1,5 @@
 import {
+  QueryOperator,
   useDeleteUserMutation,
   useGetUsersAdminQuery,
   useSaveUserAdminMutation,
@@ -8,7 +9,17 @@ import { CustomTable } from '../../components/molecules';
 
 const UsersRequestsListPage = () => {
   const { data, refetch: refetchUsers } = useGetUsersAdminQuery({
-    variables: { value: 'false' },
+    variables: {
+      params: {
+        expression: {
+          entity: {
+            operator: QueryOperator.Equal,
+            path: 'approved',
+            value: 'false',
+          },
+        },
+      },
+    },
   });
 
   const [approveUser] = useSaveUserAdminMutation({
