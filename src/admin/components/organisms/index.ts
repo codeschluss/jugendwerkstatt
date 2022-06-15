@@ -15,6 +15,7 @@ export * from "./Vacancy/VacancyForm";
 export * from "./Vacancy/VacancyTerminForm";
 export * from "./Vacancy/SketchColor";
 export * from "./Forms/UserForms";
+export * from "./EvaluationQuestionList/EvaluationQuestionList";
 
 // export all types
 export * from "./GeneralSettings/GeneralAddressForm.props";
@@ -22,3 +23,4 @@ export * from "./Events/Events.types";
 export * from "./Forms/Forms.types";
 export * from "./Media/Media.types";
 export * from "./Vacancy/Vacancy.types";
+export * from "./EvaluationQuestionList/EvaluationQuestionList.types";
