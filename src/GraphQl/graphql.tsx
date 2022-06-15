@@ -2728,6 +2728,20 @@ export type TemplateFragment = { __typename?: 'TemplateEntity', id?: string | nu
 
 export type UserFieldFragment = { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null };
 
+export type SaveAddressMutationVariables = Exact<{
+  entity?: InputMaybe<AddressEntityInput>;
+}>;
+
+
+export type SaveAddressMutation = { __typename?: 'Mutation', saveAddress?: { __typename?: 'AddressEntity', id?: string | null, houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null, longitude?: number | null, latitude?: number | null } | null };
+
+export type DeleteAddressMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteAddressMutation = { __typename?: 'Mutation', deleteAddress?: boolean | null };
+
 export type SaveCompanyMutationVariables = Exact<{
   entity?: InputMaybe<CompanyEntityInput>;
 }>;
@@ -2933,6 +2947,18 @@ export type DeleteUserMutationVariables = Exact<{
 
 
 export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser?: boolean | null };
+
+export type GetAddressQueryVariables = Exact<{
+  entity?: InputMaybe<AddressEntityInput>;
+}>;
+
+
+export type GetAddressQuery = { __typename?: 'Query', address?: { __typename?: 'AddressEntity', id?: string | null, houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null, longitude?: number | null, latitude?: number | null } | null };
+
+export type GetAddressesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAddressesQuery = { __typename?: 'Query', addresses?: { __typename?: 'PageableList_AddressEntity', result?: Array<{ __typename?: 'AddressEntity', id?: string | null, houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null, longitude?: number | null, latitude?: number | null } | null> | null } | null };
 
 export type GetCompaniesQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3496,6 +3522,70 @@ export const UserFieldFragmentDoc = gql`
   created
 }
     ${RoleFieldFragmentDoc}`;
+export const SaveAddressDocument = gql`
+    mutation SaveAddress($entity: AddressEntityInput) {
+  saveAddress(entity: $entity) {
+    ...AddressField
+  }
+}
+    ${AddressFieldFragmentDoc}`;
+export type SaveAddressMutationFn = Apollo.MutationFunction<SaveAddressMutation, SaveAddressMutationVariables>;
+
+/**
+ * __useSaveAddressMutation__
+ *
+ * To run a mutation, you first call `useSaveAddressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveAddressMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveAddressMutation, { data, loading, error }] = useSaveAddressMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveAddressMutation(baseOptions?: Apollo.MutationHookOptions<SaveAddressMutation, SaveAddressMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveAddressMutation, SaveAddressMutationVariables>(SaveAddressDocument, options);
+      }
+export type SaveAddressMutationHookResult = ReturnType<typeof useSaveAddressMutation>;
+export type SaveAddressMutationResult = Apollo.MutationResult<SaveAddressMutation>;
+export type SaveAddressMutationOptions = Apollo.BaseMutationOptions<SaveAddressMutation, SaveAddressMutationVariables>;
+export const DeleteAddressDocument = gql`
+    mutation DeleteAddress($id: String) {
+  deleteAddress(id: $id)
+}
+    `;
+export type DeleteAddressMutationFn = Apollo.MutationFunction<DeleteAddressMutation, DeleteAddressMutationVariables>;
+
+/**
+ * __useDeleteAddressMutation__
+ *
+ * To run a mutation, you first call `useDeleteAddressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAddressMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAddressMutation, { data, loading, error }] = useDeleteAddressMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteAddressMutation(baseOptions?: Apollo.MutationHookOptions<DeleteAddressMutation, DeleteAddressMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteAddressMutation, DeleteAddressMutationVariables>(DeleteAddressDocument, options);
+      }
+export type DeleteAddressMutationHookResult = ReturnType<typeof useDeleteAddressMutation>;
+export type DeleteAddressMutationResult = Apollo.MutationResult<DeleteAddressMutation>;
+export type DeleteAddressMutationOptions = Apollo.BaseMutationOptions<DeleteAddressMutation, DeleteAddressMutationVariables>;
 export const SaveCompanyDocument = gql`
     mutation SaveCompany($entity: CompanyEntityInput) {
   saveCompany(entity: $entity) {
@@ -4426,6 +4516,77 @@ export function useDeleteUserMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeleteUserMutationHookResult = ReturnType<typeof useDeleteUserMutation>;
 export type DeleteUserMutationResult = Apollo.MutationResult<DeleteUserMutation>;
 export type DeleteUserMutationOptions = Apollo.BaseMutationOptions<DeleteUserMutation, DeleteUserMutationVariables>;
+export const GetAddressDocument = gql`
+    query GetAddress($entity: AddressEntityInput) {
+  address: getAddress(entity: $entity) {
+    ...AddressField
+  }
+}
+    ${AddressFieldFragmentDoc}`;
+
+/**
+ * __useGetAddressQuery__
+ *
+ * To run a query within a React component, call `useGetAddressQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAddressQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAddressQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetAddressQuery(baseOptions?: Apollo.QueryHookOptions<GetAddressQuery, GetAddressQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAddressQuery, GetAddressQueryVariables>(GetAddressDocument, options);
+      }
+export function useGetAddressLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAddressQuery, GetAddressQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAddressQuery, GetAddressQueryVariables>(GetAddressDocument, options);
+        }
+export type GetAddressQueryHookResult = ReturnType<typeof useGetAddressQuery>;
+export type GetAddressLazyQueryHookResult = ReturnType<typeof useGetAddressLazyQuery>;
+export type GetAddressQueryResult = Apollo.QueryResult<GetAddressQuery, GetAddressQueryVariables>;
+export const GetAddressesDocument = gql`
+    query GetAddresses {
+  addresses: getAddresss {
+    result {
+      ...AddressField
+    }
+  }
+}
+    ${AddressFieldFragmentDoc}`;
+
+/**
+ * __useGetAddressesQuery__
+ *
+ * To run a query within a React component, call `useGetAddressesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAddressesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAddressesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAddressesQuery(baseOptions?: Apollo.QueryHookOptions<GetAddressesQuery, GetAddressesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAddressesQuery, GetAddressesQueryVariables>(GetAddressesDocument, options);
+      }
+export function useGetAddressesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAddressesQuery, GetAddressesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAddressesQuery, GetAddressesQueryVariables>(GetAddressesDocument, options);
+        }
+export type GetAddressesQueryHookResult = ReturnType<typeof useGetAddressesQuery>;
+export type GetAddressesLazyQueryHookResult = ReturnType<typeof useGetAddressesLazyQuery>;
+export type GetAddressesQueryResult = Apollo.QueryResult<GetAddressesQuery, GetAddressesQueryVariables>;
 export const GetCompaniesDocument = gql`
     query GetCompanies($params: FilterSortPaginateInput) {
   getCompanies(params: $params) {

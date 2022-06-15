@@ -12,7 +12,7 @@ import {
   useSaveGroupMutation,
 } from '../../../GraphQl/graphql';
 
-const CreateGroupPage = (): ReactElement => {
+const EditGroupPage = (): ReactElement => {
   const navigate = useNavigate();
   const { id } = useParams();
   const {
@@ -56,4 +56,4 @@ const CreateGroupPage = (): ReactElement => {
   );
 };
 
-export default CreateGroupPage;
+export default EditGroupPage;

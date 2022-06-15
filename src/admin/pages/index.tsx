@@ -294,3 +294,14 @@ export const GeneralAddressPage = loadable(
     fallback: <PageLoader />,
   }
 );
+
+export const EditGeneralAddressPage = loadable(
+  () =>
+    timeout(
+      import('./GeneralSettings/EditGeneralAddressPage'),
+      PAGE_LOAD_TIMEOUT
+    ),
+  {
+    fallback: <PageLoader />,
+  }
+);

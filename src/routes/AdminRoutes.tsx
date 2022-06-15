@@ -43,7 +43,7 @@ import {
   GroupCoursesPage,
   GroupMembersPage,
   CreateGroupMembersPage,
-  // GroupPage,
+  EditGeneralAddressPage,
 } from '../admin/pages';
 
 export const AdminRoutes = () => (
@@ -159,19 +159,36 @@ export const AdminRoutes = () => (
         <Route path="groups/:id/edit" element={<EditGroupPage />} />
 
         {/* General Settings */}
-        <Route path="general-settings">
-          <Route
-            path="push-notifications"
-            element={<PushNotificationsPage />}
-          />
-          <Route path="chat-activation" element={<ChatActivationPage />} />
+        <Route
+          path="general-settings/push-notifications"
+          element={<PushNotificationsPage />}
+        />
+        <Route
+          path="general-settings/chat-activation"
+          element={<ChatActivationPage />}
+        />
 
-          <Route path="address" element={<GeneralAddressPage />} />
-          <Route path="address/new" element={<GeneralAddressForm />} />
+        <Route
+          path="general-settings/addresses"
+          element={<GeneralAddressPage />}
+        />
+        <Route
+          path="general-settings/addresses/:id"
+          element={<EditGeneralAddressPage />}
+        />
+        <Route
+          path="general-settings/addresses/new"
+          element={<GeneralAddressForm />}
+        />
 
-          <Route path="public-pages" element={<PublicPagesPage />} />
-          <Route path="public-pages/new" element={<PublicPagesForm />} />
-        </Route>
+        <Route
+          path="general-settings/public-pages"
+          element={<PublicPagesPage />}
+        />
+        <Route
+          path="general-settings/public-pages/new"
+          element={<PublicPagesForm />}
+        />
       </Route>
 
       <Route path="*" element={<h1>Page Not Found!</h1>} />

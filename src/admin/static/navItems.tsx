@@ -150,14 +150,17 @@ export const navItems = (
           {
             name: 'Öffentliche Seiten',
             items: [
-              { name: 'Startseite' },
+              {
+                name: 'Startseite',
+                location: 'general-settings/public-pages',
+              },
               { name: 'Impressum' },
               { name: 'Datenschutz' },
             ],
           },
           {
             name: 'Adressen',
-            location: 'general-settings/address',
+            location: 'general-settings/addresses',
           },
         ],
       },
