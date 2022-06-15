@@ -1,0 +1,4 @@
+fragment SettingField on SettingsEntity {
+  id
+  chatActive
+}

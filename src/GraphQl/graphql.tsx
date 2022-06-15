@@ -2718,6 +2718,8 @@ export type RoleFieldFragment = { __typename?: 'RoleEntity', id?: string | null,
 
 export type ScheduleFieldFragment = { __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null };
 
+export type SettingFieldFragment = { __typename?: 'SettingsEntity', id?: string | null, chatActive?: boolean | null };
+
 export type TemplateFieldFragment = { __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null };
 
 export type TemplateTypeFieldFragment = { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null };
@@ -2891,6 +2893,13 @@ export type AddRolesMutationVariables = Exact<{
 
 
 export type AddRolesMutation = { __typename?: 'Mutation', addRoles?: { __typename?: 'UserEntity', id?: string | null } | null };
+
+export type SaveSettingsMutationVariables = Exact<{
+  entity?: InputMaybe<SettingsEntityInput>;
+}>;
+
+
+export type SaveSettingsMutation = { __typename?: 'Mutation', saveSettings?: { __typename?: 'SettingsEntity', id?: string | null, chatActive?: boolean | null } | null };
 
 export type SaveTemplateAdminMutationVariables = Exact<{
   entity?: InputMaybe<TemplateEntityInput>;
@@ -3104,6 +3113,11 @@ export type GetRolesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetRolesQuery = { __typename?: 'Query', roles?: { __typename?: 'PageableList_RoleEntity', result?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null };
+
+export type GetSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSettingsQuery = { __typename?: 'Query', settings?: { __typename?: 'SettingsEntity', id?: string | null, chatActive?: boolean | null } | null };
 
 export type GetTemplatesAdminQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3473,6 +3487,12 @@ export const QuestionFieldFragmentDoc = gql`
     fragment QuestionField on QuestionEntity {
   id
   item
+}
+    `;
+export const SettingFieldFragmentDoc = gql`
+    fragment SettingField on SettingsEntity {
+  id
+  chatActive
 }
     `;
 export const UserTemplateFieldFragmentDoc = gql`
@@ -4260,6 +4280,39 @@ export function useAddRolesMutation(baseOptions?: Apollo.MutationHookOptions<Add
 export type AddRolesMutationHookResult = ReturnType<typeof useAddRolesMutation>;
 export type AddRolesMutationResult = Apollo.MutationResult<AddRolesMutation>;
 export type AddRolesMutationOptions = Apollo.BaseMutationOptions<AddRolesMutation, AddRolesMutationVariables>;
+export const SaveSettingsDocument = gql`
+    mutation SaveSettings($entity: SettingsEntityInput) {
+  saveSettings(entity: $entity) {
+    ...SettingField
+  }
+}
+    ${SettingFieldFragmentDoc}`;
+export type SaveSettingsMutationFn = Apollo.MutationFunction<SaveSettingsMutation, SaveSettingsMutationVariables>;
+
+/**
+ * __useSaveSettingsMutation__
+ *
+ * To run a mutation, you first call `useSaveSettingsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveSettingsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveSettingsMutation, { data, loading, error }] = useSaveSettingsMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveSettingsMutation(baseOptions?: Apollo.MutationHookOptions<SaveSettingsMutation, SaveSettingsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveSettingsMutation, SaveSettingsMutationVariables>(SaveSettingsDocument, options);
+      }
+export type SaveSettingsMutationHookResult = ReturnType<typeof useSaveSettingsMutation>;
+export type SaveSettingsMutationResult = Apollo.MutationResult<SaveSettingsMutation>;
+export type SaveSettingsMutationOptions = Apollo.BaseMutationOptions<SaveSettingsMutation, SaveSettingsMutationVariables>;
 export const SaveTemplateAdminDocument = gql`
     mutation SaveTemplateAdmin($entity: TemplateEntityInput) {
   saveTemplate(entity: $entity) {
@@ -5395,6 +5448,40 @@ export function useGetRolesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetRolesQueryHookResult = ReturnType<typeof useGetRolesQuery>;
 export type GetRolesLazyQueryHookResult = ReturnType<typeof useGetRolesLazyQuery>;
 export type GetRolesQueryResult = Apollo.QueryResult<GetRolesQuery, GetRolesQueryVariables>;
+export const GetSettingsDocument = gql`
+    query GetSettings {
+  settings: getSettings {
+    ...SettingField
+  }
+}
+    ${SettingFieldFragmentDoc}`;
+
+/**
+ * __useGetSettingsQuery__
+ *
+ * To run a query within a React component, call `useGetSettingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSettingsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetSettingsQuery(baseOptions?: Apollo.QueryHookOptions<GetSettingsQuery, GetSettingsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSettingsQuery, GetSettingsQueryVariables>(GetSettingsDocument, options);
+      }
+export function useGetSettingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSettingsQuery, GetSettingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSettingsQuery, GetSettingsQueryVariables>(GetSettingsDocument, options);
+        }
+export type GetSettingsQueryHookResult = ReturnType<typeof useGetSettingsQuery>;
+export type GetSettingsLazyQueryHookResult = ReturnType<typeof useGetSettingsLazyQuery>;
+export type GetSettingsQueryResult = Apollo.QueryResult<GetSettingsQuery, GetSettingsQueryVariables>;
 export const GetTemplatesAdminDocument = gql`
     query GetTemplatesAdmin($params: FilterSortPaginateInput) {
   getTemplates(params: $params) {
