@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import ForgotPassword from "../shared/components/authentication/forgotPassword";
 import Email from "../shared/components/authentication/forgotPassword/Email";
 import Password from "../shared/components/authentication/forgotPassword/Password";
@@ -37,10 +37,12 @@ import ProfileImageUpload from "../client/pages/Profile/ProfileImageUpload";
 import LoginPage from "../client/pages/authentication/LoginPage";
 import RegisterPage from "../client/pages/authentication/Register";
 import Messenger from "../client/pages/messenger";
+import ApprovalPending from "../client/pages/verify/ApprovalPending";
+import { Switch } from "../admin/components/atoms";
 
 const Router = () => {
   return (
-    <BrowserRouter basename="/">
+    <BrowserRouter>
       <Layout>
         <Routes>
           <Route index element={<Home />} />
@@ -172,6 +174,7 @@ const Router = () => {
           <Route path="/toVerifyEmail" element={<ToVerifyUser />} />
           <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />
           <Route path="/reVerifyEmail" element={<ReVerifyUser />} />
+          <Route path="/pending-approval" element={<ApprovalPending />} />
 
           <Route path="/upload-file" element={<UploadData />} />
 

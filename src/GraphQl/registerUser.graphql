@@ -1,0 +1,7 @@
+mutation RegisterUser($entity: UserEntityInput) {
+  saveUser(entity: $entity) {
+    email
+    id
+    fullname
+  }
+}

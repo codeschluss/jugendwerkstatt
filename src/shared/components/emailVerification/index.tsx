@@ -3,9 +3,7 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../client/components/ui/Button";
 import AuthContext from "../../../contexts/AuthContext";
-import {
-  useSendVerificationMutation
-} from "../../../GraphQl/graphql";
+import { useSendVerificationMutation } from "../../../GraphQl/graphql";
 import logo from "../../images/jugendwerkstatt-logo.png";
 
 interface CheckingProps {
@@ -13,6 +11,7 @@ interface CheckingProps {
   toVerify?: boolean;
   alreadyVerified?: boolean;
   reVerify?: boolean;
+  pendingApproval?: boolean;
 }
 
 const RegistrationOrVerification: React.FC<CheckingProps> = ({
@@ -20,6 +19,7 @@ const RegistrationOrVerification: React.FC<CheckingProps> = ({
   toVerify,
   alreadyVerified,
   reVerify,
+  pendingApproval,
 }) => {
   const { tempEmail } = useContext(AuthContext);
 
@@ -29,11 +29,11 @@ const RegistrationOrVerification: React.FC<CheckingProps> = ({
     },
   });
 
-  const reverify = () => {
-    reSendVerification();
-  };
-
   const navigate = useNavigate();
+
+  const reverify = () => {
+    reSendVerification().then(() => navigate("/"));
+  };
 
   return (
     <div className="px-0 flex flex-col w-screen h-screen absolute top-0 z-20">

@@ -6,7 +6,6 @@ import {
   useGetEventsQuery,
   useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
-import { GET_EVENTS } from "../../../GraphQl/Querry";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
 

@@ -4,8 +4,10 @@ import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../../../../config/app";
 import AuthContext from "../../../../contexts/AuthContext";
-import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
-import { SAVE_USER } from "../../../../GraphQl/mutation";
+import {
+  useGetMeBasicQuery,
+  useRegisterUserMutation,
+} from "../../../../GraphQl/graphql";
 import useInput from "../../../../hooks/use-input";
 import CustomHeader from "../../header/customHeader/CustomHeader";
 import Button from "../../../../client/components/ui/Button";
@@ -52,17 +54,20 @@ const PersonalData = () => {
   user.data?.me?.fullname &&
     (letter = user.data.me.fullname.substring(0, 1).toUpperCase());
 
-  const [saveNewUser, { data, loading, error }] = useMutation(SAVE_USER);
+  const [saveNewUser] = useRegisterUserMutation();
 
   const onSubmitHandler = (e: any) => {
     e.preventDefault();
     if (enteredNameValidity || enteredEmailValidity) {
       saveNewUser({
         variables: {
-          id: user?.data?.me?.id,
-          fullName: enteredName === "" ? user.data?.me?.fullname : enteredName,
-          email: enteredEmail === "" ? user.data?.me?.email : enteredEmail,
-          phone: enteredPhone === "" ? user.data?.me?.phone : enteredPhone,
+          entity: {
+            id: user?.data?.me?.id,
+            fullname:
+              enteredName === "" ? user.data?.me?.fullname : enteredName,
+            email: enteredEmail === "" ? user.data?.me?.email : enteredEmail,
+            phone: enteredPhone === "" ? user.data?.me?.phone : enteredPhone,
+          },
         },
         onCompleted: () => {
           navigate("/");

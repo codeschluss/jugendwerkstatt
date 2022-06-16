@@ -87,16 +87,19 @@ const SlideCard: React.FC<SlideCardProps> = ({
             )}
           </div>
         </div>
-        <div
-          className={`absolute left-0 w-full bottom-0 ${
-            gradient ? "bg-gradient-to-t from-black to-transparent" : ""
-          }  text-white px-3 pb-3 pt-9`}
-        >
-          <p className="border-b border-white pb-1 mb-1 font-bold">
-            {location}
-          </p>
-          <p>{`${weekDay}, ${day}.${month}.${year}`}</p>
-        </div>
+        <Link to={route}>
+          {" "}
+          <div
+            className={`absolute left-0 w-full bottom-0 ${
+              gradient ? "bg-gradient-to-t from-black to-transparent" : ""
+            }  text-white px-3 pb-3 pt-9`}
+          >
+            <p className="border-b border-white pb-1 mb-1 font-bold">
+              {location}
+            </p>
+            <p>{`${weekDay}, ${day}.${month}.${year}`}</p>
+          </div>
+        </Link>
       </div>
     </div>
   );

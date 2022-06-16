@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../contexts/AuthContext";
-import { SAVE_USER } from "../../../GraphQl/mutation";
+import { useRegisterUserMutation } from "../../../GraphQl/graphql";
 import useInput from "../../../hooks/use-input";
 import AuthInput from "../../../shared/components/authentication/AuthInput";
 import AuthWrapper from "../../../shared/components/authentication/AuthWrapper";
@@ -105,7 +105,7 @@ const Register = () => {
     passwordChangeHandler(e);
   };
 
-  const [saveNewUser, { data, loading, error }] = useMutation(SAVE_USER);
+  const [registeredUser] = useRegisterUserMutation();
 
   const onSubmitHandler = (e: any) => {
     e.preventDefault();
@@ -115,11 +115,13 @@ const Register = () => {
       enteredPasswordValidity &&
       enteredCPasswordValidity
     ) {
-      saveNewUser({
+      registeredUser({
         variables: {
-          fullName: enteredUsername,
-          email: enteredEmail,
-          password: enteredPassword,
+          entity: {
+            fullname: enteredUsername,
+            email: enteredEmail,
+            password: enteredPassword,
+          },
         },
         onCompleted: () => {
           disableInput = true;

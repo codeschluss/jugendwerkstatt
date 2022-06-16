@@ -2,9 +2,12 @@ import { useMutation } from "@apollo/client";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../client/components/ui/Button";
-import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
-import { SAVE_USER } from "../../../../GraphQl/mutation";
+import {
+  useGetMeBasicQuery,
+  useRegisterUserMutation,
+} from "../../../../GraphQl/graphql";
 import useInput from "../../../../hooks/use-input";
+import AuthInput from "../../authentication/AuthInput";
 import CustomHeader from "../../header/customHeader/CustomHeader";
 import Input from "./Input";
 
@@ -29,15 +32,17 @@ const ChangePassword = () => {
     resetValue: resetPasswordTwoInput,
   } = useInput((value: string) => value !== "" && value === passwordOne);
 
-  const [saveNewUser, { data, loading, error }] = useMutation(SAVE_USER);
+  const [updateUser] = useRegisterUserMutation();
 
   const onSubmitHandler = (e: any) => {
     e.preventDefault();
     if (passwordOneValidity || passwordTwoValidity) {
-      saveNewUser({
+      updateUser({
         variables: {
-          id: user.data?.me?.id,
-          password: passwordOne,
+          entity: {
+            id: user.data?.me?.id,
+            password: passwordOne,
+          },
         },
         onCompleted: () => {
           navigate("/");
@@ -54,26 +59,38 @@ const ChangePassword = () => {
           onSubmit={onSubmitHandler}
           className="w-full flex flex-col items-center justify-between md:justify-start pb-20 h-full"
         >
-          <div className="flex w-full items-center flex-col  justify-between">
-            <Input
-              value={passwordOne}
-              title="Neues Passwort"
-              onInput={passwordOneChangeHandler}
+          <div className="flex w-full items-center flex-col mt-16 justify-between">
+            <AuthInput
+              id="Passwort"
+              type="password"
+              onChange={passwordOneChangeHandler}
               onBlur={passwordOneBlurHandler}
-              error={passwordOneError ? "Password nicht stark Genug" : false}
+              value={passwordOne}
+              error={passwordOneError ? "Passwort nicht stark genug" : ""}
+              inputClassName={`${
+                passwordOneError && "border-500-red"
+              }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
             />
-            <Input
-              value={passwordTwo}
-              title="Passwort wiederholen"
-              onInput={passwordTwoChangeHandler}
+            <AuthInput
+              id="Passwort wiederholen"
+              type="password"
+              onChange={passwordTwoChangeHandler}
               onBlur={passwordTwoBlurHandler}
-              error={passwordTwoError ? "Password must match" : false}
+              value={passwordTwo}
+              error={passwordTwoError ? "Password must match" : ""}
+              inputClassName={`${
+                passwordTwoError && "border-500-red"
+              }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
             />
           </div>
           <span className="w-4/6 md:w-2/5 md:my-5">
             <Button
-              isDisabled={passwordTwoValidity}
-              isValidated={passwordTwoValidity}
+              isDisabled={
+                passwordOneValidity && passwordTwoValidity ? true : false
+              }
+              isValidated={
+                passwordOneValidity && passwordTwoValidity ? true : false
+              }
               buttonType={"submit"}
             >
               Passwort ändern
