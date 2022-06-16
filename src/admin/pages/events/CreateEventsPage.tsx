@@ -1,9 +1,13 @@
-import { ReactElement } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { ChangeEvent, ReactElement } from "react";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Accordion, FormActions } from "../../components/molecules";
+import {
+  Accordion,
+  FormActions,
+  UploadField,
+} from "../../components/molecules";
 import {
   AddressForm,
   BaseDataForm,
@@ -30,16 +34,23 @@ const CreateEventsPage = (): ReactElement => {
   });
 
   const methods = useForm<EventsFormInputs>({
-    resolver: joiResolver(EventsFormSchema),
+    // resolver: joiResolver(EventsFormSchema),
   });
 
-  const { reset, handleSubmit } = methods;
+  const { reset, handleSubmit, register, control, formState } = methods;
+
+  const { fields, append, remove } = useFieldArray({
+    name: "files",
+    control,
+  });
 
   const handleOnSubmit = ({
     baseData,
     address,
     description,
+    files,
   }: EventsFormInputs) => {
+    console.log("handleOnSubmit", files);
     saveEvent({
       variables: {
         entity: {
@@ -55,6 +66,12 @@ const CreateEventsPage = (): ReactElement => {
   };
 
   const handleReset = () => reset();
+  const handleAppend = (file: FileList | null) => {
+    console.log("file", file);
+    append({ file: file || undefined });
+  };
+
+  console.log("fields", fields, formState?.errors);
 
   // useEffect(() => {
   //   if (!!result) {
@@ -75,7 +92,23 @@ const CreateEventsPage = (): ReactElement => {
           <DescriptionFrom />
         </Accordion>
         <Accordion title="Bilder">
-          <p>lorem ispum</p>
+          <div className="flex items-start justify-start">
+            {fields.map((item, index) => (
+              <UploadField
+                key={index}
+                preview
+                src={URL.createObjectURL(item.file[0])}
+                id={`files.${index}.file`}
+                {...register(`files.${index}.file`)}
+              />
+            ))}
+
+            <UploadField
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                handleAppend(event.currentTarget.files)
+              }
+            />
+          </div>
         </Accordion>
         <Accordion title="Termine">
           <p>lorem ispum</p>
