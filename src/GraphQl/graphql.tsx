@@ -125,19 +125,23 @@ export type ChatEntity = {
   __typename?: 'ChatEntity';
   admin?: Maybe<Scalars['Boolean']>;
   created?: Maybe<Scalars['OffsetDateTime']>;
+  group?: Maybe<GroupEntity>;
   id?: Maybe<Scalars['String']>;
   messages?: Maybe<Array<Maybe<MessageEntity>>>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   name?: Maybe<Scalars['String']>;
+  participants?: Maybe<Array<Maybe<MessageEntity>>>;
 };
 
 export type ChatEntityInput = {
   admin?: InputMaybe<Scalars['Boolean']>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
+  group?: InputMaybe<GroupEntityInput>;
   id?: InputMaybe<Scalars['String']>;
   messages?: InputMaybe<Array<InputMaybe<MessageEntityInput>>>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   name?: InputMaybe<Scalars['String']>;
+  participants?: InputMaybe<Array<InputMaybe<MessageEntityInput>>>;
 };
 
 export type CompanyEntity = {
@@ -188,6 +192,11 @@ export type CourseEntity = {
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   name?: Maybe<Scalars['String']>;
+};
+
+
+export type CourseEntityAverageRatingArgs = {
+  year?: InputMaybe<Scalars['Int']>;
 };
 
 export type CourseEntityInput = {
@@ -246,7 +255,6 @@ export type EventCategoryEntity = {
   __typename?: 'EventCategoryEntity';
   created?: Maybe<Scalars['OffsetDateTime']>;
   events?: Maybe<Array<Maybe<EventEntity>>>;
-  icon?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   name?: Maybe<Scalars['String']>;
@@ -255,7 +263,6 @@ export type EventCategoryEntity = {
 export type EventCategoryEntityInput = {
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   events?: InputMaybe<Array<InputMaybe<EventEntityInput>>>;
-  icon?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   name?: InputMaybe<Scalars['String']>;
@@ -321,6 +328,7 @@ export type FilterSortPaginateInput = {
 
 export type GroupEntity = {
   __typename?: 'GroupEntity';
+  chat?: Maybe<ChatEntity>;
   courses?: Maybe<Array<Maybe<CourseEntity>>>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   id?: Maybe<Scalars['String']>;
@@ -330,6 +338,7 @@ export type GroupEntity = {
 };
 
 export type GroupEntityInput = {
+  chat?: InputMaybe<ChatEntityInput>;
   courses?: InputMaybe<Array<InputMaybe<CourseEntityInput>>>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   id?: InputMaybe<Scalars['String']>;
@@ -552,6 +561,7 @@ export type Mutation = {
   addAssignments?: Maybe<UserEntity>;
   addEventFavorite?: Maybe<UserEntity>;
   addJobAdFavorite?: Maybe<UserEntity>;
+  addMember: Scalars['Boolean'];
   addRoles?: Maybe<UserEntity>;
   addUploads?: Maybe<UserEntity>;
   createToken?: Maybe<TokenDto>;
@@ -586,6 +596,7 @@ export type Mutation = {
   deleteLink?: Maybe<Scalars['Boolean']>;
   deleteLinkCategory?: Maybe<Scalars['Boolean']>;
   deleteLinks?: Maybe<Scalars['Boolean']>;
+  deleteMember: Scalars['Boolean'];
   deleteMessage?: Maybe<Scalars['Boolean']>;
   deleteMessages?: Maybe<Scalars['Boolean']>;
   deleteOrganizer?: Maybe<Scalars['Boolean']>;
@@ -704,6 +715,13 @@ export type MutationAddEventFavoriteArgs = {
 /** Mutation root */
 export type MutationAddJobAdFavoriteArgs = {
   jobAdId?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationAddMemberArgs = {
+  groupId?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -911,6 +929,13 @@ export type MutationDeleteLinkCategoryArgs = {
 /** Mutation root */
 export type MutationDeleteLinksArgs = {
   ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteMemberArgs = {
+  groupId?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -2302,12 +2327,18 @@ export enum QueryOperator {
 export type QuestionEntity = {
   __typename?: 'QuestionEntity';
   answers?: Maybe<Array<Maybe<AnswerEntity>>>;
+  averageRating?: Maybe<Scalars['Float']>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   id?: Maybe<Scalars['String']>;
   item?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   questionnaire?: Maybe<QuestionnaireEntity>;
   sequenceOrder?: Maybe<Scalars['Int']>;
+};
+
+
+export type QuestionEntityAverageRatingArgs = {
+  year?: InputMaybe<Scalars['Int']>;
 };
 
 export type QuestionEntityInput = {
@@ -3110,28 +3141,28 @@ export type GetEventQueryVariables = Exact<{
 }>;
 
 
-export type GetEventQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null, postalCode?: string | null, latitude?: number | null, longitude?: number | null, id?: string | null, houseNumber?: string | null, created?: any | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, endDate?: any | null, startDate?: any | null } | null> | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null, icon?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null, name?: string | null, phone?: string | null, website?: string | null, mail?: string | null } | null } | null };
+export type GetEventQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, nextSchedule?: { __typename?: 'ScheduleEntity', startDate?: any | null, endDate?: any | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null, postalCode?: string | null, latitude?: number | null, longitude?: number | null, id?: string | null, houseNumber?: string | null, created?: any | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, endDate?: any | null, startDate?: any | null } | null> | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null, name?: string | null, phone?: string | null, website?: string | null, mail?: string | null } | null } | null };
 
 export type GetEventCategoriesQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
 }>;
 
 
-export type GetEventCategoriesQuery = { __typename?: 'Query', getEventCategories?: { __typename?: 'PageableList_EventCategoryEntity', result?: Array<{ __typename?: 'EventCategoryEntity', name?: string | null, id?: string | null, icon?: string | null, events?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, titleImage?: { __typename?: 'MediaEntity', name?: string | null, id?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null, organizer?: { __typename?: 'OrganizerEntity', website?: string | null, phone?: string | null, name?: string | null, mail?: string | null, id?: string | null } | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, modified?: any | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null> | null } | null> | null } | null };
+export type GetEventCategoriesQuery = { __typename?: 'Query', getEventCategories?: { __typename?: 'PageableList_EventCategoryEntity', result?: Array<{ __typename?: 'EventCategoryEntity', name?: string | null, id?: string | null, events?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, titleImage?: { __typename?: 'MediaEntity', name?: string | null, id?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null, organizer?: { __typename?: 'OrganizerEntity', website?: string | null, phone?: string | null, name?: string | null, mail?: string | null, id?: string | null } | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, modified?: any | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null> | null } | null> | null } | null };
 
 export type GetEventsQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
 }>;
 
 
-export type GetEventsQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', result?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null, postalCode?: string | null, latitude?: number | null, longitude?: number | null, id?: string | null, houseNumber?: string | null, created?: any | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, endDate?: any | null, startDate?: any | null } | null> | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null, icon?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null, name?: string | null, phone?: string | null, website?: string | null, mail?: string | null } | null } | null> | null } | null };
+export type GetEventsQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', result?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null, postalCode?: string | null, latitude?: number | null, longitude?: number | null, id?: string | null, houseNumber?: string | null, created?: any | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, endDate?: any | null, startDate?: any | null } | null> | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null, name?: string | null, phone?: string | null, website?: string | null, mail?: string | null } | null } | null> | null } | null };
 
 export type GetJobAdQueryVariables = Exact<{
   entity?: InputMaybe<JobAdEntityInput>;
 }>;
 
 
-export type GetJobAdQuery = { __typename?: 'Query', getJobAd?: { __typename?: 'JobAdEntity', dueDate?: any | null, id?: string | null, title?: string | null, startDate?: any | null, company?: { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null, type?: { __typename?: 'JobTypeEntity', color?: string | null, id?: string | null, name?: string | null } | null } | null };
+export type GetJobAdQuery = { __typename?: 'Query', getJobAd?: { __typename?: 'JobAdEntity', dueDate?: any | null, content?: string | null, id?: string | null, title?: string | null, startDate?: any | null, company?: { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null, type?: { __typename?: 'JobTypeEntity', color?: string | null, id?: string | null, name?: string | null } | null } | null };
 
 export type GetJobAdsQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3169,6 +3200,11 @@ export type GetMeUploadsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetMeUploadsQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, uploads?: Array<{ __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null } | null> | null } | null };
 
+export type GetMeUserTemplatesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMeUserTemplatesQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, content?: string | null, name?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', name?: string | null, id?: string | null } | null } | null> | null } | null };
+
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3194,13 +3230,6 @@ export type GetTemplatesQueryVariables = Exact<{
 
 
 export type GetTemplatesQuery = { __typename?: 'Query', getTemplates?: { __typename?: 'PageableList_TemplateEntity', result?: Array<{ __typename?: 'TemplateEntity', id?: string | null, name?: string | null } | null> | null } | null };
-
-export type GetUserQueryVariables = Exact<{
-  entity?: InputMaybe<UserEntityInput>;
-}>;
-
-
-export type GetUserQuery = { __typename?: 'Query', getUser?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, uploads?: Array<{ __typename?: 'MediaEntity', id?: string | null, name?: string | null } | null> | null, roles?: Array<{ __typename?: 'RoleEntity', name?: string | null, id?: string | null } | null> | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, content?: string | null, name?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', name?: string | null, id?: string | null } | null } | null> | null, verification?: { __typename?: 'VerificationEntity', id?: string | null } | null } | null };
 
 export type GetUserTemplateQueryVariables = Exact<{
   id: Scalars['String'];
@@ -5530,6 +5559,10 @@ export const GetEventDocument = gql`
     query GetEvent($id: String!) {
   getEvent(entity: {id: $id}) {
     name
+    nextSchedule {
+      startDate
+      endDate
+    }
     titleImage {
       id
     }
@@ -5553,7 +5586,6 @@ export const GetEventDocument = gql`
     category {
       id
       name
-      icon
     }
     organizer {
       id
@@ -5599,7 +5631,6 @@ export const GetEventCategoriesDocument = gql`
     result {
       name
       id
-      icon
       events {
         titleImage {
           name
@@ -5691,7 +5722,6 @@ export const GetEventsDocument = gql`
       category {
         id
         name
-        icon
       }
       organizer {
         id
@@ -5752,6 +5782,7 @@ export const GetJobAdDocument = gql`
       website
     }
     dueDate
+    content
     id
     title
     type {
@@ -6121,6 +6152,49 @@ export function useGetMeUploadsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetMeUploadsQueryHookResult = ReturnType<typeof useGetMeUploadsQuery>;
 export type GetMeUploadsLazyQueryHookResult = ReturnType<typeof useGetMeUploadsLazyQuery>;
 export type GetMeUploadsQueryResult = Apollo.QueryResult<GetMeUploadsQuery, GetMeUploadsQueryVariables>;
+export const GetMeUserTemplatesDocument = gql`
+    query GetMeUserTemplates {
+  me {
+    id
+    userTemplates {
+      id
+      content
+      name
+      templateType {
+        name
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMeUserTemplatesQuery__
+ *
+ * To run a query within a React component, call `useGetMeUserTemplatesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMeUserTemplatesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMeUserTemplatesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMeUserTemplatesQuery(baseOptions?: Apollo.QueryHookOptions<GetMeUserTemplatesQuery, GetMeUserTemplatesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMeUserTemplatesQuery, GetMeUserTemplatesQueryVariables>(GetMeUserTemplatesDocument, options);
+      }
+export function useGetMeUserTemplatesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMeUserTemplatesQuery, GetMeUserTemplatesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMeUserTemplatesQuery, GetMeUserTemplatesQueryVariables>(GetMeUserTemplatesDocument, options);
+        }
+export type GetMeUserTemplatesQueryHookResult = ReturnType<typeof useGetMeUserTemplatesQuery>;
+export type GetMeUserTemplatesLazyQueryHookResult = ReturnType<typeof useGetMeUserTemplatesLazyQuery>;
+export type GetMeUserTemplatesQueryResult = Apollo.QueryResult<GetMeUserTemplatesQuery, GetMeUserTemplatesQueryVariables>;
 export const GetNotificationsDocument = gql`
     query GetNotifications {
   me {
@@ -6276,66 +6350,6 @@ export function useGetTemplatesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetTemplatesQueryHookResult = ReturnType<typeof useGetTemplatesQuery>;
 export type GetTemplatesLazyQueryHookResult = ReturnType<typeof useGetTemplatesLazyQuery>;
 export type GetTemplatesQueryResult = Apollo.QueryResult<GetTemplatesQuery, GetTemplatesQueryVariables>;
-export const GetUserDocument = gql`
-    query GetUser($entity: UserEntityInput) {
-  getUser(entity: $entity) {
-    uploads {
-      id
-      name
-    }
-    roles {
-      name
-      id
-    }
-    profilePicture {
-      id
-    }
-    id
-    fullname
-    email
-    userTemplates {
-      id
-      content
-      name
-      templateType {
-        name
-        id
-      }
-    }
-    verification {
-      id
-    }
-  }
-}
-    `;
-
-/**
- * __useGetUserQuery__
- *
- * To run a query within a React component, call `useGetUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetUserQuery({
- *   variables: {
- *      entity: // value for 'entity'
- *   },
- * });
- */
-export function useGetUserQuery(baseOptions?: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-      }
-export function useGetUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options);
-        }
-export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>;
-export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
-export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const GetUserTemplateDocument = gql`
     query GetUserTemplate($id: String!) {
   getUserTemplate(entity: {id: $id}) {

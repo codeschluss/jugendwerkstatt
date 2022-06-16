@@ -1,19 +1,19 @@
-import { ShareButton } from "../../ui/ShareButton";
+import { ShareButton } from "../ui/ShareButton";
 import { HeartIcon as OutlineHeart } from "@heroicons/react/outline";
 import { HeartIcon as SolidHeart } from "@heroicons/react/solid";
 
 interface EventHeaderProps {
   eventName?: string;
   url?: string;
-  setFavorite?: () => void;
   isFavorite?: boolean;
+  setFavorite?: () => void;
 }
 
-export const EventHeader: React.FC<EventHeaderProps> = ({
+export const JobHeader: React.FC<EventHeaderProps> = ({
   eventName,
   url,
-  setFavorite,
   isFavorite,
+  setFavorite,
 }) => {
   return (
     <>

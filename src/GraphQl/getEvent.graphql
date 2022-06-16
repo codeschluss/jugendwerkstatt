@@ -1,6 +1,10 @@
 query GetEvent($id: String!) {
   getEvent(entity: { id: $id }) {
     name
+    nextSchedule {
+      startDate
+      endDate
+    }
     titleImage {
       id
     }
@@ -24,7 +28,6 @@ query GetEvent($id: String!) {
     category {
       id
       name
-      icon
     }
     organizer {
       id

@@ -17,6 +17,7 @@ query GetJobAd($entity: JobAdEntityInput) {
       website
     }
     dueDate
+    content
     id
     title
     type {

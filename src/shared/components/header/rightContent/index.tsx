@@ -2,6 +2,7 @@ import { BellIcon, LogoutIcon, SearchIcon } from "@heroicons/react/outline";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
+  NotificationEntity,
   useGetMeBasicQuery,
   useGetNotificationsQuery,
 } from "../../../../GraphQl/graphql";
@@ -74,8 +75,8 @@ const RightContent: React.FC<RightContentProps> = () => {
 
       <DropDown
         position="right"
-        className="mr-3 ml-3 border-r border-gray-200 pr-3 hidden md:block"
-        boxClassName=" mt-3 py-2.5 px-4"
+        className="mr-3  ml-3 border-r border-gray-200 pr-3 hidden md:block"
+        boxClassName=" mt-3 w-96 py-2.5 px-4"
         name={
           <I className="h-6 w-6 text-white md:text-black md:ml-6">
             <BellIcon />
@@ -85,13 +86,20 @@ const RightContent: React.FC<RightContentProps> = () => {
         <div>
           <ul>
             {notifications.data?.me?.notifications?.map((el: any) => {
+              const weekDays = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+              const weekDay = weekDays[new Date(el.created).getDay()];
+              const year = `${new Date(el.created).getFullYear()}`;
+              const month = `${new Date(el.created).getMonth()}`;
+              const date = `${new Date(el.created).getDate()}`;
               return (
-                <li className="border-b-[1px] border-gray-500">
-                  <p className="text-sm">TITLE</p>
-                  <p className="text-xs py-3">
-                    ContContentContentContentContentent
+                <li className="border-b-[1px]  border-gray-400">
+                  <p className={`text-base mt-2 ${el.read && "font-bold"}`}>
+                    {el?.title}
                   </p>
-                  <p className="text-xs">Date</p>
+                  <p className={`text-sm py-2 ${el.read && "font-bold"} `}>
+                    {el?.content}
+                  </p>
+                  <p className="text-sm py-2">{`${weekDay}, ${date}.${month}.${year}`}</p>
                 </li>
               );
             })}

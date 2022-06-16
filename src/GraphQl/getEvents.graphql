@@ -25,7 +25,6 @@ query getEvents($params: FilterSortPaginateInput) {
       category {
         id
         name
-        icon
       }
       organizer {
         id

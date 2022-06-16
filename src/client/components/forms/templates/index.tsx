@@ -1,15 +1,13 @@
-import React, { useContext } from "react";
 import ChevronRightIcon from "@heroicons/react/outline/ChevronRightIcon";
-import I from "../../../../shared/components/ui/IconWrapper";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
   TemplateEntity,
   useGetMeBasicQuery,
-  useGetTemplatesQuery,
-  useGetUserQuery,
-  UserTemplateEntity,
+  useGetMeUserTemplatesQuery,
+  useGetTemplatesQuery, UserTemplateEntity
 } from "../../../../GraphQl/graphql";
-import AuthContext from "../../../../contexts/AuthContext";
+import I from "../../../../shared/components/ui/IconWrapper";
 
 const Templates: React.FC = () => {
   const location = useLocation();
@@ -25,17 +23,12 @@ const Templates: React.FC = () => {
   const fetchedTemplates: [TemplateEntity] = templatesResult.data?.getTemplates
     ?.result as [TemplateEntity];
 
-  const userTemplatesResult = useGetUserQuery({
-    variables: {
-      entity: {
-        id: user.data?.me?.id,
-      },
-    },
-    fetchPolicy: "network-only",
+  const userTemplatesResult = useGetMeUserTemplatesQuery({
+    fetchPolicy: "network-only"
   });
 
   const fetchedUserTemplates: [UserTemplateEntity] = userTemplatesResult.data
-    ?.getUser?.userTemplates as [UserTemplateEntity];
+    ?.me?.userTemplates as [UserTemplateEntity];
 
   console.log(fetchedUserTemplates);
 
@@ -69,7 +62,7 @@ const Templates: React.FC = () => {
       </ul>
       <h5 className="text-xl font-bold pt-4">Eigene Vorlagen "</h5>
       <ul className="list-none text-base font-normal pl-4 text-gray-600">
-        {fetchedUserTemplates?.map((template, index) => {
+        {fetchedUserTemplates?.filter(ut => ut.templateType?.id === templateType.id)?.map((template, index) => {
           return (
             <li className="pt-4" key={index}>
               <Link

@@ -1,10 +1,12 @@
-import { HeartIcon, ShareIcon } from "@heroicons/react/solid";
+import { HeartIcon as SolidHeart, ShareIcon } from "@heroicons/react/solid";
+import { HeartIcon as OutlineHeart } from "@heroicons/react/outline";
 import { Link } from "react-router-dom";
 import {
   AddressEntity,
   EventEntity,
   useAddEventFavoriteMutation,
   useAddJobAdFavoriteMutation,
+  useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
 import { API_URL } from "../../../config/app";
 import { ShareButton } from "../ui/ShareButton";
@@ -18,7 +20,8 @@ export interface SlideCardProps {
   width?: string;
   color?: string | undefined | null;
   gradient?: boolean;
-  setFavorite?: () => void;
+  setFavorite?: any;
+  isFavorite?: boolean;
 }
 
 const SlideCard: React.FC<SlideCardProps> = ({
@@ -30,6 +33,7 @@ const SlideCard: React.FC<SlideCardProps> = ({
   imgUrl,
   route,
   color,
+  isFavorite,
   width = "w-9/12 md:w-full",
   setFavorite,
 }) => {
@@ -76,7 +80,11 @@ const SlideCard: React.FC<SlideCardProps> = ({
           <small className="font-bold">{eventName}</small>
           <div className="flex items-center">
             <ShareButton url="#" />
-            <HeartIcon className="w-4 h-4" onClick={setFavorite} />
+            {isFavorite ? (
+              <SolidHeart className="w-5" />
+            ) : (
+              <OutlineHeart className="w-5" onClick={setFavorite} />
+            )}
           </div>
         </div>
         <div
