@@ -1,12 +1,12 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement, useContext, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import AuthContext from '../../../../contexts/AuthContext';
-import { useSaveUserAdminMutation } from '../../../../GraphQl/graphql';
-import { ProfilePasswordFormSchema } from '../../../validations';
-import { Panel } from '../../atoms';
-import { PasswordField } from '../../molecules';
-import { ProfilePasswordFormInputs } from './AdminProfile.props';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { ReactElement, useContext, useState } from "react";
+import { useForm } from "react-hook-form";
+import AuthContext from "../../../../contexts/AuthContext";
+import { useSaveUserAdminMutation } from "../../../../GraphQl/graphql";
+import { ProfilePasswordFormSchema } from "../../../validations";
+import { Panel } from "../../atoms";
+import { PasswordField } from "../../molecules";
+import { ProfilePasswordFormInputs } from "./AdminProfile.props";
 
 export const AdminProfilePassword = (): ReactElement => {
   const user = useContext(AuthContext);
@@ -19,13 +19,13 @@ export const AdminProfilePassword = (): ReactElement => {
   } = useForm<ProfilePasswordFormInputs>({
     resolver: joiResolver(ProfilePasswordFormSchema),
   });
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [saveUser] = useSaveUserAdminMutation();
 
   const onSubmit = (data: ProfilePasswordFormInputs) => {
     if (data.currentPassword !== user.password)
-      setErrorMessage('Falsches aktuelles Passwort');
+      setErrorMessage("Falsches aktuelles Passwort");
     else
       saveUser({
         variables: {
@@ -49,22 +49,19 @@ export const AdminProfilePassword = (): ReactElement => {
         <PasswordField
           id="currentPassword"
           label="Aktuelles Passwort"
-          labelProps={{ htmlFor: 'currentPassword' }}
-          {...register('currentPassword')}
+          {...register("currentPassword")}
           error={currentPassword?.message}
         />
         <PasswordField
           id="newPassword"
           label="Neues Passwort"
-          labelProps={{ htmlFor: 'newPassword' }}
-          {...register('newPassword')}
+          {...register("newPassword")}
           error={newPassword?.message}
         />
         <PasswordField
           id="confirmPassword"
           label="Neues Passwort wiederholen"
-          labelProps={{ htmlFor: 'confirmPassword' }}
-          {...register('confirmPassword')}
+          {...register("confirmPassword")}
           error={confirmPassword?.message}
         />
       </Panel.Body>

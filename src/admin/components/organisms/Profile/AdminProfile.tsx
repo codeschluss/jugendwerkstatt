@@ -1,15 +1,15 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement, useContext, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { ReactElement, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import {
   useGetMeBasicQuery,
   useSaveUserAdminMutation,
-} from '../../../../GraphQl/graphql';
-import Avatar from '../../../../shared/components/header/sideBar/Avatar';
-import { ProfileFormSchema } from '../../../validations';
-import { Button, Panel } from '../../atoms';
-import { InputField } from '../../molecules';
-import { ProfileFormInputs } from './AdminProfile.props';
+} from "../../../../GraphQl/graphql";
+import Avatar from "../../../../shared/components/header/sideBar/Avatar";
+import { ProfileFormSchema } from "../../../validations";
+import { Button, Panel } from "../../atoms";
+import { InputField } from "../../molecules";
+import { ProfileFormInputs } from "./AdminProfile.props";
 
 export const AdminProfile = (): ReactElement => {
   const { data: user } = useGetMeBasicQuery();
@@ -29,9 +29,9 @@ export const AdminProfile = (): ReactElement => {
   useEffect(() => {
     if (user?.me) {
       reset({
-        fullname: user?.me?.fullname || '',
-        email: user?.me?.email || '',
-        phone: user?.me?.phone || '',
+        fullname: user?.me?.fullname || "",
+        email: user?.me?.email || "",
+        phone: user?.me?.phone || "",
       });
     }
   }, [user?.me, reset]);
@@ -55,22 +55,19 @@ export const AdminProfile = (): ReactElement => {
           <InputField
             id="fullname"
             label="Name"
-            labelProps={{ htmlFor: 'fullname' }}
-            {...register('fullname')}
+            {...register("fullname")}
             error={fullname?.message}
           />
           <InputField
             id="email"
             label="E-Mail-Adresse"
-            labelProps={{ htmlFor: 'email' }}
-            {...register('email')}
+            {...register("email")}
             error={email?.message}
           />
           <InputField
             id="phone"
             label="Telefonnummer"
-            labelProps={{ htmlFor: 'phone' }}
-            {...register('phone')}
+            {...register("phone")}
             error={phone?.message}
           />
         </div>

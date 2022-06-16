@@ -12,10 +12,10 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
       name,
       preview,
       onChange,
+      handleShow,
       handleAppend,
       className,
       inputClassName,
-      labelProps,
       ...rest
     },
     ref
@@ -28,13 +28,19 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
         setfilePreview(URL.createObjectURL(event.currentTarget.files[0]));
       }
       onChange && onChange(event);
+      console.log("files 1", event.target.files);
+      event.target.files = null;
+      console.log("files 2", event.target.files);
     };
+
+    const isPreview = !!preview && !!filePreview;
 
     return (
       <Label
-        {...labelProps}
-        htmlFor={id || name}
-        className={twClsx("w-72 h-auto min-h-48 cursor-pointer", className)}
+        {...(isPreview
+          ? { as: "div", onClick: handleShow }
+          : { htmlFor: id || name })}
+        className={twClsx("w-64 h-48 m-4 cursor-pointer", className)}
       >
         <div
           className={twClsx(
@@ -42,9 +48,13 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
             className
           )}
         >
-          <div className="flex flex-col items-center justify-center w-full p-2 border border-transparent rounded-sm shadow-lg shadow-gray-200">
-            {preview && filePreview ? (
-              <img src={filePreview} alt={name} />
+          <div className="flex flex-col h-full items-center justify-center w-full p-2 border border-transparent rounded-sm shadow-lg shadow-gray-200">
+            {isPreview ? (
+              <img
+                src={filePreview}
+                alt={name}
+                className="object-contain h-full"
+              />
             ) : (
               <>
                 <PhotographIcon width={24} />

@@ -1,5 +1,10 @@
-import { ChangeEvent, ReactElement } from "react";
-import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import { ChangeEvent, ReactElement, useMemo, useState } from "react";
+import {
+  FieldArrayWithId,
+  FormProvider,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -23,6 +28,12 @@ import {
 const CreateEventsPage = (): ReactElement => {
   const navigate = useNavigate();
   const { id } = useParams();
+
+  const [file, setFile] = useState<FieldArrayWithId<
+    EventsFormInputs,
+    "files",
+    "id"
+  > | null>(null);
 
   const { data: result } = useGetEventAdminQuery({
     variables: { entity: { id } },
@@ -66,8 +77,14 @@ const CreateEventsPage = (): ReactElement => {
   };
 
   const handleReset = () => reset();
-  const handleAppend = (file: FileList | null) => {
-    console.log("file", file);
+
+  const handleSetFile =
+    (item: FieldArrayWithId<EventsFormInputs, "files", "id">) => () => {
+      console.log("item", item);
+      setFile(item);
+    };
+
+  const handleAppend = (file: FileList) => {
     append({ file: file || undefined });
   };
 
@@ -91,23 +108,33 @@ const CreateEventsPage = (): ReactElement => {
         <Accordion title="Beschreibung">
           <DescriptionFrom />
         </Accordion>
-        <Accordion title="Bilder">
+        <Accordion
+          title="Bilder"
+          showSide
+          sideClassName="w-auto"
+          sideContent={
+            file && (
+              <img
+                className="h-72"
+                alt={file.file[0].name}
+                src={URL.createObjectURL(file.file[0] as File) || ""}
+              />
+            )
+          }
+        >
           <div className="flex items-start justify-start">
             {fields.map((item, index) => (
               <UploadField
                 key={index}
                 preview
+                handleShow={handleSetFile(item)}
                 src={URL.createObjectURL(item.file[0])}
                 id={`files.${index}.file`}
                 {...register(`files.${index}.file`)}
               />
             ))}
 
-            <UploadField
-              onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                handleAppend(event.currentTarget.files)
-              }
-            />
+            <UploadField handleAppend={handleAppend} />
           </div>
         </Accordion>
         <Accordion title="Termine">
