@@ -1,13 +1,13 @@
-import { default as jwt_decode } from "jwt-decode";
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
-import TokenStorageContext from "../contexts/TokenStorageContext";
+import { default as jwt_decode } from 'jwt-decode';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
+import TokenStorageContext from '../contexts/TokenStorageContext';
 import {
   TokenDto,
   useCreateTokenMutation,
   useRefreshTokenMutation,
-} from "../GraphQl/graphql";
+} from '../GraphQl/graphql';
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ export const useAuth = () => {
     if (refreshToken) {
       refreshTokenMutation({
         variables: {
-          refreshToken: refreshToken || "",
+          refreshToken: refreshToken || '',
         },
       }).then((response) => {
         store(response.data?.refreshToken);
@@ -50,23 +50,23 @@ export const useAuth = () => {
       .then((response) => {
         // response.errors ? setHasError(true) : setHasError(false);
         const recievedToken: [string] | any = jwt_decode(
-          response.data?.createToken?.access || ""
+          response.data?.createToken?.access || ''
         );
 
         if (!recievedToken.verified) {
-          navigate("/reVerifyEmail");
+          navigate('/reVerifyEmail');
           return;
         }
 
         //TODO: pending approved view
         if (!recievedToken.approved) {
-          navigate("/pending-approval");
+          navigate('/pending-approval');
           return;
         }
 
         store(response.data?.createToken);
         timers(response.data?.createToken);
-        navigate("/");
+        navigate('/');
       })
       .catch((err) => {
         setHasError(err);
@@ -75,7 +75,7 @@ export const useAuth = () => {
 
   const store = (token: TokenDto | null | undefined) => {
     if (token) {
-      const recievedToken: [string] | any = jwt_decode(token?.access || "");
+      const recievedToken: [string] | any = jwt_decode(token?.access || '');
 
       setUserRole(recievedToken.roles[0]);
       setAccessToken(token.access);
@@ -94,7 +94,7 @@ export const useAuth = () => {
   };
 
   const expiration = (token: string): number => {
-    const decoded = JSON.parse(atob(token.split(".")[1]));
+    const decoded = JSON.parse(atob(token.split('.')[1]));
     return decoded.exp * 1000 - Date.now();
   };
 
@@ -104,7 +104,7 @@ export const useAuth = () => {
     setAccessToken(null);
     setRefreshToken(null);
     setIsLogedIn(false);
-    navigate("/");
+    navigate('/');
   };
 
   return {

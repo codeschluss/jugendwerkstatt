@@ -1,13 +1,13 @@
-import { Control, FieldError, UseFormRegister } from "react-hook-form";
+import { Control, FieldError, UseFormRegister } from 'react-hook-form';
 
-export interface QuuestionInput {
+export interface QuestionInput {
   name: string;
   questionId?: string;
 }
 
 export interface QuestionsInput {
-  questions: QuuestionInput[];
   name: string;
+  questions: QuestionInput[];
 }
 
 export interface EvaluationQuestionListProps {

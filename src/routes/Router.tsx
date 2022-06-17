@@ -31,18 +31,23 @@ import {
   FormsUserListPage,
   FormsListPage,
   GroupListPage,
-  CreateGroupPage,
-  EditGroupPage,
+  GroupFormPage,
   ChatActivationPage,
   GeneralAddressPage,
   PublicPagesPage,
-  EvaluationsPage,
-  EvaluationsQuestionsPage,
   FormsCategoriesListPage,
   CreateFormsCategories,
   CreateUserFormsPage,
   PushMessagesPage,
   EditGeneralAddressPage,
+  EvaluationsAssignmentsPage,
+  CreateEvaluationAssignmentPage,
+  EvaluationQuestionViewPage,
+  EvaluationQuestionsPage,
+  EvaluationQuestionFormPage,
+  GroupMembersPage,
+  CreateGroupMembersPage,
+  GroupCoursesPage,
 } from '../admin/pages';
 import LoginPage from '../client/pages/authentication/LoginPage';
 // import ForgotPassword from "../shared/components/authentication/forgotPassword";
@@ -245,15 +250,47 @@ export const Router = () => {
           element={<CreateFormsCategories />}
         />
 
-        <Route path="evaluations" element={<EvaluationsPage />} />
+        {/* Evaluations */}
         <Route
-          path="evaluations/questions"
-          element={<EvaluationsQuestionsPage />}
+          path="evaluation/questions"
+          element={<EvaluationQuestionsPage />}
+        />
+        <Route
+          path="evaluation/questions/:id/view"
+          element={<EvaluationQuestionViewPage />}
+        />
+        <Route
+          path="evaluation/questions/new"
+          element={<EvaluationQuestionFormPage />}
+        />
+        <Route
+          path="evaluation/questions/:id"
+          element={<EvaluationQuestionFormPage />}
         />
 
+        <Route
+          path="evaluations/assignments"
+          element={<EvaluationsAssignmentsPage />}
+        />
+        <Route
+          path="evaluations/assignments/new"
+          element={<CreateEvaluationAssignmentPage />}
+        />
+        <Route
+          path="evaluations/assignments/:id"
+          element={<CreateEvaluationAssignmentPage />}
+        />
+
+        {/* Groups */}
         <Route path="groups" element={<GroupListPage />} />
-        <Route path="groups/new" element={<CreateGroupPage />} />
-        <Route path="groups/:id" element={<EditGroupPage />} />
+        <Route path="groups/new" element={<GroupFormPage />} />
+        <Route path="groups/:id" element={<GroupFormPage />} />
+        <Route path="groups/:id/members" element={<GroupMembersPage />} />
+        <Route
+          path="groups/:id/members/new"
+          element={<CreateGroupMembersPage />}
+        />
+        <Route path="groups/:id/courses" element={<GroupCoursesPage />} />
 
         {/* General Settings */}
         <Route

@@ -179,7 +179,7 @@ export const FormsUserListPage = loadable(
   }
 );
 export const CreateUserFormsPage = loadable(
-  () => timeout(import("./Forms/CreateUserFormsPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Forms/CreateUserFormsPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
@@ -227,8 +227,8 @@ export const GroupMembersPage = loadable(
   }
 );
 
-export const CreateGroupPage = loadable(
-  () => timeout(import('./Group/CreateGroupPage'), PAGE_LOAD_TIMEOUT),
+export const GroupFormPage = loadable(
+  () => timeout(import('./Group/GroupFormPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
@@ -241,24 +241,52 @@ export const CreateGroupMembersPage = loadable(
   }
 );
 
-export const EditGroupPage = loadable(
-  () => timeout(import('./Group/EditGroupPage'), PAGE_LOAD_TIMEOUT),
+// Evaluations pages
+export const EvaluationQuestionsPage = loadable(
+  () =>
+    timeout(import('./Evaluations/EvaluationQuestionsPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
-// Evaluations pages
-export const EvaluationsPage = loadable(
-  () => timeout(import('./Evaluations/EvaluationsPage'), PAGE_LOAD_TIMEOUT),
+export const EvaluationQuestionViewPage = loadable(
+  () =>
+    timeout(
+      import('./Evaluations/EvaluationQuestionViewPage'),
+      PAGE_LOAD_TIMEOUT
+    ),
   {
     fallback: <PageLoader />,
   }
 );
-export const EvaluationsQuestionsPage = loadable(
+
+export const EvaluationQuestionFormPage = loadable(
   () =>
     timeout(
-      import('./Evaluations/EvaluationsQuestionsPage'),
+      import('./Evaluations/EvaluationQuestionFormPage'),
+      PAGE_LOAD_TIMEOUT
+    ),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const EvaluationsAssignmentsPage = loadable(
+  () =>
+    timeout(
+      import('./Evaluations/EvaluationsAssignmentsPage'),
+      PAGE_LOAD_TIMEOUT
+    ),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const CreateEvaluationAssignmentPage = loadable(
+  () =>
+    timeout(
+      import('./Evaluations/CreateEvaluationAssignmentPage'),
       PAGE_LOAD_TIMEOUT
     ),
   {

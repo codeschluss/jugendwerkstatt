@@ -20,8 +20,7 @@ const GroupListPage = () => {
 
   const handleGroupCoursesNavigate = (groupId: string) => () =>
     navigate(`${groupId}/courses`);
-  const handleGroupUpdate = (groupId: string) => () =>
-    navigate(`${groupId}/edit`);
+  const handleGroupUpdate = (groupId: string) => () => navigate(groupId);
   const handleGroupDelete = (groupId: string) => () => {
     // eslint-disable-next-line no-restricted-globals
     if (confirm('Möchten Sie dies löschen?')) {

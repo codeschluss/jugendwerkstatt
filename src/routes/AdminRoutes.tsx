@@ -30,14 +30,11 @@ import {
   FormsUserListPage,
   FormsListPage,
   GroupListPage,
-  CreateGroupPage,
-  EditGroupPage,
+  GroupFormPage,
   PushMessagesPage,
   ChatActivationPage,
   GeneralAddressPage,
   PublicPagesPage,
-  EvaluationsPage,
-  EvaluationsQuestionsPage,
   FormsCategoriesListPage,
   CreateFormsCategories,
   GroupMembersPage,
@@ -142,22 +139,23 @@ export const AdminRoutes = () => {
           path="forms/categories/:id"
           element={<CreateFormsCategories />}
         />
-
-        <Route path="evaluations" element={<EvaluationsPage />} />
+        {/* <Route
+          path="evaluations/evaluation-forms"
+          element={<EvaluationsFormsViewPage />}
+        />
         <Route
           path="evaluations/questions"
           element={<EvaluationsQuestionsPage />}
-        />
+        /> */}
 
         <Route path="groups" element={<GroupListPage />} />
-        <Route path="groups/new" element={<CreateGroupPage />} />
+        <Route path="groups/new" element={<GroupFormPage />} />
         <Route path="groups/:id/members" element={<GroupMembersPage />} />
         <Route
           path="groups/:id/members/new"
           element={<CreateGroupMembersPage />}
         />
         <Route path="groups/:id/courses" element={<GroupCoursesPage />} />
-        <Route path="groups/:id/edit" element={<EditGroupPage />} />
 
         {/* General Settings */}
         <Route

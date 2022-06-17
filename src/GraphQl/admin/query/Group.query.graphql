@@ -19,6 +19,9 @@ query GetGroup($entity: GroupEntityInput) {
     users {
       ...UserField
     }
+    courses {
+      ...CourseField
+    }
   }
 }
 

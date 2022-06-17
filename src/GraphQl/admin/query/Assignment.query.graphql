@@ -1,0 +1,17 @@
+query GetAssignments {
+  assignments: getAssignments {
+    result {
+      ...AssignmentField
+      user {
+        ...UserField
+        approved
+      }
+    }
+  }
+}
+
+query GetAssignment($entity: AssignmentEntityInput) {
+  getAssignment(entity: $entity) {
+    ...AssignmentField
+  }
+}

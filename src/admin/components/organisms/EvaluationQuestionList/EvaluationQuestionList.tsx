@@ -1,11 +1,11 @@
-import { PlusCircleIcon } from "@heroicons/react/outline";
-import { useCallback } from "react";
-import { useFieldArray } from "react-hook-form";
-import { SortOver, SortEvent } from "react-sortable-hoc";
-import { Button, DragItem, DragList, ListItem } from "../../atoms";
-import { InputField } from "../../molecules";
+import { PlusCircleIcon } from '@heroicons/react/outline';
+import { useCallback } from 'react';
+import { useFieldArray } from 'react-hook-form';
+import { SortOver, SortEvent } from 'react-sortable-hoc';
+import { Button, DragItem, DragList, ListItem } from '../../atoms';
+import { InputField } from '../../molecules';
 
-import { EvaluationQuestionListProps } from "./EvaluationQuestionList.types";
+import { EvaluationQuestionListProps } from './EvaluationQuestionList.types';
 
 export const EvaluationQuestionList = ({
   errors,
@@ -13,13 +13,13 @@ export const EvaluationQuestionList = ({
   register,
 }: EvaluationQuestionListProps) => {
   const { fields, append, remove, move } = useFieldArray({
-    name: "questions",
+    name: 'questions',
     control,
   });
 
   // handlers
   const handleAddNew = () => {
-    append({ questionId: "", name: "" }, { shouldFocus: true });
+    append({ questionId: '', name: '' }, { shouldFocus: true });
   };
 
   const handleOnSortEnd = useCallback(
@@ -37,7 +37,7 @@ export const EvaluationQuestionList = ({
         lockAxis="y"
         useDragHandle
         lockToContainerEdges
-        lockOffset={["0%", "0%"]}
+        lockOffset={['0%', '0%']}
         onSortOver={handleOnSortEnd}
         className="mb-3"
       >

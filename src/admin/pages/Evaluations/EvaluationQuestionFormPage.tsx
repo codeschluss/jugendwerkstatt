@@ -1,18 +1,23 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { ReactElement, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useGetQuestionsQuery } from "../../../GraphQl/graphql";
-import { Button } from "../../components/atoms";
-import { Accordion, FormActions, InputField } from "../../components/molecules";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { ReactElement, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
-  EvaluationQuestionList,
-  QuestionsInput,
-} from "../../components/organisms";
-import { EvaluationsQuestionsFormSchema } from "../../validations";
+  useGetQuestionsQuery,
+  useSaveQuestionnaireMutation,
+} from '../../../GraphQl/graphql';
+import { Button } from '../../components/atoms';
+import { Accordion, FormActions, InputField } from '../../components/molecules';
+import { EvaluationQuestionList } from '../../components/organisms/EvaluationQuestionList/EvaluationQuestionList';
+import { QuestionsInput } from '../../components/organisms/EvaluationQuestionList/EvaluationQuestionList.types';
+import { EvaluationsQuestionsFormSchema } from '../../validations/EvaluationsQuestions.schema';
 
-const EvaluationsQuestionsPage = (): ReactElement => {
-  const { data: { questions = null } = {} } = useGetQuestionsQuery();
-
+const EvaluationQuestionFormPage = (): ReactElement => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { data: { questions = null } = {} } = useGetQuestionsQuery({
+    skip: !id,
+  });
   // const [deleteQuestion] = useDeleteQuestionMutation({
   //   onCompleted: () => refetch(),
   // });
@@ -27,6 +32,9 @@ const EvaluationsQuestionsPage = (): ReactElement => {
   } = useForm<QuestionsInput>({
     resolver: joiResolver(EvaluationsQuestionsFormSchema),
   });
+  const [saveQuestionnaire] = useSaveQuestionnaireMutation({
+    onCompleted: () => navigate('/admin/evaluation/questions'),
+  });
 
   // const handleEditQuestion = () => {
   //   console.log("We need a view for editing questions!");
@@ -40,19 +48,29 @@ const EvaluationsQuestionsPage = (): ReactElement => {
   // };
 
   const handleOnSubmit = (data: QuestionsInput) => {
-    console.log("data", data);
+    console.log(data);
+    // saveQuestionnaire({
+    //   variables: {
+    //     entity: {
+    //       name: data.name,
+    //       questions: data.questions.map((question) => ({
+    //         item: question.name,
+    //         sequenceOrder: Number(question.questionId),
+    //       })),
+    //     },
+    //   },
+    // });
   };
 
-  const handleTrigger = () => trigger("name");
-
+  const handleTrigger = () => trigger('name');
   const handleReset = () => reset();
 
   useEffect(() => {
     if (!!questions?.result) {
       reset({
         questions: questions?.result?.map((question) => ({
-          questionId: question?.id || "",
-          name: question?.item || "",
+          questionId: question?.id || '',
+          name: question?.item || '',
         })),
       });
     }
@@ -65,7 +83,7 @@ const EvaluationsQuestionsPage = (): ReactElement => {
           id="name"
           label="Name"
           placeholder="Evaluierungsbogen 1"
-          {...register("name")}
+          {...register('name')}
           error={errors?.name?.message}
         />
 
@@ -88,4 +106,4 @@ const EvaluationsQuestionsPage = (): ReactElement => {
   );
 };
 
-export default EvaluationsQuestionsPage;
+export default EvaluationQuestionFormPage;
