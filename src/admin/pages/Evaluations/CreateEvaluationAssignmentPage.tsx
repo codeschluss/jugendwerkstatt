@@ -47,7 +47,6 @@ const CreateEvaluationAssignmentPage = (): ReactElement => {
   //     });
   //   };
 
-  const handleReset = () => reset();
   const onSubmit = (data: EvaluationFormInputs) => console.log(data);
 
   //   useEffect(() => {
@@ -77,7 +76,7 @@ const CreateEvaluationAssignmentPage = (): ReactElement => {
           </Select>
         </div>
       </Accordion>
-      <FormActions onReset={handleReset} onSubmit={handleSubmit(onSubmit)} />
+      <FormActions onSubmit={handleSubmit(onSubmit)} />
     </form>
   );
 };

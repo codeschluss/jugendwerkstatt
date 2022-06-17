@@ -1,20 +1,20 @@
-import { ReactElement } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { joiResolver } from "@hookform/resolvers/joi";
-import { useNavigate, useParams } from "react-router-dom";
+import { ReactElement } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { Accordion, FormActions } from "../../components/molecules";
+import { Accordion, FormActions } from '../../components/molecules';
 import {
   AddressForm,
   BaseDataForm,
   DescriptionFrom,
   EventsFormInputs,
-} from "../../components/organisms";
-import { EventsFormSchema } from "../../validations";
+} from '../../components/organisms';
+import { EventsFormSchema } from '../../validations';
 import {
   useGetEventAdminQuery,
   useSaveEventMutation,
-} from "../../../GraphQl/graphql";
+} from '../../../GraphQl/graphql';
 
 const CreateEventsPage = (): ReactElement => {
   const navigate = useNavigate();
@@ -26,14 +26,14 @@ const CreateEventsPage = (): ReactElement => {
   });
 
   const [saveEvent] = useSaveEventMutation({
-    onCompleted: () => navigate("/admin/events"),
+    onCompleted: () => navigate('/admin/events'),
   });
 
   const methods = useForm<EventsFormInputs>({
     resolver: joiResolver(EventsFormSchema),
   });
 
-  const { reset, handleSubmit } = methods;
+  const { handleSubmit } = methods;
 
   const handleOnSubmit = ({
     baseData,
@@ -53,8 +53,6 @@ const CreateEventsPage = (): ReactElement => {
       },
     });
   };
-
-  const handleReset = () => reset();
 
   // useEffect(() => {
   //   if (!!result) {
@@ -81,10 +79,7 @@ const CreateEventsPage = (): ReactElement => {
           <p>lorem ispum</p>
         </Accordion>
 
-        <FormActions
-          onReset={handleReset}
-          onSubmit={handleSubmit(handleOnSubmit)}
-        />
+        <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
       </form>
     </FormProvider>
   );

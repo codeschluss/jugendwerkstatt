@@ -2,7 +2,6 @@ import { Control, FieldError, UseFormRegister } from 'react-hook-form';
 
 export interface QuestionInput {
   name: string;
-  questionId?: string;
 }
 
 export interface QuestionsInput {
@@ -16,9 +15,9 @@ export interface EvaluationQuestionListProps {
   errors:
     | {
         name?: FieldError | undefined;
-        questionId?: FieldError | undefined;
       }[]
     | undefined;
+  error: FieldError | undefined;
   onDelete?: (id: string) => void;
   onUpdate?: (id: string) => void;
 }

@@ -8,7 +8,6 @@ import {
   useSaveGroupMutation,
 } from '../../../GraphQl/graphql';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button } from '../../components/atoms';
 import {
   GroupCoursesForm,
   GroupCoursesInput,
@@ -19,12 +18,11 @@ const GroupFormPage = (): ReactElement => {
   const { id } = useParams();
   const methods = useForm<GroupCoursesInput>({
     resolver: joiResolver(GroupFormSchema),
-    defaultValues: { courses: [{ name: '', courseId: '', isActive: false }] },
+    defaultValues: { courses: [{ name: '', isActive: false }] },
   });
   const {
     reset,
     control,
-    trigger,
     register,
     handleSubmit,
     formState: { errors },
@@ -42,7 +40,6 @@ const GroupFormPage = (): ReactElement => {
       reset({
         name: group.name || '',
         courses: group.courses?.map((course) => ({
-          courseId: course?.id || '',
           name: course?.name || '',
           isActive: course?.active || false,
         })),
@@ -50,8 +47,6 @@ const GroupFormPage = (): ReactElement => {
     }
   }, [id, reset, group]);
 
-  const handleReset = () => reset();
-  const handleTrigger = () => trigger('name');
   const handleOnSubmit = (data: GroupCoursesInput) =>
     saveGroup({
       variables: {
@@ -77,9 +72,6 @@ const GroupFormPage = (): ReactElement => {
             {...register('name')}
             error={errors.name?.message}
           />
-          <Button className="mt-6" type="button" onClick={handleTrigger}>
-            Speichern
-          </Button>
         </Accordion>
 
         <Accordion title="Kurs" open={!!id}>
@@ -90,10 +82,7 @@ const GroupFormPage = (): ReactElement => {
             register={register}
           />
         </Accordion>
-        <FormActions
-          onReset={handleReset}
-          onSubmit={handleSubmit(handleOnSubmit)}
-        />
+        <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
       </div>
     </FormProvider>
   );

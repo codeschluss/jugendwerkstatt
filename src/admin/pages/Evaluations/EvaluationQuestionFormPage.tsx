@@ -1,8 +1,9 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { ReactElement, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldError, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
+  useGetQuestionnaireQuery,
   useGetQuestionsQuery,
   useSaveQuestionnaireMutation,
 } from '../../../GraphQl/graphql';
@@ -15,12 +16,10 @@ import { EvaluationsQuestionsFormSchema } from '../../validations/EvaluationsQue
 const EvaluationQuestionFormPage = (): ReactElement => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data: { questions = null } = {} } = useGetQuestionsQuery({
+  const { data: { questionnaire } = {} } = useGetQuestionnaireQuery({
     skip: !id,
+    variables: { entity: { id } },
   });
-  // const [deleteQuestion] = useDeleteQuestionMutation({
-  //   onCompleted: () => refetch(),
-  // });
 
   const {
     control,
@@ -31,54 +30,42 @@ const EvaluationQuestionFormPage = (): ReactElement => {
     handleSubmit,
   } = useForm<QuestionsInput>({
     resolver: joiResolver(EvaluationsQuestionsFormSchema),
+    defaultValues: { name: '', questions: [{ name: '' }] },
   });
   const [saveQuestionnaire] = useSaveQuestionnaireMutation({
     onCompleted: () => navigate('/admin/evaluation/questions'),
   });
 
-  // const handleEditQuestion = () => {
-  //   console.log("We need a view for editing questions!");
-  // };
-
-  // const handleDeleteQuestion = (questionId: string) => () => {
-  //   // eslint-disable-next-line no-restricted-globals
-  //   if (confirm("Möchten Sie dies löschen?")) {
-  //     deleteQuestion({ variables: { questionId } });
-  //   }
-  // };
-
   const handleOnSubmit = (data: QuestionsInput) => {
-    console.log(data);
-    // saveQuestionnaire({
-    //   variables: {
-    //     entity: {
-    //       name: data.name,
-    //       questions: data.questions.map((question) => ({
-    //         item: question.name,
-    //         sequenceOrder: Number(question.questionId),
-    //       })),
-    //     },
-    //   },
-    // });
+    saveQuestionnaire({
+      variables: {
+        entity: {
+          ...(!!id && { id }),
+          name: data.name,
+          questions: data.questions.map((question, index) => ({
+            item: question.name,
+            sequenceOrder: index + 1,
+          })),
+        },
+      },
+    });
   };
 
   const handleTrigger = () => trigger('name');
-  const handleReset = () => reset();
 
   useEffect(() => {
-    if (!!questions?.result) {
+    if (!!questionnaire?.questions) {
       reset({
-        questions: questions?.result?.map((question) => ({
-          questionId: question?.id || '',
+        questions: questionnaire.questions.map((question) => ({
           name: question?.item || '',
         })),
       });
     }
-  }, [questions, reset]);
+  }, [questionnaire?.questions, reset]);
 
   return (
     <form className="min-h-full ">
-      <Accordion title="Stammdaten">
+      <Accordion title="Stammdaten" open={!!id}>
         <InputField
           id="name"
           label="Name"
@@ -91,17 +78,15 @@ const EvaluationQuestionFormPage = (): ReactElement => {
           Speichern
         </Button>
       </Accordion>
-      <Accordion title="Teilnehmerbefragung - Fragen">
+      <Accordion title="Teilnehmerbefragung - Fragen" open={!!id}>
         <EvaluationQuestionList
+          error={errors?.questions as unknown as FieldError}
           errors={errors?.questions}
           control={control}
           register={register}
         />
       </Accordion>
-      <FormActions
-        onReset={handleReset}
-        onSubmit={handleSubmit(handleOnSubmit)}
-      />
+      <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
     </form>
   );
 };

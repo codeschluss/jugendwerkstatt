@@ -14,11 +14,9 @@ export const PublicPagesForm = (): ReactElement => {
     resolver: joiResolver(PublicPagesFormSchema),
   });
 
-  const { reset, handleSubmit } = methods;
+  const { handleSubmit } = methods;
 
   const onSubmit = (data: PublicPagesFormProps) => console.log(data);
-
-  const handleReset = () => reset();
 
   return (
     <FormProvider {...methods}>
@@ -29,7 +27,7 @@ export const PublicPagesForm = (): ReactElement => {
         {/* <Accordion title="Beschreibung">
           <DescriptionFrom />
         </Accordion> */}
-        <FormActions onReset={handleReset} onSubmit={handleSubmit(onSubmit)} />
+        <FormActions onSubmit={handleSubmit(onSubmit)} />
       </form>
     </FormProvider>
     // <Accordion title="Beschreibung">

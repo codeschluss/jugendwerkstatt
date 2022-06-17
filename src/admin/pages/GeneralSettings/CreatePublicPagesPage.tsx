@@ -14,8 +14,6 @@ const CreatePublicPagesPage = (): ReactElement => {
 
   const onSubmit = (data: PublicPagesFormProps) => console.log(data);
 
-  const handleReset = () => reset();
-
   return (
     <FormProvider {...methods}>
       <form className="min-h-full">
@@ -25,7 +23,7 @@ const CreatePublicPagesPage = (): ReactElement => {
         {/* <Accordion title="Beschreibung">
           <DescriptionFrom />
         </Accordion> */}
-        <FormActions onReset={handleReset} onSubmit={handleSubmit(onSubmit)} />
+        <FormActions onSubmit={handleSubmit(onSubmit)} />
       </form>
     </FormProvider>
     // <Accordion title="Beschreibung">

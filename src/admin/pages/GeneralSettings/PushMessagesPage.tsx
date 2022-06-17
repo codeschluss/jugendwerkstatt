@@ -17,7 +17,6 @@ const PushMessagesPage = (): ReactElement => {
   });
   const [sendGlobalPush] = useSendGlobalPushMutation();
 
-  const handleReset = () => reset();
   const onSubmit = ({ title, message }: PushMessagesInputs) =>
     sendGlobalPush({
       variables: { message: { title: title, content: message } },
@@ -40,7 +39,7 @@ const PushMessagesPage = (): ReactElement => {
           error={errors.message?.message}
         />
 
-        <FormActions onReset={handleReset} onSubmit={handleSubmit(onSubmit)} />
+        <FormActions onSubmit={handleSubmit(onSubmit)} />
       </form>
     </Accordion>
   );

@@ -2,7 +2,6 @@ import { Control, FieldError, UseFormRegister } from 'react-hook-form';
 
 export interface GroupCourseInput {
   name: string;
-  courseId: string;
   isActive: boolean;
 }
 
@@ -17,7 +16,6 @@ export interface GroupCoursesProps {
   errors:
     | {
         name?: FieldError | undefined;
-        courseId?: FieldError | undefined;
         isActive?: FieldError | undefined;
       }[]
     | undefined;

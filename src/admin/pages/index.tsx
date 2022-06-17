@@ -7,22 +7,6 @@ const PageLoader = () => <h1>Loading...</h1>;
 
 //* Export all pages
 
-// Account pages
-export const AdminProfilePage = loadable(
-  () => timeout(import('./Profile/AdminProfilePage'), PAGE_LOAD_TIMEOUT),
-  {
-    fallback: <PageLoader />,
-  }
-);
-
-export const AdminProfilePasswordPage = loadable(
-  () =>
-    timeout(import('./Profile/AdminProfilePasswordPage'), PAGE_LOAD_TIMEOUT),
-  {
-    fallback: <PageLoader />,
-  }
-);
-
 // Events pages
 export const EventsListPage = loadable(
   () => timeout(import('./Events/EventsListPage'), PAGE_LOAD_TIMEOUT),

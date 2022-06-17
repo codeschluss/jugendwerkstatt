@@ -20,7 +20,7 @@ export const GroupCoursesForm = ({
 
   // handlers
   const handleAddNew = () => {
-    append({ courseId: '', name: '', isActive: false }, { shouldFocus: true });
+    append({ name: '', isActive: false }, { shouldFocus: true });
   };
 
   const handleOnSortEnd = useCallback(
@@ -31,7 +31,9 @@ export const GroupCoursesForm = ({
 
   const handleOnDelete = (id: number) => () => remove(id);
   const handleApproveCourse = (index: number) => () => {
-    if (getValues('courses').some((field) => field.isActive === true)) return;
+    getValues('courses').forEach((_, idx) =>
+      setValue(`courses.${idx}.isActive`, false)
+    );
     setValue(`courses.${index}.isActive`, true, { shouldValidate: true });
   };
 
@@ -47,7 +49,7 @@ export const GroupCoursesForm = ({
           onSortOver={handleOnSortEnd}
           className="mb-3"
         >
-          {fields.map((course, index) => (
+          {fields.map((_course, index) => (
             <DragItem key={index} index={index}>
               <InputField
                 {...register(`courses.${index}.name`)}
@@ -61,14 +63,16 @@ export const GroupCoursesForm = ({
             </DragItem>
           ))}
         </DragList>
-        {error && <p className="pb-2 text-primary">{error.message}</p>}
       </div>
-      <Button
-        iconOnly
-        type="button"
-        onClick={handleAddNew}
-        iconLeft={<PlusCircleIcon />}
-      />
+      <div className="flex items-center gap-x-4">
+        <Button
+          iconOnly
+          type="button"
+          onClick={handleAddNew}
+          iconLeft={<PlusCircleIcon />}
+        />
+        {error && <p className="text-primary">{error.message}</p>}
+      </div>
     </>
   );
 };

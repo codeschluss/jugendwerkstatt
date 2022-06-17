@@ -1,19 +1,19 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { ReactElement, useEffect } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { ReactElement, useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   useGetUserTemplateAdminQuery,
   useSaveUserTemplateAdminMutation,
-} from "../../../GraphQl/graphql";
-import { Accordion, FormActions } from "../../components/molecules";
+} from '../../../GraphQl/graphql';
+import { Accordion, FormActions } from '../../components/molecules';
 import {
   DescriptionFrom,
   UserFormsForm,
   UserFormsFormInputs,
-} from "../../components/organisms";
-import { gqlVar } from "../../utils";
-import { UserFormsFormSchema } from "../../validations";
+} from '../../components/organisms';
+import { gqlVar } from '../../utils';
+import { UserFormsFormSchema } from '../../validations';
 
 const CreateUserFormsPage = (): ReactElement => {
   const { id } = useParams();
@@ -32,7 +32,7 @@ const CreateUserFormsPage = (): ReactElement => {
     });
 
   const [saveUserTemplate] = useSaveUserTemplateAdminMutation({
-    onCompleted: () => navigate("/admin/forms/user-templates"),
+    onCompleted: () => navigate('/admin/forms/user-templates'),
   });
 
   const handleOnSubmit = ({
@@ -50,17 +50,15 @@ const CreateUserFormsPage = (): ReactElement => {
     );
   };
 
-  const handleReset = () => reset();
-
   useEffect(() => {
     if (!!getUserTemplate) {
       reset({
         baseData: {
-          name: getUserTemplate?.name || "",
-          category: getUserTemplate?.templateType?.id || "",
-          user: getUserTemplate?.user?.id || "",
+          name: getUserTemplate?.name || '',
+          category: getUserTemplate?.templateType?.id || '',
+          user: getUserTemplate?.user?.id || '',
         },
-        description: getUserTemplate?.content || "",
+        description: getUserTemplate?.content || '',
       });
     }
   }, [getUserTemplate, reset]);
@@ -74,10 +72,7 @@ const CreateUserFormsPage = (): ReactElement => {
         <Accordion title="Beschreibung">
           <DescriptionFrom />
         </Accordion>
-        <FormActions
-          onReset={handleReset}
-          onSubmit={handleSubmit(handleOnSubmit)}
-        />
+        <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
       </form>
     </FormProvider>
   );

@@ -1,13 +1,13 @@
-import { ReactElement, useEffect } from "react";
-import { joiResolver } from "@hookform/resolvers/joi";
-import { FormProvider, useForm } from "react-hook-form";
+import { ReactElement, useEffect } from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { FormProvider, useForm } from 'react-hook-form';
 
-import { Accordion, FormActions } from "../../components/molecules";
-import { MediaForm, MediaFormInputs } from "../../components/organisms";
-import { VideoFormSchema } from "../../validations/VideoForm.schema";
-import { useNavigate, useParams } from "react-router-dom";
-import { useGetLinkQuery, useSaveLinkMutation } from "../../../GraphQl/graphql";
-import { gqlVar } from "../../utils";
+import { Accordion, FormActions } from '../../components/molecules';
+import { MediaForm, MediaFormInputs } from '../../components/organisms';
+import { VideoFormSchema } from '../../validations/VideoForm.schema';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useGetLinkQuery, useSaveLinkMutation } from '../../../GraphQl/graphql';
+import { gqlVar } from '../../utils';
 
 const CreateMediaPage = (): ReactElement => {
   const { id } = useParams();
@@ -25,7 +25,7 @@ const CreateMediaPage = (): ReactElement => {
   });
 
   const [saveLink] = useSaveLinkMutation({
-    onCompleted: () => navigate("/admin/medias"),
+    onCompleted: () => navigate('/admin/medias'),
   });
 
   const handleOnSubmit = ({ category, url, title }: MediaFormInputs) => {
@@ -39,14 +39,12 @@ const CreateMediaPage = (): ReactElement => {
     );
   };
 
-  const handleReset = () => reset();
-
   useEffect(() => {
     if (!!getLink) {
       reset({
-        url: getLink?.url || "",
-        title: getLink?.title || "",
-        category: getLink?.category?.name || "",
+        url: getLink?.url || '',
+        title: getLink?.title || '',
+        category: getLink?.category?.name || '',
       });
     }
   }, [getLink, reset]);
@@ -57,10 +55,7 @@ const CreateMediaPage = (): ReactElement => {
         <Accordion title="Neues Video hinzufügen" open={!!id}>
           <MediaForm />
         </Accordion>
-        <FormActions
-          onReset={handleReset}
-          onSubmit={handleSubmit(handleOnSubmit)}
-        />
+        <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
       </form>
     </FormProvider>
   );

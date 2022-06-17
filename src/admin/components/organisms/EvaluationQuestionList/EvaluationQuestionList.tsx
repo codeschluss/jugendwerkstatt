@@ -1,6 +1,6 @@
 import { PlusCircleIcon } from '@heroicons/react/outline';
 import { useCallback } from 'react';
-import { useFieldArray } from 'react-hook-form';
+import { FieldError, useFieldArray } from 'react-hook-form';
 import { SortOver, SortEvent } from 'react-sortable-hoc';
 import { Button, DragItem, DragList, ListItem } from '../../atoms';
 import { InputField } from '../../molecules';
@@ -19,7 +19,7 @@ export const EvaluationQuestionList = ({
 
   // handlers
   const handleAddNew = () => {
-    append({ questionId: '', name: '' }, { shouldFocus: true });
+    append({ name: '' }, { shouldFocus: true });
   };
 
   const handleOnSortEnd = useCallback(
@@ -50,6 +50,11 @@ export const EvaluationQuestionList = ({
             <ListItem onDelete={handleOnDelete(index)} />
           </DragItem>
         ))}
+        {errors && (
+          <p className="my-2 text-primary">
+            {(errors as unknown as FieldError)?.message}
+          </p>
+        )}
       </DragList>
       <Button
         iconOnly

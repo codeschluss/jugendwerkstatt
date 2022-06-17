@@ -5,8 +5,6 @@ import {
 } from '../admin/components/organisms';
 import { AdminDashboardLayout } from '../admin/components/templates';
 import {
-  AdminProfilePage,
-  AdminProfilePasswordPage,
   EventsListPage,
   CreateEventsPage,
   OrganizersListPage,
@@ -48,9 +46,6 @@ export const AdminRoutes = () => {
   return (
     <Routes>
       <Route path="/admin" element={<AdminDashboardLayout />}>
-        <Route path="profile" element={<AdminProfilePage />} />
-        <Route path="profile-password" element={<AdminProfilePasswordPage />} />
-
         <Route path="events" element={<EventsListPage />} />
         <Route path="events/new" element={<CreateEventsPage />} />
         <Route path="events/:id" element={<CreateEventsPage />} />
