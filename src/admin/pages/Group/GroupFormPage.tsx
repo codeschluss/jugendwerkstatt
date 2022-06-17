@@ -18,7 +18,6 @@ const GroupFormPage = (): ReactElement => {
   const { id } = useParams();
   const methods = useForm<GroupCoursesInput>({
     resolver: joiResolver(GroupFormSchema),
-    defaultValues: { courses: [{ name: '', isActive: false }] },
   });
   const {
     reset,
