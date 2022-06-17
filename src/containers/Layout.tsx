@@ -16,7 +16,7 @@ const Layout: React.FC = ({ children }) => {
 
   return (
     <main
-      className={`flex flex-col  min-h-screen transition-all duration-500 md:transition-none ${
+      className={`flex flex-col  min-h-screen transition-all duration-500 ${
         sideBar && isLogedIn ? "md:pl-60" : "md:pl-20"
       }`}
     >

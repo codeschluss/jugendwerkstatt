@@ -1,4 +1,4 @@
-import { ShareIcon, HeartIcon } from "@heroicons/react/outline";
+import { ShareIcon } from "@heroicons/react/outline";
 import DropDown from "../../../shared/components/ui/DropDown";
 import {
   FacebookShareButton,

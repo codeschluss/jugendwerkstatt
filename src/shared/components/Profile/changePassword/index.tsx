@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../client/components/ui/Button";
 import {
@@ -9,7 +9,7 @@ import {
 import useInput from "../../../../hooks/use-input";
 import AuthInput from "../../authentication/AuthInput";
 import CustomHeader from "../../header/customHeader/CustomHeader";
-import Input from "./Input";
+import SimpleBackdrop from "./Backdrop";
 
 const ChangePassword = () => {
   const user = useGetMeBasicQuery();

@@ -1,0 +1,8 @@
+query GetEventImages($entity: EventEntityInput) {
+  getEvent(entity: $entity) {
+    images {
+      id
+      name
+    }
+  }
+}

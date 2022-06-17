@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import SwiperCore, { Virtual } from "swiper";
 import SlideCard from "../slideItems/SlideCard";
+import Slider from "../slideItems/Slider";
 SwiperCore.use([Virtual]);
 
 const Map: FunctionComponent = () => {
@@ -71,24 +72,20 @@ const Map: FunctionComponent = () => {
               spaceBetween={0}
               slidesPerView={1.5}
             >
-              {allEvents?.map((el: any, index: number) => {
-                console.log(el);
-
-                return (
-                  <SwiperSlide key={el.id}>
-                    <div>
-                      <SlideCard
-                        route={`/event/${el.id}`}
-                        key={el?.name}
-                        eventName={el?.name}
-                        location={el?.address?.street}
-                        date="Freitag, 25/02/22"
-                        imgUrl={el?.titleImage?.id}
-                      />
-                    </div>
-                  </SwiperSlide>
-                );
-              })}
+              <Slider title="Events">
+                {allEvents?.map((el: any, index: number) => {
+                  return (
+                    <SlideCard
+                      route={`/event/${el.id}`}
+                      key={el?.id}
+                      eventName={el?.name}
+                      location={el?.address?.street}
+                      date="Freitag, 25/02/22"
+                      imgUrl={el?.titleImage?.id}
+                    />
+                  );
+                })}
+              </Slider>
             </Swiper>
           </div>
         </div>

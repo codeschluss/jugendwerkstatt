@@ -9,14 +9,14 @@ import {
   useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
 import { API_URL } from "../../../config/app";
-import { ShareButton } from "../ui/ShareButton";
+import { SocialMedia } from "../ui/SocialMedia";
 export interface SlideCardProps {
   className?: string;
   imgUrl?: any;
-  eventName: EventEntity["name"];
-  location: AddressEntity["place"];
-  date: any;
-  route: any;
+  eventName?: EventEntity["name"];
+  location?: AddressEntity["place"];
+  date?: any;
+  route?: any;
   width?: string;
   color?: string | undefined | null;
   gradient?: boolean;
@@ -78,14 +78,16 @@ const SlideCard: React.FC<SlideCardProps> = ({
           }  text-white px-3 pb-8 pt-3 flex justify-between items-center`}
         >
           <small className="font-bold">{eventName}</small>
-          <div className="flex items-center">
-            <ShareButton url="#" />
-            {isFavorite ? (
-              <SolidHeart className="w-5" />
-            ) : (
-              <OutlineHeart className="w-5" onClick={setFavorite} />
-            )}
-          </div>
+          {isFavorite && (
+            <div className="flex items-center md:w-20 justify-between">
+              <SocialMedia /> |
+              {isFavorite ? (
+                <SolidHeart className="w-5" />
+              ) : (
+                <OutlineHeart className="w-5" onClick={setFavorite} />
+              )}
+            </div>
+          )}
         </div>
         <Link to={route}>
           {" "}
@@ -94,10 +96,12 @@ const SlideCard: React.FC<SlideCardProps> = ({
               gradient ? "bg-gradient-to-t from-black to-transparent" : ""
             }  text-white px-3 pb-3 pt-9`}
           >
-            <p className="border-b border-white pb-1 mb-1 font-bold">
-              {location}
-            </p>
-            <p>{`${weekDay}, ${day}.${month}.${year}`}</p>
+            {location && (
+              <p className="border-b border-white pb-1 mb-1 font-bold">
+                {location}
+              </p>
+            )}
+            {date && <p>{`${weekDay}, ${day}.${month}.${year}`}</p>}
           </div>
         </Link>
       </div>

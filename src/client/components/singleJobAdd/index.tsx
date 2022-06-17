@@ -8,7 +8,7 @@ import {
 } from "../../../GraphQl/graphql";
 import { EventDetails } from "../singleEvent/eventDetails/EventDetails";
 import { JobHeader } from "./jobHeader";
-import { Slider } from "../singleEvent/slider/Slider";
+import { TitleImgSlider } from "../singleEvent/slider/Slider";
 export const SingleJobAdd = () => {
   const params = useParams();
 
@@ -37,7 +37,7 @@ export const SingleJobAdd = () => {
   return (
     <div>
       <div className="flex flex-col md:flex-row">
-        <Slider
+        <TitleImgSlider
           title={jobsQuery.data?.getJobAd?.title}
           colorBg={jobsQuery.data?.getJobAd?.type?.color}
         />

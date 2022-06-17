@@ -1,9 +1,13 @@
+import { useState } from "react";
 import Button from "../../../../client/components/ui/Button";
 import useAuth from "../../../../hooks/useAuth";
 import CustomHeader from "../../header/customHeader/CustomHeader";
+import DeleteConfirmation from "./Confirmation";
 import Items from "./Items";
 
 const ProfileSettings = () => {
+  const [confirmationToggle, setConfirmationToggle] = useState<boolean>();
+
   const { logout } = useAuth();
 
   return (
@@ -23,9 +27,7 @@ const ProfileSettings = () => {
         <Button isDisabled={true} isValidated={true} click={logout}>
           Logout
         </Button>
-        <Button isDisabled={true} isValidated={true} click={() => alert("awd")}>
-          Profil löschen
-        </Button>
+        <DeleteConfirmation />
       </div>
     </div>
   );

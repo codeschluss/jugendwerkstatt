@@ -12,6 +12,7 @@ import useInput from "../../../../hooks/use-input";
 import CustomHeader from "../../header/customHeader/CustomHeader";
 import Button from "../../../../client/components/ui/Button";
 import Input from "./Input";
+import AuthInput from "../../authentication/AuthInput";
 
 const PersonalData = () => {
   const { bgColor } = useContext(AuthContext);
@@ -70,7 +71,7 @@ const PersonalData = () => {
           },
         },
         onCompleted: () => {
-          navigate("/");
+          navigate("/profile");
         },
       });
     }
@@ -109,24 +110,41 @@ const PersonalData = () => {
                 </Link>
               </span>
             </div>
-            <Input
-              value={enteredName}
-              title="Name"
-              onInput={nameChangeHandler}
-              onBlur={nameBlurHandler}
-            />
-            <Input
-              value={enteredEmail}
-              title="E-Mail"
-              onInput={emailChangeHandler}
-              onBlur={emailBlurHandler}
-            />
-            <Input
-              value={enteredPhone}
-              title="Telefonnummer"
-              onInput={phoneChangeHandler}
-              onBlur={phoneBlurHandler}
-            />
+            <div className="mt-5">
+              <AuthInput
+                id="Name"
+                type="text"
+                onChange={nameChangeHandler}
+                onBlur={nameBlurHandler}
+                value={enteredName}
+                error={nameInputError ? "Kann nicht lehr gelassen werden" : ""}
+                inputClassName={`${
+                  nameInputError && "border-500-red"
+                }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
+              />
+              <AuthInput
+                id="Email"
+                type="text"
+                onChange={emailChangeHandler}
+                onBlur={emailBlurHandler}
+                value={enteredEmail}
+                error={emailInputError ? "Kann nicht lehr gelassen werden" : ""}
+                inputClassName={`${
+                  emailInputError && "border-500-red"
+                }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
+              />
+              <AuthInput
+                id="Telefon"
+                type="text"
+                onChange={phoneChangeHandler}
+                onBlur={phoneBlurHandler}
+                value={enteredPhone}
+                error={phoneInputError ? "Kann nicht lehr gelassen werden" : ""}
+                inputClassName={`${
+                  phoneInputError && "border-500-red"
+                }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
+              />
+            </div>
           </div>
           <span className="w-4/6 md:w-2/5 md:mt-5">
             <Button

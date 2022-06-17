@@ -1,0 +1,98 @@
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { ShareIcon } from "@heroicons/react/outline";
+
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  ViberShareButton,
+  WhatsappShareButton,
+  WhatsappIcon,
+  ViberIcon,
+  FacebookIcon,
+  TwitterIcon,
+  LinkedinIcon,
+} from "react-share";
+import { BASE_URL } from "../../../config/app";
+
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+};
+
+export const SocialMedia: React.FC<{ url?: string }> = ({ url }) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  return (
+    <div>
+      <ShareIcon className="w-5" onClick={handleOpen} />
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Share
+          </Typography>
+
+          <ul>
+            <li>
+              <FacebookShareButton
+                url={`${BASE_URL}${url}`}
+                className="flex  items-center"
+              >
+                <FacebookIcon className="w-10 mr-1" /> <p>Facebook</p>
+              </FacebookShareButton>
+            </li>
+            <li>
+              <TwitterShareButton
+                url={`${BASE_URL}${url}`}
+                className="flex  items-center"
+              >
+                <TwitterIcon className="w-10 mr-1" /> Twitter
+              </TwitterShareButton>
+            </li>
+
+            <li>
+              <WhatsappShareButton
+                url={`${BASE_URL}${url}`}
+                className="flex  items-center"
+              >
+                <WhatsappIcon className="w-10 mr-1" /> WhatsApp
+              </WhatsappShareButton>
+            </li>
+            <li>
+              <ViberShareButton
+                url={`${BASE_URL}${url}`}
+                className="flex  items-center"
+              >
+                <ViberIcon className="w-10 mr-1" /> Viber
+              </ViberShareButton>
+            </li>
+            <li>
+              <LinkedinShareButton
+                url={`${BASE_URL}${url}`}
+                className="flex  items-center"
+              >
+                <LinkedinIcon className="w-10 mr-1" /> LinkedIn
+              </LinkedinShareButton>
+            </li>
+          </ul>
+        </Box>
+      </Modal>
+    </div>
+  );
+};

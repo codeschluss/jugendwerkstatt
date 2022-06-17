@@ -2,12 +2,15 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import {
   useAddEventFavoriteMutation,
+  useGetEventImagesQuery,
   useGetEventQuery,
   useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
+import SlideCard from "../slideItems/SlideCard";
 import { EventDetails } from "./eventDetails/EventDetails";
 import { EventHeader } from "./eventHeader/EventHeader";
-import { Slider } from "./slider/Slider";
+import { TitleImgSlider } from "./slider/Slider";
+import Slider from "../slideItems/Slider";
 
 export const SingleEvent = () => {
   const params = useParams();
@@ -15,6 +18,13 @@ export const SingleEvent = () => {
   const eventQuery = useGetEventQuery({
     variables: { id: params.id || "" },
   });
+
+  const eventImages = useGetEventImagesQuery({
+    variables: {
+      entity: { id: params.id },
+    },
+  });
+  console.log(eventImages.data);
 
   const [eventFavorite] = useAddEventFavoriteMutation({});
 
@@ -33,7 +43,7 @@ export const SingleEvent = () => {
   return (
     <div>
       <div className="flex flex-col md:flex-row">
-        <Slider imgUrl={eventQuery?.data?.getEvent?.titleImage?.id} />
+        <TitleImgSlider imgUrl={eventQuery?.data?.getEvent?.titleImage?.id} />
         <div className="p-5 md:w-1/2 md:ml-8 md:flex-grow rounded-md bg-white">
           <EventHeader
             isFavorite={hasId}
@@ -99,6 +109,11 @@ export const SingleEvent = () => {
         <p className="text-3xl">{eventQuery?.data?.getEvent?.name}</p>
         <p>{eventQuery?.data?.getEvent?.description}</p>
       </div>
+      <Slider title="Fotos">
+        {eventImages?.data?.getEvent?.images?.map((el: any) => {
+          return <SlideCard key={el?.id} imgUrl={el?.id} route="#" />;
+        })}
+      </Slider>
     </div>
   );
 };

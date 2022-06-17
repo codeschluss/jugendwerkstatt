@@ -3150,6 +3150,13 @@ export type GetEventCategoriesQueryVariables = Exact<{
 
 export type GetEventCategoriesQuery = { __typename?: 'Query', getEventCategories?: { __typename?: 'PageableList_EventCategoryEntity', result?: Array<{ __typename?: 'EventCategoryEntity', name?: string | null, id?: string | null, events?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, titleImage?: { __typename?: 'MediaEntity', name?: string | null, id?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null, organizer?: { __typename?: 'OrganizerEntity', website?: string | null, phone?: string | null, name?: string | null, mail?: string | null, id?: string | null } | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, modified?: any | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null> | null } | null> | null } | null };
 
+export type GetEventImagesQueryVariables = Exact<{
+  entity?: InputMaybe<EventEntityInput>;
+}>;
+
+
+export type GetEventImagesQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', images?: Array<{ __typename?: 'MediaEntity', id?: string | null, name?: string | null } | null> | null } | null };
+
 export type GetEventsQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
 }>;
@@ -5701,6 +5708,44 @@ export function useGetEventCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type GetEventCategoriesQueryHookResult = ReturnType<typeof useGetEventCategoriesQuery>;
 export type GetEventCategoriesLazyQueryHookResult = ReturnType<typeof useGetEventCategoriesLazyQuery>;
 export type GetEventCategoriesQueryResult = Apollo.QueryResult<GetEventCategoriesQuery, GetEventCategoriesQueryVariables>;
+export const GetEventImagesDocument = gql`
+    query GetEventImages($entity: EventEntityInput) {
+  getEvent(entity: $entity) {
+    images {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetEventImagesQuery__
+ *
+ * To run a query within a React component, call `useGetEventImagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventImagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEventImagesQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetEventImagesQuery(baseOptions?: Apollo.QueryHookOptions<GetEventImagesQuery, GetEventImagesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEventImagesQuery, GetEventImagesQueryVariables>(GetEventImagesDocument, options);
+      }
+export function useGetEventImagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEventImagesQuery, GetEventImagesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEventImagesQuery, GetEventImagesQueryVariables>(GetEventImagesDocument, options);
+        }
+export type GetEventImagesQueryHookResult = ReturnType<typeof useGetEventImagesQuery>;
+export type GetEventImagesLazyQueryHookResult = ReturnType<typeof useGetEventImagesLazyQuery>;
+export type GetEventImagesQueryResult = Apollo.QueryResult<GetEventImagesQuery, GetEventImagesQueryVariables>;
 export const GetEventsDocument = gql`
     query getEvents($params: FilterSortPaginateInput) {
   getEvents(params: $params) {
