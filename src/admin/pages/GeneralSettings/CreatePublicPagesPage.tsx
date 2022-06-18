@@ -1,64 +1,61 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { Accordion, FormActions, InputField } from '../../components/molecules';
-import { PublicPagesFormProps } from '../../components/organisms/GeneralSettings/PublicPagesForm.props';
-import { PublicPagesFormSchema } from '../../validations';
+import { useParams } from 'react-router-dom';
+import { useGetPageQuery } from '../../../GraphQl/graphql';
+import { Accordion, FormActions } from '../../components/molecules';
+import {
+  DescriptionFrom,
+  FormsBaseForm,
+  FormsFormInputs,
+} from '../../components/organisms';
+import { FormsFormSchema } from '../../validations';
 
 const CreatePublicPagesPage = (): ReactElement => {
-  const methods = useForm<PublicPagesFormProps>({
-    resolver: joiResolver(PublicPagesFormSchema),
+  const { id } = useParams();
+
+  const methods = useForm<FormsFormInputs>({
+    resolver: joiResolver(FormsFormSchema),
   });
 
-  const { register, reset, handleSubmit } = methods;
+  const { data: { page = null } = {} } = useGetPageQuery({
+    skip: !id,
+    variables: { entity: { id } },
+  });
 
-  const onSubmit = (data: PublicPagesFormProps) => console.log(data);
+  // const [savePage] = useSaveTemplateAdminMutation({
+  //   onCompleted: () => navigate('/admin/forms/templates'),
+  // });
+
+  const { reset, handleSubmit } = methods;
+
+  useEffect(() => {
+    if (!!page) {
+      reset({
+        baseData: {
+          name: page?.content || '',
+        },
+      });
+    }
+  }, [page, reset]);
+
+  const handleOnSubmit = ({
+    description,
+    baseData: { name, category },
+  }: FormsFormInputs) => console.log(description, name, category);
 
   return (
     <FormProvider {...methods}>
       <form className="min-h-full">
-        <Accordion title="Stammdaten">
-          {/* <InputField id="name" label="Seitenname" {...register('name')} /> */}
+        <Accordion title="Stammdaten" open={!!id}>
+          <FormsBaseForm />
         </Accordion>
-        {/* <Accordion title="Beschreibung">
+        <Accordion title="Beschreibung">
           <DescriptionFrom />
-        </Accordion> */}
-        <FormActions onSubmit={handleSubmit(onSubmit)} />
+        </Accordion>
+        <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
       </form>
     </FormProvider>
-    // <Accordion title="Beschreibung">
-    //   <DescriptionFrom />
-    // </Accordion>
-    // <Accordion title="Neue Seite hinzufügen">
-    //   <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-    //     <InputField
-    //       id="pageName"
-    //       label="Seitenname"
-    //       {...register('pageName')}
-    //       error={errors.pageName?.message}
-    //       placeholder="Team Jugendwerkstatt"
-    //     />
-    //     <Select
-    //       id="pageContent"
-    //       placeholder="Textfeld"
-    //       defaultValue={1}
-    //       label="Seiteninhalt"
-    //       {...register('pageContent')}
-    //       error={errors.pageContent?.message}
-    //     >
-    //       {['Value 1', 'Value 2', 'Value 3'].map((value) => (
-    //         <option value={value}>{value}</option>
-    //       ))}
-    //     </Select>
-
-    //     <div className="mt-5 space-y-5">
-    //       <Button variant={ButtonVariantsEnum.SECONDARY}>
-    //         Weiteren Seiteninhalt hinzufügen
-    //       </Button>
-    //       <Button>Speichern</Button>
-    //     </div>
-    //   </form>
-    // </Accordion>
   );
 };
 

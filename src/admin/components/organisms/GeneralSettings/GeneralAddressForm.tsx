@@ -46,7 +46,7 @@ export const GeneralAddressForm = (): ReactElement => {
     saveAddress({ variables: { entity: { id, ...data } } });
 
   return (
-    <Accordion title="Adresse" className="max-w-4xl">
+    <Accordion title="Adresse" className="max-w-4xl" open>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-8 md:grid-cols-2">
           <div className="flex flex-col justify-start w-full space-y-6">

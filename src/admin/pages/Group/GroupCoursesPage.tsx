@@ -42,10 +42,13 @@ const GroupCoursesPage = (): ReactElement => {
           className="flex flex-col space-y-5"
           submitButton={false}
         >
-          {[2022, 2023, 2024, 'Alle Jahre'].map((label) => (
+          {[2022, 2023, 2024, 'Alle Jahre'].map((label, idx) => (
             <Button
               key={label}
-              variant={ButtonVariantsEnum.SECONDARY}
+              {...((Number(queryString.year) === Number(label) ||
+                idx === 3) && {
+                variant: ButtonVariantsEnum.SECONDARY,
+              })}
               onClick={handleYearFilter(label)}
               className="w-fit"
             >

@@ -1,9 +1,6 @@
 import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import {
-  GeneralAddressForm,
-  PublicPagesForm,
-} from '../admin/components/organisms';
+import { GeneralAddressForm } from '../admin/components/organisms';
 import { AdminDashboardLayout } from '../admin/components/templates';
 import {
   EventsListPage,
@@ -46,6 +43,7 @@ import {
   GroupMembersPage,
   CreateGroupMembersPage,
   GroupCoursesPage,
+  CreatePublicPagesPage,
 } from '../admin/pages';
 import LoginPage from '../client/pages/authentication/LoginPage';
 // import ForgotPassword from "../shared/components/authentication/forgotPassword";
@@ -217,11 +215,9 @@ export const Router = () => {
           element={<CreateMediaCategoriesPage />}
         />
         <Route path="users/requests" element={<UsersRequestsListPage />} />
-
         <Route path="users" element={<UsersListPage />} />
         <Route path="users/requests" element={<UsersRequestsListPage />} />
         <Route path="users/:id" element={<EditUserPage />} />
-
         <Route path="forms/templates" element={<FormsListPage />} />
         <Route path="forms/templates/new" element={<CreateFormsPage />} />
         <Route path="forms/templates/:id" element={<CreateFormsPage />} />
@@ -234,7 +230,6 @@ export const Router = () => {
           path="forms/user-templates/:id"
           element={<CreateUserFormsPage />}
         />
-
         <Route path="forms/categories" element={<FormsCategoriesListPage />} />
         <Route
           path="forms/categories/new"
@@ -244,7 +239,6 @@ export const Router = () => {
           path="forms/categories/:id"
           element={<CreateFormsCategories />}
         />
-
         {/* Evaluations */}
         <Route
           path="evaluation/questions"
@@ -262,7 +256,6 @@ export const Router = () => {
           path="evaluation/questions/:id"
           element={<EvaluationQuestionFormPage />}
         />
-
         <Route
           path="evaluations/assignments"
           element={<EvaluationsAssignmentsPage />}
@@ -275,7 +268,6 @@ export const Router = () => {
           path="evaluations/assignments/:id"
           element={<CreateEvaluationAssignmentPage />}
         />
-
         {/* Groups */}
         <Route path="groups" element={<GroupListPage />} />
         <Route path="groups/new" element={<GroupFormPage />} />
@@ -286,7 +278,6 @@ export const Router = () => {
           element={<CreateGroupMembersPage />}
         />
         <Route path="groups/:id/courses" element={<GroupCoursesPage />} />
-
         {/* General Settings */}
         <Route
           path="general-settings/push-messages"
@@ -296,7 +287,6 @@ export const Router = () => {
           path="general-settings/chat-activation"
           element={<ChatActivationPage />}
         />
-
         <Route
           path="general-settings/addresses"
           element={<GeneralAddressPage />}
@@ -309,14 +299,17 @@ export const Router = () => {
           path="general-settings/addresses/new"
           element={<GeneralAddressForm />}
         />
-
         <Route
           path="general-settings/public-pages"
           element={<PublicPagesPage />}
         />
         <Route
           path="general-settings/public-pages/new"
-          element={<PublicPagesForm />}
+          element={<CreatePublicPagesPage />}
+        />
+        <Route
+          path="general-settings/public-pages/:id"
+          element={<CreatePublicPagesPage />}
         />
       </Route>
       <Route path="*" element={<h1>Page Not Found!</h1>} />

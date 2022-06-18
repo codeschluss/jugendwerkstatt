@@ -1,7 +1,10 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSendGlobalPushMutation } from '../../../GraphQl/graphql';
+import {
+  NotificationType,
+  useSendGlobalPushMutation,
+} from '../../../GraphQl/graphql';
 import { Accordion, FormActions, InputField } from '../../components/molecules';
 import { PushMessagesPageSchema } from '../../validations/PushMessagesForm.schema';
 import { PushMessagesInputs } from './PushMessages.props';
@@ -9,7 +12,6 @@ import { PushMessagesInputs } from './PushMessages.props';
 const PushMessagesPage = (): ReactElement => {
   const {
     register,
-    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<PushMessagesInputs>({
@@ -17,31 +19,32 @@ const PushMessagesPage = (): ReactElement => {
   });
   const [sendGlobalPush] = useSendGlobalPushMutation();
 
-  const onSubmit = ({ title, message }: PushMessagesInputs) =>
+  const handleOnSubmit = ({ title, message: content }: PushMessagesInputs) =>
     sendGlobalPush({
-      variables: { message: { title: title, content: message } },
+      variables: { message: { title, content, type: NotificationType.Global } },
     });
 
   return (
-    <Accordion title="Push-Nachrichten" className="max-w-3xl">
-      <form className="flex flex-col mt-5 mb-10 space-y-5">
-        <InputField
-          id="title"
-          label="Titel"
-          {...register('title')}
-          error={errors.title?.message}
-        />
+    <form>
+      <Accordion title="Push-Nachrichten">
+        <div className="space-y-5">
+          <InputField
+            id="title"
+            label="Titel"
+            {...register('title')}
+            error={errors.title?.message}
+          />
+          <InputField
+            id="message"
+            label="Nachricht"
+            {...register('message')}
+            error={errors.message?.message}
+          />
+        </div>
+      </Accordion>
 
-        <InputField
-          id="message"
-          label="Nachricht"
-          {...register('message')}
-          error={errors.message?.message}
-        />
-
-        <FormActions onSubmit={handleSubmit(onSubmit)} />
-      </form>
-    </Accordion>
+      <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
+    </form>
   );
 };
 
