@@ -25,23 +25,26 @@ const EditUserPage = (): ReactElement => {
     formState: { errors },
   } = useForm<UserFormInputs>({
     resolver: joiResolver(UserFormSchema),
-    defaultValues: { roles: [] },
+    defaultValues: { roles: [{ label: '', value: '' }] },
   });
   const { data: roles } = useGetRolesQuery();
-  const { data: user } = useGetUserAdminQuery({ variables: { id } });
+  const { data: { user = null } = {}, loading } = useGetUserAdminQuery({
+    fetchPolicy: 'cache-and-network',
+    variables: { id },
+  });
   const [saveUser] = useSaveUserMutation({
     onCompleted: () => navigate('/admin/users'),
   });
 
   useEffect(() => {
-    if (user)
+    if (id)
       reset({
-        roles: user.user?.roles?.map((role) => ({
-          value: role?.id,
-          label: role?.name,
+        roles: user?.roles?.map((role) => ({
+          value: role?.id || '',
+          label: role?.name || '',
         })),
       });
-  }, [user, reset]);
+  }, [id, reset, user?.roles]);
 
   const handleChange = (values: OptionType[]) =>
     setValue('roles', values, { shouldValidate: true });
@@ -65,20 +68,27 @@ const EditUserPage = (): ReactElement => {
       value: role?.id,
     })) || [];
 
+  if (loading) return <p>loading...</p>;
+
   return (
     <div className="min-h-full">
-      <Accordion title="Max Müller Rolle zuweisen">
-        <MultiSelect
-          options={roleOptions}
-          defaultValue={getValues('roles')}
-          isSearchable={false}
-          onGetValues={handleChange}
-        />
-        {errors && (
-          <span className="text-primary">
-            {(errors.roles as FieldError)?.message}
-          </span>
+      <Accordion title="Max Müller Rolle zuweisen" open>
+        {getValues('roles') && (
+          <>
+            <MultiSelect
+              options={roleOptions}
+              defaultValue={getValues('roles')}
+              isSearchable={false}
+              onGetValues={handleChange}
+            />
+            {errors && (
+              <span className="text-primary">
+                {(errors.roles as unknown as FieldError)?.message}
+              </span>
+            )}
+          </>
         )}
+
         <Button className="mt-6" onClick={handleSubmit(onSubmit)}>
           Speichern
         </Button>

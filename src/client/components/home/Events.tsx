@@ -1,9 +1,9 @@
-import { useQuery } from "@apollo/client";
-import { useContext, useEffect } from "react";
-import { EventEntity, useGetEventsQuery } from "../../../GraphQl/graphql";
-import { GET_EVENTS } from "../../../GraphQl/Querry";
-import SlideCard from "../slideItems/SlideCard";
-import Slider from "../slideItems/Slider";
+import { useQuery } from '@apollo/client';
+import { useContext, useEffect } from 'react';
+import { EventEntity, useGetEventsQuery } from '../../../GraphQl/graphql';
+import { GET_EVENTS } from '../../../GraphQl/Querry';
+import SlideCard from '../slideItems/SlideCard';
+import Slider from '../slideItems/Slider';
 
 interface EventsProps {}
 
@@ -15,7 +15,7 @@ const Events: React.FC<EventsProps> = () => {
   ];
 
   return (
-    <Slider title="Events" link={"/events"}>
+    <Slider title="Events" link={'/events'}>
       {fetchedData?.map((el: any) => {
         return (
           <SlideCard

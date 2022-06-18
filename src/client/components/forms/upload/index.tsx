@@ -1,23 +1,23 @@
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import AuthContext from "../../../../contexts/AuthContext";
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import AuthContext from '../../../../contexts/AuthContext';
 import {
   useGetMeBasicQuery,
   useSaveUploadsMutation,
   useSaveUserMutation,
-} from "../../../../GraphQl/graphql";
-import TypeInput from "./TypeInput";
+} from '../../../../GraphQl/graphql';
+import TypeInput from './TypeInput';
 
 const UploadFile = () => {
   const user = useGetMeBasicQuery();
 
   const [fileData, setFileData] = useState<any>({
-    base64: "",
-    mimeType: "",
-    name: "",
+    base64: '',
+    mimeType: '',
+    name: '',
   });
-  const [fileName, setFileName] = useState<string>("");
-  const [display, setDisplay] = useState<string>("block");
+  const [fileName, setFileName] = useState<string>('');
+  const [display, setDisplay] = useState<string>('block');
   const navigate = useNavigate();
 
   const uploadHandler = async (e: any) => {
@@ -33,7 +33,7 @@ const UploadFile = () => {
     });
     setFileName(file.name);
 
-    setDisplay("none");
+    setDisplay('none');
   };
 
   const convertBase64 = (file: any) => {
@@ -53,7 +53,7 @@ const UploadFile = () => {
     variables: {
       uploads: [
         {
-          base64: fileData.base64.split(",")[1],
+          base64: fileData.base64.split(',')[1],
           mimeType: fileData.mimeType,
           name: fileData.name,
         },
@@ -61,12 +61,12 @@ const UploadFile = () => {
     },
     onCompleted: () => {
       setFileData({
-        base64: "",
-        mimeType: "",
-        name: "",
+        base64: '',
+        mimeType: '',
+        name: '',
       });
-      setFileName("");
-      navigate("/Forms");
+      setFileName('');
+      navigate('/Forms');
     },
   });
   if (data) {
@@ -79,20 +79,20 @@ const UploadFile = () => {
   return (
     <div className="flex justify-center">
       <button
-        className="w-40 h-10 bg-primary rounded-md mt-10 text-white"
+        className="w-40 h-10 mt-10 text-white rounded-md bg-primary"
         style={{ display: display }}
       >
         <TypeInput onChange={(e: any) => uploadHandler(e)}>
-          {" "}
+          {' '}
           Chose a file
         </TypeInput>
       </button>
 
-      {fileName !== "" && (
-        <span className="flex items-center justify-center flex-col">
+      {fileName !== '' && (
+        <span className="flex flex-col items-center justify-center">
           <button
             onClick={fireUpload}
-            className="w-40 h-10 bg-primary rounded-md mt-10 text-white"
+            className="w-40 h-10 mt-10 text-white rounded-md bg-primary"
           >
             Speichern
           </button>

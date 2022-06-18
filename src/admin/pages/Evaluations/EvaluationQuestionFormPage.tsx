@@ -34,6 +34,18 @@ const EvaluationQuestionFormPage = (): ReactElement => {
     onCompleted: () => navigate('/admin/evaluation/questions'),
   });
 
+  useEffect(() => {
+    if (id && questionnaire) {
+      reset({
+        name: questionnaire.name || '',
+        questions: questionnaire.questions?.map((question) => ({
+          name: question?.item || '',
+        })),
+      });
+    }
+  }, [id, questionnaire, reset]);
+
+  const handleTrigger = () => trigger('name');
   const handleOnSubmit = (data: QuestionsInput) => {
     saveQuestionnaire({
       variables: {
@@ -48,18 +60,6 @@ const EvaluationQuestionFormPage = (): ReactElement => {
       },
     });
   };
-
-  const handleTrigger = () => trigger('name');
-
-  useEffect(() => {
-    if (!!questionnaire?.questions) {
-      reset({
-        questions: questionnaire.questions.map((question) => ({
-          name: question?.item || '',
-        })),
-      });
-    }
-  }, [questionnaire?.questions, reset]);
 
   return (
     <form className="min-h-full ">

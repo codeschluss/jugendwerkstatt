@@ -11,8 +11,11 @@ import { CustomTable } from '../../components/molecules';
 
 const EvaluationsAssignmentPage = (): ReactElement => {
   const navigate = useNavigate();
-  const { data: { assignments = null } = {}, refetch } =
-    useGetAssignmentsQuery();
+  const { data: { assignments = null } = {}, refetch } = useGetAssignmentsQuery(
+    {
+      fetchPolicy: 'cache-and-network',
+    }
+  );
   const [deleteAssignment] = useDeleteAssignmentMutation({
     onCompleted: () => refetch(),
   });

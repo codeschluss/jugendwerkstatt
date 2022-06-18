@@ -30,18 +30,16 @@ export const BaseDataForm = (): ReactElement => {
     if (!getValues('baseData.category') && categoriesData) {
       setValue(
         'baseData.category',
-        categoriesData?.categories?.result?.[0]?.name || ''
+        categoriesData?.categories?.result?.[0]?.id || ''
       );
     }
     if (!getValues('baseData.organizer') && organizersData) {
       setValue(
         'baseData.organizer',
-        organizersData?.organizers?.result?.[0]?.name || ''
+        organizersData?.organizers?.result?.[0]?.id || ''
       );
     }
   }, [organizersData, categoriesData, getValues, setValue]);
-
-  console.log('baseData', baseData);
 
   return (
     <>
@@ -69,7 +67,7 @@ export const BaseDataForm = (): ReactElement => {
             error={baseData?.category?.message}
           >
             {categoriesData?.categories?.result?.map((item) => (
-              <option key={item?.id} value={item?.name || ''}>
+              <option key={item?.id} value={item?.id || ''}>
                 {item?.name}
               </option>
             ))}
@@ -83,7 +81,7 @@ export const BaseDataForm = (): ReactElement => {
             error={baseData?.organizer?.message}
           >
             {organizersData?.organizers?.result?.map((item) => (
-              <option key={item?.id} value={item?.name || ''}>
+              <option key={item?.id} value={item?.id || ''}>
                 {item?.name}
               </option>
             ))}

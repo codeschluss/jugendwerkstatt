@@ -7,7 +7,7 @@ export const EventsFormSchema = Joi.object({
   address: AddressFormSchema,
   baseData: EventBaseDataFormSchema,
   description: Joi.string().required().label('Beschreibung'),
-  schedule: ScheduleFormSchema,
+  // schedule: ScheduleFormSchema,
 });
 
 export const OrganizerFormSchema = Joi.object({

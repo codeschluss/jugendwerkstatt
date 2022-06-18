@@ -21,6 +21,7 @@ const CreateEvaluationAssignmentPage = (): ReactElement => {
   const { data: { assignment = null } = {} } = useGetAssignmentQuery({
     skip: !id,
     variables: { entity: { id } },
+    fetchPolicy: 'cache-and-network',
   });
   const { data: { users = null } = {} } = useGetUsersAdminQuery({
     variables: {
@@ -37,7 +38,7 @@ const CreateEvaluationAssignmentPage = (): ReactElement => {
   });
   const { data: { questionnaires = null } = {} } = useGetQuestionnairesQuery();
   const [saveAssignment] = useSaveAssignmentMutation({
-    onCompleted: () => navigate('/admin/assignments'),
+    onCompleted: () => navigate('/admin/evaluations/assignments'),
   });
 
   const {
@@ -62,6 +63,7 @@ const CreateEvaluationAssignmentPage = (): ReactElement => {
     saveAssignment({
       variables: {
         entity: {
+          ...(id && { id }),
           user: { id: userId },
           questionnaire: { id: evaluationQuestionId },
         },
@@ -75,7 +77,6 @@ const CreateEvaluationAssignmentPage = (): ReactElement => {
         <div className="space-y-6">
           <div>
             <Select id="user" label="Benutzer/in" {...register('userId')}>
-              {!id && <option defaultValue="Choose an option" />}
               {users?.result?.map((user) => (
                 <option key={user?.id} value={user?.id || ''}>
                   {user?.fullname}
@@ -91,8 +92,8 @@ const CreateEvaluationAssignmentPage = (): ReactElement => {
             <Select
               label="Evaluierungsbogen"
               {...register('evaluationQuestionId')}
+              placeholder="Choose an Option"
             >
-              {!id && <option defaultValue="Choose an option" />}
               {questionnaires?.result?.map((questionnaire) => (
                 <option key={questionnaire?.id} value={questionnaire?.id || ''}>
                   {questionnaire?.name}

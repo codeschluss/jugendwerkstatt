@@ -1,5 +1,4 @@
 import { CalendarIcon, ClockIcon } from '@heroicons/react/outline';
-import { watch } from 'fs';
 import { ReactElement } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { useSchedules } from '../../../hooks/useSchedules';
@@ -15,8 +14,14 @@ export const SchedulesForm = (): ReactElement => {
   const watchFields = useWatch({ control });
   const handleTrigger = () => trigger('schedule');
   const dates = useSchedules(watchFields.schedule || {});
+
+  console.log('main component', dates);
   return (
-    <Accordion title="Termine" showSide sideContent={<SchedulesPreview />}>
+    <Accordion
+      title="Termine"
+      showSide
+      sideContent={<SchedulesPreview dates={dates} />}
+    >
       <div className="max-w-md space-y-8">
         <div className="flex items-center">
           <div className="mr-10">

@@ -18,7 +18,7 @@ export interface ScheduleProps {
   start_hour?: Date;
   end_date?: Date;
   end_hour?: Date;
-  repeat?: Date;
+  repeat?: 'week' | 'month' | 'year';
   end_repeat?: Date;
 }
 

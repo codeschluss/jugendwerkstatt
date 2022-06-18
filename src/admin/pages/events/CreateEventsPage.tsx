@@ -1,4 +1,5 @@
 import { ReactElement, useState } from 'react';
+import { encode } from 'base64-arraybuffer';
 import {
   FieldArrayWithId,
   FormProvider,
@@ -25,6 +26,17 @@ import {
   useSaveEventMutation,
 } from '../../../GraphQl/graphql';
 import { Button } from '../../components/atoms';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { EventsFormSchema } from '../../validations';
+import dayjs from 'dayjs';
+
+const obj = async (file: File) => ({
+  name: file?.name,
+  mimeType: file?.type,
+  ...(!!file && {
+    base64: encode(await file.arrayBuffer()),
+  }),
+});
 
 const CreateEventsPage = (): ReactElement => {
   const navigate = useNavigate();
@@ -35,6 +47,7 @@ const CreateEventsPage = (): ReactElement => {
     'files',
     'id'
   > | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const { data: result } = useGetEventAdminQuery({
     variables: { entity: { id } },
@@ -48,27 +61,60 @@ const CreateEventsPage = (): ReactElement => {
   const methods = useForm<EventsFormInputs>({
     // resolver: joiResolver(EventsFormSchema),
     // mode: 'onChange',
+    defaultValues: {
+      schedule: {
+        start_date: dayjs().startOf('date').toDate(),
+        end_date: dayjs().startOf('date').toDate(),
+        end_repeat: dayjs().startOf('date').toDate(),
+        start_hour: dayjs().startOf('h').toDate(),
+        end_hour: dayjs().startOf('h').toDate(),
+      },
+    },
   });
 
-  const { trigger, handleSubmit, register, control } = methods;
+  const {
+    formState: { errors },
+    trigger,
+    handleSubmit,
+    register,
+    control,
+  } = methods;
 
   const { fields, append, remove } = useFieldArray({
     name: 'files',
     control,
   });
 
-  const handleOnSubmit = ({
+  const handleOnSubmit = async ({
     baseData,
     address,
     description,
-    files,
   }: EventsFormInputs) => {
-    console.log('handleOnSubmit', files);
+    let images: { name: string; mimeType: string; base64: string }[] = [];
+
+    for (const field of fields) {
+      const object = await obj(field.file[0]);
+      images.push(object);
+    }
+
+    console.log({
+      address,
+      description,
+      images,
+      ...(!!imageFile && { titleImage: await obj(imageFile) }),
+      name: baseData?.name,
+      organizer: { id: baseData?.organizer },
+      category: { id: baseData?.category },
+      ...(!!result && { id: result?.getEvent?.id }),
+    });
+
     saveEvent({
       variables: {
         entity: {
           address,
           description,
+          images,
+          ...(!!imageFile && { titleImage: await obj(imageFile) }),
           name: baseData?.name,
           organizer: { id: baseData?.organizer },
           category: { id: baseData?.category },
@@ -78,11 +124,12 @@ const CreateEventsPage = (): ReactElement => {
     });
   };
 
+  console.log(errors);
+
   const handleTrigger = () => trigger();
 
   const handleSetFile =
     (item: FieldArrayWithId<EventsFormInputs, 'files', 'id'>) => () => {
-      console.log('item', item);
       setFile(item);
     };
 
@@ -94,6 +141,8 @@ const CreateEventsPage = (): ReactElement => {
     remove(fields.findIndex((field) => field.id === id));
     setFile(null);
   };
+
+  const onHandle = (file: File | null) => setImageFile(file);
 
   // useEffect(() => {
   //   if (!!result) {
@@ -120,8 +169,10 @@ const CreateEventsPage = (): ReactElement => {
           sideContent={
             file && (
               <EventImagePreview
+                id={file.id}
+                onHandle={onHandle}
                 onRemoveImage={handleRemoveImage}
-                file={file}
+                file={file.file[0]}
               />
             )
           }
