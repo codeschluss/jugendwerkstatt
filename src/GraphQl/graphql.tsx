@@ -3143,6 +3143,13 @@ export type GetEventQueryVariables = Exact<{
 
 export type GetEventQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, nextSchedule?: { __typename?: 'ScheduleEntity', startDate?: any | null, endDate?: any | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null, postalCode?: string | null, latitude?: number | null, longitude?: number | null, id?: string | null, houseNumber?: string | null, created?: any | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, endDate?: any | null, startDate?: any | null } | null> | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null, name?: string | null, phone?: string | null, website?: string | null, mail?: string | null } | null } | null };
 
+export type GetEventCategorieNamesQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetEventCategorieNamesQuery = { __typename?: 'Query', getEventCategories?: { __typename?: 'PageableList_EventCategoryEntity', result?: Array<{ __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null> | null } | null };
+
 export type GetEventCategoriesQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
 }>;
@@ -5639,6 +5646,44 @@ export function useGetEventLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetEventQueryHookResult = ReturnType<typeof useGetEventQuery>;
 export type GetEventLazyQueryHookResult = ReturnType<typeof useGetEventLazyQuery>;
 export type GetEventQueryResult = Apollo.QueryResult<GetEventQuery, GetEventQueryVariables>;
+export const GetEventCategorieNamesDocument = gql`
+    query GetEventCategorieNames($params: FilterSortPaginateInput) {
+  getEventCategories(params: $params) {
+    result {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetEventCategorieNamesQuery__
+ *
+ * To run a query within a React component, call `useGetEventCategorieNamesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetEventCategorieNamesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetEventCategorieNamesQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetEventCategorieNamesQuery(baseOptions?: Apollo.QueryHookOptions<GetEventCategorieNamesQuery, GetEventCategorieNamesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetEventCategorieNamesQuery, GetEventCategorieNamesQueryVariables>(GetEventCategorieNamesDocument, options);
+      }
+export function useGetEventCategorieNamesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetEventCategorieNamesQuery, GetEventCategorieNamesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetEventCategorieNamesQuery, GetEventCategorieNamesQueryVariables>(GetEventCategorieNamesDocument, options);
+        }
+export type GetEventCategorieNamesQueryHookResult = ReturnType<typeof useGetEventCategorieNamesQuery>;
+export type GetEventCategorieNamesLazyQueryHookResult = ReturnType<typeof useGetEventCategorieNamesLazyQuery>;
+export type GetEventCategorieNamesQueryResult = Apollo.QueryResult<GetEventCategorieNamesQuery, GetEventCategorieNamesQueryVariables>;
 export const GetEventCategoriesDocument = gql`
     query GetEventCategories($params: FilterSortPaginateInput) {
   getEventCategories(params: $params) {

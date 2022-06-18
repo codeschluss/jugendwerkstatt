@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { useGetEventsQuery } from "../../../GraphQl/graphql";
+import { EventEntity, useGetEventsQuery } from "../../../GraphQl/graphql";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "./style.css";
 import "swiper/css";
@@ -8,7 +8,6 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import SwiperCore, { Virtual } from "swiper";
 import SlideCard from "../slideItems/SlideCard";
-import Slider from "../slideItems/Slider";
 SwiperCore.use([Virtual]);
 
 const Map: FunctionComponent = () => {
@@ -72,20 +71,20 @@ const Map: FunctionComponent = () => {
               spaceBetween={0}
               slidesPerView={1.5}
             >
-              <Slider title="Events">
-                {allEvents?.map((el: any, index: number) => {
-                  return (
-                    <SlideCard
-                      route={`/event/${el.id}`}
-                      key={el?.id}
-                      eventName={el?.name}
-                      location={el?.address?.street}
-                      date="Freitag, 25/02/22"
-                      imgUrl={el?.titleImage?.id}
-                    />
-                  );
-                })}
-              </Slider>
+              {allEvents?.map((el: EventEntity, index: number) => {
+                console.log(el);
+
+                return (
+                  <SwiperSlide key={el.id}>
+                    <div className="w-full h-32  bottom-0 z-50">
+                      <img
+                        src={`http://localhost:8061/api/media/${el.titleImage?.id}`}
+                        alt=""
+                      />
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
             </Swiper>
           </div>
         </div>

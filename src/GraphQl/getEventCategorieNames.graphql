@@ -1,0 +1,8 @@
+query GetEventCategorieNames($params: FilterSortPaginateInput) {
+  getEventCategories(params: $params) {
+    result {
+      id
+      name
+    }
+  }
+}
