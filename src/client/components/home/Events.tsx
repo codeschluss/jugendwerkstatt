@@ -1,10 +1,8 @@
-import { useQuery } from "@apollo/client";
-import { useContext, useEffect } from "react";
 import {
   EventEntity,
   useAddEventFavoriteMutation,
   useGetEventsQuery,
-  useGetMeFavoritesQuery,
+  useGetMeFavoritesQuery
 } from "../../../GraphQl/graphql";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
@@ -12,11 +10,7 @@ import Slider from "../slideItems/Slider";
 interface EventsProps {}
 
 const Events: React.FC<EventsProps> = () => {
-  
-
-  const useEvents = useGetEventsQuery({
-    fetchPolicy: "network-only",
-  });
+  const useEvents = useGetEventsQuery({});
 
   const [eventFavorite] = useAddEventFavoriteMutation({});
 
@@ -24,9 +18,7 @@ const Events: React.FC<EventsProps> = () => {
     EventEntity
   ];
 
-  const favorites = useGetMeFavoritesQuery({
-    fetchPolicy: "network-only",
-  });
+  const favorites = useGetMeFavoritesQuery({});
   const refetchQueries = () => {
     useEvents.refetch();
     favorites.refetch();

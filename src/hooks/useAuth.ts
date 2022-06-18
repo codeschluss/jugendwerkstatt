@@ -2,11 +2,12 @@ import { default as jwt_decode } from "jwt-decode";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
+import FeedbackContext, { FeedbackType } from "../contexts/FeedbackContext";
 import TokenStorageContext from "../contexts/TokenStorageContext";
 import {
   TokenDto,
   useCreateTokenMutation,
-  useRefreshTokenMutation,
+  useRefreshTokenMutation
 } from "../GraphQl/graphql";
 
 export const useAuth = () => {
@@ -16,10 +17,10 @@ export const useAuth = () => {
     useContext(TokenStorageContext);
 
   const { setIsLogedIn } = useContext(AuthContext);
+  const { setFeedback } = useContext(FeedbackContext);
 
   const [accessTimer, setAccessTimer] = useState<any>(null);
   const [refreshTimer, setRefreshTimer] = useState<any>(null);
-  const [hasError, setHasError] = useState<boolean>(false);
 
   const init = () => {
     refreshToken && expiration(refreshToken) > 0 ? refresh() : logout();
@@ -65,11 +66,11 @@ export const useAuth = () => {
 
         store(response.data?.createToken);
         timers(response.data?.createToken);
+        setFeedback({
+          type: FeedbackType.Success,
+          message: "Erolgreich eingeloggt"
+        });
         navigate("/");
-      })
-      .catch((err) => {
-        setHasError(err);
-        console.log(true);
       });
   };
 
@@ -92,9 +93,6 @@ export const useAuth = () => {
 
   const expiration = (token: string): number => {
     const decoded = JSON.parse(atob(token.split(".")[1]));
-    console.log("exp", decoded.exp * 1000);
-    console.log("Date.now()", Date.now());
-    console.log("expiration", decoded.exp * 1000 - Date.now());
     return decoded.exp * 1000 - Date.now();
   };
 
@@ -110,8 +108,7 @@ export const useAuth = () => {
   return {
     handleLogin,
     init,
-    logout,
-    hasError,
+    logout
   };
 };
 
