@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import {
   QueryOperator,
   useDeleteUserMutation,
@@ -55,7 +56,9 @@ const UsersRequestsListPage = () => {
                 <Table.Data>{user?.fullname}</Table.Data>
                 <Table.Data>{user?.email}</Table.Data>
                 <Table.Data>{user?.phone}</Table.Data>
-                <Table.Data>{user?.created}</Table.Data>
+                <Table.Data>
+                  {dayjs(user?.created).format('DD.MM.YYYY')}
+                </Table.Data>
                 <Table.Data>
                   <Action
                     onApprove={handleApproveUser(user?.id || '')}

@@ -1,6 +1,6 @@
 import { PlusCircleIcon } from '@heroicons/react/outline';
 import { useCallback } from 'react';
-import { FieldError, useFieldArray } from 'react-hook-form';
+import { useFieldArray } from 'react-hook-form';
 import { SortOver, SortEvent } from 'react-sortable-hoc';
 import { Button, DragItem, DragList, ListItem } from '../../atoms';
 import { InputField } from '../../molecules';
@@ -9,6 +9,7 @@ import { EvaluationQuestionListProps } from './EvaluationQuestionList.types';
 
 export const EvaluationQuestionList = ({
   errors,
+  error,
   control,
   register,
 }: EvaluationQuestionListProps) => {
@@ -50,18 +51,16 @@ export const EvaluationQuestionList = ({
             <ListItem onDelete={handleOnDelete(index)} />
           </DragItem>
         ))}
-        {errors && (
-          <p className="my-2 text-primary">
-            {(errors as unknown as FieldError)?.message}
-          </p>
-        )}
       </DragList>
-      <Button
-        iconOnly
-        type="button"
-        onClick={handleAddNew}
-        iconLeft={<PlusCircleIcon />}
-      />
+      <div className="flex items-center gap-x-4">
+        <Button
+          iconOnly
+          type="button"
+          onClick={handleAddNew}
+          iconLeft={<PlusCircleIcon />}
+        />
+        {error && <p className="text-primary">{error.message}</p>}
+      </div>
     </>
   );
 };

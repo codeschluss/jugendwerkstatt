@@ -1,5 +1,0 @@
-mutation AddRoles($userId: String, $roleIds: [String]) {
-  addRoles(userId: $userId, roleIds: $roleIds) {
-    id
-  }
-}

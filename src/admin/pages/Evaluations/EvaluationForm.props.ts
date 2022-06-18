@@ -1,4 +1,4 @@
 export interface EvaluationFormInputs {
-  user: string;
-  evaluationQuestion: string;
+  userId: string;
+  evaluationQuestionId: string;
 }

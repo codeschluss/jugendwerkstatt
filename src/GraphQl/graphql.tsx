@@ -2936,14 +2936,6 @@ export type DeleteQuestionnaireMutationVariables = Exact<{
 
 export type DeleteQuestionnaireMutation = { __typename?: 'Mutation', deleteQuestionnaire?: boolean | null };
 
-export type AddRolesMutationVariables = Exact<{
-  userId?: InputMaybe<Scalars['String']>;
-  roleIds?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
-}>;
-
-
-export type AddRolesMutation = { __typename?: 'Mutation', addRoles?: { __typename?: 'UserEntity', id?: string | null } | null };
-
 export type SaveSettingsMutationVariables = Exact<{
   entity?: InputMaybe<SettingsEntityInput>;
 }>;
@@ -3022,14 +3014,14 @@ export type GetAddressesQuery = { __typename?: 'Query', addresses?: { __typename
 export type GetAssignmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAssignmentsQuery = { __typename?: 'Query', assignments?: { __typename?: 'PageableList_AssignmentEntity', result?: Array<{ __typename?: 'AssignmentEntity', id?: string | null, created?: any | null, comment?: string | null, user?: { __typename?: 'UserEntity', approved?: boolean | null, id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null } | null> | null } | null };
+export type GetAssignmentsQuery = { __typename?: 'Query', assignments?: { __typename?: 'PageableList_AssignmentEntity', result?: Array<{ __typename?: 'AssignmentEntity', id?: string | null, created?: any | null, comment?: string | null, user?: { __typename?: 'UserEntity', approved?: boolean | null, id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null, questionnaire?: { __typename?: 'QuestionnaireEntity', id?: string | null, name?: string | null, created?: any | null } | null } | null> | null } | null };
 
 export type GetAssignmentQueryVariables = Exact<{
   entity?: InputMaybe<AssignmentEntityInput>;
 }>;
 
 
-export type GetAssignmentQuery = { __typename?: 'Query', getAssignment?: { __typename?: 'AssignmentEntity', id?: string | null, created?: any | null, comment?: string | null } | null };
+export type GetAssignmentQuery = { __typename?: 'Query', assignment?: { __typename?: 'AssignmentEntity', user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null, questionnaire?: { __typename?: 'QuestionnaireEntity', id?: string | null, name?: string | null, created?: any | null } | null } | null };
 
 export type GetCompaniesQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3170,11 +3162,6 @@ export type GetPageQueryVariables = Exact<{
 
 
 export type GetPageQuery = { __typename?: 'Query', page?: { __typename?: 'PageEntity', id?: string | null, content?: string | null, slug?: string | null } | null };
-
-export type GetQuestionsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetQuestionsQuery = { __typename?: 'Query', questions?: { __typename?: 'PageableList_QuestionEntity', result?: Array<{ __typename?: 'QuestionEntity', id?: string | null, item?: string | null } | null> | null } | null };
 
 export type DeleteQuestionMutationVariables = Exact<{
   questionId?: InputMaybe<Scalars['String']>;
@@ -4572,40 +4559,6 @@ export function useDeleteQuestionnaireMutation(baseOptions?: Apollo.MutationHook
 export type DeleteQuestionnaireMutationHookResult = ReturnType<typeof useDeleteQuestionnaireMutation>;
 export type DeleteQuestionnaireMutationResult = Apollo.MutationResult<DeleteQuestionnaireMutation>;
 export type DeleteQuestionnaireMutationOptions = Apollo.BaseMutationOptions<DeleteQuestionnaireMutation, DeleteQuestionnaireMutationVariables>;
-export const AddRolesDocument = gql`
-    mutation AddRoles($userId: String, $roleIds: [String]) {
-  addRoles(userId: $userId, roleIds: $roleIds) {
-    id
-  }
-}
-    `;
-export type AddRolesMutationFn = Apollo.MutationFunction<AddRolesMutation, AddRolesMutationVariables>;
-
-/**
- * __useAddRolesMutation__
- *
- * To run a mutation, you first call `useAddRolesMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddRolesMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [addRolesMutation, { data, loading, error }] = useAddRolesMutation({
- *   variables: {
- *      userId: // value for 'userId'
- *      roleIds: // value for 'roleIds'
- *   },
- * });
- */
-export function useAddRolesMutation(baseOptions?: Apollo.MutationHookOptions<AddRolesMutation, AddRolesMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddRolesMutation, AddRolesMutationVariables>(AddRolesDocument, options);
-      }
-export type AddRolesMutationHookResult = ReturnType<typeof useAddRolesMutation>;
-export type AddRolesMutationResult = Apollo.MutationResult<AddRolesMutation>;
-export type AddRolesMutationOptions = Apollo.BaseMutationOptions<AddRolesMutation, AddRolesMutationVariables>;
 export const SaveSettingsDocument = gql`
     mutation SaveSettings($entity: SettingsEntityInput) {
   saveSettings(entity: $entity) {
@@ -4975,11 +4928,15 @@ export const GetAssignmentsDocument = gql`
         ...UserField
         approved
       }
+      questionnaire {
+        ...QuestionnaireField
+      }
     }
   }
 }
     ${AssignmentFieldFragmentDoc}
-${UserFieldFragmentDoc}`;
+${UserFieldFragmentDoc}
+${QuestionnaireFieldFragmentDoc}`;
 
 /**
  * __useGetAssignmentsQuery__
@@ -5009,11 +4966,17 @@ export type GetAssignmentsLazyQueryHookResult = ReturnType<typeof useGetAssignme
 export type GetAssignmentsQueryResult = Apollo.QueryResult<GetAssignmentsQuery, GetAssignmentsQueryVariables>;
 export const GetAssignmentDocument = gql`
     query GetAssignment($entity: AssignmentEntityInput) {
-  getAssignment(entity: $entity) {
-    ...AssignmentField
+  assignment: getAssignment(entity: $entity) {
+    user {
+      ...UserField
+    }
+    questionnaire {
+      ...QuestionnaireField
+    }
   }
 }
-    ${AssignmentFieldFragmentDoc}`;
+    ${UserFieldFragmentDoc}
+${QuestionnaireFieldFragmentDoc}`;
 
 /**
  * __useGetAssignmentQuery__
@@ -5822,42 +5785,6 @@ export function useGetPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetPageQueryHookResult = ReturnType<typeof useGetPageQuery>;
 export type GetPageLazyQueryHookResult = ReturnType<typeof useGetPageLazyQuery>;
 export type GetPageQueryResult = Apollo.QueryResult<GetPageQuery, GetPageQueryVariables>;
-export const GetQuestionsDocument = gql`
-    query GetQuestions {
-  questions: getQuestions {
-    result {
-      ...QuestionField
-    }
-  }
-}
-    ${QuestionFieldFragmentDoc}`;
-
-/**
- * __useGetQuestionsQuery__
- *
- * To run a query within a React component, call `useGetQuestionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetQuestionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetQuestionsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetQuestionsQuery(baseOptions?: Apollo.QueryHookOptions<GetQuestionsQuery, GetQuestionsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetQuestionsQuery, GetQuestionsQueryVariables>(GetQuestionsDocument, options);
-      }
-export function useGetQuestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetQuestionsQuery, GetQuestionsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetQuestionsQuery, GetQuestionsQueryVariables>(GetQuestionsDocument, options);
-        }
-export type GetQuestionsQueryHookResult = ReturnType<typeof useGetQuestionsQuery>;
-export type GetQuestionsLazyQueryHookResult = ReturnType<typeof useGetQuestionsLazyQuery>;
-export type GetQuestionsQueryResult = Apollo.QueryResult<GetQuestionsQuery, GetQuestionsQueryVariables>;
 export const DeleteQuestionDocument = gql`
     mutation DeleteQuestion($questionId: String) {
   deleteQuestion(id: $questionId)

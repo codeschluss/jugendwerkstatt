@@ -11,7 +11,9 @@ import { CustomTable } from '../../components/molecules';
 const EvaluationQuestionsPage = (): ReactElement => {
   const navigate = useNavigate();
   const { data: { questionnaires = null } = {}, refetch } =
-    useGetQuestionnairesQuery();
+    useGetQuestionnairesQuery({
+      fetchPolicy: 'cache-and-network',
+    });
   const [deleteQuestionnaire] = useDeleteQuestionnaireMutation({
     onCompleted: () => refetch(),
   });

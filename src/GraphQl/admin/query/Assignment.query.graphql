@@ -6,12 +6,20 @@ query GetAssignments {
         ...UserField
         approved
       }
+      questionnaire {
+        ...QuestionnaireField
+      }
     }
   }
 }
 
 query GetAssignment($entity: AssignmentEntityInput) {
-  getAssignment(entity: $entity) {
-    ...AssignmentField
+  assignment: getAssignment(entity: $entity) {
+    user {
+      ...UserField
+    }
+    questionnaire {
+      ...QuestionnaireField
+    }
   }
 }

@@ -1,15 +1,15 @@
-import { ChangeEvent, ReactElement, useMemo, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import {
   FieldArrayWithId,
   FormProvider,
   useFieldArray,
   useForm,
 } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import {
   Accordion,
+  EventImagePreview,
   FormActions,
   UploadField,
 } from '../../components/molecules';
@@ -18,12 +18,13 @@ import {
   BaseDataForm,
   DescriptionFrom,
   EventsFormInputs,
+  SchedulesForm,
 } from '../../components/organisms';
-import { EventsFormSchema } from '../../validations';
 import {
   useGetEventAdminQuery,
   useSaveEventMutation,
 } from '../../../GraphQl/graphql';
+import { Button } from '../../components/atoms';
 
 const CreateEventsPage = (): ReactElement => {
   const navigate = useNavigate();
@@ -46,9 +47,10 @@ const CreateEventsPage = (): ReactElement => {
 
   const methods = useForm<EventsFormInputs>({
     // resolver: joiResolver(EventsFormSchema),
+    // mode: 'onChange',
   });
 
-  const { reset, handleSubmit, register, control, formState } = methods;
+  const { trigger, handleSubmit, register, control } = methods;
 
   const { fields, append, remove } = useFieldArray({
     name: 'files',
@@ -76,7 +78,7 @@ const CreateEventsPage = (): ReactElement => {
     });
   };
 
-  const handleReset = () => reset();
+  const handleTrigger = () => trigger();
 
   const handleSetFile =
     (item: FieldArrayWithId<EventsFormInputs, 'files', 'id'>) => () => {
@@ -88,7 +90,10 @@ const CreateEventsPage = (): ReactElement => {
     append({ file: file || undefined });
   };
 
-  console.log('fields', fields, formState?.errors);
+  const handleRemoveImage = (id: string) => {
+    remove(fields.findIndex((field) => field.id === id));
+    setFile(null);
+  };
 
   // useEffect(() => {
   //   if (!!result) {
@@ -114,10 +119,9 @@ const CreateEventsPage = (): ReactElement => {
           sideClassName="w-auto"
           sideContent={
             file && (
-              <img
-                className="h-72"
-                alt={file.file[0].name}
-                src={URL.createObjectURL(file.file[0] as File) || ''}
+              <EventImagePreview
+                onRemoveImage={handleRemoveImage}
+                file={file}
               />
             )
           }
@@ -136,10 +140,12 @@ const CreateEventsPage = (): ReactElement => {
 
             <UploadField handleAppend={handleAppend} />
           </div>
+          <Button type="button" className="mt-6" onClick={handleTrigger}>
+            Speichern
+          </Button>
         </Accordion>
-        <Accordion title="Termine">
-          <p>lorem ispum</p>
-        </Accordion>
+
+        <SchedulesForm />
 
         <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
       </form>

@@ -3,6 +3,7 @@ export * from './Events/AddressForm';
 export * from './Events/BaseDataForm';
 export * from './Events/DescriptionFrom';
 export * from './Events/BaseOrganizerForm';
+export * from './Events/SchedulesForm';
 export * from './Forms/FormsBaseForm';
 export * from './GeneralSettings/GeneralAddressForm';
 export * from './GeneralSettings/PublicPagesForm';

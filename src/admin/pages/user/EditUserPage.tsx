@@ -1,11 +1,11 @@
 import { joiResolver } from '@hookform/resolvers/joi';
 import { ReactElement, useEffect } from 'react';
 import { FieldError, useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
-  useAddRolesMutation,
   useGetRolesQuery,
   useGetUserAdminQuery,
+  useSaveUserMutation,
 } from '../../../GraphQl/graphql';
 import { Button } from '../../components/atoms';
 import { MultiSelect } from '../../components/atoms/Form/MultiSelect/MultiSelect';
@@ -16,6 +16,7 @@ import { UserFormInputs } from './User.props';
 
 const EditUserPage = (): ReactElement => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const {
     reset,
     setValue,
@@ -28,7 +29,9 @@ const EditUserPage = (): ReactElement => {
   });
   const { data: roles } = useGetRolesQuery();
   const { data: user } = useGetUserAdminQuery({ variables: { id } });
-  const [addUserRoles] = useAddRolesMutation();
+  const [saveUser] = useSaveUserMutation({
+    onCompleted: () => navigate('/admin/users'),
+  });
 
   useEffect(() => {
     if (user)
@@ -44,10 +47,14 @@ const EditUserPage = (): ReactElement => {
     setValue('roles', values, { shouldValidate: true });
   const onSubmit = (data: UserFormInputs) => {
     const roles = data.roles as OptionType[];
-    addUserRoles({
+    saveUser({
       variables: {
-        userId: user?.user?.id || '',
-        roleIds: Object.values(roles.map((role) => role.value)),
+        entity: {
+          id,
+          roles: roles.map(({ value }) => ({
+            id: value,
+          })),
+        },
       },
     });
   };

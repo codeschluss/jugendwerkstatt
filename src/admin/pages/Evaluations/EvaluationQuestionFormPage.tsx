@@ -4,7 +4,6 @@ import { FieldError, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   useGetQuestionnaireQuery,
-  useGetQuestionsQuery,
   useSaveQuestionnaireMutation,
 } from '../../../GraphQl/graphql';
 import { Button } from '../../components/atoms';
@@ -30,7 +29,6 @@ const EvaluationQuestionFormPage = (): ReactElement => {
     handleSubmit,
   } = useForm<QuestionsInput>({
     resolver: joiResolver(EvaluationsQuestionsFormSchema),
-    defaultValues: { name: '', questions: [{ name: '' }] },
   });
   const [saveQuestionnaire] = useSaveQuestionnaireMutation({
     onCompleted: () => navigate('/admin/evaluation/questions'),

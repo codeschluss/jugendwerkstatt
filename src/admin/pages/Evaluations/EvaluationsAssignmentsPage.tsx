@@ -43,7 +43,7 @@ const EvaluationsAssignmentPage = (): ReactElement => {
           assignments?.result?.map((assignment) => (
             <Table.Row key={assignment?.id}>
               <Table.Data>{assignment?.user?.fullname}</Table.Data>
-              <Table.Data>{assignment?.comment || '/'}</Table.Data>
+              <Table.Data>{assignment?.questionnaire?.name || '/'}</Table.Data>
               <Table.Data>
                 {dayjs(assignment?.created).format('DD.MM.YYYY')}
               </Table.Data>
