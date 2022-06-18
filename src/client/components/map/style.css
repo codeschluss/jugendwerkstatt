@@ -1,11 +1,11 @@
 .leaflet-container {
   width: 100%;
-  height: 100vh;
+  height: 75vh;
   z-index: 1;
 }
 
 .map-tags {
-  margin-top:2px;
+  margin-top: 2px;
   height: 40px;
   padding: 8px 24px;
   background-color: red;
@@ -19,7 +19,6 @@
 
 .slider {
   z-index: 200;
-  position: absolute;
   bottom: 0;
   width: 100%;
 }

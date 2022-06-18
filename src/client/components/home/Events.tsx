@@ -12,6 +12,8 @@ import Slider from "../slideItems/Slider";
 interface EventsProps {}
 
 const Events: React.FC<EventsProps> = () => {
+  
+
   const useEvents = useGetEventsQuery({
     fetchPolicy: "network-only",
   });

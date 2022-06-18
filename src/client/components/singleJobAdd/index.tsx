@@ -9,6 +9,7 @@ import {
 import { EventDetails } from "../singleEvent/eventDetails/EventDetails";
 import { JobHeader } from "./jobHeader";
 import { TitleImgSlider } from "../singleEvent/slider/Slider";
+import SideBar from "../filter/SideBar";
 export const SingleJobAdd = () => {
   const params = useParams();
 

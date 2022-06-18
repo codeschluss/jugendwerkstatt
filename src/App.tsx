@@ -10,10 +10,12 @@ import { useContext } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { API_URL } from "./config/app";
 import { AuthProvider } from "./contexts/AuthContext";
+import { FilterProvider } from "./contexts/FilterContext";
 import { SideBarProvider } from "./contexts/SideBarContext";
 import TokenStorageContext from "./contexts/TokenStorageContext";
 import Router from "./routes/Router";
-
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 function App() {
   const { accessToken } = useContext(TokenStorageContext);
 
@@ -39,7 +41,11 @@ function App() {
     <ApolloProvider client={client}>
       <AuthProvider>
         <SideBarProvider>
-          <Router />
+          <FilterProvider>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Router />
+            </LocalizationProvider>
+          </FilterProvider>
         </SideBarProvider>
       </AuthProvider>
     </ApolloProvider>
