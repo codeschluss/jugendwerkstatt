@@ -5,6 +5,7 @@ export * from "./Form/PasswordField/PasswordField";
 export * from "./FormActions/FormActions";
 export * from "./DatePicker/DatePicker";
 export * from "./DatePicker/TimePicker";
+export * from "./Form/UploadField/UploadField";
 
 // types
 export * from "./Accordion/Accordion.props";

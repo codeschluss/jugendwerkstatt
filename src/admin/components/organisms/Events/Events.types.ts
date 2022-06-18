@@ -17,6 +17,7 @@ export interface EventsFormInputs {
   baseData: BaseDataFormInputs;
   address: AddressFormInputs;
   description: string;
+  files: { file: FileList }[];
 }
 export interface OrganizerFormInputs {
   name: string;

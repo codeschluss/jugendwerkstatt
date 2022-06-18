@@ -85,7 +85,6 @@ import LoginPage from '../client/pages/authentication/LoginPage';
 // import { RequireAuthRoute } from "../shared/components/RequireAuthRoute/RequireAuthRoute";
 // import { RequireNonAuthRoute } from "../shared/components/RequireAuthRoute/RequireNonAuthRoute";
 // import { RequireAuthAdmin } from "../shared/components/RequireAuthRoute/RequireAuthAdmin";
-
 import useAuth from '../hooks/useAuth';
 
 export const Router = () => {
@@ -98,6 +97,7 @@ export const Router = () => {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
+
       {/* <Route element={<RequireNonAuthRoute />}>
         <Route path="/" element={<DefaultHome />} />
         <Route path="/login" element={<LoginPage />} />
