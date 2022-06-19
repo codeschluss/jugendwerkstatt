@@ -1,0 +1,9 @@
+query GetChats {
+  getChats {
+    result {
+      name
+      id
+      modified
+    }
+  }
+}

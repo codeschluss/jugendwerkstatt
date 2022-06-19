@@ -1,0 +1,22 @@
+query GetMessages($params: FilterSortPaginateInput) {
+  getMessages(params: $params) {
+    result {
+      id
+      parent {
+        id
+        user {
+          fullname
+        }
+        content
+      }
+      content
+      media {
+        id
+      }
+      user {
+        id
+        fullname
+      }
+    }
+  }
+}

@@ -4,7 +4,9 @@ export const TokenStorageContext = createContext<any>(null);
 
 export const TokenStorageProvider: React.FunctionComponent = ({ children }) => {
   const [accessToken, setAccessToken] = useState<string>();
-  const [refreshToken, setRefreshToken] = useState<string>(localStorage.getItem("refreshToken") || "");
+  const [refreshToken, setRefreshToken] = useState<string>(
+    localStorage.getItem("refreshToken") || ""
+  );
 
   useEffect(() => {
     refreshToken
@@ -18,7 +20,7 @@ export const TokenStorageProvider: React.FunctionComponent = ({ children }) => {
         accessToken,
         refreshToken,
         setAccessToken,
-        setRefreshToken
+        setRefreshToken,
       }}
     >
       {children}

@@ -1,0 +1,8 @@
+subscription Chatlistener($token: String!) {
+  addChatListener(token: $token) {
+    content
+    data
+    title
+    type
+  }
+}

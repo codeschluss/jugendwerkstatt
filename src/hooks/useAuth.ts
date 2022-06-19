@@ -7,7 +7,7 @@ import TokenStorageContext from "../contexts/TokenStorageContext";
 import {
   TokenDto,
   useCreateTokenMutation,
-  useRefreshTokenMutation
+  useRefreshTokenMutation,
 } from "../GraphQl/graphql";
 
 export const useAuth = () => {
@@ -46,29 +46,28 @@ export const useAuth = () => {
         username: email,
         password: password,
       },
-    })
-      .then((response) => {
-        const recievedToken: [string] | any = jwt_decode(
-          response.data?.createToken?.access || ""
-        );
-        if (!recievedToken.verified) {
-          navigate("/reVerifyEmail");
-          return;
-        }
+    }).then((response) => {
+      const recievedToken: [string] | any = jwt_decode(
+        response.data?.createToken?.access || ""
+      );
+      if (!recievedToken.verified) {
+        navigate("/reVerifyEmail");
+        return;
+      }
 
-        //TODO: pending approved view
-        if (!recievedToken.approved) {
-          navigate("/pending-approval");
-          return;
-        }
+      //TODO: pending approved view
+      if (!recievedToken.approved) {
+        navigate("/pending-approval");
+        return;
+      }
 
-        store(response.data?.createToken);
-        setFeedback({
-          type: FeedbackType.Success,
-          message: "Erolgreich eingeloggt"
-        });
-        navigate("/");
+      store(response.data?.createToken);
+      setFeedback({
+        type: FeedbackType.Success,
+        message: "Erolgreich eingeloggt",
       });
+      navigate("/");
+    });
   };
 
   const store = (token: TokenDto | null | undefined) => {
@@ -89,7 +88,7 @@ export const useAuth = () => {
   return {
     handleLogin,
     init,
-    logout
+    logout,
   };
 };
 

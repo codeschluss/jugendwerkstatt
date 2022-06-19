@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   useGetMeBasicQuery,
-  useGetNotificationsQuery
+  useGetNotificationsQuery,
 } from "../../../../GraphQl/graphql";
 import useAuth from "../../../../hooks/useAuth";
 import detectDevice from "../../../utils/isTouch";
@@ -90,7 +90,7 @@ const RightContent: React.FC<RightContentProps> = () => {
               const month = `${new Date(el.created).getMonth()}`;
               const date = `${new Date(el.created).getDate()}`;
               return (
-                <li className="border-b-[1px]  border-gray-400">
+                <li key={el.title} className="border-b-[1px]  border-gray-400">
                   <p className={`text-base mt-2 ${el.read && "font-bold"}`}>
                     {el?.title}
                   </p>

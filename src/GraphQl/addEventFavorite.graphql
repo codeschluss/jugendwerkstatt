@@ -1,5 +1,5 @@
 mutation AddEventFavorite($jobAdId: String) {
-  addEventFavorite(jobAdId: $jobAdId) {
+  addEventFavorite(eventId: $jobAdId) {
     id
   }
 }

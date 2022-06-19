@@ -1,12 +1,20 @@
-import { ApolloClient, ApolloLink, HttpLink, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloLink,
+  HttpLink,
+  InMemoryCache,
+  split,
+} from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { useContext } from "react";
-import { API_URL } from "../config/app";
+import { API_URL, WS_URL } from "../config/app";
 import FeedbackContext, { FeedbackType } from "../contexts/FeedbackContext";
 import TokenStorageContext from "../contexts/TokenStorageContext";
+import { WebSocketLink } from "@apollo/client/link/ws";
+import { getMainDefinition } from "@apollo/client/utilities";
+import { SubscriptionClient } from "subscriptions-transport-ws";
 
 export const useApollo = () => {
-
   const { accessToken } = useContext(TokenStorageContext);
   const { setFeedback } = useContext(FeedbackContext);
 
@@ -23,32 +31,48 @@ export const useApollo = () => {
   });
 
   const errorLink = onError(({ graphQLErrors, networkError }) => {
-    switch(true) {
+    switch (true) {
       case !!graphQLErrors:
         setFeedback({
           message: graphQLErrors && graphQLErrors[0].message,
           action: "Probiere es erneut",
-          type: FeedbackType.Error
+          type: FeedbackType.Error,
         });
         break;
       case !!networkError:
         setFeedback({
           message: "Schwerwiegender Fehler",
           action: "Kontaktiere den Support",
-          type: FeedbackType.Critical
+          type: FeedbackType.Critical,
         });
         break;
     }
   });
 
+  const wsLink = new WebSocketLink(
+    new SubscriptionClient(`${WS_URL}graphql`, {
+      reconnect: true,
+    })
+  );
+  const splitLink = split(
+    ({ query }) => {
+      const definition = getMainDefinition(query);
+      return (
+        definition.kind === "OperationDefinition" &&
+        definition.operation === "subscription"
+      );
+    },
+    wsLink,
+    httpLink
+  );
   const client = new ApolloClient({
     cache: new InMemoryCache(),
-    link: ApolloLink.from([authMiddleware, errorLink, httpLink]),
+    link: ApolloLink.from([authMiddleware, errorLink, splitLink]),
   });
-  
+
   return {
-    client
+    client,
   };
-}
+};
 
 export default useApollo;

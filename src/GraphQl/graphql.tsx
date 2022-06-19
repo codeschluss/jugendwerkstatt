@@ -130,7 +130,7 @@ export type ChatEntity = {
   messages?: Maybe<Array<Maybe<MessageEntity>>>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   name?: Maybe<Scalars['String']>;
-  participants?: Maybe<Array<Maybe<MessageEntity>>>;
+  participants?: Maybe<Array<Maybe<ParticipantEntity>>>;
 };
 
 export type ChatEntityInput = {
@@ -141,7 +141,7 @@ export type ChatEntityInput = {
   messages?: InputMaybe<Array<InputMaybe<MessageEntityInput>>>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   name?: InputMaybe<Scalars['String']>;
-  participants?: InputMaybe<Array<InputMaybe<MessageEntityInput>>>;
+  participants?: InputMaybe<Array<InputMaybe<ParticipantEntityInput>>>;
 };
 
 export type CompanyEntity = {
@@ -558,15 +558,13 @@ export type MessageEntityInput = {
 /** Mutation root */
 export type Mutation = {
   __typename?: 'Mutation';
-  addAssignments?: Maybe<UserEntity>;
   addEventFavorite?: Maybe<UserEntity>;
   addJobAdFavorite?: Maybe<UserEntity>;
   addMember: Scalars['Boolean'];
-  addRoles?: Maybe<UserEntity>;
   addUploads?: Maybe<UserEntity>;
   createToken?: Maybe<TokenDto>;
   deleteAddress?: Maybe<Scalars['Boolean']>;
-  deleteAddresss?: Maybe<Scalars['Boolean']>;
+  deleteAddresses?: Maybe<Scalars['Boolean']>;
   deleteAnswer?: Maybe<Scalars['Boolean']>;
   deleteAnswers?: Maybe<Scalars['Boolean']>;
   deleteAssignment?: Maybe<Scalars['Boolean']>;
@@ -584,18 +582,21 @@ export type Mutation = {
   deleteEvent?: Maybe<Scalars['Boolean']>;
   deleteEventCategories?: Maybe<Scalars['Boolean']>;
   deleteEventCategory?: Maybe<Scalars['Boolean']>;
+  deleteEventFavorite?: Maybe<UserEntity>;
   deleteEvents?: Maybe<Scalars['Boolean']>;
   deleteFeedback?: Maybe<Scalars['Boolean']>;
   deleteFeedbacks?: Maybe<Scalars['Boolean']>;
   deleteGroup?: Maybe<Scalars['Boolean']>;
   deleteGroups?: Maybe<Scalars['Boolean']>;
   deleteJobAd?: Maybe<Scalars['Boolean']>;
+  deleteJobAdFavorite?: Maybe<UserEntity>;
   deleteJobAds?: Maybe<Scalars['Boolean']>;
   deleteJobType?: Maybe<Scalars['Boolean']>;
   deleteJobTypes?: Maybe<Scalars['Boolean']>;
   deleteLink?: Maybe<Scalars['Boolean']>;
   deleteLinkCategory?: Maybe<Scalars['Boolean']>;
   deleteLinks?: Maybe<Scalars['Boolean']>;
+  deleteMe?: Maybe<Scalars['Boolean']>;
   deleteMember: Scalars['Boolean'];
   deleteMessage?: Maybe<Scalars['Boolean']>;
   deleteMessages?: Maybe<Scalars['Boolean']>;
@@ -623,6 +624,7 @@ export type Mutation = {
   deleteTemplateType?: Maybe<Scalars['Boolean']>;
   deleteTemplateTypes?: Maybe<Scalars['Boolean']>;
   deleteTemplates?: Maybe<Scalars['Boolean']>;
+  deleteUploads?: Maybe<UserEntity>;
   deleteUser?: Maybe<Scalars['Boolean']>;
   deleteUserTemplate?: Maybe<Scalars['Boolean']>;
   deleteUserTemplates?: Maybe<Scalars['Boolean']>;
@@ -630,7 +632,7 @@ export type Mutation = {
   refreshToken?: Maybe<TokenDto>;
   resetPassword?: Maybe<Scalars['Boolean']>;
   saveAddress?: Maybe<AddressEntity>;
-  saveAddresss?: Maybe<Array<Maybe<AddressEntity>>>;
+  saveAddresses?: Maybe<Array<Maybe<AddressEntity>>>;
   saveAnswer?: Maybe<AnswerEntity>;
   saveAnswers?: Maybe<Array<Maybe<AnswerEntity>>>;
   saveAssignment?: Maybe<AssignmentEntity>;
@@ -661,6 +663,7 @@ export type Mutation = {
   saveLinkCategories?: Maybe<Array<Maybe<LinkCategoryEntity>>>;
   saveLinkCategory?: Maybe<LinkCategoryEntity>;
   saveLinks?: Maybe<Array<Maybe<LinkEntity>>>;
+  saveMe?: Maybe<UserEntity>;
   saveMessage?: Maybe<MessageEntity>;
   saveMessages?: Maybe<Array<Maybe<MessageEntity>>>;
   saveOrganizer?: Maybe<OrganizerEntity>;
@@ -701,14 +704,8 @@ export type Mutation = {
 
 
 /** Mutation root */
-export type MutationAddAssignmentsArgs = {
-  assignments?: InputMaybe<Array<InputMaybe<AssignmentEntityInput>>>;
-};
-
-
-/** Mutation root */
 export type MutationAddEventFavoriteArgs = {
-  jobAdId?: InputMaybe<Scalars['String']>;
+  eventId?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -721,13 +718,6 @@ export type MutationAddJobAdFavoriteArgs = {
 /** Mutation root */
 export type MutationAddMemberArgs = {
   groupId?: InputMaybe<Scalars['String']>;
-  userId?: InputMaybe<Scalars['String']>;
-};
-
-
-/** Mutation root */
-export type MutationAddRolesArgs = {
-  roleIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   userId?: InputMaybe<Scalars['String']>;
 };
 
@@ -752,7 +742,7 @@ export type MutationDeleteAddressArgs = {
 
 
 /** Mutation root */
-export type MutationDeleteAddresssArgs = {
+export type MutationDeleteAddressesArgs = {
   ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
@@ -860,6 +850,12 @@ export type MutationDeleteEventCategoryArgs = {
 
 
 /** Mutation root */
+export type MutationDeleteEventFavoriteArgs = {
+  eventId?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
 export type MutationDeleteEventsArgs = {
   ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
@@ -892,6 +888,12 @@ export type MutationDeleteGroupsArgs = {
 /** Mutation root */
 export type MutationDeleteJobAdArgs = {
   id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteJobAdFavoriteArgs = {
+  jobAdId?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -929,6 +931,12 @@ export type MutationDeleteLinkCategoryArgs = {
 /** Mutation root */
 export type MutationDeleteLinksArgs = {
   ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteMeArgs = {
+  password?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -1096,6 +1104,12 @@ export type MutationDeleteTemplatesArgs = {
 
 
 /** Mutation root */
+export type MutationDeleteUploadsArgs = {
+  uploadIds?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
 export type MutationDeleteUserArgs = {
   id?: InputMaybe<Scalars['String']>;
 };
@@ -1139,7 +1153,7 @@ export type MutationSaveAddressArgs = {
 
 
 /** Mutation root */
-export type MutationSaveAddresssArgs = {
+export type MutationSaveAddressesArgs = {
   entities?: InputMaybe<Array<InputMaybe<AddressEntityInput>>>;
 };
 
@@ -1321,6 +1335,12 @@ export type MutationSaveLinkCategoryArgs = {
 /** Mutation root */
 export type MutationSaveLinksArgs = {
   entities?: InputMaybe<Array<InputMaybe<LinkEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationSaveMeArgs = {
+  entity?: InputMaybe<UserEntityInput>;
 };
 
 
@@ -1561,11 +1581,12 @@ export type NotificationEntityInput = {
 };
 
 export enum NotificationType {
+  Chat = 'chat',
+  DeletedUser = 'deletedUser',
   Evaluation = 'evaluation',
   Event = 'event',
   Global = 'global',
   JobAd = 'jobAd',
-  Message = 'message',
   ReadReceipt = 'readReceipt'
 }
 
@@ -1599,6 +1620,7 @@ export type PageEntity = {
   id?: Maybe<Scalars['String']>;
   images?: Maybe<Array<Maybe<MediaEntity>>>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
+  name?: Maybe<Scalars['String']>;
   slug?: Maybe<Scalars['String']>;
   titleImage?: Maybe<MediaEntity>;
   video?: Maybe<MediaEntity>;
@@ -1610,6 +1632,7 @@ export type PageEntityInput = {
   id?: InputMaybe<Scalars['String']>;
   images?: InputMaybe<Array<InputMaybe<MediaEntityInput>>>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
+  name?: InputMaybe<Scalars['String']>;
   slug?: InputMaybe<Scalars['String']>;
   titleImage?: InputMaybe<MediaEntityInput>;
   video?: InputMaybe<MediaEntityInput>;
@@ -1842,7 +1865,7 @@ export type Query = {
   __typename?: 'Query';
   calculateRoute?: Maybe<RouteResource>;
   getAddress?: Maybe<AddressEntity>;
-  getAddresss?: Maybe<PageableList_AddressEntity>;
+  getAddresses?: Maybe<PageableList_AddressEntity>;
   getAnswer?: Maybe<AnswerEntity>;
   getAnswers?: Maybe<PageableList_AnswerEntity>;
   getAssignment?: Maybe<AssignmentEntity>;
@@ -1922,7 +1945,7 @@ export type QueryGetAddressArgs = {
 
 
 /** Query root */
-export type QueryGetAddresssArgs = {
+export type QueryGetAddressesArgs = {
   params?: InputMaybe<FilterSortPaginateInput>;
 };
 
@@ -2216,12 +2239,6 @@ export type QueryGetSchedulesArgs = {
 
 
 /** Query root */
-export type QueryGetSettingsArgs = {
-  entity?: InputMaybe<SettingsEntityInput>;
-};
-
-
-/** Query root */
 export type QueryGetSubscriptionArgs = {
   entity?: InputMaybe<SubscriptionEntityInput>;
 };
@@ -2376,7 +2393,7 @@ export type ReadReceiptEntity = {
   id?: Maybe<Scalars['String']>;
   message?: Maybe<MessageEntity>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
-  participant?: Maybe<UserEntity>;
+  participant?: Maybe<ParticipantEntity>;
 };
 
 export type ReadReceiptEntityInput = {
@@ -2384,7 +2401,7 @@ export type ReadReceiptEntityInput = {
   id?: InputMaybe<Scalars['String']>;
   message?: InputMaybe<MessageEntityInput>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
-  participant?: InputMaybe<UserEntityInput>;
+  participant?: InputMaybe<ParticipantEntityInput>;
 };
 
 export type RoleEntity = {
@@ -2498,7 +2515,14 @@ export type StartWaypoint = {
 /** Subscription root */
 export type Subscription = {
   __typename?: 'Subscription';
+  addChatListener?: Maybe<MessageDto>;
   addListener?: Maybe<MessageDto>;
+};
+
+
+/** Subscription root */
+export type SubscriptionAddChatListenerArgs = {
+  token?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -2597,9 +2621,9 @@ export type UserEntity = {
   assignments?: Maybe<Array<Maybe<AssignmentEntity>>>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   email?: Maybe<Scalars['String']>;
-  evaluateCourse?: Maybe<Scalars['Boolean']>;
   favoriteEvents?: Maybe<Array<Maybe<EventEntity>>>;
   favoriteJobAds?: Maybe<Array<Maybe<JobAdEntity>>>;
+  feedbacks?: Maybe<Array<Maybe<FeedbackEntity>>>;
   fullname?: Maybe<Scalars['String']>;
   group?: Maybe<GroupEntity>;
   id?: Maybe<Scalars['String']>;
@@ -2623,9 +2647,9 @@ export type UserEntityInput = {
   assignments?: InputMaybe<Array<InputMaybe<AssignmentEntityInput>>>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   email?: InputMaybe<Scalars['String']>;
-  evaluateCourse?: InputMaybe<Scalars['Boolean']>;
   favoriteEvents?: InputMaybe<Array<InputMaybe<EventEntityInput>>>;
   favoriteJobAds?: InputMaybe<Array<InputMaybe<JobAdEntityInput>>>;
+  feedbacks?: InputMaybe<Array<InputMaybe<FeedbackEntityInput>>>;
   fullname?: InputMaybe<Scalars['String']>;
   group?: InputMaybe<GroupEntityInput>;
   id?: InputMaybe<Scalars['String']>;
@@ -2874,7 +2898,7 @@ export type AddRolesMutationVariables = Exact<{
 }>;
 
 
-export type AddRolesMutation = { __typename?: 'Mutation', addRoles?: { __typename?: 'UserEntity', id?: string | null } | null };
+export type AddRolesMutation = { __typename?: 'Mutation', saveUser?: { __typename?: 'UserEntity', id?: string | null } | null };
 
 export type SaveTemplateAdminMutationVariables = Exact<{
   entity?: InputMaybe<TemplateEntityInput>;
@@ -3128,6 +3152,13 @@ export type GetRequestedUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetRequestedUsersQuery = { __typename?: 'Query', requestedUsers?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null };
 
+export type ChatlistenerSubscriptionVariables = Exact<{
+  token: Scalars['String'];
+}>;
+
+
+export type ChatlistenerSubscription = { __typename?: 'Subscription', addChatListener?: { __typename?: 'MessageDto', content?: string | null, data?: any | null, title?: string | null, type?: NotificationType | null } | null };
+
 export type CreateTokenMutationVariables = Exact<{
   password?: InputMaybe<Scalars['String']>;
   username?: InputMaybe<Scalars['String']>;
@@ -3135,6 +3166,18 @@ export type CreateTokenMutationVariables = Exact<{
 
 
 export type CreateTokenMutation = { __typename?: 'Mutation', createToken?: { __typename?: 'TokenDto', access?: string | null, refresh?: string | null } | null };
+
+export type GetChatQueryVariables = Exact<{
+  entity?: InputMaybe<ChatEntityInput>;
+}>;
+
+
+export type GetChatQuery = { __typename?: 'Query', getChat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', user?: { __typename?: 'UserEntity', id?: string | null } | null } | null> | null } | null };
+
+export type GetChatsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetChatsQuery = { __typename?: 'Query', getChats?: { __typename?: 'PageableList_ChatEntity', result?: Array<{ __typename?: 'ChatEntity', name?: string | null, id?: string | null, modified?: any | null } | null> | null } | null };
 
 export type GetEventQueryVariables = Exact<{
   id: Scalars['String'];
@@ -3219,6 +3262,13 @@ export type GetMeUserTemplatesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetMeUserTemplatesQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, content?: string | null, name?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', name?: string | null, id?: string | null } | null } | null> | null } | null };
 
+export type GetMessagesQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetMessagesQuery = { __typename?: 'Query', getMessages?: { __typename?: 'PageableList_MessageEntity', result?: Array<{ __typename?: 'MessageEntity', id?: string | null, content?: string | null, parent?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, user?: { __typename?: 'UserEntity', fullname?: string | null } | null } | null, media?: { __typename?: 'MediaEntity', id?: string | null } | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null> | null } | null };
+
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3259,6 +3309,11 @@ export type GetUserTemplatesQueryVariables = Exact<{
 
 export type GetUserTemplatesQuery = { __typename?: 'Query', getUserTemplates?: { __typename?: 'PageableList_UserTemplateEntity', result?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null> | null } | null };
 
+export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUsersQuery = { __typename?: 'Query', getUsers?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', fullname?: string | null, id?: string | null } | null> | null } | null };
+
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars['String'];
 }>;
@@ -3280,6 +3335,20 @@ export type ResetPasswordMutationVariables = Exact<{
 
 
 export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword?: boolean | null };
+
+export type SaveChatMutationVariables = Exact<{
+  entity?: InputMaybe<ChatEntityInput>;
+}>;
+
+
+export type SaveChatMutation = { __typename?: 'Mutation', saveChat?: { __typename?: 'ChatEntity', id?: string | null } | null };
+
+export type SaveMessageMutationVariables = Exact<{
+  entity?: InputMaybe<MessageEntityInput>;
+}>;
+
+
+export type SaveMessageMutation = { __typename?: 'Mutation', saveMessage?: { __typename?: 'MessageEntity', id?: string | null } | null };
 
 export type SaveSubscriptionMutationVariables = Exact<{
   entity?: InputMaybe<SubscriptionEntityInput>;
@@ -3528,7 +3597,7 @@ export const UserFieldFragmentDoc = gql`
     ${RoleFieldFragmentDoc}`;
 export const AddEventFavoriteDocument = gql`
     mutation AddEventFavorite($jobAdId: String) {
-  addEventFavorite(jobAdId: $jobAdId) {
+  addEventFavorite(eventId: $jobAdId) {
     id
   }
 }
@@ -4170,7 +4239,7 @@ export type DeleteOrganizerMutationResult = Apollo.MutationResult<DeleteOrganize
 export type DeleteOrganizerMutationOptions = Apollo.BaseMutationOptions<DeleteOrganizerMutation, DeleteOrganizerMutationVariables>;
 export const AddRolesDocument = gql`
     mutation AddRoles($userId: String, $roleIds: [String]) {
-  addRoles(userId: $userId, roleIds: $roleIds) {
+  saveUser(entity: {id: "dasadasda"}) {
     id
   }
 }
@@ -5541,6 +5610,39 @@ export function useGetRequestedUsersLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type GetRequestedUsersQueryHookResult = ReturnType<typeof useGetRequestedUsersQuery>;
 export type GetRequestedUsersLazyQueryHookResult = ReturnType<typeof useGetRequestedUsersLazyQuery>;
 export type GetRequestedUsersQueryResult = Apollo.QueryResult<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>;
+export const ChatlistenerDocument = gql`
+    subscription Chatlistener($token: String!) {
+  addChatListener(token: $token) {
+    content
+    data
+    title
+    type
+  }
+}
+    `;
+
+/**
+ * __useChatlistenerSubscription__
+ *
+ * To run a query within a React component, call `useChatlistenerSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useChatlistenerSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChatlistenerSubscription({
+ *   variables: {
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useChatlistenerSubscription(baseOptions: Apollo.SubscriptionHookOptions<ChatlistenerSubscription, ChatlistenerSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<ChatlistenerSubscription, ChatlistenerSubscriptionVariables>(ChatlistenerDocument, options);
+      }
+export type ChatlistenerSubscriptionHookResult = ReturnType<typeof useChatlistenerSubscription>;
+export type ChatlistenerSubscriptionResult = Apollo.SubscriptionResult<ChatlistenerSubscription>;
 export const CreateTokenDocument = gql`
     mutation CreateToken($password: String, $username: String) {
   createToken(password: $password, username: $username) {
@@ -5576,6 +5678,85 @@ export function useCreateTokenMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateTokenMutationHookResult = ReturnType<typeof useCreateTokenMutation>;
 export type CreateTokenMutationResult = Apollo.MutationResult<CreateTokenMutation>;
 export type CreateTokenMutationOptions = Apollo.BaseMutationOptions<CreateTokenMutation, CreateTokenMutationVariables>;
+export const GetChatDocument = gql`
+    query GetChat($entity: ChatEntityInput) {
+  getChat(entity: $entity) {
+    id
+    name
+    participants {
+      user {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetChatQuery__
+ *
+ * To run a query within a React component, call `useGetChatQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChatQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChatQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetChatQuery(baseOptions?: Apollo.QueryHookOptions<GetChatQuery, GetChatQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChatQuery, GetChatQueryVariables>(GetChatDocument, options);
+      }
+export function useGetChatLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChatQuery, GetChatQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChatQuery, GetChatQueryVariables>(GetChatDocument, options);
+        }
+export type GetChatQueryHookResult = ReturnType<typeof useGetChatQuery>;
+export type GetChatLazyQueryHookResult = ReturnType<typeof useGetChatLazyQuery>;
+export type GetChatQueryResult = Apollo.QueryResult<GetChatQuery, GetChatQueryVariables>;
+export const GetChatsDocument = gql`
+    query GetChats {
+  getChats {
+    result {
+      name
+      id
+      modified
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetChatsQuery__
+ *
+ * To run a query within a React component, call `useGetChatsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChatsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChatsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetChatsQuery(baseOptions?: Apollo.QueryHookOptions<GetChatsQuery, GetChatsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChatsQuery, GetChatsQueryVariables>(GetChatsDocument, options);
+      }
+export function useGetChatsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChatsQuery, GetChatsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChatsQuery, GetChatsQueryVariables>(GetChatsDocument, options);
+        }
+export type GetChatsQueryHookResult = ReturnType<typeof useGetChatsQuery>;
+export type GetChatsLazyQueryHookResult = ReturnType<typeof useGetChatsLazyQuery>;
+export type GetChatsQueryResult = Apollo.QueryResult<GetChatsQuery, GetChatsQueryVariables>;
 export const GetEventDocument = gql`
     query GetEvent($id: String!) {
   getEvent(entity: {id: $id}) {
@@ -6292,6 +6473,58 @@ export function useGetMeUserTemplatesLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type GetMeUserTemplatesQueryHookResult = ReturnType<typeof useGetMeUserTemplatesQuery>;
 export type GetMeUserTemplatesLazyQueryHookResult = ReturnType<typeof useGetMeUserTemplatesLazyQuery>;
 export type GetMeUserTemplatesQueryResult = Apollo.QueryResult<GetMeUserTemplatesQuery, GetMeUserTemplatesQueryVariables>;
+export const GetMessagesDocument = gql`
+    query GetMessages($params: FilterSortPaginateInput) {
+  getMessages(params: $params) {
+    result {
+      id
+      parent {
+        id
+        user {
+          fullname
+        }
+        content
+      }
+      content
+      media {
+        id
+      }
+      user {
+        id
+        fullname
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMessagesQuery__
+ *
+ * To run a query within a React component, call `useGetMessagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMessagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMessagesQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetMessagesQuery(baseOptions?: Apollo.QueryHookOptions<GetMessagesQuery, GetMessagesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMessagesQuery, GetMessagesQueryVariables>(GetMessagesDocument, options);
+      }
+export function useGetMessagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMessagesQuery, GetMessagesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMessagesQuery, GetMessagesQueryVariables>(GetMessagesDocument, options);
+        }
+export type GetMessagesQueryHookResult = ReturnType<typeof useGetMessagesQuery>;
+export type GetMessagesLazyQueryHookResult = ReturnType<typeof useGetMessagesLazyQuery>;
+export type GetMessagesQueryResult = Apollo.QueryResult<GetMessagesQuery, GetMessagesQueryVariables>;
 export const GetNotificationsDocument = gql`
     query GetNotifications {
   me {
@@ -6525,6 +6758,43 @@ export function useGetUserTemplatesLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetUserTemplatesQueryHookResult = ReturnType<typeof useGetUserTemplatesQuery>;
 export type GetUserTemplatesLazyQueryHookResult = ReturnType<typeof useGetUserTemplatesLazyQuery>;
 export type GetUserTemplatesQueryResult = Apollo.QueryResult<GetUserTemplatesQuery, GetUserTemplatesQueryVariables>;
+export const GetUsersDocument = gql`
+    query GetUsers {
+  getUsers {
+    result {
+      fullname
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetUsersQuery__
+ *
+ * To run a query within a React component, call `useGetUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUsersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUsersQuery(baseOptions?: Apollo.QueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options);
+      }
+export function useGetUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options);
+        }
+export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
+export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>;
+export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
 export const RefreshTokenDocument = gql`
     mutation refreshToken($refreshToken: String!) {
   refreshToken(refreshToken: $refreshToken) {
@@ -6626,6 +6896,72 @@ export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOption
 export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
 export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const SaveChatDocument = gql`
+    mutation SaveChat($entity: ChatEntityInput) {
+  saveChat(entity: $entity) {
+    id
+  }
+}
+    `;
+export type SaveChatMutationFn = Apollo.MutationFunction<SaveChatMutation, SaveChatMutationVariables>;
+
+/**
+ * __useSaveChatMutation__
+ *
+ * To run a mutation, you first call `useSaveChatMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveChatMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveChatMutation, { data, loading, error }] = useSaveChatMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveChatMutation(baseOptions?: Apollo.MutationHookOptions<SaveChatMutation, SaveChatMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveChatMutation, SaveChatMutationVariables>(SaveChatDocument, options);
+      }
+export type SaveChatMutationHookResult = ReturnType<typeof useSaveChatMutation>;
+export type SaveChatMutationResult = Apollo.MutationResult<SaveChatMutation>;
+export type SaveChatMutationOptions = Apollo.BaseMutationOptions<SaveChatMutation, SaveChatMutationVariables>;
+export const SaveMessageDocument = gql`
+    mutation SaveMessage($entity: MessageEntityInput) {
+  saveMessage(entity: $entity) {
+    id
+  }
+}
+    `;
+export type SaveMessageMutationFn = Apollo.MutationFunction<SaveMessageMutation, SaveMessageMutationVariables>;
+
+/**
+ * __useSaveMessageMutation__
+ *
+ * To run a mutation, you first call `useSaveMessageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveMessageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveMessageMutation, { data, loading, error }] = useSaveMessageMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveMessageMutation(baseOptions?: Apollo.MutationHookOptions<SaveMessageMutation, SaveMessageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveMessageMutation, SaveMessageMutationVariables>(SaveMessageDocument, options);
+      }
+export type SaveMessageMutationHookResult = ReturnType<typeof useSaveMessageMutation>;
+export type SaveMessageMutationResult = Apollo.MutationResult<SaveMessageMutation>;
+export type SaveMessageMutationOptions = Apollo.BaseMutationOptions<SaveMessageMutation, SaveMessageMutationVariables>;
 export const SaveSubscriptionDocument = gql`
     mutation SaveSubscription($entity: SubscriptionEntityInput) {
   saveSubscription(entity: $entity) {

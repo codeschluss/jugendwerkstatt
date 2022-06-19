@@ -1,0 +1,5 @@
+mutation SaveMessage($entity: MessageEntityInput) {
+  saveMessage(entity: $entity) {
+    id
+  }
+}

@@ -10,9 +10,11 @@ const Layout: React.FC = ({ children }) => {
   const { sideBar } = useContext(SideBarContext);
   const { isLogedIn } = useContext(AuthContext);
   const { init } = useAuth();
+
   useEffect(() => {
     init();
   }, []);
+
   return (
     <main
       className={`flex flex-col  min-h-screen transition-all duration-500 ${
