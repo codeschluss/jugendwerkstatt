@@ -8,6 +8,6 @@ switch (process.env.NODE_ENV) {
     break;
   case "development":
   default:
-    BASE_URL = "http://localhost:8061/";
+    BASE_URL = "https://www.alphaev.app/";
 }
 API_URL = BASE_URL + "api/";

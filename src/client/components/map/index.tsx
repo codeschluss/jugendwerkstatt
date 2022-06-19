@@ -7,7 +7,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import SwiperCore, { Virtual } from "swiper";
-import SlideCard from "../slideItems/SlideCard";
 SwiperCore.use([Virtual]);
 
 const Map: FunctionComponent = () => {

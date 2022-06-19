@@ -13,7 +13,6 @@ const Layout: React.FC = ({ children }) => {
   useEffect(() => {
     init();
   }, []);
-
   return (
     <main
       className={`flex flex-col  min-h-screen transition-all duration-500 ${
