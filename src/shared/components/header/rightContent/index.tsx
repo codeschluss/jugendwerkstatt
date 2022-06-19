@@ -2,9 +2,8 @@ import { BellIcon, LogoutIcon, SearchIcon } from "@heroicons/react/outline";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  NotificationEntity,
   useGetMeBasicQuery,
-  useGetNotificationsQuery,
+  useGetNotificationsQuery
 } from "../../../../GraphQl/graphql";
 import useAuth from "../../../../hooks/useAuth";
 import detectDevice from "../../../utils/isTouch";
@@ -22,7 +21,6 @@ const RightContent: React.FC<RightContentProps> = () => {
   const { logout } = useAuth();
   const user = useGetMeBasicQuery();
   const notifications = useGetNotificationsQuery();
-  console.log(notifications.data?.me, "noti");
   return (
     <div className="flex items-center flex-grow justify-end relative">
       <Search

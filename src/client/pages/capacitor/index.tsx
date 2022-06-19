@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
-  PushNotificationSchema,
-  PushNotifications,
-  Token,
-  ActionPerformed,
+  ActionPerformed, PushNotifications, PushNotificationSchema, Token
 } from "@capacitor/push-notifications";
 import { Toast } from "@capacitor/toast";
 import {
   useGetMeBasicQuery,
-  useSaveSubscriptionMutation,
+  useSaveSubscriptionMutation
 } from "../../../GraphQl/graphql";
 // import {
 //   useGetMeBasicQuery,
@@ -51,7 +48,6 @@ export default function PushNotificationsContainer() {
           id: data?.me?.id,
         },
       };
-      console.log("subs entity", entity);
       subs({
         variables: {
           entity,
@@ -59,7 +55,6 @@ export default function PushNotificationsContainer() {
       })
         .then((subs) => alert(subs.data?.saveSubscription?.id))
         .catch((err) => alert(err));
-      console.log(token);
     });
 
     PushNotifications.addListener("registrationError", (error: any) => {

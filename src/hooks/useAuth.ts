@@ -1,12 +1,13 @@
 import { default as jwt_decode } from "jwt-decode";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
+import FeedbackContext, { FeedbackType } from "../contexts/FeedbackContext";
 import TokenStorageContext from "../contexts/TokenStorageContext";
 import {
   TokenDto,
   useCreateTokenMutation,
-  useRefreshTokenMutation,
+  useRefreshTokenMutation
 } from "../GraphQl/graphql";
 
 export const useAuth = () => {
@@ -16,13 +17,15 @@ export const useAuth = () => {
     useContext(TokenStorageContext);
 
   const { setIsLogedIn } = useContext(AuthContext);
-
-  const [accessTimer, setAccessTimer] = useState<any>(null);
-  const [refreshTimer, setRefreshTimer] = useState<any>(null);
-  const [hasError, setHasError] = useState<boolean>(false);
+  const { setFeedback } = useContext(FeedbackContext);
 
   const init = () => {
     refreshToken && expiration(refreshToken) > 0 ? refresh() : logout();
+  };
+
+  const expiration = (token: string): number => {
+    const decoded = JSON.parse(atob(token.split(".")[1]));
+    return decoded.exp * 1000 - Date.now();
   };
 
   const [refreshTokenMutation] = useRefreshTokenMutation();
@@ -32,10 +35,7 @@ export const useAuth = () => {
         variables: {
           refreshToken: refreshToken || "",
         },
-      }).then((response) => {
-        store(response.data?.refreshToken);
-        timers(response.data?.refreshToken);
-      });
+      }).then((response) => store(response.data?.refreshToken));
     }
   };
 
@@ -48,7 +48,6 @@ export const useAuth = () => {
       },
     })
       .then((response) => {
-        // response.errors ? setHasError(true) : setHasError(false);
         const recievedToken: [string] | any = jwt_decode(
           response.data?.createToken?.access || ""
         );
@@ -64,12 +63,11 @@ export const useAuth = () => {
         }
 
         store(response.data?.createToken);
-        timers(response.data?.createToken);
+        setFeedback({
+          type: FeedbackType.Success,
+          message: "Erolgreich eingeloggt"
+        });
         navigate("/");
-      })
-      .catch((err) => {
-        setHasError(err);
-        console.log(true);
       });
   };
 
@@ -81,26 +79,7 @@ export const useAuth = () => {
     }
   };
 
-  const timers = (token: TokenDto | null | undefined) => {
-    if (token) {
-      accessTimer && clearTimeout(accessTimer);
-      refreshTimer && clearTimeout(refreshTimer);
-      setAccessTimer(setTimeout(() => refresh(), expiration(token.access!)));
-      setRefreshTimer(setTimeout(() => logout(), expiration(token.refresh!)));
-    }
-  };
-
-  const expiration = (token: string): number => {
-    const decoded = JSON.parse(atob(token.split(".")[1]));
-    console.log("exp", decoded.exp * 1000);
-    console.log("Date.now()", Date.now());
-    console.log("expiration", decoded.exp * 1000 - Date.now());
-    return decoded.exp * 1000 - Date.now();
-  };
-
   const logout = () => {
-    accessTimer && clearTimeout(accessTimer);
-    refreshTimer && clearTimeout(refreshTimer);
     setAccessToken(null);
     setRefreshToken(null);
     setIsLogedIn(false);
@@ -110,8 +89,7 @@ export const useAuth = () => {
   return {
     handleLogin,
     init,
-    logout,
-    hasError,
+    logout
   };
 };
 
