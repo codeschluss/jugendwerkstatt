@@ -87,15 +87,16 @@ const Router = () => {
                 </Protected>
               }
             />
+            <Route
+              path="chat/:id"
+              element={
+                <Protected>
+                  <Chat />
+                </Protected>
+              }
+            />
           </Route>
-          <Route
-            path="/messenger/chat/:id"
-            element={
-              <Protected>
-                <Chat />
-              </Protected>
-            }
-          />
+
           <Route
             path="/event/:id"
             element={
