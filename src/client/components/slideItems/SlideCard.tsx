@@ -78,7 +78,7 @@ const SlideCard: React.FC<SlideCardProps> = ({
           }  text-white px-3 pb-8 pt-3 flex justify-between items-center`}
         >
           <small className="font-bold">{eventName}</small>
-          {isFavorite && (
+          {(location || date) && (
             <div className="flex items-center md:w-20 justify-between">
               <SocialMedia /> |
               {isFavorite ? (

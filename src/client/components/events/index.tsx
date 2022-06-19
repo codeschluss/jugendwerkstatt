@@ -18,40 +18,61 @@ const Events = () => {
   >();
   const { category, dates } = useContext(FilterContext);
 
-  const result = useGetEventCategoriesQuery({
-    variables: {
-      params: {
-        expression: {
-          conjunction: {
-            operator: ConjunctionOperator.And,
-            operands: [
-              {
-                entity: {
-                  operator: QueryOperator.Equal,
-                  path: "id",
-                  value: category?.id,
-                },
+  const filterOperands: any = [];
+
+  useEffect(() => {
+    category &&
+      filterOperands.push({
+        entity: {
+          operator: QueryOperator.Equal,
+          path: "id",
+          value: category?.id,
+        },
+      });
+  }, [category]);
+
+  useEffect(() => {
+    dates.startDate &&
+      filterOperands.push({
+        entity: {
+          operator: QueryOperator.GreaterOrEqual,
+          path: "events.schedules.startDate",
+          value: dates?.startDate?.$d,
+        },
+      });
+  }, [dates.startDate]);
+
+  useEffect(() => {
+    dates.endDate &&
+      filterOperands.push({
+        entity: {
+          operator: QueryOperator.LessOrEqual,
+          path: "events.schedules.endDate",
+          value: dates?.endDate?.$d,
+        },
+      });
+  }, [dates.endDate]);
+
+  const result = useGetEventCategoriesQuery(
+    filterOperands &&
+      filterOperands.length && {
+        fetchPolicy: "network-only",
+        variables: {
+          params: {
+            expression: {
+              conjunction: {
+                operator: ConjunctionOperator.And,
+                operands: filterOperands,
               },
-              {
-                entity: {
-                  operator: QueryOperator.GreaterOrEqual,
-                  path: "events.schedules.startDate",
-                  value: dates?.startDate?.$d,
-                },
-              },
-              {
-                entity: {
-                  operator: QueryOperator.LessOrEqual,
-                  path: "events.schedules.endDate",
-                  value: dates?.endDate?.$d,
-                },
-              },
-            ],
+            },
           },
         },
-      },
-    },
-  });
+      }
+  );
+
+  useEffect(() => {
+    result.refetch();
+  }, [category, dates]);
 
   useEffect(() => {
     if (result.data) {
