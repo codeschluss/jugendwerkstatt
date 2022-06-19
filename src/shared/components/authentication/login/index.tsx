@@ -30,7 +30,7 @@ const Login = () => {
     resetValue: resetPasswordInput,
   } = useInput((value: any) => value.trim().length !== 0);
 
-  const { handleLogin, hasError } = useAuth();
+  const { handleLogin } = useAuth();
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
@@ -42,9 +42,6 @@ const Login = () => {
   return (
     <AuthWrapper title="Anmelden">
       <form onSubmit={submitHandler} className="p-6 mt-5 text-right">
-        {hasError && (
-          <p className="text-primary">Benutzernamme oder Password Falsch</p>
-        )}
         <AuthInput
           value={enteredEmail}
           onBlur={emailBlurHandler}

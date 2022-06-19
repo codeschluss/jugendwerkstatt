@@ -1,10 +1,8 @@
-import React, { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../../../../contexts/AuthContext";
 import {
   useGetMeBasicQuery,
-  useSaveUploadsMutation,
-  useSaveUserMutation,
+  useSaveUploadsMutation
 } from "../../../../GraphQl/graphql";
 import TypeInput from "./TypeInput";
 
@@ -23,8 +21,6 @@ const UploadFile = () => {
   const uploadHandler = async (e: any) => {
     const file = e.target.files[0];
     const base64 = await convertBase64(file);
-    console.log(file);
-    console.log(base64);
 
     setFileData({
       base64: base64,
@@ -69,9 +65,6 @@ const UploadFile = () => {
       navigate("/Forms");
     },
   });
-  if (data) {
-    console.log(data);
-  }
   const fireUpload = () => {
     saveUpload();
   };

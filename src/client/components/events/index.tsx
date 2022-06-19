@@ -1,17 +1,16 @@
-import Slider from "../slideItems/Slider";
-import SlideCard from "../slideItems/SlideCard";
+import { useContext, useEffect, useState } from "react";
+import FilterContext from "../../../contexts/FilterContext";
 import {
   ConjunctionOperator,
   EventCategoryEntity,
+
   QueryOperator,
-  useGetEventCategoriesQuery,
+  useGetEventCategoriesQuery
 } from "../../../GraphQl/graphql";
-import { useContext, useEffect, useState } from "react";
 import FilterHeader from "../../../shared/components/header/filterHeader";
-import Fab from "@mui/material/Fab";
-import { FilterIcon } from "@heroicons/react/outline";
 import SideBar from "../filter/SideBar";
-import FilterContext from "../../../contexts/FilterContext";
+import SlideCard from "../slideItems/SlideCard";
+import Slider from "../slideItems/Slider";
 
 const Events = () => {
   const [categoriesData, setCategoriesData] = useState<

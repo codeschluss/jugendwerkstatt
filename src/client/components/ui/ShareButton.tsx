@@ -1,22 +1,11 @@
 import { ShareIcon } from "@heroicons/react/outline";
-import DropDown from "../../../shared/components/ui/DropDown";
 import {
-  FacebookShareButton,
-  LinkedinShareButton,
-  TwitterShareButton,
-  ViberShareButton,
-  WhatsappShareButton,
-  WhatsappIcon,
-  ViberIcon,
-  FacebookIcon,
-  TwitterIcon,
-  LinkedinIcon,
+  FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, TwitterIcon, TwitterShareButton, ViberIcon, ViberShareButton, WhatsappIcon, WhatsappShareButton
 } from "react-share";
 import { BASE_URL } from "../../../config/app";
+import DropDown from "../../../shared/components/ui/DropDown";
 
 export const ShareButton: React.FC<{ url: any }> = ({ url }) => {
-  console.log(BASE_URL + url, "theUrl");
-
   return (
     <DropDown
       position="right"

@@ -1,7 +1,7 @@
-import { LinkCategoryEntity, useGetLinkCategoriesQuery } from "../../../GraphQl/graphql";
-import Slider from "./slideItems/Slider";
-import SlideCard from "./slideItems/SlideCard";
 import { useEffect } from "react";
+import { LinkCategoryEntity, useGetLinkCategoriesQuery } from "../../../GraphQl/graphql";
+import SlideCard from "./slideItems/SlideCard";
+import Slider from "./slideItems/Slider";
 
 const MediaLibrary: React.FC = () => {
 
@@ -40,7 +40,6 @@ const MediaLibrary: React.FC = () => {
 
   function showOrHideArrows() {
     
-  console.log('window.innerWidth', window.innerWidth);    
     if(window.innerWidth>=1024){
       
       var elements = document.getElementsByClassName("possiblyOverflowing");

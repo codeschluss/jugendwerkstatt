@@ -1,16 +1,15 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import {
   useAddEventFavoriteMutation,
   useGetEventImagesQuery,
   useGetEventQuery,
-  useGetMeFavoritesQuery,
+  useGetMeFavoritesQuery
 } from "../../../GraphQl/graphql";
 import SlideCard from "../slideItems/SlideCard";
+import Slider from "../slideItems/Slider";
 import { EventDetails } from "./eventDetails/EventDetails";
 import { EventHeader } from "./eventHeader/EventHeader";
 import { TitleImgSlider } from "./slider/Slider";
-import Slider from "../slideItems/Slider";
 
 export const SingleEvent = () => {
   const params = useParams();
@@ -24,7 +23,6 @@ export const SingleEvent = () => {
       entity: { id: params.id },
     },
   });
-  console.log(eventImages.data);
 
   const [eventFavorite] = useAddEventFavoriteMutation({});
 

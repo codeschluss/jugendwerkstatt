@@ -1,16 +1,15 @@
-import Slider from "../slideItems/Slider";
-import SlideCard from "../slideItems/SlideCard";
+import { useEffect, useState } from "react";
 import {
   JobAdEntity,
   JobTypeEntity,
-  useGetJobTypesQuery,
+  useGetJobTypesQuery
 } from "../../../GraphQl/graphql";
-import { useEffect, useState } from "react";
+import SlideCard from "../slideItems/SlideCard";
+import Slider from "../slideItems/Slider";
 
 const Jobs = () => {
   const [typesData, setTypesData] = useState<JobTypeEntity | any>();
   const result = useGetJobTypesQuery();
-  console.log(console.log(result.data?.getJobTypes?.result));
 
   useEffect(() => {
     if (result?.data) {
