@@ -1,5 +1,5 @@
 import { default as jwt_decode } from "jwt-decode";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import FeedbackContext, { FeedbackType } from "../contexts/FeedbackContext";
@@ -19,11 +19,13 @@ export const useAuth = () => {
   const { setIsLogedIn } = useContext(AuthContext);
   const { setFeedback } = useContext(FeedbackContext);
 
-  const [accessTimer, setAccessTimer] = useState<any>(null);
-  const [refreshTimer, setRefreshTimer] = useState<any>(null);
-
   const init = () => {
     refreshToken && expiration(refreshToken) > 0 ? refresh() : logout();
+  };
+
+  const expiration = (token: string): number => {
+    const decoded = JSON.parse(atob(token.split(".")[1]));
+    return decoded.exp * 1000 - Date.now();
   };
 
   const [refreshTokenMutation] = useRefreshTokenMutation();
@@ -33,10 +35,7 @@ export const useAuth = () => {
         variables: {
           refreshToken: refreshToken || "",
         },
-      }).then((response) => {
-        store(response.data?.refreshToken);
-        timers(response.data?.refreshToken);
-      });
+      }).then((response) => store(response.data?.refreshToken));
     }
   };
 
@@ -49,7 +48,6 @@ export const useAuth = () => {
       },
     })
       .then((response) => {
-        // response.errors ? setHasError(true) : setHasError(false);
         const recievedToken: [string] | any = jwt_decode(
           response.data?.createToken?.access || ""
         );
@@ -65,7 +63,6 @@ export const useAuth = () => {
         }
 
         store(response.data?.createToken);
-        timers(response.data?.createToken);
         setFeedback({
           type: FeedbackType.Success,
           message: "Erolgreich eingeloggt"
@@ -82,23 +79,7 @@ export const useAuth = () => {
     }
   };
 
-  const timers = (token: TokenDto | null | undefined) => {
-    if (token) {
-      accessTimer && clearTimeout(accessTimer);
-      refreshTimer && clearTimeout(refreshTimer);
-      setAccessTimer(setTimeout(() => refresh(), expiration(token.access!)));
-      setRefreshTimer(setTimeout(() => logout(), expiration(token.refresh!)));
-    }
-  };
-
-  const expiration = (token: string): number => {
-    const decoded = JSON.parse(atob(token.split(".")[1]));
-    return decoded.exp * 1000 - Date.now();
-  };
-
   const logout = () => {
-    accessTimer && clearTimeout(accessTimer);
-    refreshTimer && clearTimeout(refreshTimer);
     setAccessToken(null);
     setRefreshToken(null);
     setIsLogedIn(false);

@@ -25,7 +25,6 @@ export const useApollo = () => {
   const errorLink = onError(({ graphQLErrors, networkError }) => {
     switch(true) {
       case !!graphQLErrors:
-        console.log("test", graphQLErrors);
         setFeedback({
           message: graphQLErrors && graphQLErrors[0].message,
           action: "Probiere es erneut",

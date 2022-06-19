@@ -30,8 +30,6 @@ const Templates: React.FC = () => {
   const fetchedUserTemplates: [UserTemplateEntity] = userTemplatesResult.data
     ?.me?.userTemplates as [UserTemplateEntity];
 
-  console.log(fetchedUserTemplates);
-
   return (
     <div className="container mx-auto px-4 pt-4 md:bg-white md:w-2/5 md:mx-0 md:py-6 md:rounded-md">
       <h5 className="text-2xl font-bold">{templateType.name}</h5>
