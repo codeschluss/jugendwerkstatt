@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useContext, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import AuthContext from "../../../../contexts/AuthContext";
 import TokenStorageContext from "../../../../contexts/TokenStorageContext";
 import {
   QueryOperator,
@@ -9,7 +8,7 @@ import {
   useGetChatQuery,
   useGetMeBasicQuery,
   useGetMessagesQuery,
-  useSaveMessageMutation,
+  useSaveMessageMutation
 } from "../../../../GraphQl/graphql";
 import ChatText from "./ChatText";
 
@@ -49,7 +48,6 @@ const Chat = () => {
     },
   });
   const getMessages = useGetMessagesQuery({
-    fetchPolicy: "network-only",
     variables: {
       params: {
         dir: "desc",

@@ -1,15 +1,12 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import {
-  useAddEventFavoriteMutation,
   useAddJobAdFavoriteMutation,
   useGetJobAdQuery,
-  useGetMeFavoritesQuery,
+  useGetMeFavoritesQuery
 } from "../../../GraphQl/graphql";
 import { EventDetails } from "../singleEvent/eventDetails/EventDetails";
-import { JobHeader } from "./jobHeader";
 import { TitleImgSlider } from "../singleEvent/slider/Slider";
-import SideBar from "../filter/SideBar";
+import { JobHeader } from "./jobHeader";
 export const SingleJobAdd = () => {
   const params = useParams();
 
@@ -23,9 +20,7 @@ export const SingleJobAdd = () => {
 
   const [jobFavorites] = useAddJobAdFavoriteMutation();
 
-  const favorites = useGetMeFavoritesQuery({
-    fetchPolicy: "network-only",
-  });
+  const favorites = useGetMeFavoritesQuery();
 
   const checkId = (obj: any) => obj.id === jobsQuery?.data?.getJobAd?.id;
   const hasId = favorites?.data?.me?.favoriteJobAds?.some(checkId);

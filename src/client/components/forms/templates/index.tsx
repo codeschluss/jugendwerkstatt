@@ -16,16 +16,13 @@ const Templates: React.FC = () => {
   const templatesResult = useGetTemplatesQuery({
     variables: {
       id: templateType.id,
-    },
-    fetchPolicy: "network-only",
+    }
   });
 
   const fetchedTemplates: [TemplateEntity] = templatesResult.data?.getTemplates
     ?.result as [TemplateEntity];
 
-  const userTemplatesResult = useGetMeUserTemplatesQuery({
-    fetchPolicy: "network-only"
-  });
+  const userTemplatesResult = useGetMeUserTemplatesQuery();
 
   const fetchedUserTemplates: [UserTemplateEntity] = userTemplatesResult.data
     ?.me?.userTemplates as [UserTemplateEntity];

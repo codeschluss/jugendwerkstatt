@@ -1,10 +1,8 @@
-import Slider from "../slideItems/Slider";
+import { useGetMeFavoritesQuery } from "../../../GraphQl/graphql";
 import SlideCard from "../slideItems/SlideCard";
-import { JobAdEntity, useGetMeFavoritesQuery } from "../../../GraphQl/graphql";
 
 const Favorites = () => {
   const { data } = useGetMeFavoritesQuery({
-    fetchPolicy: "network-only",
   });
   const favorites = data?.me?.favoriteEvents;
 

@@ -1,11 +1,11 @@
 import { Alert, AlertTitle, Snackbar } from "@mui/material";
-import { FC, SyntheticEvent, useContext, useEffect, useState } from "react";
-import FeedbackContext, { FeedbackType } from "../../../contexts/FeedbackContext";
+import { FC, SyntheticEvent, useEffect, useState } from "react";
+import useStore, { FeedbackInput, FeedbackType } from "../../../states/feedbackState";
 
-const Feedback: FC = () => {
+const FeedbackComponent: FC = () => {
 
   const [open, setOpen] = useState<boolean>(false);
-  const { feedback } = useContext(FeedbackContext);
+  const feedback = useStore((state: FeedbackInput) => state)
 
   useEffect(() => {
     setOpen(!!feedback);  
@@ -68,4 +68,4 @@ const Feedback: FC = () => {
   );
 };
 
-export default Feedback;
+export default FeedbackComponent;

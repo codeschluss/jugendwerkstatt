@@ -3,7 +3,6 @@ import Modal from "../client/components/modals/courseReviewPopUp";
 import AuthContext from "../contexts/AuthContext";
 import SideBarContext from "../contexts/SideBarContext";
 import useAuth from "../hooks/useAuth";
-import Feedback from "../shared/components/feedback/Feedback";
 import Header from "../shared/components/header";
 
 const Layout: React.FC = ({ children }) => {
@@ -21,7 +20,6 @@ const Layout: React.FC = ({ children }) => {
         sideBar && isLogedIn ? "md:pl-60" : "md:pl-20"
       }`}
     >
-      <Feedback />
       {isLogedIn && <Header />}
       <div className="md:p-12">
         <Modal visible={false} course={"Holz 1"}></Modal>

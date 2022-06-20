@@ -2,13 +2,13 @@ import { default as jwt_decode } from "jwt-decode";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
-import FeedbackContext, { FeedbackType } from "../contexts/FeedbackContext";
 import TokenStorageContext from "../contexts/TokenStorageContext";
 import {
   TokenDto,
   useCreateTokenMutation,
-  useRefreshTokenMutation,
+  useRefreshTokenMutation
 } from "../GraphQl/graphql";
+import useStore, { FeedbackInput, FeedbackType } from "../states/feedbackState";
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ export const useAuth = () => {
     useContext(TokenStorageContext);
 
   const { setIsLogedIn } = useContext(AuthContext);
-  const { setFeedback } = useContext(FeedbackContext);
+  const setFeedback = useStore((state: FeedbackInput) => state.setFeedback)
 
   const init = () => {
     refreshToken && expiration(refreshToken) > 0 ? refresh() : logout();
@@ -62,7 +62,7 @@ export const useAuth = () => {
       }
 
       store(response.data?.createToken);
-      setFeedback({
+      setFeedback?.({
         type: FeedbackType.Success,
         message: "Erolgreich eingeloggt",
       });

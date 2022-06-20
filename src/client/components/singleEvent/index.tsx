@@ -26,9 +26,7 @@ export const SingleEvent = () => {
 
   const [eventFavorite] = useAddEventFavoriteMutation({});
 
-  const favorites = useGetMeFavoritesQuery({
-    fetchPolicy: "network-only",
-  });
+  const favorites = useGetMeFavoritesQuery();
 
   const checkId = (obj: any) => obj.id === eventQuery.data?.getEvent?.id;
   const hasId = favorites?.data?.me?.favoriteEvents?.some(checkId);

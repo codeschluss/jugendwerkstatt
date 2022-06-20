@@ -2,7 +2,7 @@ import {
   JobAdEntity,
   useAddJobAdFavoriteMutation,
   useGetJobAdsQuery,
-  useGetMeFavoritesQuery,
+  useGetMeFavoritesQuery
 } from "../../../GraphQl/graphql";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
@@ -10,18 +10,14 @@ import Slider from "../slideItems/Slider";
 interface EventsProps {}
 
 const Events: React.FC<EventsProps> = () => {
-  const result = useGetJobAdsQuery({
-    fetchPolicy: "network-only",
-  });
+  const result = useGetJobAdsQuery();
 
   const fetchedData: [JobAdEntity] = result.data?.getJobAds?.result as [
     JobAdEntity
   ];
   const [jobFavorites] = useAddJobAdFavoriteMutation();
 
-  const favorites = useGetMeFavoritesQuery({
-    fetchPolicy: "network-only",
-  });
+  const favorites = useGetMeFavoritesQuery();
   const refetchQueries = () => {
     result.refetch();
     favorites.refetch();

@@ -56,7 +56,6 @@ const Events = () => {
   const result = useGetEventCategoriesQuery(
     filterOperands &&
       filterOperands.length && {
-        fetchPolicy: "network-only",
         variables: {
           params: {
             expression: {

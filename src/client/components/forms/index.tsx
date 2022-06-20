@@ -16,16 +16,12 @@ import detectDevice from "../../../shared/utils/isTouch";
 const Forms: React.FC = () => {
   const isTouch = detectDevice();
 
-  const result = useGetTemplateTypesQuery({
-    fetchPolicy: "network-only",
-  });
+  const result = useGetTemplateTypesQuery();
 
   const fetchedData: [TemplateTypeEntity] = result.data?.getTemplateTypes
     ?.result as [TemplateTypeEntity];
 
-  const userUploads = useGetMeUploadsQuery({
-    fetchPolicy: "network-only",
-  });
+  const userUploads = useGetMeUploadsQuery();
 
   const fetchedUserUploads: [MediaEntity] = userUploads.data?.me?.uploads as [
     MediaEntity

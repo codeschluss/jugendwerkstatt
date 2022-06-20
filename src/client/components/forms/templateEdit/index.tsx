@@ -1,16 +1,13 @@
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import DownloadIcon from "@heroicons/react/solid/DownloadIcon";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../../../../config/app";
-import AuthContext from "../../../../contexts/AuthContext";
 import {
   useGetMeBasicQuery,
   useGetTemplateQuery,
-  useGetUserTemplateQuery,
-  UserEntity,
-  useSaveUserTemplateMutation,
+  useGetUserTemplateQuery, useSaveUserTemplateMutation
 } from "../../../../GraphQl/graphql";
 import I from "../../../../shared/components/ui/IconWrapper";
 
@@ -76,12 +73,10 @@ const TemplateEdit: React.FC = () => {
   };
 
   const userTemplateResult = useGetUserTemplateQuery({
-    variables: { id: id! },
-    fetchPolicy: "network-only",
+    variables: { id: id! }
   });
   const templateResult = useGetTemplateQuery({
-    variables: { id: id! },
-    fetchPolicy: "network-only",
+    variables: { id: id! }
   });
 
   const userTemplateContent = userTemplateResult.data?.getUserTemplate?.content;
