@@ -1,18 +1,19 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import Modal from '../client/components/modals/courseReviewPopUp';
 import AuthContext from '../contexts/AuthContext';
 import SideBarContext from '../contexts/SideBarContext';
+import useAuth from '../hooks/useAuth';
 import Feedback from '../shared/components/feedback/Feedback';
 import Header from '../shared/components/header';
 
 const Layout: React.FC = ({ children }) => {
   const { sideBar } = useContext(SideBarContext);
   const { isLogedIn } = useContext(AuthContext);
-  
-  // const { init } = useAuth();
-  // useEffect(() => {
-  //   init();
-  // }, []);
+
+  const { init } = useAuth();
+  useEffect(() => {
+    init();
+  }, []);
 
   return (
     <main

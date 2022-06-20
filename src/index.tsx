@@ -7,12 +7,10 @@ import './shared/styles/index.css';
 import './shared/styles/SlickSlider.css';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <TokenStorageProvider>
-      <FeedbackProvider>
-        <App />
-      </FeedbackProvider>
-    </TokenStorageProvider>
-  </React.StrictMode>,
+  <TokenStorageProvider>
+    <FeedbackProvider>
+      <App />
+    </FeedbackProvider>
+  </TokenStorageProvider>,
   document.getElementById('root')
 );

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
 import ForgotPassword from '../shared/components/authentication/forgotPassword';
 import Email from '../shared/components/authentication/forgotPassword/Email';
@@ -42,18 +42,41 @@ import { Switch } from '../admin/components/atoms';
 import { UserRoutes } from './UserRoutes';
 import { AdminRoutes } from './AdminRoutes';
 import AuthContext from '../contexts/AuthContext';
+import { If } from '../shared/components/If/If';
+import useAuth from '../hooks/useAuth';
+
+enum UserRole {
+  ADMIN = 'Admin',
+  STUDENT = 'Student',
+}
 
 const Router = () => {
   // get user role
   const { userRole } = useContext(AuthContext);
-  console.log(userRole);
+
   // if role is admin disply
+
+  console.log(userRole, userRole === UserRole.ADMIN);
+  const user =
+    localStorage.getItem('accessToken') &&
+    JSON.parse(atob(localStorage.getItem('accessToken')?.split('.')[1] || ''));
+
   return (
     <BrowserRouter>
+      <Routes>
+        <Route path="/Login" element={<LoginPage />} />
+      </Routes>
+
       {/* <AdminRoutes /> */}
-      <Layout>
-        <UserRoutes />
-      </Layout>
+      <If condition={user?.roles[0] === UserRole.STUDENT}>
+        <Layout>
+          <UserRoutes />
+        </Layout>
+      </If>
+
+      <If condition={user?.roles[0] === UserRole.ADMIN}>
+        <AdminRoutes />
+      </If>
     </BrowserRouter>
   );
 };

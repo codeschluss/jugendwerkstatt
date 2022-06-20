@@ -1,7 +1,7 @@
-import { FC, ReactElement } from "react";
-import { Table } from "../../atoms";
+import { FC, ReactElement } from 'react';
+import { Table } from '../../atoms';
 
-import { CustomTableProps } from "./CustomTable.types";
+import { CustomTableProps } from './CustomTable.types';
 
 export const CustomTable: FC<CustomTableProps> = ({
   bodyData,

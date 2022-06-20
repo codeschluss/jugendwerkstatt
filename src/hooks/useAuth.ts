@@ -7,8 +7,13 @@ import TokenStorageContext from '../contexts/TokenStorageContext';
 import {
   TokenDto,
   useCreateTokenMutation,
-  useRefreshTokenMutation
+  useRefreshTokenMutation,
 } from '../GraphQl/graphql';
+
+enum UserRole {
+  ADMIN = 'Admin',
+  STUDENT = 'Student',
+}
 
 export const useAuth = () => {
   const navigate = useNavigate();
@@ -16,12 +21,12 @@ export const useAuth = () => {
   const { setAccessToken, refreshToken, setRefreshToken } =
     useContext(TokenStorageContext);
 
-  const { setIsLogedIn } = useContext(AuthContext);
+  const { setIsLogedIn, useRoles } = useContext(AuthContext);
   const { setFeedback } = useContext(FeedbackContext);
 
-  // const init = () => {
-  //   refreshToken && expiration(refreshToken) > 0 ? refresh() : logout();
-  // };
+  const init = () => {
+    refreshToken && expiration(refreshToken) > 0 ? refresh() : logout();
+  };
 
   const expiration = (token: string): number => {
     const decoded = JSON.parse(atob(token.split('.')[1]));
@@ -50,6 +55,7 @@ export const useAuth = () => {
       const recievedToken: [string] | any = jwt_decode(
         response.data?.createToken?.access || ''
       );
+
       if (!recievedToken.verified) {
         navigate('/reVerifyEmail');
         return;
@@ -66,7 +72,13 @@ export const useAuth = () => {
         type: FeedbackType.Success,
         message: 'Erolgreich eingeloggt',
       });
-      navigate('/');
+      console.log(useRoles);
+      const user = JSON.parse(
+        atob(response.data?.createToken?.access?.split('.')[1] || '')
+      );
+
+      console.log(user);
+      navigate(user?.roles?.[0] === UserRole.ADMIN ? '/admin' : '/');
     });
   };
 
@@ -86,6 +98,7 @@ export const useAuth = () => {
   };
 
   return {
+    init,
     handleLogin,
     logout,
   };

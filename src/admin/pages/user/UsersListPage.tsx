@@ -11,7 +11,7 @@ const UsersListPage = () => {
   });
 
   const handleUserUpdate = (userId: string) => () => navigate(userId);
-
+  console.log(users);
   return (
     <Panel.Wrapper>
       <CustomTable

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import {
   GeneralAddressForm,
@@ -42,7 +43,6 @@ import {
 } from '../admin/pages';
 
 export const AdminRoutes = () => {
-  console.log('admin');
   return (
     <Routes>
       <Route path="/admin" element={<AdminDashboardLayout />}>
