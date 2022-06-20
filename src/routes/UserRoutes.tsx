@@ -22,13 +22,11 @@ import ProfileSettings from "../client/pages/Profile/ProfileSettings";
 import PersonalData from "../client/pages/Profile/PersonalData";
 import ChangePassword from "../client/pages/Profile/ChangePassword";
 import UploadData from "../client/pages/forms/UploadData";
-import Feedback from "../client/components/Feedback";
 import ProfileImageUpload from "../client/pages/Profile/ProfileImageUpload";
 import Homepage from "../client/components/home/Homepage";
 import { RequireAuthRoute } from "../shared/components/RequireAuthRoute/RequireAuthRoute";
 
 export const UserRoutes = () => {
-  console.log("user");
   return (
     <Routes>
       <Route element={<RequireAuthRoute />}>
@@ -65,7 +63,6 @@ export const UserRoutes = () => {
           <Route path="/Forms/Templates/:id" element={<TemplateView />} />
           <Route path="/Forms/Templates/Edit/:id" element={<TemplateEdit />} />
 
-          <Route path="/feedback" element={<Feedback />} />
           <Route path="*" element={<h1>Page not found!</h1>} />
         </Route>
       </Route>

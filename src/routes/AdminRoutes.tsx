@@ -46,7 +46,6 @@ import {
 import { RequireAuthAdmin } from "../shared/components/RequireAuthRoute/RequireAuthAdmin";
 
 export const AdminRoutes = () => {
-  console.log("admin");
   return (
     <Routes>
       <Route element={<RequireAuthAdmin />}>

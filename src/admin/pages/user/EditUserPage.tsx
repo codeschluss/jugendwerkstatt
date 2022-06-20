@@ -1,13 +1,13 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement } from 'react';
-import { FieldError, useForm } from 'react-hook-form';
-import { useGetRolesQuery } from '../../../GraphQl/graphql';
-import { Button } from '../../components/atoms';
-import { MultiSelect } from '../../components/atoms/Form/MultiSelect/MultiSelect';
-import { OptionType } from '../../components/atoms/Form/MultiSelect/MultiSelect.props';
-import { Accordion } from '../../components/molecules';
-import { UserFormSchema } from '../../validations/UserForm.schema';
-import { UserFormInputs } from './User.props';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { ReactElement } from "react";
+import { FieldError, useForm } from "react-hook-form";
+import { useGetRolesQuery } from "../../../GraphQl/graphql";
+import { Button } from "../../components/atoms";
+import { MultiSelect } from "../../components/atoms/Form/MultiSelect/MultiSelect";
+import { OptionType } from "../../components/atoms/Form/MultiSelect/MultiSelect.props";
+import { Accordion } from "../../components/molecules";
+import { UserFormSchema } from "../../validations/UserForm.schema";
+import { UserFormInputs } from "./User.props";
 
 const EditUserPage = (): ReactElement => {
   // AddRole Mutation will be Added later addRole(userId, roleId)
@@ -20,11 +20,11 @@ const EditUserPage = (): ReactElement => {
   });
   const { data } = useGetRolesQuery();
   console.log(data);
-  console.log('here');
+  console.log("here");
 
   const handleChange = (values: OptionType[]) => {
     console.log(values);
-    setValue('roles', values, { shouldValidate: true });
+    setValue("roles", values, { shouldValidate: true });
   };
   const onSubmit = (data: UserFormInputs) => console.log(data);
 

@@ -3,9 +3,9 @@ import FilterContext from "../../../contexts/FilterContext";
 import {
   ConjunctionOperator,
   EventCategoryEntity,
-
+  EventEntity,
   QueryOperator,
-  useGetEventCategoriesQuery
+  useGetEventCategoriesQuery,
 } from "../../../GraphQl/graphql";
 import FilterHeader from "../../../shared/components/header/filterHeader";
 import SideBar from "../filter/SideBar";
@@ -20,38 +20,32 @@ const Events = () => {
 
   const filterOperands: any = [];
 
-  useEffect(() => {
-    category &&
-      filterOperands.push({
-        entity: {
-          operator: QueryOperator.Equal,
-          path: "id",
-          value: category?.id,
-        },
-      });
-  }, [category]);
+  category &&
+    filterOperands.push({
+      entity: {
+        operator: QueryOperator.Equal,
+        path: "id",
+        value: category?.id,
+      },
+    });
 
-  useEffect(() => {
-    dates.startDate &&
-      filterOperands.push({
-        entity: {
-          operator: QueryOperator.GreaterOrEqual,
-          path: "events.schedules.startDate",
-          value: dates?.startDate?.$d,
-        },
-      });
-  }, [dates.startDate]);
+  dates.startDate &&
+    filterOperands.push({
+      entity: {
+        operator: QueryOperator.GreaterOrEqual,
+        path: "events.schedules.startDate",
+        value: dates?.startDate?.$d,
+      },
+    });
 
-  useEffect(() => {
-    dates.endDate &&
-      filterOperands.push({
-        entity: {
-          operator: QueryOperator.LessOrEqual,
-          path: "events.schedules.endDate",
-          value: dates?.endDate?.$d,
-        },
-      });
-  }, [dates.endDate]);
+  dates.endDate &&
+    filterOperands.push({
+      entity: {
+        operator: QueryOperator.LessOrEqual,
+        path: "events.schedules.endDate",
+        value: dates?.endDate?.$d,
+      },
+    });
 
   const result = useGetEventCategoriesQuery(
     filterOperands &&
@@ -93,19 +87,27 @@ const Events = () => {
         {" "}
         {categoriesData?.map((category: EventCategoryEntity) => {
           return (
-            <Slider title={category?.name || ""} className="-mx-4">
-              {category?.events?.map((el: any) => {
-                console.log(el, "eventData");
-                return (
-                  <SlideCard
-                    eventName={el?.name}
-                    location={`${el?.address?.street}, ${el?.address?.houseNumber}, ${el?.address?.place}`}
-                    date={el?.schedules[el.schedules.length - 1]?.startDate}
-                    route={`/event/${el.id}`}
-                    imgUrl={el?.titleImage?.id}
-                  />
-                );
-              })}
+            <Slider
+              title={category?.name || ""}
+              className="-mx-4"
+              key={category.id}
+            >
+              {category?.events
+                ?.filter(
+                  (event: EventEntity | undefined | null) => event?.nextSchedule
+                )
+                .map((el: any) => {
+                  return (
+                    <SlideCard
+                      key={el.id}
+                      eventName={el?.name}
+                      location={`${el?.address?.street}, ${el?.address?.houseNumber}, ${el?.address?.place}`}
+                      date={el?.nextSchedule.startDate}
+                      route={`/event/${el.id}`}
+                      imgUrl={el?.titleImage?.id}
+                    />
+                  );
+                })}
             </Slider>
           );
         })}

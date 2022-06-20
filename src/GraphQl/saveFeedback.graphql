@@ -1,0 +1,5 @@
+mutation SaveFeedback($entity: FeedbackEntityInput) {
+  saveFeedback(entity: $entity) {
+    id
+  }
+}

@@ -1,0 +1,11 @@
+query Feedbacks {
+  me {
+    feedbacks {
+      id
+      rating
+      course {
+        name
+      }
+    }
+  }
+}

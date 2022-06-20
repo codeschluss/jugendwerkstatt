@@ -32,13 +32,12 @@ import ReVerifyUser from "../client/pages/verify/ReVerifyUser";
 import ChangePassword from "../client/pages/Profile/ChangePassword";
 import Protected from "../client/pages/Protected";
 import UploadData from "../client/pages/forms/UploadData";
-import Feedback from "../client/components/Feedback";
+import Feedback from "../client/components/Evaluation";
 import ProfileImageUpload from "../client/pages/Profile/ProfileImageUpload";
 import LoginPage from "../client/pages/authentication/LoginPage";
 import RegisterPage from "../client/pages/authentication/Register";
 import Messenger from "../client/pages/messenger";
 import ApprovalPending from "../client/pages/verify/ApprovalPending";
-import { Switch } from "../admin/components/atoms";
 
 const Router = () => {
   return (
@@ -243,8 +242,6 @@ const Router = () => {
               </Protected>
             }
           />
-
-          <Route path="/feedback" element={<Feedback />} />
         </Routes>
       </Layout>
     </BrowserRouter>

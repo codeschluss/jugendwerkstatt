@@ -1,10 +1,10 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement } from 'react';
-import { useForm } from 'react-hook-form';
-import { GeneralAddressFormSchema } from '../../../validations';
-import { Button } from '../../atoms';
-import { Accordion, InputField } from '../../molecules';
-import { GeneralAddressFormProps } from './GeneralAddressForm.props';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { ReactElement } from "react";
+import { useForm } from "react-hook-form";
+import { GeneralAddressFormSchema } from "../../../validations";
+import { Button } from "../../atoms";
+import { Accordion, InputField } from "../../molecules";
+import { GeneralAddressFormProps } from "./GeneralAddressForm.props";
 
 export const GeneralAddressForm = (): ReactElement => {
   const {
@@ -25,14 +25,14 @@ export const GeneralAddressForm = (): ReactElement => {
             <InputField
               id="street"
               label="Straße"
-              {...register('street')}
+              {...register("street")}
               error={errors.street?.message}
               placeholder="Heinz-Kluncker-Straße"
             />
             <InputField
               id="city"
               label="Stadt"
-              {...register('city')}
+              {...register("city")}
               placeholder="Wuppertal"
               error={errors.city?.message}
             />
@@ -43,7 +43,7 @@ export const GeneralAddressForm = (): ReactElement => {
               placeholder="4"
               id="houseNumber"
               label="Hausnummer"
-              {...register('houseNumber')}
+              {...register("houseNumber")}
               error={errors.houseNumber?.message}
             />
             <InputField
@@ -51,7 +51,7 @@ export const GeneralAddressForm = (): ReactElement => {
               id="postalCode"
               label="Postleitzahl"
               placeholder="42285"
-              {...register('postalCode')}
+              {...register("postalCode")}
               error={errors.postalCode?.message}
             />
           </div>
@@ -62,14 +62,14 @@ export const GeneralAddressForm = (): ReactElement => {
             id="longitude"
             label="Längengrad"
             placeholder="7.1507636"
-            {...register('long')}
+            {...register("long")}
             error={errors?.long?.message}
           />
           <InputField
             id="latitude"
             label="Breitengrad"
             placeholder="7.1507636"
-            {...register('lat')}
+            {...register("lat")}
             error={errors?.lat?.message}
           />
         </div>

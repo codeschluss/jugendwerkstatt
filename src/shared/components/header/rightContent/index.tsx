@@ -1,9 +1,13 @@
 import { BellIcon, LogoutIcon, SearchIcon } from "@heroicons/react/outline";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import {
+  NotificationEntity,
+  NotificationType,
+  useAddListenerSubscription,
   useGetMeBasicQuery,
   useGetNotificationsQuery,
+  useSaveNotificationMutation,
 } from "../../../../GraphQl/graphql";
 import useAuth from "../../../../hooks/useAuth";
 import detectDevice from "../../../utils/isTouch";
@@ -11,6 +15,14 @@ import DropDown from "../../ui/DropDown";
 import I from "../../ui/IconWrapper";
 import Avatar from "../sideBar/Avatar";
 import Search from "./Search";
+import Badge from "@mui/material/Badge";
+import MailIcon from "@mui/icons-material/Mail";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import FeedbackContext, {
+  FeedbackType,
+} from "../../../../contexts/FeedbackContext";
+import TokenStorageContext from "../../../../contexts/TokenStorageContext";
 
 interface RightContentProps {}
 
@@ -21,6 +33,11 @@ const RightContent: React.FC<RightContentProps> = () => {
   const { logout } = useAuth();
   const user = useGetMeBasicQuery();
   const notifications = useGetNotificationsQuery();
+  const [saveNotification] = useSaveNotificationMutation();
+  const unreadExist = notifications.data?.me?.notifications?.filter(
+    (notification: NotificationEntity | undefined | null) => !notification?.read
+  ).length;
+
   return (
     <div className="flex items-center flex-grow justify-end relative">
       <Search
@@ -73,12 +90,24 @@ const RightContent: React.FC<RightContentProps> = () => {
 
       <DropDown
         position="right"
-        className="mr-3  ml-3 border-r border-gray-200 pr-3 hidden md:block"
-        boxClassName=" mt-3 w-96 py-2.5 px-4"
+        className="mr-3  ml-3 border-r border-gray-200 pr-3 hidden md:block "
+        boxClassName=" mt-3 w-96 py-2.5 px-2 "
+        withArrow={false}
         name={
-          <I className="h-6 w-6 text-white md:text-black md:ml-6">
-            <BellIcon />
-          </I>
+          <Badge
+            badgeContent={
+              notifications.data?.me?.notifications?.filter(
+                (el: NotificationEntity | undefined | null) => !el?.read
+              ).length
+            }
+            color="error"
+          >
+            {unreadExist ? (
+              <NotificationsIcon color="action" />
+            ) : (
+              <NotificationsNoneIcon color="action" />
+            )}
+          </Badge>
         }
       >
         <div>
@@ -90,14 +119,29 @@ const RightContent: React.FC<RightContentProps> = () => {
               const month = `${new Date(el.created).getMonth()}`;
               const date = `${new Date(el.created).getDate()}`;
               return (
-                <li key={el.title} className="border-b-[1px]  border-gray-400">
-                  <p className={`text-base mt-2 ${el.read && "font-bold"}`}>
+                <li
+                  onClick={() =>
+                    saveNotification({
+                      variables: {
+                        entity: {
+                          id: el.id,
+                          read: true,
+                        },
+                      },
+                    }).then(() => notifications.refetch())
+                  }
+                  key={el.title}
+                  className={`border-b-[1px] p-2  border-gray-400 cursor-pointer ${
+                    !el.read && "bg-gray-100"
+                  }`}
+                >
+                  <p className={`text-base mt-2 ${!el.read && "font-bold"}`}>
                     {el?.title}
                   </p>
-                  <p className={`text-sm py-2 ${el.read && "font-bold"} `}>
+                  <p className={`text-sm  ${!el.read && "font-bold"} `}>
                     {el?.content}
                   </p>
-                  <p className="text-sm py-2">{`${weekDay}, ${date}.${month}.${year}`}</p>
+                  <p className="text-sm ">{`${weekDay}, ${date}.${month}.${year}`}</p>
                 </li>
               );
             })}

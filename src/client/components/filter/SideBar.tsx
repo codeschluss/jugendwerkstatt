@@ -64,7 +64,6 @@ const SideBar: React.FC = () => {
         endDate: tempDates.tempEndDate,
       });
   };
-  console.log(tempDates.tempStartDate, "the date");
 
   const list = (anchor: Anchor) => (
     <Box

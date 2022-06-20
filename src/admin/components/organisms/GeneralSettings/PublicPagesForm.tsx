@@ -1,11 +1,11 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement } from 'react';
-import { useForm } from 'react-hook-form';
-import { ButtonVariantsEnum } from '../../../interfaces/enums/ButtonVariants.enum';
-import { PublicPagesFormSchema } from '../../../validations';
-import { Button, Select } from '../../atoms';
-import { Accordion, InputField } from '../../molecules';
-import { PublicPagesFormProps } from './PublicPagesForm.props';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { ReactElement } from "react";
+import { useForm } from "react-hook-form";
+import { ButtonVariantsEnum } from "../../../interfaces/enums/ButtonVariants.enum";
+import { PublicPagesFormSchema } from "../../../validations";
+import { Button, Select } from "../../atoms";
+import { Accordion, InputField } from "../../molecules";
+import { PublicPagesFormProps } from "./PublicPagesForm.props";
 
 export const PublicPagesForm = (): ReactElement => {
   const {
@@ -24,7 +24,7 @@ export const PublicPagesForm = (): ReactElement => {
         <InputField
           id="pageName"
           label="Seitenname"
-          {...register('pageName')}
+          {...register("pageName")}
           error={errors.pageName?.message}
           placeholder="Team Jugendwerkstatt"
         />
@@ -33,10 +33,10 @@ export const PublicPagesForm = (): ReactElement => {
           placeholder="Textfeld"
           defaultValue={1}
           label="Seiteninhalt"
-          {...register('pageContent')}
+          {...register("pageContent")}
           error={errors.pageContent?.message}
         >
-          {['Value 1', 'Value 2', 'Value 3'].map((value) => (
+          {["Value 1", "Value 2", "Value 3"].map((value) => (
             <option value={value}>{value}</option>
           ))}
         </Select>

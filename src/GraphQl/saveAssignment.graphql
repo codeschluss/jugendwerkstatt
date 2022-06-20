@@ -1,0 +1,5 @@
+mutation SaveAssignment($entity: AssignmentEntityInput) {
+  saveAssignment(entity: $entity) {
+    id
+  }
+}

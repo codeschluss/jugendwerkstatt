@@ -69,9 +69,6 @@ const Chat = () => {
 
   const [saveMessage] = useSaveMessageMutation();
 
-  console.log(getMessages.data?.getMessages?.result);
-  console.log("test", chatAddlistener.data?.addChatListener);
-
   const scrollToBottom = () => {
     messageEnd.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -82,7 +79,6 @@ const Chat = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(writeMessage.current.value);
     saveMessage({
       variables: {
         entity: {
@@ -103,7 +99,6 @@ const Chat = () => {
       <h2>{getChat.data?.getChat?.name}</h2>
       {getMessages.data?.getMessages?.result?.map((el) => {
         const _me: boolean = el?.user?.id === myId ? true : false;
-        console.log(myId, el?.id);
         return (
           <ChatText
             key={el?.id}

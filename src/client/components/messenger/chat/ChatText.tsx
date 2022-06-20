@@ -7,7 +7,6 @@ interface TextProps {
 }
 
 const ChatText: React.FC<TextProps> = ({ content, name, me }) => {
-  console.log(me);
   return (
     <div
       className={`w-full flex px-6  ${me ? "justify-end" : "justify-start"}`}

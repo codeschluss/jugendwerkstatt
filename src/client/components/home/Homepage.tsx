@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import Button from "../ui/Button";
 import Events from "./Events";
 import Jobs from "./Jobs";
 
