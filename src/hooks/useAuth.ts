@@ -7,7 +7,7 @@ import TokenStorageContext from '../contexts/TokenStorageContext';
 import {
   TokenDto,
   useCreateTokenMutation,
-  useRefreshTokenMutation,
+  useRefreshTokenMutation
 } from '../GraphQl/graphql';
 
 export const useAuth = () => {
@@ -19,9 +19,9 @@ export const useAuth = () => {
   const { setIsLogedIn } = useContext(AuthContext);
   const { setFeedback } = useContext(FeedbackContext);
 
-  const init = () => {
-    refreshToken && expiration(refreshToken) > 0 ? refresh() : logout();
-  };
+  // const init = () => {
+  //   refreshToken && expiration(refreshToken) > 0 ? refresh() : logout();
+  // };
 
   const expiration = (token: string): number => {
     const decoded = JSON.parse(atob(token.split('.')[1]));
@@ -87,7 +87,6 @@ export const useAuth = () => {
 
   return {
     handleLogin,
-    init,
     logout,
   };
 };
