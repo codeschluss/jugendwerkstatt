@@ -1,0 +1,5 @@
+fragment AssignmentField on AssignmentEntity {
+  id
+  created
+  comment
+}

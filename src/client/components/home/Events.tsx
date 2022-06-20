@@ -2,17 +2,17 @@ import {
   EventEntity,
   useAddEventFavoriteMutation,
   useGetEventsQuery,
-  useGetMeFavoritesQuery
-} from "../../../GraphQl/graphql";
-import SlideCard from "../slideItems/SlideCard";
-import Slider from "../slideItems/Slider";
+  useGetMeFavoritesQuery,
+} from '../../../GraphQl/graphql';
+import SlideCard from '../slideItems/SlideCard';
+import Slider from '../slideItems/Slider';
 
 interface EventsProps {}
 
 const Events: React.FC<EventsProps> = () => {
   const useEvents = useGetEventsQuery({});
 
-  const [eventFavorite] = useAddEventFavoriteMutation({});
+  const [eventFavorite] = useAddEventFavoriteMutation();
 
   const fetchedData: [EventEntity] = useEvents.data?.getEvents?.result as [
     EventEntity
@@ -25,7 +25,7 @@ const Events: React.FC<EventsProps> = () => {
   };
 
   return (
-    <Slider title="Events" link={"/events"}>
+    <Slider title="Events" link={'/events'}>
       {fetchedData?.map((el: any) => {
         const checkId = (obj: any) => obj.id === el.id;
         const hasId = favorites?.data?.me?.favoriteEvents?.some(checkId);

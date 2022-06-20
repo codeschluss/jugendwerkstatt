@@ -14,7 +14,7 @@
 }
 
 .dashboard-sidebar {
-  @apply flex flex-col justify-between bg-primary;
+  @apply sticky top-0 flex flex-col justify-between h-screen overflow-y-scroll bg-primary;
   grid-area: sidebar;
 }
 

@@ -1,23 +1,22 @@
-import { ReactElement, useEffect } from "react";
-import { joiResolver } from "@hookform/resolvers/joi";
-import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { ReactElement, useEffect } from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { Accordion, FormActions, InputField } from "../../components/molecules";
-import { CategoryFormInputs } from "../../components/organisms";
-import { CategoryFormSchema } from "../../validations";
+import { Accordion, FormActions, InputField } from '../../components/molecules';
+import { CategoryFormInputs } from '../../components/organisms';
+import { CategoryFormSchema } from '../../validations';
 import {
   useGetEventCategoryQuery,
   useSaveEventCategoryMutation,
-} from "../../../GraphQl/graphql";
-import { gqlVar } from "../../utils";
+} from '../../../GraphQl/graphql';
+import { gqlVar } from '../../utils';
 
 const CreateCategoriesPage = (): ReactElement => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const {
-    reset,
     setValue,
     register,
     handleSubmit,
@@ -32,7 +31,7 @@ const CreateCategoriesPage = (): ReactElement => {
   });
 
   const [saveEventCategory] = useSaveEventCategoryMutation({
-    onCompleted: () => navigate("/admin/events/categories"),
+    onCompleted: () => navigate('/admin/events/categories'),
   });
 
   const handleOnSubmit = ({ name }: CategoryFormInputs) => {
@@ -41,11 +40,9 @@ const CreateCategoriesPage = (): ReactElement => {
     );
   };
 
-  const handleReset = () => reset();
-
   useEffect(() => {
     if (!!category) {
-      setValue("name", category?.name || "");
+      setValue('name', category?.name || '');
     }
   }, [category, setValue]);
 
@@ -56,14 +53,11 @@ const CreateCategoriesPage = (): ReactElement => {
           id="name"
           label="Kategoriename"
           placeholder="Metallhandwerk"
-          {...register("name")}
+          {...register('name')}
           error={errors?.name?.message}
         />
       </Accordion>
-      <FormActions
-        onReset={handleReset}
-        onSubmit={handleSubmit(handleOnSubmit)}
-      />
+      <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
     </form>
   );
 };

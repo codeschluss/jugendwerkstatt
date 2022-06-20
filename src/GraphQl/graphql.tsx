@@ -2722,9 +2722,13 @@ export type AddJobAdFavoriteMutation = { __typename?: 'Mutation', addJobAdFavori
 
 export type AddressFieldFragment = { __typename?: 'AddressEntity', id?: string | null, houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null, longitude?: number | null, latitude?: number | null };
 
+export type AssignmentFieldFragment = { __typename?: 'AssignmentEntity', id?: string | null, created?: any | null, comment?: string | null };
+
 export type CompanyFieldFragment = { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null };
 
 export type CompanyFragment = { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', id?: string | null, houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null, longitude?: number | null, latitude?: number | null } | null };
+
+export type CourseFieldFragment = { __typename?: 'CourseEntity', id?: string | null, name?: string | null, active?: boolean | null };
 
 export type EventFieldFragment = { __typename?: 'EventEntity', id?: string | null, name?: string | null };
 
@@ -2748,23 +2752,57 @@ export type LinkFragment = { __typename?: 'LinkEntity', id?: string | null, titl
 
 export type OrganizerFieldFragment = { __typename?: 'OrganizerEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null };
 
+export type PageFieldFragment = { __typename?: 'PageEntity', id?: string | null, content?: string | null, slug?: string | null };
+
 export type QuestionFieldFragment = { __typename?: 'QuestionEntity', id?: string | null, item?: string | null };
+
+export type QuestionnaireFieldFragment = { __typename?: 'QuestionnaireEntity', id?: string | null, name?: string | null, created?: any | null };
 
 export type RoleFieldFragment = { __typename?: 'RoleEntity', id?: string | null, name?: string | null };
 
 export type ScheduleFieldFragment = { __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null };
 
+export type SettingFieldFragment = { __typename?: 'SettingsEntity', id?: string | null, chatActive?: boolean | null };
+
 export type TemplateFieldFragment = { __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null };
 
 export type TemplateTypeFieldFragment = { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null };
 
-export type UserTemplateFieldFragment = { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null };
+export type UserTemplateFieldFragment = { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null, created?: any | null };
 
 export type TemplateFragment = { __typename?: 'TemplateEntity', id?: string | null, name?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null };
 
-export type UserTemplateFragment = { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null };
+export type UserTemplateFragment = { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null, created?: any | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null };
 
 export type UserFieldFragment = { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null };
+
+export type SaveAddressMutationVariables = Exact<{
+  entity?: InputMaybe<AddressEntityInput>;
+}>;
+
+
+export type SaveAddressMutation = { __typename?: 'Mutation', saveAddress?: { __typename?: 'AddressEntity', id?: string | null, houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null, longitude?: number | null, latitude?: number | null } | null };
+
+export type DeleteAddressMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteAddressMutation = { __typename?: 'Mutation', deleteAddress?: boolean | null };
+
+export type SaveAssignmentMutationVariables = Exact<{
+  entity?: InputMaybe<AssignmentEntityInput>;
+}>;
+
+
+export type SaveAssignmentMutation = { __typename?: 'Mutation', saveAssignment?: { __typename?: 'AssignmentEntity', id?: string | null } | null };
+
+export type DeleteAssignmentMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteAssignmentMutation = { __typename?: 'Mutation', deleteAssignment?: boolean | null };
 
 export type SaveCompanyMutationVariables = Exact<{
   entity?: InputMaybe<CompanyEntityInput>;
@@ -2808,6 +2846,13 @@ export type DeleteEventCategoryMutationVariables = Exact<{
 
 export type DeleteEventCategoryMutation = { __typename?: 'Mutation', deleteEventCategory?: boolean | null };
 
+export type SendGlobalPushMutationVariables = Exact<{
+  message?: InputMaybe<MessageDtoInput>;
+}>;
+
+
+export type SendGlobalPushMutation = { __typename?: 'Mutation', sendGlobalPush?: boolean | null };
+
 export type SaveGroupMutationVariables = Exact<{
   groupEntity?: InputMaybe<GroupEntityInput>;
 }>;
@@ -2821,6 +2866,22 @@ export type DeleteGroupMutationVariables = Exact<{
 
 
 export type DeleteGroupMutation = { __typename?: 'Mutation', deleteGroup?: boolean | null };
+
+export type AddGroupMemberMutationVariables = Exact<{
+  userId?: InputMaybe<Scalars['String']>;
+  groupId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type AddGroupMemberMutation = { __typename?: 'Mutation', addMember: boolean };
+
+export type DeleteGroupMemberMutationVariables = Exact<{
+  userId?: InputMaybe<Scalars['String']>;
+  groupId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteGroupMemberMutation = { __typename?: 'Mutation', deleteMember: boolean };
 
 export type SaveJobAdMutationVariables = Exact<{
   entity?: InputMaybe<JobAdEntityInput>;
@@ -2892,6 +2953,27 @@ export type DeleteOrganizerMutationVariables = Exact<{
 
 export type DeleteOrganizerMutation = { __typename?: 'Mutation', deleteOrganizer?: boolean | null };
 
+export type DeletePageMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeletePageMutation = { __typename?: 'Mutation', deletePage?: boolean | null };
+
+export type SaveQuestionnaireMutationVariables = Exact<{
+  entity?: InputMaybe<QuestionnaireEntityInput>;
+}>;
+
+
+export type SaveQuestionnaireMutation = { __typename?: 'Mutation', saveQuestionnaire?: { __typename?: 'QuestionnaireEntity', id?: string | null } | null };
+
+export type DeleteQuestionnaireMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteQuestionnaireMutation = { __typename?: 'Mutation', deleteQuestionnaire?: boolean | null };
+
 export type AddRolesMutationVariables = Exact<{
   userId?: InputMaybe<Scalars['String']>;
   roleIds?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
@@ -2899,6 +2981,13 @@ export type AddRolesMutationVariables = Exact<{
 
 
 export type AddRolesMutation = { __typename?: 'Mutation', saveUser?: { __typename?: 'UserEntity', id?: string | null } | null };
+
+export type SaveSettingsMutationVariables = Exact<{
+  entity?: InputMaybe<SettingsEntityInput>;
+}>;
+
+
+export type SaveSettingsMutation = { __typename?: 'Mutation', saveSettings?: { __typename?: 'SettingsEntity', id?: string | null, chatActive?: boolean | null } | null };
 
 export type SaveTemplateAdminMutationVariables = Exact<{
   entity?: InputMaybe<TemplateEntityInput>;
@@ -2933,7 +3022,7 @@ export type SaveUserTemplateAdminMutationVariables = Exact<{
 }>;
 
 
-export type SaveUserTemplateAdminMutation = { __typename?: 'Mutation', saveUserTemplate?: { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null } | null };
+export type SaveUserTemplateAdminMutation = { __typename?: 'Mutation', saveUserTemplate?: { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null, created?: any | null } | null };
 
 export type DeleteUserTemplateMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
@@ -2943,25 +3032,42 @@ export type DeleteUserTemplateMutationVariables = Exact<{
 export type DeleteUserTemplateMutation = { __typename?: 'Mutation', deleteUserTemplate?: boolean | null };
 
 export type SaveUserAdminMutationVariables = Exact<{
-  user?: InputMaybe<UserEntityInput>;
+  entity?: InputMaybe<UserEntityInput>;
 }>;
 
 
 export type SaveUserAdminMutation = { __typename?: 'Mutation', saveUser?: { __typename?: 'UserEntity', id?: string | null } | null };
 
-export type ApproveUserMutationVariables = Exact<{
-  entity?: InputMaybe<UserEntityInput>;
-}>;
-
-
-export type ApproveUserMutation = { __typename?: 'Mutation', saveUser?: { __typename?: 'UserEntity', id?: string | null } | null };
-
 export type DeleteUserMutationVariables = Exact<{
-  userId?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
 }>;
 
 
 export type DeleteUserMutation = { __typename?: 'Mutation', deleteUser?: boolean | null };
+
+export type GetAddressQueryVariables = Exact<{
+  entity?: InputMaybe<AddressEntityInput>;
+}>;
+
+
+export type GetAddressQuery = { __typename?: 'Query', address?: { __typename?: 'AddressEntity', id?: string | null, houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null, longitude?: number | null, latitude?: number | null } | null };
+
+export type GetAddressesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAddressesQuery = { __typename?: 'Query', addresses?: { __typename?: 'PageableList_AddressEntity', result?: Array<{ __typename?: 'AddressEntity', id?: string | null, houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null, longitude?: number | null, latitude?: number | null } | null> | null } | null };
+
+export type GetAssignmentsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAssignmentsQuery = { __typename?: 'Query', assignments?: { __typename?: 'PageableList_AssignmentEntity', result?: Array<{ __typename?: 'AssignmentEntity', id?: string | null, created?: any | null, comment?: string | null, user?: { __typename?: 'UserEntity', approved?: boolean | null, id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null, questionnaire?: { __typename?: 'QuestionnaireEntity', id?: string | null, name?: string | null, created?: any | null } | null } | null> | null } | null };
+
+export type GetAssignmentQueryVariables = Exact<{
+  entity?: InputMaybe<AssignmentEntityInput>;
+}>;
+
+
+export type GetAssignmentQuery = { __typename?: 'Query', assignment?: { __typename?: 'AssignmentEntity', user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null, questionnaire?: { __typename?: 'QuestionnaireEntity', id?: string | null, name?: string | null, created?: any | null } | null } | null };
 
 export type GetCompaniesQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3006,14 +3112,22 @@ export type GetEventCategoryQuery = { __typename?: 'Query', category?: { __typen
 export type GetGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetGroupsQuery = { __typename?: 'Query', groups?: { __typename?: 'PageableList_GroupEntity', result?: Array<{ __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null> | null } | null };
+export type GetGroupsQuery = { __typename?: 'Query', groups?: { __typename?: 'PageableList_GroupEntity', result?: Array<{ __typename?: 'GroupEntity', id?: string | null, name?: string | null, courses?: Array<{ __typename?: 'CourseEntity', id?: string | null, name?: string | null, active?: boolean | null } | null> | null, users?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null> | null } | null };
 
 export type GetGroupQueryVariables = Exact<{
-  groupId?: InputMaybe<Scalars['String']>;
+  entity?: InputMaybe<GroupEntityInput>;
 }>;
 
 
-export type GetGroupQuery = { __typename?: 'Query', group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null };
+export type GetGroupQuery = { __typename?: 'Query', group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null, users?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null, courses?: Array<{ __typename?: 'CourseEntity', id?: string | null, name?: string | null, active?: boolean | null } | null> | null } | null };
+
+export type GetGroupCoursesQueryVariables = Exact<{
+  entity?: InputMaybe<GroupEntityInput>;
+  year?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type GetGroupCoursesQuery = { __typename?: 'Query', group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null, courses?: Array<{ __typename?: 'CourseEntity', averageRating?: number | null, id?: string | null, name?: string | null, active?: boolean | null } | null> | null } | null };
 
 export type GetJobAdsAdminQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3083,10 +3197,17 @@ export type GetOrganizerQueryVariables = Exact<{
 
 export type GetOrganizerQuery = { __typename?: 'Query', organizer?: { __typename?: 'OrganizerEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null } | null };
 
-export type GetQuestionsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetPagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetQuestionsQuery = { __typename?: 'Query', questions?: { __typename?: 'PageableList_QuestionEntity', result?: Array<{ __typename?: 'QuestionEntity', id?: string | null, item?: string | null } | null> | null } | null };
+export type GetPagesQuery = { __typename?: 'Query', pages?: { __typename?: 'PageableList_PageEntity', result?: Array<{ __typename?: 'PageEntity', id?: string | null, content?: string | null, slug?: string | null } | null> | null } | null };
+
+export type GetPageQueryVariables = Exact<{
+  entity?: InputMaybe<PageEntityInput>;
+}>;
+
+
+export type GetPageQuery = { __typename?: 'Query', page?: { __typename?: 'PageEntity', id?: string | null, content?: string | null, slug?: string | null } | null };
 
 export type DeleteQuestionMutationVariables = Exact<{
   questionId?: InputMaybe<Scalars['String']>;
@@ -3095,10 +3216,28 @@ export type DeleteQuestionMutationVariables = Exact<{
 
 export type DeleteQuestionMutation = { __typename?: 'Mutation', deleteQuestion?: boolean | null };
 
+export type GetQuestionnairesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetQuestionnairesQuery = { __typename?: 'Query', questionnaires?: { __typename?: 'PageableList_QuestionnaireEntity', result?: Array<{ __typename?: 'QuestionnaireEntity', id?: string | null, name?: string | null, created?: any | null } | null> | null } | null };
+
+export type GetQuestionnaireQueryVariables = Exact<{
+  entity?: InputMaybe<QuestionnaireEntityInput>;
+  year?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type GetQuestionnaireQuery = { __typename?: 'Query', questionnaire?: { __typename?: 'QuestionnaireEntity', id?: string | null, name?: string | null, created?: any | null, assignments?: Array<{ __typename?: 'AssignmentEntity', id?: string | null, created?: any | null, comment?: string | null } | null> | null, questions?: Array<{ __typename?: 'QuestionEntity', averageRating?: number | null, id?: string | null, item?: string | null } | null> | null } | null };
+
 export type GetRolesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetRolesQuery = { __typename?: 'Query', roles?: { __typename?: 'PageableList_RoleEntity', result?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null };
+
+export type GetSettingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSettingsQuery = { __typename?: 'Query', settings?: { __typename?: 'SettingsEntity', id?: string | null, chatActive?: boolean | null } | null };
 
 export type GetTemplatesAdminQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3133,24 +3272,35 @@ export type GetUserTemplatesAdminQueryVariables = Exact<{
 }>;
 
 
-export type GetUserTemplatesAdminQuery = { __typename?: 'Query', getUserTemplates?: { __typename?: 'PageableList_UserTemplateEntity', total: any, result?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null> | null } | null };
+export type GetUserTemplatesAdminQuery = { __typename?: 'Query', getUserTemplates?: { __typename?: 'PageableList_UserTemplateEntity', total: any, result?: Array<{ __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null, created?: any | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null> | null } | null };
 
 export type GetUserTemplateAdminQueryVariables = Exact<{
   entity?: InputMaybe<UserTemplateEntityInput>;
 }>;
 
 
-export type GetUserTemplateAdminQuery = { __typename?: 'Query', getUserTemplate?: { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null };
+export type GetUserTemplateAdminQuery = { __typename?: 'Query', getUserTemplate?: { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null, created?: any | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null };
 
-export type GetApprovedUsersQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetApprovedUsersQuery = { __typename?: 'Query', approvedUsers?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null };
-
-export type GetRequestedUsersQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetUserAdminQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
 
 
-export type GetRequestedUsersQuery = { __typename?: 'Query', requestedUsers?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null };
+export type GetUserAdminQuery = { __typename?: 'Query', user?: { __typename?: 'UserEntity', id?: string | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null };
+
+export type GetUsersAdminQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetUsersAdminQuery = { __typename?: 'Query', users?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null };
+
+export type GetUsersListQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetUsersListQuery = { __typename?: 'Query', getUsers?: { __typename?: 'PageableList_UserEntity', total: any, result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null } | null };
 
 export type ChatlistenerSubscriptionVariables = Exact<{
   token: Scalars['String'];
@@ -3245,7 +3395,7 @@ export type GetLinkCategoriesQuery = { __typename?: 'Query', getLinkCategories?:
 export type GetMeBasicQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMeBasicQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, phone?: string | null, email?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null };
+export type GetMeBasicQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, phone?: string | null, password?: string | null, email?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null };
 
 export type GetMeFavoritesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3403,6 +3553,13 @@ export type VerifyMutationVariables = Exact<{
 
 export type VerifyMutation = { __typename?: 'Mutation', verify?: { __typename?: 'UserEntity', id?: string | null } | null };
 
+export const AssignmentFieldFragmentDoc = gql`
+    fragment AssignmentField on AssignmentEntity {
+  id
+  created
+  comment
+}
+    `;
 export const CompanyFieldFragmentDoc = gql`
     fragment CompanyField on CompanyEntity {
   id
@@ -3432,6 +3589,13 @@ export const CompanyFragmentDoc = gql`
 }
     ${CompanyFieldFragmentDoc}
 ${AddressFieldFragmentDoc}`;
+export const CourseFieldFragmentDoc = gql`
+    fragment CourseField on CourseEntity {
+  id
+  name
+  active
+}
+    `;
 export const EventFieldFragmentDoc = gql`
     fragment EventField on EventEntity {
   id
@@ -3529,10 +3693,30 @@ export const OrganizerFieldFragmentDoc = gql`
   website
 }
     `;
+export const PageFieldFragmentDoc = gql`
+    fragment PageField on PageEntity {
+  id
+  content
+  slug
+}
+    `;
 export const QuestionFieldFragmentDoc = gql`
     fragment QuestionField on QuestionEntity {
   id
   item
+}
+    `;
+export const QuestionnaireFieldFragmentDoc = gql`
+    fragment QuestionnaireField on QuestionnaireEntity {
+  id
+  name
+  created
+}
+    `;
+export const SettingFieldFragmentDoc = gql`
+    fragment SettingField on SettingsEntity {
+  id
+  chatActive
 }
     `;
 export const TemplateFieldFragmentDoc = gql`
@@ -3562,6 +3746,7 @@ export const UserTemplateFieldFragmentDoc = gql`
   id
   name
   content
+  created
 }
     `;
 export const UserTemplateFragmentDoc = gql`
@@ -3661,6 +3846,134 @@ export function useAddJobAdFavoriteMutation(baseOptions?: Apollo.MutationHookOpt
 export type AddJobAdFavoriteMutationHookResult = ReturnType<typeof useAddJobAdFavoriteMutation>;
 export type AddJobAdFavoriteMutationResult = Apollo.MutationResult<AddJobAdFavoriteMutation>;
 export type AddJobAdFavoriteMutationOptions = Apollo.BaseMutationOptions<AddJobAdFavoriteMutation, AddJobAdFavoriteMutationVariables>;
+export const SaveAddressDocument = gql`
+    mutation SaveAddress($entity: AddressEntityInput) {
+  saveAddress(entity: $entity) {
+    ...AddressField
+  }
+}
+    ${AddressFieldFragmentDoc}`;
+export type SaveAddressMutationFn = Apollo.MutationFunction<SaveAddressMutation, SaveAddressMutationVariables>;
+
+/**
+ * __useSaveAddressMutation__
+ *
+ * To run a mutation, you first call `useSaveAddressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveAddressMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveAddressMutation, { data, loading, error }] = useSaveAddressMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveAddressMutation(baseOptions?: Apollo.MutationHookOptions<SaveAddressMutation, SaveAddressMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveAddressMutation, SaveAddressMutationVariables>(SaveAddressDocument, options);
+      }
+export type SaveAddressMutationHookResult = ReturnType<typeof useSaveAddressMutation>;
+export type SaveAddressMutationResult = Apollo.MutationResult<SaveAddressMutation>;
+export type SaveAddressMutationOptions = Apollo.BaseMutationOptions<SaveAddressMutation, SaveAddressMutationVariables>;
+export const DeleteAddressDocument = gql`
+    mutation DeleteAddress($id: String) {
+  deleteAddress(id: $id)
+}
+    `;
+export type DeleteAddressMutationFn = Apollo.MutationFunction<DeleteAddressMutation, DeleteAddressMutationVariables>;
+
+/**
+ * __useDeleteAddressMutation__
+ *
+ * To run a mutation, you first call `useDeleteAddressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAddressMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAddressMutation, { data, loading, error }] = useDeleteAddressMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteAddressMutation(baseOptions?: Apollo.MutationHookOptions<DeleteAddressMutation, DeleteAddressMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteAddressMutation, DeleteAddressMutationVariables>(DeleteAddressDocument, options);
+      }
+export type DeleteAddressMutationHookResult = ReturnType<typeof useDeleteAddressMutation>;
+export type DeleteAddressMutationResult = Apollo.MutationResult<DeleteAddressMutation>;
+export type DeleteAddressMutationOptions = Apollo.BaseMutationOptions<DeleteAddressMutation, DeleteAddressMutationVariables>;
+export const SaveAssignmentDocument = gql`
+    mutation SaveAssignment($entity: AssignmentEntityInput) {
+  saveAssignment(entity: $entity) {
+    id
+  }
+}
+    `;
+export type SaveAssignmentMutationFn = Apollo.MutationFunction<SaveAssignmentMutation, SaveAssignmentMutationVariables>;
+
+/**
+ * __useSaveAssignmentMutation__
+ *
+ * To run a mutation, you first call `useSaveAssignmentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveAssignmentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveAssignmentMutation, { data, loading, error }] = useSaveAssignmentMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveAssignmentMutation(baseOptions?: Apollo.MutationHookOptions<SaveAssignmentMutation, SaveAssignmentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveAssignmentMutation, SaveAssignmentMutationVariables>(SaveAssignmentDocument, options);
+      }
+export type SaveAssignmentMutationHookResult = ReturnType<typeof useSaveAssignmentMutation>;
+export type SaveAssignmentMutationResult = Apollo.MutationResult<SaveAssignmentMutation>;
+export type SaveAssignmentMutationOptions = Apollo.BaseMutationOptions<SaveAssignmentMutation, SaveAssignmentMutationVariables>;
+export const DeleteAssignmentDocument = gql`
+    mutation DeleteAssignment($id: String) {
+  deleteAssignment(id: $id)
+}
+    `;
+export type DeleteAssignmentMutationFn = Apollo.MutationFunction<DeleteAssignmentMutation, DeleteAssignmentMutationVariables>;
+
+/**
+ * __useDeleteAssignmentMutation__
+ *
+ * To run a mutation, you first call `useDeleteAssignmentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAssignmentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAssignmentMutation, { data, loading, error }] = useDeleteAssignmentMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteAssignmentMutation(baseOptions?: Apollo.MutationHookOptions<DeleteAssignmentMutation, DeleteAssignmentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteAssignmentMutation, DeleteAssignmentMutationVariables>(DeleteAssignmentDocument, options);
+      }
+export type DeleteAssignmentMutationHookResult = ReturnType<typeof useDeleteAssignmentMutation>;
+export type DeleteAssignmentMutationResult = Apollo.MutationResult<DeleteAssignmentMutation>;
+export type DeleteAssignmentMutationOptions = Apollo.BaseMutationOptions<DeleteAssignmentMutation, DeleteAssignmentMutationVariables>;
 export const SaveCompanyDocument = gql`
     mutation SaveCompany($entity: CompanyEntityInput) {
   saveCompany(entity: $entity) {
@@ -3853,6 +4166,37 @@ export function useDeleteEventCategoryMutation(baseOptions?: Apollo.MutationHook
 export type DeleteEventCategoryMutationHookResult = ReturnType<typeof useDeleteEventCategoryMutation>;
 export type DeleteEventCategoryMutationResult = Apollo.MutationResult<DeleteEventCategoryMutation>;
 export type DeleteEventCategoryMutationOptions = Apollo.BaseMutationOptions<DeleteEventCategoryMutation, DeleteEventCategoryMutationVariables>;
+export const SendGlobalPushDocument = gql`
+    mutation SendGlobalPush($message: MessageDtoInput) {
+  sendGlobalPush(message: $message)
+}
+    `;
+export type SendGlobalPushMutationFn = Apollo.MutationFunction<SendGlobalPushMutation, SendGlobalPushMutationVariables>;
+
+/**
+ * __useSendGlobalPushMutation__
+ *
+ * To run a mutation, you first call `useSendGlobalPushMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendGlobalPushMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendGlobalPushMutation, { data, loading, error }] = useSendGlobalPushMutation({
+ *   variables: {
+ *      message: // value for 'message'
+ *   },
+ * });
+ */
+export function useSendGlobalPushMutation(baseOptions?: Apollo.MutationHookOptions<SendGlobalPushMutation, SendGlobalPushMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendGlobalPushMutation, SendGlobalPushMutationVariables>(SendGlobalPushDocument, options);
+      }
+export type SendGlobalPushMutationHookResult = ReturnType<typeof useSendGlobalPushMutation>;
+export type SendGlobalPushMutationResult = Apollo.MutationResult<SendGlobalPushMutation>;
+export type SendGlobalPushMutationOptions = Apollo.BaseMutationOptions<SendGlobalPushMutation, SendGlobalPushMutationVariables>;
 export const SaveGroupDocument = gql`
     mutation SaveGroup($groupEntity: GroupEntityInput) {
   saveGroup(entity: $groupEntity) {
@@ -3917,6 +4261,70 @@ export function useDeleteGroupMutation(baseOptions?: Apollo.MutationHookOptions<
 export type DeleteGroupMutationHookResult = ReturnType<typeof useDeleteGroupMutation>;
 export type DeleteGroupMutationResult = Apollo.MutationResult<DeleteGroupMutation>;
 export type DeleteGroupMutationOptions = Apollo.BaseMutationOptions<DeleteGroupMutation, DeleteGroupMutationVariables>;
+export const AddGroupMemberDocument = gql`
+    mutation AddGroupMember($userId: String, $groupId: String) {
+  addMember(userId: $userId, groupId: $groupId)
+}
+    `;
+export type AddGroupMemberMutationFn = Apollo.MutationFunction<AddGroupMemberMutation, AddGroupMemberMutationVariables>;
+
+/**
+ * __useAddGroupMemberMutation__
+ *
+ * To run a mutation, you first call `useAddGroupMemberMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddGroupMemberMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addGroupMemberMutation, { data, loading, error }] = useAddGroupMemberMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      groupId: // value for 'groupId'
+ *   },
+ * });
+ */
+export function useAddGroupMemberMutation(baseOptions?: Apollo.MutationHookOptions<AddGroupMemberMutation, AddGroupMemberMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddGroupMemberMutation, AddGroupMemberMutationVariables>(AddGroupMemberDocument, options);
+      }
+export type AddGroupMemberMutationHookResult = ReturnType<typeof useAddGroupMemberMutation>;
+export type AddGroupMemberMutationResult = Apollo.MutationResult<AddGroupMemberMutation>;
+export type AddGroupMemberMutationOptions = Apollo.BaseMutationOptions<AddGroupMemberMutation, AddGroupMemberMutationVariables>;
+export const DeleteGroupMemberDocument = gql`
+    mutation DeleteGroupMember($userId: String, $groupId: String) {
+  deleteMember(userId: $userId, groupId: $groupId)
+}
+    `;
+export type DeleteGroupMemberMutationFn = Apollo.MutationFunction<DeleteGroupMemberMutation, DeleteGroupMemberMutationVariables>;
+
+/**
+ * __useDeleteGroupMemberMutation__
+ *
+ * To run a mutation, you first call `useDeleteGroupMemberMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteGroupMemberMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteGroupMemberMutation, { data, loading, error }] = useDeleteGroupMemberMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      groupId: // value for 'groupId'
+ *   },
+ * });
+ */
+export function useDeleteGroupMemberMutation(baseOptions?: Apollo.MutationHookOptions<DeleteGroupMemberMutation, DeleteGroupMemberMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteGroupMemberMutation, DeleteGroupMemberMutationVariables>(DeleteGroupMemberDocument, options);
+      }
+export type DeleteGroupMemberMutationHookResult = ReturnType<typeof useDeleteGroupMemberMutation>;
+export type DeleteGroupMemberMutationResult = Apollo.MutationResult<DeleteGroupMemberMutation>;
+export type DeleteGroupMemberMutationOptions = Apollo.BaseMutationOptions<DeleteGroupMemberMutation, DeleteGroupMemberMutationVariables>;
 export const SaveJobAdDocument = gql`
     mutation SaveJobAd($entity: JobAdEntityInput) {
   saveJobAd(entity: $entity) {
@@ -4237,6 +4645,101 @@ export function useDeleteOrganizerMutation(baseOptions?: Apollo.MutationHookOpti
 export type DeleteOrganizerMutationHookResult = ReturnType<typeof useDeleteOrganizerMutation>;
 export type DeleteOrganizerMutationResult = Apollo.MutationResult<DeleteOrganizerMutation>;
 export type DeleteOrganizerMutationOptions = Apollo.BaseMutationOptions<DeleteOrganizerMutation, DeleteOrganizerMutationVariables>;
+export const DeletePageDocument = gql`
+    mutation DeletePage($id: String) {
+  deletePage(id: $id)
+}
+    `;
+export type DeletePageMutationFn = Apollo.MutationFunction<DeletePageMutation, DeletePageMutationVariables>;
+
+/**
+ * __useDeletePageMutation__
+ *
+ * To run a mutation, you first call `useDeletePageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeletePageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deletePageMutation, { data, loading, error }] = useDeletePageMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeletePageMutation(baseOptions?: Apollo.MutationHookOptions<DeletePageMutation, DeletePageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeletePageMutation, DeletePageMutationVariables>(DeletePageDocument, options);
+      }
+export type DeletePageMutationHookResult = ReturnType<typeof useDeletePageMutation>;
+export type DeletePageMutationResult = Apollo.MutationResult<DeletePageMutation>;
+export type DeletePageMutationOptions = Apollo.BaseMutationOptions<DeletePageMutation, DeletePageMutationVariables>;
+export const SaveQuestionnaireDocument = gql`
+    mutation SaveQuestionnaire($entity: QuestionnaireEntityInput) {
+  saveQuestionnaire(entity: $entity) {
+    id
+  }
+}
+    `;
+export type SaveQuestionnaireMutationFn = Apollo.MutationFunction<SaveQuestionnaireMutation, SaveQuestionnaireMutationVariables>;
+
+/**
+ * __useSaveQuestionnaireMutation__
+ *
+ * To run a mutation, you first call `useSaveQuestionnaireMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveQuestionnaireMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveQuestionnaireMutation, { data, loading, error }] = useSaveQuestionnaireMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveQuestionnaireMutation(baseOptions?: Apollo.MutationHookOptions<SaveQuestionnaireMutation, SaveQuestionnaireMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveQuestionnaireMutation, SaveQuestionnaireMutationVariables>(SaveQuestionnaireDocument, options);
+      }
+export type SaveQuestionnaireMutationHookResult = ReturnType<typeof useSaveQuestionnaireMutation>;
+export type SaveQuestionnaireMutationResult = Apollo.MutationResult<SaveQuestionnaireMutation>;
+export type SaveQuestionnaireMutationOptions = Apollo.BaseMutationOptions<SaveQuestionnaireMutation, SaveQuestionnaireMutationVariables>;
+export const DeleteQuestionnaireDocument = gql`
+    mutation DeleteQuestionnaire($id: String) {
+  deleteQuestionnaire(id: $id)
+}
+    `;
+export type DeleteQuestionnaireMutationFn = Apollo.MutationFunction<DeleteQuestionnaireMutation, DeleteQuestionnaireMutationVariables>;
+
+/**
+ * __useDeleteQuestionnaireMutation__
+ *
+ * To run a mutation, you first call `useDeleteQuestionnaireMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteQuestionnaireMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteQuestionnaireMutation, { data, loading, error }] = useDeleteQuestionnaireMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteQuestionnaireMutation(baseOptions?: Apollo.MutationHookOptions<DeleteQuestionnaireMutation, DeleteQuestionnaireMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteQuestionnaireMutation, DeleteQuestionnaireMutationVariables>(DeleteQuestionnaireDocument, options);
+      }
+export type DeleteQuestionnaireMutationHookResult = ReturnType<typeof useDeleteQuestionnaireMutation>;
+export type DeleteQuestionnaireMutationResult = Apollo.MutationResult<DeleteQuestionnaireMutation>;
+export type DeleteQuestionnaireMutationOptions = Apollo.BaseMutationOptions<DeleteQuestionnaireMutation, DeleteQuestionnaireMutationVariables>;
 export const AddRolesDocument = gql`
     mutation AddRoles($userId: String, $roleIds: [String]) {
   saveUser(entity: {id: "dasadasda"}) {
@@ -4271,6 +4774,39 @@ export function useAddRolesMutation(baseOptions?: Apollo.MutationHookOptions<Add
 export type AddRolesMutationHookResult = ReturnType<typeof useAddRolesMutation>;
 export type AddRolesMutationResult = Apollo.MutationResult<AddRolesMutation>;
 export type AddRolesMutationOptions = Apollo.BaseMutationOptions<AddRolesMutation, AddRolesMutationVariables>;
+export const SaveSettingsDocument = gql`
+    mutation SaveSettings($entity: SettingsEntityInput) {
+  saveSettings(entity: $entity) {
+    ...SettingField
+  }
+}
+    ${SettingFieldFragmentDoc}`;
+export type SaveSettingsMutationFn = Apollo.MutationFunction<SaveSettingsMutation, SaveSettingsMutationVariables>;
+
+/**
+ * __useSaveSettingsMutation__
+ *
+ * To run a mutation, you first call `useSaveSettingsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveSettingsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveSettingsMutation, { data, loading, error }] = useSaveSettingsMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveSettingsMutation(baseOptions?: Apollo.MutationHookOptions<SaveSettingsMutation, SaveSettingsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveSettingsMutation, SaveSettingsMutationVariables>(SaveSettingsDocument, options);
+      }
+export type SaveSettingsMutationHookResult = ReturnType<typeof useSaveSettingsMutation>;
+export type SaveSettingsMutationResult = Apollo.MutationResult<SaveSettingsMutation>;
+export type SaveSettingsMutationOptions = Apollo.BaseMutationOptions<SaveSettingsMutation, SaveSettingsMutationVariables>;
 export const SaveTemplateAdminDocument = gql`
     mutation SaveTemplateAdmin($entity: TemplateEntityInput) {
   saveTemplate(entity: $entity) {
@@ -4464,8 +5000,8 @@ export type DeleteUserTemplateMutationHookResult = ReturnType<typeof useDeleteUs
 export type DeleteUserTemplateMutationResult = Apollo.MutationResult<DeleteUserTemplateMutation>;
 export type DeleteUserTemplateMutationOptions = Apollo.BaseMutationOptions<DeleteUserTemplateMutation, DeleteUserTemplateMutationVariables>;
 export const SaveUserAdminDocument = gql`
-    mutation SaveUserAdmin($user: UserEntityInput) {
-  saveUser(entity: $user) {
+    mutation SaveUserAdmin($entity: UserEntityInput) {
+  saveUser(entity: $entity) {
     id
   }
 }
@@ -4485,7 +5021,7 @@ export type SaveUserAdminMutationFn = Apollo.MutationFunction<SaveUserAdminMutat
  * @example
  * const [saveUserAdminMutation, { data, loading, error }] = useSaveUserAdminMutation({
  *   variables: {
- *      user: // value for 'user'
+ *      entity: // value for 'entity'
  *   },
  * });
  */
@@ -4496,42 +5032,9 @@ export function useSaveUserAdminMutation(baseOptions?: Apollo.MutationHookOption
 export type SaveUserAdminMutationHookResult = ReturnType<typeof useSaveUserAdminMutation>;
 export type SaveUserAdminMutationResult = Apollo.MutationResult<SaveUserAdminMutation>;
 export type SaveUserAdminMutationOptions = Apollo.BaseMutationOptions<SaveUserAdminMutation, SaveUserAdminMutationVariables>;
-export const ApproveUserDocument = gql`
-    mutation ApproveUser($entity: UserEntityInput) {
-  saveUser(entity: $entity) {
-    id
-  }
-}
-    `;
-export type ApproveUserMutationFn = Apollo.MutationFunction<ApproveUserMutation, ApproveUserMutationVariables>;
-
-/**
- * __useApproveUserMutation__
- *
- * To run a mutation, you first call `useApproveUserMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useApproveUserMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [approveUserMutation, { data, loading, error }] = useApproveUserMutation({
- *   variables: {
- *      entity: // value for 'entity'
- *   },
- * });
- */
-export function useApproveUserMutation(baseOptions?: Apollo.MutationHookOptions<ApproveUserMutation, ApproveUserMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<ApproveUserMutation, ApproveUserMutationVariables>(ApproveUserDocument, options);
-      }
-export type ApproveUserMutationHookResult = ReturnType<typeof useApproveUserMutation>;
-export type ApproveUserMutationResult = Apollo.MutationResult<ApproveUserMutation>;
-export type ApproveUserMutationOptions = Apollo.BaseMutationOptions<ApproveUserMutation, ApproveUserMutationVariables>;
 export const DeleteUserDocument = gql`
-    mutation DeleteUser($userId: String) {
-  deleteUser(id: $userId)
+    mutation DeleteUser($id: String) {
+  deleteUser(id: $id)
 }
     `;
 export type DeleteUserMutationFn = Apollo.MutationFunction<DeleteUserMutation, DeleteUserMutationVariables>;
@@ -4549,7 +5052,7 @@ export type DeleteUserMutationFn = Apollo.MutationFunction<DeleteUserMutation, D
  * @example
  * const [deleteUserMutation, { data, loading, error }] = useDeleteUserMutation({
  *   variables: {
- *      userId: // value for 'userId'
+ *      id: // value for 'id'
  *   },
  * });
  */
@@ -4560,6 +5063,163 @@ export function useDeleteUserMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeleteUserMutationHookResult = ReturnType<typeof useDeleteUserMutation>;
 export type DeleteUserMutationResult = Apollo.MutationResult<DeleteUserMutation>;
 export type DeleteUserMutationOptions = Apollo.BaseMutationOptions<DeleteUserMutation, DeleteUserMutationVariables>;
+export const GetAddressDocument = gql`
+    query GetAddress($entity: AddressEntityInput) {
+  address: getAddress(entity: $entity) {
+    ...AddressField
+  }
+}
+    ${AddressFieldFragmentDoc}`;
+
+/**
+ * __useGetAddressQuery__
+ *
+ * To run a query within a React component, call `useGetAddressQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAddressQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAddressQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetAddressQuery(baseOptions?: Apollo.QueryHookOptions<GetAddressQuery, GetAddressQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAddressQuery, GetAddressQueryVariables>(GetAddressDocument, options);
+      }
+export function useGetAddressLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAddressQuery, GetAddressQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAddressQuery, GetAddressQueryVariables>(GetAddressDocument, options);
+        }
+export type GetAddressQueryHookResult = ReturnType<typeof useGetAddressQuery>;
+export type GetAddressLazyQueryHookResult = ReturnType<typeof useGetAddressLazyQuery>;
+export type GetAddressQueryResult = Apollo.QueryResult<GetAddressQuery, GetAddressQueryVariables>;
+export const GetAddressesDocument = gql`
+    query GetAddresses {
+  addresses: getAddresses {
+    result {
+      ...AddressField
+    }
+  }
+}
+    ${AddressFieldFragmentDoc}`;
+
+/**
+ * __useGetAddressesQuery__
+ *
+ * To run a query within a React component, call `useGetAddressesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAddressesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAddressesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAddressesQuery(baseOptions?: Apollo.QueryHookOptions<GetAddressesQuery, GetAddressesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAddressesQuery, GetAddressesQueryVariables>(GetAddressesDocument, options);
+      }
+export function useGetAddressesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAddressesQuery, GetAddressesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAddressesQuery, GetAddressesQueryVariables>(GetAddressesDocument, options);
+        }
+export type GetAddressesQueryHookResult = ReturnType<typeof useGetAddressesQuery>;
+export type GetAddressesLazyQueryHookResult = ReturnType<typeof useGetAddressesLazyQuery>;
+export type GetAddressesQueryResult = Apollo.QueryResult<GetAddressesQuery, GetAddressesQueryVariables>;
+export const GetAssignmentsDocument = gql`
+    query GetAssignments {
+  assignments: getAssignments {
+    result {
+      ...AssignmentField
+      user {
+        ...UserField
+        approved
+      }
+      questionnaire {
+        ...QuestionnaireField
+      }
+    }
+  }
+}
+    ${AssignmentFieldFragmentDoc}
+${UserFieldFragmentDoc}
+${QuestionnaireFieldFragmentDoc}`;
+
+/**
+ * __useGetAssignmentsQuery__
+ *
+ * To run a query within a React component, call `useGetAssignmentsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAssignmentsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAssignmentsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAssignmentsQuery(baseOptions?: Apollo.QueryHookOptions<GetAssignmentsQuery, GetAssignmentsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAssignmentsQuery, GetAssignmentsQueryVariables>(GetAssignmentsDocument, options);
+      }
+export function useGetAssignmentsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAssignmentsQuery, GetAssignmentsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAssignmentsQuery, GetAssignmentsQueryVariables>(GetAssignmentsDocument, options);
+        }
+export type GetAssignmentsQueryHookResult = ReturnType<typeof useGetAssignmentsQuery>;
+export type GetAssignmentsLazyQueryHookResult = ReturnType<typeof useGetAssignmentsLazyQuery>;
+export type GetAssignmentsQueryResult = Apollo.QueryResult<GetAssignmentsQuery, GetAssignmentsQueryVariables>;
+export const GetAssignmentDocument = gql`
+    query GetAssignment($entity: AssignmentEntityInput) {
+  assignment: getAssignment(entity: $entity) {
+    user {
+      ...UserField
+    }
+    questionnaire {
+      ...QuestionnaireField
+    }
+  }
+}
+    ${UserFieldFragmentDoc}
+${QuestionnaireFieldFragmentDoc}`;
+
+/**
+ * __useGetAssignmentQuery__
+ *
+ * To run a query within a React component, call `useGetAssignmentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAssignmentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAssignmentQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetAssignmentQuery(baseOptions?: Apollo.QueryHookOptions<GetAssignmentQuery, GetAssignmentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAssignmentQuery, GetAssignmentQueryVariables>(GetAssignmentDocument, options);
+      }
+export function useGetAssignmentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAssignmentQuery, GetAssignmentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAssignmentQuery, GetAssignmentQueryVariables>(GetAssignmentDocument, options);
+        }
+export type GetAssignmentQueryHookResult = ReturnType<typeof useGetAssignmentQuery>;
+export type GetAssignmentLazyQueryHookResult = ReturnType<typeof useGetAssignmentLazyQuery>;
+export type GetAssignmentQueryResult = Apollo.QueryResult<GetAssignmentQuery, GetAssignmentQueryVariables>;
 export const GetCompaniesDocument = gql`
     query GetCompanies($params: FilterSortPaginateInput) {
   getCompanies(params: $params) {
@@ -4782,11 +5442,19 @@ export const GetGroupsDocument = gql`
     query GetGroups {
   groups: getGroups {
     result {
-      ...GroupField
+      id
+      name
+      courses {
+        ...CourseField
+      }
+      users {
+        ...UserField
+      }
     }
   }
 }
-    ${GroupFieldFragmentDoc}`;
+    ${CourseFieldFragmentDoc}
+${UserFieldFragmentDoc}`;
 
 /**
  * __useGetGroupsQuery__
@@ -4815,12 +5483,20 @@ export type GetGroupsQueryHookResult = ReturnType<typeof useGetGroupsQuery>;
 export type GetGroupsLazyQueryHookResult = ReturnType<typeof useGetGroupsLazyQuery>;
 export type GetGroupsQueryResult = Apollo.QueryResult<GetGroupsQuery, GetGroupsQueryVariables>;
 export const GetGroupDocument = gql`
-    query GetGroup($groupId: String) {
-  group: getGroup(entity: {id: $groupId}) {
+    query GetGroup($entity: GroupEntityInput) {
+  group: getGroup(entity: $entity) {
     ...GroupField
+    users {
+      ...UserField
+    }
+    courses {
+      ...CourseField
+    }
   }
 }
-    ${GroupFieldFragmentDoc}`;
+    ${GroupFieldFragmentDoc}
+${UserFieldFragmentDoc}
+${CourseFieldFragmentDoc}`;
 
 /**
  * __useGetGroupQuery__
@@ -4834,7 +5510,7 @@ export const GetGroupDocument = gql`
  * @example
  * const { data, loading, error } = useGetGroupQuery({
  *   variables: {
- *      groupId: // value for 'groupId'
+ *      entity: // value for 'entity'
  *   },
  * });
  */
@@ -4849,6 +5525,47 @@ export function useGetGroupLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetGroupQueryHookResult = ReturnType<typeof useGetGroupQuery>;
 export type GetGroupLazyQueryHookResult = ReturnType<typeof useGetGroupLazyQuery>;
 export type GetGroupQueryResult = Apollo.QueryResult<GetGroupQuery, GetGroupQueryVariables>;
+export const GetGroupCoursesDocument = gql`
+    query GetGroupCourses($entity: GroupEntityInput, $year: Int) {
+  group: getGroup(entity: $entity) {
+    ...GroupField
+    courses {
+      ...CourseField
+      averageRating(year: $year)
+    }
+  }
+}
+    ${GroupFieldFragmentDoc}
+${CourseFieldFragmentDoc}`;
+
+/**
+ * __useGetGroupCoursesQuery__
+ *
+ * To run a query within a React component, call `useGetGroupCoursesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetGroupCoursesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetGroupCoursesQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *      year: // value for 'year'
+ *   },
+ * });
+ */
+export function useGetGroupCoursesQuery(baseOptions?: Apollo.QueryHookOptions<GetGroupCoursesQuery, GetGroupCoursesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetGroupCoursesQuery, GetGroupCoursesQueryVariables>(GetGroupCoursesDocument, options);
+      }
+export function useGetGroupCoursesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetGroupCoursesQuery, GetGroupCoursesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetGroupCoursesQuery, GetGroupCoursesQueryVariables>(GetGroupCoursesDocument, options);
+        }
+export type GetGroupCoursesQueryHookResult = ReturnType<typeof useGetGroupCoursesQuery>;
+export type GetGroupCoursesLazyQueryHookResult = ReturnType<typeof useGetGroupCoursesLazyQuery>;
+export type GetGroupCoursesQueryResult = Apollo.QueryResult<GetGroupCoursesQuery, GetGroupCoursesQueryVariables>;
 export const GetJobAdsAdminDocument = gql`
     query GetJobAdsAdmin($params: FilterSortPaginateInput) {
   getJobAds(params: $params) {
@@ -5212,42 +5929,77 @@ export function useGetOrganizerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetOrganizerQueryHookResult = ReturnType<typeof useGetOrganizerQuery>;
 export type GetOrganizerLazyQueryHookResult = ReturnType<typeof useGetOrganizerLazyQuery>;
 export type GetOrganizerQueryResult = Apollo.QueryResult<GetOrganizerQuery, GetOrganizerQueryVariables>;
-export const GetQuestionsDocument = gql`
-    query GetQuestions {
-  questions: getQuestions {
+export const GetPagesDocument = gql`
+    query GetPages {
+  pages: getPages {
     result {
-      ...QuestionField
+      ...PageField
     }
   }
 }
-    ${QuestionFieldFragmentDoc}`;
+    ${PageFieldFragmentDoc}`;
 
 /**
- * __useGetQuestionsQuery__
+ * __useGetPagesQuery__
  *
- * To run a query within a React component, call `useGetQuestionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetQuestionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetPagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetQuestionsQuery({
+ * const { data, loading, error } = useGetPagesQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGetQuestionsQuery(baseOptions?: Apollo.QueryHookOptions<GetQuestionsQuery, GetQuestionsQueryVariables>) {
+export function useGetPagesQuery(baseOptions?: Apollo.QueryHookOptions<GetPagesQuery, GetPagesQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetQuestionsQuery, GetQuestionsQueryVariables>(GetQuestionsDocument, options);
+        return Apollo.useQuery<GetPagesQuery, GetPagesQueryVariables>(GetPagesDocument, options);
       }
-export function useGetQuestionsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetQuestionsQuery, GetQuestionsQueryVariables>) {
+export function useGetPagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPagesQuery, GetPagesQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetQuestionsQuery, GetQuestionsQueryVariables>(GetQuestionsDocument, options);
+          return Apollo.useLazyQuery<GetPagesQuery, GetPagesQueryVariables>(GetPagesDocument, options);
         }
-export type GetQuestionsQueryHookResult = ReturnType<typeof useGetQuestionsQuery>;
-export type GetQuestionsLazyQueryHookResult = ReturnType<typeof useGetQuestionsLazyQuery>;
-export type GetQuestionsQueryResult = Apollo.QueryResult<GetQuestionsQuery, GetQuestionsQueryVariables>;
+export type GetPagesQueryHookResult = ReturnType<typeof useGetPagesQuery>;
+export type GetPagesLazyQueryHookResult = ReturnType<typeof useGetPagesLazyQuery>;
+export type GetPagesQueryResult = Apollo.QueryResult<GetPagesQuery, GetPagesQueryVariables>;
+export const GetPageDocument = gql`
+    query GetPage($entity: PageEntityInput) {
+  page: getPage(entity: $entity) {
+    ...PageField
+  }
+}
+    ${PageFieldFragmentDoc}`;
+
+/**
+ * __useGetPageQuery__
+ *
+ * To run a query within a React component, call `useGetPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPageQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetPageQuery(baseOptions?: Apollo.QueryHookOptions<GetPageQuery, GetPageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPageQuery, GetPageQueryVariables>(GetPageDocument, options);
+      }
+export function useGetPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPageQuery, GetPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPageQuery, GetPageQueryVariables>(GetPageDocument, options);
+        }
+export type GetPageQueryHookResult = ReturnType<typeof useGetPageQuery>;
+export type GetPageLazyQueryHookResult = ReturnType<typeof useGetPageLazyQuery>;
+export type GetPageQueryResult = Apollo.QueryResult<GetPageQuery, GetPageQueryVariables>;
 export const DeleteQuestionDocument = gql`
     mutation DeleteQuestion($questionId: String) {
   deleteQuestion(id: $questionId)
@@ -5279,6 +6031,87 @@ export function useDeleteQuestionMutation(baseOptions?: Apollo.MutationHookOptio
 export type DeleteQuestionMutationHookResult = ReturnType<typeof useDeleteQuestionMutation>;
 export type DeleteQuestionMutationResult = Apollo.MutationResult<DeleteQuestionMutation>;
 export type DeleteQuestionMutationOptions = Apollo.BaseMutationOptions<DeleteQuestionMutation, DeleteQuestionMutationVariables>;
+export const GetQuestionnairesDocument = gql`
+    query GetQuestionnaires {
+  questionnaires: getQuestionnaires {
+    result {
+      ...QuestionnaireField
+    }
+  }
+}
+    ${QuestionnaireFieldFragmentDoc}`;
+
+/**
+ * __useGetQuestionnairesQuery__
+ *
+ * To run a query within a React component, call `useGetQuestionnairesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetQuestionnairesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetQuestionnairesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetQuestionnairesQuery(baseOptions?: Apollo.QueryHookOptions<GetQuestionnairesQuery, GetQuestionnairesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetQuestionnairesQuery, GetQuestionnairesQueryVariables>(GetQuestionnairesDocument, options);
+      }
+export function useGetQuestionnairesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetQuestionnairesQuery, GetQuestionnairesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetQuestionnairesQuery, GetQuestionnairesQueryVariables>(GetQuestionnairesDocument, options);
+        }
+export type GetQuestionnairesQueryHookResult = ReturnType<typeof useGetQuestionnairesQuery>;
+export type GetQuestionnairesLazyQueryHookResult = ReturnType<typeof useGetQuestionnairesLazyQuery>;
+export type GetQuestionnairesQueryResult = Apollo.QueryResult<GetQuestionnairesQuery, GetQuestionnairesQueryVariables>;
+export const GetQuestionnaireDocument = gql`
+    query getQuestionnaire($entity: QuestionnaireEntityInput, $year: Int) {
+  questionnaire: getQuestionnaire(entity: $entity) {
+    ...QuestionnaireField
+    assignments {
+      ...AssignmentField
+    }
+    questions {
+      ...QuestionField
+      averageRating(year: $year)
+    }
+  }
+}
+    ${QuestionnaireFieldFragmentDoc}
+${AssignmentFieldFragmentDoc}
+${QuestionFieldFragmentDoc}`;
+
+/**
+ * __useGetQuestionnaireQuery__
+ *
+ * To run a query within a React component, call `useGetQuestionnaireQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetQuestionnaireQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetQuestionnaireQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *      year: // value for 'year'
+ *   },
+ * });
+ */
+export function useGetQuestionnaireQuery(baseOptions?: Apollo.QueryHookOptions<GetQuestionnaireQuery, GetQuestionnaireQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetQuestionnaireQuery, GetQuestionnaireQueryVariables>(GetQuestionnaireDocument, options);
+      }
+export function useGetQuestionnaireLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetQuestionnaireQuery, GetQuestionnaireQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetQuestionnaireQuery, GetQuestionnaireQueryVariables>(GetQuestionnaireDocument, options);
+        }
+export type GetQuestionnaireQueryHookResult = ReturnType<typeof useGetQuestionnaireQuery>;
+export type GetQuestionnaireLazyQueryHookResult = ReturnType<typeof useGetQuestionnaireLazyQuery>;
+export type GetQuestionnaireQueryResult = Apollo.QueryResult<GetQuestionnaireQuery, GetQuestionnaireQueryVariables>;
 export const GetRolesDocument = gql`
     query GetRoles {
   roles: getRoles {
@@ -5315,6 +6148,40 @@ export function useGetRolesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetRolesQueryHookResult = ReturnType<typeof useGetRolesQuery>;
 export type GetRolesLazyQueryHookResult = ReturnType<typeof useGetRolesLazyQuery>;
 export type GetRolesQueryResult = Apollo.QueryResult<GetRolesQuery, GetRolesQueryVariables>;
+export const GetSettingsDocument = gql`
+    query GetSettings {
+  settings: getSettings {
+    ...SettingField
+  }
+}
+    ${SettingFieldFragmentDoc}`;
+
+/**
+ * __useGetSettingsQuery__
+ *
+ * To run a query within a React component, call `useGetSettingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSettingsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetSettingsQuery(baseOptions?: Apollo.QueryHookOptions<GetSettingsQuery, GetSettingsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSettingsQuery, GetSettingsQueryVariables>(GetSettingsDocument, options);
+      }
+export function useGetSettingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSettingsQuery, GetSettingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSettingsQuery, GetSettingsQueryVariables>(GetSettingsDocument, options);
+        }
+export type GetSettingsQueryHookResult = ReturnType<typeof useGetSettingsQuery>;
+export type GetSettingsLazyQueryHookResult = ReturnType<typeof useGetSettingsLazyQuery>;
+export type GetSettingsQueryResult = Apollo.QueryResult<GetSettingsQuery, GetSettingsQueryVariables>;
 export const GetTemplatesAdminDocument = gql`
     query GetTemplatesAdmin($params: FilterSortPaginateInput) {
   getTemplates(params: $params) {
@@ -5534,11 +6401,47 @@ export function useGetUserTemplateAdminLazyQuery(baseOptions?: Apollo.LazyQueryH
 export type GetUserTemplateAdminQueryHookResult = ReturnType<typeof useGetUserTemplateAdminQuery>;
 export type GetUserTemplateAdminLazyQueryHookResult = ReturnType<typeof useGetUserTemplateAdminLazyQuery>;
 export type GetUserTemplateAdminQueryResult = Apollo.QueryResult<GetUserTemplateAdminQuery, GetUserTemplateAdminQueryVariables>;
-export const GetApprovedUsersDocument = gql`
-    query GetApprovedUsers {
-  approvedUsers: getUsers(
-    params: {expression: {entity: {operator: EQUAL, path: "approved", value: "true"}}}
-  ) {
+export const GetUserAdminDocument = gql`
+    query GetUserAdmin($id: String) {
+  user: getUser(entity: {id: $id}) {
+    id
+    roles {
+      ...RoleField
+    }
+  }
+}
+    ${RoleFieldFragmentDoc}`;
+
+/**
+ * __useGetUserAdminQuery__
+ *
+ * To run a query within a React component, call `useGetUserAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserAdminQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetUserAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetUserAdminQuery, GetUserAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserAdminQuery, GetUserAdminQueryVariables>(GetUserAdminDocument, options);
+      }
+export function useGetUserAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserAdminQuery, GetUserAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserAdminQuery, GetUserAdminQueryVariables>(GetUserAdminDocument, options);
+        }
+export type GetUserAdminQueryHookResult = ReturnType<typeof useGetUserAdminQuery>;
+export type GetUserAdminLazyQueryHookResult = ReturnType<typeof useGetUserAdminLazyQuery>;
+export type GetUserAdminQueryResult = Apollo.QueryResult<GetUserAdminQuery, GetUserAdminQueryVariables>;
+export const GetUsersAdminDocument = gql`
+    query GetUsersAdmin($params: FilterSortPaginateInput) {
+  users: getUsers(params: $params) {
     result {
       ...UserField
     }
@@ -5547,69 +6450,71 @@ export const GetApprovedUsersDocument = gql`
     ${UserFieldFragmentDoc}`;
 
 /**
- * __useGetApprovedUsersQuery__
+ * __useGetUsersAdminQuery__
  *
- * To run a query within a React component, call `useGetApprovedUsersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetApprovedUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetUsersAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUsersAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetApprovedUsersQuery({
+ * const { data, loading, error } = useGetUsersAdminQuery({
  *   variables: {
+ *      params: // value for 'params'
  *   },
  * });
  */
-export function useGetApprovedUsersQuery(baseOptions?: Apollo.QueryHookOptions<GetApprovedUsersQuery, GetApprovedUsersQueryVariables>) {
+export function useGetUsersAdminQuery(baseOptions?: Apollo.QueryHookOptions<GetUsersAdminQuery, GetUsersAdminQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetApprovedUsersQuery, GetApprovedUsersQueryVariables>(GetApprovedUsersDocument, options);
+        return Apollo.useQuery<GetUsersAdminQuery, GetUsersAdminQueryVariables>(GetUsersAdminDocument, options);
       }
-export function useGetApprovedUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetApprovedUsersQuery, GetApprovedUsersQueryVariables>) {
+export function useGetUsersAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUsersAdminQuery, GetUsersAdminQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetApprovedUsersQuery, GetApprovedUsersQueryVariables>(GetApprovedUsersDocument, options);
+          return Apollo.useLazyQuery<GetUsersAdminQuery, GetUsersAdminQueryVariables>(GetUsersAdminDocument, options);
         }
-export type GetApprovedUsersQueryHookResult = ReturnType<typeof useGetApprovedUsersQuery>;
-export type GetApprovedUsersLazyQueryHookResult = ReturnType<typeof useGetApprovedUsersLazyQuery>;
-export type GetApprovedUsersQueryResult = Apollo.QueryResult<GetApprovedUsersQuery, GetApprovedUsersQueryVariables>;
-export const GetRequestedUsersDocument = gql`
-    query GetRequestedUsers {
-  requestedUsers: getUsers(
-    params: {expression: {entity: {operator: EQUAL, path: "approved", value: "false"}}}
-  ) {
+export type GetUsersAdminQueryHookResult = ReturnType<typeof useGetUsersAdminQuery>;
+export type GetUsersAdminLazyQueryHookResult = ReturnType<typeof useGetUsersAdminLazyQuery>;
+export type GetUsersAdminQueryResult = Apollo.QueryResult<GetUsersAdminQuery, GetUsersAdminQueryVariables>;
+export const GetUsersListDocument = gql`
+    query GetUsersList($params: FilterSortPaginateInput) {
+  getUsers(params: $params) {
+    total
     result {
-      ...UserField
+      id
+      fullname
     }
   }
 }
-    ${UserFieldFragmentDoc}`;
+    `;
 
 /**
- * __useGetRequestedUsersQuery__
+ * __useGetUsersListQuery__
  *
- * To run a query within a React component, call `useGetRequestedUsersQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetRequestedUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetUsersListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUsersListQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetRequestedUsersQuery({
+ * const { data, loading, error } = useGetUsersListQuery({
  *   variables: {
+ *      params: // value for 'params'
  *   },
  * });
  */
-export function useGetRequestedUsersQuery(baseOptions?: Apollo.QueryHookOptions<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>) {
+export function useGetUsersListQuery(baseOptions?: Apollo.QueryHookOptions<GetUsersListQuery, GetUsersListQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>(GetRequestedUsersDocument, options);
+        return Apollo.useQuery<GetUsersListQuery, GetUsersListQueryVariables>(GetUsersListDocument, options);
       }
-export function useGetRequestedUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>) {
+export function useGetUsersListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUsersListQuery, GetUsersListQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>(GetRequestedUsersDocument, options);
+          return Apollo.useLazyQuery<GetUsersListQuery, GetUsersListQueryVariables>(GetUsersListDocument, options);
         }
-export type GetRequestedUsersQueryHookResult = ReturnType<typeof useGetRequestedUsersQuery>;
-export type GetRequestedUsersLazyQueryHookResult = ReturnType<typeof useGetRequestedUsersLazyQuery>;
-export type GetRequestedUsersQueryResult = Apollo.QueryResult<GetRequestedUsersQuery, GetRequestedUsersQueryVariables>;
+export type GetUsersListQueryHookResult = ReturnType<typeof useGetUsersListQuery>;
+export type GetUsersListLazyQueryHookResult = ReturnType<typeof useGetUsersListLazyQuery>;
+export type GetUsersListQueryResult = Apollo.QueryResult<GetUsersListQuery, GetUsersListQueryVariables>;
 export const ChatlistenerDocument = gql`
     subscription Chatlistener($token: String!) {
   addChatListener(token: $token) {
@@ -6278,6 +7183,7 @@ export const GetMeBasicDocument = gql`
     id
     fullname
     phone
+    password
     email
     profilePicture {
       id

@@ -1,0 +1,5 @@
+fragment PageField on PageEntity {
+  id
+  content
+  slug
+}

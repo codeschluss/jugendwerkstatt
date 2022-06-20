@@ -1,15 +1,14 @@
-import { EyeIcon, EyeOffIcon } from '@heroicons/react/outline';
-import { FC, forwardRef, ReactElement, useState } from 'react';
-import { useToggle } from '../../../../../hooks/useToggle';
-import { ButtonVariantsEnum } from '../../../../interfaces/enums/ButtonVariants.enum';
-import { Button } from '../../../atoms/Form/Button/Button';
-import { Input } from '../../../atoms/Form/Input/Input';
-import { Label } from '../../../atoms/Form/Label/Label';
-import { InputFieldProps } from '../InputField/InputField.props';
-import { PasswordFieldProps } from './PasswordField.props';
+import { EyeIcon, EyeOffIcon } from "@heroicons/react/outline";
+import { forwardRef, ReactElement } from "react";
+import { useToggle } from "../../../../../hooks/useToggle";
+import { ButtonVariantsEnum } from "../../../../interfaces/enums/ButtonVariants.enum";
+import { Button } from "../../../atoms/Form/Button/Button";
+import { Input } from "../../../atoms/Form/Input/Input";
+import { Label } from "../../../atoms/Form/Label/Label";
+import { PasswordFieldProps } from "./PasswordField.props";
 
-export const PasswordField = forwardRef<HTMLInputElement, InputFieldProps>(
-  ({ id, name, label, labelProps, ...rest }, ref): ReactElement => {
+export const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
+  ({ id, name, label, ...rest }, ref): ReactElement => {
     const {
       isToggled: isPasswordToggled,
       handleToggle: handlePasswordToggler,
@@ -17,12 +16,10 @@ export const PasswordField = forwardRef<HTMLInputElement, InputFieldProps>(
 
     return (
       <div className="input-field">
-        <Label {...labelProps} htmlFor={id || name}>
-          {label}
-        </Label>
+        <Label htmlFor={id || name}>{label}</Label>
         <Input
           {...rest}
-          {...(isPasswordToggled && { type: 'password' })}
+          {...(isPasswordToggled && { type: "password" })}
           id={id}
           name={name || id}
           iconRight={

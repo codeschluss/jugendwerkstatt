@@ -7,6 +7,7 @@ import {
 
 import { Table, Action, Panel } from "../../components/atoms";
 import { CustomTable } from "../../components/molecules";
+import { formatDate, formatDateTime } from "../../utils";
 
 const EventsListPage = (): ReactElement => {
   const navigate = useNavigate();
@@ -33,25 +34,22 @@ const EventsListPage = (): ReactElement => {
       action={{ to: "/admin/events/new", label: "Neues Event erstellen" }}
     >
       <CustomTable
-        headerData={[
-          "Eventname",
-          "Kategorie",
-          "Datum",
-          "Uhrzeit",
-          "Turnus",
-          "Aktionen",
-        ]}
+        headerData={["Eventname", "Kategorie", "Datum", "Uhrzeit", "Aktionen"]}
         bodyData={
           data?.getEvents?.result?.map((item) => (
             <Table.Row key={item?.id}>
               <Table.Data>{item?.name}</Table.Data>
               <Table.Data>{item?.category?.name}</Table.Data>
-              <Table.Data>{item?.schedules?.[0]?.startDate}</Table.Data>
-              <Table.Data>{item?.schedules?.[0]?.endDate}</Table.Data>
-              <Table.Data>{item?.schedules?.[0]?.endDate}</Table.Data>
+              <Table.Data>
+                {formatDate(item?.schedules?.[0]?.startDate)}
+              </Table.Data>
+              <Table.Data>
+                {`${formatDateTime(
+                  item?.schedules?.[0]?.startDate
+                )} - ${formatDateTime(item?.schedules?.[0]?.startDate)} Uhr`}
+              </Table.Data>
               <Table.Data>
                 <Action
-                  onSend={() => {}}
                   onUpdate={handleUpdateById(item?.id || "")}
                   onDelete={handleDeleteById(item?.id || "")}
                 />

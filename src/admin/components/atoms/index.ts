@@ -1,3 +1,4 @@
+export * from './Badge/Badge';
 export * from './Table/TableBody';
 export * from './Table/TableData';
 export * from './Table/TableHeader';
@@ -12,5 +13,6 @@ export * from './Form/Switch/Switch';
 export * from './Panel/Panel';
 export * from './ListItem/ListItem';
 export * from './Icons';
+export * from './DragList/DragHelpers';
 
 export * from './ListItem/ListItem.props';

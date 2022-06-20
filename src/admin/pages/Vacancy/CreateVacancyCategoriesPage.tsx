@@ -1,19 +1,19 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { ReactElement, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { ReactElement, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { Accordion, FormActions, InputField } from "../../components/molecules";
+import { Accordion, FormActions, InputField } from '../../components/molecules';
 import {
   SketchColor,
   VacancyCategoryFormInputs,
-} from "../../components/organisms";
-import { VacancyCategoryFormSchema } from "../../validations";
+} from '../../components/organisms';
+import { VacancyCategoryFormSchema } from '../../validations';
 import {
   useGetJobTypeQuery,
   useSaveJobTypeMutation,
-} from "../../../GraphQl/graphql";
-import { gqlVar } from "../../utils";
+} from '../../../GraphQl/graphql';
+import { gqlVar } from '../../utils';
 
 const CreateVacancyCategoriesPage = (): ReactElement => {
   const { id } = useParams();
@@ -36,7 +36,7 @@ const CreateVacancyCategoriesPage = (): ReactElement => {
   });
 
   const [saveJobType] = useSaveJobTypeMutation({
-    onCompleted: () => navigate("/admin/job-announcements/categories"),
+    onCompleted: () => navigate('/admin/job-announcements/categories'),
   });
 
   const handleOnSubmit = (data: VacancyCategoryFormInputs) => {
@@ -45,13 +45,11 @@ const CreateVacancyCategoriesPage = (): ReactElement => {
     );
   };
 
-  const handleReset = () => reset();
-
   useEffect(() => {
     if (!!getJobType) {
       reset({
-        name: getJobType?.name || "",
-        color: getJobType?.color || "",
+        name: getJobType?.name || '',
+        color: getJobType?.color || '',
       });
     }
   }, [getJobType, reset]);
@@ -70,22 +68,19 @@ const CreateVacancyCategoriesPage = (): ReactElement => {
             id="name"
             label="Kategoriename"
             placeholder="Metallhandwerk"
-            {...register("name")}
+            {...register('name')}
             error={errors?.name?.message}
           />
           <InputField
             id="color"
             label="Farbe"
             placeholder="#FFFFFF"
-            {...register("color")}
+            {...register('color')}
             error={errors?.color?.message}
           />
         </div>
       </Accordion>
-      <FormActions
-        onReset={handleReset}
-        onSubmit={handleSubmit(handleOnSubmit)}
-      />
+      <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
     </form>
   );
 };

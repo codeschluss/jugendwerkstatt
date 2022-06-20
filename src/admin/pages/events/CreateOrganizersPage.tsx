@@ -1,19 +1,19 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { ReactElement, useEffect } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { ReactElement, useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import {
   useGetOrganizerQuery,
   useSaveOrganizerMutation,
-} from "../../../GraphQl/graphql";
-import { Button } from "../../components/atoms";
-import { Accordion, FormActions } from "../../components/molecules";
+} from '../../../GraphQl/graphql';
+import { Button } from '../../components/atoms';
+import { Accordion, FormActions } from '../../components/molecules';
 import {
   BaseOrganizerForm,
   OrganizerFormInputs,
-} from "../../components/organisms";
-import { OrganizerFormSchema } from "../../validations";
+} from '../../components/organisms';
+import { OrganizerFormSchema } from '../../validations';
 
 const CreateOrganizersPage = (): ReactElement => {
   const { id } = useParams();
@@ -31,7 +31,7 @@ const CreateOrganizersPage = (): ReactElement => {
   });
 
   const [saveEventOrganizer] = useSaveOrganizerMutation({
-    onCompleted: () => navigate("/admin/events/organizers"),
+    onCompleted: () => navigate('/admin/events/organizers'),
   });
 
   const handleOnSubmit = (data: OrganizerFormInputs) => {
@@ -45,16 +45,15 @@ const CreateOrganizersPage = (): ReactElement => {
     });
   };
 
-  const handleReset = () => reset();
   const handleTrigger = () => trigger();
 
   useEffect(() => {
     if (!!organizerData?.organizer) {
       reset({
-        mail: organizerData?.organizer?.mail || "",
-        name: organizerData?.organizer?.name || "",
-        phone: organizerData?.organizer?.phone || "",
-        website: organizerData?.organizer?.website || "",
+        mail: organizerData?.organizer?.mail || '',
+        name: organizerData?.organizer?.name || '',
+        phone: organizerData?.organizer?.phone || '',
+        website: organizerData?.organizer?.website || '',
       });
     }
   }, [organizerData, reset]);
@@ -70,10 +69,7 @@ const CreateOrganizersPage = (): ReactElement => {
             </Button>
           </>
         </Accordion>
-        <FormActions
-          onReset={handleReset}
-          onSubmit={handleSubmit(handleOnSubmit)}
-        />
+        <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
       </form>
     </FormProvider>
   );

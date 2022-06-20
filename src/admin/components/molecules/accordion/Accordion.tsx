@@ -1,8 +1,8 @@
-import { FC, useState } from "react";
-import { AccordionItem } from "./AccordionItem";
-import { AccordionProps, AccordionComposition } from "./Accordion.props";
-import { If } from "../../../../shared/components/If/If";
-import { twClsx } from "../../../utils";
+import { FC, useState } from 'react';
+import { AccordionItem } from './AccordionItem';
+import { AccordionProps, AccordionComposition } from './Accordion.props';
+import { If } from '../../../../shared/components/If/If';
+import { twClsx } from '../../../utils';
 
 export const Accordion: FC<AccordionProps> & AccordionComposition = ({
   title,
@@ -22,10 +22,10 @@ export const Accordion: FC<AccordionProps> & AccordionComposition = ({
   const handleAccordion = () => setOpenAccordion(!openAccordion);
 
   return (
-    <div className="grid md:grid-cols-3 gap-4 my-2 md:my-4">
+    <div className="grid gap-4 my-2 md:grid-cols-3 md:my-4">
       <div
         className={twClsx(
-          "flex justify-start flex-col bg-white rounded-sm p-4 col-span-2",
+          'flex justify-start flex-col bg-white rounded-sm p-4 col-span-2',
           className
         )}
       >
@@ -42,7 +42,12 @@ export const Accordion: FC<AccordionProps> & AccordionComposition = ({
         </If>
       </div>
       {showSide && (
-        <div className={twClsx("bg-white rounded-sm h-fit", sideClassName)}>
+        <div
+          className={twClsx(
+            'bg-white max-w-md rounded-sm h-fit',
+            sideClassName
+          )}
+        >
           <h3
             role="button"
             onClick={handleAccordion}

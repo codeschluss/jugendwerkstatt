@@ -7,3 +7,11 @@ export const FormsFormSchema = Joi.object({
   }),
   description: Joi.string().required().label("Beschreibung"),
 });
+export const UserFormsFormSchema = Joi.object({
+  baseData: Joi.object({
+    name: Joi.string().required().label("Benutzerformulare"),
+    category: Joi.string().required().label("Kategoriename"),
+    user: Joi.string().required().label("Nutzername"),
+  }),
+  description: Joi.string().required().label("Beschreibung"),
+});

@@ -1,8 +1,8 @@
 export interface GeneralAddressFormProps {
   street: string;
-  city: string;
+  place: string;
   houseNumber: string;
-  lat: number;
-  long: number;
-  postalCode: number;
+  latitude: number;
+  longitude: number;
+  postalCode: string;
 }
