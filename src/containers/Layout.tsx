@@ -54,7 +54,7 @@ const Layout: React.FC = ({ children }) => {
       }`}
     >
       <Feedback />
-      <Evaluation visible={true} />
+      <Evaluation visible={false} />
       {feedback?.data?.me?.feedbacks?.map(
         (el: FeedbackEntity | undefined | null) => {
           if (el?.rating === null) {
