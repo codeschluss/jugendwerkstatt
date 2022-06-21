@@ -22,8 +22,6 @@ const Router = () => {
   const user =
     localStorage.getItem('accessToken') &&
     JSON.parse(atob(localStorage.getItem('accessToken')?.split('.')[1] || ''));
-
-  console.log(user, user === UserRole.ADMIN);
     
   return (
     <BrowserRouter>
