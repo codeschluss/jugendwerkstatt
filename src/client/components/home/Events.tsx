@@ -1,6 +1,7 @@
 import {
   EventEntity,
   useAddEventFavoriteMutation,
+  useDeleteEventFavoriteMutation,
   useGetEventsQuery,
   useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
@@ -18,6 +19,8 @@ const Events: React.FC<EventsProps> = () => {
     EventEntity
   ];
 
+  const [deleteEventFavorite] = useDeleteEventFavoriteMutation();
+
   const favorites = useGetMeFavoritesQuery({});
   const refetchQueries = () => {
     useEvents.refetch();
@@ -34,6 +37,7 @@ const Events: React.FC<EventsProps> = () => {
 
           return (
             <SlideCard
+              shareUrl={`event/${el.id}`}
               route={`/event/${el.id}`}
               key={el?.id}
               isFavorite={hasId}
@@ -45,6 +49,13 @@ const Events: React.FC<EventsProps> = () => {
                 eventFavorite({
                   variables: {
                     jobAdId: el.id,
+                  },
+                }).then(() => refetchQueries())
+              }
+              removeFavorite={() =>
+                deleteEventFavorite({
+                  variables: {
+                    eventId: el.id,
                   },
                 }).then(() => refetchQueries())
               }

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import {
   useAddEventFavoriteMutation,
   useAddJobAdFavoriteMutation,
+  useDeleteJobAdFavoriteMutation,
   useGetJobAdQuery,
   useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
@@ -22,6 +23,7 @@ export const SingleJobAdd = () => {
   });
 
   const [jobFavorites] = useAddJobAdFavoriteMutation();
+  const [deleteJobAdFavorite] = useDeleteJobAdFavoriteMutation();
 
   const favorites = useGetMeFavoritesQuery({
     fetchPolicy: "network-only",
@@ -51,6 +53,13 @@ export const SingleJobAdd = () => {
             }
             setFavorite={() =>
               jobFavorites({
+                variables: {
+                  jobAdId: jobsQuery?.data?.getJobAd?.id,
+                },
+              }).then(() => refetchQueries())
+            }
+            removeFavorite={() =>
+              deleteJobAdFavorite({
                 variables: {
                   jobAdId: jobsQuery?.data?.getJobAd?.id,
                 },

@@ -1958,6 +1958,7 @@ export type Query = {
   getUsers?: Maybe<PageableList_UserEntity>;
   lookupAddress?: Maybe<AddressEntity>;
   me?: Maybe<UserEntity>;
+  search?: Maybe<Array<Maybe<SearchDto>>>;
 };
 
 
@@ -2356,6 +2357,12 @@ export type QueryLookupAddressArgs = {
   entity?: InputMaybe<AddressEntityInput>;
 };
 
+
+/** Query root */
+export type QuerySearchArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
 export type QueryConjunctionInput = {
   operands?: InputMaybe<Array<InputMaybe<QueryExpressionInput>>>;
   operator?: InputMaybe<ConjunctionOperator>;
@@ -2527,6 +2534,20 @@ export type ScheduleEntityInput = {
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   startDate?: InputMaybe<Scalars['OffsetDateTime']>;
 };
+
+export type SearchDto = {
+  __typename?: 'SearchDto';
+  content?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  type?: Maybe<SearchResultType>;
+};
+
+export enum SearchResultType {
+  Event = 'event',
+  JobAd = 'jobAd',
+  Template = 'template'
+}
 
 export type SettingsEntity = {
   __typename?: 'SettingsEntity';
@@ -3214,6 +3235,20 @@ export type CreateTokenMutationVariables = Exact<{
 
 
 export type CreateTokenMutation = { __typename?: 'Mutation', createToken?: { __typename?: 'TokenDto', access?: string | null, refresh?: string | null } | null };
+
+export type DeleteEventFavoriteMutationVariables = Exact<{
+  eventId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteEventFavoriteMutation = { __typename?: 'Mutation', deleteEventFavorite?: { __typename?: 'UserEntity', id?: string | null } | null };
+
+export type DeleteJobAdFavoriteMutationVariables = Exact<{
+  jobAdId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteJobAdFavoriteMutation = { __typename?: 'Mutation', deleteJobAdFavorite?: { __typename?: 'UserEntity', id?: string | null } | null };
 
 export type GetChatQueryVariables = Exact<{
   entity?: InputMaybe<ChatEntityInput>;
@@ -5790,6 +5825,72 @@ export function useCreateTokenMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateTokenMutationHookResult = ReturnType<typeof useCreateTokenMutation>;
 export type CreateTokenMutationResult = Apollo.MutationResult<CreateTokenMutation>;
 export type CreateTokenMutationOptions = Apollo.BaseMutationOptions<CreateTokenMutation, CreateTokenMutationVariables>;
+export const DeleteEventFavoriteDocument = gql`
+    mutation DeleteEventFavorite($eventId: String) {
+  deleteEventFavorite(eventId: $eventId) {
+    id
+  }
+}
+    `;
+export type DeleteEventFavoriteMutationFn = Apollo.MutationFunction<DeleteEventFavoriteMutation, DeleteEventFavoriteMutationVariables>;
+
+/**
+ * __useDeleteEventFavoriteMutation__
+ *
+ * To run a mutation, you first call `useDeleteEventFavoriteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteEventFavoriteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteEventFavoriteMutation, { data, loading, error }] = useDeleteEventFavoriteMutation({
+ *   variables: {
+ *      eventId: // value for 'eventId'
+ *   },
+ * });
+ */
+export function useDeleteEventFavoriteMutation(baseOptions?: Apollo.MutationHookOptions<DeleteEventFavoriteMutation, DeleteEventFavoriteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteEventFavoriteMutation, DeleteEventFavoriteMutationVariables>(DeleteEventFavoriteDocument, options);
+      }
+export type DeleteEventFavoriteMutationHookResult = ReturnType<typeof useDeleteEventFavoriteMutation>;
+export type DeleteEventFavoriteMutationResult = Apollo.MutationResult<DeleteEventFavoriteMutation>;
+export type DeleteEventFavoriteMutationOptions = Apollo.BaseMutationOptions<DeleteEventFavoriteMutation, DeleteEventFavoriteMutationVariables>;
+export const DeleteJobAdFavoriteDocument = gql`
+    mutation DeleteJobAdFavorite($jobAdId: String) {
+  deleteJobAdFavorite(jobAdId: $jobAdId) {
+    id
+  }
+}
+    `;
+export type DeleteJobAdFavoriteMutationFn = Apollo.MutationFunction<DeleteJobAdFavoriteMutation, DeleteJobAdFavoriteMutationVariables>;
+
+/**
+ * __useDeleteJobAdFavoriteMutation__
+ *
+ * To run a mutation, you first call `useDeleteJobAdFavoriteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteJobAdFavoriteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteJobAdFavoriteMutation, { data, loading, error }] = useDeleteJobAdFavoriteMutation({
+ *   variables: {
+ *      jobAdId: // value for 'jobAdId'
+ *   },
+ * });
+ */
+export function useDeleteJobAdFavoriteMutation(baseOptions?: Apollo.MutationHookOptions<DeleteJobAdFavoriteMutation, DeleteJobAdFavoriteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteJobAdFavoriteMutation, DeleteJobAdFavoriteMutationVariables>(DeleteJobAdFavoriteDocument, options);
+      }
+export type DeleteJobAdFavoriteMutationHookResult = ReturnType<typeof useDeleteJobAdFavoriteMutation>;
+export type DeleteJobAdFavoriteMutationResult = Apollo.MutationResult<DeleteJobAdFavoriteMutation>;
+export type DeleteJobAdFavoriteMutationOptions = Apollo.BaseMutationOptions<DeleteJobAdFavoriteMutation, DeleteJobAdFavoriteMutationVariables>;
 export const GetChatDocument = gql`
     query GetChat($entity: ChatEntityInput) {
   getChat(entity: $entity) {

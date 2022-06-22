@@ -1,28 +1,95 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { EventEntity, useGetEventsQuery } from "../../../GraphQl/graphql";
+import React, {
+  FunctionComponent,
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+} from "react";
+import { MapContainer, TileLayer, Marker, Popup, Tooltip } from "react-leaflet";
+import {
+  ConjunctionOperator,
+  EventEntity,
+  QueryOperator,
+  useAddEventFavoriteMutation,
+  useDeleteEventFavoriteMutation,
+  useGetEventsQuery,
+  useGetMeFavoritesQuery,
+} from "../../../GraphQl/graphql";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "./style.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import SwiperCore, { Virtual } from "swiper";
+import { API_URL } from "../../../config/app";
+import { getHour } from "../../../shared/utils/date/getHour";
+import { MapSocial } from "./MapSocial";
+import FilterContext from "../../../contexts/FilterContext";
+
 SwiperCore.use([Virtual]);
 
 const Map: FunctionComponent = () => {
   const [allEvents, setAllEvents] = useState<any>();
-  const [swiperRef, setSwiperRef] = useState<any>(null);
+  const [selectedEvent, setSelectedEvent] = useState<
+    EventEntity | null | undefined
+  >();
 
-  const result = useGetEventsQuery({
-    variables: {
-      params: {
-        //FilterSortPaginate fields
+  const { category, dates } = useContext(FilterContext);
+
+  const filterOperands: any = [];
+
+  category &&
+    filterOperands.push({
+      entity: {
+        operator: QueryOperator.Equal,
+        path: "category.id",
+        value: category?.id,
       },
-    },
-  });
+    });
 
-  const slideTo = (index: any) => {
-    swiperRef.slideTo(index - 1, 0);
+  dates.startDate &&
+    filterOperands.push({
+      entity: {
+        operator: QueryOperator.GreaterOrEqual,
+        path: "events.schedules.startDate",
+        value: dates?.startDate?.$d,
+      },
+    });
+
+  dates.endDate &&
+    filterOperands.push({
+      entity: {
+        operator: QueryOperator.LessOrEqual,
+        path: "events.schedules.endDate",
+        value: dates?.endDate?.$d,
+      },
+    });
+
+  const result = useGetEventsQuery(
+    filterOperands &&
+      filterOperands.length && {
+        fetchPolicy: "network-only",
+        variables: {
+          params: {
+            expression: {
+              conjunction: {
+                operator: ConjunctionOperator.And,
+                operands: filterOperands,
+              },
+            },
+          },
+        },
+      }
+  );
+
+  const [eventFavorite] = useAddEventFavoriteMutation({});
+
+  const [deleteEventFavorite] = useDeleteEventFavoriteMutation();
+
+  const favorites = useGetMeFavoritesQuery({});
+  const refetchQueries = () => {
+    result.refetch();
+    favorites.refetch();
   };
 
   useEffect(() => {
@@ -30,8 +97,27 @@ const Map: FunctionComponent = () => {
     setAllEvents(events);
   }, [result.data?.getEvents?.result, allEvents]);
 
+  const theDate = new Date(selectedEvent?.nextSchedule?.startDate);
+  const year = theDate.getFullYear();
+  const month = theDate.getMonth();
+  const day = theDate.getDate();
+
+  const weekDays = [
+    "Sonntag",
+    "Montag",
+    "Dienstag",
+    "Mittwoch",
+    "Donnerstag",
+    "Freitag",
+    "Samstag",
+  ];
+  const weekDay = weekDays[theDate.getDay()];
+
+  const checkId = (obj: any) => obj.id === selectedEvent?.id;
+  const hasId = favorites?.data?.me?.favoriteEvents?.some(checkId);
+
   return (
-    <div>
+    <div className="overflow-hidden relative">
       {allEvents && (
         <div className="map">
           <MapContainer
@@ -46,43 +132,78 @@ const Map: FunctionComponent = () => {
               url="https://api.maptiler.com/maps/openstreetmap/{z}/{x}/{y}@2x.jpg?key=MjiCJwnWXgOykin9V6Np"
             />
 
-            {allEvents?.map((event: any, index: number) => {
-              return (
-                <div key={event.id} onClick={() => slideTo(index)}>
-                  <Marker
-                    position={[event.address.latitude, event.address.longitude]}
-                  >
-                    <Popup>
-                      <p>Stadt : {event.address.place}</p>
-                      <p>Straße : {event.address.street}</p>
-                      <p>Postleitzahl: {event.address.postalCode}</p>
-                    </Popup>
-                  </Marker>
-                </div>
-              );
-            })}
-          </MapContainer>
-
-          <div className="slider">
-            <Swiper
-              onSwiper={setSwiperRef}
-              modules={[Virtual]}
-              spaceBetween={0}
-              slidesPerView={1.5}
-            >
-              {allEvents?.map((el: EventEntity, index: number) => {
+            {allEvents
+              ?.filter(
+                (event: EventEntity | undefined | null) => event?.nextSchedule
+              )
+              .map((event: any, index: number) => {
                 return (
-                  <SwiperSlide key={el.id}>
-                    <div className="w-full h-32  bottom-0 z-50">
-                      <img
-                        src={`http://localhost:8061/api/media/${el.titleImage?.id}`}
-                        alt=""
-                      />
-                    </div>
-                  </SwiperSlide>
+                  <div key={event.id}>
+                    <Marker
+                      eventHandlers={{
+                        click: () => setSelectedEvent(event),
+                      }}
+                      position={[
+                        event.address.latitude,
+                        event.address.longitude,
+                      ]}
+                    >
+                      <Tooltip>
+                        <p>Stadt : {event.address.place}</p>
+                        <p>Straße : {event.address.street}</p>
+                        <p>Postleitzahl: {event.address.postalCode}</p>
+                      </Tooltip>
+                    </Marker>
+                  </div>
                 );
               })}
-            </Swiper>
+          </MapContainer>
+
+          <div
+            className={`absolute bg-white transform-gpu transition-all duration-200 ${
+              selectedEvent ? "-bottom-0 md:-left-0" : "-bottom-64 md:left-full"
+            }  h-64 z-10 w-full md:w-1/3 p-3`}
+          >
+            <div className="flex justify-between items-start">
+              <div className="w-1/2 md:w-1/2">
+                {" "}
+                <img
+                  alt={selectedEvent?.name || ""}
+                  className="object-cover w-full h-full rounded-md shadow-md  inset-0"
+                  src={`${API_URL}media/${selectedEvent?.titleImage?.id}`}
+                />
+              </div>
+              <div className="mr-2 flex flex-col items-end">
+                <p className="text-base">{selectedEvent?.name}</p>
+                <p className="text-sm">{`${weekDay}, ${day}.${month}.${year}`}</p>
+                <p className="text-sm">
+                  {`${getHour(
+                    selectedEvent?.nextSchedule?.startDate
+                  )}${" Uhr"}`}
+                </p>
+                <MapSocial
+                  url={`event/${selectedEvent?.id}`}
+                  isFavorite={hasId}
+                  setFavorite={() =>
+                    eventFavorite({
+                      variables: {
+                        jobAdId: selectedEvent?.id,
+                      },
+                    }).then(() => refetchQueries())
+                  }
+                  removeFavorite={() =>
+                    deleteEventFavorite({
+                      variables: {
+                        eventId: selectedEvent?.id,
+                      },
+                    }).then(() => refetchQueries())
+                  }
+                />
+              </div>
+            </div>
+            <p className="text-sm md:text-base mt-1 overflow-auto">
+              {selectedEvent?.description}
+            </p>
           </div>
         </div>
       )}

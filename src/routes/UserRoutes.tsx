@@ -1,71 +1,224 @@
 import { Route, Routes } from "react-router-dom";
+import Map from "../client/components/map";
 import Calls from "../client/components/messenger/overview/calls";
 import Chats from "../client/components/messenger/overview/chats";
 import Contacts from "../client/components/messenger/overview/contacts";
-import Layout from "../containers/Layout";
-import Forms from "../client/pages/forms";
-import Templates from "../client/pages/forms/Templates";
-import TemplateEdit from "../client/pages/forms/TemplateEdit";
-import Map from "../client/components/map";
+import RegisteredSuccessfully from "../client/components/register/success/registeredSuccessfully";
+import JobDetails from "../client/components/singleJobAdd";
+import LoginPage from "../client/pages/authentication/LoginPage";
+import RegisterPage from "../client/pages/authentication/Register";
 import EventDetail from "../client/pages/eventDetail";
-import MediaLibrary from "../client/pages/mediaLibrary";
+import Events from "../client/pages/events";
 import EventsCalendar from "../client/pages/eventsCalendar";
 import EventsTime from "../client/pages/eventsTime";
-import Chat from "../client/pages/messenger/Chat";
-import TemplateView from "../client/pages/forms/TemplateView";
-import JobDetails from "../client/components/singleJobAdd";
 import Favorites from "../client/pages/favorites";
-import Events from "../client/pages/events";
-import Jobs from "../client/pages/jobs";
-import PushNotificationsContainer from "../client/pages/capacitor";
-import ProfileSettings from "../client/pages/Profile/ProfileSettings";
-import PersonalData from "../client/pages/Profile/PersonalData";
-import ChangePassword from "../client/pages/Profile/ChangePassword";
+import Forms from "../client/pages/forms";
+import TemplateEdit from "../client/pages/forms/TemplateEdit";
+import Templates from "../client/pages/forms/Templates";
+import TemplateView from "../client/pages/forms/TemplateView";
 import UploadData from "../client/pages/forms/UploadData";
+import Jobs from "../client/pages/jobs";
+import MediaLibrary from "../client/pages/mediaLibrary";
+import Messenger from "../client/pages/messenger";
+import Chat from "../client/pages/messenger/Chat";
+import ChangePassword from "../client/pages/Profile/ChangePassword";
+import PersonalData from "../client/pages/Profile/PersonalData";
 import ProfileImageUpload from "../client/pages/Profile/ProfileImageUpload";
-import Homepage from "../client/components/home/Homepage";
-import { RequireAuthRoute } from "../shared/components/RequireAuthRoute/RequireAuthRoute";
+import ProfileSettings from "../client/pages/Profile/ProfileSettings";
+import Protected from "../client/pages/Protected";
+import AlreadyVerifiedUser from "../client/pages/verify/AlreadyVerifiedUser";
+import ApprovalPending from "../client/pages/verify/ApprovalPending";
+import ReVerifyUser from "../client/pages/verify/ReVerifyUser";
+import ToVerifyUser from "../client/pages/verify/ToVerifyUser";
+import ForgotPassword from "../shared/components/authentication/forgotPassword";
+import Email from "../shared/components/authentication/forgotPassword/Email";
+import Password from "../shared/components/authentication/forgotPassword/Password";
 
-export const UserRoutes = () => {
-  return (
+export const UserRoutes = () => (
+  <>
     <Routes>
-      <Route element={<RequireAuthRoute />}>
-        <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/messenger" element={<PushNotificationsContainer />}>
-            <Route path="chats" element={<Chats />} />
-            <Route path="calls" element={<Calls />} />
-            <Route path="contacts" element={<Contacts />} />
-          </Route>
-
-          <Route path="/messenger/chat/:id" element={<Chat />} />
-          <Route path="/event/:id" element={<EventDetail />} />
-          <Route path="/job-ad/:id" element={<JobDetails />} />
-
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/jobs" element={<Jobs />} />
-          <Route path="/profile" element={<ProfileSettings />} />
-          <Route path="/profile-personal" element={<PersonalData />} />
-          <Route path="/profile-password" element={<ChangePassword />} />
-          <Route
-            path="/profile-upload-picture"
-            element={<ProfileImageUpload />}
-          />
-
-          <Route path="/upload-file" element={<UploadData />} />
-          <Route path="/map" element={<Map />} />
-          <Route path="/MediaLibrary" element={<MediaLibrary />} />
-          <Route path="/EventsCalendar" element={<EventsCalendar />} />
-          <Route path="/EventsTime" element={<EventsTime />} />
-          <Route path="/Forms" element={<Forms />} />
-          <Route path="/Forms/Templates" element={<Templates />} />
-          <Route path="/Forms/Templates/:id" element={<TemplateView />} />
-          <Route path="/Forms/Templates/Edit/:id" element={<TemplateEdit />} />
-
-          <Route path="*" element={<h1>Page not found!</h1>} />
-        </Route>
+      <Route
+        path="messenger"
+        element={
+          <Protected>
+            <Messenger />
+          </Protected>
+        }
+      >
+        <Route
+          path="chats"
+          element={
+            <Protected>
+              <Chats />
+            </Protected>
+          }
+        />
+        <Route
+          path="calls"
+          element={
+            <Protected>
+              <Calls />
+            </Protected>
+          }
+        />
+        <Route
+          path="contacts"
+          element={
+            <Protected>
+              <Contacts />
+            </Protected>
+          }
+        />
+        <Route
+          path="chat/:id"
+          element={
+            <Protected>
+              <Chat />
+            </Protected>
+          }
+        />
       </Route>
+
+      <Route
+        path="/event/:id"
+        element={
+          <Protected>
+            <EventDetail />
+          </Protected>
+        }
+      />
+      <Route
+        path="/job-ad/:id"
+        element={
+          <Protected>
+            <JobDetails />
+          </Protected>
+        }
+      />
+
+      <Route
+        path="/favorites"
+        element={
+          <Protected>
+            <Favorites />
+          </Protected>
+        }
+      />
+      <Route
+        path="/events"
+        element={
+          <Protected>
+            <Events />
+          </Protected>
+        }
+      />
+      <Route
+        path="/jobs"
+        element={
+          <Protected>
+            <Jobs />
+          </Protected>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <Protected>
+            <ProfileSettings />
+          </Protected>
+        }
+      />
+      <Route
+        path="/profile-personal"
+        element={
+          <Protected>
+            <PersonalData />
+          </Protected>
+        }
+      />
+      <Route
+        path="/profile-password"
+        element={
+          <Protected>
+            <ChangePassword />
+          </Protected>
+        }
+      />
+      <Route
+        path="/profile-upload-picture"
+        element={
+          <Protected>
+            <ProfileImageUpload />
+          </Protected>
+        }
+      />
+
+      <Route path="/upload-file" element={<UploadData />} />
+
+      <Route
+        path="/map"
+        element={
+          <Protected>
+            <Map />
+          </Protected>
+        }
+      />
+      <Route
+        path="/MediaLibrary"
+        element={
+          <Protected>
+            <MediaLibrary />
+          </Protected>
+        }
+      />
+      <Route
+        path="/EventsCalendar"
+        element={
+          <Protected>
+            <EventsCalendar />
+          </Protected>
+        }
+      />
+      <Route
+        path="/EventsTime"
+        element={
+          <Protected>
+            <EventsTime />
+          </Protected>
+        }
+      />
+      <Route
+        path="/Forms"
+        element={
+          <Protected>
+            <Forms />
+          </Protected>
+        }
+      />
+      <Route
+        path="/Forms/Templates"
+        element={
+          <Protected>
+            <Templates />
+          </Protected>
+        }
+      />
+      <Route
+        path="/Forms/Templates/:id"
+        element={
+          <Protected>
+            <TemplateView />
+          </Protected>
+        }
+      />
+      <Route
+        path="/Forms/Templates/Edit/:id"
+        element={
+          <Protected>
+            <TemplateEdit />
+          </Protected>
+        }
+      />
     </Routes>
-  );
-};
+  </>
+);

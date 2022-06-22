@@ -1,6 +1,7 @@
 import {
   JobAdEntity,
   useAddJobAdFavoriteMutation,
+  useDeleteJobAdFavoriteMutation,
   useGetJobAdsQuery,
   useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
@@ -9,7 +10,7 @@ import Slider from "../slideItems/Slider";
 
 interface EventsProps {}
 
-const Events: React.FC<EventsProps> = () => {
+const Jobs: React.FC<EventsProps> = () => {
   const result = useGetJobAdsQuery({
     fetchPolicy: "network-only",
   });
@@ -18,6 +19,8 @@ const Events: React.FC<EventsProps> = () => {
     JobAdEntity
   ];
   const [jobFavorites] = useAddJobAdFavoriteMutation();
+
+  const [deleteJobAdFavorite] = useDeleteJobAdFavoriteMutation();
 
   const favorites = useGetMeFavoritesQuery({
     fetchPolicy: "network-only",
@@ -40,6 +43,7 @@ const Events: React.FC<EventsProps> = () => {
           const hasId = favorites?.data?.me?.favoriteJobAds?.some(checkId);
           return (
             <SlideCard
+              shareUrl={`job-ad/${el.id}`}
               route={`/job-ad/${el.id}`}
               gradient={false}
               key={el?.id}
@@ -56,6 +60,13 @@ const Events: React.FC<EventsProps> = () => {
                   },
                 }).then(() => refetchQueries());
               }}
+              removeFavorite={() => {
+                deleteJobAdFavorite({
+                  variables: {
+                    jobAdId: el.id,
+                  },
+                }).then(() => refetchQueries());
+              }}
             />
           );
         })}
@@ -63,4 +74,4 @@ const Events: React.FC<EventsProps> = () => {
   );
 };
 
-export default Events;
+export default Jobs;

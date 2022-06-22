@@ -70,7 +70,7 @@ const Layout: React.FC = ({ children }) => {
         }
       )}
       {isLogedIn && <Header />}
-      <div className="md:p-12">
+      <div className="">
         <div>{children}</div>
       </div>
       {/* <Footer /> */}

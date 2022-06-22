@@ -12,20 +12,19 @@ const EventsCalendar: React.FC = () => {
   let currentDate = new Date();
 
   const currentUrl = window.location.href;
-  if(currentUrl.indexOf('?date=')!==-1){
-    const currentListStringDate =  currentUrl.split("?date=")[1].split(".");
-    currentDate = new Date(parseInt(currentListStringDate[0]), (parseInt(currentListStringDate[1])-1), parseInt(currentListStringDate[2]));
+  if (currentUrl.indexOf("?date=") !== -1) {
+    const currentListStringDate = currentUrl.split("?date=")[1].split(".");
+    currentDate = new Date(
+      parseInt(currentListStringDate[0]),
+      parseInt(currentListStringDate[1]) - 1,
+      parseInt(currentListStringDate[2])
+    );
   }
 
   const navigate = useNavigate();
   function goBack() {
     navigate(-1);
   }
-
-  
-
-  
-  
 
   const localizer = momentLocalizer(moment);
 
@@ -138,9 +137,10 @@ const EventsCalendar: React.FC = () => {
       dateParameter.getDate();
     if (window.innerWidth >= 1024) {
       return (
-        <Link className="anchor-number-of-events "
+        <Link
+          className="anchor-number-of-events "
           to={"/EventsCalendar?date=" + dateParameter}
-          >
+        >
           {event.numberOfEvents}{" "}
           V&shy;e&shy;r&shy;a&shy;n&shy;s&shy;t&shy;a&shy;l&shy;t&shy;u&shy;n&shy;g&shy;e&shy;n
         </Link>
@@ -256,7 +256,7 @@ const EventsCalendar: React.FC = () => {
   };
 
   return (
-    <div className="absolute lg:relative top-0 left-0 w-screen h-screen lg:w-full lg:h-full bg-[#f7f7f7] z-10 lg:z-auto pt-0">
+    <div className="absolute md:m-12 lg:relative top-0 left-0 w-screen h-screen lg:w-full lg:h-full bg-[#f7f7f7] z-10 lg:z-auto pt-0">
       <div className="lg:hidden flex bg-primary h-[6.5rem] text-white">
         <div className="my-auto relative">
           <button

@@ -21,7 +21,9 @@ export interface SlideCardProps {
   color?: string | undefined | null;
   gradient?: boolean;
   setFavorite?: any;
+  removeFavorite?: any;
   isFavorite?: boolean;
+  shareUrl?: string;
 }
 
 const SlideCard: React.FC<SlideCardProps> = ({
@@ -36,6 +38,8 @@ const SlideCard: React.FC<SlideCardProps> = ({
   isFavorite,
   width = "w-9/12 md:w-full",
   setFavorite,
+  removeFavorite,
+  shareUrl,
 }) => {
   const theDate = new Date(date);
   const year = theDate.getFullYear();
@@ -80,11 +84,17 @@ const SlideCard: React.FC<SlideCardProps> = ({
           <small className="font-bold">{eventName}</small>
           {(location || date) && (
             <div className="flex items-center md:w-20 justify-between">
-              <SocialMedia /> |
+              <SocialMedia url={shareUrl} /> |
               {isFavorite ? (
-                <SolidHeart className="w-5" />
+                <SolidHeart
+                  className="w-5 cursor-pointer"
+                  onClick={removeFavorite}
+                />
               ) : (
-                <OutlineHeart className="w-5" onClick={setFavorite} />
+                <OutlineHeart
+                  className="w-5 cursor-pointer"
+                  onClick={setFavorite}
+                />
               )}
             </div>
           )}
