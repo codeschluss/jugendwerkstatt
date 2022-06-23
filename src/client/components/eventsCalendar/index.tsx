@@ -43,16 +43,18 @@ const EventsCalendar: React.FC = () => {
       var tempSchedules = singleEvent?.schedules as any;
 
       for (let i = 0; i < tempSchedules?.length; i++) {
-        datesOnEvents[temmmpCounter] = {
-          id: temmmpCounter,
-          eventId: singleEvent.id,
-          name: singleEvent.name,
-          description: singleEvent.description,
-          start: new Date(tempSchedules[i]?.startDate),
-          end: new Date(tempSchedules[i]?.endDate),
-          allDay: true,
-        };
-        temmmpCounter = temmmpCounter + 1;
+          if(new Date(tempSchedules[i]?.startDate)<=new Date(tempSchedules[i]?.endDate)){ //validating bad schedules
+              datesOnEvents[temmmpCounter] = {
+                id: temmmpCounter,
+                eventId: singleEvent.id,
+                name: singleEvent.name,
+                description: singleEvent.description,
+                start: new Date(tempSchedules[i]?.startDate),
+                end: new Date(tempSchedules[i]?.endDate),
+                allDay: true,
+              };
+              temmmpCounter = temmmpCounter + 1;
+          }
       }
     });
   }
@@ -105,8 +107,10 @@ const EventsCalendar: React.FC = () => {
               datesOnEvents[i].end > endTempDate)) &&
           tempEventsIds.indexOf(datesOnEvents[i].eventId) <= -1
         ) {
+          
           numberOfEventsPerDate++;
           tempEventsIds.push(datesOnEvents[i].eventId);
+          
         }
       }
 
