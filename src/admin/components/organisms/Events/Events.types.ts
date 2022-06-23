@@ -18,15 +18,19 @@ export interface ScheduleProps {
   start_hour?: Date;
   end_date?: Date;
   end_hour?: Date;
-  repeat?: 'week' | 'month' | 'year';
+  repeat?: "week" | "month" | "year";
   end_repeat?: Date;
+}
+export interface ScheduleInputs {
+  startDate?: Date;
+  endDate?: Date;
 }
 
 export interface EventsFormInputs {
   baseData: BaseDataFormInputs;
   address: AddressFormInputs;
   description: string;
-  files: { file: FileList }[];
+  files: { file: FileList | null }[];
   schedule: ScheduleProps;
 }
 export interface OrganizerFormInputs {

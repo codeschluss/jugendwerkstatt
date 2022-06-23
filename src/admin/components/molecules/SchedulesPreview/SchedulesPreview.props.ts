@@ -1,3 +1,7 @@
+import { ScheduleInputs } from "../../organisms";
+
 export interface SchedulesPreviewProps {
-  dates: { startDate: Date; endDate: Date; startHour: Date; endHour: Date }[];
+  handleDeleteAll: () => void;
+  handleDeleteById: (idx: number) => void;
+  schedules: [] | ScheduleInputs[];
 }

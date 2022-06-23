@@ -21,7 +21,7 @@ const client = new ApolloClient({
   // defaultOptions: {
   //   query: { fetchPolicy: 'no-cache' },
   //   watchQuery: { fetchPolicy: 'no-cache' },
-  // },
+  // }, +
   link: ApolloLink.from([
     authLink(),
     // retryLink(),
@@ -29,6 +29,8 @@ const client = new ApolloClient({
     networkLink(),
   ]),
 });
+
+
 
 function App() {
   return (

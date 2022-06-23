@@ -4,6 +4,6 @@ export interface UploadFieldProps extends InputProps {
   inputClassName?: string;
   preview?: boolean;
   src?: string;
-  handleAppend?: (file: FileList) => void;
+  handleAppend?: () => void;
   handleShow?: () => void;
 }
