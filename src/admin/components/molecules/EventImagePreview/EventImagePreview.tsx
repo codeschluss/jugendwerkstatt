@@ -14,10 +14,10 @@ export const EventImagePreview: FC<EventImagePreviewProps> = ({
   const handleRemoveImage = () => onRemoveImage(id);
 
   return (
-    <div className="p-5 space-y-4">
+    <div className="p-5 space-y-4 overflow-auto">
       {file && (
         <img
-          className="h-72"
+          className="object-contain h-72"
           alt={file.name}
           src={URL.createObjectURL(file) || ''}
         />

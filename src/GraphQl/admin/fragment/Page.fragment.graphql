@@ -1,5 +1,12 @@
 fragment PageField on PageEntity {
   id
-  content
+  name
   slug
+  content
+  video {
+    ...FileField
+  }
+  images {
+    ...FileField
+  }
 }

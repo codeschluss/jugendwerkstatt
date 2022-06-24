@@ -40,12 +40,19 @@ import {
   CreateGroupMembersPage,
   EditGeneralAddressPage,
   GroupCoursesPage,
+  EvaluationQuestionsPage,
+  EvaluationsAssignmentsPage,
+  EvaluationQuestionViewPage,
+  EvaluationQuestionFormPage,
+  CreateEvaluationAssignmentPage,
+  CreatePublicPagesPage,
 } from '../admin/pages';
 
 export const AdminRoutes = () => {
   return (
     <Routes>
       <Route path="/admin" element={<AdminDashboardLayout />}>
+        {/* Events */}
         <Route path="events" element={<EventsListPage />} />
         <Route path="events/new" element={<CreateEventsPage />} />
         <Route path="events/:id" element={<CreateEventsPage />} />
@@ -67,6 +74,8 @@ export const AdminRoutes = () => {
           path="events/categories/:id"
           element={<CreateCategoriesPage />}
         />
+
+        {/* Vacancies */}
         <Route path="job-announcements" element={<VacancyListPage />} />
         <Route path="job-announcements/new" element={<CreateVacancyPage />} />
         <Route path="job-announcements/:id" element={<CreateVacancyPage />} />
@@ -94,6 +103,8 @@ export const AdminRoutes = () => {
           path="job-announcements/companies/:id"
           element={<CreateVacancyCompaniesPage />}
         />
+
+        {/* Medias */}
         <Route path="medias" element={<MediaListPage />} />
         <Route path="medias/new" element={<CreateMediaPage />} />
         <Route path="medias/:id" element={<CreateMediaPage />} />
@@ -106,12 +117,13 @@ export const AdminRoutes = () => {
           path="medias/categories/:id"
           element={<CreateMediaCategoriesPage />}
         />
-        <Route path="users/requests" element={<UsersRequestsListPage />} />
 
+        {/* Users */}
         <Route path="users" element={<UsersListPage />} />
-        <Route path="users/requests" element={<UsersRequestsListPage />} />
         <Route path="users/:id" element={<EditUserPage />} />
+        <Route path="users/requests" element={<UsersRequestsListPage />} />
 
+        {/* Forms */}
         <Route path="forms/templates" element={<FormsListPage />} />
         <Route path="forms/templates/new" element={<CreateFormsPage />} />
         <Route path="forms/templates/:id" element={<CreateFormsPage />} />
@@ -134,16 +146,36 @@ export const AdminRoutes = () => {
           path="forms/categories/:id"
           element={<CreateFormsCategories />}
         />
-        {/* <Route
-          path="evaluations/evaluation-forms"
-          element={<EvaluationsFormsViewPage />}
+
+        {/* Evaluations */}
+        <Route
+          path="evaluation/questions"
+          element={<EvaluationQuestionsPage />}
         />
         <Route
-          path="evaluations/questions"
-          element={<EvaluationsQuestionsPage />}
-        /> */}
+          path="evaluation/questions/:id"
+          element={<EvaluationQuestionFormPage />}
+        />
+        <Route
+          path="evaluation/questions/:id/view"
+          element={<EvaluationQuestionViewPage />}
+        />
+        <Route
+          path="evaluations/assignments"
+          element={<EvaluationsAssignmentsPage />}
+        />
+        <Route
+          path="evaluations/assignments/:id"
+          element={<CreateEvaluationAssignmentPage />}
+        />
+        <Route
+          path="evaluations/assignments/new"
+          element={<CreateEvaluationAssignmentPage />}
+        />
 
+        {/* Groups */}
         <Route path="groups" element={<GroupListPage />} />
+        <Route path="groups/:id" element={<GroupFormPage />} />
         <Route path="groups/new" element={<GroupFormPage />} />
         <Route path="groups/:id/members" element={<GroupMembersPage />} />
         <Route
@@ -180,8 +212,12 @@ export const AdminRoutes = () => {
           element={<PublicPagesPage />}
         />
         <Route
+          path="general-settings/public-pages/:id"
+          element={<CreatePublicPagesPage />}
+        />
+        <Route
           path="general-settings/public-pages/new"
-          element={<PublicPagesForm />}
+          element={<CreatePublicPagesPage />}
         />
       </Route>
     </Routes>
