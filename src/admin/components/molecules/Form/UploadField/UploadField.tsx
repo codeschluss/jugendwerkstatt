@@ -11,6 +11,7 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
       src,
       name,
       preview,
+      error,
       onChange,
       handleShow,
       handleAppend,
@@ -24,13 +25,10 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
 
     const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
       if (!!event.currentTarget.files?.length) {
-        handleAppend && handleAppend(event.currentTarget.files);
+        handleAppend && handleAppend();
         setfilePreview(URL.createObjectURL(event.currentTarget.files[0]));
       }
       onChange && onChange(event);
-      console.log("files 1", event.target.files);
-      event.target.files = null;
-      console.log("files 2", event.target.files);
     };
 
     const isPreview = !!preview && !!filePreview;
@@ -40,7 +38,7 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
         {...(isPreview
           ? { as: "div", onClick: handleShow }
           : { htmlFor: id || name })}
-        className={twClsx("w-64 h-48 m-4 cursor-pointer", className)}
+        className={twClsx("w-64 h-48 m-4 mb-10 cursor-pointer", className)}
       >
         <div
           className={twClsx(
@@ -48,7 +46,7 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
             className
           )}
         >
-          <div className="flex flex-col h-full items-center justify-center w-full p-2 border border-transparent rounded-sm shadow-lg shadow-gray-200">
+          <div className="flex flex-col items-center justify-center w-full h-full p-2 border border-transparent rounded-sm shadow-lg shadow-gray-200">
             {isPreview ? (
               <img
                 src={filePreview}
@@ -62,6 +60,7 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
               </>
             )}
           </div>
+
           <Input
             type="file"
             {...rest}
@@ -72,6 +71,9 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
             className={twClsx("hidden", inputClassName)}
           />
         </div>
+        {error && (
+          <span className="my-1 text-sm text-center text-primary">{error}</span>
+        )}
       </Label>
     );
   }

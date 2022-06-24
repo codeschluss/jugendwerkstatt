@@ -1,8 +1,8 @@
-import { XIcon } from '@heroicons/react/solid';
-import { FC, ReactElement } from 'react';
-import { ButtonVariantsEnum } from '../../../interfaces/enums/ButtonVariants.enum';
-import { Button } from '../Form/Button/Button';
-import { BadgeProps } from './Badge.props';
+import { XIcon } from "@heroicons/react/solid";
+import { FC, ReactElement } from "react";
+import { ButtonVariantsEnum } from "../../../interfaces/enums/ButtonVariants.enum";
+import { Button } from "../Form/Button/Button";
+import { BadgeProps } from "./Badge.props";
 
 export const Badge: FC<BadgeProps> = ({ onRemove, children }): ReactElement => {
   return (
@@ -11,6 +11,7 @@ export const Badge: FC<BadgeProps> = ({ onRemove, children }): ReactElement => {
       <Button
         variant={ButtonVariantsEnum.LINK}
         iconOnly
+        type="button"
         className="p-0"
         onClick={onRemove}
         iconRight={<XIcon className="text-primary" />}

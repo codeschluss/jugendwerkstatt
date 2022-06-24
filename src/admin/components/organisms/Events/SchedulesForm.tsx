@@ -1,26 +1,46 @@
-import { CalendarIcon, ClockIcon } from '@heroicons/react/outline';
-import { ReactElement } from 'react';
-import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { useSchedules } from '../../../hooks/useSchedules';
+import { CalendarIcon, ClockIcon } from "@heroicons/react/outline";
+import { Dispatch, ReactElement, SetStateAction } from "react";
+import { Controller, useFormContext } from "react-hook-form";
+import { generateSchedules } from "../../../utils/generateSchedules";
 
-import { Button, Select } from '../../atoms';
-import { Accordion, DatePicker } from '../../molecules';
-import { SchedulesPreview } from '../../molecules/SchedulesPreview/SchedulesPreview';
-import { EventsFormInputs } from './Events.types';
+import { Button, Select } from "../../atoms";
+import { Accordion, DatePicker } from "../../molecules";
+import { SchedulesPreview } from "../../molecules/SchedulesPreview/SchedulesPreview";
+import { EventsFormInputs, ScheduleInputs } from "./Events.types";
 
-export const SchedulesForm = (): ReactElement => {
+export const SchedulesForm = ({
+  setSchedules,
+  schedules,
+}: {
+  setSchedules: Dispatch<SetStateAction<[] | ScheduleInputs[]>>;
+  schedules: [] | ScheduleInputs[];
+}): ReactElement => {
   const { register, control, getValues, trigger } =
     useFormContext<EventsFormInputs>();
-  const watchFields = useWatch({ control });
-  const handleTrigger = () => trigger('schedule');
-  const dates = useSchedules(watchFields.schedule || {});
 
-  console.log('main component', dates);
+  const handleDeleteAll = () => setSchedules([]);
+
+  const handleDeleteById = (index: number) => {
+    setSchedules(schedules.filter((_item, idx) => idx !== index));
+  };
+
+  const handleTrigger = () => {
+    const dates = generateSchedules(getValues("schedule") || {});
+    setSchedules(dates);
+    trigger("schedule");
+  };
+
   return (
     <Accordion
       title="Termine"
       showSide
-      sideContent={<SchedulesPreview dates={dates} />}
+      sideContent={
+        <SchedulesPreview
+          schedules={schedules}
+          handleDeleteAll={handleDeleteAll}
+          handleDeleteById={handleDeleteById}
+        />
+      }
     >
       <div className="max-w-md space-y-8">
         <div className="flex items-center">
@@ -97,7 +117,7 @@ export const SchedulesForm = (): ReactElement => {
         </div>
         <div className="flex items-center">
           <div className="mr-10">
-            <Select label="Turnus" {...register('schedule.repeat')}>
+            <Select label="Turnus" {...register("schedule.repeat")}>
               <option value="">Repeat</option>
               <option value="week">Weekly</option>
               <option value="month">Monthly</option>
@@ -105,7 +125,7 @@ export const SchedulesForm = (): ReactElement => {
             </Select>
           </div>
 
-          {getValues('schedule.repeat') && (
+          {getValues("schedule.repeat") && (
             <div>
               <Controller
                 control={control}
