@@ -1,8 +1,6 @@
 /* eslint-disable */
-import { useMutation } from "@apollo/client";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../../../contexts/AuthContext";
 import { useRegisterUserMutation } from "../../../GraphQl/graphql";
 import useInput from "../../../hooks/use-input";
 import AuthInput from "../../../shared/components/authentication/AuthInput";
@@ -14,7 +12,8 @@ const Register = () => {
   const [inputsAreValid, setInputsAreValid] = useState(false);
 
   const navigate = useNavigate();
-  const { setTempEmail } = useContext(AuthContext);
+  // const { setTempEmail } = useContext(AuthContext);
+
   let disableInput = false;
   const regex = /[^A-Za-z0-9_.]/g;
 
@@ -75,7 +74,8 @@ const Register = () => {
   ]);
 
   const [password, setPassword] = useState<string>("");
-  const { passwordBits, setPasswordBits } = useContext(AuthContext);
+  // const { passwordBits, setPasswordBits } = useContext(AuthContext);
+  const [passwordBits, setPasswordBits] = useState<any>();
 
   function passwordStrength(event: any) {
     passwordChangeHandler;
@@ -98,6 +98,7 @@ const Register = () => {
     const argument = Math.pow(possibleSymbols, passwordLength);
 
     setPasswordBits(Math.log2(argument));
+    // setPasswordBits(Math.log2(argument));
   }
 
   const twoCalls = (e: any) => {
@@ -128,14 +129,14 @@ const Register = () => {
         },
       });
     }
-    setTempEmail(enteredEmail);
+    // setTempEmail(enteredEmail);
     navigate("/toVerifyEmail");
   };
 
   return (
     <AuthWrapper page="register" title={"Registrierung"}>
       <form className="w-full" onSubmit={onSubmitHandler}>
-        <div className="pb-0 p-12">
+        <div className="p-12 pb-0">
           <AuthInput
             id="Name"
             type="text"
@@ -180,7 +181,7 @@ const Register = () => {
               cPasswordInputError && "border-500-red"
             }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
           />
-          <RegisterValidations />
+          <RegisterValidations passwordBits={passwordBits} />
         </div>
         <span className="w-[80%] block m-auto">
           <Button

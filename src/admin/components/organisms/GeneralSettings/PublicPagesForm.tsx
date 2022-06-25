@@ -1,13 +1,13 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { ButtonVariantsEnum } from '../../../interfaces/enums/ButtonVariants.enum';
-import { PublicPagesFormSchema } from '../../../validations';
-import { Button, Select } from '../../atoms';
-import { Accordion, FormActions, InputField } from '../../molecules';
-import { DescriptionFrom } from '../Events/DescriptionFrom';
-import { FormsBaseForm } from '../Forms/FormsBaseForm';
-import { PublicPagesFormProps } from './PublicPagesForm.props';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { ReactElement } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { ButtonVariantsEnum } from "../../../interfaces/enums/ButtonVariants.enum";
+import { PublicPagesFormSchema } from "../../../validations";
+import { Button, Select } from "../../atoms";
+import { Accordion, FormActions, InputField } from "../../molecules";
+import { DescriptionFrom } from "../Events/DescriptionFrom";
+import { FormsBaseForm } from "../Forms/FormsBaseForm";
+import { PublicPagesFormProps } from "./PublicPagesForm.props";
 
 export const PublicPagesForm = (): ReactElement => {
   const methods = useForm<PublicPagesFormProps>({

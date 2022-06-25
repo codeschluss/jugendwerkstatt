@@ -11,7 +11,11 @@ import {
 
 import { useRefreshTokenMutation } from "../GraphQl/graphql";
 
-export const useAuth = (): { loading: boolean } => {
+export const useAuth = (): {
+  loading: boolean;
+  handleLogout: () => void;
+  handleStoreUser: (token: string) => void;
+} => {
   const { loading, addAuth, removeAuth } = useAuthStore();
 
   const refreshToken = readAuthToken("refreshToken") || "";
@@ -75,5 +79,5 @@ export const useAuth = (): { loading: boolean } => {
     handleStoreUser,
   ]);
 
-  return { loading };
+  return { loading, handleLogout, handleStoreUser };
 };

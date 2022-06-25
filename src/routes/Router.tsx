@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "../client/pages/authentication/LoginPage";
 import Home from "../client/pages/home";
-import Layout from "../containers/Layout";
 import AuthContext from "../contexts/AuthContext";
 import { If } from "../shared/components/If/If";
 import { AdminRoutes } from "./AdminRoutes";

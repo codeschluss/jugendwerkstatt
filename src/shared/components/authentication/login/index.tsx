@@ -1,14 +1,35 @@
-import { useContext } from "react";
+import { ReactElement, useCallback } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../../../client/components/ui/Button";
-import AuthContext from "../../../../contexts/AuthContext";
+import { useCreateTokenMutation } from "../../../../GraphQl/graphql";
 import useInput from "../../../../hooks/use-input";
-import useAuth from "../../../../hooks/useAuth";
+import { useAuthStore } from "../../../../store";
+import { getSingleJWTField, writeAuthToken } from "../../../utils";
 import AuthInput from "../AuthInput";
 import AuthWrapper from "../AuthWrapper";
 
-const Login = () => {
-  const { setTempEmail } = useContext(AuthContext);
+const Login = (): ReactElement => {
+  const { addAuth } = useAuthStore();
+
+  const handleStoreUser = useCallback(
+    (access: string, refresh: string) => {
+      writeAuthToken("refreshToken", refresh);
+      writeAuthToken("accessToken", access);
+      const fileds = getSingleJWTField(access);
+      addAuth(
+        {
+          roles: fileds?.roles || [],
+          scopes: fileds?.scopes || [],
+          approved: fileds?.approved || false,
+          verified: fileds?.verified || false,
+          email: fileds?.sub || "",
+        },
+        true,
+        false
+      );
+    },
+    [addAuth]
+  );
 
   const {
     value: enteredEmail,
@@ -16,7 +37,6 @@ const Login = () => {
     hasError: emailInputError,
     valueChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
-    resetValue: resetEmailInput,
   } = useInput(
     (value: any) => value.includes("@") && value !== "" && value.includes(".")
   );
@@ -27,18 +47,24 @@ const Login = () => {
     hasError: passwordInputError,
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
-    resetValue: resetPasswordInput,
   } = useInput((value: any) => value.trim().length !== 0);
 
-  const { handleLogin } = useAuth();
+  const [createToken] = useCreateTokenMutation({
+    onCompleted: ({ createToken }) => {
+      handleStoreUser(createToken?.access || "", createToken?.refresh || "");
+    },
+  });
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
-    handleLogin(enteredEmail, enteredPassword);
-    // resetEmailInput();
-    // resetPasswordInput();
-    setTempEmail(enteredEmail);
+    createToken({
+      variables: {
+        username: enteredEmail,
+        password: enteredPassword,
+      },
+    });
   };
+
   return (
     <AuthWrapper title="Anmelden">
       <form onSubmit={submitHandler} className="p-6 mt-5 text-right">

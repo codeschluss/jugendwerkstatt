@@ -1,10 +1,6 @@
-import React, { useContext } from "react";
-import AuthContext from "../../../contexts/AuthContext";
+import React from "react";
 import PendingApproval from "../../../shared/components/emailVerification/PendingApproval";
 
-const ApprovalPending = () => {
-  const { isLogedIn } = useContext(AuthContext);
-  return <>{<PendingApproval />}</>;
-};
+const ApprovalPending = () => <PendingApproval />;
 
 export default ApprovalPending;

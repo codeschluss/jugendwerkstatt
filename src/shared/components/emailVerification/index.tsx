@@ -1,8 +1,8 @@
 import { CheckIcon, MailIcon } from "@heroicons/react/outline";
-import React, { useContext } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../client/components/ui/Button";
-import AuthContext from "../../../contexts/AuthContext";
+// import AuthContext from "../../../contexts/AuthContext";
 import { useSendVerificationMutation } from "../../../GraphQl/graphql";
 import logo from "../../images/jugendwerkstatt-logo.png";
 
@@ -21,11 +21,11 @@ const RegistrationOrVerification: React.FC<CheckingProps> = ({
   reVerify,
   pendingApproval,
 }) => {
-  const { tempEmail } = useContext(AuthContext);
+  // const { tempEmail } = useContext(AuthContext);
 
   const [reSendVerification] = useSendVerificationMutation({
     variables: {
-      email: tempEmail,
+      email: "tempEmail",
     },
   });
 
@@ -36,19 +36,19 @@ const RegistrationOrVerification: React.FC<CheckingProps> = ({
   };
 
   return (
-    <div className="px-0 flex flex-col w-screen h-screen absolute top-0 z-20">
+    <div className="absolute top-0 z-20 flex flex-col w-screen h-screen px-0">
       <div className="px-0 h-[30%]">
-        <img className="h-full w-screen object-cover" src={logo} alt={"logo"} />
+        <img className="object-cover w-screen h-full" src={logo} alt={"logo"} />
       </div>
-      <div className="grid grid-rows-12 flex-grow w-screen h-full px-10 -mt-6 rounded-3xl bg-white">
-        <div className="row-span-6 text-center pt-5 flex flex-col items-center justify-center">
+      <div className="grid flex-grow w-screen h-full px-10 -mt-6 bg-white grid-rows-12 rounded-3xl">
+        <div className="flex flex-col items-center justify-center row-span-6 pt-5 text-center">
           {verified ? (
             <CheckIcon className="w-24 h-24 text-[#04915C]" />
           ) : (
             <MailIcon className="w-24 h-24 text-[#04915C]" />
           )}
         </div>
-        <div className="text-gray-500 row-span-6 text-center text-xs px- -mt-10 flex flex-col ">
+        <div className="flex flex-col row-span-6 -mt-10 text-xs text-center text-gray-500 px- ">
           <span className="text-xl">
             {(verified || toVerify) && "Glückwunsch"}
           </span>

@@ -1,15 +1,21 @@
 import { ReactElement } from "react";
-import { Outlet, Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
+import { AllowedRoles, UserRoleEnum } from "../../../interfaces";
 
 // store
 import { useAuthStore } from "../../../store";
+import { RequireAuthLayout } from "./RequireAuthLayout";
 
-export const RequireAuthRoute = (): ReactElement => {
+export const RequireAuthRoute = ({
+  accessRole,
+}: {
+  accessRole: AllowedRoles;
+}): ReactElement => {
   // hooks
   const location = useLocation();
   const { isAuthenticated, user } = useAuthStore();
 
-  console.log("auth", user, isAuthenticated);
+  console.log("auth");
 
   // if (!user?.verified) {
   //   return (
@@ -29,9 +35,14 @@ export const RequireAuthRoute = (): ReactElement => {
   //   );
   // }
 
-  return isAuthenticated ? (
-    <Outlet />
+  const rolePath = accessRole === UserRoleEnum.ADMIN ? "/" : "admin/events";
+
+  return isAuthenticated && user?.roles.includes(accessRole) ? (
+    <RequireAuthLayout accessRole={accessRole} />
   ) : (
-    <Navigate to={{ pathname: "/login" }} state={{ from: location }} />
+    <Navigate
+      to={{ pathname: isAuthenticated ? rolePath : "/" }}
+      state={{ from: location }}
+    />
   );
 };

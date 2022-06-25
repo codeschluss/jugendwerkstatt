@@ -1,13 +1,12 @@
-import { useContext } from "react";
-import AuthContext from "../../../../contexts/AuthContext";
-
-export const RegisterValidations = () => {
-  const { passwordBits } = useContext(AuthContext);
-
+export const RegisterValidations = ({
+  passwordBits,
+}: {
+  passwordBits: number;
+}) => {
   return (
-    <div className="w-full mx-auto mb-10 mt-0">
+    <div className="w-full mx-auto mt-0 mb-10">
       <p>Passwortstärke</p>
-      <div className="flex flex-nowrap justify-between">
+      <div className="flex justify-between flex-nowrap">
         <div
           className={`w-1/6 h-1 rounded-lg ${
             !passwordBits || passwordBits < 15 || passwordBits < 10

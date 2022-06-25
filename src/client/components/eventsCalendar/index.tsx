@@ -12,20 +12,19 @@ const EventsCalendar: React.FC = () => {
   let currentDate = new Date();
 
   const currentUrl = window.location.href;
-  if(currentUrl.indexOf('?date=')!==-1){
-    const currentListStringDate =  currentUrl.split("?date=")[1].split(".");
-    currentDate = new Date(parseInt(currentListStringDate[0]), (parseInt(currentListStringDate[1])-1), parseInt(currentListStringDate[2]));
+  if (currentUrl.indexOf("?date=") !== -1) {
+    const currentListStringDate = currentUrl.split("?date=")[1].split(".");
+    currentDate = new Date(
+      parseInt(currentListStringDate[0]),
+      parseInt(currentListStringDate[1]) - 1,
+      parseInt(currentListStringDate[2])
+    );
   }
 
   const navigate = useNavigate();
   function goBack() {
     navigate(-1);
   }
-
-  
-
-  
-  
 
   const localizer = momentLocalizer(moment);
 
@@ -138,9 +137,10 @@ const EventsCalendar: React.FC = () => {
       dateParameter.getDate();
     if (window.innerWidth >= 1024) {
       return (
-        <Link className="anchor-number-of-events "
-          to={"/EventsCalendar?date=" + dateParameter}
-          >
+        <Link
+          className="anchor-number-of-events "
+          to={"/events/calendar?date=" + dateParameter}
+        >
           {event.numberOfEvents}{" "}
           V&shy;e&shy;r&shy;a&shy;n&shy;s&shy;t&shy;a&shy;l&shy;t&shy;u&shy;n&shy;g&shy;e&shy;n
         </Link>
@@ -149,7 +149,7 @@ const EventsCalendar: React.FC = () => {
       return (
         <Link
           className="anchor-number-of-events "
-          to={"/eventsTime?date=" + dateParameter}
+          to={"/events/time?date=" + dateParameter}
         >
           {event.numberOfEvents}{" "}
           V&shy;e&shy;r&shy;a&shy;n&shy;s&shy;t&shy;a&shy;l&shy;t&shy;u&shy;n&shy;g&shy;e&shy;n
@@ -258,7 +258,7 @@ const EventsCalendar: React.FC = () => {
   return (
     <div className="absolute lg:relative top-0 left-0 w-screen h-screen lg:w-full lg:h-full bg-[#f7f7f7] z-10 lg:z-auto pt-0">
       <div className="lg:hidden flex bg-primary h-[6.5rem] text-white">
-        <div className="my-auto relative">
+        <div className="relative my-auto">
           <button
             className="absolute inline ml-5 -mt-3"
             onClick={goBack}
@@ -279,21 +279,21 @@ const EventsCalendar: React.FC = () => {
             </svg>
           </button>
           <div
-            className="inline w-screen absolute left-0 text-center -mt-4"
+            className="absolute left-0 inline w-screen -mt-4 text-center"
             style={{ zIndex: 1 }}
           >
-            <span id="testId" className="text-2xl font-light text-center pt-20">
+            <span id="testId" className="pt-20 text-2xl font-light text-center">
               Veranstaltungskalender
             </span>
           </div>
         </div>
       </div>
-      <div className="hidden lg:flex items-center justify-center text-3xl font-semibold">
-        <div className="bg-white w-full p-2 rounded-md">Kalender</div>
+      <div className="items-center justify-center hidden text-3xl font-semibold lg:flex">
+        <div className="w-full p-2 bg-white rounded-md">Kalender</div>
       </div>
-      <div className="flex items-center justify-center lg:justify-start mt-0 lg:mt-5">
+      <div className="flex items-center justify-center mt-0 lg:justify-start lg:mt-5">
         <Calendar
-          className="customized-monthly-calendar max-w-2xl w-full mx-auto lg:mx-0 bg-white pb-10"
+          className="w-full max-w-2xl pb-10 mx-auto bg-white customized-monthly-calendar lg:mx-0"
           localizer={localizer}
           events={finalDatesEvents}
           components={{ event: event_dates }}

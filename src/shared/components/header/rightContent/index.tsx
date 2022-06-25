@@ -1,26 +1,25 @@
-import { BellIcon, LogoutIcon, SearchIcon } from '@heroicons/react/outline';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { BellIcon, LogoutIcon, SearchIcon } from "@heroicons/react/outline";
+import { FC, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   useGetMeBasicQuery,
   useGetNotificationsQuery,
-} from '../../../../GraphQl/graphql';
-import useAuth from '../../../../hooks/useAuth';
-import detectDevice from '../../../utils/isTouch';
-import DropDown from '../../ui/DropDown';
-import I from '../../ui/IconWrapper';
-import Avatar from '../sideBar/Avatar';
-import Search from './Search';
+} from "../../../../GraphQl/graphql";
+import { useAuth } from "../../../../hooks/useAuth-v2";
+import detectDevice from "../../../utils/isTouch";
+import DropDown from "../../ui/DropDown";
+import I from "../../ui/IconWrapper";
+import Avatar from "../sideBar/Avatar";
+import Search from "./Search";
 
-interface RightContentProps {}
-
-const RightContent: React.FC<RightContentProps> = () => {
+const RightContent: FC = () => {
   const isTouch = detectDevice();
   const [toggleSearch, setToggleSearch] = useState<boolean>(false);
 
-  const { logout } = useAuth();
+  const { handleLogout } = useAuth();
   const user = useGetMeBasicQuery();
   const notifications = useGetNotificationsQuery();
+
   return (
     <div className="relative flex items-center justify-end flex-grow">
       <Search
@@ -60,11 +59,11 @@ const RightContent: React.FC<RightContentProps> = () => {
             <p>E-Mail Benachrichtigungen</p>
           </div>
           <div className="flex items-center justify-start">
-            {' '}
+            {" "}
             <I className="hidden w-8 h-8 text-white cursor-pointer md:text-black md:flex">
-              <LogoutIcon onClick={logout} />
-            </I>{' '}
-            <p onClick={logout} className="cursor-pointer">
+              <LogoutIcon onClick={handleLogout} />
+            </I>{" "}
+            <p onClick={handleLogout} className="cursor-pointer">
               Logout
             </p>
           </div>
@@ -84,17 +83,17 @@ const RightContent: React.FC<RightContentProps> = () => {
         <div>
           <ul>
             {notifications.data?.me?.notifications?.map((el: any) => {
-              const weekDays = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+              const weekDays = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
               const weekDay = weekDays[new Date(el.created).getDay()];
               const year = `${new Date(el.created).getFullYear()}`;
               const month = `${new Date(el.created).getMonth()}`;
               const date = `${new Date(el.created).getDate()}`;
               return (
                 <li key={el.title} className="border-b-[1px]  border-gray-400">
-                  <p className={`text-base mt-2 ${el.read && 'font-bold'}`}>
+                  <p className={`text-base mt-2 ${el.read && "font-bold"}`}>
                     {el?.title}
                   </p>
-                  <p className={`text-sm py-2 ${el.read && 'font-bold'} `}>
+                  <p className={`text-sm py-2 ${el.read && "font-bold"} `}>
                     {el?.content}
                   </p>
                   <p className="py-2 text-sm">{`${weekDay}, ${date}.${month}.${year}`}</p>
@@ -105,7 +104,7 @@ const RightContent: React.FC<RightContentProps> = () => {
         </div>
       </DropDown>
       <I className="hidden w-6 h-6 text-white cursor-pointer md:text-black md:flex md:ml-6">
-        <LogoutIcon onClick={logout} />
+        <LogoutIcon onClick={handleLogout} />
       </I>
     </div>
   );

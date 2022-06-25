@@ -4,8 +4,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import {
   MediaEntity,
-  TemplateTypeEntity, useGetMeUploadsQuery,
-  useGetTemplateTypesQuery
+  TemplateTypeEntity,
+  useGetMeUploadsQuery,
+  useGetTemplateTypesQuery,
 } from "../../../GraphQl/graphql";
 import Action from "../../../shared/components/table/Action";
 import Row from "../../../shared/components/table/Row";
@@ -32,19 +33,19 @@ const Forms: React.FC = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 pt-4">
+    <div className="container px-4 pt-4 mx-auto">
       <h5 className="text-2xl font-bold">Formulare</h5>
-      <ul className="list-none text-base font-normal pl-4 text-gray-600">
+      <ul className="pl-4 text-base font-normal text-gray-600 list-none">
         {fetchedData?.map((template, index) => {
           return (
             <li
-              className="px-2 md:w-96  md:bg-white md:my-2 flex items-center  md:h-16    "
+              className="flex items-center px-2 md:w-96 md:bg-white md:my-2 md:h-16 "
               key={index}
             >
               <Link
-                className="w-full h-full flex justify-between items-center"
+                className="flex items-center justify-between w-full h-full"
                 to={{
-                  pathname: "/Forms/Templates",
+                  pathname: "/forms/templates",
                 }}
                 state={{
                   templateType: {
@@ -61,9 +62,9 @@ const Forms: React.FC = () => {
           );
         })}
       </ul>
-      <h5 className="text-2xl font-bold pt-4">
+      <h5 className="pt-4 text-2xl font-bold">
         Eigene Dokumente
-        <I className="h-10 float-right opacity-70">
+        <I className="float-right h-10 opacity-70">
           <Link to="/upload-file">
             {" "}
             <UploadIcon />
@@ -91,7 +92,7 @@ const Forms: React.FC = () => {
       )}
 
       {isTouch && (
-        <ul className="list-none text-base font-normal pl-4 text-gray-600">
+        <ul className="pl-4 text-base font-normal text-gray-600 list-none">
           {fetchedUserUploads?.map((file, index) => {
             return (
               <li className="pt-4" key={index}>

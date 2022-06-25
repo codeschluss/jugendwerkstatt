@@ -45,7 +45,7 @@ const TemplateEdit: React.FC = () => {
         userId: userBasicId,
       },
       onCompleted: () => {
-        navigate("/Forms");
+        navigate("/forms");
       },
     });
 
@@ -96,15 +96,15 @@ const TemplateEdit: React.FC = () => {
   }, [userTemplateContent, templateContentResult]);
 
   return (
-    <div className="container mx-auto px-4 pt-4">
+    <div className="container px-4 pt-4 mx-auto">
       <h5 className="text-2xl font-bold">
         {templateType}
 
-        <I className="h-5 float-right" onClick={downloadTemplate}>
+        <I className="float-right h-5" onClick={downloadTemplate}>
           <DownloadIcon />
         </I>
       </h5>
-      <h5 className="text-xl font-normal pt-4" onClick={handleClick}>
+      <h5 className="pt-4 text-xl font-normal" onClick={handleClick}>
         {editName ? (
           <input
             type="text"
@@ -128,9 +128,9 @@ const TemplateEdit: React.FC = () => {
         />
       </div>
 
-      <div className="w-full text-center pt-6">
+      <div className="w-full pt-6 text-center">
         <button
-          className="bg-primary text-white mb-2 w-3/4 h-10 rounded-2xl"
+          className="w-3/4 h-10 mb-2 text-white bg-primary rounded-2xl"
           onClick={saveTemplate}
         >
           Speichern
