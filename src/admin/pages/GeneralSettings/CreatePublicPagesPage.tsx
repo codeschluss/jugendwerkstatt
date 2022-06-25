@@ -154,7 +154,7 @@ const CreatePublicPagesPage = (): ReactElement => {
               />
             ))}
 
-            <UploadField handleAppend={handleAppend} />
+            {/* <UploadField handleAppend={handleAppend} /> */}
           </div>
           <Button type="button" className="mt-6" onClick={handleTrigger}>
             Speichern

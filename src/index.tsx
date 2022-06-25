@@ -1,27 +1,31 @@
-import { Suspense } from "react";
-import ReactDOM from "react-dom";
-import { ApolloProvider } from "@apollo/client";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { BrowserRouter } from "react-router-dom";
+import { Suspense } from 'react';
+import ReactDOM from 'react-dom';
+import { ApolloProvider } from '@apollo/client';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { BrowserRouter } from 'react-router-dom';
+import { ErrorSnackbar } from './shared/components/ErrorSnackbar/ErrorSnackbar';
 
-import App from "./App";
-import { apolloClient } from "./GraphQl/config";
+import App from './App';
+import { apolloClient } from './GraphQl/config';
 
-import { FeedbackProvider } from "./contexts/FeedbackContext";
-import { TokenStorageProvider } from "./contexts/TokenStorageContext";
+import { FeedbackProvider } from './contexts/FeedbackContext';
+import { TokenStorageProvider } from './contexts/TokenStorageContext';
 
-import "./shared/styles/index.css";
-import "./shared/styles/SlickSlider.css";
-import "react-datepicker/dist/react-datepicker.css";
+import './shared/styles/index.css';
+import './shared/styles/SlickSlider.css';
+import 'react-datepicker/dist/react-datepicker.css';
 
 ReactDOM.render(
   <TokenStorageProvider>
     <FeedbackProvider>
-      <App />
+      <ApolloProvider client={apolloClient()}>
+        <App />
+        <ErrorSnackbar />
+      </ApolloProvider>
     </FeedbackProvider>
   </TokenStorageProvider>,
-  document.getElementById("root")
+  document.getElementById('root')
   // );
 
   // ReactDOM.render(
