@@ -1,7 +1,6 @@
 import { ApolloLink } from "@apollo/client";
 
 export const authLink = () => {
-  
   return new ApolloLink((operation, forward) => {
     operation.setContext(({ headers = {} }) => ({
       headers: {
@@ -12,4 +11,4 @@ export const authLink = () => {
 
     return forward(operation);
   });
-}
+};
