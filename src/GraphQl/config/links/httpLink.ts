@@ -6,5 +6,5 @@ import { API_URL } from "../../../config/app";
 
 // export link
 export const httpLink = createHttpLink({
-  uri: API_URL,
+  uri: API_URL + "graphql",
 });

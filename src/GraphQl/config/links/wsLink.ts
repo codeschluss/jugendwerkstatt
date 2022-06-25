@@ -7,7 +7,7 @@ import { WS_URL } from "../../../config/app";
 // utils
 import { readAuthToken } from "../../../shared/utils";
 
-export const wsClient = new SubscriptionClient(WS_URL, {
+export const wsClient = new SubscriptionClient(WS_URL + "graphql", {
   reconnect: true,
   lazy: true,
   connectionParams: () => {

@@ -4,10 +4,10 @@ import { InMemoryCache } from "@apollo/client";
 // export cache
 export const cache = new InMemoryCache({
   typePolicies: {
-    // NotificationEntity: {
-    //   // In an inventory management system, products might be identified
-    //   // by their UPC.
-    //   keyFields: ["notifications"],
-    // },
+    NotificationEntity: {
+      // In an inventory management system, products might be identified
+      // by their UPC.
+      keyFields: ["notifications"],
+    },
   },
 });
