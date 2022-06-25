@@ -23,14 +23,14 @@ export const useAuth = (): {
 
   const handleStoreUser = useCallback(
     (token: string) => {
-      const fileds = getSingleJWTField(token);
+      const fields = getSingleJWTField(token);
       addAuth(
         {
-          roles: fileds?.roles || [],
-          scopes: fileds?.scopes || [],
-          approved: fileds?.approved || false,
-          verified: fileds?.verified || false,
-          email: fileds?.sub || "",
+          roles: fields?.roles || [],
+          scopes: fields?.scopes || [],
+          approved: fields?.approved || false,
+          verified: fields?.verified || false,
+          email: fields?.sub || "",
         },
         true,
         false

@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { UserRoleEnum } from "../../../interfaces";
+import { UserLayout } from "../../../shared/components/UserLayout";
 import { useAuthStore } from "../../../store";
 import DefaultHome from "../../components/home/defaultHome";
 import Homepage from "../../components/home/Homepage";
@@ -12,7 +13,9 @@ const Home = () => {
   }
 
   return isAuthenticated && user?.roles.includes(UserRoleEnum.STUDENT) ? (
-    <Homepage />
+    <UserLayout>
+      <Homepage />
+    </UserLayout>
   ) : (
     <DefaultHome />
   );

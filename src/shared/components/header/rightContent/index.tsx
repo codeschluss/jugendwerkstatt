@@ -5,7 +5,7 @@ import {
   useGetMeBasicQuery,
   useGetNotificationsQuery,
 } from "../../../../GraphQl/graphql";
-import { useAuth } from "../../../../hooks/useAuth-v2";
+import { useAuth } from "../../../../hooks/useAuthV2";
 import detectDevice from "../../../utils/isTouch";
 import DropDown from "../../ui/DropDown";
 import I from "../../ui/IconWrapper";

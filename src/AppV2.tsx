@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { useAuth } from "./hooks/useAuth-v2";
+import { useAuth } from "./hooks/useAuthV2";
 import { RequireAuthRoute, RequireNonAuthRoute } from "./shared/components";
 
 // pages

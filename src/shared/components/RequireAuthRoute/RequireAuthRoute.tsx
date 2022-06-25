@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { Navigate, useLocation } from "react-router-dom";
+import { useExpireToken } from "../../../hooks/useExpireToken";
 import { AllowedRoles, UserRoleEnum } from "../../../interfaces";
 
 // store
@@ -14,8 +15,11 @@ export const RequireAuthRoute = ({
   // hooks
   const location = useLocation();
   const { isAuthenticated, user } = useAuthStore();
+  useExpireToken();
 
   console.log("auth");
+
+  // if (loading) return <div>Loading...</div>;
 
   // if (!user?.verified) {
   //   return (
