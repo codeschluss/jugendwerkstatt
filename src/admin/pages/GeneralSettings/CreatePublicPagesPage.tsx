@@ -1,21 +1,41 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement, useEffect } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
-import { useGetPageQuery } from '../../../GraphQl/graphql';
-import { Accordion, FormActions } from '../../components/molecules';
+import { ReactElement, useEffect, useState } from 'react';
 import {
-  DescriptionFrom,
-  FormsBaseForm,
-  FormsFormInputs,
-} from '../../components/organisms';
-import { FormsFormSchema } from '../../validations';
+  FieldArrayWithId,
+  FormProvider,
+  useFieldArray,
+  useForm,
+} from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useGetPageQuery, useSavePageMutation } from '../../../GraphQl/graphql';
+import { Button } from '../../components/atoms';
+import { ButtonVariants } from '../../components/atoms/Form/Button/Button.props';
+import {
+  Accordion,
+  EventImagePreview,
+  FormActions,
+  InputField,
+  UploadField,
+} from '../../components/molecules';
+import { DescriptionFrom } from '../../components/organisms';
+import { fileToBase64 } from '../../utils/fileToBase64';
+import { PublicPagesFormSchema } from '../../validations';
+import { PublicPageFormInputs } from './PublicPageForm.props';
 
 const CreatePublicPagesPage = (): ReactElement => {
+  const navigate = useNavigate();
   const { id } = useParams();
+  const [images, setImages] = useState<FieldArrayWithId<
+    PublicPageFormInputs,
+    'images',
+    'id'
+  > | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const methods = useForm<FormsFormInputs>({
-    resolver: joiResolver(FormsFormSchema),
+  const methods = useForm<PublicPageFormInputs>({
+    resolver: joiResolver(PublicPagesFormSchema),
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
   });
 
   const { data: { page = null } = {} } = useGetPageQuery({
@@ -23,35 +43,148 @@ const CreatePublicPagesPage = (): ReactElement => {
     variables: { entity: { id } },
   });
 
-  // const [savePage] = useSaveTemplateAdminMutation({
-  //   onCompleted: () => navigate('/admin/forms/templates'),
-  // });
+  console.log(page);
+  const [savePage] = useSavePageMutation({
+    onCompleted: () => navigate('/admin/general-settings/public-pages'),
+  });
 
-  const { reset, handleSubmit } = methods;
+  const {
+    reset,
+    getValues,
+    control,
+    trigger,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
+  console.log('errors', errors);
+  // useEffect(() => {
+  //   if (!!page) {
+  //     reset({
+  //       baseData: {
+  //         name: page?.content || '',
+  //       },
+  //     });
+  //   }
+  // }, [page, reset]);
 
-  useEffect(() => {
-    if (!!page) {
-      reset({
-        baseData: {
-          name: page?.content || '',
-        },
-      });
+  const { fields, append, remove } = useFieldArray({
+    name: 'images',
+    control,
+  });
+
+  const handleTrigger = () => trigger();
+  const handleOnSubmit = async (data: PublicPageFormInputs) => {
+    let images: { name: string; mimeType: string; base64: string }[] = [];
+
+    for (const field of fields) {
+      const object = await fileToBase64(field.file[0]);
+      images.push(object);
     }
-  }, [page, reset]);
 
-  const handleOnSubmit = ({
-    description,
-    baseData: { name, category },
-  }: FormsFormInputs) => console.log(description, name, category);
+    savePage({
+      variables: {
+        entity: {
+          ...(id && { id }),
+          slug: data.pageName,
+          name: data.pageName,
+          content: data.description,
+          video: await fileToBase64(data.video[0]),
+          images,
+          ...(!!imageFile && { titleImage: await fileToBase64(imageFile) }),
+        },
+      },
+    });
+  };
+
+  const handleSetFile =
+    (item: FieldArrayWithId<PublicPageFormInputs, 'images', 'id'>) => () => {
+      setImages(item);
+    };
+
+  const handleAppend = (file: FileList) => {
+    append({ file: file || undefined });
+  };
+
+  const handleRemoveImage = (id: string) => {
+    remove(fields.findIndex((field) => field.id === id));
+    setImages(null);
+  };
+  const handleRemoveVideo = () => {};
+  const onHandle = (file: File | null) => setImageFile(file);
 
   return (
     <FormProvider {...methods}>
-      <form className="min-h-full">
+      <form>
         <Accordion title="Stammdaten" open={!!id}>
-          <FormsBaseForm />
+          <InputField
+            id="pageName"
+            label="Stammdaten"
+            {...register('pageName')}
+            error={errors.pageName?.message}
+          />
+          <Button className="mt-6" type="button" onClick={handleTrigger}>
+            Speichern
+          </Button>
         </Accordion>
-        <Accordion title="Beschreibung">
+        <Accordion
+          title="Titelbild"
+          showSide
+          sideClassName="w-auto"
+          sideContent={
+            images && (
+              <EventImagePreview
+                id={images.id}
+                onHandle={onHandle}
+                onRemoveImage={handleRemoveImage}
+                file={images.file[0]}
+              />
+            )
+          }
+        >
+          <div className="flex items-start justify-start">
+            {fields.map((item, index) => (
+              <UploadField
+                key={index}
+                preview
+                handleShow={handleSetFile(item)}
+                src={URL.createObjectURL(item.file[0])}
+                id={`images.${index}.file`}
+                {...register(`images.${index}.file`)}
+              />
+            ))}
+
+            {/* <UploadField handleAppend={handleAppend} /> */}
+          </div>
+          <Button type="button" className="mt-6" onClick={handleTrigger}>
+            Speichern
+          </Button>
+        </Accordion>
+
+        <Accordion title="Textfeld">
           <DescriptionFrom />
+        </Accordion>
+
+        <Accordion title="Video" className="p-5">
+          <div className="flex items-start justify-start">
+            <UploadField id="video" {...register('video')} />
+          </div>
+          <div className="flex gap-x-2">
+            <Button
+              onClick={handleRemoveVideo}
+              className="border-[#424242] text-[#424242]"
+              type="button"
+            >
+              Löschen
+            </Button>
+            <Button
+              type="button"
+              color={ButtonVariants.secondary}
+              onClick={handleTrigger}
+            >
+              Speichern
+            </Button>
+          </div>
         </Accordion>
         <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
       </form>
