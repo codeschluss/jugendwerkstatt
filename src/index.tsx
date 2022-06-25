@@ -8,23 +8,12 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./AppV2";
 import { apolloClient } from "./GraphQl/config";
 import { SideBarProvider } from "./contexts/SideBarContext";
-
-// import { FeedbackProvider } from "./contexts/FeedbackContext";
-// import { TokenStorageProvider } from "./contexts/TokenStorageContext";
+import { FilterProvider } from "./contexts/FilterContext";
+import { ErrorSnackbar } from "./shared/components/ErrorSnackbar/ErrorSnackbar";
 
 import "./shared/styles/index.css";
 import "./shared/styles/SlickSlider.css";
 import "react-datepicker/dist/react-datepicker.css";
-import { FilterProvider } from "./contexts/FilterContext";
-
-// ReactDOM.render(
-//   <TokenStorageProvider>
-//     <FeedbackProvider>
-//       <App />
-//     </FeedbackProvider>
-//   </TokenStorageProvider>,
-//   document.getElementById('root')
-// );
 
 ReactDOM.render(
   <Suspense fallback={<div>Loading...</div>}>
@@ -34,6 +23,7 @@ ReactDOM.render(
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <BrowserRouter>
               <App />
+              <ErrorSnackbar />
             </BrowserRouter>
           </LocalizationProvider>
         </FilterProvider>

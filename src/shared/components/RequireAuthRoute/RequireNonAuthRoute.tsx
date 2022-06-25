@@ -9,6 +9,7 @@ export const RequireNonAuthRoute = (): ReactElement => {
   // hooks
   const location = useLocation();
   const { isAuthenticated } = useAuthStore();
+
   console.log("non auth");
 
   return isAuthenticated ? (

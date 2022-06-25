@@ -1,15 +1,16 @@
 // apollo
-import { ApolloClient } from "@apollo/client";
+import { ApolloClient, from } from "@apollo/client";
 
 // cache
 import { cache } from "./cache";
 
 // links
 import { links } from "./links";
+import { errorLink } from "./links/errorLink";
 
 // export new client instance
 export const apolloClient = new ApolloClient({
   cache,
-  link: links,
+  link: from([errorLink, links]),
   connectToDevTools: true,
 });
