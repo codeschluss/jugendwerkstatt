@@ -6,10 +6,12 @@ import FeedbackContext, { FeedbackType } from "../contexts/FeedbackContext";
 import SideBarContext from "../contexts/SideBarContext";
 import TokenStorageContext from "../contexts/TokenStorageContext";
 import {
+  AssignmentEntity,
   FeedbackEntity,
   NotificationType,
   useAddListenerSubscription,
   useFeedbacksQuery,
+  useGetMeAssignmentsQuery,
 } from "../GraphQl/graphql";
 import useAuth from "../hooks/useAuth";
 import Feedback from "../shared/components/feedback/Feedback";
@@ -27,6 +29,12 @@ const Layout: React.FC = ({ children }) => {
   }, []);
 
   const feedback = useFeedbacksQuery();
+  const assignments = useGetMeAssignmentsQuery();
+  const filteredAssignment = assignments.data?.me?.assignments?.filter(
+    (assignment: AssignmentEntity | undefined | null) => {
+      return assignment?.assignmentState?.name === "ASSIGNED";
+    }
+  );
 
   const addListener = useAddListenerSubscription({
     skip: !accessToken,
@@ -45,7 +53,6 @@ const Layout: React.FC = ({ children }) => {
     case NotificationType.Evaluation:
       feedback.refetch();
   }
-  console.log(feedback.data?.me?.feedbacks, "feedbacks");
 
   return (
     <main
@@ -54,7 +61,19 @@ const Layout: React.FC = ({ children }) => {
       }`}
     >
       <Feedback />
-      <Evaluation visible={false} />
+      {filteredAssignment?.map(
+        (assignment: AssignmentEntity | undefined | null) => {
+          console.log(assignment);
+          return (
+            <Evaluation
+              key={assignment?.id}
+              visible={true}
+              assignment={assignment}
+            />
+          );
+        }
+      )}
+
       {feedback?.data?.me?.feedbacks?.map(
         (el: FeedbackEntity | undefined | null) => {
           if (el?.rating === null) {

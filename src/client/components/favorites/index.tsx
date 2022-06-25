@@ -52,6 +52,7 @@ const Favorites = () => {
             {favorites.data?.me?.favoriteJobAds?.map((job: any) => {
               return (
                 <SlideCard
+                  key={job.id}
                   isFavorite={true}
                   width="w-full md:w-1/2"
                   className="mb-4 md:h-72"
@@ -79,7 +80,7 @@ const Favorites = () => {
       favorites.data?.me?.favoriteEvents?.length === 0 ? (
         <div className="w-full h-full flex justify-center items-center text-4xl">
           <FavoriteBorderIcon fontSize="large" />
-          <p>Upss... looks like you havnt added any favorites...</p>
+          <p>Upss... looks like you have not added any favorites...</p>
         </div>
       ) : (
         ""

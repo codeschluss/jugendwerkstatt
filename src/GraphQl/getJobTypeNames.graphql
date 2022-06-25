@@ -1,0 +1,8 @@
+query GetJobTypeNames($params: FilterSortPaginateInput) {
+  getJobTypes(params: $params) {
+    result {
+      name
+      id
+    }
+  }
+}

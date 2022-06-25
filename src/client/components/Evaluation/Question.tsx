@@ -1,20 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Radio from "@mui/material/Radio";
+import {
+  AnswerEntity,
+  QuestionEntity,
+  useSaveAnswerMutation,
+} from "../../../GraphQl/graphql";
 
 interface QuestionProps {
-  question: string;
+  answer: AnswerEntity | undefined | null;
+  submitAnswer?: any;
 }
 
-const Question: React.FC<QuestionProps> = ({ question }) => {
+const Question: React.FC<QuestionProps> = ({ answer, submitAnswer }) => {
   const [selectedValue, setSelectedValue] = useState(1);
+
+  // const [answer] = useSaveAnswerMutation();
+
+  submitAnswer(selectedValue);
 
   return (
     <div className=" flex my-0.5">
       <div className="text-xs w-36 bg-white h-16 ml-1 flex justify-center items-center p-1">
         {" "}
-        <p>{question}</p>
+        <p>{answer?.question?.item}</p>
       </div>
-      <div className="bg-white  h-16 flex justify-center items-center ml-0.5">
+      <div className="bg-white w-12  h-16 flex justify-center items-center ml-0.5">
         <Radio
           checked={selectedValue === 1}
           onChange={() => setSelectedValue(1)}
@@ -23,7 +33,7 @@ const Question: React.FC<QuestionProps> = ({ question }) => {
           inputProps={{ "aria-label": "A" }}
         />
       </div>
-      <div className="bg-white  h-16 flex justify-center items-center ml-0.5">
+      <div className="bg-white w-12  h-16 flex justify-center items-center ml-0.5">
         <Radio
           checked={selectedValue === 2}
           onChange={() => setSelectedValue(2)}
@@ -32,7 +42,7 @@ const Question: React.FC<QuestionProps> = ({ question }) => {
           inputProps={{ "aria-label": "B" }}
         />
       </div>
-      <div className="bg-white  h-16 flex justify-center items-center ml-0.5">
+      <div className="bg-white w-12  h-16 flex justify-center items-center ml-0.5">
         <Radio
           checked={selectedValue === 3}
           onChange={() => setSelectedValue(3)}
@@ -41,7 +51,7 @@ const Question: React.FC<QuestionProps> = ({ question }) => {
           inputProps={{ "aria-label": "B" }}
         />
       </div>
-      <div className="bg-white  h-16 flex justify-center items-center ml-0.5">
+      <div className="bg-white w-12  h-16 flex justify-center items-center ml-0.5">
         <Radio
           checked={selectedValue === 4}
           onChange={() => setSelectedValue(4)}

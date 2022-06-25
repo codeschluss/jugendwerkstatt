@@ -38,6 +38,7 @@ import LoginPage from "../client/pages/authentication/LoginPage";
 import RegisterPage from "../client/pages/authentication/Register";
 import Messenger from "../client/pages/messenger";
 import ApprovalPending from "../client/pages/verify/ApprovalPending";
+import Notifications from "../shared/components/notifications";
 
 const Router = () => {
   return (
@@ -183,6 +184,14 @@ const Router = () => {
             element={
               <Protected>
                 <Map />
+              </Protected>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <Protected>
+                <Notifications />
               </Protected>
             }
           />

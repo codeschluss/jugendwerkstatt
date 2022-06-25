@@ -3250,6 +3250,13 @@ export type DeleteJobAdFavoriteMutationVariables = Exact<{
 
 export type DeleteJobAdFavoriteMutation = { __typename?: 'Mutation', deleteJobAdFavorite?: { __typename?: 'UserEntity', id?: string | null } | null };
 
+export type DeleteUploadsMutationVariables = Exact<{
+  uploadIds?: InputMaybe<Array<InputMaybe<Scalars['String']>> | InputMaybe<Scalars['String']>>;
+}>;
+
+
+export type DeleteUploadsMutation = { __typename?: 'Mutation', deleteUploads?: { __typename?: 'UserEntity', id?: string | null } | null };
+
 export type GetChatQueryVariables = Exact<{
   entity?: InputMaybe<ChatEntityInput>;
 }>;
@@ -3310,6 +3317,13 @@ export type GetJobAdsQueryVariables = Exact<{
 
 
 export type GetJobAdsQuery = { __typename?: 'Query', getJobAds?: { __typename?: 'PageableList_JobAdEntity', result?: Array<{ __typename?: 'JobAdEntity', dueDate?: any | null, id?: string | null, title?: string | null, startDate?: any | null, company?: { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null, type?: { __typename?: 'JobTypeEntity', color?: string | null, id?: string | null, name?: string | null } | null } | null> | null } | null };
+
+export type GetJobTypeNamesQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type GetJobTypeNamesQuery = { __typename?: 'Query', getJobTypes?: { __typename?: 'PageableList_JobTypeEntity', result?: Array<{ __typename?: 'JobTypeEntity', name?: string | null, id?: string | null } | null> | null } | null };
 
 export type GetJobTypesQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3429,12 +3443,19 @@ export type ResetPasswordMutationVariables = Exact<{
 
 export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword?: boolean | null };
 
+export type SaveAnswerMutationVariables = Exact<{
+  entity?: InputMaybe<AnswerEntityInput>;
+}>;
+
+
+export type SaveAnswerMutation = { __typename?: 'Mutation', saveAnswer?: { __typename?: 'AnswerEntity', id?: string | null, rating?: number | null, question?: { __typename?: 'QuestionEntity', id?: string | null } | null } | null };
+
 export type SaveAssignmentMutationVariables = Exact<{
   entity?: InputMaybe<AssignmentEntityInput>;
 }>;
 
 
-export type SaveAssignmentMutation = { __typename?: 'Mutation', saveAssignment?: { __typename?: 'AssignmentEntity', id?: string | null } | null };
+export type SaveAssignmentMutation = { __typename?: 'Mutation', saveAssignment?: { __typename?: 'AssignmentEntity', id?: string | null, assignmentState?: { __typename?: 'AssignmentStateEntity', name?: string | null } | null, answers?: Array<{ __typename?: 'AnswerEntity', rating?: number | null, question?: { __typename?: 'QuestionEntity', id?: string | null, item?: string | null } | null } | null> | null } | null };
 
 export type SaveChatMutationVariables = Exact<{
   entity?: InputMaybe<ChatEntityInput>;
@@ -5891,6 +5912,39 @@ export function useDeleteJobAdFavoriteMutation(baseOptions?: Apollo.MutationHook
 export type DeleteJobAdFavoriteMutationHookResult = ReturnType<typeof useDeleteJobAdFavoriteMutation>;
 export type DeleteJobAdFavoriteMutationResult = Apollo.MutationResult<DeleteJobAdFavoriteMutation>;
 export type DeleteJobAdFavoriteMutationOptions = Apollo.BaseMutationOptions<DeleteJobAdFavoriteMutation, DeleteJobAdFavoriteMutationVariables>;
+export const DeleteUploadsDocument = gql`
+    mutation DeleteUploads($uploadIds: [String]) {
+  deleteUploads(uploadIds: $uploadIds) {
+    id
+  }
+}
+    `;
+export type DeleteUploadsMutationFn = Apollo.MutationFunction<DeleteUploadsMutation, DeleteUploadsMutationVariables>;
+
+/**
+ * __useDeleteUploadsMutation__
+ *
+ * To run a mutation, you first call `useDeleteUploadsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteUploadsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteUploadsMutation, { data, loading, error }] = useDeleteUploadsMutation({
+ *   variables: {
+ *      uploadIds: // value for 'uploadIds'
+ *   },
+ * });
+ */
+export function useDeleteUploadsMutation(baseOptions?: Apollo.MutationHookOptions<DeleteUploadsMutation, DeleteUploadsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteUploadsMutation, DeleteUploadsMutationVariables>(DeleteUploadsDocument, options);
+      }
+export type DeleteUploadsMutationHookResult = ReturnType<typeof useDeleteUploadsMutation>;
+export type DeleteUploadsMutationResult = Apollo.MutationResult<DeleteUploadsMutation>;
+export type DeleteUploadsMutationOptions = Apollo.BaseMutationOptions<DeleteUploadsMutation, DeleteUploadsMutationVariables>;
 export const GetChatDocument = gql`
     query GetChat($entity: ChatEntityInput) {
   getChat(entity: $entity) {
@@ -6382,6 +6436,44 @@ export function useGetJobAdsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetJobAdsQueryHookResult = ReturnType<typeof useGetJobAdsQuery>;
 export type GetJobAdsLazyQueryHookResult = ReturnType<typeof useGetJobAdsLazyQuery>;
 export type GetJobAdsQueryResult = Apollo.QueryResult<GetJobAdsQuery, GetJobAdsQueryVariables>;
+export const GetJobTypeNamesDocument = gql`
+    query GetJobTypeNames($params: FilterSortPaginateInput) {
+  getJobTypes(params: $params) {
+    result {
+      name
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetJobTypeNamesQuery__
+ *
+ * To run a query within a React component, call `useGetJobTypeNamesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetJobTypeNamesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetJobTypeNamesQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useGetJobTypeNamesQuery(baseOptions?: Apollo.QueryHookOptions<GetJobTypeNamesQuery, GetJobTypeNamesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetJobTypeNamesQuery, GetJobTypeNamesQueryVariables>(GetJobTypeNamesDocument, options);
+      }
+export function useGetJobTypeNamesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetJobTypeNamesQuery, GetJobTypeNamesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetJobTypeNamesQuery, GetJobTypeNamesQueryVariables>(GetJobTypeNamesDocument, options);
+        }
+export type GetJobTypeNamesQueryHookResult = ReturnType<typeof useGetJobTypeNamesQuery>;
+export type GetJobTypeNamesLazyQueryHookResult = ReturnType<typeof useGetJobTypeNamesLazyQuery>;
+export type GetJobTypeNamesQueryResult = Apollo.QueryResult<GetJobTypeNamesQuery, GetJobTypeNamesQueryVariables>;
 export const GetJobTypesDocument = gql`
     query GetJobTypes($params: FilterSortPaginateInput) {
   getJobTypes(params: $params) {
@@ -7202,10 +7294,57 @@ export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOption
 export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
 export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const SaveAnswerDocument = gql`
+    mutation SaveAnswer($entity: AnswerEntityInput) {
+  saveAnswer(entity: $entity) {
+    id
+    rating
+    question {
+      id
+    }
+  }
+}
+    `;
+export type SaveAnswerMutationFn = Apollo.MutationFunction<SaveAnswerMutation, SaveAnswerMutationVariables>;
+
+/**
+ * __useSaveAnswerMutation__
+ *
+ * To run a mutation, you first call `useSaveAnswerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveAnswerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveAnswerMutation, { data, loading, error }] = useSaveAnswerMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveAnswerMutation(baseOptions?: Apollo.MutationHookOptions<SaveAnswerMutation, SaveAnswerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveAnswerMutation, SaveAnswerMutationVariables>(SaveAnswerDocument, options);
+      }
+export type SaveAnswerMutationHookResult = ReturnType<typeof useSaveAnswerMutation>;
+export type SaveAnswerMutationResult = Apollo.MutationResult<SaveAnswerMutation>;
+export type SaveAnswerMutationOptions = Apollo.BaseMutationOptions<SaveAnswerMutation, SaveAnswerMutationVariables>;
 export const SaveAssignmentDocument = gql`
     mutation SaveAssignment($entity: AssignmentEntityInput) {
   saveAssignment(entity: $entity) {
     id
+    assignmentState {
+      name
+    }
+    answers {
+      rating
+      question {
+        id
+        item
+      }
+    }
   }
 }
     `;

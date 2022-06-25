@@ -3,8 +3,6 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   NotificationEntity,
-  NotificationType,
-  useAddListenerSubscription,
   useGetMeBasicQuery,
   useGetNotificationsQuery,
   useSaveNotificationMutation,
@@ -16,13 +14,7 @@ import I from "../../ui/IconWrapper";
 import Avatar from "../sideBar/Avatar";
 import Search from "./Search";
 import Badge from "@mui/material/Badge";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import FeedbackContext, {
-  FeedbackType,
-} from "../../../../contexts/FeedbackContext";
-import TokenStorageContext from "../../../../contexts/TokenStorageContext";
+import { BellIcon as FilledBell } from "@heroicons/react/solid";
 
 interface RightContentProps {}
 
@@ -90,8 +82,8 @@ const RightContent: React.FC<RightContentProps> = () => {
 
       <DropDown
         position="right"
-        className="mr-3  ml-3 border-r border-gray-200 pr-3 hidden md:block "
-        boxClassName=" mt-3 w-96 py-2.5 px-2 "
+        className="mr-3  ml-3  md:border-r md:border-gray-200 pr-3  block "
+        boxClassName=" mt-3 w-72 md:w-96 py-2.5 px-2 "
         withArrow={false}
         name={
           <Badge
@@ -103,48 +95,59 @@ const RightContent: React.FC<RightContentProps> = () => {
             color="error"
           >
             {unreadExist ? (
-              <NotificationsIcon color="action" />
+              <FilledBell className="text-white md:text-black w-5" />
             ) : (
-              <NotificationsNoneIcon color="action" />
+              <BellIcon className="text-white md:text-black w-5" />
             )}
           </Badge>
         }
       >
         <div>
-          <ul>
-            {notifications.data?.me?.notifications?.map((el: any) => {
-              const weekDays = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
-              const weekDay = weekDays[new Date(el.created).getDay()];
-              const year = `${new Date(el.created).getFullYear()}`;
-              const month = `${new Date(el.created).getMonth()}`;
-              const date = `${new Date(el.created).getDate()}`;
-              return (
-                <li
-                  onClick={() =>
-                    saveNotification({
-                      variables: {
-                        entity: {
-                          id: el.id,
-                          read: true,
+          <ul className="list-style-type: none">
+            {notifications.data?.me?.notifications
+              ?.filter((el: NotificationEntity | undefined | null) => !el?.read)
+              .map((el: any) => {
+                const weekDays = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+                const weekDay = weekDays[new Date(el.created).getDay()];
+                const year = `${new Date(el.created).getFullYear()}`;
+                const month = `${new Date(el.created).getMonth()}`;
+                const date = `${new Date(el.created).getDate()}`;
+                return (
+                  <li
+                    onClick={() =>
+                      saveNotification({
+                        variables: {
+                          entity: {
+                            id: el.id,
+                            read: true,
+                          },
                         },
-                      },
-                    }).then(() => notifications.refetch())
-                  }
-                  key={el.title}
-                  className={`border-b-[1px] p-2  border-gray-400 cursor-pointer ${
-                    !el.read && "bg-gray-100"
-                  }`}
-                >
-                  <p className={`text-base mt-2 ${!el.read && "font-bold"}`}>
-                    {el?.title}
-                  </p>
-                  <p className={`text-sm  ${!el.read && "font-bold"} `}>
-                    {el?.content}
-                  </p>
-                  <p className="text-sm ">{`${weekDay}, ${date}.${month}.${year}`}</p>
-                </li>
-              );
-            })}
+                      }).then(() => notifications.refetch())
+                    }
+                    key={el.title}
+                    className={`border-b-[1px] p-2  border-gray-400 cursor-pointer ${
+                      !el.read && "bg-gray-100"
+                    }`}
+                  >
+                    <p className={`text-base mt-2 ${!el.read && "font-bold"}`}>
+                      {el?.title}
+                    </p>
+                    <p className={`text-sm  ${!el.read && "font-bold"} `}>
+                      {el?.content}
+                    </p>
+                    <p className="text-sm ">{`${weekDay}, ${date}.${month}.${year}`}</p>
+                  </li>
+                );
+              })}
+            <Link to="notifications">
+              {" "}
+              <p
+                style={{ color: "blue" }}
+                className="text-sm text-center mt-2 "
+              >
+                see all notifications
+              </p>
+            </Link>
           </ul>
         </div>
       </DropDown>

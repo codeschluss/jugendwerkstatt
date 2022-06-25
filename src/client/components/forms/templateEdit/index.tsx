@@ -53,16 +53,20 @@ const TemplateEdit: React.FC = () => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ html: templateContent, name: templateName }),
+      body: JSON.stringify({
+        html: templateContent,
+        name: templateName,
+        type: "docx",
+      }),
     };
-    await fetch(API_URL + "media/pdf", requestOptions)
+    await fetch(API_URL + "media/export", requestOptions)
       .then((resp) => resp.blob())
       .then((blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.style.display = "none";
         a.href = url;
-        a.download = `${templateName}.pdf`;
+        a.download = `${templateName}.docx`;
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);

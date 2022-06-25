@@ -111,7 +111,12 @@ const SlideCard: React.FC<SlideCardProps> = ({
                 {location}
               </p>
             )}
-            {date && <p>{`${weekDay}, ${day}.${month}.${year}`}</p>}
+            {date && (
+              <p>
+                {color && "Bewerbungsfrist:"}{" "}
+                {`${weekDay}, ${day}.${month}.${year}`}
+              </p>
+            )}
           </div>
         </Link>
       </div>

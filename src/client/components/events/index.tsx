@@ -91,7 +91,7 @@ const Events = () => {
   return (
     <div className=" m-auto md:m-12">
       <div className=" pl-2 md:absolute  md:top-14 overflow-hidden bg-primary md:bg-transparent border-t-2 border-white md:border-none w-full items-center flex  h-16">
-        <SideBar />
+        <SideBar type="EVENT" />
 
         <FilterHeader />
       </div>

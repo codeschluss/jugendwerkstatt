@@ -86,13 +86,17 @@ const Chat = () => {
           // },
         },
       },
-    }).then(() => {
-      scrollToBottom();
-      getMessages.refetch();
-    });
+    })
+      .then(() => {
+        scrollToBottom();
+        getMessages.refetch();
+      })
+      .finally(() => (inputRef.current.value = ""));
   };
 
-  const reverseMessages = getMessages.data?.getMessages?.result?.reverse();
+  const reverseMessages = getMessages.data?.getMessages?.result
+    ?.slice()
+    .reverse();
 
   return (
     <div className="flex flex-col bg-[#eee] rounded-lg -mx-8 md:mx-0">

@@ -14,11 +14,12 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import {
   useGetEventCategorieNamesQuery,
   useGetEventCategoriesQuery,
+  useGetJobTypeNamesQuery,
 } from "../../../GraphQl/graphql";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
-const SideBar: React.FC = () => {
+const SideBar: React.FC<{ type?: string }> = ({ type }) => {
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -37,6 +38,8 @@ const SideBar: React.FC = () => {
     setTempCategory(event.target.value);
   };
   const eventCategories = useGetEventCategorieNamesQuery();
+  const jobTypeNames = useGetJobTypeNamesQuery();
+
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -58,7 +61,7 @@ const SideBar: React.FC = () => {
     });
 
     tempCategory && setCategory(tempCategory);
-    tempCategory &&
+    tempDates &&
       setDates({
         startDate: tempDates.tempStartDate,
         endDate: tempDates.tempEndDate,
@@ -78,7 +81,9 @@ const SideBar: React.FC = () => {
       </div>
 
       <FormControl sx={{ m: 3, minWidth: 200 }}>
-        <InputLabel id="demo-simple-select-helper-label">Kategorie</InputLabel>
+        <InputLabel id="demo-simple-select-helper-label">
+          {type === "EVENT" ? "Kategorie" : "JobType"}
+        </InputLabel>
         <Select
           labelId="demo-simple-select-helper-label"
           id="demo-simple-select-helper"
@@ -89,20 +94,30 @@ const SideBar: React.FC = () => {
           <MenuItem value="">
             <em></em>
           </MenuItem>
-          {eventCategories.data?.getEventCategories?.result?.map((cat: any) => {
-            return (
-              <MenuItem key={cat.id} value={cat}>
-                {cat.name}
-              </MenuItem>
-            );
-          })}
+          {type === "EVENT"
+            ? eventCategories.data?.getEventCategories?.result?.map(
+                (cat: any) => {
+                  return (
+                    <MenuItem key={cat.id} value={cat}>
+                      {cat.name}
+                    </MenuItem>
+                  );
+                }
+              )
+            : jobTypeNames.data?.getJobTypes?.result?.map((typeName: any) => {
+                return (
+                  <MenuItem key={typeName.id} value={typeName}>
+                    {typeName.name}
+                  </MenuItem>
+                );
+              })}
         </Select>
       </FormControl>
 
       <FormControl sx={{ m: 3 }}>
         <DatePicker
           disablePast
-          label="Start Date"
+          label={type === "EVENT" ? "Start date" : "Due Date"}
           value={tempDates.tempStartDate}
           onChange={(newValue) => {
             setTempDates({ ...tempDates, tempStartDate: newValue });
@@ -113,7 +128,7 @@ const SideBar: React.FC = () => {
       <FormControl sx={{ m: 3 }}>
         <DatePicker
           disablePast
-          label="endDate"
+          label={type === "EVENT" ? "End date" : "Start date"}
           value={tempDates.tempEndDate}
           onChange={(newValue) => {
             setTempDates({ ...tempDates, tempEndDate: newValue });

@@ -50,7 +50,7 @@ const Jobs: React.FC<EventsProps> = () => {
               isFavorite={hasId}
               eventName={el?.company?.name}
               location={el?.company?.address?.street}
-              date={el?.startDate}
+              date={el?.dueDate}
               // imgUrl={el?.titleImage?.id}
               color={el?.type?.color}
               setFavorite={() => {

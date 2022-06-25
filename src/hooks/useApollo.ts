@@ -66,7 +66,7 @@ export const useApollo = () => {
     httpLink
   );
   const client = new ApolloClient({
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({ addTypename: false }),
     link: ApolloLink.from([authMiddleware, errorLink, splitLink]),
   });
 

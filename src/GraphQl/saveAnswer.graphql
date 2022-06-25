@@ -1,0 +1,9 @@
+mutation SaveAnswer($entity: AnswerEntityInput) {
+  saveAnswer(entity: $entity) {
+    id
+    rating
+    question {
+      id
+    }
+  }
+}
