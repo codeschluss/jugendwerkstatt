@@ -1,0 +1,5 @@
+fragment FileField on MediaEntity {
+  id
+  base64
+  name
+}

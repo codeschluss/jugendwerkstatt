@@ -600,6 +600,7 @@ export type Mutation = {
   deleteMember: Scalars['Boolean'];
   deleteMessage?: Maybe<Scalars['Boolean']>;
   deleteMessages?: Maybe<Scalars['Boolean']>;
+  deleteNotification?: Maybe<Scalars['Boolean']>;
   deleteOrganizer?: Maybe<Scalars['Boolean']>;
   deleteOrganizers?: Maybe<Scalars['Boolean']>;
   deletePage?: Maybe<Scalars['Boolean']>;
@@ -666,6 +667,8 @@ export type Mutation = {
   saveMe?: Maybe<UserEntity>;
   saveMessage?: Maybe<MessageEntity>;
   saveMessages?: Maybe<Array<Maybe<MessageEntity>>>;
+  saveNotification?: Maybe<NotificationEntity>;
+  saveNotifications?: Maybe<Array<Maybe<NotificationEntity>>>;
   saveOrganizer?: Maybe<OrganizerEntity>;
   saveOrganizers?: Maybe<Array<Maybe<OrganizerEntity>>>;
   savePage?: Maybe<PageEntity>;
@@ -956,6 +959,12 @@ export type MutationDeleteMessageArgs = {
 /** Mutation root */
 export type MutationDeleteMessagesArgs = {
   ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteNotificationArgs = {
+  id?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -1357,6 +1366,18 @@ export type MutationSaveMessagesArgs = {
 
 
 /** Mutation root */
+export type MutationSaveNotificationArgs = {
+  entity?: InputMaybe<NotificationEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveNotificationsArgs = {
+  entities?: InputMaybe<Array<InputMaybe<NotificationEntityInput>>>;
+};
+
+
+/** Mutation root */
 export type MutationSaveOrganizerArgs = {
   entity?: InputMaybe<OrganizerEntityInput>;
 };
@@ -1740,6 +1761,12 @@ export type PageableList_MessageEntity = {
   total: Scalars['Long'];
 };
 
+export type PageableList_NotificationEntity = {
+  __typename?: 'PageableList_NotificationEntity';
+  result?: Maybe<Array<Maybe<NotificationEntity>>>;
+  total: Scalars['Long'];
+};
+
 export type PageableList_OrganizerEntity = {
   __typename?: 'PageableList_OrganizerEntity';
   result?: Maybe<Array<Maybe<OrganizerEntity>>>;
@@ -1898,6 +1925,8 @@ export type Query = {
   getLinks?: Maybe<PageableList_LinkEntity>;
   getMessage?: Maybe<MessageEntity>;
   getMessages?: Maybe<PageableList_MessageEntity>;
+  getNotification?: Maybe<NotificationEntity>;
+  getNotifications?: Maybe<PageableList_NotificationEntity>;
   getOrganizer?: Maybe<OrganizerEntity>;
   getOrganizers?: Maybe<PageableList_OrganizerEntity>;
   getPage?: Maybe<PageEntity>;
@@ -1929,6 +1958,7 @@ export type Query = {
   getUsers?: Maybe<PageableList_UserEntity>;
   lookupAddress?: Maybe<AddressEntity>;
   me?: Maybe<UserEntity>;
+  search?: Maybe<Array<Maybe<SearchDto>>>;
 };
 
 
@@ -2143,6 +2173,18 @@ export type QueryGetMessagesArgs = {
 
 
 /** Query root */
+export type QueryGetNotificationArgs = {
+  entity?: InputMaybe<NotificationEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetNotificationsArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
 export type QueryGetOrganizerArgs = {
   entity?: InputMaybe<OrganizerEntityInput>;
 };
@@ -2313,6 +2355,12 @@ export type QueryGetUsersArgs = {
 /** Query root */
 export type QueryLookupAddressArgs = {
   entity?: InputMaybe<AddressEntityInput>;
+};
+
+
+/** Query root */
+export type QuerySearchArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
 };
 
 export type QueryConjunctionInput = {
@@ -2486,6 +2534,20 @@ export type ScheduleEntityInput = {
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   startDate?: InputMaybe<Scalars['OffsetDateTime']>;
 };
+
+export type SearchDto = {
+  __typename?: 'SearchDto';
+  content?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']>;
+  type?: Maybe<SearchResultType>;
+};
+
+export enum SearchResultType {
+  Event = 'event',
+  JobAd = 'jobAd',
+  Template = 'template'
+}
 
 export type SettingsEntity = {
   __typename?: 'SettingsEntity';
@@ -2736,6 +2798,8 @@ export type CategoryFieldFragment = { __typename?: 'EventCategoryEntity', id?: s
 
 export type EventFragment = { __typename?: 'EventEntity', id?: string | null, name?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null };
 
+export type FileFieldFragment = { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null };
+
 export type GroupFieldFragment = { __typename?: 'GroupEntity', id?: string | null, name?: string | null };
 
 export type JobAdFieldFragment = { __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null };
@@ -2752,7 +2816,7 @@ export type LinkFragment = { __typename?: 'LinkEntity', id?: string | null, titl
 
 export type OrganizerFieldFragment = { __typename?: 'OrganizerEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null };
 
-export type PageFieldFragment = { __typename?: 'PageEntity', id?: string | null, content?: string | null, slug?: string | null };
+export type PageFieldFragment = { __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null> | null };
 
 export type QuestionFieldFragment = { __typename?: 'QuestionEntity', id?: string | null, item?: string | null };
 
@@ -2952,6 +3016,13 @@ export type DeleteOrganizerMutationVariables = Exact<{
 
 
 export type DeleteOrganizerMutation = { __typename?: 'Mutation', deleteOrganizer?: boolean | null };
+
+export type SavePageMutationVariables = Exact<{
+  entity?: InputMaybe<PageEntityInput>;
+}>;
+
+
+export type SavePageMutation = { __typename?: 'Mutation', savePage?: { __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null> | null } | null };
 
 export type DeletePageMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
@@ -3200,14 +3271,14 @@ export type GetOrganizerQuery = { __typename?: 'Query', organizer?: { __typename
 export type GetPagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPagesQuery = { __typename?: 'Query', pages?: { __typename?: 'PageableList_PageEntity', result?: Array<{ __typename?: 'PageEntity', id?: string | null, content?: string | null, slug?: string | null } | null> | null } | null };
+export type GetPagesQuery = { __typename?: 'Query', pages?: { __typename?: 'PageableList_PageEntity', result?: Array<{ __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null> | null } | null> | null } | null };
 
 export type GetPageQueryVariables = Exact<{
   entity?: InputMaybe<PageEntityInput>;
 }>;
 
 
-export type GetPageQuery = { __typename?: 'Query', page?: { __typename?: 'PageEntity', id?: string | null, content?: string | null, slug?: string | null } | null };
+export type GetPageQuery = { __typename?: 'Query', page?: { __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null> | null } | null };
 
 export type DeleteQuestionMutationVariables = Exact<{
   questionId?: InputMaybe<Scalars['String']>;
@@ -3693,13 +3764,27 @@ export const OrganizerFieldFragmentDoc = gql`
   website
 }
     `;
+export const FileFieldFragmentDoc = gql`
+    fragment FileField on MediaEntity {
+  id
+  base64
+  name
+}
+    `;
 export const PageFieldFragmentDoc = gql`
     fragment PageField on PageEntity {
   id
-  content
+  name
   slug
+  content
+  video {
+    ...FileField
+  }
+  images {
+    ...FileField
+  }
 }
-    `;
+    ${FileFieldFragmentDoc}`;
 export const QuestionFieldFragmentDoc = gql`
     fragment QuestionField on QuestionEntity {
   id
@@ -4645,6 +4730,39 @@ export function useDeleteOrganizerMutation(baseOptions?: Apollo.MutationHookOpti
 export type DeleteOrganizerMutationHookResult = ReturnType<typeof useDeleteOrganizerMutation>;
 export type DeleteOrganizerMutationResult = Apollo.MutationResult<DeleteOrganizerMutation>;
 export type DeleteOrganizerMutationOptions = Apollo.BaseMutationOptions<DeleteOrganizerMutation, DeleteOrganizerMutationVariables>;
+export const SavePageDocument = gql`
+    mutation SavePage($entity: PageEntityInput) {
+  savePage(entity: $entity) {
+    ...PageField
+  }
+}
+    ${PageFieldFragmentDoc}`;
+export type SavePageMutationFn = Apollo.MutationFunction<SavePageMutation, SavePageMutationVariables>;
+
+/**
+ * __useSavePageMutation__
+ *
+ * To run a mutation, you first call `useSavePageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSavePageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [savePageMutation, { data, loading, error }] = useSavePageMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSavePageMutation(baseOptions?: Apollo.MutationHookOptions<SavePageMutation, SavePageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SavePageMutation, SavePageMutationVariables>(SavePageDocument, options);
+      }
+export type SavePageMutationHookResult = ReturnType<typeof useSavePageMutation>;
+export type SavePageMutationResult = Apollo.MutationResult<SavePageMutation>;
+export type SavePageMutationOptions = Apollo.BaseMutationOptions<SavePageMutation, SavePageMutationVariables>;
 export const DeletePageDocument = gql`
     mutation DeletePage($id: String) {
   deletePage(id: $id)
