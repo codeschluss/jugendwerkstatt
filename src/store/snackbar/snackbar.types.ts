@@ -1,14 +1,12 @@
-import { GQLErrorTypeEnum } from '../../interfaces/enums/GQLErrorType.enum';
+import { SnackbarTypeEnum } from '../../interfaces/enums/SnackbarType.enum';
 
 export interface SnackbarStoreTypes {
-  open: boolean;
   info: SnackbarInfo | null;
   handleClose: () => void;
   handleOpen: (info: SnackbarInfo) => void;
 }
 
 export type SnackbarInfo = {
-  type: GQLErrorTypeEnum;
+  type: SnackbarTypeEnum;
   message?: string;
-  action?: string;
 };
