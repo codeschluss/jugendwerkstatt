@@ -1,5 +1,5 @@
 import Button from "../../../../client/components/ui/Button";
-import { useAuth } from "../../../../hooks/useAuthV2";
+import { useAuth } from "../../../../hooks/useAuth";
 import CustomHeader from "../../header/customHeader/CustomHeader";
 import DeleteConfirmation from "./Confirmation";
 import Items from "./Items";

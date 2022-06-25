@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 import {
   useAddEventFavoriteMutation,
+  useDeleteEventFavoriteMutation,
   useGetEventImagesQuery,
   useGetEventQuery,
-  useGetMeFavoritesQuery
+  useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
@@ -25,6 +26,7 @@ export const SingleEvent = () => {
   });
 
   const [eventFavorite] = useAddEventFavoriteMutation({});
+  const [deleteEventFavorite] = useDeleteEventFavoriteMutation();
 
   const favorites = useGetMeFavoritesQuery({
     fetchPolicy: "network-only",
@@ -51,6 +53,13 @@ export const SingleEvent = () => {
               eventFavorite({
                 variables: {
                   jobAdId: eventQuery?.data?.getEvent?.id,
+                },
+              }).then(() => refetchQueries())
+            }
+            removeFavorite={() =>
+              deleteEventFavorite({
+                variables: {
+                  eventId: eventQuery?.data?.getEvent?.id,
                 },
               }).then(() => refetchQueries())
             }

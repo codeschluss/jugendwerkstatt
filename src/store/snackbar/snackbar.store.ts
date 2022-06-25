@@ -1,7 +1,7 @@
-import create from 'zustand';
+import create from "zustand";
 
 // types
-import { SnackbarInfo, SnackbarStoreTypes } from './snackbar.types';
+import { SnackbarInfo, SnackbarStoreTypes } from "./snackbar.types";
 
 export const snackbarStore = create<SnackbarStoreTypes>((set) => ({
   info: null,

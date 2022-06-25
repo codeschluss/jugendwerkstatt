@@ -43,16 +43,22 @@ const EventsCalendar: React.FC = () => {
       var tempSchedules = singleEvent?.schedules as any;
 
       for (let i = 0; i < tempSchedules?.length; i++) {
-        datesOnEvents[temmmpCounter] = {
-          id: temmmpCounter,
-          eventId: singleEvent.id,
-          name: singleEvent.name,
-          description: singleEvent.description,
-          start: new Date(tempSchedules[i]?.startDate),
-          end: new Date(tempSchedules[i]?.endDate),
-          allDay: true,
-        };
-        temmmpCounter = temmmpCounter + 1;
+        if (
+          new Date(tempSchedules[i]?.startDate) <=
+          new Date(tempSchedules[i]?.endDate)
+        ) {
+          //validating bad schedules
+          datesOnEvents[temmmpCounter] = {
+            id: temmmpCounter,
+            eventId: singleEvent.id,
+            name: singleEvent.name,
+            description: singleEvent.description,
+            start: new Date(tempSchedules[i]?.startDate),
+            end: new Date(tempSchedules[i]?.endDate),
+            allDay: true,
+          };
+          temmmpCounter = temmmpCounter + 1;
+        }
       }
     });
   }
@@ -139,7 +145,7 @@ const EventsCalendar: React.FC = () => {
       return (
         <Link
           className="anchor-number-of-events "
-          to={"/events/calendar?date=" + dateParameter}
+          to={"/EventsCalendar?date=" + dateParameter}
         >
           {event.numberOfEvents}{" "}
           V&shy;e&shy;r&shy;a&shy;n&shy;s&shy;t&shy;a&shy;l&shy;t&shy;u&shy;n&shy;g&shy;e&shy;n
@@ -256,7 +262,7 @@ const EventsCalendar: React.FC = () => {
   };
 
   return (
-    <div className="absolute lg:relative top-0 left-0 w-screen h-screen lg:w-full lg:h-full bg-[#f7f7f7] z-10 lg:z-auto pt-0">
+    <div className="absolute md:m-12 lg:relative top-0 left-0 w-screen h-screen lg:w-full lg:h-full bg-[#f7f7f7] z-10 lg:z-auto pt-0">
       <div className="lg:hidden flex bg-primary h-[6.5rem] text-white">
         <div className="relative my-auto">
           <button

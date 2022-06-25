@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import {
   MediaEntity,
   TemplateTypeEntity,
+  useDeleteUploadsMutation,
   useGetMeUploadsQuery,
   useGetTemplateTypesQuery,
 } from "../../../GraphQl/graphql";
@@ -27,6 +28,8 @@ const Forms: React.FC = () => {
   const userUploads = useGetMeUploadsQuery({
     fetchPolicy: "network-only",
   });
+
+  const [deleteUpload] = useDeleteUploadsMutation();
 
   const fetchedUserUploads: [MediaEntity] = userUploads.data?.me?.uploads as [
     MediaEntity
@@ -83,7 +86,15 @@ const Forms: React.FC = () => {
               return (
                 <div className="flex justify-between w-full">
                   <Row rowItem={el.name} />
-                  <Action onDelete />
+                  <Action
+                    onDelete={() =>
+                      deleteUpload({
+                        variables: {
+                          uploadIds: el.id,
+                        },
+                      }).then(() => userUploads.refetch())
+                    }
+                  />
                 </div>
               );
             })}

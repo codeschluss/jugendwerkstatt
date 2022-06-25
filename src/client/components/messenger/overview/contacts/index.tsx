@@ -8,7 +8,6 @@ import Item from "../Item";
 
 const Contacts = () => {
   const getUsers = useGetUsersQuery();
-  console.log(getUsers.data?.getUsers?.result, "getusers");
   const [saveChat] = useSaveChatMutation();
   // const [modal, setModal] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -29,7 +28,6 @@ const Contacts = () => {
         },
       },
     }).then((res) => {
-      console.log(res.data?.saveChat?.id, "ID");
       navigate(`/messenger/chat/${res.data?.saveChat?.id}`);
     });
   };

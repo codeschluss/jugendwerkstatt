@@ -1,0 +1,5 @@
+mutation DeleteJobAdFavorite($jobAdId: String) {
+  deleteJobAdFavorite(jobAdId: $jobAdId) {
+    id
+  }
+}

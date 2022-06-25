@@ -17,9 +17,7 @@ export const RequireAuthRoute = ({
   const { isAuthenticated, user } = useAuthStore();
   useExpireToken();
 
-  console.log("auth");
-
-  // if (loading) return <div>Loading...</div>;
+  console.log("user", user, isAuthenticated && !user?.verified);
 
   // if (!user?.verified) {
   //   return (
@@ -30,7 +28,7 @@ export const RequireAuthRoute = ({
   //   );
   // }
 
-  // if (!user?.approved) {
+  // if ( !user?.approved) {
   //   return (
   //     <Navigate
   //       to={{ pathname: "/pending-approval" }}

@@ -7,14 +7,13 @@ interface TextProps {
 }
 
 const ChatText: React.FC<TextProps> = ({ content, name, me }) => {
-  console.log(me);
   return (
     <div
       className={`w-full flex px-6  ${me ? "justify-end" : "justify-start"}`}
     >
       <span
-        className={`p-2 max-w-[70%] my-1 rounded-md text-gray-800 text-sm 
-        ${me ? "bg-green-300" : "bg-white"}`}
+        className={`p-2 max-w-[70%] my-1 rounded-md  text-sm
+        ${me ? "bg-primary text-white" : "bg-white text-black"}`}
       >
         {name && <p className=" text-base">{name}</p>}
         <p>{content}</p>

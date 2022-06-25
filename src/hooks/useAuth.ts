@@ -1,107 +1,83 @@
-import { default as jwt_decode } from 'jwt-decode';
-import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../contexts/AuthContext';
-import FeedbackContext, { FeedbackType } from '../contexts/FeedbackContext';
-import TokenStorageContext from '../contexts/TokenStorageContext';
+import { useCallback, useEffect } from "react";
+
+import { useAuthStore } from "../store";
 import {
-  TokenDto,
-  useCreateTokenMutation,
-  useRefreshTokenMutation,
-} from '../GraphQl/graphql';
+  getSingleJWTField,
+  readAuthToken,
+  removeAuthToken,
+  validateAuthToken,
+  writeAuthToken,
+} from "../shared/utils";
 
-enum UserRole {
-  ADMIN = 'Admin',
-  STUDENT = 'Student',
-}
+import { useRefreshTokenMutation } from "../GraphQl/graphql";
 
-export const useAuth = () => {
-  const navigate = useNavigate();
+export const useAuth = (): {
+  loading: boolean;
+  handleLogout: () => void;
+  handleStoreUser: (token: string) => void;
+} => {
+  const { loading, addAuth, removeAuth } = useAuthStore();
 
-  const { setAccessToken, refreshToken, setRefreshToken } =
-    useContext(TokenStorageContext);
+  const refreshToken = readAuthToken("refreshToken") || "";
+  const accessToken = readAuthToken("accessToken") || "";
 
-  const { setIsLogedIn, useRoles } = useContext(AuthContext);
-  const { setFeedback } = useContext(FeedbackContext);
-
-  const init = () => {
-    refreshToken && expiration(refreshToken) > 0 ? refresh() : logout();
-  };
-
-  const expiration = (token: string): number => {
-    const decoded = JSON.parse(atob(token.split('.')[1]));
-    return decoded.exp * 1000 - Date.now();
-  };
-
-  const [refreshTokenMutation] = useRefreshTokenMutation();
-  const refresh = () => {
-    if (refreshToken) {
-      refreshTokenMutation({
-        variables: {
-          refreshToken: refreshToken || '',
+  const handleStoreUser = useCallback(
+    (token: string) => {
+      const fields = getSingleJWTField(token);
+      addAuth(
+        {
+          roles: fields?.roles || [],
+          scopes: fields?.scopes || [],
+          approved: fields?.approved || false,
+          verified: fields?.verified || false,
+          email: fields?.sub || "",
         },
-      }).then((response) => store(response.data?.refreshToken));
-    }
-  };
-
-  const [createToken] = useCreateTokenMutation();
-  const handleLogin = (email: string, password: string) => {
-    createToken({
-      variables: {
-        username: email,
-        password: password,
-      },
-    }).then((response) => {
-      const recievedToken: [string] | any = jwt_decode(
-        response.data?.createToken?.access || ''
+        true,
+        false
       );
+    },
+    [addAuth]
+  );
 
-      if (!recievedToken.verified) {
-        navigate('/reVerifyEmail');
-        return;
+  const handleLogout = useCallback(() => {
+    removeAuthToken("refreshToken");
+    removeAuthToken("accessToken");
+    removeAuth();
+    addAuth(null, false, false);
+  }, [addAuth, removeAuth]);
+
+  const [refreshTokenMutation] = useRefreshTokenMutation({
+    onCompleted: ({ refreshToken }) => {
+      if (!!refreshToken?.access) {
+        writeAuthToken("accessToken", refreshToken?.access);
+        handleStoreUser(refreshToken?.access);
       }
+    },
+    onError: () => handleLogout(),
+  });
 
-      //TODO: pending approved view
-      if (!recievedToken.approved) {
-        navigate('/pending-approval');
-        return;
+  const handleRefresh = useCallback(() => {
+    refreshTokenMutation({ variables: { refreshToken } });
+  }, [refreshToken, refreshTokenMutation]);
+
+  useEffect(() => {
+    if (validateAuthToken(refreshToken)) {
+      if (!validateAuthToken(accessToken)) {
+        handleRefresh();
+      } else {
+        handleStoreUser(accessToken);
       }
-
-      store(response.data?.createToken);
-      setFeedback({
-        type: FeedbackType.Success,
-        message: 'Erolgreich eingeloggt',
-      });
-      console.log(useRoles);
-      const user = JSON.parse(
-        atob(response.data?.createToken?.access?.split('.')[1] || '')
-      );
-
-      console.log(user);
-      navigate(user?.roles?.[0] === UserRole.ADMIN ? '/admin' : '/');
-    });
-  };
-
-  const store = (token: TokenDto | null | undefined) => {
-    if (token) {
-      setAccessToken(token.access);
-      setRefreshToken(token.refresh);
-      setIsLogedIn(true);
+    } else {
+      handleLogout();
     }
-  };
+  }, [
+    accessToken,
+    refreshToken,
+    addAuth,
+    handleLogout,
+    handleRefresh,
+    handleStoreUser,
+  ]);
 
-  const logout = () => {
-    setAccessToken(null);
-    setRefreshToken(null);
-    setIsLogedIn(false);
-    navigate('/');
-  };
-
-  return {
-    init,
-    handleLogin,
-    logout,
-  };
+  return { loading, handleLogout, handleStoreUser };
 };
-
-export default useAuth;

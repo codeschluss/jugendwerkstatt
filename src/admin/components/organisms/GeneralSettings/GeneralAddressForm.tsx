@@ -1,15 +1,15 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { ReactElement, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   useGetAddressQuery,
   useSaveAddressMutation,
-} from '../../../../GraphQl/graphql';
-import { GeneralAddressFormSchema } from '../../../validations';
-import { Button } from '../../atoms';
-import { Accordion, InputField } from '../../molecules';
-import { GeneralAddressFormProps } from './GeneralAddressForm.props';
+} from "../../../../GraphQl/graphql";
+import { GeneralAddressFormSchema } from "../../../validations";
+import { Button } from "../../atoms";
+import { Accordion, InputField } from "../../molecules";
+import { GeneralAddressFormProps } from "./GeneralAddressForm.props";
 
 export const GeneralAddressForm = (): ReactElement => {
   const navigate = useNavigate();
@@ -27,16 +27,16 @@ export const GeneralAddressForm = (): ReactElement => {
   });
 
   const [saveAddress] = useSaveAddressMutation({
-    onCompleted: () => navigate('/admin/general-settings/addresses'),
+    onCompleted: () => navigate("/admin/general-settings/addresses"),
   });
 
   useEffect(() => {
     if (id)
       reset({
-        street: address?.street || '',
-        place: address?.place || '',
-        houseNumber: address?.houseNumber || '',
-        postalCode: address?.postalCode || '',
+        street: address?.street || "",
+        place: address?.place || "",
+        houseNumber: address?.houseNumber || "",
+        postalCode: address?.postalCode || "",
         latitude: address?.latitude || 0,
         longitude: address?.longitude || 0,
       });
@@ -53,14 +53,14 @@ export const GeneralAddressForm = (): ReactElement => {
             <InputField
               id="street"
               label="Straße"
-              {...register('street')}
+              {...register("street")}
               error={errors.street?.message}
               placeholder="Heinz-Kluncker-Straße"
             />
             <InputField
               id="place"
               label="Stadt"
-              {...register('place')}
+              {...register("place")}
               placeholder="Wuppertal"
               error={errors.place?.message}
             />
@@ -71,7 +71,7 @@ export const GeneralAddressForm = (): ReactElement => {
               placeholder="4"
               id="houseNumber"
               label="Hausnummer"
-              {...register('houseNumber')}
+              {...register("houseNumber")}
               error={errors.houseNumber?.message}
             />
             <InputField
@@ -79,7 +79,7 @@ export const GeneralAddressForm = (): ReactElement => {
               id="postalCode"
               label="Postleitzahl"
               placeholder="42285"
-              {...register('postalCode')}
+              {...register("postalCode")}
               error={errors.postalCode?.message}
             />
           </div>
@@ -90,14 +90,14 @@ export const GeneralAddressForm = (): ReactElement => {
             id="longitude"
             label="Längengrad"
             placeholder="7.1507636"
-            {...register('longitude')}
+            {...register("longitude")}
             error={errors?.longitude?.message}
           />
           <InputField
             id="latitude"
             label="Breitengrad"
             placeholder="7.1507636"
-            {...register('latitude')}
+            {...register("latitude")}
             error={errors?.latitude?.message}
           />
         </div>

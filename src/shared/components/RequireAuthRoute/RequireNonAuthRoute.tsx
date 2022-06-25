@@ -10,8 +10,6 @@ export const RequireNonAuthRoute = (): ReactElement => {
   const location = useLocation();
   const { isAuthenticated } = useAuthStore();
 
-  console.log("non auth");
-
   return isAuthenticated ? (
     <Navigate to={{ pathname: "/" }} state={{ from: location }} />
   ) : (

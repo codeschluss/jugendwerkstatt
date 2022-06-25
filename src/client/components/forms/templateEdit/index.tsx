@@ -1,15 +1,13 @@
+import React, { useEffect, useState } from "react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import DownloadIcon from "@heroicons/react/solid/DownloadIcon";
-import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../../../../config/app";
-import AuthContext from "../../../../contexts/AuthContext";
 import {
   useGetMeBasicQuery,
   useGetTemplateQuery,
   useGetUserTemplateQuery,
-  UserEntity,
   useSaveUserTemplateMutation,
 } from "../../../../GraphQl/graphql";
 import I from "../../../../shared/components/ui/IconWrapper";
@@ -53,16 +51,20 @@ const TemplateEdit: React.FC = () => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ html: templateContent, name: templateName }),
+      body: JSON.stringify({
+        html: templateContent,
+        name: templateName,
+        type: "docx",
+      }),
     };
-    await fetch(API_URL + "media/pdf", requestOptions)
+    await fetch(API_URL + "media/export", requestOptions)
       .then((resp) => resp.blob())
       .then((blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.style.display = "none";
         a.href = url;
-        a.download = `${templateName}.pdf`;
+        a.download = `${templateName}.docx`;
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);

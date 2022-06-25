@@ -49,7 +49,7 @@ const DropDown: React.FC<DropDownProps> = ({
           <div
             className={cx([
               boxClassName,
-              `absolute z-20 bg-white p-4 rounded-lg shadow ${position}-0`,
+              `absolute z-20 bg-white p-4 rounded-lg shadow  ${position}-0`,
             ])}
           >
             {children}

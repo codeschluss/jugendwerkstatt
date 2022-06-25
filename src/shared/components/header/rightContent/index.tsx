@@ -2,15 +2,19 @@ import { BellIcon, LogoutIcon, SearchIcon } from "@heroicons/react/outline";
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import {
+  NotificationEntity,
   useGetMeBasicQuery,
   useGetNotificationsQuery,
+  useSaveNotificationMutation,
 } from "../../../../GraphQl/graphql";
-import { useAuth } from "../../../../hooks/useAuthV2";
+import { useAuth } from "../../../../hooks/useAuth";
 import detectDevice from "../../../utils/isTouch";
 import DropDown from "../../ui/DropDown";
 import I from "../../ui/IconWrapper";
 import Avatar from "../sideBar/Avatar";
 import Search from "./Search";
+import Badge from "@mui/material/Badge";
+import { BellIcon as FilledBell } from "@heroicons/react/solid";
 
 const RightContent: FC = () => {
   const isTouch = detectDevice();
@@ -19,6 +23,11 @@ const RightContent: FC = () => {
   const { handleLogout } = useAuth();
   const user = useGetMeBasicQuery();
   const notifications = useGetNotificationsQuery();
+  const [saveNotification] = useSaveNotificationMutation();
+
+  const unreadExist = notifications.data?.me?.notifications?.filter(
+    (notification: NotificationEntity | undefined | null) => !notification?.read
+  ).length;
 
   return (
     <div className="relative flex items-center justify-end flex-grow">
@@ -72,34 +81,72 @@ const RightContent: FC = () => {
 
       <DropDown
         position="right"
-        className="hidden pr-3 ml-3 mr-3 border-r border-gray-200 md:block"
-        boxClassName=" mt-3 w-96 py-2.5 px-4"
+        className="block pr-3 ml-3 mr-3 md:border-r md:border-gray-200 "
+        boxClassName=" mt-3 w-72 md:w-96 py-2.5 px-2 "
+        withArrow={false}
         name={
-          <I className="w-6 h-6 text-white md:text-black md:ml-6">
-            <BellIcon />
-          </I>
+          <Badge
+            badgeContent={
+              notifications.data?.me?.notifications?.filter(
+                (el: NotificationEntity | undefined | null) => !el?.read
+              ).length
+            }
+            color="error"
+          >
+            {unreadExist ? (
+              <FilledBell className="w-5 text-white md:text-black" />
+            ) : (
+              <BellIcon className="w-5 text-white md:text-black" />
+            )}
+          </Badge>
         }
       >
         <div>
-          <ul>
-            {notifications.data?.me?.notifications?.map((el: any) => {
-              const weekDays = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
-              const weekDay = weekDays[new Date(el.created).getDay()];
-              const year = `${new Date(el.created).getFullYear()}`;
-              const month = `${new Date(el.created).getMonth()}`;
-              const date = `${new Date(el.created).getDate()}`;
-              return (
-                <li key={el.title} className="border-b-[1px]  border-gray-400">
-                  <p className={`text-base mt-2 ${el.read && "font-bold"}`}>
-                    {el?.title}
-                  </p>
-                  <p className={`text-sm py-2 ${el.read && "font-bold"} `}>
-                    {el?.content}
-                  </p>
-                  <p className="py-2 text-sm">{`${weekDay}, ${date}.${month}.${year}`}</p>
-                </li>
-              );
-            })}
+          <ul className="list-style-type: none">
+            {notifications.data?.me?.notifications
+              ?.filter((el: NotificationEntity | undefined | null) => !el?.read)
+              .map((el: any) => {
+                const weekDays = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+                const weekDay = weekDays[new Date(el.created).getDay()];
+                const year = `${new Date(el.created).getFullYear()}`;
+                const month = `${new Date(el.created).getMonth()}`;
+                const date = `${new Date(el.created).getDate()}`;
+                return (
+                  <li
+                    onClick={() =>
+                      saveNotification({
+                        variables: {
+                          entity: {
+                            id: el.id,
+                            read: true,
+                          },
+                        },
+                      }).then(() => notifications.refetch())
+                    }
+                    key={el.title}
+                    className={`border-b-[1px] p-2  border-gray-400 cursor-pointer ${
+                      !el.read && "bg-gray-100"
+                    }`}
+                  >
+                    <p className={`text-base mt-2 ${!el.read && "font-bold"}`}>
+                      {el?.title}
+                    </p>
+                    <p className={`text-sm  ${!el.read && "font-bold"} `}>
+                      {el?.content}
+                    </p>
+                    <p className="text-sm ">{`${weekDay}, ${date}.${month}.${year}`}</p>
+                  </li>
+                );
+              })}
+            <Link to="notifications">
+              {" "}
+              <p
+                style={{ color: "blue" }}
+                className="mt-2 text-sm text-center "
+              >
+                see all notifications
+              </p>
+            </Link>
           </ul>
         </div>
       </DropDown>

@@ -5,7 +5,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { BrowserRouter } from "react-router-dom";
 
-import App from "./AppV2";
+import App from "./App";
 import { apolloClient } from "./GraphQl/config";
 import { SideBarProvider } from "./contexts/SideBarContext";
 import { FilterProvider } from "./contexts/FilterContext";

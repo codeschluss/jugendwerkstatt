@@ -1,6 +1,3 @@
-import { useContext } from "react";
-import { API_URL } from "../../../../config/app";
-import AuthContext from "../../../../contexts/AuthContext";
 import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
 import Avatar from "./Avatar";
 import Styles from "./Head.module.css";
@@ -9,7 +6,7 @@ const Head: React.FunctionComponent = () => {
   const { data } = useGetMeBasicQuery();
 
   return (
-    <div className="w-full p-8 relative">
+    <div className="relative w-full p-8">
       <span
         className={`absolute inset-0 overflow-hidden ${Styles.headStyle}`}
       ></span>
