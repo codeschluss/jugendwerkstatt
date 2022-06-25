@@ -1,24 +1,37 @@
 import { ReactElement } from "react";
 import { Outlet, Navigate, useLocation } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../../../contexts/AuthContext";
+
+// store
+import { useAuthStore } from "../../../store";
 
 export const RequireAuthRoute = (): ReactElement => {
   // hooks
   const location = useLocation();
-  const { userRole } = useContext(AuthContext);
+  const { isAuthenticated, user } = useAuthStore();
 
-  // if (userRole === "") return <div>Loading...</div>;
+  console.log("auth", user, isAuthenticated);
 
-  return !!userRole && userRole !== "Admin" ? (
+  // if (!user?.verified) {
+  //   return (
+  //     <Navigate
+  //       to={{ pathname: "/reVerifyEmail" }}
+  //       state={{ from: location }}
+  //     />
+  //   );
+  // }
+
+  // if (!user?.approved) {
+  //   return (
+  //     <Navigate
+  //       to={{ pathname: "/pending-approval" }}
+  //       state={{ from: location }}
+  //     />
+  //   );
+  // }
+
+  return isAuthenticated ? (
     <Outlet />
   ) : (
-    <Navigate
-      to={{
-        pathname:
-          !!userRole && userRole === "Admin" ? "/admin/events" : "/login",
-      }}
-      state={{ from: location }}
-    />
+    <Navigate to={{ pathname: "/login" }} state={{ from: location }} />
   );
 };
