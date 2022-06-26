@@ -2768,13 +2768,6 @@ export type VerificationEntityInput = {
   user?: InputMaybe<UserEntityInput>;
 };
 
-export type SaveClientAssignmentMutationVariables = Exact<{
-  entity?: InputMaybe<AssignmentEntityInput>;
-}>;
-
-
-export type SaveClientAssignmentMutation = { __typename?: 'Mutation', saveAssignment?: { __typename?: 'AssignmentEntity', id?: string | null, assignmentState?: { __typename?: 'AssignmentStateEntity', name?: string | null } | null, answers?: Array<{ __typename?: 'AnswerEntity', rating?: number | null, question?: { __typename?: 'QuestionEntity', id?: string | null, item?: string | null } | null } | null> | null } | null };
-
 export type AddEventFavoriteMutationVariables = Exact<{
   jobAdId?: InputMaybe<Scalars['String']>;
 }>;
@@ -3623,6 +3616,13 @@ export type SaveChatMutationVariables = Exact<{
 
 export type SaveChatMutation = { __typename?: 'Mutation', saveChat?: { __typename?: 'ChatEntity', id?: string | null } | null };
 
+export type SaveClientAssignmentMutationVariables = Exact<{
+  entity?: InputMaybe<AssignmentEntityInput>;
+}>;
+
+
+export type SaveClientAssignmentMutation = { __typename?: 'Mutation', saveAssignment?: { __typename?: 'AssignmentEntity', id?: string | null, assignmentState?: { __typename?: 'AssignmentStateEntity', name?: string | null } | null, answers?: Array<{ __typename?: 'AnswerEntity', rating?: number | null, question?: { __typename?: 'QuestionEntity', id?: string | null, item?: string | null } | null } | null> | null } | null };
+
 export type SaveFeedbackMutationVariables = Exact<{
   entity?: InputMaybe<FeedbackEntityInput>;
 }>;
@@ -3938,49 +3938,6 @@ export const UserFieldFragmentDoc = gql`
   created
 }
     ${RoleFieldFragmentDoc}`;
-export const SaveClientAssignmentDocument = gql`
-    mutation SaveClientAssignment($entity: AssignmentEntityInput) {
-  saveAssignment(entity: $entity) {
-    id
-    assignmentState {
-      name
-    }
-    answers {
-      rating
-      question {
-        id
-        item
-      }
-    }
-  }
-}
-    `;
-export type SaveClientAssignmentMutationFn = Apollo.MutationFunction<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>;
-
-/**
- * __useSaveClientAssignmentMutation__
- *
- * To run a mutation, you first call `useSaveClientAssignmentMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSaveClientAssignmentMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [saveClientAssignmentMutation, { data, loading, error }] = useSaveClientAssignmentMutation({
- *   variables: {
- *      entity: // value for 'entity'
- *   },
- * });
- */
-export function useSaveClientAssignmentMutation(baseOptions?: Apollo.MutationHookOptions<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>(SaveClientAssignmentDocument, options);
-      }
-export type SaveClientAssignmentMutationHookResult = ReturnType<typeof useSaveClientAssignmentMutation>;
-export type SaveClientAssignmentMutationResult = Apollo.MutationResult<SaveClientAssignmentMutation>;
-export type SaveClientAssignmentMutationOptions = Apollo.BaseMutationOptions<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>;
 export const AddEventFavoriteDocument = gql`
     mutation AddEventFavorite($jobAdId: String) {
   addEventFavorite(eventId: $jobAdId) {
@@ -8373,6 +8330,49 @@ export function useSaveChatMutation(baseOptions?: Apollo.MutationHookOptions<Sav
 export type SaveChatMutationHookResult = ReturnType<typeof useSaveChatMutation>;
 export type SaveChatMutationResult = Apollo.MutationResult<SaveChatMutation>;
 export type SaveChatMutationOptions = Apollo.BaseMutationOptions<SaveChatMutation, SaveChatMutationVariables>;
+export const SaveClientAssignmentDocument = gql`
+    mutation SaveClientAssignment($entity: AssignmentEntityInput) {
+  saveAssignment(entity: $entity) {
+    id
+    assignmentState {
+      name
+    }
+    answers {
+      rating
+      question {
+        id
+        item
+      }
+    }
+  }
+}
+    `;
+export type SaveClientAssignmentMutationFn = Apollo.MutationFunction<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>;
+
+/**
+ * __useSaveClientAssignmentMutation__
+ *
+ * To run a mutation, you first call `useSaveClientAssignmentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveClientAssignmentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveClientAssignmentMutation, { data, loading, error }] = useSaveClientAssignmentMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveClientAssignmentMutation(baseOptions?: Apollo.MutationHookOptions<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>(SaveClientAssignmentDocument, options);
+      }
+export type SaveClientAssignmentMutationHookResult = ReturnType<typeof useSaveClientAssignmentMutation>;
+export type SaveClientAssignmentMutationResult = Apollo.MutationResult<SaveClientAssignmentMutation>;
+export type SaveClientAssignmentMutationOptions = Apollo.BaseMutationOptions<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>;
 export const SaveFeedbackDocument = gql`
     mutation SaveFeedback($entity: FeedbackEntityInput) {
   saveFeedback(entity: $entity) {

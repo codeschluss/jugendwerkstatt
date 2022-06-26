@@ -1,19 +1,19 @@
-import { ReactElement } from 'react';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { ReactElement, useEffect } from "react";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { FormProvider, useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   useGetCompanyQuery,
   useSaveCompanyMutation,
-} from '../../../GraphQl/graphql';
+} from "../../../GraphQl/graphql";
 
-import { Accordion, FormActions } from '../../components/molecules';
+import { Accordion, FormActions } from "../../components/molecules";
 import {
   AddressForm,
   VacancyCompaniesFormInputs,
   VacancyCompanyForm,
-} from '../../components/organisms';
-import { VacancyCompaiesFormSchema } from '../../validations';
+} from "../../components/organisms";
+import { VacancyCompaiesFormSchema } from "../../validations";
 
 const CreateVacancyCompaniesPage = (): ReactElement => {
   const { id } = useParams();
@@ -31,7 +31,7 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
   });
 
   const [saveCompany] = useSaveCompanyMutation({
-    onCompleted: () => navigate('/admin/job-announcements/companies'),
+    onCompleted: () => navigate("/admin/job-announcements/companies"),
   });
 
   const handleOnSubmit = ({
@@ -42,7 +42,7 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
       variables: {
         entity: {
           ...baseData,
-          address: { id: 'ff656406-89af-4835-a9bf-571fd978f78f' },
+          address,
           // jobAd: [
           //   {
           //     id: "2a592f70-9ffe-404a-b8dc-2c95ca4799ec",
@@ -53,6 +53,25 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
       },
     });
   };
+
+  useEffect(() => {
+    if (!!getCompany) {
+      reset({
+        address: {
+          houseNumber: getCompany?.address?.houseNumber || "",
+          place: getCompany?.address?.place || "",
+          postalCode: getCompany?.address?.postalCode || "",
+          street: getCompany?.address?.street || "",
+        },
+        baseData: {
+          mail: getCompany?.mail || "",
+          name: getCompany?.name || "",
+          phone: getCompany?.phone || "",
+          website: getCompany?.website || "",
+        },
+      });
+    }
+  }, [getCompany, reset]);
 
   return (
     <FormProvider {...methods}>
