@@ -1,10 +1,10 @@
 // react
-import { ReactElement } from "react";
-import { Outlet } from "react-router-dom";
-import { AdminDashboardLayout } from "../../../admin/components/templates";
-import { AllowedRoles, UserRoleEnum } from "../../../interfaces";
+import { ReactElement } from 'react';
+import { Outlet } from 'react-router-dom';
+import { AdminDashboardLayout } from '../../../admin/components/templates/Layouts/AdminDashboardLayout';
+import { AllowedRoles, UserRoleEnum } from '../../../interfaces';
 
-import { UserLayout } from "../UserLayout";
+import { UserLayout } from '../UserLayout';
 
 export const RequireAuthLayout = ({
   accessRole,

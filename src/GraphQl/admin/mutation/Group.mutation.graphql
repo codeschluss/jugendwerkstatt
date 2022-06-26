@@ -1,5 +1,5 @@
-mutation SaveGroup($groupEntity: GroupEntityInput) {
-  saveGroup(entity: $groupEntity) {
+mutation SaveGroup($entity: GroupEntityInput) {
+  saveGroup(entity: $entity) {
     id
   }
 }

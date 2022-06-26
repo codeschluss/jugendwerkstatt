@@ -234,6 +234,7 @@ const App = (): ReactElement => {
         <Route path="/admin/groups">
           <Route index element={<GroupListPage />} />
           <Route path="new" element={<GroupFormPage />} />
+          <Route path=":id" element={<GroupFormPage />} />
           <Route path=":id/courses" element={<GroupCoursesPage />} />
           <Route path=":id/members" element={<GroupMembersPage />} />
           <Route path=":id/members/new" element={<CreateGroupMembersPage />} />
@@ -266,10 +267,11 @@ const App = (): ReactElement => {
 
         <Route path="/admin/general-settings">
           <Route index element={<PublicPagesPage />} />
-          <Route path="public-pages" element={<PublicPagesPage />} />
           <Route path="push-messages" element={<PushMessagesPage />} />
-          <Route path="public-pages/new" element={<PublicPagesForm />} />
           <Route path="chat-activation" element={<ChatActivationPage />} />
+          <Route path="public-pages" element={<PublicPagesPage />} />
+          <Route path="public-pages/:id" element={<PublicPagesForm />} />
+          <Route path="public-pages/new" element={<PublicPagesForm />} />
 
           <Route path="addresses">
             <Route index element={<GeneralAddressPage />} />
