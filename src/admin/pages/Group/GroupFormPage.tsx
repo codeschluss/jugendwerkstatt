@@ -49,7 +49,7 @@ const GroupFormPage = (): ReactElement => {
   const handleOnSubmit = (data: GroupCoursesInput) =>
     saveGroup({
       variables: {
-        groupEntity: {
+        entity: {
           ...(id && { id }),
           name: data.name,
           courses: data.courses.map((course, index) => ({

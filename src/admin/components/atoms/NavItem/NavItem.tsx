@@ -73,6 +73,7 @@ export const NavItem: FC<NavItemProps> = ({
         </button>
       ) : (
         <NavLink
+          end
           to={`${BASE_HREF}/${item.location}`}
           className={activeLink ? 'text-charcoal' : ''}
         >

@@ -2830,7 +2830,7 @@ export type LinkFragment = { __typename?: 'LinkEntity', id?: string | null, titl
 
 export type OrganizerFieldFragment = { __typename?: 'OrganizerEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null };
 
-export type PageFieldFragment = { __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null> | null };
+export type PageFieldFragment = { __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null };
 
 export type QuestionFieldFragment = { __typename?: 'QuestionEntity', id?: string | null, item?: string | null };
 
@@ -2932,7 +2932,7 @@ export type SendGlobalPushMutationVariables = Exact<{
 export type SendGlobalPushMutation = { __typename?: 'Mutation', sendGlobalPush?: boolean | null };
 
 export type SaveGroupMutationVariables = Exact<{
-  groupEntity?: InputMaybe<GroupEntityInput>;
+  entity?: InputMaybe<GroupEntityInput>;
 }>;
 
 
@@ -3036,7 +3036,7 @@ export type SavePageMutationVariables = Exact<{
 }>;
 
 
-export type SavePageMutation = { __typename?: 'Mutation', savePage?: { __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null> | null } | null };
+export type SavePageMutation = { __typename?: 'Mutation', savePage?: { __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null } | null };
 
 export type DeletePageMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
@@ -3145,7 +3145,7 @@ export type GetAddressesQuery = { __typename?: 'Query', addresses?: { __typename
 export type GetAssignmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAssignmentsQuery = { __typename?: 'Query', assignments?: { __typename?: 'PageableList_AssignmentEntity', result?: Array<{ __typename?: 'AssignmentEntity', id?: string | null, created?: any | null, comment?: string | null, user?: { __typename?: 'UserEntity', approved?: boolean | null, id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null, questionnaire?: { __typename?: 'QuestionnaireEntity', id?: string | null, name?: string | null, created?: any | null } | null } | null> | null } | null };
+export type GetAssignmentsQuery = { __typename?: 'Query', assignments?: { __typename?: 'PageableList_AssignmentEntity', result?: Array<{ __typename?: 'AssignmentEntity', id?: string | null, created?: any | null, comment?: string | null, assignmentState?: { __typename?: 'AssignmentStateEntity', id?: string | null, name?: string | null } | null, user?: { __typename?: 'UserEntity', approved?: boolean | null, id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null, questionnaire?: { __typename?: 'QuestionnaireEntity', id?: string | null, name?: string | null, created?: any | null } | null } | null> | null } | null };
 
 export type GetAssignmentQueryVariables = Exact<{
   entity?: InputMaybe<AssignmentEntityInput>;
@@ -3285,14 +3285,14 @@ export type GetOrganizerQuery = { __typename?: 'Query', organizer?: { __typename
 export type GetPagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPagesQuery = { __typename?: 'Query', pages?: { __typename?: 'PageableList_PageEntity', result?: Array<{ __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null> | null } | null> | null } | null };
+export type GetPagesQuery = { __typename?: 'Query', pages?: { __typename?: 'PageableList_PageEntity', result?: Array<{ __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null } | null> | null } | null };
 
 export type GetPageQueryVariables = Exact<{
   entity?: InputMaybe<PageEntityInput>;
 }>;
 
 
-export type GetPageQuery = { __typename?: 'Query', page?: { __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null> | null } | null };
+export type GetPageQuery = { __typename?: 'Query', page?: { __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null } | null };
 
 export type DeleteQuestionMutationVariables = Exact<{
   questionId?: InputMaybe<Scalars['String']>;
@@ -3853,7 +3853,7 @@ export const PageFieldFragmentDoc = gql`
   video {
     ...FileField
   }
-  images {
+  titleImage {
     ...FileField
   }
 }
@@ -4432,8 +4432,8 @@ export type SendGlobalPushMutationHookResult = ReturnType<typeof useSendGlobalPu
 export type SendGlobalPushMutationResult = Apollo.MutationResult<SendGlobalPushMutation>;
 export type SendGlobalPushMutationOptions = Apollo.BaseMutationOptions<SendGlobalPushMutation, SendGlobalPushMutationVariables>;
 export const SaveGroupDocument = gql`
-    mutation SaveGroup($groupEntity: GroupEntityInput) {
-  saveGroup(entity: $groupEntity) {
+    mutation SaveGroup($entity: GroupEntityInput) {
+  saveGroup(entity: $entity) {
     id
   }
 }
@@ -4453,7 +4453,7 @@ export type SaveGroupMutationFn = Apollo.MutationFunction<SaveGroupMutation, Sav
  * @example
  * const [saveGroupMutation, { data, loading, error }] = useSaveGroupMutation({
  *   variables: {
- *      groupEntity: // value for 'groupEntity'
+ *      entity: // value for 'entity'
  *   },
  * });
  */
@@ -5406,6 +5406,10 @@ export const GetAssignmentsDocument = gql`
   assignments: getAssignments {
     result {
       ...AssignmentField
+      assignmentState {
+        id
+        name
+      }
       user {
         ...UserField
         approved

@@ -51,7 +51,7 @@ const EvaluationsAssignmentPage = (): ReactElement => {
                 {dayjs(assignment?.created).format('DD.MM.YYYY')}
               </Table.Data>
               <Table.Data>
-                {!assignment?.user?.approved ? (
+                {assignment?.assignmentState?.name === 'ASSIGNED' ? (
                   <Icon icon={<ExclamationCircleIcon />} />
                 ) : (
                   <Icon icon={<CheckIcon className="text-green-500" />} />

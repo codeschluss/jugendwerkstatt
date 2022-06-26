@@ -1,9 +1,9 @@
 // react
 import { ReactElement } from "react";
 import { Outlet } from "react-router-dom";
-
-import { AdminDashboardLayout } from "../../../admin/components/templates";
+import { AdminDashboardLayout } from "../../../admin/components/templates/Layouts/AdminDashboardLayout";
 import { AllowedRoles, UserRoleEnum } from "../../../interfaces";
+
 import { UserLayout } from "../UserLayout";
 
 export const RequireAuthLayout = ({

@@ -31,7 +31,7 @@ const EvaluationQuestionFormPage = (): ReactElement => {
     resolver: joiResolver(EvaluationsQuestionsFormSchema),
   });
   const [saveQuestionnaire] = useSaveQuestionnaireMutation({
-    onCompleted: () => navigate('/admin/evaluation/questions'),
+    onCompleted: () => navigate('/admin/evaluations/questions'),
   });
 
   useEffect(() => {
