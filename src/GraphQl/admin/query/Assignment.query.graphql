@@ -2,6 +2,10 @@ query GetAssignments {
   assignments: getAssignments {
     result {
       ...AssignmentField
+      assignmentState {
+        id
+        name
+      }
       user {
         ...UserField
         approved
