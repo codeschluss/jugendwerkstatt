@@ -1,23 +1,22 @@
-import { ReactElement, useEffect } from 'react';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { ReactElement, useEffect } from "react";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { Accordion, FormActions, InputField } from '../../components/molecules';
-import { CategoryFormInputs } from '../../components/organisms';
-import { CategoryFormSchema } from '../../validations';
+import { Accordion, FormActions, InputField } from "../../components/molecules";
+import { CategoryFormInputs } from "../../components/organisms";
+import { CategoryFormSchema } from "../../validations";
 import {
   useGetLinkCategoryQuery,
   useSaveLinkCategoryMutation,
-} from '../../../GraphQl/graphql';
-import { gqlVar } from '../../utils';
+} from "../../../GraphQl/graphql";
+import { gqlVar } from "../../utils";
 
 const CreateMediaCategoriesPage = (): ReactElement => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const {
-    reset,
     setValue,
     register,
     handleSubmit,
@@ -32,7 +31,7 @@ const CreateMediaCategoriesPage = (): ReactElement => {
   });
 
   const [saveLinkCategory] = useSaveLinkCategoryMutation({
-    onCompleted: () => navigate('/admin/medias/categories'),
+    onCompleted: () => navigate("/admin/medias/categories"),
   });
 
   const handleOnSubmit = ({ name }: CategoryFormInputs) => {
@@ -43,7 +42,7 @@ const CreateMediaCategoriesPage = (): ReactElement => {
 
   useEffect(() => {
     if (!!getLinkCategory) {
-      setValue('name', getLinkCategory?.name || '');
+      setValue("name", getLinkCategory?.name || "");
     }
   }, [getLinkCategory, setValue]);
 
@@ -54,7 +53,7 @@ const CreateMediaCategoriesPage = (): ReactElement => {
           id="name"
           label="Kategoriename"
           placeholder="Was kommt nach der Schule"
-          {...register('name')}
+          {...register("name")}
           error={errors?.name?.message}
         />
       </Accordion>

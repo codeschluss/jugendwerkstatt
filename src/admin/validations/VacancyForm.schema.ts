@@ -18,7 +18,7 @@ export const VacancyCompaiesFormSchema = Joi.object({
   baseData: Joi.object({
     name: Joi.string().min(3).max(50).required().label("Unternehmen Name"),
     phone: Joi.string().required().label("Telefonnummer"),
-    website: Joi.string().uri().optional().label("Webseite"),
+    website: Joi.string().optional().label("Webseite"),
     mail: Joi.string().email({ tlds: false }).label("E-Mail-Adresse"),
   }),
   address: AddressFormSchema,

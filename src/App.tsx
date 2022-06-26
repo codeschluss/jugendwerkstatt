@@ -51,6 +51,7 @@ import {
   CreateMediaCategoriesPage,
   CreateMediaPage,
   CreateOrganizersPage,
+  CreatePublicPagesPage,
   CreateUserFormsPage,
   CreateVacancyCategoriesPage,
   CreateVacancyCompaniesPage,
@@ -82,10 +83,7 @@ import {
   VacancyListPage,
 } from "./admin/pages";
 
-import {
-  GeneralAddressForm,
-  PublicPagesForm,
-} from "./admin/components/organisms";
+import { GeneralAddressForm } from "./admin/components/organisms";
 import Home from "./client/pages/home";
 import { RequireAuthAll } from "./shared/components/RequireAuthRoute/RequireAuthAll";
 
@@ -262,8 +260,8 @@ const App = (): ReactElement => {
           <Route path="push-messages" element={<PushMessagesPage />} />
           <Route path="chat-activation" element={<ChatActivationPage />} />
           <Route path="public-pages" element={<PublicPagesPage />} />
-          <Route path="public-pages/:id" element={<PublicPagesForm />} />
-          <Route path="public-pages/new" element={<PublicPagesForm />} />
+          <Route path="public-pages/:id" element={<CreatePublicPagesPage />} />
+          <Route path="public-pages/new" element={<CreatePublicPagesPage />} />
 
           <Route path="addresses">
             <Route index element={<GeneralAddressPage />} />
