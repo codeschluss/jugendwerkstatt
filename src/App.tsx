@@ -1,42 +1,42 @@
-import { ReactElement } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import { useAuth } from './hooks/useAuth';
-import { RequireAuthRoute, RequireNonAuthRoute } from './shared/components';
+import { ReactElement } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { useAuth } from "./hooks/useAuth";
+import { RequireAuthRoute, RequireNonAuthRoute } from "./shared/components";
 
 // pages
-import Map from './client/components/map';
-import Calls from './client/components/messenger/overview/calls';
-import Chats from './client/components/messenger/overview/chats';
-import Contacts from './client/components/messenger/overview/contacts';
-import RegisteredSuccessfully from './client/components/register/success/registeredSuccessfully';
-import JobDetails from './client/components/singleJobAdd';
-import LoginPage from './client/pages/authentication/LoginPage';
-import RegisterPage from './client/pages/authentication/Register';
-import EventDetail from './client/pages/eventDetail';
-import Events from './client/pages/events';
-import EventsCalendar from './client/pages/eventsCalendar';
-import EventsTime from './client/pages/eventsTime';
-import Favorites from './client/pages/favorites';
-import Forms from './client/pages/forms';
-import TemplateEdit from './client/pages/forms/TemplateEdit';
-import Templates from './client/pages/forms/Templates';
-import TemplateView from './client/pages/forms/TemplateView';
-import UploadData from './client/pages/forms/UploadData';
-import Jobs from './client/pages/jobs';
-import MediaLibrary from './client/pages/mediaLibrary';
-import Messenger from './client/pages/messenger';
-import Chat from './client/pages/messenger/Chat';
-import ChangePassword from './client/pages/Profile/ChangePassword';
-import PersonalData from './client/pages/Profile/PersonalData';
-import ProfileImageUpload from './client/pages/Profile/ProfileImageUpload';
-import ProfileSettings from './client/pages/Profile/ProfileSettings';
-import AlreadyVerifiedUser from './client/pages/verify/AlreadyVerifiedUser';
-import ApprovalPending from './client/pages/verify/ApprovalPending';
-import ReVerifyUser from './client/pages/verify/ReVerifyUser';
-import ToVerifyUser from './client/pages/verify/ToVerifyUser';
-import ForgotPassword from './shared/components/authentication/forgotPassword';
-import Email from './shared/components/authentication/forgotPassword/Email';
-import Password from './shared/components/authentication/forgotPassword/Password';
+import Map from "./client/components/map";
+import Calls from "./client/components/messenger/overview/calls";
+import Chats from "./client/components/messenger/overview/chats";
+import Contacts from "./client/components/messenger/overview/contacts";
+import RegisteredSuccessfully from "./client/components/register/success/registeredSuccessfully";
+import JobDetails from "./client/components/singleJobAdd";
+import LoginPage from "./client/pages/authentication/LoginPage";
+import RegisterPage from "./client/pages/authentication/Register";
+import EventDetail from "./client/pages/eventDetail";
+import Events from "./client/pages/events";
+import EventsCalendar from "./client/pages/eventsCalendar";
+import EventsTime from "./client/pages/eventsTime";
+import Favorites from "./client/pages/favorites";
+import Forms from "./client/pages/forms";
+import TemplateEdit from "./client/pages/forms/TemplateEdit";
+import Templates from "./client/pages/forms/Templates";
+import TemplateView from "./client/pages/forms/TemplateView";
+import UploadData from "./client/pages/forms/UploadData";
+import Jobs from "./client/pages/jobs";
+import MediaLibrary from "./client/pages/mediaLibrary";
+import Messenger from "./client/pages/messenger";
+import Chat from "./client/pages/messenger/Chat";
+import ChangePassword from "./client/pages/Profile/ChangePassword";
+import PersonalData from "./client/pages/Profile/PersonalData";
+import ProfileImageUpload from "./client/pages/Profile/ProfileImageUpload";
+import ProfileSettings from "./client/pages/Profile/ProfileSettings";
+import AlreadyVerifiedUser from "./client/pages/verify/AlreadyVerifiedUser";
+import ApprovalPending from "./client/pages/verify/ApprovalPending";
+import ReVerifyUser from "./client/pages/verify/ReVerifyUser";
+import ToVerifyUser from "./client/pages/verify/ToVerifyUser";
+import ForgotPassword from "./shared/components/authentication/forgotPassword";
+import Email from "./shared/components/authentication/forgotPassword/Email";
+import Password from "./shared/components/authentication/forgotPassword/Password";
 
 // admin pages
 import {
@@ -80,14 +80,14 @@ import {
   VacancyCategoriesListPage,
   VacancyCompaniesListPage,
   VacancyListPage,
-} from './admin/pages';
+} from "./admin/pages";
 
 import {
   GeneralAddressForm,
   PublicPagesForm,
-} from './admin/components/organisms';
-import Home from './client/pages/home';
-import { RequireAuthAll } from './shared/components/RequireAuthRoute/RequireAuthAll';
+} from "./admin/components/organisms";
+import Home from "./client/pages/home";
+import { RequireAuthAll } from "./shared/components/RequireAuthRoute/RequireAuthAll";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
@@ -242,28 +242,18 @@ const App = (): ReactElement => {
         </Route>
 
         <Route path="/admin/evaluations">
-          <Route path="questions" element={<EvaluationQuestionsPage />} />
-          <Route
-            path="questions/:id"
-            element={<EvaluationQuestionFormPage />}
-          />
-          <Route
-            path="questions/:id/view"
-            element={<EvaluationQuestionViewPage />}
-          />
-          <Route
-            path="questions/new"
-            element={<EvaluationQuestionFormPage />}
-          />
-          <Route path="assignments" element={<EvaluationsAssignmentsPage />} />
-          <Route
-            path="assignments/new"
-            element={<CreateEvaluationAssignmentPage />}
-          />
-          <Route
-            path="assignments/:id"
-            element={<CreateEvaluationAssignmentPage />}
-          />
+          <Route path="questions">
+            <Route index element={<EvaluationQuestionsPage />} />
+            <Route path=":id" element={<EvaluationQuestionFormPage />} />
+            <Route path=":id/view" element={<EvaluationQuestionViewPage />} />
+            <Route path="new" element={<EvaluationQuestionFormPage />} />
+          </Route>
+
+          <Route path="assignments">
+            <Route index element={<EvaluationsAssignmentsPage />} />
+            <Route path="new" element={<CreateEvaluationAssignmentPage />} />
+            <Route path=":id" element={<CreateEvaluationAssignmentPage />} />
+          </Route>
         </Route>
 
         <Route path="/admin/general-settings">
@@ -283,7 +273,7 @@ const App = (): ReactElement => {
 
       <Route
         path="/admin"
-        element={<Navigate to={{ pathname: '/admin/events' }} />}
+        element={<Navigate to={{ pathname: "/admin/events" }} />}
       />
 
       <Route
