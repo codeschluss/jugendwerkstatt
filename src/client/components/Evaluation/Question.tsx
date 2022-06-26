@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Radio from "@mui/material/Radio";
-import {
-  AnswerEntity,
-  QuestionEntity,
-  useSaveAnswerMutation,
-} from "../../../GraphQl/graphql";
+import { AnswerEntityInput } from "../../../GraphQl/graphql";
 
 interface QuestionProps {
-  answer: AnswerEntity | undefined | null;
+  answer: AnswerEntityInput | undefined | null;
   submitAnswer?: any;
 }
 

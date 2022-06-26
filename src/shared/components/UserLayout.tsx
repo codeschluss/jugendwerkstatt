@@ -45,6 +45,19 @@ export const UserLayout: FC = ({ children }) => {
       break;
     case NotificationType.Evaluation:
       feedback.refetch();
+      assignments.refetch();
+      break;
+    case NotificationType.Event:
+      handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
+      break;
+    case NotificationType.JobAd:
+      handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
+      break;
+    case NotificationType.ReadReceipt:
+      handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
+      break;
+    case NotificationType.Global:
+      handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
   }
 
   return (
@@ -58,8 +71,9 @@ export const UserLayout: FC = ({ children }) => {
           return (
             <Evaluation
               key={assignment?.id}
-              visible={false}
+              visible={true}
               assignment={assignment}
+              refetchParent={() => assignments.refetch()}
             />
           );
         }
@@ -72,7 +86,7 @@ export const UserLayout: FC = ({ children }) => {
               <Modal
                 key={el?.id}
                 id={el?.id}
-                visible={false}
+                visible={true}
                 course={el?.course?.name}
                 refetchParent={() => feedback.refetch()}
               ></Modal>

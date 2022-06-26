@@ -11,6 +11,7 @@ import {
   useSaveUserTemplateMutation,
 } from "../../../../GraphQl/graphql";
 import I from "../../../../shared/components/ui/IconWrapper";
+import DropDown from "../../../../shared/components/ui/DropDown";
 
 const TemplateEdit: React.FC = () => {
   const { id } = useParams();
@@ -47,7 +48,7 @@ const TemplateEdit: React.FC = () => {
       },
     });
 
-  const downloadTemplate = async () => {
+  const downloadTemplateDocx = async () => {
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -65,6 +66,31 @@ const TemplateEdit: React.FC = () => {
         a.style.display = "none";
         a.href = url;
         a.download = `${templateName}.docx`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        alert("your file has downloaded!");
+      })
+      .catch(() => alert("oh no!"));
+  };
+  const downloadTemplatePdf = async () => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        html: templateContent,
+        name: templateName,
+        type: "pdf",
+      }),
+    };
+    await fetch(API_URL + "media/export", requestOptions)
+      .then((resp) => resp.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = `${templateName}.pdf`;
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
@@ -102,9 +128,27 @@ const TemplateEdit: React.FC = () => {
       <h5 className="text-2xl font-bold">
         {templateType}
 
-        <I className="float-right h-5" onClick={downloadTemplate}>
-          <DownloadIcon />
-        </I>
+        <DropDown
+          position="right"
+          className="float-right mt-auto"
+          boxClassName="w-40 mt-3 py-2.5 px-1"
+          name={<DownloadIcon className="w-5" />}
+          withArrow={false}
+        >
+          <p className="text-sm font-normal text-center"> format:</p>
+          <p
+            onClick={downloadTemplatePdf}
+            className="text-base font-normal text-center my-1 cursor-pointer hover:bg-gray-100"
+          >
+            .pdf
+          </p>
+          <p
+            onClick={downloadTemplateDocx}
+            className="text-base font-normal text-center my-1 cursor-pointer hover:bg-gray-100"
+          >
+            .docx
+          </p>
+        </DropDown>
       </h5>
       <h5 className="pt-4 text-xl font-normal" onClick={handleClick}>
         {editName ? (
