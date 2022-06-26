@@ -15,6 +15,8 @@ import Avatar from "../sideBar/Avatar";
 import Search from "./Search";
 import Badge from "@mui/material/Badge";
 import { BellIcon as FilledBell } from "@heroicons/react/solid";
+import { Autocomplete, TextField } from "@mui/material";
+import { Height } from "@mui/icons-material";
 
 const RightContent: FC = () => {
   const isTouch = detectDevice();
@@ -35,6 +37,7 @@ const RightContent: FC = () => {
         searchActive={toggleSearch || !isTouch}
         hideSearch={() => setToggleSearch(false)}
       />
+
       {!toggleSearch && (
         <I
           className="absolute text-white md:text-black right-12 md:hidden"

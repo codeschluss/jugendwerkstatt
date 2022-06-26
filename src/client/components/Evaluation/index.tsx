@@ -1,9 +1,11 @@
 import { useState } from "react";
 import {
   AnswerEntity,
+  AnswerEntityInput,
   AssignmentEntity,
   QuestionEntity,
   useSaveAssignmentMutation,
+  useSaveClientAssignmentMutation,
 } from "../../../GraphQl/graphql";
 import Button from "../ui/Button";
 import Question from "./Question";
@@ -25,12 +27,12 @@ const Evaluation: React.FC<ModalProps> = ({
   const givenAnswers = assignment?.questionnaire?.questions?.map(
     (question: QuestionEntity | undefined | null) =>
       ({
-        question: question,
+        question: { item: question?.item, id: question?.id },
         rating: null,
-      } as AnswerEntity)
+      } as AnswerEntityInput)
   );
 
-  const [saveAssignment] = useSaveAssignmentMutation();
+  const [saveAssignment] = useSaveClientAssignmentMutation();
   const submitHandler = (e: any) => {
     e.preventDefault();
     console.log(givenAnswers);
@@ -42,7 +44,7 @@ const Evaluation: React.FC<ModalProps> = ({
           answers: givenAnswers,
         },
       },
-    }).then((data: any) => console.log(data));
+    }).then(() => refetchParent());
   };
 
   return (
