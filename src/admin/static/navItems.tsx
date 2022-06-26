@@ -102,11 +102,11 @@ export const navItems = (
       {
         name: 'Evaluierung',
         icon: <ViewListIcon />,
-        location: 'evaluation',
+        location: 'evaluations',
         items: [
           {
             name: 'Evaluierungsbögen',
-            location: 'evaluation/questions',
+            location: 'evaluations/questions',
           },
           {
             name: 'Zuordnungen',
