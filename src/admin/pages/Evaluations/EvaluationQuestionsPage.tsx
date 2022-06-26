@@ -30,7 +30,7 @@ const EvaluationQuestionsPage = (): ReactElement => {
   return (
     <Panel.Wrapper
       action={{
-        to: '/admin/evaluation/questions/new',
+        to: '/admin/evaluations/questions/new',
         label: 'Evaluierungsbogen hinzufügen',
       }}
     >
