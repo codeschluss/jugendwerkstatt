@@ -101,6 +101,9 @@ const App = (): ReactElement => {
           path="/profile-upload-picture"
           element={<ProfileImageUpload />}
         />
+        <Route path="/toVerifyEmail" element={<ToVerifyUser />} />
+        <Route path="/reVerifyEmail" element={<ReVerifyUser />} />
+        <Route path="/pending-approval" element={<ApprovalPending />} />
       </Route>
 
       <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />
@@ -113,12 +116,9 @@ const App = (): ReactElement => {
           <Route path="email" element={<Email />} />
           <Route path="password/:id" element={<Password />} />
         </Route>
-        <Route path="/toVerifyEmail" element={<ToVerifyUser />} />
-        <Route path="/reVerifyEmail" element={<ReVerifyUser />} />
-        <Route path="/pending-approval" element={<ApprovalPending />} />
       </Route>
 
-      <Route element={<RequireAuthRoute accessRole="student" />}>
+      <Route element={<RequireAuthRoute accessRole={["student"]} />}>
         <Route path="/job-ad/:id" element={<JobDetails />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/jobs" element={<Jobs />} />
@@ -153,7 +153,9 @@ const App = (): ReactElement => {
         </Route>
       </Route>
 
-      <Route element={<RequireAuthRoute accessRole="admin" />}>
+      <Route
+        element={<RequireAuthRoute accessRole={["admin", "supervisor"]} />}
+      >
         <Route path="/admin/events">
           <Route index element={<EventsListPage />} />
           <Route path=":id" element={<CreateEventsPage />} />

@@ -10,36 +10,22 @@ import { RequireAuthLayout } from "./RequireAuthLayout";
 export const RequireAuthRoute = ({
   accessRole,
 }: {
-  accessRole: AllowedRoles;
+  accessRole: AllowedRoles[];
 }): ReactElement => {
   // hooks
   const location = useLocation();
   const { isAuthenticated, user } = useAuthStore();
   useExpireToken();
 
-  console.log("user", user, isAuthenticated && !user?.verified);
+  const rolePath = accessRole.includes(UserRoleEnum.STUDENT)
+    ? "admin/events"
+    : "/";
 
-  // if (!user?.verified) {
-  //   return (
-  //     <Navigate
-  //       to={{ pathname: "/reVerifyEmail" }}
-  //       state={{ from: location }}
-  //     />
-  //   );
-  // }
+  const hasAccess = user?.roles.some((role) =>
+    accessRole.includes(role as AllowedRoles)
+  );
 
-  // if ( !user?.approved) {
-  //   return (
-  //     <Navigate
-  //       to={{ pathname: "/pending-approval" }}
-  //       state={{ from: location }}
-  //     />
-  //   );
-  // }
-
-  const rolePath = accessRole === UserRoleEnum.ADMIN ? "/" : "admin/events";
-
-  return isAuthenticated && user?.roles.includes(accessRole) ? (
+  return isAuthenticated && hasAccess ? (
     <RequireAuthLayout accessRole={accessRole} />
   ) : (
     <Navigate

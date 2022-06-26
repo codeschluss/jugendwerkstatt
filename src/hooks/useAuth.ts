@@ -10,6 +10,7 @@ import {
 } from "../shared/utils";
 
 import { useRefreshTokenMutation } from "../GraphQl/graphql";
+import { useNavigate } from "react-router-dom";
 
 export const useAuth = (): {
   loading: boolean;
@@ -17,6 +18,7 @@ export const useAuth = (): {
   handleStoreUser: (token: string) => void;
 } => {
   const { loading, addAuth, removeAuth } = useAuthStore();
+  const navigate = useNavigate();
 
   const refreshToken = readAuthToken("refreshToken") || "";
   const accessToken = readAuthToken("accessToken") || "";
@@ -24,6 +26,14 @@ export const useAuth = (): {
   const handleStoreUser = useCallback(
     (token: string) => {
       const fields = getSingleJWTField(token);
+
+      if (!fields?.verified) {
+        navigate("/reVerifyEmail");
+      }
+      if (!fields?.approved) {
+        navigate("/pending-approval");
+      }
+
       addAuth(
         {
           roles: fields?.roles || [],
@@ -36,7 +46,7 @@ export const useAuth = (): {
         false
       );
     },
-    [addAuth]
+    [addAuth, navigate]
   );
 
   const handleLogout = useCallback(() => {
