@@ -1,11 +1,13 @@
 import { BellIcon, LogoutIcon, SearchIcon } from "@heroicons/react/outline";
 import { FC, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   NotificationEntity,
+  SearchDto,
   useGetMeBasicQuery,
   useGetNotificationsQuery,
   useSaveNotificationMutation,
+  useSearchQuery,
 } from "../../../../GraphQl/graphql";
 import { useAuth } from "../../../../hooks/useAuth";
 import detectDevice from "../../../utils/isTouch";
@@ -17,15 +19,63 @@ import Badge from "@mui/material/Badge";
 import { BellIcon as FilledBell } from "@heroicons/react/solid";
 import { Autocomplete, TextField } from "@mui/material";
 import { Height } from "@mui/icons-material";
+import { idText } from "typescript";
 
 const RightContent: FC = () => {
   const isTouch = detectDevice();
-  const [toggleSearch, setToggleSearch] = useState<boolean>(false);
-
+  const [inputvalue, setInputValue] = useState();
   const { handleLogout } = useAuth();
   const user = useGetMeBasicQuery();
   const notifications = useGetNotificationsQuery();
   const [saveNotification] = useSaveNotificationMutation();
+  const navigate = useNavigate();
+
+  const searchfield: any = [];
+
+  const search = useSearchQuery({
+    variables: {
+      params: {
+        page: 0,
+        size: 5,
+      },
+    },
+  });
+
+  search.data?.search?.map((el: any) => {
+    searchfield.push({ label: el.title, type: el.type });
+  });
+
+  const searching = (e: any) => {
+    search.refetch({
+      params: {
+        search: e.target.value,
+      },
+    });
+  };
+
+  const handleSearch = (searchParams: string) => {
+    search
+      .refetch({
+        params: {
+          search: searchParams,
+        },
+      })
+      .then((data: any) => {
+        if (data.data.search.length <= 3) {
+          switch (data?.data?.search[0]?.type) {
+            case "event":
+              navigate(`event/${data?.data?.search[0]?.id}`);
+              break;
+            case "jobAd":
+              navigate(`job-ad/${data?.data?.search[0]?.id}`);
+              break;
+            case "template":
+              navigate(`forms`);
+              break;
+          }
+        }
+      });
+  };
 
   const unreadExist = notifications.data?.me?.notifications?.filter(
     (notification: NotificationEntity | undefined | null) => !notification?.read
@@ -33,19 +83,29 @@ const RightContent: FC = () => {
 
   return (
     <div className="relative flex items-center justify-end flex-grow">
-      <Search
-        searchActive={toggleSearch || !isTouch}
-        hideSearch={() => setToggleSearch(false)}
+      <Autocomplete
+        freeSolo
+        id="combo-box-demo"
+        options={searchfield}
+        sx={{
+          width: 300,
+          marginRight: 1,
+          background: "white",
+          borderRadius: 1,
+        }}
+        renderInput={(params) => (
+          <TextField
+            onKeyPress={(e: any) => {
+              if (e.key === "Enter") {
+                handleSearch(e.target.value);
+              }
+            }}
+            onChange={searching}
+            {...params}
+            label="Suche"
+          />
+        )}
       />
-
-      {!toggleSearch && (
-        <I
-          className="absolute text-white md:text-black right-12 md:hidden"
-          onClick={() => setToggleSearch(true)}
-        >
-          <SearchIcon />
-        </I>
-      )}
 
       <DropDown
         position="right"
