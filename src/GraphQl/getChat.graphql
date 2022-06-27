@@ -1,0 +1,11 @@
+query GetChat($entity: ChatEntityInput) {
+  getChat(entity: $entity) {
+    id
+    name
+    participants {
+      user {
+        id
+      }
+    }
+  }
+}

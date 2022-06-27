@@ -1,19 +1,18 @@
-import React, { useContext } from 'react';
-import { API_URL } from '../../../../config/app';
-import AuthContext from '../../../../contexts/AuthContext';
-import { useGetMeBasicQuery } from '../../../../GraphQl/graphql';
-import { cx } from '../../../utils/ClassNames';
+import { FC } from "react";
+import { API_URL } from "../../../../config/app";
+import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
+import { cx } from "../../../utils/ClassNames";
 
-const Avatar: React.FC<{ size: string; className?: string }> = ({
+const Avatar: FC<{ size: string; className?: string }> = ({
   size,
   className,
 }) => {
-  const { bgColor } = useContext(AuthContext);
   const { data } = useGetMeBasicQuery();
 
   let letter;
   data?.me?.fullname &&
     (letter = data?.me?.fullname?.substring(0, 1).toUpperCase());
+
   return (
     <div>
       {data?.me?.profilePicture?.id ? (
@@ -29,7 +28,7 @@ const Avatar: React.FC<{ size: string; className?: string }> = ({
         <span
           //   style={{ height: size + "px", width: size + "px" }}
           className={cx([
-            `w-${size} h-${size} rounded-full ${bgColor} flex justify-center items-center text-white`,
+            `w-${size} h-${size} rounded-full flex bg-primary justify-center items-center text-white`,
             className,
           ])}
         >

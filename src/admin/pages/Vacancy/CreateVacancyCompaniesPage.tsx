@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -34,8 +34,6 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
     onCompleted: () => navigate("/admin/job-announcements/companies"),
   });
 
-  const handleReset = () => reset();
-
   const handleOnSubmit = ({
     baseData,
     address,
@@ -44,7 +42,7 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
       variables: {
         entity: {
           ...baseData,
-          address: { id: "ff656406-89af-4835-a9bf-571fd978f78f" },
+          address,
           // jobAd: [
           //   {
           //     id: "2a592f70-9ffe-404a-b8dc-2c95ca4799ec",
@@ -56,6 +54,25 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
     });
   };
 
+  useEffect(() => {
+    if (!!getCompany) {
+      reset({
+        address: {
+          houseNumber: getCompany?.address?.houseNumber || "",
+          place: getCompany?.address?.place || "",
+          postalCode: getCompany?.address?.postalCode || "",
+          street: getCompany?.address?.street || "",
+        },
+        baseData: {
+          mail: getCompany?.mail || "",
+          name: getCompany?.name || "",
+          phone: getCompany?.phone || "",
+          website: getCompany?.website || "",
+        },
+      });
+    }
+  }, [getCompany, reset]);
+
   return (
     <FormProvider {...methods}>
       <form className="min-h-full">
@@ -65,10 +82,7 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
         <Accordion title="Adresse">
           <AddressForm />
         </Accordion>
-        <FormActions
-          onReset={handleReset}
-          onSubmit={handleSubmit(handleOnSubmit)}
-        />
+        <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
       </form>
     </FormProvider>
   );

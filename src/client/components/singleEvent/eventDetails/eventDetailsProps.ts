@@ -11,4 +11,5 @@ export interface EventDetailsProps {
   startDate?: string;
   theRest?: string;
   description?: string;
+  dueDate?: any;
 }

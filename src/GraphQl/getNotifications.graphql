@@ -1,0 +1,11 @@
+query GetNotifications {
+  me {
+    notifications {
+      id
+      read
+      title
+      content
+      created
+    }
+  }
+}

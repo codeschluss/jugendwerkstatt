@@ -12,9 +12,7 @@ import {
 } from "@heroicons/react/outline";
 import { HeartIcon } from "@heroicons/react/solid";
 import { useContext } from "react";
-import { NavLink } from "react-router-dom";
 import SideBarContext from "../../../../contexts/SideBarContext";
-import I from "../../ui/IconWrapper";
 import Item from "./Item";
 
 interface SideItemsProps {
@@ -24,14 +22,14 @@ interface SideItemsProps {
 const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
   const { sideBar, setSideBar } = useContext(SideBarContext);
   return (
-    <div className="h-full flex flex-col justify-between pb-4">
+    <div className="flex flex-col justify-between h-full pb-4">
       <ul>
         <Item name="Start" icon={<HomeIcon />} clicked={clicked} href="/" />
         <Item
           name="Formulare"
           icon={<DocumentTextIcon />}
           clicked={clicked}
-          href="/Forms"
+          href="/forms"
         />
         <Item
           name="Events"
@@ -43,7 +41,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
           name="E-Learning"
           icon={<AcademicCapIcon />}
           clicked={clicked}
-          href="/MediaLibrary"
+          href="/media-library"
         />
         <Item
           name="Messenger"
@@ -61,7 +59,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
           name="Kalendar"
           icon={<CalendarIcon />}
           clicked={clicked}
-          href="/EventsCalendar"
+          href="/events/calendar"
         />
         <Item
           name="Favoriten"
@@ -85,7 +83,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
       </ul>
       {sideBar ? (
         <span
-          className="text-center w-full text-white"
+          className="w-full text-center text-white"
           onClick={() => setSideBar(false)}
         >
           Menu schliesen
@@ -93,7 +91,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
       ) : (
         <span
           onClick={() => setSideBar(true)}
-          className="flex justify-end  pr-6 w-full text-white"
+          className="flex justify-end w-full pr-6 text-white"
         >
           <ChevronDoubleRightIcon className="w-8" />
         </span>

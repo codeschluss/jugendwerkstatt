@@ -1,0 +1,5 @@
+mutation SaveNotification($entity: NotificationEntityInput) {
+  saveNotification(entity: $entity) {
+    id
+  }
+}

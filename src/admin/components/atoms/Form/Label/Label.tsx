@@ -1,13 +1,19 @@
-import { FC, ReactElement } from 'react';
-import { twClsx } from '../../../../utils/twClsx';
-import { LabelProps } from './Label.props';
+import { ComponentPropsWithoutRef } from "react";
+import { ElementType, ReactElement } from "react";
+import { twClsx } from "../../../../utils/twClsx";
+import { LabelProps } from "./Label.props";
 
-export const Label: FC<LabelProps> = ({
+export const Label = <T extends ElementType = "label">({
+  as,
   className,
   children,
   ...rest
-}): ReactElement => (
-  <label className={twClsx('text-gray-600', className)} {...rest}>
-    {children}
-  </label>
-);
+}: LabelProps<T> &
+  Omit<ComponentPropsWithoutRef<T>, keyof LabelProps<T>>): ReactElement => {
+  const Component = as || "label";
+  return (
+    <Component className={twClsx("text-gray-600", className)} {...rest}>
+      {children}
+    </Component>
+  );
+};

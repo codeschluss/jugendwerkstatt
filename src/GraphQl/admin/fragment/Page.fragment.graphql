@@ -1,0 +1,12 @@
+fragment PageField on PageEntity {
+  id
+  name
+  slug
+  content
+  video {
+    ...FileField
+  }
+  titleImage {
+    ...FileField
+  }
+}

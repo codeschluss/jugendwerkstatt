@@ -7,12 +7,16 @@ import "./style.css";
 
 // import "./style.css";
 interface SliderProps {
-  imgUrl?: string | undefined | null;
+  imgUrl?: any;
   colorBg?: string | undefined | null;
   title?: string | undefined | null;
 }
 
-export const Slider: React.FC<SliderProps> = ({ imgUrl, colorBg, title }) => {
+export const TitleImgSlider: React.FC<SliderProps> = ({
+  imgUrl,
+  colorBg,
+  title,
+}) => {
   return (
     <div className="w-full md:w-1/2 md:bg-white md:rounded-md md:p-5">
       {imgUrl && (

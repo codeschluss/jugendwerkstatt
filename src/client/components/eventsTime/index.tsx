@@ -33,17 +33,19 @@ const EventsTime: React.FC = () => {
         var tempSchedules = singleEvent?.schedules as any;
 
         for (let i = 0; i < tempSchedules?.length; i++) {
-            eventsInfo[temmmpCounter] = {
-                id : temmmpCounter,
-                eventId : singleEvent.id,
-                name: singleEvent.name,
-                description: singleEvent.description,
-                // color: singleEvent.color,
-                start : new Date(tempSchedules[i]?.startDate),
-                end : new Date(tempSchedules[i]?.endDate),
-                allDay: false
+            if(new Date(tempSchedules[i]?.startDate)<=new Date(tempSchedules[i]?.endDate)){ //validating bad schedules
+                eventsInfo[temmmpCounter] = {
+                    id : temmmpCounter,
+                    eventId : singleEvent.id,
+                    name: singleEvent.name,
+                    description: singleEvent.description,
+                    // color: singleEvent.color,
+                    start : new Date(tempSchedules[i]?.startDate),
+                    end : new Date(tempSchedules[i]?.endDate),
+                    allDay: false
+                }
+                temmmpCounter = temmmpCounter+1;
             }
-            temmmpCounter = temmmpCounter+1;
         }
     })};
     

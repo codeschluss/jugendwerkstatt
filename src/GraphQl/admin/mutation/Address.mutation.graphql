@@ -1,0 +1,9 @@
+mutation SaveAddress($entity: AddressEntityInput) {
+  saveAddress(entity: $entity) {
+    ...AddressField
+  }
+}
+
+mutation DeleteAddress($id: String) {
+  deleteAddress(id: $id)
+}

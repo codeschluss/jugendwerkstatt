@@ -9,13 +9,17 @@ import { CustomTable } from '../../components/molecules';
 const GroupListPage = () => {
   const navigate = useNavigate();
 
-  const { data, refetch: refetchGroups } = useGetGroupsQuery({
-    fetchPolicy: 'cache-and-network',
-  });
+  const { data: { groups = null } = {}, refetch: refetchGroups } =
+    useGetGroupsQuery({
+      fetchPolicy: 'cache-and-network',
+    });
+
   const [deleteGroup] = useDeleteGroupMutation({
     onCompleted: () => refetchGroups(),
   });
 
+  const handleGroupCoursesNavigate = (groupId: string) => () =>
+    navigate(`${groupId}/courses`);
   const handleGroupUpdate = (groupId: string) => () => navigate(groupId);
   const handleGroupDelete = (groupId: string) => () => {
     // eslint-disable-next-line no-restricted-globals
@@ -23,6 +27,8 @@ const GroupListPage = () => {
       deleteGroup({ variables: { deleteGroupId: groupId } });
     }
   };
+
+  const groupsData = groups?.result || [];
 
   return (
     <Panel.Wrapper
@@ -32,23 +38,30 @@ const GroupListPage = () => {
       }}
     >
       <CustomTable
-        headerData={['Gruppen', 'Gruppenmitglieder', 'Aktionen']}
-        bodyData={
-          (data?.groups?.result &&
-            data.groups.result.map((group) => (
-              <Table.Row key={group?.id}>
-                <Table.Data>{group?.name}</Table.Data>
-                {/* <Table.Data>
-                  {(group?.courses && group.courses[0]?.users?.length) || 0}
-                </Table.Data> */}
-                <Table.Data>
-                  <Action onUpdate={handleGroupUpdate(group?.id || '')} />
-                  <Action onDelete={handleGroupDelete(group?.id || '')} />
-                </Table.Data>
-              </Table.Row>
-            ))) ||
-          []
-        }
+        headerData={[
+          'Gruppen',
+          'Aktiver Kurs',
+          'Gruppenmitglieder',
+          'Aktionen',
+        ]}
+        bodyData={groupsData.map((group) => (
+          <Table.Row key={group?.id}>
+            <Table.Data>{group?.name}</Table.Data>
+            <Table.Data>
+              {(group?.courses &&
+                group.courses.filter((course) => course?.active)[0]?.name) ||
+                '/'}
+            </Table.Data>
+            <Table.Data>{group?.users?.length || 0}</Table.Data>
+            <Table.Data>
+              <Action
+                onNavigate={handleGroupCoursesNavigate(group?.id || '')}
+              />
+              <Action onUpdate={handleGroupUpdate(group?.id || '')} />
+              <Action onDelete={handleGroupDelete(group?.id || '')} />
+            </Table.Data>
+          </Table.Row>
+        ))}
       />
     </Panel.Wrapper>
   );

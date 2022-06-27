@@ -1,15 +1,15 @@
-import { ReactElement } from "react";
-import { Button } from "../../atoms";
-import { FormActionsProps } from "./FormActions.types";
+import { ReactElement } from 'react';
+import { Button } from '../../atoms';
+import { FormActionsProps } from './FormActions.types';
 
-export const FormActions = ({
-  onSubmit,
-  onReset,
-}: FormActionsProps): ReactElement => {
+export const FormActions = ({ onSubmit }: FormActionsProps): ReactElement => {
+  // eslint-disable-next-line no-restricted-globals
+  const handleGoBack = () => history.back();
+
   return (
-    <div className="flex md:justify-start justify-between flex-row mt-4">
+    <div className="flex flex-row justify-between mt-4 md:justify-start">
       <Button
-        onClick={onReset}
+        onClick={handleGoBack}
         className="md:mr-6 border-[#424242] text-[#424242]"
         type="button"
       >

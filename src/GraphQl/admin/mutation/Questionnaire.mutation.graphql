@@ -1,0 +1,9 @@
+mutation SaveQuestionnaire($entity: QuestionnaireEntityInput) {
+  saveQuestionnaire(entity: $entity) {
+    id
+  }
+}
+
+mutation DeleteQuestionnaire($id: String) {
+  deleteQuestionnaire(id: $id)
+}

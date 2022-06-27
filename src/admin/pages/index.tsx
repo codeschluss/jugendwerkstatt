@@ -1,66 +1,50 @@
-import loadable from "@loadable/component";
-import { timeout } from "promise-timeout";
-import { PAGE_LOAD_TIMEOUT } from "../config/global";
+import loadable from '@loadable/component';
+import { timeout } from 'promise-timeout';
+import { PAGE_LOAD_TIMEOUT } from '../config/global';
 
 // import your loader component
 const PageLoader = () => <h1>Loading...</h1>;
 
 //* Export all pages
 
-// Account pages
-export const AdminProfilePage = loadable(
-  () => timeout(import("./profile/AdminProfilePage"), PAGE_LOAD_TIMEOUT),
-  {
-    fallback: <PageLoader />,
-  }
-);
-
-export const AdminProfilePasswordPage = loadable(
-  () =>
-    timeout(import("./profile/AdminProfilePasswordPage"), PAGE_LOAD_TIMEOUT),
-  {
-    fallback: <PageLoader />,
-  }
-);
-
 // Events pages
 export const EventsListPage = loadable(
-  () => timeout(import("./events/EventsListPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Events/EventsListPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
 export const CreateEventsPage = loadable(
-  () => timeout(import("./events/CreateEventsPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Events/CreateEventsPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
 export const OrganizersListPage = loadable(
-  () => timeout(import("./events/OrganizersListPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Events/OrganizersListPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
 export const CreateOrganizersPage = loadable(
-  () => timeout(import("./events/CreateOrganizersPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Events/CreateOrganizersPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
 export const CategoriesListPage = loadable(
-  () => timeout(import("./events/CategoriesListPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Events/CategoriesListPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
 export const CreateCategoriesPage = loadable(
-  () => timeout(import("./events/CreateCategoriesPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Events/CreateCategoriesPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
@@ -68,13 +52,13 @@ export const CreateCategoriesPage = loadable(
 
 // Vacancy pages
 export const VacancyListPage = loadable(
-  () => timeout(import("./Vacancy/VacancyListPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Vacancy/VacancyListPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 export const CreateVacancyPage = loadable(
-  () => timeout(import("./Vacancy/CreateVacancyPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Vacancy/CreateVacancyPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
@@ -82,7 +66,7 @@ export const CreateVacancyPage = loadable(
 
 export const VacancyCategoriesListPage = loadable(
   () =>
-    timeout(import("./Vacancy/VacancyCategoriesListPage"), PAGE_LOAD_TIMEOUT),
+    timeout(import('./Vacancy/VacancyCategoriesListPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
@@ -90,7 +74,7 @@ export const VacancyCategoriesListPage = loadable(
 
 export const CreateVacancyCategoriesPage = loadable(
   () =>
-    timeout(import("./Vacancy/CreateVacancyCategoriesPage"), PAGE_LOAD_TIMEOUT),
+    timeout(import('./Vacancy/CreateVacancyCategoriesPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
@@ -98,7 +82,7 @@ export const CreateVacancyCategoriesPage = loadable(
 
 export const VacancyCompaniesListPage = loadable(
   () =>
-    timeout(import("./Vacancy/VacancyCompaniesListPage"), PAGE_LOAD_TIMEOUT),
+    timeout(import('./Vacancy/VacancyCompaniesListPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
@@ -106,7 +90,7 @@ export const VacancyCompaniesListPage = loadable(
 
 export const CreateVacancyCompaniesPage = loadable(
   () =>
-    timeout(import("./Vacancy/CreateVacancyCompaniesPage"), PAGE_LOAD_TIMEOUT),
+    timeout(import('./Vacancy/CreateVacancyCompaniesPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
@@ -114,28 +98,28 @@ export const CreateVacancyCompaniesPage = loadable(
 
 // Medias pages
 export const MediaListPage = loadable(
-  () => timeout(import("./media/MediaListPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Media/MediaListPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
 export const CreateMediaPage = loadable(
-  () => timeout(import("./media/CreateMediaPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Media/CreateMediaPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
 export const MediaCategoriesListPage = loadable(
-  () => timeout(import("./media/MediaCategoriesListPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Media/MediaCategoriesListPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
 export const CreateMediaCategoriesPage = loadable(
-  () => timeout(import("./media/CreateMediaCategoriesPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Media/CreateMediaCategoriesPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
@@ -143,21 +127,21 @@ export const CreateMediaCategoriesPage = loadable(
 
 // User pages
 export const UsersRequestsListPage = loadable(
-  () => timeout(import("./user/UsersRequestsListPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./User/UsersRequestsListPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
 export const UsersListPage = loadable(
-  () => timeout(import("./user/UsersListPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./User/UsersListPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
 export const EditUserPage = loadable(
-  () => timeout(import("./user/EditUserPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./User/EditUserPage'), PAGE_LOAD_TIMEOUT),
 
   {
     fallback: <PageLoader />,
@@ -166,33 +150,39 @@ export const EditUserPage = loadable(
 
 // Forms pages
 export const FormsListPage = loadable(
-  () => timeout(import("./Forms/FormsListPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Forms/FormsListPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
 export const FormsUserListPage = loadable(
-  () => timeout(import("./Forms/FormsUserListPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Forms/FormsUserListPage'), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+export const CreateUserFormsPage = loadable(
+  () => timeout(import('./Forms/CreateUserFormsPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 export const FormsCategoriesListPage = loadable(
-  () => timeout(import("./Forms/FormsCategoriesListPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Forms/FormsCategoriesListPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 export const CreateFormsCategories = loadable(
-  () => timeout(import("./Forms/CreateFormsCategories"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Forms/CreateFormsCategories'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
 export const CreateFormsPage = loadable(
-  () => timeout(import("./Forms/CreateFormsPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Forms/CreateFormsPage'), PAGE_LOAD_TIMEOUT),
 
   {
     fallback: <PageLoader />,
@@ -201,52 +191,86 @@ export const CreateFormsPage = loadable(
 
 // Groups pages
 export const GroupListPage = loadable(
-  () => timeout(import("./Group/GroupListPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./Group/GroupListPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
-export const CreateGroupPage = loadable(
-  () => timeout(import("./Group/CreateGroupPage"), PAGE_LOAD_TIMEOUT),
+export const GroupCoursesPage = loadable(
+  () => timeout(import('./Group/GroupCoursesPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
-export const EditGroupPage = loadable(
-  () => timeout(import("./Group/EditGroupPage"), PAGE_LOAD_TIMEOUT),
+export const GroupMembersPage = loadable(
+  () => timeout(import('./Group/GroupMembersPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
-export const GroupParticipantsListPage = loadable(
-  () => timeout(import("./Group/GroupParticipantsListPage"), PAGE_LOAD_TIMEOUT),
+export const GroupFormPage = loadable(
+  () => timeout(import('./Group/GroupFormPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
-export const GroupCourseRatingsListPage = loadable(
-  () =>
-    timeout(import("./Group/GroupCourseRatingsListPage"), PAGE_LOAD_TIMEOUT),
+export const CreateGroupMembersPage = loadable(
+  () => timeout(import('./Group/CreateGroupMembersPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
 // Evaluations pages
-export const EvaluationsPage = loadable(
-  () => timeout(import("./Evaluations/EvaluationsPage"), PAGE_LOAD_TIMEOUT),
+export const EvaluationQuestionsPage = loadable(
+  () =>
+    timeout(import('./Evaluations/EvaluationQuestionsPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
-export const EvaluationsQuestionsPage = loadable(
+
+export const EvaluationQuestionViewPage = loadable(
   () =>
     timeout(
-      import("./Evaluations/EvaluationsQuestionsPage"),
+      import('./Evaluations/EvaluationQuestionViewPage'),
+      PAGE_LOAD_TIMEOUT
+    ),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const EvaluationQuestionFormPage = loadable(
+  () =>
+    timeout(
+      import('./Evaluations/EvaluationQuestionFormPage'),
+      PAGE_LOAD_TIMEOUT
+    ),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const EvaluationsAssignmentsPage = loadable(
+  () =>
+    timeout(
+      import('./Evaluations/EvaluationsAssignmentsPage'),
+      PAGE_LOAD_TIMEOUT
+    ),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const CreateEvaluationAssignmentPage = loadable(
+  () =>
+    timeout(
+      import('./Evaluations/CreateEvaluationAssignmentPage'),
       PAGE_LOAD_TIMEOUT
     ),
   {
@@ -255,12 +279,9 @@ export const EvaluationsQuestionsPage = loadable(
 );
 
 // General Settings
-export const PushNotificationsPage = loadable(
+export const PushMessagesPage = loadable(
   () =>
-    timeout(
-      import("./GeneralSettings/PushNotificationsPage"),
-      PAGE_LOAD_TIMEOUT
-    ),
+    timeout(import('./GeneralSettings/PushMessagesPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
@@ -268,14 +289,25 @@ export const PushNotificationsPage = loadable(
 
 export const ChatActivationPage = loadable(
   () =>
-    timeout(import("./GeneralSettings/ChatActivationPage"), PAGE_LOAD_TIMEOUT),
+    timeout(import('./GeneralSettings/ChatActivationPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
 );
 
 export const PublicPagesPage = loadable(
-  () => timeout(import("./GeneralSettings/PublicPagesPage"), PAGE_LOAD_TIMEOUT),
+  () => timeout(import('./GeneralSettings/PublicPagesPage'), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const CreatePublicPagesPage = loadable(
+  () =>
+    timeout(
+      import('./GeneralSettings/CreatePublicPagesPage'),
+      PAGE_LOAD_TIMEOUT
+    ),
   {
     fallback: <PageLoader />,
   }
@@ -283,7 +315,18 @@ export const PublicPagesPage = loadable(
 
 export const GeneralAddressPage = loadable(
   () =>
-    timeout(import("./GeneralSettings/GeneralAddressPage"), PAGE_LOAD_TIMEOUT),
+    timeout(import('./GeneralSettings/GeneralAddressPage'), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const EditGeneralAddressPage = loadable(
+  () =>
+    timeout(
+      import('./GeneralSettings/EditGeneralAddressPage'),
+      PAGE_LOAD_TIMEOUT
+    ),
   {
     fallback: <PageLoader />,
   }

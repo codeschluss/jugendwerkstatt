@@ -1,9 +1,15 @@
-mutation SaveGroup($groupEntity: GroupEntityInput) {
-  saveGroup(entity: $groupEntity) {
+mutation SaveGroup($entity: GroupEntityInput) {
+  saveGroup(entity: $entity) {
     id
   }
 }
-
 mutation DeleteGroup($deleteGroupId: String) {
   deleteGroup(id: $deleteGroupId)
+}
+
+mutation AddGroupMember($userId: String, $groupId: String) {
+  addMember(userId: $userId, groupId: $groupId)
+}
+mutation DeleteGroupMember($userId: String, $groupId: String) {
+  deleteMember(userId: $userId, groupId: $groupId)
 }

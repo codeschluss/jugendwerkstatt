@@ -1,0 +1,5 @@
+mutation DeleteUploads($uploadIds: [String]) {
+  deleteUploads(uploadIds: $uploadIds) {
+    id
+  }
+}

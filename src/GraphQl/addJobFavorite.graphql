@@ -1,0 +1,5 @@
+mutation AddJobAdFavorite($jobAdId: String) {
+  addJobAdFavorite(jobAdId: $jobAdId) {
+    id
+  }
+}

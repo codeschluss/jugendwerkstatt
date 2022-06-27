@@ -1,0 +1,20 @@
+query GetQuestionnaires {
+  questionnaires: getQuestionnaires {
+    result {
+      ...QuestionnaireField
+    }
+  }
+}
+
+query getQuestionnaire($entity: QuestionnaireEntityInput, $year: Int) {
+  questionnaire: getQuestionnaire(entity: $entity) {
+    ...QuestionnaireField
+    assignments {
+      ...AssignmentField
+    }
+    questions {
+      ...QuestionField
+      averageRating(year: $year)
+    }
+  }
+}

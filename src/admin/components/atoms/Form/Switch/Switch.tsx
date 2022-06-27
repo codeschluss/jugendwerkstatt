@@ -3,11 +3,14 @@ import { useToggle } from '../../../../../hooks/useToggle';
 import { twClsx } from '../../../../utils/twClsx';
 import { SwitchProps } from './Switch.props';
 
-export const Switch: FC<SwitchProps> = ({ onSwitch }): ReactElement => {
+export const Switch: FC<SwitchProps> = ({
+  enabled = false,
+  onSwitch,
+}): ReactElement => {
   /**
    * hooks
    */
-  const { isToggled, handleToggle } = useToggle(false);
+  const { isToggled, handleToggle } = useToggle(enabled);
 
   const handleSwitchToggle = () => {
     handleToggle();

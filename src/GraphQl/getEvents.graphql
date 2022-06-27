@@ -2,6 +2,10 @@ query getEvents($params: FilterSortPaginateInput) {
   getEvents(params: $params) {
     result {
       name
+      nextSchedule {
+        startDate
+        endDate
+      }
       titleImage {
         id
       }
@@ -25,7 +29,6 @@ query getEvents($params: FilterSortPaginateInput) {
       category {
         id
         name
-        icon
       }
       organizer {
         id

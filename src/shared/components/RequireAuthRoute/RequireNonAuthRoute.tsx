@@ -1,21 +1,17 @@
-import { ReactElement, useContext } from "react";
+// react
+import { ReactElement } from "react";
 import { Outlet, Navigate, useLocation } from "react-router-dom";
-import AuthContext from "../../../contexts/AuthContext";
+
+// store
+import { useAuthStore } from "../../../store";
 
 export const RequireNonAuthRoute = (): ReactElement => {
   // hooks
   const location = useLocation();
-  const { userRole, isLogedIn } = useContext(AuthContext);
+  const { isAuthenticated } = useAuthStore();
 
-  // if (userRole === "") return <div>Loading...</div>;
-
-  return isLogedIn ? (
-    <Navigate
-      to={{
-        pathname: !!userRole && userRole === "Admin" ? "/admin/events" : "/",
-      }}
-      state={{ from: location }}
-    />
+  return isAuthenticated ? (
+    <Navigate to={{ pathname: "/" }} state={{ from: location }} />
   ) : (
     <Outlet />
   );

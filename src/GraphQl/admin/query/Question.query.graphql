@@ -1,11 +1,3 @@
-query GetQuestions {
-  questions: getQuestions {
-    result {
-      ...QuestionField
-    }
-  }
-}
-
 mutation DeleteQuestion($questionId: String) {
   deleteQuestion(id: $questionId)
 }
