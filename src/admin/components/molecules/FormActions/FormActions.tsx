@@ -13,7 +13,7 @@ export const FormActions = ({ onSubmit }: FormActionsProps): ReactElement => {
         className="md:mr-6 border-[#424242] text-[#424242]"
         type="button"
       >
-        Zurücksetzen
+        Zurück
       </Button>
       <Button
         className="md:mr-6 disabled:opacity-50 disabled:cursor-not-allowed"
