@@ -8,7 +8,7 @@ export const EvaluationsQuestionsFormSchema = Joi.object({
   name: Joi.string().required().label('Name'),
   questions: Joi.array()
     .min(1)
+    .required()
     .items(QuestionSchema)
-    .has(QuestionSchema)
     .label('Question'),
 });

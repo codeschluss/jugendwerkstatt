@@ -1,4 +1,9 @@
-import { Control, FieldError, UseFormRegister } from 'react-hook-form';
+import {
+  Control,
+  FieldError,
+  UseFormClearErrors,
+  UseFormRegister,
+} from 'react-hook-form';
 
 export interface QuestionInput {
   name: string;
@@ -18,6 +23,7 @@ export interface EvaluationQuestionListProps {
       }[]
     | undefined;
   error: FieldError | undefined;
+  clearErrors: UseFormClearErrors<QuestionsInput>;
   onDelete?: (id: string) => void;
   onUpdate?: (id: string) => void;
 }

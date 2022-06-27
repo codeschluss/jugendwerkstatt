@@ -7,7 +7,6 @@ import {
   useGetOrganizerQuery,
   useSaveOrganizerMutation,
 } from '../../../GraphQl/graphql';
-import { Button } from '../../components/atoms';
 import { Accordion, FormActions } from '../../components/molecules';
 import {
   BaseOrganizerForm,
@@ -23,7 +22,7 @@ const CreateOrganizersPage = (): ReactElement => {
     resolver: joiResolver(OrganizerFormSchema),
   });
 
-  const { reset, handleSubmit, trigger } = methods;
+  const { reset, handleSubmit } = methods;
 
   const { data: organizerData } = useGetOrganizerQuery({
     variables: { entity: { id } },
@@ -45,8 +44,6 @@ const CreateOrganizersPage = (): ReactElement => {
     });
   };
 
-  const handleTrigger = () => trigger();
-
   useEffect(() => {
     if (!!organizerData?.organizer) {
       reset({
@@ -62,12 +59,7 @@ const CreateOrganizersPage = (): ReactElement => {
     <FormProvider {...methods}>
       <form className="min-h-full">
         <Accordion title="Stammdaten" open={!!id}>
-          <>
-            <BaseOrganizerForm />
-            <Button type="button" className="mt-6" onClick={handleTrigger}>
-              Speichern
-            </Button>
-          </>
+          <BaseOrganizerForm />
         </Accordion>
         <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
       </form>

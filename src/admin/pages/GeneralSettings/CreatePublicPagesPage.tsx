@@ -1,41 +1,41 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { ReactElement, useEffect, useState } from "react";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { ReactElement, useEffect, useState } from 'react';
 import {
   FieldArrayWithId,
   FormProvider,
   useFieldArray,
   useForm,
-} from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
-import { useGetPageQuery, useSavePageMutation } from "../../../GraphQl/graphql";
-import { Button } from "../../components/atoms";
-import { ButtonVariants } from "../../components/atoms/Form/Button/Button.props";
+} from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useGetPageQuery, useSavePageMutation } from '../../../GraphQl/graphql';
+import { Button } from '../../components/atoms';
+import { ButtonVariants } from '../../components/atoms/Form/Button/Button.props';
 import {
   Accordion,
   EventImagePreview,
   FormActions,
   InputField,
   UploadField,
-} from "../../components/molecules";
-import { DescriptionFrom } from "../../components/organisms";
-import { fileToBase64 } from "../../utils/fileToBase64";
-import { PublicPagesFormSchema } from "../../validations";
-import { PublicPageFormInputs } from "./PublicPageForm.props";
+} from '../../components/molecules';
+import { DescriptionFrom } from '../../components/organisms';
+import { fileToBase64 } from '../../utils/fileToBase64';
+import { PublicPagesFormSchema } from '../../validations';
+import { PublicPageFormInputs } from './PublicPageForm.props';
 
 const CreatePublicPagesPage = (): ReactElement => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [images, setImages] = useState<FieldArrayWithId<
     PublicPageFormInputs,
-    "images",
-    "id"
+    'images',
+    'id'
   > | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   const methods = useForm<PublicPageFormInputs>({
     resolver: joiResolver(PublicPagesFormSchema),
-    mode: "onSubmit",
-    reValidateMode: "onSubmit",
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
   });
 
   const { data: { page = null } = {} } = useGetPageQuery({
@@ -45,7 +45,7 @@ const CreatePublicPagesPage = (): ReactElement => {
 
   console.log(page);
   const [savePage] = useSavePageMutation({
-    onCompleted: () => navigate("/admin/general-settings/public-pages"),
+    onCompleted: () => navigate('/admin/general-settings/public-pages'),
   });
 
   const {
@@ -58,7 +58,7 @@ const CreatePublicPagesPage = (): ReactElement => {
   } = methods;
 
   const { fields, append, remove } = useFieldArray({
-    name: "images",
+    name: 'images',
     control,
   });
 
@@ -87,7 +87,7 @@ const CreatePublicPagesPage = (): ReactElement => {
   };
 
   const handleSetFile =
-    (item: FieldArrayWithId<PublicPageFormInputs, "images", "id">) => () => {
+    (item: FieldArrayWithId<PublicPageFormInputs, 'images', 'id'>) => () => {
       setImages(item);
     };
 
@@ -105,8 +105,8 @@ const CreatePublicPagesPage = (): ReactElement => {
   useEffect(() => {
     if (!!page) {
       reset({
-        pageName: page?.name || "",
-        description: page?.content || "",
+        pageName: page?.name || '',
+        description: page?.content || '',
       });
     }
   }, [page, reset]);
@@ -118,12 +118,9 @@ const CreatePublicPagesPage = (): ReactElement => {
           <InputField
             id="pageName"
             label="Stammdaten"
-            {...register("pageName")}
+            {...register('pageName')}
             error={errors.pageName?.message}
           />
-          <Button className="mt-6" type="button" onClick={handleTrigger}>
-            Speichern
-          </Button>
         </Accordion>
         <Accordion
           title="Titelbild"
@@ -154,9 +151,6 @@ const CreatePublicPagesPage = (): ReactElement => {
 
             {/* <UploadField handleAppend={handleAppend} /> */}
           </div>
-          <Button type="button" className="mt-6" onClick={handleTrigger}>
-            Speichern
-          </Button>
         </Accordion>
 
         <Accordion title="Beschreibung">
@@ -165,7 +159,7 @@ const CreatePublicPagesPage = (): ReactElement => {
 
         <Accordion title="Video" className="p-5">
           <div className="flex items-start justify-start">
-            <UploadField id="video" {...register("video")} />
+            <UploadField id="video" {...register('video')} />
           </div>
           <div className="flex gap-x-2">
             <Button
@@ -174,13 +168,6 @@ const CreatePublicPagesPage = (): ReactElement => {
               type="button"
             >
               Löschen
-            </Button>
-            <Button
-              type="button"
-              color={ButtonVariants.secondary}
-              onClick={handleTrigger}
-            >
-              Speichern
             </Button>
           </div>
         </Accordion>
