@@ -33,7 +33,7 @@ const CreateMediaPage = (): ReactElement => {
       gqlVar({
         url,
         title,
-        category: { name: category },
+        category: { id: category },
         ...(!!getLink && { id: getLink?.id }),
       })
     );
