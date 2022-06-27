@@ -25,10 +25,12 @@ const DefaultHome: React.FC = () => {
           />
         </div>
         <p className="text-sm p-2">
-          Die Jugendwerkstatt ist eine Einrichtung für Jugendliche, die
-          besondere Schwierigkeiten beim Übergang von der Schule in das
-          Berufsleben haben. In der Jugendwerkstatt können sie sich beruflich
-          orientieren, handwerkliche
+          Hallo und Willkommen! <br/>
+          Dies ist die App der Jugendwerkstatt alpha e.V. in Wuppertal.
+          Du bist in der Jugendwerkstatt tätig? Dann geht es hier mit der Anmeldung weiter für dich…
+          <br/> <br/>
+          Wenn du noch nicht in der Jugendwerkstatt angemeldet bist, bewirb dich bei uns, wir freuen uns auf dich! 
+          Weitere Informationen findest du unter: <a href="https://www.alphaev.de">https://www.alphaev.de</a> 
         </p>
         <div className="my-5 w-[80%] m-auto h-[10%] flex flex-col items-center justify-between">
           <Link className="w-full md:w-full md:mb-5" to="/login">

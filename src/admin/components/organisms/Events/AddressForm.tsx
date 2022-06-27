@@ -1,18 +1,14 @@
 import { ReactElement } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Button } from '../../atoms';
 import { InputField } from '../../molecules';
 
 export const AddressForm = (): ReactElement => {
   const {
-    trigger,
     register,
     formState: {
       errors: { address },
     },
   } = useFormContext();
-
-  const handleTrigger = () => trigger('address');
 
   return (
     <>
@@ -56,9 +52,6 @@ export const AddressForm = (): ReactElement => {
           />
         </div>
       </div>
-      <Button type="button" className="mt-6" onClick={handleTrigger}>
-        Speichern
-      </Button>
     </>
   );
 };

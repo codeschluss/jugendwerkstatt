@@ -125,6 +125,15 @@ const CreatePublicPagesPage = (): ReactElement => {
   const handleRemoveVideo = () => {};
   const onHandle = (file: File | null) => setImageFile(file);
 
+  // useEffect(() => {
+  //   if (!!page) {
+  //     reset({
+  //       pageName: page?.name || '',
+  //       description: page?.content || '',
+  //     });
+  //   }
+  // }, [page, reset]);
+
   return (
     <FormProvider {...methods}>
       <form>
@@ -135,9 +144,6 @@ const CreatePublicPagesPage = (): ReactElement => {
             {...register('pageName')}
             error={errors.pageName?.message}
           />
-          <Button className="mt-6" type="button" onClick={handleTrigger}>
-            Speichern
-          </Button>
         </Accordion>
         <Accordion
           title="Titelbild"
@@ -170,9 +176,6 @@ const CreatePublicPagesPage = (): ReactElement => {
               />
             ))}
           </div>
-          <Button type="button" className="mt-6" onClick={handleTrigger}>
-            Speichern
-          </Button>
         </Accordion>
 
         <Accordion title="Textfeld">
@@ -190,13 +193,6 @@ const CreatePublicPagesPage = (): ReactElement => {
               type="button"
             >
               Löschen
-            </Button>
-            <Button
-              type="button"
-              color={ButtonVariants.secondary}
-              onClick={handleTrigger}
-            >
-              Speichern
             </Button>
           </div>
         </Accordion>

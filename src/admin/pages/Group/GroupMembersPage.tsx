@@ -11,6 +11,7 @@ const GroupMembersPage = (): ReactElement => {
   const { id } = useParams();
   const { data: { group = null } = {}, refetch: refetchGroups } =
     useGetGroupQuery({
+      fetchPolicy: 'cache-and-network',
       variables: { entity: { id } },
     });
   const [deleteMember] = useDeleteGroupMemberMutation({
