@@ -6,9 +6,6 @@ export interface AddressFormInputs {
 }
 export interface BaseDataFormInputs {
   name: string;
-  phone?: string;
-  email?: string;
-  website?: string;
   organizer: string;
   category: string;
 }
