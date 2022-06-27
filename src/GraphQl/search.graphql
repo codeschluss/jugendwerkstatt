@@ -1,0 +1,8 @@
+query Search($params: FilterSortPaginateInput) {
+  search(params: $params) {
+    id
+    title
+    content
+    type
+  }
+}
