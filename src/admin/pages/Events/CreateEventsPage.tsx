@@ -1,19 +1,19 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState } from 'react';
 import {
   FieldArrayWithId,
   FormProvider,
   useFieldArray,
   useForm,
-} from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
-import { joiResolver } from "@hookform/resolvers/joi";
+} from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 import {
   Accordion,
   EventImagePreview,
   FormActions,
   UploadField,
-} from "../../components/molecules";
+} from '../../components/molecules';
 import {
   AddressForm,
   BaseDataForm,
@@ -21,15 +21,14 @@ import {
   EventsFormInputs,
   ScheduleInputs,
   SchedulesForm,
-} from "../../components/organisms";
+} from '../../components/organisms';
 import {
   useGetEventAdminQuery,
   useSaveEventMutation,
-} from "../../../GraphQl/graphql";
-import { Button } from "../../components/atoms";
-import { EventsFormSchema } from "../../validations";
-import dayjs from "dayjs";
-import { fileObject } from "../../utils";
+} from '../../../GraphQl/graphql';
+import { EventsFormSchema } from '../../validations';
+import dayjs from 'dayjs';
+import { fileObject } from '../../utils';
 
 const CreateEventsPage = (): ReactElement => {
   const { id } = useParams();
@@ -37,8 +36,8 @@ const CreateEventsPage = (): ReactElement => {
 
   const [file, setFile] = useState<FieldArrayWithId<
     EventsFormInputs,
-    "files",
-    "id"
+    'files',
+    'id'
   > | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [schedules, setSchedules] = useState<ScheduleInputs[] | []>([]);
@@ -49,27 +48,27 @@ const CreateEventsPage = (): ReactElement => {
   });
 
   const [saveEvent] = useSaveEventMutation({
-    onCompleted: () => navigate("/admin/events"),
+    onCompleted: () => navigate('/admin/events'),
   });
 
   const methods = useForm<EventsFormInputs>({
     resolver: joiResolver(EventsFormSchema),
     defaultValues: {
       schedule: {
-        start_date: dayjs().startOf("date").toDate(),
-        end_date: dayjs().startOf("date").toDate(),
-        end_repeat: dayjs().startOf("date").toDate(),
-        start_hour: dayjs().startOf("h").toDate(),
-        end_hour: dayjs().startOf("h").toDate(),
+        start_date: dayjs().startOf('date').toDate(),
+        end_date: dayjs().startOf('date').toDate(),
+        end_repeat: dayjs().startOf('date').toDate(),
+        start_hour: dayjs().startOf('h').toDate(),
+        end_hour: dayjs().startOf('h').toDate(),
       },
       files: [{ file: null }],
     },
   });
 
-  const { formState, trigger, handleSubmit, register, control } = methods;
+  const { formState, handleSubmit, register, control } = methods;
 
   const { fields, append, remove } = useFieldArray({
-    name: "files",
+    name: 'files',
     control,
   });
 
@@ -104,13 +103,12 @@ const CreateEventsPage = (): ReactElement => {
     });
   };
 
-  console.log("errors", formState?.errors.files);
+  console.log('errors', formState?.errors.files);
 
-  const handleTrigger = () => trigger();
   const handleAppend = () => append({ file: null });
 
   const handleSetFile =
-    (item: FieldArrayWithId<EventsFormInputs, "files", "id">) => () => {
+    (item: FieldArrayWithId<EventsFormInputs, 'files', 'id'>) => () => {
       setFile(item);
     };
 
@@ -172,9 +170,6 @@ const CreateEventsPage = (): ReactElement => {
 
             {/* <UploadField handleAppend={handleAppend} /> */}
           </div>
-          <Button type="button" className="mt-6" onClick={handleTrigger}>
-            Speichern
-          </Button>
         </Accordion>
 
         <SchedulesForm setSchedules={setSchedules} schedules={schedules} />

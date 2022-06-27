@@ -15,7 +15,10 @@ export const FormActions = ({ onSubmit }: FormActionsProps): ReactElement => {
       >
         Zurücksetzen
       </Button>
-      <Button className="md:mr-6" onClick={onSubmit}>
+      <Button
+        className="md:mr-6 disabled:opacity-50 disabled:cursor-not-allowed"
+        onClick={onSubmit}
+      >
         Absenden
       </Button>
     </div>
