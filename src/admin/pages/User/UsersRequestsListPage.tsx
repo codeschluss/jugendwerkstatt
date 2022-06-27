@@ -7,6 +7,7 @@ import {
 } from '../../../GraphQl/graphql';
 import { Table, Action, Panel } from '../../components/atoms';
 import { CustomTable } from '../../components/molecules';
+import { BackButton } from '../../components/molecules/BackButton/BackButton';
 
 const UsersRequestsListPage = () => {
   const { data, refetch: refetchUsers } = useGetUsersAdminQuery({
@@ -70,6 +71,7 @@ const UsersRequestsListPage = () => {
           []
         }
       />
+      <BackButton />
     </Panel.Wrapper>
   );
 };
