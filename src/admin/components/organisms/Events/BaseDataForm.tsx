@@ -5,7 +5,7 @@ import {
   useGetEventCategoriesAdminQuery,
   useGetOrganizersQuery,
 } from "../../../../GraphQl/graphql";
-import { Button, Select } from "../../atoms";
+import { Select } from "../../atoms";
 import { InputField } from "../../molecules";
 import { EventsFormInputs } from "./Events.types";
 
@@ -17,14 +17,11 @@ export const BaseDataForm = (): ReactElement => {
   const {
     setValue,
     getValues,
-    trigger,
     register,
     formState: {
       errors: { baseData },
     },
   } = useFormContext<EventsFormInputs>();
-
-  const handleTrigger = () => trigger("baseData");
 
   useEffect(() => {
     if (!getValues("baseData.category") && categoriesData) {
@@ -81,9 +78,6 @@ export const BaseDataForm = (): ReactElement => {
           </Select>
         </div>
       </div>
-      <Button type="button" className="mt-6" onClick={handleTrigger}>
-        Speichern
-      </Button>
     </>
   );
 };

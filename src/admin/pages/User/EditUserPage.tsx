@@ -1,5 +1,5 @@
-import { joiResolver } from '@hookform/resolvers/joi';
 import { ReactElement, useEffect } from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
 import { FieldError, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
@@ -7,10 +7,9 @@ import {
   useGetUserAdminQuery,
   useSaveUserMutation,
 } from '../../../GraphQl/graphql';
-import { Button } from '../../components/atoms';
 import { MultiSelect } from '../../components/atoms/Form/MultiSelect/MultiSelect';
 import { OptionType } from '../../components/atoms/Form/MultiSelect/MultiSelect.props';
-import { Accordion } from '../../components/molecules';
+import { Accordion, FormActions } from '../../components/molecules';
 import { UserFormSchema } from '../../validations/UserForm.schema';
 import { UserFormInputs } from './User.props';
 
@@ -71,8 +70,8 @@ const EditUserPage = (): ReactElement => {
   if (loading) return <p>loading...</p>;
 
   return (
-    <div className="min-h-full">
-      <Accordion title="Max Müller Rolle zuweisen" open>
+    <Accordion title="Max Müller Rolle zuweisen" open>
+      <form className="min-h-full">
         {getValues('roles') && (
           <>
             <MultiSelect
@@ -88,12 +87,10 @@ const EditUserPage = (): ReactElement => {
             )}
           </>
         )}
-
-        <Button className="mt-6" onClick={handleSubmit(onSubmit)}>
-          Speichern
-        </Button>
-      </Accordion>
-    </div>
+        <FormActions onSubmit={handleSubmit(onSubmit)} />
+      </form>
+    </Accordion>
   );
 };
+
 export default EditUserPage;

@@ -1,16 +1,15 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement, useEffect } from 'react';
-import { FieldError, useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { ReactElement, useEffect } from "react";
+import { FieldError, useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   useGetQuestionnaireQuery,
   useSaveQuestionnaireMutation,
-} from '../../../GraphQl/graphql';
-import { Button } from '../../components/atoms';
-import { Accordion, FormActions, InputField } from '../../components/molecules';
-import { EvaluationQuestionList } from '../../components/organisms/EvaluationQuestionList/EvaluationQuestionList';
-import { QuestionsInput } from '../../components/organisms/EvaluationQuestionList/EvaluationQuestionList.types';
-import { EvaluationsQuestionsFormSchema } from '../../validations/EvaluationsQuestions.schema';
+} from "../../../GraphQl/graphql";
+import { Accordion, FormActions, InputField } from "../../components/molecules";
+import { EvaluationQuestionList } from "../../components/organisms/EvaluationQuestionList/EvaluationQuestionList";
+import { QuestionsInput } from "../../components/organisms/EvaluationQuestionList/EvaluationQuestionList.types";
+import { EvaluationsQuestionsFormSchema } from "../../validations/EvaluationsQuestions.schema";
 
 const EvaluationQuestionFormPage = (): ReactElement => {
   const { id } = useParams();
@@ -22,30 +21,32 @@ const EvaluationQuestionFormPage = (): ReactElement => {
 
   const {
     control,
-    formState: { errors },
+    formState: { isDirty, errors },
+    clearErrors,
     reset,
-    trigger,
     register,
     handleSubmit,
   } = useForm<QuestionsInput>({
     resolver: joiResolver(EvaluationsQuestionsFormSchema),
+    mode: "onTouched",
   });
   const [saveQuestionnaire] = useSaveQuestionnaireMutation({
-    onCompleted: () => navigate('/admin/evaluations/questions'),
+    onCompleted: () => navigate("/admin/evaluations/questions"),
   });
 
   useEffect(() => {
     if (id && questionnaire) {
       reset({
-        name: questionnaire.name || '',
+        name: questionnaire.name || "",
         questions: questionnaire.questions?.map((question) => ({
-          name: question?.item || '',
+          name: question?.item || "",
         })),
       });
     }
   }, [id, questionnaire, reset]);
 
-  const handleTrigger = () => trigger('name');
+  console.log(isDirty, !!errors);
+
   const handleOnSubmit = (data: QuestionsInput) => {
     saveQuestionnaire({
       variables: {
@@ -63,28 +64,40 @@ const EvaluationQuestionFormPage = (): ReactElement => {
 
   return (
     <form className="min-h-full ">
-      <Accordion title="Stammdaten" open={!!id}>
+      <Accordion
+        title="Stammdaten"
+        open={!!id}
+        {...(errors.name && {
+          className: "border border-primary",
+        })}
+      >
         <InputField
           id="name"
           label="Name"
           placeholder="Evaluierungsbogen 1"
-          {...register('name')}
+          {...register("name")}
           error={errors?.name?.message}
         />
-
-        <Button className="mt-6" type="button" onClick={handleTrigger}>
-          Speichern
-        </Button>
       </Accordion>
-      <Accordion title="Teilnehmerbefragung - Fragen" open={!!id}>
+      <Accordion
+        title="Teilnehmerbefragung - Fragen"
+        open={!!id}
+        {...(errors.questions && {
+          className: "border border-primary",
+        })}
+      >
         <EvaluationQuestionList
           error={errors?.questions as unknown as FieldError}
           errors={errors?.questions}
+          clearErrors={clearErrors}
           control={control}
           register={register}
         />
       </Accordion>
-      <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
+      <FormActions
+        // preventSubmit={isDirty && !!errors}
+        onSubmit={handleSubmit(handleOnSubmit)}
+      />
     </form>
   );
 };

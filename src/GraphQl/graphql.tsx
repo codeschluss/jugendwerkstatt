@@ -3676,6 +3676,13 @@ export type SaveUserTemplateMutationVariables = Exact<{
 
 export type SaveUserTemplateMutation = { __typename?: 'Mutation', saveUserTemplate?: { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null } | null };
 
+export type SearchQueryVariables = Exact<{
+  params?: InputMaybe<FilterSortPaginateInput>;
+}>;
+
+
+export type SearchQuery = { __typename?: 'Query', search?: Array<{ __typename?: 'SearchDto', id?: string | null, title?: string | null, content?: string | null, type?: SearchResultType | null } | null> | null };
+
 export type SendPasswordResetMutationVariables = Exact<{
   email: Scalars['String'];
 }>;
@@ -8696,6 +8703,44 @@ export function useSaveUserTemplateMutation(baseOptions?: Apollo.MutationHookOpt
 export type SaveUserTemplateMutationHookResult = ReturnType<typeof useSaveUserTemplateMutation>;
 export type SaveUserTemplateMutationResult = Apollo.MutationResult<SaveUserTemplateMutation>;
 export type SaveUserTemplateMutationOptions = Apollo.BaseMutationOptions<SaveUserTemplateMutation, SaveUserTemplateMutationVariables>;
+export const SearchDocument = gql`
+    query Search($params: FilterSortPaginateInput) {
+  search(params: $params) {
+    id
+    title
+    content
+    type
+  }
+}
+    `;
+
+/**
+ * __useSearchQuery__
+ *
+ * To run a query within a React component, call `useSearchQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchQuery({
+ *   variables: {
+ *      params: // value for 'params'
+ *   },
+ * });
+ */
+export function useSearchQuery(baseOptions?: Apollo.QueryHookOptions<SearchQuery, SearchQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchQuery, SearchQueryVariables>(SearchDocument, options);
+      }
+export function useSearchLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchQuery, SearchQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchQuery, SearchQueryVariables>(SearchDocument, options);
+        }
+export type SearchQueryHookResult = ReturnType<typeof useSearchQuery>;
+export type SearchLazyQueryHookResult = ReturnType<typeof useSearchLazyQuery>;
+export type SearchQueryResult = Apollo.QueryResult<SearchQuery, SearchQueryVariables>;
 export const SendPasswordResetDocument = gql`
     mutation sendPasswordReset($email: String!) {
   sendPasswordReset(mailAddress: $email)
