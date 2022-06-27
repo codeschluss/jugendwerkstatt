@@ -1,12 +1,12 @@
-import { CalendarIcon, ClockIcon } from "@heroicons/react/outline";
-import { Dispatch, ReactElement, SetStateAction } from "react";
-import { Controller, useFormContext } from "react-hook-form";
-import { generateSchedules } from "../../../utils/generateSchedules";
+import { CalendarIcon, ClockIcon } from '@heroicons/react/outline';
+import { Dispatch, ReactElement, SetStateAction } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
+import { generateSchedules } from '../../../utils/generateSchedules';
 
-import { Button, Select } from "../../atoms";
-import { Accordion, DatePicker } from "../../molecules";
-import { SchedulesPreview } from "../../molecules/SchedulesPreview/SchedulesPreview";
-import { EventsFormInputs, ScheduleInputs } from "./Events.types";
+import { Button, Select } from '../../atoms';
+import { Accordion, DatePicker } from '../../molecules';
+import { SchedulesPreview } from '../../molecules/SchedulesPreview/SchedulesPreview';
+import { EventsFormInputs, ScheduleInputs } from './Events.types';
 
 export const SchedulesForm = ({
   setSchedules,
@@ -25,9 +25,9 @@ export const SchedulesForm = ({
   };
 
   const handleTrigger = () => {
-    const dates = generateSchedules(getValues("schedule") || {});
+    const dates = generateSchedules(getValues('schedule') || {});
     setSchedules(dates);
-    trigger("schedule");
+    trigger('schedule');
   };
 
   return (
@@ -117,7 +117,7 @@ export const SchedulesForm = ({
         </div>
         <div className="flex items-center">
           <div className="mr-10">
-            <Select label="Turnus" {...register("schedule.repeat")}>
+            <Select label="Turnus" {...register('schedule.repeat')}>
               <option value="">Repeat</option>
               <option value="week">Weekly</option>
               <option value="month">Monthly</option>
@@ -125,7 +125,7 @@ export const SchedulesForm = ({
             </Select>
           </div>
 
-          {getValues("schedule.repeat") && (
+          {getValues('schedule.repeat') && (
             <div>
               <Controller
                 control={control}

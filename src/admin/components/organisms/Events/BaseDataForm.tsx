@@ -5,7 +5,7 @@ import {
   useGetEventCategoriesAdminQuery,
   useGetOrganizersQuery,
 } from '../../../../GraphQl/graphql';
-import { Button, Select } from '../../atoms';
+import { Select } from '../../atoms';
 import { InputField } from '../../molecules';
 import { EventsFormInputs } from './Events.types';
 
@@ -17,14 +17,11 @@ export const BaseDataForm = (): ReactElement => {
   const {
     setValue,
     getValues,
-    trigger,
     register,
     formState: {
       errors: { baseData },
     },
   } = useFormContext<EventsFormInputs>();
-
-  const handleTrigger = () => trigger('baseData');
 
   useEffect(() => {
     if (!getValues('baseData.category') && categoriesData) {
@@ -42,70 +39,65 @@ export const BaseDataForm = (): ReactElement => {
   }, [organizersData, categoriesData, getValues, setValue]);
 
   return (
-    <>
-      <div className="grid grid-cols-2 gap-8">
-        <div className="flex flex-col justify-start w-full space-y-6">
-          <InputField
-            id="name"
-            label="Eventname"
-            {...register('baseData.name')}
-            error={baseData?.name?.message}
-            placeholder="Das erste Event"
-          />
-          <InputField
-            id="phone"
-            label="Telefonnummer"
-            {...register('baseData.phone')}
-            placeholder="+49 202 - 49 68 94 10"
-            error={baseData?.phone?.message}
-          />
+    <div className="grid grid-cols-2 gap-8">
+      <div className="flex flex-col justify-start w-full space-y-6">
+        <InputField
+          id="name"
+          label="Eventname"
+          {...register('baseData.name')}
+          error={baseData?.name?.message}
+          placeholder="Das erste Event"
+        />
+        <InputField
+          id="phone"
+          label="Telefonnummer"
+          {...register('baseData.phone')}
+          placeholder="+49 202 - 49 68 94 10"
+          error={baseData?.phone?.message}
+        />
 
-          <Select
-            id="category"
-            label="Kategorie"
-            {...register('baseData.category')}
-            error={baseData?.category?.message}
-          >
-            {categoriesData?.categories?.result?.map((item) => (
-              <option key={item?.id} value={item?.id || ''}>
-                {item?.name}
-              </option>
-            ))}
-          </Select>
-        </div>
-        <div className="flex flex-col justify-start space-y-6">
-          <Select
-            id="organizator"
-            label="Veranstalter"
-            {...register('baseData.organizer')}
-            error={baseData?.organizer?.message}
-          >
-            {organizersData?.organizers?.result?.map((item) => (
-              <option key={item?.id} value={item?.id || ''}>
-                {item?.name}
-              </option>
-            ))}
-          </Select>
-          <InputField
-            id="email"
-            label="E-Mail-Adresse"
-            placeholder="mail@alphaev.de"
-            {...register('baseData.email')}
-            error={baseData?.email?.message}
-          />
-          <InputField
-            id="website"
-            label="Webseite"
-            required={false}
-            placeholder="https://www.alphaev.de"
-            {...register('baseData.website')}
-            error={baseData?.website?.message}
-          />
-        </div>
+        <Select
+          id="category"
+          label="Kategorie"
+          {...register('baseData.category')}
+          error={baseData?.category?.message}
+        >
+          {categoriesData?.categories?.result?.map((item) => (
+            <option key={item?.id} value={item?.id || ''}>
+              {item?.name}
+            </option>
+          ))}
+        </Select>
       </div>
-      <Button type="button" className="mt-6" onClick={handleTrigger}>
-        Speichern
-      </Button>
-    </>
+      <div className="flex flex-col justify-start space-y-6">
+        <Select
+          id="organizator"
+          label="Veranstalter"
+          {...register('baseData.organizer')}
+          error={baseData?.organizer?.message}
+        >
+          {organizersData?.organizers?.result?.map((item) => (
+            <option key={item?.id} value={item?.id || ''}>
+              {item?.name}
+            </option>
+          ))}
+        </Select>
+        <InputField
+          id="email"
+          label="E-Mail-Adresse"
+          placeholder="mail@alphaev.de"
+          {...register('baseData.email')}
+          error={baseData?.email?.message}
+        />
+        <InputField
+          id="website"
+          label="Webseite"
+          required={false}
+          placeholder="https://www.alphaev.de"
+          {...register('baseData.website')}
+          error={baseData?.website?.message}
+        />
+      </div>
+    </div>
   );
 };
