@@ -99,11 +99,14 @@ const Chat = () => {
     .reverse();
 
   return (
-    <div className="flex flex-col bg-[#eee] rounded-lg -mx-8 md:mx-0">
+    <div
+      className="flex flex-col bg-[#eee] rounded-lg  md:mx-0"
+      style={{ height: "calc(100vh - 3.5rem)" }}
+    >
       <h2 className="sticky px-4 py-3 font-semibold bg-white border-b-2 rounded-b-lg top-14">
         {getChat.data?.getChat?.name}
       </h2>
-      <div className="py-3">
+      <div className="py-3 h-full">
         {reverseMessages?.map((el) => {
           const _me: boolean = el?.user?.id === myId ? true : false;
           return (
