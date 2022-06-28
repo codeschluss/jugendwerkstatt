@@ -13,7 +13,7 @@ import {
   useGetJobTypeQuery,
   useSaveJobTypeMutation,
 } from '../../../GraphQl/graphql';
-import { gqlVar } from '../../utils';
+import { gqlVar, twClsx } from '../../utils';
 
 const CreateVacancyCategoriesPage = (): ReactElement => {
   const { id } = useParams();
@@ -62,6 +62,9 @@ const CreateVacancyCategoriesPage = (): ReactElement => {
         open={!!id}
         sideClassName="bg-transparent"
         sideContent={<SketchColor control={control} setValue={setValue} />}
+        className={twClsx(
+          (errors.color || errors.name) && 'border border-primary'
+        )}
       >
         <div className="flex flex-col justify-start w-full space-y-6">
           <InputField

@@ -14,7 +14,7 @@ import {
   VacancyFormInputs,
   VacancyTerminForm,
 } from '../../components/organisms';
-import { gqlVar } from '../../utils';
+import { gqlVar, twClsx } from '../../utils';
 import { VacancyFormSchema } from '../../validations';
 
 const CreateVacancyPage = (): ReactElement => {
@@ -31,7 +31,11 @@ const CreateVacancyPage = (): ReactElement => {
     },
   });
 
-  const { reset, handleSubmit } = methods;
+  const {
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
 
   const { data: { getJobAd = null } = {} } = useGetJobAdAdminQuery({
     variables: { entity: { id } },
@@ -72,20 +76,33 @@ const CreateVacancyPage = (): ReactElement => {
           startDate: dayjs(getJobAd?.startDate).format(),
           dueDate: dayjs(getJobAd?.dueDate).format(),
         },
+        description: getJobAd?.content || '',
       });
     }
   }, [getJobAd, reset]);
 
+  console.log(getJobAd);
+
   return (
     <FormProvider {...methods}>
       <form className="min-h-full">
-        <Accordion title="Stammdaten" open={!!id}>
+        <Accordion
+          title="Stammdaten"
+          open={!!id}
+          className={twClsx(errors.baseData && 'border border-primary')}
+        >
           <VacancyForm />
         </Accordion>
-        <Accordion title="Beschreibung">
+        <Accordion
+          title="Beschreibung"
+          className={twClsx(errors.description && 'border border-primary')}
+        >
           <DescriptionFrom />
         </Accordion>
-        <Accordion title="Termine">
+        <Accordion
+          title="Termine"
+          className={twClsx(errors.date && 'border border-primary')}
+        >
           <VacancyTerminForm />
         </Accordion>
         <FormActions onSubmit={handleSubmit(handleOnSubmit)} />

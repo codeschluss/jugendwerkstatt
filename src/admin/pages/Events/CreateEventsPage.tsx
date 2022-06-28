@@ -1,19 +1,19 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from 'react';
 import {
   FieldArrayWithId,
   FormProvider,
   useFieldArray,
   useForm,
-} from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
-import { joiResolver } from "@hookform/resolvers/joi";
+} from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 import {
   Accordion,
   EventImagePreview,
   FormActions,
   UploadField,
-} from "../../components/molecules";
+} from '../../components/molecules';
 import {
   AddressForm,
   BaseDataForm,
@@ -21,14 +21,14 @@ import {
   EventsFormInputs,
   ScheduleInputs,
   SchedulesForm,
-} from "../../components/organisms";
+} from '../../components/organisms';
 import {
   useGetEventAdminQuery,
   useSaveEventMutation,
-} from "../../../GraphQl/graphql";
-import { EventsFormSchema } from "../../validations";
-import dayjs from "dayjs";
-import { fileObject } from "../../utils";
+} from '../../../GraphQl/graphql';
+import { EventsFormSchema } from '../../validations';
+import dayjs from 'dayjs';
+import { fileObject, twClsx } from '../../utils';
 
 const CreateEventsPage = (): ReactElement => {
   const { id } = useParams();
@@ -36,8 +36,8 @@ const CreateEventsPage = (): ReactElement => {
 
   const [file, setFile] = useState<FieldArrayWithId<
     EventsFormInputs,
-    "files",
-    "id"
+    'files',
+    'id'
   > | null>(null);
 
   const [imageFile, setImageFile] = useState<{ file: File; id: string } | null>(
@@ -52,27 +52,35 @@ const CreateEventsPage = (): ReactElement => {
   });
 
   const [saveEvent, { loading }] = useSaveEventMutation({
-    onCompleted: () => navigate("/admin/events"),
+    onCompleted: () => navigate('/admin/events'),
   });
 
   const methods = useForm<EventsFormInputs>({
     resolver: joiResolver(EventsFormSchema),
     defaultValues: {
       schedule: {
-        start_date: dayjs().startOf("date").toDate(),
-        end_date: dayjs().startOf("date").toDate(),
-        end_repeat: dayjs().startOf("date").toDate(),
-        start_hour: dayjs().startOf("h").toDate(),
-        end_hour: dayjs().startOf("h").toDate(),
+        start_date: dayjs().startOf('date').toDate(),
+        end_date: dayjs().startOf('date').toDate(),
+        end_repeat: dayjs().startOf('date').toDate(),
+        start_hour: dayjs().startOf('h').toDate(),
+        end_hour: dayjs().startOf('h').toDate(),
       },
       files: [{ file: null }],
     },
   });
 
-  const { formState, handleSubmit, register, reset, control } = methods;
+  const {
+    formState: { isSubmitted, errors },
+    handleSubmit,
+    register,
+    reset,
+    control,
+  } = methods;
+
+  console.log(errors);
 
   const { fields, append, remove, update } = useFieldArray({
-    name: "files",
+    name: 'files',
     control,
   });
 
@@ -109,15 +117,13 @@ const CreateEventsPage = (): ReactElement => {
     });
   };
 
-  console.log("errors", formState?.errors.files);
-
   const handleAppend = (index: number, file: FileList | null) => {
     update(index, { file });
     append({ file: null });
   };
 
   const handleSetFile =
-    (item: FieldArrayWithId<EventsFormInputs, "files", "id">) => () => {
+    (item: FieldArrayWithId<EventsFormInputs, 'files', 'id'>) => () => {
       setFile(item);
     };
 
@@ -130,22 +136,22 @@ const CreateEventsPage = (): ReactElement => {
     setImageFile(data);
   };
 
-  console.log("result", getEvent?.images);
+  console.log('result', getEvent?.images);
 
   useEffect(() => {
     if (!!getEvent) {
       reset({
         baseData: {
-          name: getEvent?.name || "",
-          category: getEvent?.category?.id || "",
-          organizer: getEvent?.organizer?.id || "",
+          name: getEvent?.name || '',
+          category: getEvent?.category?.id || '',
+          organizer: getEvent?.organizer?.id || '',
         },
-        description: getEvent?.description || "",
+        description: getEvent?.description || '',
         address: {
-          houseNumber: getEvent?.address?.houseNumber || "",
-          place: getEvent?.address?.place || "",
-          postalCode: getEvent?.address?.postalCode || "",
-          street: getEvent?.address?.street || "",
+          houseNumber: getEvent?.address?.houseNumber || '',
+          place: getEvent?.address?.place || '',
+          postalCode: getEvent?.address?.postalCode || '',
+          street: getEvent?.address?.street || '',
         },
       });
       // setImageFile();
@@ -155,13 +161,23 @@ const CreateEventsPage = (): ReactElement => {
   return (
     <FormProvider {...methods}>
       <form className="min-h-full">
-        <Accordion title="Stammdaten" open={!!id}>
+        <Accordion
+          title="Stammdaten"
+          open={!!id}
+          className={twClsx(errors.baseData && 'border border-primary')}
+        >
           <BaseDataForm />
         </Accordion>
-        <Accordion title="Adresse">
+        <Accordion
+          title="Adresse"
+          className={twClsx(errors.address && 'border border-primary')}
+        >
           <AddressForm />
         </Accordion>
-        <Accordion title="Beschreibung">
+        <Accordion
+          title="Beschreibung"
+          className={twClsx(errors.description && 'border border-primary')}
+        >
           <DescriptionFrom />
         </Accordion>
         <Accordion
@@ -190,7 +206,7 @@ const CreateEventsPage = (): ReactElement => {
                 handleAppend={handleAppend}
                 handleShow={handleSetFile(item)}
                 {...register(`files.${index}.file`)}
-                error={formState.errors.files?.[index]?.file?.message}
+                error={errors.files?.[index]?.file?.message}
                 {...(!!item.file && {
                   src: URL.createObjectURL(item.file[0]),
                 })}

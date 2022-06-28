@@ -13,6 +13,6 @@ export const UserFormsFormSchema = Joi.object({
     name: Joi.string().required().label('Benutzerformulare'),
     category: Joi.string().required().label('Kategoriename'),
     user: Joi.string().required().label('Nutzername'),
-  }),
+  }).required(),
   description: Joi.string().required().label('Beschreibung'),
 });

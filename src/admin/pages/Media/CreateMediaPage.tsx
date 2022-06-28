@@ -1,13 +1,13 @@
-import { ReactElement, useEffect } from "react";
-import { joiResolver } from "@hookform/resolvers/joi";
-import { FormProvider, useForm } from "react-hook-form";
+import { ReactElement, useEffect } from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { FormProvider, useForm } from 'react-hook-form';
 
-import { Accordion, FormActions } from "../../components/molecules";
-import { MediaForm, MediaFormInputs } from "../../components/organisms";
-import { VideoFormSchema } from "../../validations/VideoForm.schema";
-import { useNavigate, useParams } from "react-router-dom";
-import { useGetLinkQuery, useSaveLinkMutation } from "../../../GraphQl/graphql";
-import { gqlVar } from "../../utils";
+import { Accordion, FormActions } from '../../components/molecules';
+import { MediaForm, MediaFormInputs } from '../../components/organisms';
+import { VideoFormSchema } from '../../validations/VideoForm.schema';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useGetLinkQuery, useSaveLinkMutation } from '../../../GraphQl/graphql';
+import { gqlVar, twClsx } from '../../utils';
 
 const CreateMediaPage = (): ReactElement => {
   const { id } = useParams();
@@ -17,7 +17,11 @@ const CreateMediaPage = (): ReactElement => {
     resolver: joiResolver(VideoFormSchema),
   });
 
-  const { reset, handleSubmit } = methods;
+  const {
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
 
   const { data: { getLink = null } = {} } = useGetLinkQuery({
     variables: { entity: { id } },
@@ -25,7 +29,7 @@ const CreateMediaPage = (): ReactElement => {
   });
 
   const [saveLink] = useSaveLinkMutation({
-    onCompleted: () => navigate("/admin/medias"),
+    onCompleted: () => navigate('/admin/medias'),
   });
 
   const handleOnSubmit = ({ category, url, title }: MediaFormInputs) => {
@@ -42,9 +46,9 @@ const CreateMediaPage = (): ReactElement => {
   useEffect(() => {
     if (!!getLink) {
       reset({
-        url: getLink?.url || "",
-        title: getLink?.title || "",
-        category: getLink?.category?.id || "",
+        url: getLink?.url || '',
+        title: getLink?.title || '',
+        category: getLink?.category?.id || '',
       });
     }
   }, [getLink, reset]);
@@ -52,7 +56,13 @@ const CreateMediaPage = (): ReactElement => {
   return (
     <FormProvider {...methods}>
       <form className="min-h-full">
-        <Accordion title="Neues Video hinzufügen" open={!!id}>
+        <Accordion
+          title="Neues Video hinzufügen"
+          open={!!id}
+          className={twClsx(
+            (errors.title || errors.url) && 'border border-primary'
+          )}
+        >
           <MediaForm />
         </Accordion>
         <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
