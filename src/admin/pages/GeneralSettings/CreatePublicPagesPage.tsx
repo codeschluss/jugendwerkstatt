@@ -18,7 +18,7 @@ import {
   UploadField,
 } from '../../components/molecules';
 import { DescriptionFrom } from '../../components/organisms';
-import { fileToBase64 } from '../../utils/fileToBase64';
+import { fileObject } from '../../utils';
 import { PublicPagesFormSchema } from '../../validations';
 import { PublicPageFormInputs } from './PublicPageForm.props';
 
@@ -36,6 +36,9 @@ const CreatePublicPagesPage = (): ReactElement => {
     resolver: joiResolver(PublicPagesFormSchema),
     mode: 'onSubmit',
     reValidateMode: 'onSubmit',
+    defaultValues: {
+      images: [{ file: null }],
+    },
   });
 
   const { data: { page = null } = {} } = useGetPageQuery({
@@ -43,13 +46,14 @@ const CreatePublicPagesPage = (): ReactElement => {
     variables: { entity: { id } },
   });
 
-  console.log(page);
   const [savePage] = useSavePageMutation({
     onCompleted: () => navigate('/admin/general-settings/public-pages'),
   });
 
   const {
     reset,
+    watch,
+    getValues,
     control,
     trigger,
     register,
@@ -57,18 +61,31 @@ const CreatePublicPagesPage = (): ReactElement => {
     formState: { errors },
   } = methods;
 
+  // useEffect(() => {
+  //   if (!!page) {
+  //     reset({
+  //       pageName: page.name || '',
+  //       description: page.content || '',
+  //     });
+  //   }
+  // }, [page, reset]);
+
   const { fields, append, remove } = useFieldArray({
     name: 'images',
     control,
   });
+
+  console.log(watch(), errors);
 
   const handleTrigger = () => trigger();
   const handleOnSubmit = async (data: PublicPageFormInputs) => {
     let images: { name: string; mimeType: string; base64: string }[] = [];
 
     for (const field of fields) {
-      const object = await fileToBase64(field.file[0]);
-      images.push(object);
+      if (!!field.file) {
+        const object = await fileObject(field.file[0]);
+        images.push(object);
+      }
     }
 
     savePage({
@@ -78,9 +95,9 @@ const CreatePublicPagesPage = (): ReactElement => {
           slug: data.pageName,
           name: data.pageName,
           content: data.description,
-          video: await fileToBase64(data.video[0]),
+          video: data.video && (await fileObject(data.video[0])),
           images,
-          ...(!!imageFile && { titleImage: await fileToBase64(imageFile) }),
+          ...(!!imageFile && { titleImage: await fileObject(imageFile) }),
         },
       },
     });
@@ -91,25 +108,31 @@ const CreatePublicPagesPage = (): ReactElement => {
       setImages(item);
     };
 
-  const handleAppend = (file: FileList) => {
-    append({ file: file || undefined });
+  const handleAppend = () => {
+    console.log('Executed');
+    append({ file: null });
   };
 
   const handleRemoveImage = (id: string) => {
-    remove(fields.findIndex((field) => field.id === id));
+    console.log(
+      id,
+      fields.findIndex((field) => field.id === id),
+      fields
+    );
+    remove(fields.findIndex((field) => field.id !== id));
     setImages(null);
   };
   const handleRemoveVideo = () => {};
   const onHandle = (file: File | null) => setImageFile(file);
 
-  useEffect(() => {
-    if (!!page) {
-      reset({
-        pageName: page?.name || '',
-        description: page?.content || '',
-      });
-    }
-  }, [page, reset]);
+  // useEffect(() => {
+  //   if (!!page) {
+  //     reset({
+  //       pageName: page?.name || '',
+  //       description: page?.content || '',
+  //     });
+  //   }
+  // }, [page, reset]);
 
   return (
     <FormProvider {...methods}>
@@ -130,9 +153,9 @@ const CreatePublicPagesPage = (): ReactElement => {
             images && (
               <EventImagePreview
                 id={images.id}
+                file={images.file?.[0] || null}
                 onHandle={onHandle}
                 onRemoveImage={handleRemoveImage}
-                file={images.file[0]}
               />
             )
           }
@@ -140,20 +163,22 @@ const CreatePublicPagesPage = (): ReactElement => {
           <div className="flex items-start justify-start">
             {fields.map((item, index) => (
               <UploadField
-                key={index}
                 preview
+                key={index}
+                id={`files.${index}.file`}
+                handleAppend={handleAppend}
                 handleShow={handleSetFile(item)}
-                src={URL.createObjectURL(item.file[0])}
-                id={`images.${index}.file`}
                 {...register(`images.${index}.file`)}
+                error={errors.images?.[index]?.file?.message}
+                // {...(!!item.file && {
+                //   src: URL.createObjectURL(item.file),
+                // })}
               />
             ))}
-
-            {/* <UploadField handleAppend={handleAppend} /> */}
           </div>
         </Accordion>
 
-        <Accordion title="Beschreibung">
+        <Accordion title="Textfeld">
           <DescriptionFrom />
         </Accordion>
 

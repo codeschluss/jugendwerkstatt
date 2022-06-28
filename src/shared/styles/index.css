@@ -16,6 +16,12 @@
     border-bottom-right-radius: 5px;
     min-height: 500px;
 }
+
+
+.dashboard-content > .ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
+    min-height: 120px;
+}
+
 .sliderContainer .slick-arrow{
     width:40px;
     height: 40px;

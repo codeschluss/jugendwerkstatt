@@ -45,8 +45,6 @@ const EvaluationQuestionFormPage = (): ReactElement => {
     }
   }, [id, questionnaire, reset]);
 
-  console.log(isDirty, !!errors);
-
   const handleOnSubmit = (data: QuestionsInput) => {
     saveQuestionnaire({
       variables: {
@@ -94,10 +92,7 @@ const EvaluationQuestionFormPage = (): ReactElement => {
           register={register}
         />
       </Accordion>
-      <FormActions
-        // preventSubmit={isDirty && !!errors}
-        onSubmit={handleSubmit(handleOnSubmit)}
-      />
+      <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
     </form>
   );
 };
