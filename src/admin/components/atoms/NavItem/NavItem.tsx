@@ -74,10 +74,19 @@ export const NavItem: FC<NavItemProps> = ({
       ) : (
         <NavLink
           end
-          to={`${BASE_HREF}/${item.location}`}
+          to={
+            item.noItems ? `${item.location}` : `${BASE_HREF}/${item.location}`
+          }
           className={activeLink ? 'text-charcoal' : ''}
         >
-          {item.name}
+          {item.noItems ? (
+            <div className="flex items-center space-x-2">
+              {item.icon && <Icon icon={item.icon} />}
+              {isSidebarToggled && <span>{item.name}</span>}
+            </div>
+          ) : (
+            item.name
+          )}
         </NavLink>
       )}
 

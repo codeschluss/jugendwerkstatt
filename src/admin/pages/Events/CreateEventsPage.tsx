@@ -70,14 +70,12 @@ const CreateEventsPage = (): ReactElement => {
   });
 
   const {
-    formState: { isSubmitted, errors },
+    formState: { errors },
     handleSubmit,
     register,
     reset,
     control,
   } = methods;
-
-  console.log(errors);
 
   const { fields, append, remove, update } = useFieldArray({
     name: 'files',

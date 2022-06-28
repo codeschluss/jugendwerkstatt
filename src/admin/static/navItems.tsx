@@ -134,6 +134,7 @@ export const navItems = (
         name: 'Messenger',
         icon: <ChatIcon />,
         location: 'messenger',
+        noItems: true,
       },
       {
         name: 'Allgemein',

@@ -107,6 +107,14 @@ const App = (): ReactElement => {
         <Route path="/toVerifyEmail" element={<ToVerifyUser />} />
         <Route path="/reVerifyEmail" element={<ReVerifyUser />} />
         <Route path="/pending-approval" element={<ApprovalPending />} />
+
+        <Route path="/messenger">
+          <Route index element={<Messenger />} />
+          <Route path="chats" element={<Chats />} />
+          <Route path="calls" element={<Calls />} />
+          <Route path="contacts" element={<Contacts />} />
+          <Route path="chat/:id" element={<Chat />} />
+        </Route>
       </Route>
 
       <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />
