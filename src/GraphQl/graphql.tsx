@@ -3515,6 +3515,11 @@ export type GetMeBasicQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetMeBasicQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, phone?: string | null, password?: string | null, email?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null };
 
+export type GetMeChatsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMeChatsQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, chat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, modified?: any | null, participants?: Array<{ __typename?: 'ParticipantEntity', user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null } | null } | null> | null } | null } | null> | null } | null };
+
 export type GetMeFavoritesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -7695,6 +7700,54 @@ export function useGetMeBasicLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetMeBasicQueryHookResult = ReturnType<typeof useGetMeBasicQuery>;
 export type GetMeBasicLazyQueryHookResult = ReturnType<typeof useGetMeBasicLazyQuery>;
 export type GetMeBasicQueryResult = Apollo.QueryResult<GetMeBasicQuery, GetMeBasicQueryVariables>;
+export const GetMeChatsDocument = gql`
+    query GetMeChats {
+  me {
+    id
+    participants {
+      id
+      chat {
+        id
+        name
+        modified
+        participants {
+          user {
+            fullname
+            id
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMeChatsQuery__
+ *
+ * To run a query within a React component, call `useGetMeChatsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMeChatsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMeChatsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMeChatsQuery(baseOptions?: Apollo.QueryHookOptions<GetMeChatsQuery, GetMeChatsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMeChatsQuery, GetMeChatsQueryVariables>(GetMeChatsDocument, options);
+      }
+export function useGetMeChatsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMeChatsQuery, GetMeChatsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMeChatsQuery, GetMeChatsQueryVariables>(GetMeChatsDocument, options);
+        }
+export type GetMeChatsQueryHookResult = ReturnType<typeof useGetMeChatsQuery>;
+export type GetMeChatsLazyQueryHookResult = ReturnType<typeof useGetMeChatsLazyQuery>;
+export type GetMeChatsQueryResult = Apollo.QueryResult<GetMeChatsQuery, GetMeChatsQueryVariables>;
 export const GetMeFavoritesDocument = gql`
     query GetMeFavorites {
   me {

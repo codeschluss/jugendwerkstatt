@@ -1,0 +1,19 @@
+query GetMeChats {
+  me {
+    id
+    participants {
+      id
+      chat {
+        id
+        name
+        modified
+        participants {
+          user {
+            fullname
+            id
+          }
+        }
+      }
+    }
+  }
+}

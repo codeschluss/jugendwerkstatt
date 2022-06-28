@@ -88,7 +88,7 @@ const RightContent: FC = () => {
         id="combo-box-demo"
         options={searchfield}
         sx={{
-          width: 300,
+          width: 280,
           marginRight: 1,
           background: "white",
           borderRadius: 1,
