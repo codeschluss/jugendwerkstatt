@@ -109,7 +109,7 @@ const CreateEventsPage = (): ReactElement => {
     });
   };
 
-  console.log("errors", formState?.errors.files);
+  console.log("errors", formState?.errors);
 
   const handleAppend = (index: number, file: FileList | null) => {
     update(index, { file });
@@ -129,11 +129,31 @@ const CreateEventsPage = (): ReactElement => {
   const onHandle = (data: { file: File; id: string } | null) => {
     setImageFile(data);
   };
+  const stringToDate = (value: string) => {
+    return dayjs(value, "YYYY-MM-DDTHH:mmZ[Z]").toDate();
+  };
 
-  console.log("result", getEvent?.images);
+  console.log("result", getEvent?.schedules);
 
   useEffect(() => {
     if (!!getEvent) {
+      const start_date = stringToDate(getEvent.schedules?.at(-1)?.startDate);
+      const end_date = stringToDate(getEvent.schedules?.at(-1)?.endDate);
+      const end_repeat = stringToDate(getEvent.schedules?.[0]?.startDate);
+
+      const repeat = [
+        { value: 7, label: "week" },
+        { value: 30, label: "month" },
+        { value: 365, label: "year" },
+      ].some((i) => {
+        const first = dayjs(end_repeat).diff(
+          start_date,
+          i.label as "week" | "month" | "year"
+        );
+        console.log("first", first);
+        return i.label;
+      });
+
       reset({
         baseData: {
           name: getEvent?.name || "",
@@ -146,6 +166,14 @@ const CreateEventsPage = (): ReactElement => {
           place: getEvent?.address?.place || "",
           postalCode: getEvent?.address?.postalCode || "",
           street: getEvent?.address?.street || "",
+        },
+        schedule: {
+          start_date,
+          end_date,
+          end_repeat,
+          start_hour: dayjs(start_date).startOf("m").toDate(),
+          end_hour: dayjs(end_date).startOf("m").toDate(),
+          repeat: "week",
         },
       });
       // setImageFile();
