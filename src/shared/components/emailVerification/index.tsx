@@ -36,9 +36,9 @@ const RegistrationOrVerification: React.FC<CheckingProps> = ({
   };
 
   return (
-    <div className="absolute top-0 z-20 flex flex-col w-screen h-screen px-0">
+    <div className="absolute top-0 z-20 flex flex-col w-1/2 h-full px-0">
       <div className="px-0 h-[30%]">
-        <img className="object-cover w-screen h-full" src={logo} alt={"logo"} />
+        <img className="object-cover w-1/2 h-full" src={logo} alt={"logo"} />
       </div>
       <div className="grid flex-grow w-screen h-full px-10 -mt-6 bg-white grid-rows-12 rounded-3xl">
         <div className="flex flex-col items-center justify-center row-span-6 pt-5 text-center">

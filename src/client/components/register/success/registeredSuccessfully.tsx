@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useVerifyMutation } from '../../../../GraphQl/graphql';
+import React, { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useVerifyMutation } from "../../../../GraphQl/graphql";
 
 const RegisteredSuccessfully: React.FC = () => {
   const navigate = useNavigate();
@@ -30,14 +30,14 @@ const RegisteredSuccessfully: React.FC = () => {
   );
 
   return (
-    <div className="relative flex flex-col w-full px-0">
+    <div className="relative flex flex-col w-1/2 px-0">
       {data && (
         <>
           <div className="px-0 bg-bgimg">
             <img
               className="object-cover w-full h-full "
               src="/assets/background.png"
-              alt={'logo'}
+              alt={"logo"}
             />
           </div>
           <div className="-mt-5 bg-white rounded-3xl">
@@ -50,7 +50,7 @@ const RegisteredSuccessfully: React.FC = () => {
 
               <div className="pb-2 pl-1 mx-12 mt-10 text-center">
                 <button
-                  onClick={() => navigate('/login')}
+                  onClick={() => navigate("/login")}
                   className="w-full h-8 drop-shadow-md rounded-2xl active:opacity-80 bg-[#C20639] text-white"
                 >
                   Zur App

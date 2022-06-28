@@ -127,10 +127,9 @@ const Register = () => {
         onCompleted: () => {
           disableInput = true;
         },
-      });
+      }).then(() => navigate("/toVerifyEmail"));
     }
     // setTempEmail(enteredEmail);
-    navigate("/toVerifyEmail");
   };
 
   return (

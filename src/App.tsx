@@ -86,6 +86,7 @@ import {
 import { GeneralAddressForm } from "./admin/components/organisms";
 import Home from "./client/pages/home";
 import { RequireAuthAll } from "./shared/components/RequireAuthRoute/RequireAuthAll";
+import Notifications from "./shared/components/notifications";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
@@ -104,7 +105,7 @@ const App = (): ReactElement => {
           path="/profile-upload-picture"
           element={<ProfileImageUpload />}
         />
-        <Route path="/toVerifyEmail" element={<ToVerifyUser />} />
+
         <Route path="/reVerifyEmail" element={<ReVerifyUser />} />
         <Route path="/pending-approval" element={<ApprovalPending />} />
       </Route>
@@ -119,6 +120,7 @@ const App = (): ReactElement => {
           <Route path="email" element={<Email />} />
           <Route path="password/:id" element={<Password />} />
         </Route>
+        <Route path="/toVerifyEmail" element={<ToVerifyUser />} />
       </Route>
 
       <Route element={<RequireAuthRoute accessRole={["student"]} />}>
@@ -138,6 +140,7 @@ const App = (): ReactElement => {
 
         <Route path="/map" element={<Map />} />
         <Route path="/media-library" element={<MediaLibrary />} />
+        <Route path="/notifications" element={<Notifications />} />
 
         <Route path="/event/:id" element={<EventDetail />} />
 
