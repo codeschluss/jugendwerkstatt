@@ -46,8 +46,8 @@ const Favorites = () => {
         </div>
       )}
       {favorites.data?.me?.favoriteJobAds?.length !== 0 && (
-        <div className="p-4 bg-white rounded-md md:px-36">
-          <p className="mb-3 mt-3 text-2xl">Jobs</p>
+        <div className="p-4 bg-white rounded-md  md:px-36">
+          <p className="mb-3 md:m-12 mt-3 text-2xl">Jobs</p>
           <div className="flex flex-col md:flex-row md:flex-wrap">
             {favorites.data?.me?.favoriteJobAds?.map((job: any) => {
               return (
