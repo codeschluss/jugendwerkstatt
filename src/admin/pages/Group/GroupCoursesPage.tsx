@@ -11,7 +11,7 @@ const GroupCoursesPage = (): ReactElement => {
   const { search } = useLocation();
   const queryString = qs.parse(search);
   const { id } = useParams();
-  const { data: { group = null } = {} } = useGetGroupCoursesQuery({
+  const { data: { group = null } = {}, loading } = useGetGroupCoursesQuery({
     variables: {
       entity: { id },
       year: queryString.year ? Number(queryString.year) : 0,
@@ -22,6 +22,8 @@ const GroupCoursesPage = (): ReactElement => {
     navigate(year === 'Alle Jahre' ? `` : `?year=${year}`);
 
   const groupCourses = group?.courses || [];
+
+  if (loading) return <h1>Loading...</h1>;
 
   return (
     <div className="flex flex-col max-w-5xl gap-x-5 md:flex-row">

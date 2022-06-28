@@ -54,7 +54,7 @@ const CreateGroupMembersPage = (): ReactElement => {
           []
         }
       />
-      <BackButton />
+      <BackButton label="Zurück zur Übersicht" />
     </Panel.Wrapper>
   );
 };

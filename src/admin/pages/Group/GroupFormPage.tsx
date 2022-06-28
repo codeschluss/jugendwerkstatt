@@ -12,16 +12,19 @@ import {
   GroupCoursesForm,
   GroupCoursesInput,
 } from '../../components/organisms';
+import { twClsx } from '../../utils';
 
 const GroupFormPage = (): ReactElement => {
   const navigate = useNavigate();
   const { id } = useParams();
   const methods = useForm<GroupCoursesInput>({
+    mode: 'onChange',
     resolver: joiResolver(GroupFormSchema),
   });
   const {
     reset,
     control,
+    clearErrors,
     register,
     handleSubmit,
     formState: { errors },
@@ -64,7 +67,11 @@ const GroupFormPage = (): ReactElement => {
   return (
     <FormProvider {...methods}>
       <div className="max-w-6xl">
-        <Accordion title="Stammdaten" open={!!id}>
+        <Accordion
+          title="Stammdaten"
+          open={!!id}
+          className={twClsx(errors.name && 'border border-primary')}
+        >
           <InputField
             id="name"
             label="Gruppenname"
@@ -73,10 +80,15 @@ const GroupFormPage = (): ReactElement => {
           />
         </Accordion>
 
-        <Accordion title="Kurs" open={!!id}>
+        <Accordion
+          title="Kurs"
+          open={!!id}
+          className={twClsx(errors.courses && 'border border-primary')}
+        >
           <GroupCoursesForm
             errors={errors?.courses}
             error={errors.courses as unknown as FieldError}
+            clearErrors={clearErrors}
             control={control}
             register={register}
           />

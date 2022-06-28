@@ -1,15 +1,15 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { ReactElement, useEffect } from "react";
-import { FieldError, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { ReactElement, useEffect } from 'react';
+import { FieldError, useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   useGetQuestionnaireQuery,
   useSaveQuestionnaireMutation,
-} from "../../../GraphQl/graphql";
-import { Accordion, FormActions, InputField } from "../../components/molecules";
-import { EvaluationQuestionList } from "../../components/organisms/EvaluationQuestionList/EvaluationQuestionList";
-import { QuestionsInput } from "../../components/organisms/EvaluationQuestionList/EvaluationQuestionList.types";
-import { EvaluationsQuestionsFormSchema } from "../../validations/EvaluationsQuestions.schema";
+} from '../../../GraphQl/graphql';
+import { Accordion, FormActions, InputField } from '../../components/molecules';
+import { EvaluationQuestionList } from '../../components/organisms/EvaluationQuestionList/EvaluationQuestionList';
+import { QuestionsInput } from '../../components/organisms/EvaluationQuestionList/EvaluationQuestionList.types';
+import { EvaluationsQuestionsFormSchema } from '../../validations/EvaluationsQuestions.schema';
 
 const EvaluationQuestionFormPage = (): ReactElement => {
   const { id } = useParams();
@@ -21,25 +21,25 @@ const EvaluationQuestionFormPage = (): ReactElement => {
 
   const {
     control,
-    formState: { isDirty, errors },
+    formState: { errors },
     clearErrors,
     reset,
     register,
     handleSubmit,
   } = useForm<QuestionsInput>({
+    mode: 'onChange',
     resolver: joiResolver(EvaluationsQuestionsFormSchema),
-    mode: "onTouched",
   });
   const [saveQuestionnaire] = useSaveQuestionnaireMutation({
-    onCompleted: () => navigate("/admin/evaluations/questions"),
+    onCompleted: () => navigate('/admin/evaluations/questions'),
   });
 
   useEffect(() => {
     if (id && questionnaire) {
       reset({
-        name: questionnaire.name || "",
+        name: questionnaire.name || '',
         questions: questionnaire.questions?.map((question) => ({
-          name: question?.item || "",
+          name: question?.item || '',
         })),
       });
     }
@@ -66,14 +66,14 @@ const EvaluationQuestionFormPage = (): ReactElement => {
         title="Stammdaten"
         open={!!id}
         {...(errors.name && {
-          className: "border border-primary",
+          className: 'border border-primary',
         })}
       >
         <InputField
           id="name"
           label="Name"
           placeholder="Evaluierungsbogen 1"
-          {...register("name")}
+          {...register('name')}
           error={errors?.name?.message}
         />
       </Accordion>
@@ -81,7 +81,7 @@ const EvaluationQuestionFormPage = (): ReactElement => {
         title="Teilnehmerbefragung - Fragen"
         open={!!id}
         {...(errors.questions && {
-          className: "border border-primary",
+          className: 'border border-primary',
         })}
       >
         <EvaluationQuestionList
