@@ -124,9 +124,11 @@ export type AssignmentStateEntityInput = {
 export type ChatEntity = {
   __typename?: 'ChatEntity';
   admin?: Maybe<Scalars['Boolean']>;
+  avatar?: Maybe<MediaEntity>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   group?: Maybe<GroupEntity>;
   id?: Maybe<Scalars['String']>;
+  lastMessage?: Maybe<MessageEntity>;
   messages?: Maybe<Array<Maybe<MessageEntity>>>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   name?: Maybe<Scalars['String']>;
@@ -135,6 +137,7 @@ export type ChatEntity = {
 
 export type ChatEntityInput = {
   admin?: InputMaybe<Scalars['Boolean']>;
+  avatar?: InputMaybe<MediaEntityInput>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   group?: InputMaybe<GroupEntityInput>;
   id?: InputMaybe<Scalars['String']>;
@@ -451,7 +454,7 @@ export type LinkCategoryEntity = {
   __typename?: 'LinkCategoryEntity';
   created?: Maybe<Scalars['OffsetDateTime']>;
   id?: Maybe<Scalars['String']>;
-  link?: Maybe<Array<Maybe<LinkEntity>>>;
+  links?: Maybe<Array<Maybe<LinkEntity>>>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   name?: Maybe<Scalars['String']>;
 };
@@ -459,7 +462,7 @@ export type LinkCategoryEntity = {
 export type LinkCategoryEntityInput = {
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   id?: InputMaybe<Scalars['String']>;
-  link?: InputMaybe<Array<InputMaybe<LinkEntityInput>>>;
+  links?: InputMaybe<Array<InputMaybe<LinkEntityInput>>>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   name?: InputMaybe<Scalars['String']>;
 };
@@ -2799,11 +2802,11 @@ export type CompanyFragment = { __typename?: 'CompanyEntity', id?: string | null
 
 export type CourseFieldFragment = { __typename?: 'CourseEntity', id?: string | null, name?: string | null, active?: boolean | null };
 
-export type EventFieldFragment = { __typename?: 'EventEntity', id?: string | null, name?: string | null };
+export type EventFieldFragment = { __typename?: 'EventEntity', id?: string | null, name?: string | null, description?: string | null };
 
 export type CategoryFieldFragment = { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null };
 
-export type EventFragment = { __typename?: 'EventEntity', id?: string | null, name?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null };
+export type EventFragment = { __typename?: 'EventEntity', id?: string | null, name?: string | null, description?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null };
 
 export type FileFieldFragment = { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null };
 
@@ -2894,7 +2897,7 @@ export type SaveEventMutationVariables = Exact<{
 }>;
 
 
-export type SaveEventMutation = { __typename?: 'Mutation', saveEvent?: { __typename?: 'EventEntity', id?: string | null, name?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null } | null };
+export type SaveEventMutation = { __typename?: 'Mutation', saveEvent?: { __typename?: 'EventEntity', id?: string | null, name?: string | null, description?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null } | null };
 
 export type DeleteEventMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
@@ -3166,14 +3169,14 @@ export type GetEventsAdminQueryVariables = Exact<{
 }>;
 
 
-export type GetEventsAdminQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', total: any, result?: Array<{ __typename?: 'EventEntity', id?: string | null, name?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null } | null> | null } | null };
+export type GetEventsAdminQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', total: any, result?: Array<{ __typename?: 'EventEntity', id?: string | null, name?: string | null, description?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null } | null> | null } | null };
 
 export type GetEventAdminQueryVariables = Exact<{
   entity?: InputMaybe<EventEntityInput>;
 }>;
 
 
-export type GetEventAdminQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', id?: string | null, name?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null } | null };
+export type GetEventAdminQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', id?: string | null, name?: string | null, description?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null, images?: Array<{ __typename?: 'MediaEntity', base64?: string | null, created?: any | null, id?: string | null, mimeType?: string | null, modified?: any | null, name?: string | null } | null> | null, titleImage?: { __typename?: 'MediaEntity', base64?: string | null, created?: any | null, id?: string | null, mimeType?: string | null, modified?: any | null, name?: string | null } | null, address?: { __typename?: 'AddressEntity', id?: string | null, houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null } | null } | null };
 
 export type GetEventCategoriesAdminQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3751,6 +3754,7 @@ export const EventFieldFragmentDoc = gql`
     fragment EventField on EventEntity {
   id
   name
+  description
 }
     `;
 export const CategoryFieldFragmentDoc = gql`
@@ -5569,10 +5573,44 @@ export type GetEventsAdminQueryResult = Apollo.QueryResult<GetEventsAdminQuery, 
 export const GetEventAdminDocument = gql`
     query GetEventAdmin($entity: EventEntityInput) {
   getEvent(entity: $entity) {
-    ...Event
+    ...EventField
+    category {
+      ...CategoryField
+    }
+    schedules {
+      ...ScheduleField
+    }
+    images {
+      base64
+      created
+      id
+      mimeType
+      modified
+      name
+    }
+    titleImage {
+      base64
+      created
+      id
+      mimeType
+      modified
+      name
+    }
+    address {
+      id
+      houseNumber
+      place
+      postalCode
+      street
+    }
+    organizer {
+      id
+    }
   }
 }
-    ${EventFragmentDoc}`;
+    ${EventFieldFragmentDoc}
+${CategoryFieldFragmentDoc}
+${ScheduleFieldFragmentDoc}`;
 
 /**
  * __useGetEventAdminQuery__
@@ -7520,7 +7558,7 @@ export const GetLinkCategoriesDocument = gql`
     result {
       id
       name
-      link {
+      link: links {
         id
         title
         url

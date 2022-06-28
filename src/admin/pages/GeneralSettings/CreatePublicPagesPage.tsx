@@ -1,41 +1,40 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement, useEffect, useState } from 'react';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { ReactElement, useState } from "react";
 import {
   FieldArrayWithId,
   FormProvider,
   useFieldArray,
   useForm,
-} from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useGetPageQuery, useSavePageMutation } from '../../../GraphQl/graphql';
-import { Button } from '../../components/atoms';
-import { ButtonVariants } from '../../components/atoms/Form/Button/Button.props';
+} from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetPageQuery, useSavePageMutation } from "../../../GraphQl/graphql";
+import { Button } from "../../components/atoms";
 import {
   Accordion,
   EventImagePreview,
   FormActions,
   InputField,
   UploadField,
-} from '../../components/molecules';
-import { DescriptionFrom } from '../../components/organisms';
-import { fileObject } from '../../utils';
-import { PublicPagesFormSchema } from '../../validations';
-import { PublicPageFormInputs } from './PublicPageForm.props';
+} from "../../components/molecules";
+import { DescriptionFrom } from "../../components/organisms";
+import { fileObject } from "../../utils";
+import { PublicPagesFormSchema } from "../../validations";
+import { PublicPageFormInputs } from "./PublicPageForm.props";
 
 const CreatePublicPagesPage = (): ReactElement => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [images, setImages] = useState<FieldArrayWithId<
     PublicPageFormInputs,
-    'images',
-    'id'
+    "images",
+    "id"
   > | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   const methods = useForm<PublicPageFormInputs>({
     resolver: joiResolver(PublicPagesFormSchema),
-    mode: 'onSubmit',
-    reValidateMode: 'onSubmit',
+    mode: "onSubmit",
+    reValidateMode: "onSubmit",
     defaultValues: {
       images: [{ file: null }],
     },
@@ -47,15 +46,12 @@ const CreatePublicPagesPage = (): ReactElement => {
   });
 
   const [savePage] = useSavePageMutation({
-    onCompleted: () => navigate('/admin/general-settings/public-pages'),
+    onCompleted: () => navigate("/admin/general-settings/public-pages"),
   });
 
   const {
-    reset,
     watch,
-    getValues,
     control,
-    trigger,
     register,
     handleSubmit,
     formState: { errors },
@@ -71,13 +67,12 @@ const CreatePublicPagesPage = (): ReactElement => {
   // }, [page, reset]);
 
   const { fields, append, remove } = useFieldArray({
-    name: 'images',
+    name: "images",
     control,
   });
 
   console.log(watch(), errors);
 
-  const handleTrigger = () => trigger();
   const handleOnSubmit = async (data: PublicPageFormInputs) => {
     let images: { name: string; mimeType: string; base64: string }[] = [];
 
@@ -104,12 +99,12 @@ const CreatePublicPagesPage = (): ReactElement => {
   };
 
   const handleSetFile =
-    (item: FieldArrayWithId<PublicPageFormInputs, 'images', 'id'>) => () => {
+    (item: FieldArrayWithId<PublicPageFormInputs, "images", "id">) => () => {
       setImages(item);
     };
 
   const handleAppend = () => {
-    console.log('Executed');
+    console.log("Executed");
     append({ file: null });
   };
 
@@ -141,7 +136,7 @@ const CreatePublicPagesPage = (): ReactElement => {
           <InputField
             id="pageName"
             label="Stammdaten"
-            {...register('pageName')}
+            {...register("pageName")}
             error={errors.pageName?.message}
           />
         </Accordion>
@@ -149,22 +144,23 @@ const CreatePublicPagesPage = (): ReactElement => {
           title="Titelbild"
           showSide
           sideClassName="w-auto"
-          sideContent={
-            images && (
-              <EventImagePreview
-                id={images.id}
-                file={images.file?.[0] || null}
-                onHandle={onHandle}
-                onRemoveImage={handleRemoveImage}
-              />
-            )
-          }
+          // sideContent={
+          //   images && (
+          //     <EventImagePreview
+          //       id={images.id}
+          //       file={images.file?.[0] || null}
+          //       onHandle={onHandle}
+          //       onRemoveImage={handleRemoveImage}
+          //     />
+          //   )
+          // }
         >
           <div className="flex items-start justify-start">
             {fields.map((item, index) => (
               <UploadField
                 preview
                 key={index}
+                index={index}
                 id={`files.${index}.file`}
                 handleAppend={handleAppend}
                 handleShow={handleSetFile(item)}
@@ -184,7 +180,7 @@ const CreatePublicPagesPage = (): ReactElement => {
 
         <Accordion title="Video" className="p-5">
           <div className="flex items-start justify-start">
-            <UploadField id="video" {...register('video')} />
+            <UploadField id="video" {...register("video")} />
           </div>
           <div className="flex gap-x-2">
             <Button

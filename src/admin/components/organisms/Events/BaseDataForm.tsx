@@ -40,8 +40,8 @@ export const BaseDataForm = (): ReactElement => {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-8">
-        <div className="flex flex-col justify-start space-y-6">
+      <div className="flex flex-col justify-start w-full space-y-6">
+        <div className="grid grid-cols-2 gap-8">
           <InputField
             id="name"
             label="Eventname"
@@ -50,7 +50,7 @@ export const BaseDataForm = (): ReactElement => {
             placeholder="Das erste Event"
           />
         </div>
-        <div className="flex flex-col justify-start w-full space-y-6">
+        <div className="grid grid-cols-2 gap-8">
           <Select
             id="category"
             label="Kategorie"

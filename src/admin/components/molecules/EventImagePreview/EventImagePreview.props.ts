@@ -1,6 +1,7 @@
 export interface EventImagePreviewProps {
   file: File | null;
-  onHandle: (file: File | null) => void;
+  onHandle: (data: { file: File; id: string } | null) => void;
   onRemoveImage: (id: string) => void;
   id: string;
+  isTitleBild: boolean;
 }

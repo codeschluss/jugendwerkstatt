@@ -1,15 +1,16 @@
-import { ChangeEvent, FC, ReactElement } from 'react';
-import { Button } from '../../atoms';
-import { EventImagePreviewProps } from './EventImagePreview.props';
+import { ChangeEvent, FC, ReactElement } from "react";
+import { Button } from "../../atoms";
+import { EventImagePreviewProps } from "./EventImagePreview.props";
 
 export const EventImagePreview: FC<EventImagePreviewProps> = ({
   id,
   file,
   onHandle,
+  isTitleBild,
   onRemoveImage,
 }): ReactElement => {
   const handleCheck = (event: ChangeEvent<HTMLInputElement>) => {
-    onHandle(event.currentTarget.value ? file : null);
+    onHandle(event.currentTarget.value && !!file ? { file, id } : null);
   };
   const handleRemoveImage = () => onRemoveImage(id);
 
@@ -19,11 +20,17 @@ export const EventImagePreview: FC<EventImagePreviewProps> = ({
         <img
           className="object-contain h-72"
           alt={file.name}
-          src={URL.createObjectURL(file) || ''}
+          src={URL.createObjectURL(file) || ""}
         />
       )}
       <div className="mt-4 space-x-4">
-        <input type="checkbox" id="title" name="title" onChange={handleCheck} />
+        <input
+          type="checkbox"
+          id="title"
+          name="title"
+          checked={isTitleBild}
+          onChange={handleCheck}
+        />
         <label htmlFor="title">TitelBild</label>
       </div>
       <p>{file?.name}</p>
