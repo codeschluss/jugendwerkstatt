@@ -43,6 +43,7 @@ const Chat = () => {
       entity: { id: id },
     },
   });
+  console.log(getChat.data?.getChat?.participants, "participants");
   const getMessages = useGetMessagesQuery({
     fetchPolicy: "network-only",
     variables: {

@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import {
+  ConjunctionOperator,
+  QueryOperator,
   useGetUsersQuery,
   useSaveChatMutation,
 } from "../../../../../GraphQl/graphql";
@@ -7,7 +9,33 @@ import {
 import Item from "../Item";
 
 const Contacts = () => {
-  const getUsers = useGetUsersQuery();
+  const getUsers = useGetUsersQuery({
+    variables: {
+      params: {
+        expression: {
+          conjunction: {
+            operands: [
+              {
+                entity: {
+                  operator: QueryOperator.Equal,
+                  path: "roles.key",
+                  value: "admin",
+                },
+              },
+              {
+                entity: {
+                  operator: QueryOperator.Equal,
+                  path: "roles.key",
+                  value: "superviser",
+                },
+              },
+            ],
+            operator: ConjunctionOperator.Or,
+          },
+        },
+      },
+    },
+  });
   const [saveChat] = useSaveChatMutation();
   // const [modal, setModal] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -23,7 +51,6 @@ const Contacts = () => {
               },
             },
           ],
-          name: `chat ${fullName}`,
           admin: false,
         },
       },
@@ -42,6 +69,7 @@ const Contacts = () => {
       /> */}
       {getUsers.data?.getUsers?.result?.map((el) => (
         <Item
+          key={el?.id}
           onClick={() => handleCreateChat(el?.id, el?.fullname)}
           // href={`/messenger/chat/${el?.id}`}
           name={el?.fullname}

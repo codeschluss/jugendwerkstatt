@@ -128,8 +128,7 @@ const App = (): ReactElement => {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/jobs" element={<Jobs />} />
 
-        <Route path="/messenger">
-          <Route index element={<Messenger />} />
+        <Route path="/messenger" element={<Messenger />}>
           <Route path="chats" element={<Chats />} />
           <Route path="calls" element={<Calls />} />
           <Route path="contacts" element={<Contacts />} />

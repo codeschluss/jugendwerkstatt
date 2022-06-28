@@ -1,8 +1,8 @@
-query GetUsers {
-  getUsers {
+query GetUsers($params: FilterSortPaginateInput) {
+  getUsers(params: $params) {
     result {
-      fullname
       id
+      fullname
     }
   }
 }
