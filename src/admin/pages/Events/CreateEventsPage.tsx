@@ -28,7 +28,7 @@ import {
 } from "../../../GraphQl/graphql";
 import { EventsFormSchema } from "../../validations";
 import dayjs from "dayjs";
-import { fileObject } from "../../utils";
+import { fileObject, twClsx } from "../../utils";
 
 // const base64ImageToBlob = (str: string, type: string, fileName: string) => {
 //   // decode base64
@@ -89,7 +89,15 @@ const CreateEventsPage = (): ReactElement => {
     },
   });
 
-  const { formState, handleSubmit, register, reset, control } = methods;
+  const {
+    formState: { isSubmitted, errors },
+    handleSubmit,
+    register,
+    reset,
+    control,
+  } = methods;
+
+  console.log(errors);
 
   const { fields, append, remove, update } = useFieldArray({
     name: "files",
@@ -152,6 +160,7 @@ const CreateEventsPage = (): ReactElement => {
   const onHandle = (data: { file: File; id: string } | null) => {
     setImageFile(data);
   };
+
   const stringToDate = (value: string) => {
     return dayjs(value, "YYYY-MM-DDTHH:mmZ[Z]").toDate();
   };
@@ -197,13 +206,23 @@ const CreateEventsPage = (): ReactElement => {
   return (
     <FormProvider {...methods}>
       <form className="min-h-full">
-        <Accordion title="Stammdaten" open={!!id}>
+        <Accordion
+          title="Stammdaten"
+          open={!!id}
+          className={twClsx(errors.baseData && "border border-primary")}
+        >
           <BaseDataForm />
         </Accordion>
-        <Accordion title="Adresse">
+        <Accordion
+          title="Adresse"
+          className={twClsx(errors.address && "border border-primary")}
+        >
           <AddressForm />
         </Accordion>
-        <Accordion title="Beschreibung">
+        <Accordion
+          title="Beschreibung"
+          className={twClsx(errors.description && "border border-primary")}
+        >
           <DescriptionFrom />
         </Accordion>
         <Accordion
@@ -232,7 +251,7 @@ const CreateEventsPage = (): ReactElement => {
                 handleAppend={handleAppend}
                 handleShow={handleSetFile(item)}
                 {...register(`files.${index}.file`)}
-                error={formState.errors.files?.[index]?.file?.message}
+                error={errors.files?.[index]?.file?.message}
                 {...(!!item.file && {
                   src: URL.createObjectURL(item.file[0]),
                 })}

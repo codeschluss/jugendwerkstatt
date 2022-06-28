@@ -12,7 +12,7 @@ import {
   UserFormsForm,
   UserFormsFormInputs,
 } from '../../components/organisms';
-import { gqlVar } from '../../utils';
+import { gqlVar, twClsx } from '../../utils';
 import { UserFormsFormSchema } from '../../validations';
 
 const CreateUserFormsPage = (): ReactElement => {
@@ -23,7 +23,11 @@ const CreateUserFormsPage = (): ReactElement => {
     resolver: joiResolver(UserFormsFormSchema),
   });
 
-  const { reset, handleSubmit } = methods;
+  const {
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
 
   const { data: { getUserTemplate = null } = {} } =
     useGetUserTemplateAdminQuery({
@@ -66,10 +70,17 @@ const CreateUserFormsPage = (): ReactElement => {
   return (
     <FormProvider {...methods}>
       <form className="min-h-full">
-        <Accordion title="Stammdaten" open={!!id}>
+        <Accordion
+          title="Stammdaten"
+          open={!!id}
+          className={twClsx(errors.baseData && 'border border-primary')}
+        >
           <UserFormsForm />
         </Accordion>
-        <Accordion title="Beschreibung">
+        <Accordion
+          title="Beschreibung"
+          className={twClsx(errors.description && 'border border-primary')}
+        >
           <DescriptionFrom />
         </Accordion>
         <FormActions onSubmit={handleSubmit(handleOnSubmit)} />

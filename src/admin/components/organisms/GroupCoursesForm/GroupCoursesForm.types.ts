@@ -1,4 +1,9 @@
-import { Control, FieldError, UseFormRegister } from 'react-hook-form';
+import {
+  Control,
+  FieldError,
+  UseFormClearErrors,
+  UseFormRegister,
+} from 'react-hook-form';
 
 export interface GroupCourseInput {
   name: string;
@@ -20,6 +25,7 @@ export interface GroupCoursesProps {
       }[]
     | undefined;
   error: FieldError | undefined;
+  clearErrors: UseFormClearErrors<GroupCoursesInput>;
   onDelete?: (id: string) => void;
   onUpdate?: (id: string) => void;
 }

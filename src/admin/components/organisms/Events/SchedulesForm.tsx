@@ -1,18 +1,18 @@
-import { CalendarIcon, ClockIcon } from "@heroicons/react/outline";
+import { CalendarIcon, ClockIcon } from '@heroicons/react/outline';
 import {
   Dispatch,
   ReactElement,
   SetStateAction,
   useEffect,
   useMemo,
-} from "react";
-import { Controller, useFormContext, useWatch } from "react-hook-form";
-import { generateSchedules } from "../../../utils/generateSchedules";
+} from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { generateSchedules } from '../../../utils/generateSchedules';
 
-import { Select } from "../../atoms";
-import { Accordion, DatePicker } from "../../molecules";
-import { SchedulesPreview } from "../../molecules/SchedulesPreview/SchedulesPreview";
-import { EventsFormInputs, ScheduleInputs } from "./Events.types";
+import { Select } from '../../atoms';
+import { Accordion, DatePicker } from '../../molecules';
+import { SchedulesPreview } from '../../molecules/SchedulesPreview/SchedulesPreview';
+import { EventsFormInputs, ScheduleInputs } from './Events.types';
 
 export const SchedulesForm = ({
   setSchedules,
@@ -23,7 +23,7 @@ export const SchedulesForm = ({
 }): ReactElement => {
   const { register, control, getValues } = useFormContext<EventsFormInputs>();
 
-  const fields = useWatch({ control, name: "schedule" });
+  const fields = useWatch({ control, name: 'schedule' });
 
   const handleDeleteAll = () => setSchedules([]);
 
@@ -125,7 +125,7 @@ export const SchedulesForm = ({
         </div>
         <div className="flex items-center">
           <div className="mr-10">
-            <Select label="Turnus" {...register("schedule.repeat")}>
+            <Select label="Turnus" {...register('schedule.repeat')}>
               <option value="">Repeat</option>
               <option value="week">Weekly</option>
               <option value="month">Monthly</option>
@@ -133,7 +133,7 @@ export const SchedulesForm = ({
             </Select>
           </div>
 
-          {getValues("schedule.repeat") && (
+          {getValues('schedule.repeat') && (
             <div>
               <Controller
                 control={control}

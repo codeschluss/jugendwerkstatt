@@ -1,40 +1,39 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { ReactElement, useState } from "react";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { ReactElement, useState } from 'react';
 import {
   FieldArrayWithId,
   FormProvider,
   useFieldArray,
   useForm,
-} from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
-import { useGetPageQuery, useSavePageMutation } from "../../../GraphQl/graphql";
-import { Button } from "../../components/atoms";
+} from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useGetPageQuery, useSavePageMutation } from '../../../GraphQl/graphql';
+import { Button } from '../../components/atoms';
 import {
   Accordion,
   EventImagePreview,
   FormActions,
   InputField,
   UploadField,
-} from "../../components/molecules";
-import { DescriptionFrom } from "../../components/organisms";
-import { fileObject } from "../../utils";
-import { PublicPagesFormSchema } from "../../validations";
-import { PublicPageFormInputs } from "./PublicPageForm.props";
+} from '../../components/molecules';
+import { DescriptionFrom } from '../../components/organisms';
+import { fileObject, twClsx } from '../../utils';
+import { PublicPagesFormSchema } from '../../validations';
+import { PublicPageFormInputs } from './PublicPageForm.props';
 
 const CreatePublicPagesPage = (): ReactElement => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [images, setImages] = useState<FieldArrayWithId<
     PublicPageFormInputs,
-    "images",
-    "id"
+    'images',
+    'id'
   > | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   const methods = useForm<PublicPageFormInputs>({
     resolver: joiResolver(PublicPagesFormSchema),
-    mode: "onSubmit",
-    reValidateMode: "onSubmit",
+    mode: 'onChange',
     defaultValues: {
       images: [{ file: null }],
     },
@@ -46,7 +45,7 @@ const CreatePublicPagesPage = (): ReactElement => {
   });
 
   const [savePage] = useSavePageMutation({
-    onCompleted: () => navigate("/admin/general-settings/public-pages"),
+    onCompleted: () => navigate('/admin/general-settings/public-pages'),
   });
 
   const {
@@ -67,7 +66,7 @@ const CreatePublicPagesPage = (): ReactElement => {
   // }, [page, reset]);
 
   const { fields, append, remove } = useFieldArray({
-    name: "images",
+    name: 'images',
     control,
   });
 
@@ -99,12 +98,12 @@ const CreatePublicPagesPage = (): ReactElement => {
   };
 
   const handleSetFile =
-    (item: FieldArrayWithId<PublicPageFormInputs, "images", "id">) => () => {
+    (item: FieldArrayWithId<PublicPageFormInputs, 'images', 'id'>) => () => {
       setImages(item);
     };
 
   const handleAppend = () => {
-    console.log("Executed");
+    console.log('Executed');
     append({ file: null });
   };
 
@@ -132,11 +131,15 @@ const CreatePublicPagesPage = (): ReactElement => {
   return (
     <FormProvider {...methods}>
       <form>
-        <Accordion title="Stammdaten" open={!!id}>
+        <Accordion
+          title="Stammdaten"
+          open={!!id}
+          className={twClsx(errors.pageName && 'border border-primary')}
+        >
           <InputField
             id="pageName"
             label="Stammdaten"
-            {...register("pageName")}
+            {...register('pageName')}
             error={errors.pageName?.message}
           />
         </Accordion>
@@ -149,11 +152,12 @@ const CreatePublicPagesPage = (): ReactElement => {
           //     <EventImagePreview
           //       id={images.id}
           //       file={images.file?.[0] || null}
-          //       onHandle={onHandle}
+          //       // onHandle={onHandle}
           //       onRemoveImage={handleRemoveImage}
           //     />
           //   )
           // }
+          className={twClsx(errors.images && 'border border-primary')}
         >
           <div className="flex items-start justify-start">
             {fields.map((item, index) => (
@@ -174,13 +178,19 @@ const CreatePublicPagesPage = (): ReactElement => {
           </div>
         </Accordion>
 
-        <Accordion title="Textfeld">
+        <Accordion
+          title="Textfeld"
+          className={twClsx(errors.description && 'border border-primary')}
+        >
           <DescriptionFrom />
         </Accordion>
 
-        <Accordion title="Video" className="p-5">
+        <Accordion
+          title="Video"
+          className={twClsx('p-5', errors.video && 'border border-primary')}
+        >
           <div className="flex items-start justify-start">
-            <UploadField id="video" {...register("video")} />
+            <UploadField id="video" {...register('video')} />
           </div>
           <div className="flex gap-x-2">
             <Button

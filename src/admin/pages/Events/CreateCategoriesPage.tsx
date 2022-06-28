@@ -10,7 +10,7 @@ import {
   useGetEventCategoryQuery,
   useSaveEventCategoryMutation,
 } from '../../../GraphQl/graphql';
-import { gqlVar } from '../../utils';
+import { gqlVar, twClsx } from '../../utils';
 
 const CreateCategoriesPage = (): ReactElement => {
   const { id } = useParams();
@@ -48,7 +48,11 @@ const CreateCategoriesPage = (): ReactElement => {
 
   return (
     <form className="min-h-full">
-      <Accordion open={!!id} title="Kategorie">
+      <Accordion
+        open={!!id}
+        title="Kategorie"
+        className={twClsx(errors.name && 'border border-primary')}
+      >
         <InputField
           id="name"
           label="Kategoriename"
