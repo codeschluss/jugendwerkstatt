@@ -10,8 +10,9 @@ import {
   useSaveMessageMutation,
 } from "../../../../GraphQl/graphql";
 import ChatText from "./ChatText";
-import { PaperAirplaneIcon } from "@heroicons/react/outline";
+import { PaperAirplaneIcon, PaperClipIcon } from "@heroicons/react/outline";
 import { readAuthToken } from "../../../../shared/utils";
+import TypeInput from "../../forms/upload/TypeInput";
 
 const Chat = () => {
   const accessToken = readAuthToken("accessToken") || "";
@@ -43,7 +44,6 @@ const Chat = () => {
       entity: { id: id },
     },
   });
-  console.log(getChat.data?.getChat?.participants, "participants");
   const getMessages = useGetMessagesQuery({
     fetchPolicy: "network-only",
     variables: {
@@ -99,6 +99,39 @@ const Chat = () => {
     ?.slice()
     .reverse();
 
+  const uploadHandler = async (e: any) => {
+    const file = e.target.files[0];
+    const base64: string | any = await convertBase64(file);
+
+    saveMessage({
+      variables: {
+        entity: {
+          chat: {
+            id: id,
+          },
+          media: {
+            base64: base64.split(",")[1],
+            mimeType: file.type,
+            name: file.name,
+          },
+        },
+      },
+    });
+  };
+
+  const convertBase64 = (file: any) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
   return (
     <div
       className="flex flex-col bg-[#eee] rounded-lg  md:mx-0"
@@ -113,8 +146,9 @@ const Chat = () => {
           return (
             <ChatText
               key={el?.id}
-              content={el?.content}
+              content={el?.content ? el.content : ""}
               name={el?.user?.fullname}
+              media={el?.media}
               me={_me}
             />
           );
@@ -133,6 +167,10 @@ const Chat = () => {
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
         />
+
+        <TypeInput onChange={uploadHandler}>
+          <PaperClipIcon className="w-5 ml-1 text-black text-opacity-40" />
+        </TypeInput>
 
         <button
           type="submit"

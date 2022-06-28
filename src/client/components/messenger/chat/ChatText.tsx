@@ -4,9 +4,10 @@ interface TextProps {
   content?: string | null;
   name?: string | null;
   me: boolean;
+  media?: any;
 }
 
-const ChatText: React.FC<TextProps> = ({ content, name, me }) => {
+const ChatText: React.FC<TextProps> = ({ content, name, me, media }) => {
   return (
     <div
       className={`w-full flex px-6  ${me ? "justify-end" : "justify-start"}`}
@@ -16,7 +17,8 @@ const ChatText: React.FC<TextProps> = ({ content, name, me }) => {
         ${me ? "bg-primary text-white" : "bg-white text-black"}`}
       >
         {name && <p className=" text-base">{name}</p>}
-        <p>{content}</p>
+        {content && <p>{content}</p>}
+        {media && <span>taratata</span>}
       </span>
     </div>
   );

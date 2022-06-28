@@ -124,9 +124,11 @@ export type AssignmentStateEntityInput = {
 export type ChatEntity = {
   __typename?: 'ChatEntity';
   admin?: Maybe<Scalars['Boolean']>;
+  avatar?: Maybe<MediaEntity>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   group?: Maybe<GroupEntity>;
   id?: Maybe<Scalars['String']>;
+  lastMessage?: Maybe<MessageEntity>;
   messages?: Maybe<Array<Maybe<MessageEntity>>>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   name?: Maybe<Scalars['String']>;
@@ -135,6 +137,7 @@ export type ChatEntity = {
 
 export type ChatEntityInput = {
   admin?: InputMaybe<Scalars['Boolean']>;
+  avatar?: InputMaybe<MediaEntityInput>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   group?: InputMaybe<GroupEntityInput>;
   id?: InputMaybe<Scalars['String']>;
@@ -3518,7 +3521,7 @@ export type GetMeBasicQuery = { __typename?: 'Query', me?: { __typename?: 'UserE
 export type GetMeChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMeChatsQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, chat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, modified?: any | null, participants?: Array<{ __typename?: 'ParticipantEntity', user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null } | null } | null> | null } | null } | null> | null } | null };
+export type GetMeChatsQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, chat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, modified?: any | null, lastMessage?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, created?: any | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null, messages?: Array<{ __typename?: 'MessageEntity', created?: any | null, content?: string | null, id?: string | null } | null> | null, participants?: Array<{ __typename?: 'ParticipantEntity', user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null> | null } | null } | null> | null } | null };
 
 export type GetMeFavoritesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3592,7 +3595,7 @@ export type GetUsersQueryVariables = Exact<{
 }>;
 
 
-export type GetUsersQuery = { __typename?: 'Query', getUsers?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null } | null };
+export type GetUsersQuery = { __typename?: 'Query', getUsers?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null> | null } | null };
 
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars['String'];
@@ -7709,11 +7712,28 @@ export const GetMeChatsDocument = gql`
       chat {
         id
         name
+        lastMessage {
+          id
+          content
+          created
+          user {
+            id
+            fullname
+          }
+        }
         modified
+        messages {
+          created
+          content
+          id
+        }
         participants {
           user {
             fullname
             id
+            profilePicture {
+              id
+            }
           }
         }
       }
@@ -8240,6 +8260,9 @@ export const GetUsersDocument = gql`
     result {
       id
       fullname
+      profilePicture {
+        id
+      }
     }
   }
 }

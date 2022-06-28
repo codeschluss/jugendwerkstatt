@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../../../../config/app";
 import {
   ConjunctionOperator,
   QueryOperator,
@@ -72,8 +73,12 @@ const Contacts = () => {
           key={el?.id}
           onClick={() => handleCreateChat(el?.id, el?.fullname)}
           // href={`/messenger/chat/${el?.id}`}
+
           name={el?.fullname}
-          imgUrl="/assets/avatarSmall2.png"
+          imgUrl={
+            el?.profilePicture?.id &&
+            `${API_URL}media/${el?.profilePicture?.id}`
+          }
         />
       ))}
     </div>

@@ -111,11 +111,11 @@ const RightContent: FC = () => {
         position="right"
         className="hidden pr-3 ml-3 mr-3 border-r border-gray-200 md:block"
         boxClassName="w-72 mt-3 py-2.5 px-4"
-        name={<Avatar size="8" />}
+        name={<Avatar fullname={user.data?.me?.fullname} />}
       >
         <div>
           <div className="flex justify-start pb-4 mb-4 border-b-2">
-            <Avatar size="10" />
+            <Avatar fullname={user?.data?.me?.fullname} />
             <div className="flex flex-col justify-around h-20 ml-4">
               <p className="text-lg">{user.data?.me?.fullname}</p>
               <p className="text-xs">{user.data?.me?.email}</p>
