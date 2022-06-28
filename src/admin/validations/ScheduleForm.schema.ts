@@ -5,6 +5,6 @@ export const ScheduleFormSchema = Joi.object({
   start_hour: Joi.date().required().label("Uhrzeit"),
   end_date: Joi.date().required().label("Ende"),
   end_hour: Joi.date().required().label("Uhrzeit"),
-  repeat: Joi.string().optional().label("Turnus"),
+  repeat: Joi.string().empty("").label("Turnus"),
   end_repeat: Joi.date().required().label("Enddatum"),
 });
