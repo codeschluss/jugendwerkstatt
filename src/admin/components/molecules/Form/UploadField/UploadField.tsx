@@ -24,7 +24,7 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
   ) => {
     const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
       if (!!event.currentTarget.files?.length) {
-        handleAppend && handleAppend(index || 0, event.currentTarget.files);
+        handleAppend && handleAppend(index || 0, event.currentTarget.files[0]);
       }
       onChange && onChange(event);
     };

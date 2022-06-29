@@ -27,7 +27,7 @@ export interface EventsFormInputs {
   baseData: BaseDataFormInputs;
   address: AddressFormInputs;
   description: string;
-  files: { file: FileList | null }[];
+  files: { file: File | null }[];
   schedule: ScheduleProps;
 }
 export interface OrganizerFormInputs {
