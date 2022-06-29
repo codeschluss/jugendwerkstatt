@@ -1,14 +1,17 @@
 import dayjs from 'dayjs';
+import { Navigate } from 'react-big-calendar';
+import { useNavigate } from 'react-router-dom';
 import {
   QueryOperator,
   useDeleteUserMutation,
   useGetUsersAdminQuery,
   useSaveUserAdminMutation,
 } from '../../../GraphQl/graphql';
-import { Table, Action, Panel } from '../../components/atoms';
+import { Table, Action, Panel, Button } from '../../components/atoms';
 import { CustomTable } from '../../components/molecules';
 
 const UsersRequestsListPage = () => {
+  const navigate = useNavigate();
   const { data, refetch: refetchUsers } = useGetUsersAdminQuery({
     variables: {
       params: {
@@ -38,6 +41,7 @@ const UsersRequestsListPage = () => {
       deleteUser({ variables: { id: userId } });
     }
   };
+  const handleGoBack = () => navigate('/admin/users');
 
   return (
     <Panel.Wrapper>
@@ -70,6 +74,13 @@ const UsersRequestsListPage = () => {
           []
         }
       />
+      <Button
+        onClick={handleGoBack}
+        className="md:mr-6 border-[#424242] text-[#424242]"
+        type="button"
+      >
+        Zurücksetzen
+      </Button>
     </Panel.Wrapper>
   );
 };

@@ -3,6 +3,9 @@ fragment PageField on PageEntity {
   name
   slug
   content
+  images {
+    ...FileField
+  }
   video {
     ...FileField
   }
