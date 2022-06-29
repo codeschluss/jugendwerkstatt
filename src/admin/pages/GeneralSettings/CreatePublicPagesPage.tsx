@@ -29,6 +29,7 @@ const CreatePublicPagesPage = (): ReactElement => {
     'images',
     'id'
   > | null>(null);
+
   const [imageFile, setImageFile] = useState<{ file: File; id: string } | null>(
     null
   );
@@ -52,20 +53,14 @@ const CreatePublicPagesPage = (): ReactElement => {
 
   const {
     reset,
+    resetField,
     control,
     register,
     handleSubmit,
     formState: { errors },
   } = methods;
 
-  // useEffect(() => {
-  //   if (!!page) {
-  //     reset({
-  //       pageName: page.name || '',
-  //       description: page.content || '',
-  //     });
-  //   }
-  // }, [page, reset]);
+  console.log(errors);
 
   const { fields, append, remove, update } = useFieldArray({
     name: 'images',
@@ -110,17 +105,25 @@ const CreatePublicPagesPage = (): ReactElement => {
   };
 
   const handleRemoveImage = (id: string) => {
-    console.log(
-      id,
-      fields.findIndex((field) => field.id === id),
-      fields
-    );
-    remove(fields.findIndex((field) => field.id !== id));
+    remove(fields.findIndex((field) => field.id === id));
     setImages(null);
   };
-  const handleRemoveVideo = () => {};
-  const onHandle = (data: { file: File; id: string } | null) =>
+
+  const handleRemoveVideo = () => resetField('video', { keepError: true });
+
+  const onHandle = (data: { file: File; id: string } | null) => {
     setImageFile(data);
+  };
+
+  useEffect(() => {
+    if (!!page) {
+      console.log('page', page);
+      reset({
+        pageName: page.name || '',
+        description: page.content || '',
+      });
+    }
+  }, [page, reset]);
 
   return (
     <FormProvider {...methods}>
@@ -160,7 +163,7 @@ const CreatePublicPagesPage = (): ReactElement => {
                 preview
                 key={index}
                 index={index}
-                id={`files.${index}.file`}
+                id={`images.${index}.file`}
                 handleAppend={handleAppend}
                 handleShow={handleSetFile(item)}
                 {...register(`images.${index}.file`)}

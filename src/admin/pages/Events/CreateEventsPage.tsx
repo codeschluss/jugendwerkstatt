@@ -30,6 +30,26 @@ import { EventsFormSchema } from '../../validations';
 import dayjs from 'dayjs';
 import { fileObject, twClsx } from '../../utils';
 
+// const base64ImageToBlob = (str: string, type: string, fileName: string) => {
+//   // decode base64
+//   const imageContent = atob(str);
+
+//   // create an ArrayBuffer and a view (as unsigned 8-bit)
+//   const buffer = new ArrayBuffer(imageContent.length);
+//   const view = new Uint8Array(buffer);
+
+//   // fill the view, using the decoded base64
+//   for (var n = 0; n < imageContent.length; n++) {
+//     view[n] = imageContent.charCodeAt(n);
+//   }
+
+//   // convert ArrayBuffer to Blob
+//   const blob = new Blob([buffer], { type });
+//   const file = new File([blob], fileName, { type });
+
+//   return file;
+// };
+
 const CreateEventsPage = (): ReactElement => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -96,6 +116,11 @@ const CreateEventsPage = (): ReactElement => {
       }
     }
 
+    // console.log(
+    //   "first",
+    //   base64ImageToBlob(images?.[0].base64, images[0].mimeType, images[0].name)
+    // );
+
     saveEvent({
       variables: {
         entity: {
@@ -115,8 +140,6 @@ const CreateEventsPage = (): ReactElement => {
     });
   };
 
-  console.log('errors', errors);
-
   const handleAppend = (index: number, file: FileList | null) => {
     update(index, { file });
     append({ file: null });
@@ -135,30 +158,22 @@ const CreateEventsPage = (): ReactElement => {
   const onHandle = (data: { file: File; id: string } | null) => {
     setImageFile(data);
   };
+
   const stringToDate = (value: string) => {
     return dayjs(value, 'YYYY-MM-DDTHH:mmZ[Z]').toDate();
   };
 
-  console.log('result', getEvent?.schedules);
-
   useEffect(() => {
-    if (!!getEvent) {
+    if (!!getEvent && !imageFile) {
       const start_date = stringToDate(getEvent.schedules?.at(-1)?.startDate);
       const end_date = stringToDate(getEvent.schedules?.at(-1)?.endDate);
       const end_repeat = stringToDate(getEvent.schedules?.[0]?.startDate);
 
-      const repeat = [
-        { value: 7, label: 'week' },
-        { value: 30, label: 'month' },
-        { value: 365, label: 'year' },
-      ].some((i) => {
-        const first = dayjs(end_repeat).diff(
-          start_date,
-          i.label as 'week' | 'month' | 'year'
-        );
-        console.log('first', first);
-        return i.label;
-      });
+      const repeat = ['week', 'month', 'year'].find(
+        (i) =>
+          getEvent.schedules?.length ===
+          dayjs(end_repeat).diff(start_date, i as 'week' | 'month' | 'year') + 2
+      );
 
       reset({
         baseData: {
@@ -179,12 +194,12 @@ const CreateEventsPage = (): ReactElement => {
           end_repeat,
           start_hour: dayjs(start_date).startOf('m').toDate(),
           end_hour: dayjs(end_date).startOf('m').toDate(),
-          repeat: 'week',
+          repeat: repeat as 'week' | 'month' | 'year',
         },
       });
       // setImageFile();
     }
-  }, [getEvent, reset]);
+  }, [getEvent, imageFile, reset, schedules.length]);
 
   return (
     <FormProvider {...methods}>
