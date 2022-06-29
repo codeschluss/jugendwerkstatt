@@ -3,6 +3,7 @@ fragment JobAdField on JobAdEntity {
   title
   startDate
   dueDate
+  content
 }
 
 fragment JobTypeField on JobTypeEntity {

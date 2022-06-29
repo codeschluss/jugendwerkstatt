@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
-import { useFormContext } from "react-hook-form";
-import { InputField } from "../../molecules";
-import { OrganizerFormInputs } from "./Events.types";
+import { ReactElement } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { InputField } from '../../molecules';
+import { OrganizerFormInputs } from './Events.types';
 
 export const BaseOrganizerForm = (): ReactElement => {
   const {
@@ -15,7 +15,7 @@ export const BaseOrganizerForm = (): ReactElement => {
         <InputField
           id="name"
           label="Veranstalter Name"
-          {...register("name")}
+          {...register('name')}
           error={errors?.name?.message}
           placeholder="IHK Wuppertal"
         />
@@ -23,7 +23,7 @@ export const BaseOrganizerForm = (): ReactElement => {
         <InputField
           id="phone"
           label="Telefonnummer"
-          {...register("phone")}
+          {...register('phone')}
           placeholder="+49 202 - 49 68 94 10"
           error={errors?.phone?.message}
         />
@@ -33,7 +33,7 @@ export const BaseOrganizerForm = (): ReactElement => {
           id="mail"
           label="E-Mail-Adresse"
           placeholder="mail@alphaev.de"
-          {...register("mail")}
+          {...register('mail')}
           error={errors?.mail?.message}
         />
         <InputField
@@ -41,7 +41,7 @@ export const BaseOrganizerForm = (): ReactElement => {
           label="Webseite"
           required={false}
           placeholder="https://www.alphaev.de"
-          {...register("website")}
+          {...register('website')}
           error={errors?.website?.message}
         />
       </div>

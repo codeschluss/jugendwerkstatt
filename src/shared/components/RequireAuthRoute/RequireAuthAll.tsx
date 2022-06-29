@@ -1,13 +1,13 @@
 // react
-import { ReactElement } from "react";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { ReactElement } from 'react';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
-import { useExpireToken } from "../../../hooks/useExpireToken";
-import { UserRoleEnum } from "../../../interfaces";
+import { useExpireToken } from '../../../hooks/useExpireToken';
+import { UserRoleEnum } from '../../../interfaces';
 
 // store
-import { useAuthStore } from "../../../store";
-import { RequireAuthLayout } from "./RequireAuthLayout";
+import { useAuthStore } from '../../../store';
+import { RequireAuthLayout } from './RequireAuthLayout';
 
 export const RequireAuthAll = (): ReactElement => {
   // hooks
@@ -19,7 +19,7 @@ export const RequireAuthAll = (): ReactElement => {
     user?.roles.length !== 0 ? (
       <RequireAuthLayout
         accessRole={[
-          user?.roles.includes(UserRoleEnum.ADMIN) ? "admin" : "student",
+          user?.roles.includes(UserRoleEnum.ADMIN) ? 'admin' : 'student',
         ]}
       />
     ) : (
@@ -29,6 +29,6 @@ export const RequireAuthAll = (): ReactElement => {
   return isAuthenticated ? (
     layout
   ) : (
-    <Navigate to={{ pathname: "/" }} state={{ from: location }} />
+    <Navigate to={{ pathname: '/' }} state={{ from: location }} />
   );
 };

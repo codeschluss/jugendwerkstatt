@@ -9,6 +9,7 @@ import { GroupCoursesInput, GroupCoursesProps } from './GroupCoursesForm.types';
 export const GroupCoursesForm = ({
   error,
   errors,
+  clearErrors,
   control,
   register,
 }: GroupCoursesProps) => {
@@ -21,6 +22,7 @@ export const GroupCoursesForm = ({
   // handlers
   const handleAddNew = () => {
     append({ name: '', isActive: false }, { shouldFocus: true });
+    clearErrors('courses');
   };
 
   const handleOnSortEnd = useCallback(

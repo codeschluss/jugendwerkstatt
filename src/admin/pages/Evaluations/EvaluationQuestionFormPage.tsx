@@ -21,14 +21,14 @@ const EvaluationQuestionFormPage = (): ReactElement => {
 
   const {
     control,
-    formState: { isSubmitted, isDirty, errors },
+    formState: { errors },
     clearErrors,
     reset,
     register,
     handleSubmit,
   } = useForm<QuestionsInput>({
+    mode: 'onChange',
     resolver: joiResolver(EvaluationsQuestionsFormSchema),
-    mode: 'onTouched',
   });
   const [saveQuestionnaire] = useSaveQuestionnaireMutation({
     onCompleted: () => navigate('/admin/evaluations/questions'),

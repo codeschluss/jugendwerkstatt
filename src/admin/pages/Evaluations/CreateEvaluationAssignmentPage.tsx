@@ -12,13 +12,14 @@ import {
 } from '../../../GraphQl/graphql';
 import { Select } from '../../components/atoms';
 import { Accordion, FormActions } from '../../components/molecules';
+import { twClsx } from '../../utils';
 import { EvaluationAssignmentFormSchema } from '../../validations/EvaluationAssignmentForm.schema';
 import { EvaluationFormInputs } from './EvaluationForm.props';
 
 const CreateEvaluationAssignmentPage = (): ReactElement => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data: { assignment = null } = {} } = useGetAssignmentQuery({
+  const { data: { assignment = null } = {}, loading } = useGetAssignmentQuery({
     skip: !id,
     variables: { entity: { id } },
     fetchPolicy: 'cache-and-network',
@@ -59,7 +60,7 @@ const CreateEvaluationAssignmentPage = (): ReactElement => {
     }
   }, [assignment, id, reset]);
 
-  const onSubmit = ({ userId, evaluationQuestionId }: EvaluationFormInputs) =>
+  const onSubmit = ({ userId, evaluationQuestionId }: EvaluationFormInputs) => {
     saveAssignment({
       variables: {
         entity: {
@@ -69,14 +70,26 @@ const CreateEvaluationAssignmentPage = (): ReactElement => {
         },
       },
     });
+  };
 
-  console.log(errors);
+  if (loading) return <h1>Loading...</h1>;
+
   return (
     <form className="min-h-full">
-      <Accordion title="Stammdaten" open={!!id}>
+      <Accordion
+        title="Stammdaten"
+        open={!!id}
+        className={twClsx(
+          (errors.userId || errors.evaluationQuestionId) &&
+            'border border-primary'
+        )}
+      >
         <div className="space-y-6">
           <div>
             <Select id="user" label="Benutzer/in" {...register('userId')}>
+              {!assignment && (
+                <option value="">Wählen Sie einen Benutzer aus</option>
+              )}
               {users?.result?.map((user) => (
                 <option key={user?.id} value={user?.id || ''}>
                   {user?.fullname}
@@ -94,6 +107,9 @@ const CreateEvaluationAssignmentPage = (): ReactElement => {
               {...register('evaluationQuestionId')}
               placeholder="Choose an Option"
             >
+              {!assignment && (
+                <option value="">Wählen Sie eine Bewertung aus</option>
+              )}
               {questionnaires?.result?.map((questionnaire) => (
                 <option key={questionnaire?.id} value={questionnaire?.id || ''}>
                   {questionnaire?.name}

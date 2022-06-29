@@ -17,7 +17,7 @@ export const RequireAuthRoute = ({
   const { isAuthenticated, user } = useAuthStore();
   useExpireToken();
 
-  const rolePath = accessRole.includes(UserRoleEnum.STUDENT)
+  const rolePath = !accessRole.includes(UserRoleEnum.STUDENT)
     ? "admin/events"
     : "/";
 

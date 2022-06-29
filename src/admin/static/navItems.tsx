@@ -2,6 +2,7 @@ import { NavItemModel, NavModel } from '../interfaces/models/Nav.model';
 import {
   BookOpenIcon,
   CalendarIcon,
+  ChatIcon,
   CogIcon,
   DocumentTextIcon,
   PlayIcon,
@@ -128,6 +129,12 @@ export const navItems = (
             location: 'users',
           },
         ],
+      },
+      {
+        name: 'Messenger',
+        icon: <ChatIcon />,
+        location: 'messenger',
+        noItems: true,
       },
       {
         name: 'Allgemein',
