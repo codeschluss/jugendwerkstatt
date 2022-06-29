@@ -77,8 +77,6 @@ const CreateEventsPage = (): ReactElement => {
     control,
   } = methods;
 
-  console.log("errors", errors);
-
   const { fields, append, remove, update } = useFieldArray({
     name: "files",
     control,

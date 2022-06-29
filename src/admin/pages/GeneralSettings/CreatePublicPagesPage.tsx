@@ -1,5 +1,5 @@
 import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import {
   FieldArrayWithId,
   FormProvider,
@@ -29,7 +29,10 @@ const CreatePublicPagesPage = (): ReactElement => {
     'images',
     'id'
   > | null>(null);
-  const [imageFile, setImageFile] = useState<File | null>(null);
+
+  const [imageFile, setImageFile] = useState<{ file: File; id: string } | null>(
+    null
+  );
 
   const methods = useForm<PublicPageFormInputs>({
     resolver: joiResolver(PublicPagesFormSchema),
@@ -49,28 +52,20 @@ const CreatePublicPagesPage = (): ReactElement => {
   });
 
   const {
-    watch,
+    reset,
+    resetField,
     control,
     register,
     handleSubmit,
     formState: { errors },
   } = methods;
 
-  // useEffect(() => {
-  //   if (!!page) {
-  //     reset({
-  //       pageName: page.name || '',
-  //       description: page.content || '',
-  //     });
-  //   }
-  // }, [page, reset]);
+  console.log(errors);
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray({
     name: 'images',
     control,
   });
-
-  console.log(watch(), errors);
 
   const handleOnSubmit = async (data: PublicPageFormInputs) => {
     let images: { name: string; mimeType: string; base64: string }[] = [];
@@ -91,7 +86,9 @@ const CreatePublicPagesPage = (): ReactElement => {
           content: data.description,
           video: data.video && (await fileObject(data.video[0])),
           images,
-          ...(!!imageFile && { titleImage: await fileObject(imageFile) }),
+          ...(!!imageFile?.file && {
+            titleImage: await fileObject(imageFile.file),
+          }),
         },
       },
     });
@@ -102,31 +99,30 @@ const CreatePublicPagesPage = (): ReactElement => {
       setImages(item);
     };
 
-  const handleAppend = () => {
-    console.log('Executed');
+  const handleAppend = (index: number, file: FileList | null) => {
+    update(index, { file });
     append({ file: null });
   };
 
   const handleRemoveImage = (id: string) => {
-    console.log(
-      id,
-      fields.findIndex((field) => field.id === id),
-      fields
-    );
-    remove(fields.findIndex((field) => field.id !== id));
+    remove(fields.findIndex((field) => field.id === id));
     setImages(null);
   };
-  const handleRemoveVideo = () => {};
-  const onHandle = (file: File | null) => setImageFile(file);
 
-  // useEffect(() => {
-  //   if (!!page) {
-  //     reset({
-  //       pageName: page?.name || '',
-  //       description: page?.content || '',
-  //     });
-  //   }
-  // }, [page, reset]);
+  const handleRemoveVideo = () => resetField('video', { keepError: true });
+
+  const onHandle = (data: { file: File; id: string } | null) => {
+    setImageFile(data);
+  };
+
+  useEffect(() => {
+    if (!!page) {
+      reset({
+        pageName: page.name || '',
+        description: page.content || '',
+      });
+    }
+  }, [page, reset]);
 
   return (
     <FormProvider {...methods}>
@@ -147,16 +143,17 @@ const CreatePublicPagesPage = (): ReactElement => {
           title="Titelbild"
           showSide
           sideClassName="w-auto"
-          // sideContent={
-          //   images && (
-          //     <EventImagePreview
-          //       id={images.id}
-          //       file={images.file?.[0] || null}
-          //       // onHandle={onHandle}
-          //       onRemoveImage={handleRemoveImage}
-          //     />
-          //   )
-          // }
+          sideContent={
+            images && (
+              <EventImagePreview
+                id={images.id}
+                file={images.file?.[0] || null}
+                onHandle={onHandle}
+                isTitleBild={imageFile?.id === images.id}
+                onRemoveImage={handleRemoveImage}
+              />
+            )
+          }
           className={twClsx(errors.images && 'border border-primary')}
         >
           <div className="flex items-start justify-start">
@@ -165,14 +162,14 @@ const CreatePublicPagesPage = (): ReactElement => {
                 preview
                 key={index}
                 index={index}
-                id={`files.${index}.file`}
+                id={`images.${index}.file`}
                 handleAppend={handleAppend}
                 handleShow={handleSetFile(item)}
                 {...register(`images.${index}.file`)}
                 error={errors.images?.[index]?.file?.message}
-                // {...(!!item.file && {
-                //   src: URL.createObjectURL(item.file),
-                // })}
+                {...(!!item.file && {
+                  src: URL.createObjectURL(item.file[0]),
+                })}
               />
             ))}
           </div>
