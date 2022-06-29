@@ -165,7 +165,7 @@ const App = (): ReactElement => {
       </Route>
 
       <Route
-        element={<RequireAuthRoute accessRole={['admin', 'supervisor']} />}
+        element={<RequireAuthRoute accessRole={['admin', 'superviser']} />}
       >
         <Route path="/admin/events">
           <Route index element={<EventsListPage />} />

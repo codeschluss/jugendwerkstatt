@@ -117,7 +117,6 @@ const CreatePublicPagesPage = (): ReactElement => {
 
   useEffect(() => {
     if (!!page) {
-      console.log('page', page);
       reset({
         pageName: page.name || '',
         description: page.content || '',

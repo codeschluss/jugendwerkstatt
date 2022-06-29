@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
-import { useFormContext } from "react-hook-form";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { ReactElement } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export const DescriptionFrom = (): ReactElement => {
   const {
@@ -11,12 +11,12 @@ export const DescriptionFrom = (): ReactElement => {
   } = useFormContext();
 
   const handleSetValue = (_event: any, editor: any) => {
-    setValue("description", JSON.stringify(editor.getData() || ""));
+    setValue('description', JSON.stringify(editor.getData() || ''));
   };
 
   const handleGetValue = (editor: any) => {
     editor.setData(
-      getValues("description") ? JSON.parse(getValues("description")) : ""
+      getValues('description') ? JSON.parse(getValues('description')) : ''
     );
   };
 
