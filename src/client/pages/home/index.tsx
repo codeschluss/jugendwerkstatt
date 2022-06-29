@@ -8,7 +8,13 @@ import Homepage from "../../components/home/Homepage";
 const Home = () => {
   const { isAuthenticated, user } = useAuthStore();
 
-  if (isAuthenticated && user?.roles.includes(UserRoleEnum.ADMIN)) {
+  const { ADMIN, SUPERVISER } = UserRoleEnum;
+
+  const hasAccess = user?.roles.some((role) =>
+    [ADMIN, SUPERVISER].includes(role as UserRoleEnum)
+  );
+
+  if (isAuthenticated && hasAccess) {
     return <Navigate to={{ pathname: "/admin" }} />;
   }
 
