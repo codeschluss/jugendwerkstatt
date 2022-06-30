@@ -1,4 +1,4 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import {
   FieldArrayWithId,
   FormProvider,
@@ -26,10 +26,9 @@ import {
   useGetEventAdminQuery,
   useSaveEventMutation,
 } from "../../../GraphQl/graphql";
-import { Button } from "../../components/atoms";
 import { EventsFormSchema } from "../../validations";
 import dayjs from "dayjs";
-import { fileObject } from "../../utils";
+import { base64ImageToFile, fileObject, twClsx } from "../../utils";
 
 const CreateEventsPage = (): ReactElement => {
   const { id } = useParams();
@@ -40,15 +39,19 @@ const CreateEventsPage = (): ReactElement => {
     "files",
     "id"
   > | null>(null);
-  const [imageFile, setImageFile] = useState<File | null>(null);
+
+  const [imageFile, setImageFile] = useState<{ file: File; id: string } | null>(
+    null
+  );
+
   const [schedules, setSchedules] = useState<ScheduleInputs[] | []>([]);
 
-  const { data: result } = useGetEventAdminQuery({
+  const { data: { getEvent = null } = {} } = useGetEventAdminQuery({
     variables: { entity: { id } },
     skip: !id,
   });
 
-  const [saveEvent] = useSaveEventMutation({
+  const [saveEvent, { loading }] = useSaveEventMutation({
     onCompleted: () => navigate("/admin/events"),
   });
 
@@ -66,9 +69,15 @@ const CreateEventsPage = (): ReactElement => {
     },
   });
 
-  const { formState, trigger, handleSubmit, register, control } = methods;
+  const {
+    formState: { errors },
+    handleSubmit,
+    register,
+    reset,
+    control,
+  } = methods;
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, update } = useFieldArray({
     name: "files",
     control,
   });
@@ -82,7 +91,7 @@ const CreateEventsPage = (): ReactElement => {
 
     for (const field of fields) {
       if (!!field.file) {
-        const object = await fileObject(field.file[0]);
+        const object = await fileObject(field.file);
         images.push(object);
       }
     }
@@ -97,17 +106,19 @@ const CreateEventsPage = (): ReactElement => {
           description,
           category: { id: category },
           organizer: { id: organizer },
-          ...(!!imageFile && { titleImage: await fileObject(imageFile) }),
-          ...(!!result && { id: result?.getEvent?.id }),
+          ...(!!imageFile?.file && {
+            titleImage: await fileObject(imageFile.file),
+          }),
+          ...(!!getEvent && { id: getEvent?.id }),
         },
       },
     });
   };
 
-  console.log("errors", formState?.errors.files);
-
-  const handleTrigger = () => trigger();
-  const handleAppend = () => append({ file: null });
+  const handleAppend = (index: number, file: File | null) => {
+    update(index, { file });
+    append({ file: null });
+  };
 
   const handleSetFile =
     (item: FieldArrayWithId<EventsFormInputs, "files", "id">) => () => {
@@ -119,24 +130,86 @@ const CreateEventsPage = (): ReactElement => {
     setFile(null);
   };
 
-  const onHandle = (file: File | null) => setImageFile(file);
+  const onHandle = (data: { file: File; id: string } | null) => {
+    setImageFile(data);
+  };
 
-  // useEffect(() => {
-  //   if (!!result) {
-  //     reset({});
-  //   }
-  // }, [result, reset]);
+  const stringToDate = (value: string) => {
+    return dayjs(value, "YYYY-MM-DDTHH:mmZ[Z]").toDate();
+  };
+
+  useEffect(() => {
+    if (!!getEvent && !imageFile) {
+      const start_date = stringToDate(getEvent.schedules?.at(-1)?.startDate);
+      const end_date = stringToDate(getEvent.schedules?.at(-1)?.endDate);
+      const end_repeat = stringToDate(getEvent.schedules?.[0]?.startDate);
+
+      const repeat = ["week", "month", "year"].find(
+        (i) =>
+          getEvent.schedules?.length ===
+          dayjs(end_repeat).diff(start_date, i as "week" | "month" | "year") + 2
+      );
+
+      reset({
+        baseData: {
+          name: getEvent?.name || "",
+          category: getEvent?.category?.id || "",
+          organizer: getEvent?.organizer?.id || "",
+        },
+        description: getEvent?.description || "",
+        address: {
+          houseNumber: getEvent?.address?.houseNumber || "",
+          place: getEvent?.address?.place || "",
+          postalCode: getEvent?.address?.postalCode || "",
+          street: getEvent?.address?.street || "",
+        },
+        schedule: {
+          start_date,
+          end_date,
+          end_repeat,
+          start_hour: dayjs(start_date).startOf("m").toDate(),
+          end_hour: dayjs(end_date).startOf("m").toDate(),
+          repeat: repeat as "week" | "month" | "year",
+        },
+        files: getEvent?.images?.map((item) => ({
+          file: base64ImageToFile(
+            item?.base64 || "",
+            item?.mimeType || "",
+            item?.name || ""
+          ),
+        })),
+      });
+      setImageFile({
+        id: getEvent?.titleImage?.id || "",
+        file: base64ImageToFile(
+          getEvent?.titleImage?.base64 || "",
+          getEvent?.titleImage?.mimeType || "",
+          getEvent?.titleImage?.name || ""
+        ),
+      });
+    }
+  }, [getEvent, imageFile, reset, schedules.length]);
 
   return (
     <FormProvider {...methods}>
       <form className="min-h-full">
-        <Accordion title="Stammdaten" open={!!id}>
+        <Accordion
+          title="Stammdaten"
+          open={!!id}
+          className={twClsx(errors.baseData && "border border-primary")}
+        >
           <BaseDataForm />
         </Accordion>
-        <Accordion title="Adresse">
+        <Accordion
+          title="Adresse"
+          className={twClsx(errors.address && "border border-primary")}
+        >
           <AddressForm />
         </Accordion>
-        <Accordion title="Beschreibung">
+        <Accordion
+          title="Beschreibung"
+          className={twClsx(errors.description && "border border-primary")}
+        >
           <DescriptionFrom />
         </Accordion>
         <Accordion
@@ -147,8 +220,9 @@ const CreateEventsPage = (): ReactElement => {
             file && (
               <EventImagePreview
                 id={file.id}
-                file={file.file?.[0] || null}
+                file={file.file || null}
                 onHandle={onHandle}
+                isTitleBild={imageFile?.id === file.id}
                 onRemoveImage={handleRemoveImage}
               />
             )
@@ -159,26 +233,25 @@ const CreateEventsPage = (): ReactElement => {
               <UploadField
                 preview
                 key={index}
+                index={index}
                 id={`files.${index}.file`}
                 handleAppend={handleAppend}
                 handleShow={handleSetFile(item)}
                 {...register(`files.${index}.file`)}
-                error={formState.errors.files?.[index]?.file?.message}
-                // {...(!!item.file && {
-                //   src: URL.createObjectURL(item.file),
-                // })}
+                error={errors.files?.[index]?.file?.message}
+                {...(!!item.file && {
+                  src: URL.createObjectURL(item.file),
+                })}
               />
             ))}
-
-            {/* <UploadField handleAppend={handleAppend} /> */}
           </div>
-          <Button type="button" className="mt-6" onClick={handleTrigger}>
-            Speichern
-          </Button>
         </Accordion>
 
         <SchedulesForm setSchedules={setSchedules} schedules={schedules} />
-        <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
+        <FormActions
+          loading={loading}
+          onSubmit={handleSubmit(handleOnSubmit)}
+        />
       </form>
     </FormProvider>
   );

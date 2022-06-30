@@ -10,14 +10,13 @@ import {
   useGetTemplateTypeAdminQuery,
   useSaveTemplateTypeAdminMutation,
 } from '../../../GraphQl/graphql';
-import { gqlVar } from '../../utils';
+import { gqlVar, twClsx } from '../../utils';
 
 const CreateFormsCategories = (): ReactElement => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const {
-    reset,
     setValue,
     register,
     handleSubmit,
@@ -50,7 +49,11 @@ const CreateFormsCategories = (): ReactElement => {
 
   return (
     <form className="min-h-full">
-      <Accordion open={!!id} title="Kategorie">
+      <Accordion
+        open={!!id}
+        title="Kategorie"
+        className={twClsx(errors.name && 'border border-primary')}
+      >
         <InputField
           id="name"
           label="Kategoriename"

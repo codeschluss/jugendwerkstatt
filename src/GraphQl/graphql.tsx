@@ -2809,21 +2809,21 @@ export type CompanyFragment = { __typename?: 'CompanyEntity', id?: string | null
 
 export type CourseFieldFragment = { __typename?: 'CourseEntity', id?: string | null, name?: string | null, active?: boolean | null };
 
-export type EventFieldFragment = { __typename?: 'EventEntity', id?: string | null, name?: string | null };
+export type EventFieldFragment = { __typename?: 'EventEntity', id?: string | null, name?: string | null, description?: string | null };
 
 export type CategoryFieldFragment = { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null };
 
-export type EventFragment = { __typename?: 'EventEntity', id?: string | null, name?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null };
+export type EventFragment = { __typename?: 'EventEntity', id?: string | null, name?: string | null, description?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null };
 
-export type FileFieldFragment = { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null };
+export type FileFieldFragment = { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null };
 
 export type GroupFieldFragment = { __typename?: 'GroupEntity', id?: string | null, name?: string | null };
 
-export type JobAdFieldFragment = { __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null };
+export type JobAdFieldFragment = { __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null, content?: string | null };
 
 export type JobTypeFieldFragment = { __typename?: 'JobTypeEntity', id?: string | null, color?: string | null, name?: string | null };
 
-export type JobAdFragment = { __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null, type?: { __typename?: 'JobTypeEntity', id?: string | null, color?: string | null, name?: string | null } | null, company?: { __typename?: 'CompanyEntity', id?: string | null, name?: string | null } | null };
+export type JobAdFragment = { __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null, content?: string | null, type?: { __typename?: 'JobTypeEntity', id?: string | null, color?: string | null, name?: string | null } | null, company?: { __typename?: 'CompanyEntity', id?: string | null, name?: string | null } | null };
 
 export type LinkFieldFragment = { __typename?: 'LinkEntity', id?: string | null, title?: string | null, url?: string | null };
 
@@ -2833,7 +2833,7 @@ export type LinkFragment = { __typename?: 'LinkEntity', id?: string | null, titl
 
 export type OrganizerFieldFragment = { __typename?: 'OrganizerEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null };
 
-export type PageFieldFragment = { __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null };
+export type PageFieldFragment = { __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null } | null> | null, video?: { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null } | null };
 
 export type QuestionFieldFragment = { __typename?: 'QuestionEntity', id?: string | null, item?: string | null };
 
@@ -2904,7 +2904,7 @@ export type SaveEventMutationVariables = Exact<{
 }>;
 
 
-export type SaveEventMutation = { __typename?: 'Mutation', saveEvent?: { __typename?: 'EventEntity', id?: string | null, name?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null } | null };
+export type SaveEventMutation = { __typename?: 'Mutation', saveEvent?: { __typename?: 'EventEntity', id?: string | null, name?: string | null, description?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null } | null };
 
 export type DeleteEventMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
@@ -2969,7 +2969,7 @@ export type SaveJobAdMutationVariables = Exact<{
 }>;
 
 
-export type SaveJobAdMutation = { __typename?: 'Mutation', saveJobAd?: { __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null, type?: { __typename?: 'JobTypeEntity', id?: string | null, color?: string | null, name?: string | null } | null, company?: { __typename?: 'CompanyEntity', id?: string | null, name?: string | null } | null } | null };
+export type SaveJobAdMutation = { __typename?: 'Mutation', saveJobAd?: { __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null, content?: string | null, type?: { __typename?: 'JobTypeEntity', id?: string | null, color?: string | null, name?: string | null } | null, company?: { __typename?: 'CompanyEntity', id?: string | null, name?: string | null } | null } | null };
 
 export type DeleteJobAdMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
@@ -3039,7 +3039,7 @@ export type SavePageMutationVariables = Exact<{
 }>;
 
 
-export type SavePageMutation = { __typename?: 'Mutation', savePage?: { __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null } | null };
+export type SavePageMutation = { __typename?: 'Mutation', savePage?: { __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null } | null> | null, video?: { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null } | null } | null };
 
 export type DeletePageMutationVariables = Exact<{
   id?: InputMaybe<Scalars['String']>;
@@ -3176,14 +3176,14 @@ export type GetEventsAdminQueryVariables = Exact<{
 }>;
 
 
-export type GetEventsAdminQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', total: any, result?: Array<{ __typename?: 'EventEntity', id?: string | null, name?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null } | null> | null } | null };
+export type GetEventsAdminQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', total: any, result?: Array<{ __typename?: 'EventEntity', id?: string | null, name?: string | null, description?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null } | null> | null } | null };
 
 export type GetEventAdminQueryVariables = Exact<{
   entity?: InputMaybe<EventEntityInput>;
 }>;
 
 
-export type GetEventAdminQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', id?: string | null, name?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null } | null };
+export type GetEventAdminQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', id?: string | null, name?: string | null, description?: string | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null, images?: Array<{ __typename?: 'MediaEntity', base64?: string | null, created?: any | null, id?: string | null, mimeType?: string | null, modified?: any | null, name?: string | null } | null> | null, titleImage?: { __typename?: 'MediaEntity', base64?: string | null, created?: any | null, id?: string | null, mimeType?: string | null, modified?: any | null, name?: string | null } | null, address?: { __typename?: 'AddressEntity', id?: string | null, houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null } | null } | null };
 
 export type GetEventCategoriesAdminQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3222,14 +3222,14 @@ export type GetJobAdsAdminQueryVariables = Exact<{
 }>;
 
 
-export type GetJobAdsAdminQuery = { __typename?: 'Query', getJobAds?: { __typename?: 'PageableList_JobAdEntity', total: any, result?: Array<{ __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null, type?: { __typename?: 'JobTypeEntity', id?: string | null, color?: string | null, name?: string | null } | null, company?: { __typename?: 'CompanyEntity', id?: string | null, name?: string | null } | null } | null> | null } | null };
+export type GetJobAdsAdminQuery = { __typename?: 'Query', getJobAds?: { __typename?: 'PageableList_JobAdEntity', total: any, result?: Array<{ __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null, content?: string | null, type?: { __typename?: 'JobTypeEntity', id?: string | null, color?: string | null, name?: string | null } | null, company?: { __typename?: 'CompanyEntity', id?: string | null, name?: string | null } | null } | null> | null } | null };
 
 export type GetJobAdAdminQueryVariables = Exact<{
   entity?: InputMaybe<JobAdEntityInput>;
 }>;
 
 
-export type GetJobAdAdminQuery = { __typename?: 'Query', getJobAd?: { __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null, type?: { __typename?: 'JobTypeEntity', id?: string | null, color?: string | null, name?: string | null } | null, company?: { __typename?: 'CompanyEntity', id?: string | null, name?: string | null } | null } | null };
+export type GetJobAdAdminQuery = { __typename?: 'Query', getJobAd?: { __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null, content?: string | null, type?: { __typename?: 'JobTypeEntity', id?: string | null, color?: string | null, name?: string | null } | null, company?: { __typename?: 'CompanyEntity', id?: string | null, name?: string | null } | null } | null };
 
 export type GetJobTypesAdminQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3288,14 +3288,14 @@ export type GetOrganizerQuery = { __typename?: 'Query', organizer?: { __typename
 export type GetPagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetPagesQuery = { __typename?: 'Query', pages?: { __typename?: 'PageableList_PageEntity', result?: Array<{ __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null } | null> | null } | null };
+export type GetPagesQuery = { __typename?: 'Query', pages?: { __typename?: 'PageableList_PageEntity', result?: Array<{ __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null } | null> | null, video?: { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null } | null } | null> | null } | null };
 
 export type GetPageQueryVariables = Exact<{
   entity?: InputMaybe<PageEntityInput>;
 }>;
 
 
-export type GetPageQuery = { __typename?: 'Query', page?: { __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, name?: string | null } | null } | null };
+export type GetPageQuery = { __typename?: 'Query', page?: { __typename?: 'PageEntity', id?: string | null, name?: string | null, slug?: string | null, content?: string | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null } | null> | null, video?: { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null } | null } | null };
 
 export type DeleteQuestionMutationVariables = Exact<{
   questionId?: InputMaybe<Scalars['String']>;
@@ -3597,6 +3597,11 @@ export type GetUsersQueryVariables = Exact<{
 
 export type GetUsersQuery = { __typename?: 'Query', getUsers?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, phone?: string | null, email?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null> | null } | null };
 
+export type MeRolesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MeRolesQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, roles?: Array<{ __typename?: 'RoleEntity', key?: string | null } | null> | null } | null };
+
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars['String'];
 }>;
@@ -3761,6 +3766,7 @@ export const EventFieldFragmentDoc = gql`
     fragment EventField on EventEntity {
   id
   name
+  description
 }
     `;
 export const CategoryFieldFragmentDoc = gql`
@@ -3801,6 +3807,7 @@ export const JobAdFieldFragmentDoc = gql`
   title
   startDate
   dueDate
+  content
 }
     `;
 export const JobTypeFieldFragmentDoc = gql`
@@ -3857,6 +3864,7 @@ export const OrganizerFieldFragmentDoc = gql`
 export const FileFieldFragmentDoc = gql`
     fragment FileField on MediaEntity {
   id
+  mimeType
   base64
   name
 }
@@ -3867,6 +3875,9 @@ export const PageFieldFragmentDoc = gql`
   name
   slug
   content
+  images {
+    ...FileField
+  }
   video {
     ...FileField
   }
@@ -5622,10 +5633,44 @@ export type GetEventsAdminQueryResult = Apollo.QueryResult<GetEventsAdminQuery, 
 export const GetEventAdminDocument = gql`
     query GetEventAdmin($entity: EventEntityInput) {
   getEvent(entity: $entity) {
-    ...Event
+    ...EventField
+    category {
+      ...CategoryField
+    }
+    schedules {
+      ...ScheduleField
+    }
+    images {
+      base64
+      created
+      id
+      mimeType
+      modified
+      name
+    }
+    titleImage {
+      base64
+      created
+      id
+      mimeType
+      modified
+      name
+    }
+    address {
+      id
+      houseNumber
+      place
+      postalCode
+      street
+    }
+    organizer {
+      id
+    }
   }
 }
-    ${EventFragmentDoc}`;
+    ${EventFieldFragmentDoc}
+${CategoryFieldFragmentDoc}
+${ScheduleFieldFragmentDoc}`;
 
 /**
  * __useGetEventAdminQuery__
@@ -8300,6 +8345,43 @@ export function useGetUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
 export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>;
 export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
+export const MeRolesDocument = gql`
+    query MeRoles {
+  me {
+    roles {
+      key
+    }
+    id
+  }
+}
+    `;
+
+/**
+ * __useMeRolesQuery__
+ *
+ * To run a query within a React component, call `useMeRolesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMeRolesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMeRolesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMeRolesQuery(baseOptions?: Apollo.QueryHookOptions<MeRolesQuery, MeRolesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MeRolesQuery, MeRolesQueryVariables>(MeRolesDocument, options);
+      }
+export function useMeRolesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeRolesQuery, MeRolesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MeRolesQuery, MeRolesQueryVariables>(MeRolesDocument, options);
+        }
+export type MeRolesQueryHookResult = ReturnType<typeof useMeRolesQuery>;
+export type MeRolesLazyQueryHookResult = ReturnType<typeof useMeRolesLazyQuery>;
+export type MeRolesQueryResult = Apollo.QueryResult<MeRolesQuery, MeRolesQueryVariables>;
 export const RefreshTokenDocument = gql`
     mutation refreshToken($refreshToken: String!) {
   refreshToken(refreshToken: $refreshToken) {

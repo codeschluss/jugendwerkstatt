@@ -9,7 +9,39 @@ query GetEventsAdmin($params: FilterSortPaginateInput) {
 
 query GetEventAdmin($entity: EventEntityInput) {
   getEvent(entity: $entity) {
-    ...Event
+    ...EventField
+    category {
+      ...CategoryField
+    }
+    schedules {
+      ...ScheduleField
+    }
+    images {
+      base64
+      created
+      id
+      mimeType
+      modified
+      name
+    }
+    titleImage {
+      base64
+      created
+      id
+      mimeType
+      modified
+      name
+    }
+    address {
+      id
+      houseNumber
+      place
+      postalCode
+      street
+    }
+    organizer {
+      id
+    }
   }
 }
 

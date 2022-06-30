@@ -6,6 +6,7 @@ import {
   useSendGlobalPushMutation,
 } from '../../../GraphQl/graphql';
 import { Accordion, FormActions, InputField } from '../../components/molecules';
+import { twClsx } from '../../utils';
 import { PushMessagesPageSchema } from '../../validations/PushMessagesForm.schema';
 import { PushMessagesInputs } from './PushMessages.props';
 
@@ -15,6 +16,7 @@ const PushMessagesPage = (): ReactElement => {
     handleSubmit,
     formState: { errors },
   } = useForm<PushMessagesInputs>({
+    mode: 'onChange',
     resolver: joiResolver(PushMessagesPageSchema),
   });
   const [sendGlobalPush] = useSendGlobalPushMutation();
@@ -26,7 +28,12 @@ const PushMessagesPage = (): ReactElement => {
 
   return (
     <form>
-      <Accordion title="Push-Nachrichten">
+      <Accordion
+        title="Push-Nachrichten"
+        className={twClsx(
+          (errors.title || errors.message) && 'border border-primary'
+        )}
+      >
         <div className="space-y-5">
           <InputField
             id="title"

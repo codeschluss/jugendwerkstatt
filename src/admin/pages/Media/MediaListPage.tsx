@@ -39,7 +39,16 @@ const MediaListPage = (): ReactElement => {
             <Table.Row key={item?.id}>
               <Table.Data>{item?.title}</Table.Data>
               <Table.Data>{item?.category?.name}</Table.Data>
-              <Table.Data title={item?.url || ""}>{item?.url}</Table.Data>
+              <Table.Data>
+                <a
+                  className="hover:underline"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href={item?.url || ""}
+                >
+                  {item?.url}
+                </a>
+              </Table.Data>
               <Table.Data>
                 <Action
                   onUpdate={handleUpdateById(item?.id || "")}

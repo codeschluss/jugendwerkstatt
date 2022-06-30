@@ -7,12 +7,12 @@ import {
   useGetOrganizerQuery,
   useSaveOrganizerMutation,
 } from '../../../GraphQl/graphql';
-import { Button } from '../../components/atoms';
 import { Accordion, FormActions } from '../../components/molecules';
 import {
   BaseOrganizerForm,
   OrganizerFormInputs,
 } from '../../components/organisms';
+import { twClsx } from '../../utils';
 import { OrganizerFormSchema } from '../../validations';
 
 const CreateOrganizersPage = (): ReactElement => {
@@ -23,7 +23,11 @@ const CreateOrganizersPage = (): ReactElement => {
     resolver: joiResolver(OrganizerFormSchema),
   });
 
-  const { reset, handleSubmit, trigger } = methods;
+  const {
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
 
   const { data: organizerData } = useGetOrganizerQuery({
     variables: { entity: { id } },
@@ -45,8 +49,6 @@ const CreateOrganizersPage = (): ReactElement => {
     });
   };
 
-  const handleTrigger = () => trigger();
-
   useEffect(() => {
     if (!!organizerData?.organizer) {
       reset({
@@ -61,13 +63,15 @@ const CreateOrganizersPage = (): ReactElement => {
   return (
     <FormProvider {...methods}>
       <form className="min-h-full">
-        <Accordion title="Stammdaten" open={!!id}>
-          <>
-            <BaseOrganizerForm />
-            <Button type="button" className="mt-6" onClick={handleTrigger}>
-              Speichern
-            </Button>
-          </>
+        <Accordion
+          title="Stammdaten"
+          open={!!id}
+          className={twClsx(
+            (errors.name || errors.phone || errors.mail) &&
+              'border border-primary'
+          )}
+        >
+          <BaseOrganizerForm />
         </Accordion>
         <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
       </form>

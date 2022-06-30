@@ -5,6 +5,7 @@ export interface NavItemModel {
   icon?: ReactElement;
   location?: string;
   items?: NavItemModel[];
+  noItems?: boolean;
 }
 
 export interface NavModel {

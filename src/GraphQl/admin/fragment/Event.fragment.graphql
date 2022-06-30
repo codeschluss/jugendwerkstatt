@@ -1,6 +1,7 @@
 fragment EventField on EventEntity {
   id
   name
+  description
 }
 
 fragment CategoryField on EventCategoryEntity {

@@ -6,7 +6,6 @@ import {
   useGetQuestionnaireQuery,
   useSaveQuestionnaireMutation,
 } from '../../../GraphQl/graphql';
-import { Button } from '../../components/atoms';
 import { Accordion, FormActions, InputField } from '../../components/molecules';
 import { EvaluationQuestionList } from '../../components/organisms/EvaluationQuestionList/EvaluationQuestionList';
 import { QuestionsInput } from '../../components/organisms/EvaluationQuestionList/EvaluationQuestionList.types';
@@ -23,11 +22,12 @@ const EvaluationQuestionFormPage = (): ReactElement => {
   const {
     control,
     formState: { errors },
+    clearErrors,
     reset,
-    trigger,
     register,
     handleSubmit,
   } = useForm<QuestionsInput>({
+    mode: 'onChange',
     resolver: joiResolver(EvaluationsQuestionsFormSchema),
   });
   const [saveQuestionnaire] = useSaveQuestionnaireMutation({
@@ -45,7 +45,6 @@ const EvaluationQuestionFormPage = (): ReactElement => {
     }
   }, [id, questionnaire, reset]);
 
-  const handleTrigger = () => trigger('name');
   const handleOnSubmit = (data: QuestionsInput) => {
     saveQuestionnaire({
       variables: {
@@ -63,7 +62,13 @@ const EvaluationQuestionFormPage = (): ReactElement => {
 
   return (
     <form className="min-h-full ">
-      <Accordion title="Stammdaten" open={!!id}>
+      <Accordion
+        title="Stammdaten"
+        open={!!id}
+        {...(errors.name && {
+          className: 'border border-primary',
+        })}
+      >
         <InputField
           id="name"
           label="Name"
@@ -71,15 +76,18 @@ const EvaluationQuestionFormPage = (): ReactElement => {
           {...register('name')}
           error={errors?.name?.message}
         />
-
-        <Button className="mt-6" type="button" onClick={handleTrigger}>
-          Speichern
-        </Button>
       </Accordion>
-      <Accordion title="Teilnehmerbefragung - Fragen" open={!!id}>
+      <Accordion
+        title="Teilnehmerbefragung - Fragen"
+        open={!!id}
+        {...(errors.questions && {
+          className: 'border border-primary',
+        })}
+      >
         <EvaluationQuestionList
           error={errors?.questions as unknown as FieldError}
           errors={errors?.questions}
+          clearErrors={clearErrors}
           control={control}
           register={register}
         />

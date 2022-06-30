@@ -8,8 +8,9 @@ import { InputField } from '../../molecules';
 import { EvaluationQuestionListProps } from './EvaluationQuestionList.types';
 
 export const EvaluationQuestionList = ({
-  errors,
   error,
+  errors,
+  clearErrors,
   control,
   register,
 }: EvaluationQuestionListProps) => {
@@ -20,7 +21,8 @@ export const EvaluationQuestionList = ({
 
   // handlers
   const handleAddNew = () => {
-    append({ name: '' }, { shouldFocus: true });
+    append({ name: '' });
+    clearErrors('questions');
   };
 
   const handleOnSortEnd = useCallback(

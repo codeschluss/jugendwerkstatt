@@ -1,12 +1,18 @@
-import { CalendarIcon, ClockIcon } from "@heroicons/react/outline";
-import { Dispatch, ReactElement, SetStateAction } from "react";
-import { Controller, useFormContext } from "react-hook-form";
-import { generateSchedules } from "../../../utils/generateSchedules";
+import { CalendarIcon, ClockIcon } from '@heroicons/react/outline';
+import {
+  Dispatch,
+  ReactElement,
+  SetStateAction,
+  useEffect,
+  useMemo,
+} from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { generateSchedules } from '../../../utils/generateSchedules';
 
-import { Button, Select } from "../../atoms";
-import { Accordion, DatePicker } from "../../molecules";
-import { SchedulesPreview } from "../../molecules/SchedulesPreview/SchedulesPreview";
-import { EventsFormInputs, ScheduleInputs } from "./Events.types";
+import { Select } from '../../atoms';
+import { Accordion, DatePicker } from '../../molecules';
+import { SchedulesPreview } from '../../molecules/SchedulesPreview/SchedulesPreview';
+import { EventsFormInputs, ScheduleInputs } from './Events.types';
 
 export const SchedulesForm = ({
   setSchedules,
@@ -15,20 +21,22 @@ export const SchedulesForm = ({
   setSchedules: Dispatch<SetStateAction<[] | ScheduleInputs[]>>;
   schedules: [] | ScheduleInputs[];
 }): ReactElement => {
-  const { register, control, getValues, trigger } =
-    useFormContext<EventsFormInputs>();
+  const { register, control, getValues } = useFormContext<EventsFormInputs>();
+
+  const fields = useWatch({ control, name: 'schedule' });
 
   const handleDeleteAll = () => setSchedules([]);
 
   const handleDeleteById = (index: number) => {
     setSchedules(schedules.filter((_item, idx) => idx !== index));
   };
+  const dates = useMemo(() => generateSchedules(fields || {}), [fields]);
 
-  const handleTrigger = () => {
-    const dates = generateSchedules(getValues("schedule") || {});
-    setSchedules(dates);
-    trigger("schedule");
-  };
+  useEffect(() => {
+    if (dates) {
+      setSchedules(dates);
+    }
+  }, [dates, setSchedules]);
 
   return (
     <Accordion
@@ -117,7 +125,7 @@ export const SchedulesForm = ({
         </div>
         <div className="flex items-center">
           <div className="mr-10">
-            <Select label="Turnus" {...register("schedule.repeat")}>
+            <Select label="Turnus" {...register('schedule.repeat')}>
               <option value="">Repeat</option>
               <option value="week">Weekly</option>
               <option value="month">Monthly</option>
@@ -125,7 +133,7 @@ export const SchedulesForm = ({
             </Select>
           </div>
 
-          {getValues("schedule.repeat") && (
+          {getValues('schedule.repeat') && (
             <div>
               <Controller
                 control={control}
@@ -143,9 +151,6 @@ export const SchedulesForm = ({
             </div>
           )}
         </div>
-        <Button type="button" className="mt-6" onClick={handleTrigger}>
-          Speichern
-        </Button>
       </div>
     </Accordion>
   );

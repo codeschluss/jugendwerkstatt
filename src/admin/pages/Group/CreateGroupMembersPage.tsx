@@ -7,7 +7,7 @@ import {
   useGetUsersAdminQuery,
 } from '../../../GraphQl/graphql';
 import { Action, Panel, Table } from '../../components/atoms';
-import { CustomTable } from '../../components/molecules';
+import { BackButton, CustomTable } from '../../components/molecules';
 
 const CreateGroupMembersPage = (): ReactElement => {
   const { id } = useParams();
@@ -54,6 +54,7 @@ const CreateGroupMembersPage = (): ReactElement => {
           []
         }
       />
+      <BackButton label="Zurück zur Übersicht" />
     </Panel.Wrapper>
   );
 };

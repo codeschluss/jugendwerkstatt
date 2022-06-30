@@ -30,10 +30,10 @@ const RegisteredSuccessfully: React.FC = () => {
   );
 
   return (
-    <div className="relative flex flex-col w-1/2 px-0">
+    <div className="absolute top-0 z-20 flex flex-col w-full h-full px-0">
       {data && (
         <>
-          <div className="px-0 bg-bgimg">
+          <div className="px-0 h-1/2">
             <img
               className="object-cover w-full h-full "
               src="/assets/background.png"

@@ -1,5 +1,5 @@
 import { PhotographIcon } from "@heroicons/react/outline";
-import { ChangeEvent, forwardRef, useState } from "react";
+import { ChangeEvent, forwardRef } from "react";
 import { twClsx } from "../../../../utils";
 import { Input, Label } from "../../../atoms";
 import { UploadFieldProps } from "./UploadField.types";
@@ -10,6 +10,7 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
       id,
       src,
       name,
+      index,
       preview,
       error,
       onChange,
@@ -21,17 +22,14 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
     },
     ref
   ) => {
-    const [filePreview, setfilePreview] = useState(src || "");
-
     const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
       if (!!event.currentTarget.files?.length) {
-        handleAppend && handleAppend();
-        setfilePreview(URL.createObjectURL(event.currentTarget.files[0]));
+        handleAppend && handleAppend(index || 0, event.currentTarget.files[0]);
       }
       onChange && onChange(event);
     };
 
-    const isPreview = !!preview && !!filePreview;
+    const isPreview = !!preview && !!src;
 
     return (
       <Label
@@ -48,11 +46,7 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
         >
           <div className="flex flex-col items-center justify-center w-full h-full p-2 border border-transparent rounded-sm shadow-lg shadow-gray-200">
             {isPreview ? (
-              <img
-                src={filePreview}
-                alt={name}
-                className="object-contain h-full"
-              />
+              <img src={src} alt={name} className="object-contain h-full" />
             ) : (
               <>
                 <PhotographIcon width={24} />

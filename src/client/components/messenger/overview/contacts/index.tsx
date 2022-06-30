@@ -4,7 +4,9 @@ import { API_URL } from "../../../../../config/app";
 import {
   ConjunctionOperator,
   QueryOperator,
+  RoleEntity,
   useGetUsersQuery,
+  useMeRolesQuery,
   UserEntity,
   useSaveChatMutation,
 } from "../../../../../GraphQl/graphql";
@@ -19,27 +21,43 @@ const Contacts = () => {
   const [contactPhone, setContactPhone] = useState<any>("");
   const [contactEmail, setContactEmail] = useState<any>("");
 
+  const meRoles = useMeRolesQuery();
+
+  const adminOperands = [
+    {
+      entity: {
+        operator: QueryOperator.Equal,
+        path: "roles.key",
+        value: "admin",
+      },
+    },
+    {
+      entity: {
+        operator: QueryOperator.Equal,
+        path: "roles.key",
+        value: "superviser",
+      },
+    },
+  ];
+
+  meRoles.data?.me?.roles?.some(
+    (el: RoleEntity | undefined | null) =>
+      el?.key === "admin" || el?.key === "superviser"
+  ) &&
+    adminOperands.push({
+      entity: {
+        operator: QueryOperator.Equal,
+        path: "roles.key",
+        value: "student",
+      },
+    });
+
   const getUsers = useGetUsersQuery({
     variables: {
       params: {
         expression: {
           conjunction: {
-            operands: [
-              {
-                entity: {
-                  operator: QueryOperator.Equal,
-                  path: "roles.key",
-                  value: "admin",
-                },
-              },
-              {
-                entity: {
-                  operator: QueryOperator.Equal,
-                  path: "roles.key",
-                  value: "superviser",
-                },
-              },
-            ],
+            operands: adminOperands,
             operator: ConjunctionOperator.Or,
           },
         },

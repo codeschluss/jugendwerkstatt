@@ -6,7 +6,6 @@ export * from './Events/BaseOrganizerForm';
 export * from './Events/SchedulesForm';
 export * from './Forms/FormsBaseForm';
 export * from './GeneralSettings/GeneralAddressForm';
-export * from './GeneralSettings/PublicPagesForm';
 export * from './Media/MediaForm';
 export * from './Vacancy/VacancyCompanyForm';
 export * from './Vacancy/VacancyForm';

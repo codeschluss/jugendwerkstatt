@@ -7,9 +7,5 @@ const CourseSchema = Joi.object({
 
 export const GroupFormSchema = Joi.object({
   name: Joi.string().required().label('Name'),
-  courses: Joi.array()
-    .items(CourseSchema)
-    .has(CourseSchema)
-    .min(1)
-    .label('Courses'),
+  courses: Joi.array().min(1).required().items(CourseSchema).label('Courses'),
 });

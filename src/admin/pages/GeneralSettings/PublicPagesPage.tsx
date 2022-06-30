@@ -30,7 +30,7 @@ const PublicPagesPage = (): ReactElement => {
           (pages?.result &&
             pages.result.map((page) => (
               <Table.Row key={page?.id}>
-                <Table.Data>{page?.slug || '/'}</Table.Data>
+                <Table.Data>{page?.name || '/'}</Table.Data>
                 <Table.Data>
                   <Action
                     onUpdate={handleUpdatePage(page?.id || '')}

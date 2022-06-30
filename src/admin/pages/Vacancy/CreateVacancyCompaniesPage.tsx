@@ -1,19 +1,20 @@
-import { ReactElement, useEffect } from "react";
-import { joiResolver } from "@hookform/resolvers/joi";
-import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { ReactElement, useEffect } from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   useGetCompanyQuery,
   useSaveCompanyMutation,
-} from "../../../GraphQl/graphql";
+} from '../../../GraphQl/graphql';
 
-import { Accordion, FormActions } from "../../components/molecules";
+import { Accordion, FormActions } from '../../components/molecules';
 import {
   AddressForm,
   VacancyCompaniesFormInputs,
   VacancyCompanyForm,
-} from "../../components/organisms";
-import { VacancyCompaiesFormSchema } from "../../validations";
+} from '../../components/organisms';
+import { VacancyCompaiesFormSchema } from '../../validations';
+import { twClsx } from '../../utils';
 
 const CreateVacancyCompaniesPage = (): ReactElement => {
   const { id } = useParams();
@@ -23,7 +24,11 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
     resolver: joiResolver(VacancyCompaiesFormSchema),
   });
 
-  const { reset, handleSubmit } = methods;
+  const {
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
 
   const { data: { getCompany = null } = {} } = useGetCompanyQuery({
     variables: { entity: { id } },
@@ -31,7 +36,7 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
   });
 
   const [saveCompany] = useSaveCompanyMutation({
-    onCompleted: () => navigate("/admin/job-announcements/companies"),
+    onCompleted: () => navigate('/admin/job-announcements/companies'),
   });
 
   const handleOnSubmit = ({
@@ -58,16 +63,16 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
     if (!!getCompany) {
       reset({
         address: {
-          houseNumber: getCompany?.address?.houseNumber || "",
-          place: getCompany?.address?.place || "",
-          postalCode: getCompany?.address?.postalCode || "",
-          street: getCompany?.address?.street || "",
+          houseNumber: getCompany?.address?.houseNumber || '',
+          place: getCompany?.address?.place || '',
+          postalCode: getCompany?.address?.postalCode || '',
+          street: getCompany?.address?.street || '',
         },
         baseData: {
-          mail: getCompany?.mail || "",
-          name: getCompany?.name || "",
-          phone: getCompany?.phone || "",
-          website: getCompany?.website || "",
+          mail: getCompany?.mail || '',
+          name: getCompany?.name || '',
+          phone: getCompany?.phone || '',
+          website: getCompany?.website || '',
         },
       });
     }
@@ -76,10 +81,18 @@ const CreateVacancyCompaniesPage = (): ReactElement => {
   return (
     <FormProvider {...methods}>
       <form className="min-h-full">
-        <Accordion title="Stammdaten" open={!!id}>
+        <Accordion
+          title="Stammdaten"
+          open={!!id}
+          className={twClsx(errors.baseData && 'border border-primary')}
+        >
           <VacancyCompanyForm />
         </Accordion>
-        <Accordion title="Adresse">
+        <Accordion
+          title="Adresse"
+          open={!!id}
+          className={twClsx(errors.address && 'border border-primary')}
+        >
           <AddressForm />
         </Accordion>
         <FormActions onSubmit={handleSubmit(handleOnSubmit)} />

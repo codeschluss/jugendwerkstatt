@@ -6,9 +6,6 @@ export interface AddressFormInputs {
 }
 export interface BaseDataFormInputs {
   name: string;
-  phone?: string;
-  email?: string;
-  website?: string;
   organizer: string;
   category: string;
 }
@@ -30,7 +27,7 @@ export interface EventsFormInputs {
   baseData: BaseDataFormInputs;
   address: AddressFormInputs;
   description: string;
-  files: { file: FileList | null }[];
+  files: { file: File | null }[];
   schedule: ScheduleProps;
 }
 export interface OrganizerFormInputs {

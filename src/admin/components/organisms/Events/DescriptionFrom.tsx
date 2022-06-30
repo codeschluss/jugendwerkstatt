@@ -3,11 +3,8 @@ import { useFormContext } from 'react-hook-form';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-import { Button } from '../../atoms';
-
 export const DescriptionFrom = (): ReactElement => {
   const {
-    trigger,
     setValue,
     getValues,
     formState: { errors },
@@ -23,7 +20,6 @@ export const DescriptionFrom = (): ReactElement => {
     );
   };
 
-  const handleTrigger = () => trigger('description');
   return (
     <div>
       <CKEditor
@@ -34,9 +30,6 @@ export const DescriptionFrom = (): ReactElement => {
       {errors.description && (
         <p className="pt-4 text-primary">{errors.description.message}</p>
       )}
-      <Button type="button" className="mt-6" onClick={handleTrigger}>
-        Vorlage erstellen
-      </Button>
     </div>
   );
 };

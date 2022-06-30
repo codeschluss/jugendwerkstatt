@@ -108,6 +108,14 @@ const App = (): ReactElement => {
 
         <Route path="/reVerifyEmail" element={<ReVerifyUser />} />
         <Route path="/pending-approval" element={<ApprovalPending />} />
+        <Route path="/verification/:id" element={<RegisteredSuccessfully />} />
+
+        <Route path="/messenger" element={<Messenger />}>
+          <Route path="chats" element={<Chats />} />
+          <Route path="calls" element={<Calls />} />
+          <Route path="contacts" element={<Contacts />} />
+          <Route path="chat/:id" element={<Chat />} />
+        </Route>
       </Route>
 
       <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />
@@ -115,7 +123,7 @@ const App = (): ReactElement => {
       <Route element={<RequireNonAuthRoute />}>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/verification/:id" element={<RegisteredSuccessfully />} />
+
         <Route path="/forgot-password" element={<ForgotPassword />}>
           <Route path="email" element={<Email />} />
           <Route path="password/:id" element={<Password />} />
@@ -128,12 +136,12 @@ const App = (): ReactElement => {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/jobs" element={<Jobs />} />
 
-        <Route path="/messenger" element={<Messenger />}>
+        {/* <Route path="/messenger" element={<Messenger />}>
           <Route path="chats" element={<Chats />} />
           <Route path="calls" element={<Calls />} />
           <Route path="contacts" element={<Contacts />} />
           <Route path="chat/:id" element={<Chat />} />
-        </Route>
+        </Route> */}
 
         <Route path="/upload-file" element={<UploadData />} />
 
@@ -159,7 +167,7 @@ const App = (): ReactElement => {
       </Route>
 
       <Route
-        element={<RequireAuthRoute accessRole={["admin", "supervisor"]} />}
+        element={<RequireAuthRoute accessRole={["admin", "superviser"]} />}
       >
         <Route path="/admin/events">
           <Route index element={<EventsListPage />} />
