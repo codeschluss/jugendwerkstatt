@@ -1,5 +1,6 @@
 fragment FileField on MediaEntity {
   id
+  mimeType
   base64
   name
 }

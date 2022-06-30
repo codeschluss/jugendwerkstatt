@@ -145,7 +145,7 @@ const EventsCalendar: React.FC = () => {
       return (
         <Link
           className="anchor-number-of-events "
-          to={"/EventsCalendar?date=" + dateParameter}
+          to={{ search: "?date=" + dateParameter }}
         >
           {event.numberOfEvents}{" "}
           V&shy;e&shy;r&shy;a&shy;n&shy;s&shy;t&shy;a&shy;l&shy;t&shy;u&shy;n&shy;g&shy;e&shy;n

@@ -30,7 +30,7 @@ export const useAuth = (): {
       if (!fields?.verified) {
         navigate("/reVerifyEmail");
       }
-      if (!fields?.approved) {
+      if (fields?.verified && !fields?.approved) {
         navigate("/pending-approval");
       }
 

@@ -1,4 +1,4 @@
-import { NavItemModel, NavModel } from '../interfaces/models/Nav.model';
+import { NavItemModel, NavModel } from "../interfaces/models/Nav.model";
 import {
   BookOpenIcon,
   CalendarIcon,
@@ -9,158 +9,158 @@ import {
   UserIcon,
   UsersIcon,
   ViewListIcon,
-} from '@heroicons/react/solid';
+} from "@heroicons/react/solid";
 
 export const navItems = (
-  groups: Pick<NavItemModel, 'name' | 'location'>[]
+  groups: Pick<NavItemModel, "name" | "location">[]
 ): NavModel => {
   return {
     items: [
       {
-        name: 'Events',
+        name: "Events",
         icon: <CalendarIcon />,
-        location: 'events',
+        location: "events",
         items: [
           {
-            name: 'Events',
-            location: 'events',
+            name: "Events",
+            location: "events",
           },
           {
-            name: 'Veranstalter',
-            location: 'events/organizers',
+            name: "Veranstalter",
+            location: "events/organizers",
           },
           {
-            name: 'Kategorien',
-            location: 'events/categories',
+            name: "Kategorien",
+            location: "events/categories",
           },
         ],
       },
       {
-        name: 'Stellenausschreibungen',
+        name: "Stellenausschreibungen",
         icon: <BookOpenIcon />,
-        location: 'job-announcements',
+        location: "job-announcements",
         items: [
           {
-            name: 'Stellenausschreibungen',
-            location: 'job-announcements',
+            name: "Stellenausschreibungen",
+            location: "job-announcements",
           },
           {
-            name: 'Kategorien',
-            location: 'job-announcements/categories',
+            name: "Kategorien",
+            location: "job-announcements/categories",
           },
           {
-            name: 'Unternehmen',
-            location: 'job-announcements/companies',
+            name: "Unternehmen",
+            location: "job-announcements/companies",
           },
         ],
       },
       {
-        name: 'Mediathek',
+        name: "Mediathek",
         icon: <PlayIcon />,
-        location: 'medias',
+        location: "medias",
         items: [
           {
-            name: 'Inhalte',
-            location: 'medias',
+            name: "Inhalte",
+            location: "medias",
           },
           {
-            name: 'Kategorien',
-            location: 'medias/categories',
+            name: "Kategorien",
+            location: "medias/categories",
           },
         ],
       },
       {
-        name: 'Formulare',
+        name: "Formulare",
         icon: <DocumentTextIcon />,
-        location: 'forms',
+        location: "forms",
         items: [
           {
-            name: 'Vorlagen',
-            location: 'forms/templates',
+            name: "Vorlagen",
+            location: "forms/templates",
           },
           {
-            name: 'Kategorien',
-            location: 'forms/categories',
+            name: "Kategorien",
+            location: "forms/categories",
           },
           {
-            name: 'Benutzerformulare',
-            location: 'forms/user-templates',
+            name: "Benutzerformulare",
+            location: "forms/user-templates",
           },
         ],
       },
       {
-        name: 'Gruppen',
+        name: "Gruppen",
         icon: <UsersIcon />,
-        location: 'groups',
+        location: "groups",
         items: [
           {
-            name: 'Übersicht',
-            location: 'groups',
+            name: "Übersicht",
+            location: "groups",
           },
           ...(groups && groups),
         ],
       },
       {
-        name: 'Evaluierung',
+        name: "Evaluierung",
         icon: <ViewListIcon />,
-        location: 'evaluations',
+        location: "evaluations",
         items: [
           {
-            name: 'Evaluierungsbögen',
-            location: 'evaluations/questions',
+            name: "Evaluierungsbögen",
+            location: "evaluations/questions",
           },
           {
-            name: 'Zuordnungen',
-            location: 'evaluations/assignments',
+            name: "Zuordnungen",
+            location: "evaluations/assignments",
           },
         ],
       },
       {
-        name: 'Benutzer',
+        name: "Benutzer",
         icon: <UserIcon />,
-        location: 'users',
+        location: "users",
         items: [
           {
-            name: 'Anfragen',
-            location: 'users/requests',
+            name: "Anfragen",
+            location: "users/requests",
           },
           {
-            name: 'Benutzer',
-            location: 'users',
+            name: "Benutzer",
+            location: "users",
           },
         ],
       },
       {
-        name: 'Messenger',
+        name: "Messenger",
         icon: <ChatIcon />,
-        location: 'messenger',
+        location: "messenger/chats",
         noItems: true,
       },
       {
-        name: 'Allgemein',
+        name: "Allgemein",
         icon: <CogIcon />,
-        location: 'general-settings',
+        location: "general-settings",
         items: [
           {
-            name: 'App',
+            name: "App",
             items: [
               {
-                name: 'Push-Nachrichten',
-                location: 'general-settings/push-messages',
+                name: "Push-Nachrichten",
+                location: "general-settings/push-messages",
               },
               {
-                name: 'Chat Aktivierung',
-                location: 'general-settings/chat-activation',
+                name: "Chat Aktivierung",
+                location: "general-settings/chat-activation",
               },
             ],
           },
           {
-            name: 'Öffentliche Seiten',
-            location: 'general-settings/public-pages',
+            name: "Öffentliche Seiten",
+            location: "general-settings/public-pages",
           },
           {
-            name: 'Adressen',
-            location: 'general-settings/addresses',
+            name: "Adressen",
+            location: "general-settings/addresses",
           },
         ],
       },

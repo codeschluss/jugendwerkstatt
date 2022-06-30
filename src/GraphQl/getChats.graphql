@@ -4,6 +4,13 @@ query GetChats {
       name
       id
       modified
+      participants {
+        id
+        user {
+          fullname
+          id
+        }
+      }
     }
   }
 }
