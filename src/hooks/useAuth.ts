@@ -27,6 +27,10 @@ export const useAuth = (): {
     (token: string) => {
       const fields = getSingleJWTField(token);
 
+      if (!fields?.verified && !fields?.approved) {
+        navigate("/toVerifyEmail");
+      }
+
       if (!fields?.verified) {
         navigate("/reVerifyEmail");
       }

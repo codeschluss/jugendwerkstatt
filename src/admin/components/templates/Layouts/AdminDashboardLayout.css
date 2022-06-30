@@ -19,6 +19,6 @@
 }
 
 .dashboard-content {
-  @apply p-4 lg:p-12;
+  @apply p-4 overflow-y-auto lg:p-12;
   grid-area: content;
 }
