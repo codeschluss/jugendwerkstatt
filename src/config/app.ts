@@ -6,7 +6,7 @@ export let WS_URL: string = "";
 switch (process.env.NODE_ENV) {
   case "production":
     BASE_URL = "https://www.alphaev.app/";
-    WS_URL = "ws://www.alphaev.app/api/";
+    WS_URL = "wss://www.alphaev.app/api/";
     break;
   case "development":
   default:
