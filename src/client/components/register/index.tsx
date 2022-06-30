@@ -5,6 +5,7 @@ import { useRegisterUserMutation } from "../../../GraphQl/graphql";
 import useInput from "../../../hooks/use-input";
 import AuthInput from "../../../shared/components/authentication/AuthInput";
 import AuthWrapper from "../../../shared/components/authentication/AuthWrapper";
+import { useTempEmailStore } from "../../../store/tempEmail/tempEmail.store";
 import Button from "../ui/Button";
 import { RegisterValidations } from "./registerfooter/RegisterValidations";
 
@@ -12,7 +13,7 @@ const Register = () => {
   const [inputsAreValid, setInputsAreValid] = useState(false);
 
   const navigate = useNavigate();
-  // const { setTempEmail } = useContext(AuthContext);
+  const { setTempEmail } = useTempEmailStore();
 
   let disableInput = false;
   const regex = /[^A-Za-z0-9_.]/g;
@@ -129,7 +130,7 @@ const Register = () => {
         },
       }).then(() => navigate("/toVerifyEmail"));
     }
-    // setTempEmail(enteredEmail);
+    setTempEmail(enteredEmail);
   };
 
   return (

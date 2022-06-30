@@ -89,8 +89,8 @@ const Chat = () => {
       },
     })
       .then(() => {
-        scrollToBottom();
         getMessages.refetch();
+        scrollToBottom();
       })
       .finally(() => (inputRef.current.value = ""));
   };
@@ -116,6 +116,8 @@ const Chat = () => {
           },
         },
       },
+    }).finally(() => {
+      getMessages.refetch();
     });
   };
 
@@ -132,15 +134,41 @@ const Chat = () => {
     });
   };
 
+  const moreMessages = () => {
+    getMessages.refetch({
+      params: {
+        dir: "desc",
+        page: 0,
+        size:
+          getMessages?.data?.getMessages?.result?.length &&
+          getMessages?.data?.getMessages?.result?.length + 10,
+        sort: "modified",
+        expression: {
+          entity: {
+            operator: QueryOperator.Equal,
+            path: "chat.id",
+            value: id,
+          },
+        },
+      },
+    });
+  };
+
   return (
     <div
-      className="flex flex-col bg-[#eee] rounded-lg  md:mx-0"
-      style={{ height: "calc(100vh - 3.5rem)" }}
+      className="flex flex-col bg-yellow-50   md:mx-0"
+      style={{ height: "calc(100vh - 10.5rem)" }}
     >
-      <h2 className="sticky px-4 py-3 font-semibold bg-white border-b-2 rounded-b-lg top-14">
+      <h2 className="sticky px-4 py-3 font-semibold bg-white   top-14 ">
         {getChat.data?.getChat?.name}
       </h2>
-      <div className="py-3 h-full">
+      <div className="py-3 h-full overflow-y-scroll">
+        <p
+          onClick={moreMessages}
+          className="mx-auto text-center text-xs cursor-pointer text-[#3279a8]"
+        >
+          show previous messages
+        </p>
         {reverseMessages?.map((el) => {
           const _me: boolean = el?.user?.id === myId ? true : false;
           return (
@@ -153,12 +181,17 @@ const Chat = () => {
             />
           );
         })}
+        <div ref={messageEnd} />
       </div>
-      <div ref={messageEnd} />
+
       <form
         onSubmit={(e) => handleSubmit(e)}
         className="md:py-6 py-3 md:pl-6 pl-3 pr-3 bg-[#e9e9e9] flex items-center rounded-b-lg sticky bottom-0 overflow-hidden"
       >
+        <TypeInput onChange={uploadHandler}>
+          <PaperClipIcon className="w-5 mr-2 text-black text-opacity-40" />
+        </TypeInput>
+
         <input
           type="text"
           ref={inputRef}
@@ -167,10 +200,6 @@ const Chat = () => {
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
         />
-
-        <TypeInput onChange={uploadHandler}>
-          <PaperClipIcon className="w-5 ml-1 text-black text-opacity-40" />
-        </TypeInput>
 
         <button
           type="submit"

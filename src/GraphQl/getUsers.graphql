@@ -3,6 +3,8 @@ query GetUsers($params: FilterSortPaginateInput) {
     result {
       id
       fullname
+      phone
+      email
       profilePicture {
         id
       }

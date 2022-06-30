@@ -4,11 +4,12 @@ import Button from "../../../../client/components/ui/Button";
 // import AuthContext from "../../../../contexts/AuthContext";
 import { useSendPasswordResetMutation } from "../../../../GraphQl/graphql";
 import useInput from "../../../../hooks/use-input";
+import { useTempEmailStore } from "../../../../store/tempEmail/tempEmail.store";
 import AuthInput from "../AuthInput";
 
 const Email: React.FC = () => {
   const [errorText, setErrorText] = useState(false);
-  // const { setTempEmail } = useContext(AuthContext);
+  const { setTempEmail } = useTempEmailStore();
   const navigate = useNavigate();
 
   const {
@@ -37,7 +38,7 @@ const Email: React.FC = () => {
 
   useEffect(() => {
     if (data?.sendPasswordReset === true) {
-      // setTempEmail(enteredEmail);
+      setTempEmail(enteredEmail);
       navigate("/reVerifyEmail");
     } else if (error) {
       setErrorText(true);

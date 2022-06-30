@@ -3548,7 +3548,7 @@ export type GetMessagesQueryVariables = Exact<{
 }>;
 
 
-export type GetMessagesQuery = { __typename?: 'Query', getMessages?: { __typename?: 'PageableList_MessageEntity', result?: Array<{ __typename?: 'MessageEntity', id?: string | null, content?: string | null, parent?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, user?: { __typename?: 'UserEntity', fullname?: string | null } | null } | null, media?: { __typename?: 'MediaEntity', id?: string | null } | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null> | null } | null };
+export type GetMessagesQuery = { __typename?: 'Query', getMessages?: { __typename?: 'PageableList_MessageEntity', result?: Array<{ __typename?: 'MessageEntity', id?: string | null, content?: string | null, parent?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, user?: { __typename?: 'UserEntity', fullname?: string | null } | null } | null, media?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null, name?: string | null } | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null> | null } | null };
 
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3595,7 +3595,7 @@ export type GetUsersQueryVariables = Exact<{
 }>;
 
 
-export type GetUsersQuery = { __typename?: 'Query', getUsers?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null> | null } | null };
+export type GetUsersQuery = { __typename?: 'Query', getUsers?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, phone?: string | null, email?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null> | null } | null };
 
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars['String'];
@@ -7984,6 +7984,9 @@ export const GetMessagesDocument = gql`
       content
       media {
         id
+        base64
+        mimeType
+        name
       }
       user {
         id
@@ -8260,6 +8263,8 @@ export const GetUsersDocument = gql`
     result {
       id
       fullname
+      phone
+      email
       profilePicture {
         id
       }

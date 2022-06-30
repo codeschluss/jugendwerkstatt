@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../client/components/ui/Button";
 // import AuthContext from "../../../contexts/AuthContext";
 import { useSendVerificationMutation } from "../../../GraphQl/graphql";
+import { useTempEmailStore } from "../../../store/tempEmail/tempEmail.store";
 import logo from "../../images/jugendwerkstatt-logo.png";
 
 interface CheckingProps {
@@ -21,11 +22,11 @@ const RegistrationOrVerification: React.FC<CheckingProps> = ({
   reVerify,
   pendingApproval,
 }) => {
-  // const { tempEmail } = useContext(AuthContext);
+  const { tempEmail } = useTempEmailStore();
 
   const [reSendVerification] = useSendVerificationMutation({
     variables: {
-      email: "tempEmail",
+      email: tempEmail,
     },
   });
 

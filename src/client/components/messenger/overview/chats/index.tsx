@@ -43,9 +43,9 @@ const Chats = () => {
               description={
                 <span className="flex items-center">
                   {`${
-                    el?.chat?.lastMessage.user.id === getChats.data?.me?.id
+                    el?.chat?.lastMessage?.user?.id === getChats?.data?.me?.id
                       ? "Du"
-                      : el?.chat?.lastMessage.user.fullname
+                      : el?.chat?.lastMessage?.user?.fullname
                   }: `}
                   {el?.chat?.lastMessage?.content}
                 </span>
@@ -56,7 +56,7 @@ const Chats = () => {
               }
               rightInfo={
                 <span className="text-sm">
-                  {dayjs(el?.chat?.lastMessage.created).format("HH:mm")}
+                  {dayjs(el?.chat?.lastMessage?.created).format("HH:mm")}
                 </span>
               }
             />

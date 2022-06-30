@@ -2,10 +2,11 @@ import { LockOpenIcon } from "@heroicons/react/outline";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../client/components/ui/Button";
+import { useAuth } from "../../../hooks/useAuth";
 import logo from "../../images/jugendwerkstatt-logo.png";
 
 const PendingApproval: React.FC = () => {
-  const navigate = useNavigate();
+  const { handleLogout } = useAuth();
 
   return (
     <div className="absolute top-0 z-20 flex flex-col w-screen h-full ">
@@ -20,7 +21,7 @@ const PendingApproval: React.FC = () => {
         </div>
       </div>
 
-      <Button click={() => navigate("/")} isValidated={true} isDisabled={true}>
+      <Button click={handleLogout} isValidated={true} isDisabled={true}>
         Zur App
       </Button>
     </div>
