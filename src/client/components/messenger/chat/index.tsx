@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
+  ParticipantEntity,
   QueryOperator,
   useChatlistenerSubscription,
   useGetChatQuery,
@@ -154,13 +155,24 @@ const Chat = () => {
     });
   };
 
+  const notMe: any = getChat.data?.getChat?.participants?.filter(
+    (el: ParticipantEntity | undefined | null) =>
+      el?.user?.id !== me.data?.me?.id
+  ) as ParticipantEntity | undefined | null;
+
+  console.log(notMe, "notme");
+
   return (
     <div
       className="flex flex-col bg-yellow-50   md:mx-0"
       style={{ height: "calc(100vh - 10.5rem)" }}
     >
-      <h2 className="sticky px-4 py-3 font-semibold bg-white   top-14 ">
-        {getChat.data?.getChat?.name}
+      <h2 className="sticky px-4 py-3 text-gray-700 bg-white   top-14 ">
+        {getChat.data?.getChat?.name
+          ? getChat.data?.getChat?.name
+          : notMe?.map((el: ParticipantEntity | undefined | null) => {
+              return el?.user?.fullname;
+            })}
       </h2>
       <div className="py-3 h-full overflow-y-scroll">
         <p

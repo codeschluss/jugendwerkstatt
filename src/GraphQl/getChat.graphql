@@ -5,6 +5,7 @@ query GetChat($entity: ChatEntityInput) {
     participants {
       user {
         id
+        fullname
       }
     }
   }
