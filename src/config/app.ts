@@ -11,7 +11,7 @@ switch (process.env.NODE_ENV) {
   case "development":
   default:
     BASE_URL = "https://www.alphaev.app/";
-    WS_URL = "https://www.alphaev.app/";
+    WS_URL = "ws://www.alphaev.app/";
 }
 
 API_URL = BASE_URL + "api/";
