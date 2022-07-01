@@ -17,3 +17,12 @@
 .tag {
   margin: 0 5px;
 }
+
+@media only screen and (max-width: 768px) {
+  .leaflet-container {
+    width: 100%;
+    height: 84vh;
+    z-index: 1;
+    /* position: abso; md:m-12  */
+  }
+}

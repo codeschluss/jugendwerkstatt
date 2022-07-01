@@ -49,6 +49,8 @@ const RightContent: FC = () => {
     search.refetch({
       params: {
         search: e.target.value,
+        page: 0,
+        size: 5,
       },
     });
   };

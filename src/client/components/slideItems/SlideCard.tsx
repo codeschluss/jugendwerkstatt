@@ -83,7 +83,7 @@ const SlideCard: React.FC<SlideCardProps> = ({
         >
           <small className="font-bold">{eventName}</small>
           {(location || date) && (
-            <div className="flex items-center md:w-20 justify-between">
+            <div className="flex items-center w-14 md:w-20 justify-between">
               <SocialMedia url={shareUrl} /> |
               {isFavorite ? (
                 <SolidHeart
