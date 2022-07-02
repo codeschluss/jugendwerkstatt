@@ -29,6 +29,7 @@ import {
 import { EventsFormSchema } from "../../validations";
 import dayjs from "dayjs";
 import { base64ImageToFile, fileObject, twClsx } from "../../utils";
+import { API_URL } from "../../../config/app";
 
 const CreateEventsPage = (): ReactElement => {
   const { id } = useParams();
@@ -57,16 +58,18 @@ const CreateEventsPage = (): ReactElement => {
 
   const methods = useForm<EventsFormInputs>({
     resolver: joiResolver(EventsFormSchema),
-    defaultValues: {
-      schedule: {
-        start_date: dayjs().startOf("date").toDate(),
-        end_date: dayjs().startOf("date").toDate(),
-        end_repeat: dayjs().startOf("date").toDate(),
-        start_hour: dayjs().startOf("h").toDate(),
-        end_hour: dayjs().startOf("h").toDate(),
-      },
-      files: [{ file: null }],
-    },
+    defaultValues: !getEvent
+      ? {
+          schedule: {
+            start_date: dayjs().startOf("date").toDate(),
+            end_date: dayjs().startOf("date").toDate(),
+            end_repeat: dayjs().startOf("date").toDate(),
+            start_hour: dayjs().startOf("h").toDate(),
+            end_hour: dayjs().startOf("h").toDate(),
+          },
+          files: [{ file: null }],
+        }
+      : {},
   });
 
   const {
@@ -75,6 +78,7 @@ const CreateEventsPage = (): ReactElement => {
     register,
     reset,
     control,
+    getValues,
   } = methods;
 
   const { fields, append, remove, update } = useFieldArray({
@@ -90,7 +94,7 @@ const CreateEventsPage = (): ReactElement => {
     let images: { name: string; mimeType: string; base64: string }[] = [];
 
     for (const field of fields) {
-      if (!!field.file) {
+      if (!!field.file && field.file.size !== 0) {
         const object = await fileObject(field.file);
         images.push(object);
       }
@@ -106,9 +110,10 @@ const CreateEventsPage = (): ReactElement => {
           description,
           category: { id: category },
           organizer: { id: organizer },
-          ...(!!imageFile?.file && {
-            titleImage: await fileObject(imageFile.file),
-          }),
+          ...(!!imageFile?.file &&
+            file?.file?.size !== 0 && {
+              titleImage: await fileObject(imageFile.file),
+            }),
           ...(!!getEvent && { id: getEvent?.id }),
         },
       },
@@ -139,7 +144,7 @@ const CreateEventsPage = (): ReactElement => {
   };
 
   useEffect(() => {
-    if (!!getEvent && !imageFile) {
+    if (!!getEvent) {
       const start_date = stringToDate(getEvent.schedules?.at(-1)?.startDate);
       const end_date = stringToDate(getEvent.schedules?.at(-1)?.endDate);
       const end_repeat = stringToDate(getEvent.schedules?.[0]?.startDate);
@@ -149,6 +154,15 @@ const CreateEventsPage = (): ReactElement => {
           getEvent.schedules?.length ===
           dayjs(end_repeat).diff(start_date, i as "week" | "month" | "year") + 2
       );
+
+      const images =
+        getEvent?.images?.map((item) => ({
+          file: base64ImageToFile(
+            item?.base64 || "",
+            item?.mimeType || "",
+            item?.name || ""
+          ),
+        })) || [];
 
       reset({
         baseData: {
@@ -171,24 +185,28 @@ const CreateEventsPage = (): ReactElement => {
           end_hour: dayjs(end_date).startOf("m").toDate(),
           repeat: repeat as "week" | "month" | "year",
         },
-        files: getEvent?.images?.map((item) => ({
-          file: base64ImageToFile(
-            item?.base64 || "",
-            item?.mimeType || "",
-            item?.name || ""
-          ),
-        })),
+        files: [...images, { file: null }],
       });
+
+      const titleImage = base64ImageToFile(
+        getEvent?.titleImage?.base64 || "",
+        getEvent?.titleImage?.mimeType || "",
+        getEvent?.titleImage?.name || ""
+      );
+
       setImageFile({
         id: getEvent?.titleImage?.id || "",
-        file: base64ImageToFile(
-          getEvent?.titleImage?.base64 || "",
-          getEvent?.titleImage?.mimeType || "",
-          getEvent?.titleImage?.name || ""
-        ),
+        file: titleImage,
+      });
+
+      setFile({
+        file: titleImage,
+        id: getEvent?.titleImage?.id || "",
       });
     }
-  }, [getEvent, imageFile, reset, schedules.length]);
+  }, [getEvent, reset]);
+
+  console.log("fields", getValues("files"));
 
   return (
     <FormProvider {...methods}>
@@ -220,7 +238,13 @@ const CreateEventsPage = (): ReactElement => {
             file && (
               <EventImagePreview
                 id={file.id}
-                file={file.file || null}
+                {...(file?.file && {
+                  src:
+                    file.file.size === 0
+                      ? `${API_URL}media/${file?.id}`
+                      : URL.createObjectURL(file.file),
+                })}
+                file={file.file}
                 onHandle={onHandle}
                 isTitleBild={imageFile?.id === file.id}
                 onRemoveImage={handleRemoveImage}
@@ -240,7 +264,10 @@ const CreateEventsPage = (): ReactElement => {
                 {...register(`files.${index}.file`)}
                 error={errors.files?.[index]?.file?.message}
                 {...(!!item.file && {
-                  src: URL.createObjectURL(item.file),
+                  src:
+                    item.file.size !== 0
+                      ? URL.createObjectURL(item.file)
+                      : `${API_URL}media/${item?.id}`,
                 })}
               />
             ))}
