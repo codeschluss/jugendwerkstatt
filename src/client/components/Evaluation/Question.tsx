@@ -8,7 +8,7 @@ interface QuestionProps {
 }
 
 const Question: React.FC<QuestionProps> = ({ answer, submitAnswer }) => {
-  const [selectedValue, setSelectedValue] = useState(1);
+  const [selectedValue, setSelectedValue] = useState<number | null>();
 
   // const [answer] = useSaveAnswerMutation();
 

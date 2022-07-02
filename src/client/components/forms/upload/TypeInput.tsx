@@ -11,7 +11,7 @@ const TypeInput: React.FC<TypeInputProps> = ({
   disabled,
 }) => {
   return (
-    <label htmlFor="contained-button-file" className="m-0 h-full w-full">
+    <label htmlFor="contained-button-file" className="m-0 ">
       <input
         value={value}
         disabled={disabled}
