@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../client/components/ui/Button";
 // import AuthContext from "../../../contexts/AuthContext";
 import { useSendVerificationMutation } from "../../../GraphQl/graphql";
+import { useTempEmailStore } from "../../../store/tempEmail/tempEmail.store";
 import logo from "../../images/jugendwerkstatt-logo.png";
 
 interface CheckingProps {
@@ -21,11 +22,11 @@ const RegistrationOrVerification: React.FC<CheckingProps> = ({
   reVerify,
   pendingApproval,
 }) => {
-  // const { tempEmail } = useContext(AuthContext);
+  const { tempEmail } = useTempEmailStore();
 
   const [reSendVerification] = useSendVerificationMutation({
     variables: {
-      email: "tempEmail",
+      email: tempEmail,
     },
   });
 
@@ -36,9 +37,9 @@ const RegistrationOrVerification: React.FC<CheckingProps> = ({
   };
 
   return (
-    <div className="absolute top-0 z-20 flex flex-col w-screen h-screen px-0">
-      <div className="px-0 h-[30%]">
-        <img className="object-cover w-screen h-full" src={logo} alt={"logo"} />
+    <div className="absolute top-0 z-20 flex flex-col w-full h-full px-0">
+      <div className="px-0 h-1/2">
+        <img className="object-cover w-full h-full" src={logo} alt={"logo"} />
       </div>
       <div className="grid flex-grow w-screen h-full px-10 -mt-6 bg-white grid-rows-12 rounded-3xl">
         <div className="flex flex-col items-center justify-center row-span-6 pt-5 text-center">

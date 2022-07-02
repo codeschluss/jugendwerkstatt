@@ -1,0 +1,36 @@
+query GetMeChats {
+  me {
+    id
+    participants {
+      id
+      chat {
+        id
+        name
+        lastMessage {
+          id
+          content
+          created
+          user {
+            id
+            fullname
+          }
+        }
+        modified
+        messages {
+          created
+          content
+          id
+        }
+        participants {
+          user {
+            fullname
+            id
+            profilePicture {
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+}

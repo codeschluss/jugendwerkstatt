@@ -12,6 +12,9 @@ query GetMessages($params: FilterSortPaginateInput) {
       content
       media {
         id
+        base64
+        mimeType
+        name
       }
       user {
         id

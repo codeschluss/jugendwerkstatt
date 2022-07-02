@@ -4,6 +4,7 @@ import { EventImagePreviewProps } from "./EventImagePreview.props";
 
 export const EventImagePreview: FC<EventImagePreviewProps> = ({
   id,
+  src = "",
   file,
   onHandle,
   isTitleBild,
@@ -17,11 +18,7 @@ export const EventImagePreview: FC<EventImagePreviewProps> = ({
   return (
     <div className="p-5 space-y-4 overflow-auto">
       {file && (
-        <img
-          className="object-contain h-72"
-          alt={file.name}
-          src={URL.createObjectURL(file) || ""}
-        />
+        <img className="object-contain h-72" alt={file.name} src={src} />
       )}
       <div className="mt-4 space-x-4">
         <input
