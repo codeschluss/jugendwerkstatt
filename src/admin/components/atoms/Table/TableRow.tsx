@@ -7,7 +7,7 @@ export const TableRow: FC<TableRowProps> = ({
   className,
   ...rest
 }): ReactElement => (
-  <tr {...rest} className={twClsx("mb-2", className)}>
+  <tr {...rest} className={twClsx("border-y-[20px] border-white", className)}>
     {children}
   </tr>
 );
