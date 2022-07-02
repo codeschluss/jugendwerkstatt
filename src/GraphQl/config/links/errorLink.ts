@@ -26,11 +26,20 @@ export const errorLink = onError(({ graphQLErrors, networkError }) => {
       }
     });
   if (networkError) {
-    snackbarStore.setState({
-      info: {
-        type: SnackbarTypeEnum.ERROR,
-        message: 'No Internet connection',
-      },
-    });
+    if (navigator.onLine) {
+      snackbarStore.setState({
+        info: {
+          type: SnackbarTypeEnum.ERROR,
+          message: 'Something went wrong with server, try again later!',
+        },
+      });
+    } else {
+      snackbarStore.setState({
+        info: {
+          type: SnackbarTypeEnum.ERROR,
+          message: 'No Internet Connection!',
+        },
+      });
+    }
   }
 });
