@@ -21,7 +21,7 @@ export const DescriptionFrom = (): ReactElement => {
   };
 
   return (
-    <div className="w-11/12">
+    <div className="xs:w-[99%] md:w-full">
       <CKEditor
         editor={ClassicEditor}
         onBlur={handleSetValue}
