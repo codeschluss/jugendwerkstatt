@@ -143,7 +143,7 @@ const SideBar: React.FC<{ type?: string }> = ({ type }) => {
       <React.Fragment>
         <span
           onClick={toggleDrawer("right", true)}
-          className="flex items-center justify-center w-8 h-8 mr-2 bg-red-800 rounded-full md:bg-primary md:mr-10"
+          className="flex cursor-pointer items-center justify-center w-8 h-8 mr-2 bg-red-800 rounded-full md:bg-primary md:mr-10"
         >
           {" "}
           <FilterIcon className="w-6 text-white" />
