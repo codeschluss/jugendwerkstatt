@@ -13,7 +13,7 @@ export const PanelWrapper: FC<PanelWrapperProps> = ({
 }): ReactElement => (
   <div
     className={twClsx(
-      "min-h-[75vh] p-4 bg-white flex justify-between flex-col items-start",
+      "min-h-[75vh] p-4 bg-white flex justify-between flex-col items-start min-w-max overflow-y-auto",
       className
     )}
     {...rest}

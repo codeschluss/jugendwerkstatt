@@ -7,7 +7,7 @@ import { NavComposition, NavProps } from './Nav.props';
 import { NavItem } from '../../atoms/NavItem/NavItem';
 import { NavWrapper } from '../../atoms/NavWrapper/NavWrapper';
 import { Icon } from '../../atoms';
-import { useToggle } from '../../../../hooks/useToggle';
+import { sidebarStore } from '../../../../store/sidebar/sidebar.store';
 
 const Nav: FC<NavProps> & NavComposition = ({
   data,
@@ -16,9 +16,9 @@ const Nav: FC<NavProps> & NavComposition = ({
   ...rest
 }) => {
   /**
-   * global state
+   * store
    */
-  const { isToggled, handleToggle } = useToggle(true);
+  const { isToggled, handleToggle } = sidebarStore();
 
   return (
     <>
