@@ -1,8 +1,8 @@
-import { FC } from "react";
-import { snackbarStore } from "../../../store";
-import { Alert, AlertColor, AlertTitle, Snackbar } from "@mui/material";
-import { useStore } from "zustand";
-import { SnackbarTypeEnum } from "../../../interfaces/enums/SnackbarType.enum";
+import { FC } from 'react';
+import { snackbarStore } from '../../../store';
+import { Alert, AlertColor, AlertTitle, Snackbar } from '@mui/material';
+import { useStore } from 'zustand';
+import { SnackbarTypeEnum } from '../../../interfaces/enums/SnackbarType.enum';
 
 const SnackbarDurations: Record<SnackbarTypeEnum, number> = {
   critical: 20000,
@@ -19,17 +19,21 @@ export const ErrorSnackbar: FC = () => {
   return (
     <Snackbar
       open={!!info}
-      autoHideDuration={SnackbarDurations[info?.type || "error"]}
+      {...(info?.type && {
+        autoHideDuration: SnackbarDurations[info.type],
+      })}
       onClose={handleClose}
       anchorOrigin={{
-        vertical: "bottom",
-        horizontal: "right",
+        vertical: 'bottom',
+        horizontal: 'right',
       }}
     >
       <div className="max-w-md min-w-[320px]">
         <Alert
           onClose={handleClose}
-          severity={(info?.type as AlertColor) || "error"}
+          {...(info?.type && {
+            severity: info.type as AlertColor,
+          })}
           variant="filled"
         >
           <AlertTitle>Fehler</AlertTitle>
