@@ -75,12 +75,6 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
           clicked={clicked}
           href="/profile"
         />
-        <Item
-          name="Hilfe"
-          icon={<QuestionMarkCircleIcon />}
-          clicked={clicked}
-          href="/profile"
-        />
       </ul>
       {sideBar ? (
         <span

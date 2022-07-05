@@ -130,7 +130,6 @@ const RightContent: FC = () => {
             <Link to="/profile-password">
               <p>Passwort ändern</p>
             </Link>
-            <p>E-Mail Benachrichtigungen</p>
           </div>
           <div className="flex items-center justify-start">
             {" "}
