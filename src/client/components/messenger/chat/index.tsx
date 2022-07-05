@@ -234,12 +234,13 @@ const Chat = () => {
           show previous messages
         </p>
         {reverseMessages?.map((el: any) => {
-          const _me: boolean = el?.user?.id === myId ? true : false;
+          const _me: boolean =
+            el?.participant?.user?.id === myId ? true : false;
           return (
             <ChatText
               key={el?.id}
               content={el?.content ? el.content : ""}
-              name={el?.user?.fullname}
+              name={el?.participant?.user?.fullname}
               media={el?.media}
               me={_me}
               myMsg={_me}

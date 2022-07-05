@@ -13,9 +13,13 @@ query GetMessages($params: FilterSortPaginateInput) {
         media {
           name
         }
-        user {
-          fullname
+        participant {
+          id
+          user {
+            fullname
+          }
         }
+
         content
       }
       content
