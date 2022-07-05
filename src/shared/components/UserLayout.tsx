@@ -53,9 +53,9 @@ export const UserLayout: FC = ({ children }) => {
     case NotificationType.JobAd:
       handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
       break;
-    case NotificationType.ReadReceipt:
-      handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
-      break;
+    // case NotificationType.ReadReceipt:
+    //   handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
+    //   break;
     case NotificationType.Global:
       handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
   }

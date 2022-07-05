@@ -49,6 +49,8 @@ const RightContent: FC = () => {
     search.refetch({
       params: {
         search: e.target.value,
+        page: 0,
+        size: 5,
       },
     });
   };
@@ -128,7 +130,6 @@ const RightContent: FC = () => {
             <Link to="/profile-password">
               <p>Passwort ändern</p>
             </Link>
-            <p>E-Mail Benachrichtigungen</p>
           </div>
           <div className="flex items-center justify-start">
             {" "}

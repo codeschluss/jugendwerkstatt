@@ -29,7 +29,7 @@ const Favorites = () => {
                   className="mb-4 md:h-72"
                   eventName={event?.name}
                   location={`${event?.address?.street}, ${event?.address?.houseNumber}, ${event?.address?.place}`}
-                  date={event?.nextSchedule}
+                  date={event?.nextSchedule?.startDate}
                   route={`/event/${event.id}`}
                   imgUrl={event?.titleImage?.id}
                   removeFavorite={() =>

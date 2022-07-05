@@ -101,27 +101,6 @@ const Map: FunctionComponent = () => {
     setAllEvents(events);
   }, [result.data?.getEvents?.result, allEvents]);
 
-  const theDate = new Date(selectedEvent?.nextSchedule?.startDate);
-  const year = theDate.getFullYear();
-  const month = theDate.getMonth();
-  const day = theDate.getDate();
-
-  useEffect(() => {
-    result.refetch();
-    setSelectedEvent(undefined);
-  }, [category, dates]);
-
-  const weekDays = [
-    "Sonntag",
-    "Montag",
-    "Dienstag",
-    "Mittwoch",
-    "Donnerstag",
-    "Freitag",
-    "Samstag",
-  ];
-  const weekDay = weekDays[theDate.getDay()];
-
   const checkId = (obj: any) => obj.id === selectedEvent?.id;
   const hasId = favorites?.data?.me?.favoriteEvents?.some(checkId);
 
@@ -163,13 +142,7 @@ const Map: FunctionComponent = () => {
                         event?.address?.latitude,
                         event?.address?.longitude,
                       ]}
-                    >
-                      <Tooltip>
-                        <p>Stadt : {event?.address?.place}</p>
-                        <p>Straße : {event?.address?.street}</p>
-                        <p>Postleitzahl: {event?.address?.postalCode}</p>
-                      </Tooltip>
-                    </Marker>
+                    ></Marker>
                   </div>
                 );
               })}
@@ -186,8 +159,8 @@ const Map: FunctionComponent = () => {
               className=""
               eventName={selectedEvent?.name}
               location={`${selectedEvent?.address?.street}, ${selectedEvent?.address?.houseNumber}, ${selectedEvent?.address?.place}`}
-              date={selectedEvent?.nextSchedule}
-              route={`/selectedEvent/${selectedEvent?.id}`}
+              date={selectedEvent?.nextSchedule?.startDate}
+              route={`/events/${selectedEvent?.id}`}
               imgUrl={selectedEvent?.titleImage?.id}
               setFavorite={() =>
                 eventFavorite({

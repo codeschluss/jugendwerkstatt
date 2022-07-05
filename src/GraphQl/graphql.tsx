@@ -1610,8 +1610,7 @@ export enum NotificationType {
   Evaluation = 'evaluation',
   Event = 'event',
   Global = 'global',
-  JobAd = 'jobAd',
-  ReadReceipt = 'readReceipt'
+  JobAd = 'jobAd'
 }
 
 export type OrganizerEntity = {
@@ -2692,6 +2691,7 @@ export type UserEntity = {
   fullname?: Maybe<Scalars['String']>;
   group?: Maybe<GroupEntity>;
   id?: Maybe<Scalars['String']>;
+  messages?: Maybe<Array<Maybe<MessageEntity>>>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   notifications?: Maybe<Array<Maybe<NotificationEntity>>>;
   participants?: Maybe<Array<Maybe<ParticipantEntity>>>;
@@ -2718,6 +2718,7 @@ export type UserEntityInput = {
   fullname?: InputMaybe<Scalars['String']>;
   group?: InputMaybe<GroupEntityInput>;
   id?: InputMaybe<Scalars['String']>;
+  messages?: InputMaybe<Array<InputMaybe<MessageEntityInput>>>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   notifications?: InputMaybe<Array<InputMaybe<NotificationEntityInput>>>;
   participants?: InputMaybe<Array<InputMaybe<ParticipantEntityInput>>>;
@@ -2770,13 +2771,6 @@ export type VerificationEntityInput = {
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   user?: InputMaybe<UserEntityInput>;
 };
-
-export type SaveClientAssignmentMutationVariables = Exact<{
-  entity?: InputMaybe<AssignmentEntityInput>;
-}>;
-
-
-export type SaveClientAssignmentMutation = { __typename?: 'Mutation', saveAssignment?: { __typename?: 'AssignmentEntity', id?: string | null, assignmentState?: { __typename?: 'AssignmentStateEntity', name?: string | null } | null, answers?: Array<{ __typename?: 'AnswerEntity', rating?: number | null, question?: { __typename?: 'QuestionEntity', id?: string | null, item?: string | null } | null } | null> | null } | null };
 
 export type AddEventFavoriteMutationVariables = Exact<{
   jobAdId?: InputMaybe<Scalars['String']>;
@@ -3431,7 +3425,7 @@ export type GetChatQueryVariables = Exact<{
 }>;
 
 
-export type GetChatQuery = { __typename?: 'Query', getChat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', user?: { __typename?: 'UserEntity', id?: string | null } | null } | null> | null } | null };
+export type GetChatQuery = { __typename?: 'Query', getChat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null> | null } | null };
 
 export type GetChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3548,7 +3542,7 @@ export type GetMessagesQueryVariables = Exact<{
 }>;
 
 
-export type GetMessagesQuery = { __typename?: 'Query', getMessages?: { __typename?: 'PageableList_MessageEntity', result?: Array<{ __typename?: 'MessageEntity', id?: string | null, content?: string | null, parent?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, user?: { __typename?: 'UserEntity', fullname?: string | null } | null } | null, media?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null, name?: string | null } | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null> | null } | null };
+export type GetMessagesQuery = { __typename?: 'Query', getMessages?: { __typename?: 'PageableList_MessageEntity', result?: Array<{ __typename?: 'MessageEntity', id?: string | null, content?: string | null, chat?: { __typename?: 'ChatEntity', participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null } | null> | null } | null, parent?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, media?: { __typename?: 'MediaEntity', name?: string | null } | null, user?: { __typename?: 'UserEntity', fullname?: string | null } | null } | null, media?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null, name?: string | null } | null, readReceipts?: Array<{ __typename?: 'ReadReceiptEntity', id?: string | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null } | null } | null> | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null> | null } | null };
 
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3638,6 +3632,13 @@ export type SaveChatMutationVariables = Exact<{
 
 export type SaveChatMutation = { __typename?: 'Mutation', saveChat?: { __typename?: 'ChatEntity', id?: string | null } | null };
 
+export type SaveClientAssignmentMutationVariables = Exact<{
+  entity?: InputMaybe<AssignmentEntityInput>;
+}>;
+
+
+export type SaveClientAssignmentMutation = { __typename?: 'Mutation', saveAssignment?: { __typename?: 'AssignmentEntity', id?: string | null, assignmentState?: { __typename?: 'AssignmentStateEntity', name?: string | null } | null, answers?: Array<{ __typename?: 'AnswerEntity', rating?: number | null, question?: { __typename?: 'QuestionEntity', id?: string | null, item?: string | null } | null } | null> | null } | null };
+
 export type SaveFeedbackMutationVariables = Exact<{
   entity?: InputMaybe<FeedbackEntityInput>;
 }>;
@@ -3658,6 +3659,13 @@ export type SaveNotificationMutationVariables = Exact<{
 
 
 export type SaveNotificationMutation = { __typename?: 'Mutation', saveNotification?: { __typename?: 'NotificationEntity', id?: string | null } | null };
+
+export type SaveReadReceiptsMutationVariables = Exact<{
+  entities?: InputMaybe<Array<InputMaybe<ReadReceiptEntityInput>> | InputMaybe<ReadReceiptEntityInput>>;
+}>;
+
+
+export type SaveReadReceiptsMutation = { __typename?: 'Mutation', saveReadReceipts?: Array<{ __typename?: 'ReadReceiptEntity', id?: string | null } | null> | null };
 
 export type SaveSubscriptionMutationVariables = Exact<{
   entity?: InputMaybe<SubscriptionEntityInput>;
@@ -3966,49 +3974,6 @@ export const UserFieldFragmentDoc = gql`
   created
 }
     ${RoleFieldFragmentDoc}`;
-export const SaveClientAssignmentDocument = gql`
-    mutation SaveClientAssignment($entity: AssignmentEntityInput) {
-  saveAssignment(entity: $entity) {
-    id
-    assignmentState {
-      name
-    }
-    answers {
-      rating
-      question {
-        id
-        item
-      }
-    }
-  }
-}
-    `;
-export type SaveClientAssignmentMutationFn = Apollo.MutationFunction<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>;
-
-/**
- * __useSaveClientAssignmentMutation__
- *
- * To run a mutation, you first call `useSaveClientAssignmentMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSaveClientAssignmentMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [saveClientAssignmentMutation, { data, loading, error }] = useSaveClientAssignmentMutation({
- *   variables: {
- *      entity: // value for 'entity'
- *   },
- * });
- */
-export function useSaveClientAssignmentMutation(baseOptions?: Apollo.MutationHookOptions<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>(SaveClientAssignmentDocument, options);
-      }
-export type SaveClientAssignmentMutationHookResult = ReturnType<typeof useSaveClientAssignmentMutation>;
-export type SaveClientAssignmentMutationResult = Apollo.MutationResult<SaveClientAssignmentMutation>;
-export type SaveClientAssignmentMutationOptions = Apollo.BaseMutationOptions<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>;
 export const AddEventFavoriteDocument = gql`
     mutation AddEventFavorite($jobAdId: String) {
   addEventFavorite(eventId: $jobAdId) {
@@ -7021,8 +6986,10 @@ export const GetChatDocument = gql`
     id
     name
     participants {
+      id
       user {
         id
+        fullname
       }
     }
   }
@@ -8019,8 +7986,17 @@ export const GetMessagesDocument = gql`
   getMessages(params: $params) {
     result {
       id
+      chat {
+        participants {
+          id
+        }
+      }
       parent {
         id
+        content
+        media {
+          name
+        }
         user {
           fullname
         }
@@ -8032,6 +8008,12 @@ export const GetMessagesDocument = gql`
         base64
         mimeType
         name
+      }
+      readReceipts {
+        id
+        participant {
+          id
+        }
       }
       user {
         id
@@ -8553,6 +8535,49 @@ export function useSaveChatMutation(baseOptions?: Apollo.MutationHookOptions<Sav
 export type SaveChatMutationHookResult = ReturnType<typeof useSaveChatMutation>;
 export type SaveChatMutationResult = Apollo.MutationResult<SaveChatMutation>;
 export type SaveChatMutationOptions = Apollo.BaseMutationOptions<SaveChatMutation, SaveChatMutationVariables>;
+export const SaveClientAssignmentDocument = gql`
+    mutation SaveClientAssignment($entity: AssignmentEntityInput) {
+  saveAssignment(entity: $entity) {
+    id
+    assignmentState {
+      name
+    }
+    answers {
+      rating
+      question {
+        id
+        item
+      }
+    }
+  }
+}
+    `;
+export type SaveClientAssignmentMutationFn = Apollo.MutationFunction<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>;
+
+/**
+ * __useSaveClientAssignmentMutation__
+ *
+ * To run a mutation, you first call `useSaveClientAssignmentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveClientAssignmentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveClientAssignmentMutation, { data, loading, error }] = useSaveClientAssignmentMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveClientAssignmentMutation(baseOptions?: Apollo.MutationHookOptions<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>(SaveClientAssignmentDocument, options);
+      }
+export type SaveClientAssignmentMutationHookResult = ReturnType<typeof useSaveClientAssignmentMutation>;
+export type SaveClientAssignmentMutationResult = Apollo.MutationResult<SaveClientAssignmentMutation>;
+export type SaveClientAssignmentMutationOptions = Apollo.BaseMutationOptions<SaveClientAssignmentMutation, SaveClientAssignmentMutationVariables>;
 export const SaveFeedbackDocument = gql`
     mutation SaveFeedback($entity: FeedbackEntityInput) {
   saveFeedback(entity: $entity) {
@@ -8652,6 +8677,39 @@ export function useSaveNotificationMutation(baseOptions?: Apollo.MutationHookOpt
 export type SaveNotificationMutationHookResult = ReturnType<typeof useSaveNotificationMutation>;
 export type SaveNotificationMutationResult = Apollo.MutationResult<SaveNotificationMutation>;
 export type SaveNotificationMutationOptions = Apollo.BaseMutationOptions<SaveNotificationMutation, SaveNotificationMutationVariables>;
+export const SaveReadReceiptsDocument = gql`
+    mutation SaveReadReceipts($entities: [ReadReceiptEntityInput]) {
+  saveReadReceipts(entities: $entities) {
+    id
+  }
+}
+    `;
+export type SaveReadReceiptsMutationFn = Apollo.MutationFunction<SaveReadReceiptsMutation, SaveReadReceiptsMutationVariables>;
+
+/**
+ * __useSaveReadReceiptsMutation__
+ *
+ * To run a mutation, you first call `useSaveReadReceiptsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveReadReceiptsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveReadReceiptsMutation, { data, loading, error }] = useSaveReadReceiptsMutation({
+ *   variables: {
+ *      entities: // value for 'entities'
+ *   },
+ * });
+ */
+export function useSaveReadReceiptsMutation(baseOptions?: Apollo.MutationHookOptions<SaveReadReceiptsMutation, SaveReadReceiptsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveReadReceiptsMutation, SaveReadReceiptsMutationVariables>(SaveReadReceiptsDocument, options);
+      }
+export type SaveReadReceiptsMutationHookResult = ReturnType<typeof useSaveReadReceiptsMutation>;
+export type SaveReadReceiptsMutationResult = Apollo.MutationResult<SaveReadReceiptsMutation>;
+export type SaveReadReceiptsMutationOptions = Apollo.BaseMutationOptions<SaveReadReceiptsMutation, SaveReadReceiptsMutationVariables>;
 export const SaveSubscriptionDocument = gql`
     mutation SaveSubscription($entity: SubscriptionEntityInput) {
   saveSubscription(entity: $entity) {

@@ -9,6 +9,7 @@ import {
   CogIcon,
   QuestionMarkCircleIcon,
   ChevronDoubleRightIcon,
+  MapIcon,
 } from "@heroicons/react/outline";
 import { HeartIcon } from "@heroicons/react/solid";
 import { useContext } from "react";
@@ -67,16 +68,10 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
           clicked={clicked}
           href="/favorites"
         />
-        <Item name="Karte" icon={<CogIcon />} clicked={clicked} href="/map" />
+        <Item name="Karte" icon={<MapIcon />} clicked={clicked} href="/map" />
         <Item
           name="Einstellungen"
           icon={<CogIcon />}
-          clicked={clicked}
-          href="/profile"
-        />
-        <Item
-          name="Hilfe"
-          icon={<QuestionMarkCircleIcon />}
           clicked={clicked}
           href="/profile"
         />

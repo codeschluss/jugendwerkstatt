@@ -18,7 +18,7 @@ export const TitleImgSlider: React.FC<SliderProps> = ({
   title,
 }) => {
   return (
-    <div className="w-full md:w-1/2 md:bg-white md:rounded-md md:p-5">
+    <div className="w-full  md:w-1/2 md:bg-white md:rounded-md md:p-5">
       {imgUrl && (
         <img
           className="md:rounded-md"
@@ -28,7 +28,7 @@ export const TitleImgSlider: React.FC<SliderProps> = ({
       )}
       {colorBg && (
         <div
-          className="w-full h-60 flex justify-center items-center text-2xl"
+          className="w-full h-full flex justify-center items-center text-2xl"
           style={{ background: `${colorBg}` }}
         >
           {title}

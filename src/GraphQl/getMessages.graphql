@@ -2,8 +2,17 @@ query GetMessages($params: FilterSortPaginateInput) {
   getMessages(params: $params) {
     result {
       id
+      chat {
+        participants {
+          id
+        }
+      }
       parent {
         id
+        content
+        media {
+          name
+        }
         user {
           fullname
         }
@@ -15,6 +24,12 @@ query GetMessages($params: FilterSortPaginateInput) {
         base64
         mimeType
         name
+      }
+      readReceipts {
+        id
+        participant {
+          id
+        }
       }
       user {
         id
