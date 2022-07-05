@@ -17,6 +17,7 @@ query GetMessages($params: FilterSortPaginateInput) {
           id
           user {
             fullname
+            id
           }
         }
 
@@ -34,10 +35,6 @@ query GetMessages($params: FilterSortPaginateInput) {
         participant {
           id
         }
-      }
-      user {
-        id
-        fullname
       }
     }
   }

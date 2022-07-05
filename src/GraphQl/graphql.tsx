@@ -121,13 +121,32 @@ export type AssignmentStateEntityInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+export type CallEntity = {
+  __typename?: 'CallEntity';
+  chat?: Maybe<ChatEntity>;
+  created?: Maybe<Scalars['OffsetDateTime']>;
+  id?: Maybe<Scalars['String']>;
+  initiator?: Maybe<UserEntity>;
+  modified?: Maybe<Scalars['OffsetDateTime']>;
+};
+
+export type CallEntityInput = {
+  chat?: InputMaybe<ChatEntityInput>;
+  created?: InputMaybe<Scalars['OffsetDateTime']>;
+  id?: InputMaybe<Scalars['String']>;
+  initiator?: InputMaybe<UserEntityInput>;
+  modified?: InputMaybe<Scalars['OffsetDateTime']>;
+};
+
 export type ChatEntity = {
   __typename?: 'ChatEntity';
   admin?: Maybe<Scalars['Boolean']>;
   avatar?: Maybe<MediaEntity>;
+  calls?: Maybe<Array<Maybe<CallEntity>>>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   group?: Maybe<GroupEntity>;
   id?: Maybe<Scalars['String']>;
+  lastCall?: Maybe<CallEntity>;
   lastMessage?: Maybe<MessageEntity>;
   messages?: Maybe<Array<Maybe<MessageEntity>>>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
@@ -138,6 +157,7 @@ export type ChatEntity = {
 export type ChatEntityInput = {
   admin?: InputMaybe<Scalars['Boolean']>;
   avatar?: InputMaybe<MediaEntityInput>;
+  calls?: InputMaybe<Array<InputMaybe<CallEntityInput>>>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   group?: InputMaybe<GroupEntityInput>;
   id?: InputMaybe<Scalars['String']>;
@@ -542,8 +562,8 @@ export type MessageEntity = {
   media?: Maybe<MediaEntity>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   parent?: Maybe<MessageEntity>;
+  participant?: Maybe<ParticipantEntity>;
   readReceipts?: Maybe<Array<Maybe<ReadReceiptEntity>>>;
-  user?: Maybe<UserEntity>;
 };
 
 export type MessageEntityInput = {
@@ -554,8 +574,8 @@ export type MessageEntityInput = {
   media?: InputMaybe<MediaEntityInput>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   parent?: InputMaybe<MessageEntityInput>;
+  participant?: InputMaybe<ParticipantEntityInput>;
   readReceipts?: InputMaybe<Array<InputMaybe<ReadReceiptEntityInput>>>;
-  user?: InputMaybe<UserEntityInput>;
 };
 
 /** Mutation root */
@@ -574,6 +594,8 @@ export type Mutation = {
   deleteAssignmentState?: Maybe<Scalars['Boolean']>;
   deleteAssignmentStates?: Maybe<Scalars['Boolean']>;
   deleteAssignments?: Maybe<Scalars['Boolean']>;
+  deleteCall?: Maybe<Scalars['Boolean']>;
+  deleteCalls?: Maybe<Scalars['Boolean']>;
   deleteChat?: Maybe<Scalars['Boolean']>;
   deleteChats?: Maybe<Scalars['Boolean']>;
   deleteCompanies?: Maybe<Scalars['Boolean']>;
@@ -643,6 +665,8 @@ export type Mutation = {
   saveAssignmentState?: Maybe<AssignmentStateEntity>;
   saveAssignmentStates?: Maybe<Array<Maybe<AssignmentStateEntity>>>;
   saveAssignments?: Maybe<Array<Maybe<AssignmentEntity>>>;
+  saveCall?: Maybe<CallEntity>;
+  saveCalls?: Maybe<Array<Maybe<CallEntity>>>;
   saveChat?: Maybe<ChatEntity>;
   saveChats?: Maybe<Array<Maybe<ChatEntity>>>;
   saveCompanies?: Maybe<Array<Maybe<CompanyEntity>>>;
@@ -785,6 +809,18 @@ export type MutationDeleteAssignmentStatesArgs = {
 
 /** Mutation root */
 export type MutationDeleteAssignmentsArgs = {
+  ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteCallArgs = {
+  id?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationDeleteCallsArgs = {
   ids?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
 };
 
@@ -1203,6 +1239,18 @@ export type MutationSaveAssignmentStatesArgs = {
 /** Mutation root */
 export type MutationSaveAssignmentsArgs = {
   entities?: InputMaybe<Array<InputMaybe<AssignmentEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationSaveCallArgs = {
+  entity?: InputMaybe<CallEntityInput>;
+};
+
+
+/** Mutation root */
+export type MutationSaveCallsArgs = {
+  entities?: InputMaybe<Array<InputMaybe<CallEntityInput>>>;
 };
 
 
@@ -1685,6 +1733,12 @@ export type PageableList_AssignmentStateEntity = {
   total: Scalars['Long'];
 };
 
+export type PageableList_CallEntity = {
+  __typename?: 'PageableList_CallEntity';
+  result?: Maybe<Array<Maybe<CallEntity>>>;
+  total: Scalars['Long'];
+};
+
 export type PageableList_ChatEntity = {
   __typename?: 'PageableList_ChatEntity';
   result?: Maybe<Array<Maybe<ChatEntity>>>;
@@ -1858,6 +1912,7 @@ export type ParticipantEntity = {
   chat?: Maybe<ChatEntity>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   id?: Maybe<Scalars['String']>;
+  messages?: Maybe<Array<Maybe<MessageEntity>>>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   readReceipts?: Maybe<Array<Maybe<ReadReceiptEntity>>>;
   user?: Maybe<UserEntity>;
@@ -1867,6 +1922,7 @@ export type ParticipantEntityInput = {
   chat?: InputMaybe<ChatEntityInput>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   id?: InputMaybe<Scalars['String']>;
+  messages?: InputMaybe<Array<InputMaybe<MessageEntityInput>>>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   readReceipts?: InputMaybe<Array<InputMaybe<ReadReceiptEntityInput>>>;
   user?: InputMaybe<UserEntityInput>;
@@ -1901,6 +1957,8 @@ export type Query = {
   getAssignmentState?: Maybe<AssignmentStateEntity>;
   getAssignmentStates?: Maybe<PageableList_AssignmentStateEntity>;
   getAssignments?: Maybe<PageableList_AssignmentEntity>;
+  getCall?: Maybe<CallEntity>;
+  getCalls?: Maybe<PageableList_CallEntity>;
   getChat?: Maybe<ChatEntity>;
   getChats?: Maybe<PageableList_ChatEntity>;
   getCompanies?: Maybe<PageableList_CompanyEntity>;
@@ -2014,6 +2072,18 @@ export type QueryGetAssignmentStatesArgs = {
 
 /** Query root */
 export type QueryGetAssignmentsArgs = {
+  params?: InputMaybe<FilterSortPaginateInput>;
+};
+
+
+/** Query root */
+export type QueryGetCallArgs = {
+  entity?: InputMaybe<CallEntityInput>;
+};
+
+
+/** Query root */
+export type QueryGetCallsArgs = {
   params?: InputMaybe<FilterSortPaginateInput>;
 };
 
@@ -2683,6 +2753,7 @@ export type UserEntity = {
   __typename?: 'UserEntity';
   approved?: Maybe<Scalars['Boolean']>;
   assignments?: Maybe<Array<Maybe<AssignmentEntity>>>;
+  calls?: Maybe<Array<Maybe<CallEntity>>>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   email?: Maybe<Scalars['String']>;
   favoriteEvents?: Maybe<Array<Maybe<EventEntity>>>;
@@ -2691,7 +2762,6 @@ export type UserEntity = {
   fullname?: Maybe<Scalars['String']>;
   group?: Maybe<GroupEntity>;
   id?: Maybe<Scalars['String']>;
-  messages?: Maybe<Array<Maybe<MessageEntity>>>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   notifications?: Maybe<Array<Maybe<NotificationEntity>>>;
   participants?: Maybe<Array<Maybe<ParticipantEntity>>>;
@@ -2710,6 +2780,7 @@ export type UserEntity = {
 export type UserEntityInput = {
   approved?: InputMaybe<Scalars['Boolean']>;
   assignments?: InputMaybe<Array<InputMaybe<AssignmentEntityInput>>>;
+  calls?: InputMaybe<Array<InputMaybe<CallEntityInput>>>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   email?: InputMaybe<Scalars['String']>;
   favoriteEvents?: InputMaybe<Array<InputMaybe<EventEntityInput>>>;
@@ -2718,7 +2789,6 @@ export type UserEntityInput = {
   fullname?: InputMaybe<Scalars['String']>;
   group?: InputMaybe<GroupEntityInput>;
   id?: InputMaybe<Scalars['String']>;
-  messages?: InputMaybe<Array<InputMaybe<MessageEntityInput>>>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   notifications?: InputMaybe<Array<InputMaybe<NotificationEntityInput>>>;
   participants?: InputMaybe<Array<InputMaybe<ParticipantEntityInput>>>;
@@ -3515,7 +3585,7 @@ export type GetMeBasicQuery = { __typename?: 'Query', me?: { __typename?: 'UserE
 export type GetMeChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMeChatsQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, chat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, modified?: any | null, lastMessage?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, created?: any | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null, messages?: Array<{ __typename?: 'MessageEntity', created?: any | null, content?: string | null, id?: string | null } | null> | null, participants?: Array<{ __typename?: 'ParticipantEntity', user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null> | null } | null } | null> | null } | null };
+export type GetMeChatsQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, chat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, modified?: any | null, lastMessage?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, created?: any | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null } | null, messages?: Array<{ __typename?: 'MessageEntity', created?: any | null, content?: string | null, id?: string | null } | null> | null, participants?: Array<{ __typename?: 'ParticipantEntity', user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null> | null } | null } | null> | null } | null };
 
 export type GetMeFavoritesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3542,7 +3612,7 @@ export type GetMessagesQueryVariables = Exact<{
 }>;
 
 
-export type GetMessagesQuery = { __typename?: 'Query', getMessages?: { __typename?: 'PageableList_MessageEntity', result?: Array<{ __typename?: 'MessageEntity', id?: string | null, content?: string | null, chat?: { __typename?: 'ChatEntity', participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null } | null> | null } | null, parent?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, media?: { __typename?: 'MediaEntity', name?: string | null } | null, user?: { __typename?: 'UserEntity', fullname?: string | null } | null } | null, media?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null, name?: string | null } | null, readReceipts?: Array<{ __typename?: 'ReadReceiptEntity', id?: string | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null } | null } | null> | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null> | null } | null };
+export type GetMessagesQuery = { __typename?: 'Query', getMessages?: { __typename?: 'PageableList_MessageEntity', result?: Array<{ __typename?: 'MessageEntity', id?: string | null, content?: string | null, chat?: { __typename?: 'ChatEntity', participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null } | null> | null } | null, parent?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, media?: { __typename?: 'MediaEntity', name?: string | null } | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null } | null } | null } | null, media?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null, name?: string | null } | null, readReceipts?: Array<{ __typename?: 'ReadReceiptEntity', id?: string | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null } | null } | null> | null } | null> | null } | null };
 
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7728,9 +7798,12 @@ export const GetMeChatsDocument = gql`
           id
           content
           created
-          user {
+          participant {
             id
-            fullname
+            user {
+              id
+              fullname
+            }
           }
         }
         modified
@@ -7997,8 +8070,12 @@ export const GetMessagesDocument = gql`
         media {
           name
         }
-        user {
-          fullname
+        participant {
+          id
+          user {
+            fullname
+            id
+          }
         }
         content
       }
@@ -8014,10 +8091,6 @@ export const GetMessagesDocument = gql`
         participant {
           id
         }
-      }
-      user {
-        id
-        fullname
       }
     }
   }

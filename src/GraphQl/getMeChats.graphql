@@ -10,9 +10,12 @@ query GetMeChats {
           id
           content
           created
-          user {
+          participant {
             id
-            fullname
+            user {
+              id
+              fullname
+            }
           }
         }
         modified

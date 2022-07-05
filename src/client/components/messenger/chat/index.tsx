@@ -57,7 +57,7 @@ const Chat = () => {
 
   useEffect(() => {
     const notMyMsg = getMessages?.data?.getMessages?.result?.filter(
-      (el) => el?.user?.id !== me.data?.me?.id
+      (el: any) => el?.participant?.user?.id !== me.data?.me?.id
     );
 
     const allUnreadMsg = notMyMsg?.map((msg: any) => ({
