@@ -87,6 +87,7 @@ import { GeneralAddressForm } from "./admin/components/organisms";
 import Home from "./client/pages/home";
 import { RequireAuthAll } from "./shared/components/RequireAuthRoute/RequireAuthAll";
 import Notifications from "./shared/components/notifications";
+import MainPanel from "./client/pages/messenger/adminPanel/MainPanel";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
@@ -116,6 +117,7 @@ const App = (): ReactElement => {
           <Route path="contacts" element={<Contacts />} />
           <Route path="chat/:id" element={<Chat />} />
         </Route>
+        <Route path="/adminMsnPanel" element={<MainPanel />} />
       </Route>
 
       <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />

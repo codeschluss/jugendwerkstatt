@@ -60,21 +60,20 @@ const Chat = () => {
       (el: any) => el?.participant?.user?.id !== me.data?.me?.id
     );
 
-    const allUnreadMsg = notMyMsg?.map((msg: any) => ({
+    const allUnreadMsg: any = notMyMsg?.map((msg: any) => ({
       message: {
         id: msg.id,
       },
-      participant: {
-        id: meParticipant && meParticipant[0].id,
-      },
     }));
 
-    saveRec({
-      variables: {
-        entities: allUnreadMsg,
-      },
-    });
-  }, [getMessages]);
+    if (allUnreadMsg?.length > 0) {
+      saveRec({
+        variables: {
+          entities: allUnreadMsg,
+        },
+      });
+    }
+  }, [getMessages.data?.getMessages?.result]);
 
   const me = useGetMeBasicQuery({
     skip: !accessToken,
@@ -111,7 +110,10 @@ const Chat = () => {
             chat: {
               id: id,
             },
+            // participant: { id: meParticipant[0]?.id },
+
             content: inputRef.current.value,
+
             parent: {
               content: replyMsg && replyMsg?.content,
               media: replyMsg && {
