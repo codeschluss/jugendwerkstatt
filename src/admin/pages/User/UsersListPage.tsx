@@ -1,17 +1,26 @@
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
-import { useGetUsersAdminQuery } from '../../../GraphQl/graphql';
+import {
+  useDeleteUserMutation,
+  useGetUsersAdminQuery,
+} from '../../../GraphQl/graphql';
 import { Table, Action, Panel } from '../../components/atoms';
 import { CustomTable } from '../../components/molecules';
 
 const UsersListPage = () => {
   const navigate = useNavigate();
-  const { data: { users = null } = {} } = useGetUsersAdminQuery({
+  const { data: { users = null } = {}, refetch } = useGetUsersAdminQuery({
     fetchPolicy: 'cache-and-network',
   });
+  const [deleteUser] = useDeleteUserMutation({ onCompleted: () => refetch() });
 
   const handleUserUpdate = (userId: string) => () => navigate(userId);
-  console.log(users);
+  const handleUserDelete = (userId: string) => () => {
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm('Möchten Sie dies löschen?'))
+      deleteUser({ variables: { id: userId } });
+  };
+
   return (
     <Panel.Wrapper>
       <CustomTable
@@ -41,7 +50,10 @@ const UsersListPage = () => {
                 {dayjs(user?.created).format('DD.MM.YYYY')}
               </Table.Data>
               <Table.Data>
-                <Action onUpdate={handleUserUpdate(user?.id || '')} />
+                <Action
+                  onUpdate={handleUserUpdate(user?.id || '')}
+                  onDelete={handleUserDelete(user?.id || '')}
+                />
               </Table.Data>
             </Table.Row>
           )) || []
