@@ -3495,7 +3495,7 @@ export type GetChatQueryVariables = Exact<{
 }>;
 
 
-export type GetChatQuery = { __typename?: 'Query', getChat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null> | null } | null };
+export type GetChatQuery = { __typename?: 'Query', getChat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null> | null } | null };
 
 export type GetChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3612,7 +3612,7 @@ export type GetMessagesQueryVariables = Exact<{
 }>;
 
 
-export type GetMessagesQuery = { __typename?: 'Query', getMessages?: { __typename?: 'PageableList_MessageEntity', result?: Array<{ __typename?: 'MessageEntity', id?: string | null, content?: string | null, chat?: { __typename?: 'ChatEntity', participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null } | null> | null } | null, parent?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, media?: { __typename?: 'MediaEntity', name?: string | null } | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null } | null } | null } | null, media?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null, name?: string | null } | null, readReceipts?: Array<{ __typename?: 'ReadReceiptEntity', id?: string | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null } | null } | null> | null } | null> | null } | null };
+export type GetMessagesQuery = { __typename?: 'Query', getMessages?: { __typename?: 'PageableList_MessageEntity', result?: Array<{ __typename?: 'MessageEntity', id?: string | null, content?: string | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null } | null } | null, chat?: { __typename?: 'ChatEntity', participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null } | null } | null> | null } | null, parent?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, media?: { __typename?: 'MediaEntity', name?: string | null } | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null } | null } | null } | null, media?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null, name?: string | null } | null, readReceipts?: Array<{ __typename?: 'ReadReceiptEntity', id?: string | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null } | null } | null> | null } | null> | null } | null };
 
 export type GetNotificationsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7058,8 +7058,11 @@ export const GetChatDocument = gql`
     participants {
       id
       user {
-        id
         fullname
+        id
+        profilePicture {
+          id
+        }
       }
     }
   }
@@ -8059,9 +8062,20 @@ export const GetMessagesDocument = gql`
   getMessages(params: $params) {
     result {
       id
+      participant {
+        id
+        user {
+          fullname
+          id
+        }
+      }
       chat {
         participants {
           id
+          user {
+            fullname
+            id
+          }
         }
       }
       parent {

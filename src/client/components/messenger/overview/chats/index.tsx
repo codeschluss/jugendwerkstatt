@@ -34,7 +34,7 @@ const Chats = () => {
             (el: ParticipantEntity | undefined | null) =>
               el?.user?.id !== getChats.data?.me?.id
           ) as ParticipantEntity | undefined | null;
-          console.log(el?.chat?.messages, "messages");
+          console.log(notMe, "ellll");
           return (
             <Item
               key={el?.id}
@@ -43,9 +43,10 @@ const Chats = () => {
               description={
                 <span className="flex items-center">
                   {`${
-                    el?.chat?.lastMessage?.user?.id === getChats?.data?.me?.id
+                    el?.chat?.lastMessage?.participant?.user?.id ===
+                    getChats?.data?.me?.id
                       ? "Du"
-                      : el?.chat?.lastMessage?.user?.fullname
+                      : el?.chat?.lastMessage?.participant?.user?.fullname
                   }: `}
                   {el?.chat?.lastMessage?.content}
                 </span>

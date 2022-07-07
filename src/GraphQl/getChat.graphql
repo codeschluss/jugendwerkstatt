@@ -5,8 +5,11 @@ query GetChat($entity: ChatEntityInput) {
     participants {
       id
       user {
-        id
         fullname
+        id
+        profilePicture {
+          id
+        }
       }
     }
   }

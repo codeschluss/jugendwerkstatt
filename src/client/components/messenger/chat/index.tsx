@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   MessageEntity,
   ParticipantEntity,
@@ -14,6 +14,7 @@ import {
 } from "../../../../GraphQl/graphql";
 import ChatText from "./ChatText";
 import {
+  CogIcon,
   PaperAirplaneIcon,
   PaperClipIcon,
   XIcon,
@@ -24,6 +25,7 @@ import TypeInput from "../../forms/upload/TypeInput";
 const Chat = () => {
   const accessToken = readAuthToken("accessToken") || "";
   const [replyMsg, setReplymsg] = useState<MessageEntity | undefined | null>();
+  const navigate = useNavigate();
 
   const { id } = useParams();
   const inputRef: any = useRef();
@@ -60,21 +62,20 @@ const Chat = () => {
       (el: any) => el?.participant?.user?.id !== me.data?.me?.id
     );
 
-    const allUnreadMsg = notMyMsg?.map((msg: any) => ({
+    const allUnreadMsg: any = notMyMsg?.map((msg: any) => ({
       message: {
         id: msg.id,
       },
-      participant: {
-        id: meParticipant && meParticipant[0].id,
-      },
     }));
 
-    saveRec({
-      variables: {
-        entities: allUnreadMsg,
-      },
-    });
-  }, [getMessages]);
+    if (allUnreadMsg?.length > 0) {
+      saveRec({
+        variables: {
+          entities: allUnreadMsg,
+        },
+      });
+    }
+  }, [getMessages.data?.getMessages?.result]);
 
   const me = useGetMeBasicQuery({
     skip: !accessToken,
@@ -104,25 +105,38 @@ const Chat = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    const baseMessage = {
+      chat: {
+        id: id,
+      },
+
+      content: inputRef.current.value,
+    };
+    const parentMedia = {
+      media: {
+        base64: replyMsg?.media?.base64,
+        mimeType: replyMsg?.media?.mimeType,
+        name: replyMsg?.media?.name,
+        id: replyMsg?.media?.id,
+      },
+    };
+
+    const parent = {
+      parent: {
+        content: replyMsg?.content,
+
+        id: replyMsg?.id,
+      },
+    };
+
+    replyMsg?.media && Object.assign(parent, parentMedia);
+
+    replyMsg?.content && Object.assign(baseMessage, parent);
+
     if (inputRef.current.value !== "") {
       saveMessage({
         variables: {
-          entity: {
-            chat: {
-              id: id,
-            },
-            content: inputRef.current.value,
-            parent: {
-              content: replyMsg && replyMsg?.content,
-              media: replyMsg && {
-                base64: replyMsg?.media?.base64,
-                mimeType: replyMsg?.media?.mimeType,
-                name: replyMsg?.media?.name,
-                id: replyMsg?.media?.id,
-              },
-              id: replyMsg?.id,
-            },
-          },
+          entity: baseMessage,
         },
       })
         .then(() => {
@@ -219,13 +233,24 @@ const Chat = () => {
       className="flex flex-col bg-yellow-50   md:mx-0"
       style={{ height: "calc(100vh - 10.5rem)" }}
     >
-      <h2 className="sticky px-4 py-3 text-gray-700 bg-white   top-14 ">
-        {getChat.data?.getChat?.name
-          ? getChat.data?.getChat?.name
-          : notMe?.map((el: ParticipantEntity | undefined | null) => {
-              return el?.user?.fullname;
-            })}
-      </h2>
+      <div className="flex items-center bg-white justify-between">
+        <h2 className="sticky px-4 py-3 text-gray-700    top-14 ">
+          {getChat.data?.getChat?.name
+            ? getChat.data?.getChat?.name
+            : notMe?.map((el: ParticipantEntity | undefined | null) => {
+                return el?.user?.fullname;
+              })}
+        </h2>
+        <div
+          onClick={() =>
+            navigate(`/adminMsnPanel/${getChat.data?.getChat?.id}`)
+          }
+          className="flex text-gray-600 cursor-pointer md:mr-5"
+        >
+          <CogIcon className="w-5" />
+          <p>Einstellungen</p>
+        </div>
+      </div>
       <div className="py-3 h-full overflow-y-scroll">
         <p
           onClick={moreMessages}
@@ -234,8 +259,9 @@ const Chat = () => {
           show previous messages
         </p>
         {reverseMessages?.map((el: any) => {
-          const _me: boolean =
-            el?.participant?.user?.id === myId ? true : false;
+          const _me: boolean = meParticipant?.every(
+            (data: ParticipantEntity) => data.id === el?.participant?.id
+          );
           return (
             <ChatText
               key={el?.id}

@@ -2,9 +2,21 @@ query GetMessages($params: FilterSortPaginateInput) {
   getMessages(params: $params) {
     result {
       id
+      participant {
+        id
+        user {
+          fullname
+          id
+        }
+      }
+
       chat {
         participants {
           id
+          user {
+            fullname
+            id
+          }
         }
       }
       parent {
