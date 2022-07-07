@@ -119,7 +119,7 @@ const App = (): ReactElement => {
           <Route path="chat/:id" element={<Chat />} />
         </Route>
         <Route path="/adminMsnPanel/:id" element={<MainPanel />} />
-        <Route path="/groupAddMember" element={<AddMemberPanel />} />
+        <Route path="/groupAddMember/:id" element={<AddMemberPanel />} />
       </Route>
 
       <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />

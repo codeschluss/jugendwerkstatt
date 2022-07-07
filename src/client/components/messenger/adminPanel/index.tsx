@@ -84,7 +84,7 @@ const AdminPanel = () => {
               withArrow={false}
             >
               <p
-                onClick={() => navigate("/groupAddMember")}
+                onClick={() => navigate(`/groupAddMember/${id}`)}
                 className="cursor-pointer"
               >
                 Teilnehmer hinzufügen

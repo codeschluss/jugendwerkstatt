@@ -27,7 +27,7 @@ const AddMemberToGroup = () => {
   const groupChat = useGetChatQuery({
     variables: {
       entity: {
-        id: "41bf7460-1a1a-41cb-8b2f-a89688671b33",
+        id: id,
       },
     },
   });
