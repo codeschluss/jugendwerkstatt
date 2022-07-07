@@ -103,28 +103,38 @@ const Chat = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    const baseMessage = {
+      chat: {
+        id: id,
+      },
+
+      content: inputRef.current.value,
+    };
+    const parentMedia = {
+      media: {
+        base64: replyMsg?.media?.base64,
+        mimeType: replyMsg?.media?.mimeType,
+        name: replyMsg?.media?.name,
+        id: replyMsg?.media?.id,
+      },
+    };
+
+    const parent = {
+      parent: {
+        content: replyMsg?.content,
+
+        id: replyMsg?.id,
+      },
+    };
+
+    replyMsg?.media && Object.assign(parent, parentMedia);
+
+    replyMsg?.content && Object.assign(baseMessage, parent);
+
     if (inputRef.current.value !== "") {
       saveMessage({
         variables: {
-          entity: {
-            chat: {
-              id: id,
-            },
-            // participant: { id: meParticipant[0]?.id },
-
-            content: inputRef.current.value,
-
-            parent: {
-              content: replyMsg && replyMsg?.content,
-              media: replyMsg && {
-                base64: replyMsg?.media?.base64,
-                mimeType: replyMsg?.media?.mimeType,
-                name: replyMsg?.media?.name,
-                id: replyMsg?.media?.id,
-              },
-              id: replyMsg?.id,
-            },
-          },
+          entity: baseMessage,
         },
       })
         .then(() => {
@@ -236,8 +246,9 @@ const Chat = () => {
           show previous messages
         </p>
         {reverseMessages?.map((el: any) => {
-          const _me: boolean =
-            el?.participant?.user?.id === myId ? true : false;
+          const _me: boolean = meParticipant?.every(
+            (data: ParticipantEntity) => data.id === el?.participant?.id
+          );
           return (
             <ChatText
               key={el?.id}

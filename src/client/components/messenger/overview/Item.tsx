@@ -21,6 +21,8 @@ const Item: React.FC<ItemProps> = ({
   href,
   onClick,
 }) => {
+  console.log(imgUrl, "imgurl");
+
   return (
     <div>
       <Link to={href || ""}>
