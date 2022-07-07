@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   MessageEntity,
   ParticipantEntity,
@@ -14,6 +14,7 @@ import {
 } from "../../../../GraphQl/graphql";
 import ChatText from "./ChatText";
 import {
+  CogIcon,
   PaperAirplaneIcon,
   PaperClipIcon,
   XIcon,
@@ -24,6 +25,7 @@ import TypeInput from "../../forms/upload/TypeInput";
 const Chat = () => {
   const accessToken = readAuthToken("accessToken") || "";
   const [replyMsg, setReplymsg] = useState<MessageEntity | undefined | null>();
+  const navigate = useNavigate();
 
   const { id } = useParams();
   const inputRef: any = useRef();
@@ -231,13 +233,24 @@ const Chat = () => {
       className="flex flex-col bg-yellow-50   md:mx-0"
       style={{ height: "calc(100vh - 10.5rem)" }}
     >
-      <h2 className="sticky px-4 py-3 text-gray-700 bg-white   top-14 ">
-        {getChat.data?.getChat?.name
-          ? getChat.data?.getChat?.name
-          : notMe?.map((el: ParticipantEntity | undefined | null) => {
-              return el?.user?.fullname;
-            })}
-      </h2>
+      <div className="flex items-center bg-white justify-between">
+        <h2 className="sticky px-4 py-3 text-gray-700    top-14 ">
+          {getChat.data?.getChat?.name
+            ? getChat.data?.getChat?.name
+            : notMe?.map((el: ParticipantEntity | undefined | null) => {
+                return el?.user?.fullname;
+              })}
+        </h2>
+        <div
+          onClick={() =>
+            navigate(`/adminMsnPanel/${getChat.data?.getChat?.id}`)
+          }
+          className="flex text-gray-600 cursor-pointer md:mr-5"
+        >
+          <CogIcon className="w-5" />
+          <p>Einstellungen</p>
+        </div>
+      </div>
       <div className="py-3 h-full overflow-y-scroll">
         <p
           onClick={moreMessages}

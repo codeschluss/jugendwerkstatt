@@ -6,24 +6,29 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/outline";
 import React from "react";
-import { useParams } from "react-router-dom";
-import { useGetChatQuery } from "../../../../GraphQl/graphql";
+import { useNavigate, useParams } from "react-router-dom";
+import { API_URL } from "../../../../config/app";
+import {
+  ParticipantEntity,
+  useGetChatQuery,
+} from "../../../../GraphQl/graphql";
 import DropDown from "../../../../shared/components/ui/DropDown";
 import Item from "../overview/Item";
 
 const AdminPanel = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const groupChat = useGetChatQuery({
     variables: {
       entity: {
-        id: "41bf7460-1a1a-41cb-8b2f-a89688671b33",
+        id: id,
       },
     },
   });
 
   console.log(groupChat.data?.getChat?.participants, "chat part");
-
+  const participants: any = groupChat?.data?.getChat?.participants;
   //   const uploadHandler = async (e: any) => {
   //     const file = e.target.files[0];
   //     const base64: string | any = await convertBase64(file);
@@ -65,7 +70,10 @@ const AdminPanel = () => {
         <div className="w-full flex justify-between">
           <div>
             {" "}
-            <ChevronLeftIcon className="w-7 text-white " />{" "}
+            <ChevronLeftIcon
+              onClick={() => navigate(`/messenger/chat/${id}`)}
+              className="w-7 text-white "
+            />{" "}
           </div>
           <div>
             <DropDown
@@ -75,7 +83,12 @@ const AdminPanel = () => {
               name={<DotsVerticalIcon className="w-7 text-white" />}
               withArrow={false}
             >
-              <p className="cursor-pointer">Teilnehmer hinzufügen</p>
+              <p
+                onClick={() => navigate("/groupAddMember")}
+                className="cursor-pointer"
+              >
+                Teilnehmer hinzufügen
+              </p>
               <p className="cursor-pointer">Gruppennamen ändern</p>
               <p className="cursor-pointer">Gruppeneinstellungen</p>
             </DropDown>
@@ -93,16 +106,23 @@ const AdminPanel = () => {
         </div>
       </div>
       <div className="px-7 my-2 text-gray-600">
-        <p>10 Teilnehmer</p>
+        <p>{participants?.length} Teilnehmer</p>
       </div>
       <div className="w-full px-7">
-        {" "}
-        <Item name={"dreni gjini"} />
-        <Item name={"dreni gjini"} />
-        <Item name={"dreni gjini"} />
-        <Item name={"dreni gjini"} />
-        <Item name={"dreni gjini"} />
-        <Item name={"dreni gjini"} />
+        {participants?.map(
+          (participant: ParticipantEntity | undefined | null) => {
+            return (
+              <Item
+                key={participant?.id}
+                imgUrl={
+                  participant?.user?.profilePicture?.id &&
+                  `${API_URL}media/${participant?.user?.profilePicture?.id}`
+                }
+                name={participant?.user?.fullname}
+              />
+            );
+          }
+        )}
       </div>
     </div>
   );
