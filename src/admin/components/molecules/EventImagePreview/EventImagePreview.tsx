@@ -11,7 +11,7 @@ export const EventImagePreview: FC<EventImagePreviewProps> = ({
   onRemoveImage,
 }): ReactElement => {
   const handleCheck = (event: ChangeEvent<HTMLInputElement>) => {
-    onHandle(event.currentTarget.value && !!file ? { file, id } : null);
+    onHandle(event.currentTarget.checked && file ? { file, id } : null);
   };
   const handleRemoveImage = () => onRemoveImage(id);
 
