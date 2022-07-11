@@ -15,6 +15,8 @@ import {
   useGetChatQuery,
   useGetUsersQuery,
   UserEntity,
+  useSaveChatMutation,
+  useSaveUserMutation,
 } from "../../../../GraphQl/graphql";
 import DropDown from "../../../../shared/components/ui/DropDown";
 import Item from "../overview/Item";
@@ -76,43 +78,23 @@ const AddMemberToGroup = () => {
         (el: UserEntity | undefined | null) => user?.id !== el?.id
       )
   );
-  console.log(notGroupMemberUsers, "users");
-  console.log(participants, "parti");
-
-  //   const uploadHandler = async (e: any) => {
-  //     const file = e.target.files[0];
-  //     const base64: string | any = await convertBase64(file);
-
-  //     saveMessage({
-  //       variables: {
-  //         entity: {
-  //           chat: {
-  //             id: id,
-  //           },
-  //           media: {
-  //             base64: base64.split(",")[1],
-  //             mimeType: file.type,
-  //             name: file.name,
-  //           },
-  //         },
-  //       },
-  //     }).finally(() => {
-  //       getMessages.refetch();
-  //     });
-  //   };
-
-  //   const convertBase64 = (file: any) => {
-  //     return new Promise((resolve, reject) => {
-  //       const fileReader = new FileReader();
-  //       fileReader.readAsDataURL(file);
-  //       fileReader.onload = () => {
-  //         resolve(fileReader.result);
-  //       };
-  //       fileReader.onerror = (error) => {
-  //         reject(error);
-  //       };
-  //     });
-  //   };
+  // const [addToChat] = useSaveChatMutation();
+  const [addToChat] = useSaveUserMutation();
+  const addMemberHandler = (memberId: string | undefined | null) => {
+    // const existingParticipants: any = groupChat?.data?.getChat?.participants;
+    addToChat({
+      variables: {
+        entity: {
+          id: memberId,
+          group: {
+            chat: {
+              id: id,
+            },
+          },
+        },
+      },
+    }).then(() => groupChat.refetch());
+  };
 
   return (
     <div className="absolute md:relative pb-5  w-full h-full z-50 bg-white top-0 md:h-screen     ">
@@ -132,6 +114,7 @@ const AddMemberToGroup = () => {
         {notGroupMemberUsers?.map((user: UserEntity | undefined | null) => {
           return (
             <Item
+              onClick={() => addMemberHandler(user?.id)}
               key={user?.id}
               imgUrl={
                 user?.profilePicture?.id &&

@@ -89,6 +89,8 @@ import { RequireAuthAll } from "./shared/components/RequireAuthRoute/RequireAuth
 import Notifications from "./shared/components/notifications";
 import MainPanel from "./client/pages/messenger/adminPanel/MainPanel";
 import AddMemberPanel from "./client/pages/messenger/adminPanel/AddMemberPanel";
+import GroupNamePanel from "./client/pages/messenger/adminPanel/GroupNamePanel";
+import ChatAccessRules from "./client/pages/messenger/adminPanel/ChatAccessRules";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
@@ -120,6 +122,8 @@ const App = (): ReactElement => {
         </Route>
         <Route path="/adminMsnPanel/:id" element={<MainPanel />} />
         <Route path="/groupAddMember/:id" element={<AddMemberPanel />} />
+        <Route path="/groupChatNameChange/:id" element={<GroupNamePanel />} />
+        <Route path="/groupChatRules/:id" element={<ChatAccessRules />} />
       </Route>
 
       <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />

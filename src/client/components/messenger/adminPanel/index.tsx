@@ -89,8 +89,18 @@ const AdminPanel = () => {
               >
                 Teilnehmer hinzufügen
               </p>
-              <p className="cursor-pointer">Gruppennamen ändern</p>
-              <p className="cursor-pointer">Gruppeneinstellungen</p>
+              <p
+                onClick={() => navigate(`/groupChatNameChange/${id}`)}
+                className="cursor-pointer"
+              >
+                Gruppennamen ändern
+              </p>
+              <p
+                onClick={() => navigate(`/groupChatRules/${id}`)}
+                className="cursor-pointer"
+              >
+                Gruppeneinstellungen
+              </p>
             </DropDown>
           </div>
         </div>

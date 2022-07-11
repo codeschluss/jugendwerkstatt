@@ -88,6 +88,7 @@ const Chat = () => {
   }, [chatAddlistener.data?.addChatListener]);
 
   const getChat = useGetChatQuery({
+    fetchPolicy: "network-only",
     variables: {
       entity: { id: id },
     },
@@ -241,15 +242,17 @@ const Chat = () => {
                 return el?.user?.fullname;
               })}
         </h2>
-        <div
-          onClick={() =>
-            navigate(`/adminMsnPanel/${getChat.data?.getChat?.id}`)
-          }
-          className="flex text-gray-600 cursor-pointer md:mr-5"
-        >
-          <CogIcon className="w-5" />
-          <p>Einstellungen</p>
-        </div>
+        {getChat.data?.getChat?.name && (
+          <div
+            onClick={() =>
+              navigate(`/adminMsnPanel/${getChat.data?.getChat?.id}`)
+            }
+            className="flex text-gray-600 cursor-pointer md:mr-5"
+          >
+            <CogIcon className="w-5" />
+            <p>Einstellungen</p>
+          </div>
+        )}
       </div>
       <div className="py-3 h-full overflow-y-scroll">
         <p
