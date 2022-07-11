@@ -1,11 +1,13 @@
-import { FC, useEffect, useState } from 'react';
-import { NavLink, useLocation, useParams } from 'react-router-dom';
-import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid';
-import clsx from 'clsx';
-import { BASE_HREF } from '../../../config/global';
-import Nav from '../../molecules/Nav/Nav';
-import { Icon } from '../Icons';
-import { NavItemProps } from './NavItem.props';
+import { FC, useContext, useEffect, useState } from "react";
+import { NavLink, useLocation, useParams } from "react-router-dom";
+import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/solid";
+import clsx from "clsx";
+import { BASE_HREF } from "../../../config/global";
+import Nav from "../../molecules/Nav/Nav";
+import { Icon } from "../Icons";
+import { NavItemProps } from "./NavItem.props";
+import SideBarContext from "../../../../contexts/SideBarContext";
+import detectDevice from "../../../../shared/utils/isTouch";
 
 export const NavItem: FC<NavItemProps> = ({
   item,
@@ -25,6 +27,8 @@ export const NavItem: FC<NavItemProps> = ({
    * local state
    */
   const [showItems, setShowItems] = useState(false);
+  const { setSideBar } = useContext(SideBarContext);
+  const isTouch = detectDevice();
 
   /**
    * effects
@@ -45,19 +49,19 @@ export const NavItem: FC<NavItemProps> = ({
    * constants
    */
   const hasChild = !!item.items;
-  const paramIndex = pathname.split('/').findIndex((item) => item === id);
+  const paramIndex = pathname.split("/").findIndex((item) => item === id);
   const activeLink =
     pathname
-      .split('/')
+      .split("/")
       .filter((item) =>
-        id && paramIndex === pathname.split('/').length - 1
+        id && paramIndex === pathname.split("/").length - 1
           ? item !== id
-          : item !== 'new'
+          : item !== "new"
       )
-      .join('/') === `${BASE_HREF}/${item.location}`;
+      .join("/") === `${BASE_HREF}/${item.location}`;
 
   return (
-    <li className={clsx('w-full text-white', !isLastChild && 'mb-8')} {...rest}>
+    <li className={clsx("w-full text-white", !isLastChild && "mb-8")} {...rest}>
       {hasChild ? (
         <button
           className="flex items-center justify-between w-full"
@@ -73,11 +77,14 @@ export const NavItem: FC<NavItemProps> = ({
         </button>
       ) : (
         <NavLink
+          {...(!!isTouch && {
+            onClick: () => setSideBar(false),
+          })}
           end
           to={
             item.noItems ? `${item.location}` : `${BASE_HREF}/${item.location}`
           }
-          className={activeLink ? 'text-charcoal' : ''}
+          className={activeLink ? "text-charcoal" : ""}
         >
           {item.noItems ? (
             <div className="flex items-center space-x-2">
@@ -99,4 +106,4 @@ export const NavItem: FC<NavItemProps> = ({
   );
 };
 
-NavItem.displayName = 'Nav.Item';
+NavItem.displayName = "Nav.Item";
