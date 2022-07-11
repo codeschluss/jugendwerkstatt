@@ -22,3 +22,16 @@ export const validateMethod = (
   // Return the value unchanged
   return file;
 };
+
+export const validateHasOne = (
+  file: File | null,
+  helpers: Joi.CustomHelpers
+): File | Joi.ErrorReport | null => {
+  // validate
+  if (file === null) {
+    return helpers.error("any.empty");
+  }
+
+  // Return the value unchanged
+  return file;
+};

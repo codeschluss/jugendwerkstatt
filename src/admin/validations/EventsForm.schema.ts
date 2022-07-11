@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { validateMethod } from "../utils";
+import { validateHasOne, validateMethod } from "../utils";
 import { AddressFormSchema } from "./AddressForm.schema";
 import { EventBaseDataFormSchema } from "./EventBaseDataForm.schema";
 import { ScheduleFormSchema } from "./ScheduleForm.schema";
@@ -26,12 +26,26 @@ const FileSchema = Joi.object({
     }),
 });
 
+const FileSchemaHasOne = Joi.object({
+  file: Joi.alternatives()
+    .try(
+      Joi.custom(
+        (value, helpers) => validateHasOne(value, helpers),
+        "file-validate"
+      )
+    )
+    .messages({
+      "any.empty":
+        "The maximum file size that can be uploaded as an image is 5 MB.",
+    }),
+});
+
 export const EventsFormSchema = Joi.object({
   address: AddressFormSchema,
   baseData: EventBaseDataFormSchema,
   description: Joi.string().required().label("Beschreibung"),
   schedule: ScheduleFormSchema,
-  files: Joi.array().min(1).items(FileSchema),
+  files: Joi.array().min(1).items(FileSchema).has(FileSchemaHasOne),
 });
 
 export const OrganizerFormSchema = Joi.object({

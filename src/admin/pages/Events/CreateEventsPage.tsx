@@ -78,7 +78,6 @@ const CreateEventsPage = (): ReactElement => {
     register,
     reset,
     control,
-    getValues,
   } = methods;
 
   const { fields, append, remove, update } = useFieldArray({
@@ -206,8 +205,6 @@ const CreateEventsPage = (): ReactElement => {
     }
   }, [getEvent, reset]);
 
-  console.log("fields", getValues("files"));
-
   return (
     <FormProvider {...methods}>
       <form className="min-h-full">
@@ -234,6 +231,7 @@ const CreateEventsPage = (): ReactElement => {
           title="Bilder"
           showSide
           sideClassName="w-auto"
+          className={twClsx(errors.files && "border border-primary")}
           sideContent={
             file && (
               <EventImagePreview
