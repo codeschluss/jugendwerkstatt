@@ -91,9 +91,14 @@ import MainPanel from "./client/pages/messenger/adminPanel/MainPanel";
 import AddMemberPanel from "./client/pages/messenger/adminPanel/AddMemberPanel";
 import GroupNamePanel from "./client/pages/messenger/adminPanel/GroupNamePanel";
 import ChatAccessRules from "./client/pages/messenger/adminPanel/ChatAccessRules";
+import { useGetChatSettingsQuery } from "./GraphQl/graphql";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
+
+  const chatEnabled = useGetChatSettingsQuery({
+    fetchPolicy: "network-only",
+  });
 
   if (loading) return <div>Loading...</div>;
 
@@ -114,16 +119,24 @@ const App = (): ReactElement => {
         <Route path="/pending-approval" element={<ApprovalPending />} />
         <Route path="/verification/:id" element={<RegisteredSuccessfully />} />
 
-        <Route path="/messenger" element={<Messenger />}>
-          <Route path="chats" element={<Chats />} />
-          <Route path="calls" element={<Calls />} />
-          <Route path="contacts" element={<Contacts />} />
-          <Route path="chat/:id" element={<Chat />} />
-        </Route>
-        <Route path="/adminMsnPanel/:id" element={<MainPanel />} />
-        <Route path="/groupAddMember/:id" element={<AddMemberPanel />} />
-        <Route path="/groupChatNameChange/:id" element={<GroupNamePanel />} />
-        <Route path="/groupChatRules/:id" element={<ChatAccessRules />} />
+        {chatEnabled?.data?.getSettings?.chatActive && (
+          <>
+            {" "}
+            <Route path="/messenger" element={<Messenger />}>
+              <Route path="chats" element={<Chats />} />
+              <Route path="calls" element={<Calls />} />
+              <Route path="contacts" element={<Contacts />} />
+              <Route path="chat/:id" element={<Chat />} />
+            </Route>
+            <Route path="/adminMsnPanel/:id" element={<MainPanel />} />
+            <Route path="/groupAddMember/:id" element={<AddMemberPanel />} />
+            <Route
+              path="/groupChatNameChange/:id"
+              element={<GroupNamePanel />}
+            />
+            <Route path="/groupChatRules/:id" element={<ChatAccessRules />} />{" "}
+          </>
+        )}
       </Route>
 
       <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />

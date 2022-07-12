@@ -3502,12 +3502,12 @@ export type GetChatQueryVariables = Exact<{
 }>;
 
 
-export type GetChatQuery = { __typename?: 'Query', getChat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, admin?: boolean | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null> | null } | null };
+export type GetChatQuery = { __typename?: 'Query', getChat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, admin?: boolean | null, avatar?: { __typename?: 'MediaEntity', id?: string | null } | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, chat?: { __typename?: 'ChatEntity', avatar?: { __typename?: 'MediaEntity', id?: string | null } | null } | null, user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null> | null } | null };
 
-export type GetChatsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetChatSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetChatsQuery = { __typename?: 'Query', getChats?: { __typename?: 'PageableList_ChatEntity', result?: Array<{ __typename?: 'ChatEntity', name?: string | null, id?: string | null, modified?: any | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null } | null } | null> | null } | null> | null } | null };
+export type GetChatSettingsQuery = { __typename?: 'Query', getSettings?: { __typename?: 'SettingsEntity', chatActive?: boolean | null } | null };
 
 export type GetEventQueryVariables = Exact<{
   id: Scalars['String'];
@@ -3587,12 +3587,12 @@ export type GetMeAssignmentsQuery = { __typename?: 'Query', me?: { __typename?: 
 export type GetMeBasicQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMeBasicQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, phone?: string | null, password?: string | null, email?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null };
+export type GetMeBasicQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, phone?: string | null, password?: string | null, email?: string | null, roles?: Array<{ __typename?: 'RoleEntity', key?: string | null } | null> | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null };
 
 export type GetMeChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMeChatsQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, chat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, modified?: any | null, lastMessage?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, created?: any | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null } | null, messages?: Array<{ __typename?: 'MessageEntity', created?: any | null, content?: string | null, id?: string | null } | null> | null, participants?: Array<{ __typename?: 'ParticipantEntity', user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null> | null } | null } | null> | null } | null };
+export type GetMeChatsQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, chat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, modified?: any | null, avatar?: { __typename?: 'MediaEntity', id?: string | null } | null, lastMessage?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, created?: any | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null } | null, messages?: Array<{ __typename?: 'MessageEntity', created?: any | null, content?: string | null, id?: string | null } | null> | null, participants?: Array<{ __typename?: 'ParticipantEntity', user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null> | null } | null } | null> | null } | null };
 
 export type GetMeFavoritesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7094,7 +7094,15 @@ export const GetChatDocument = gql`
     id
     name
     admin
+    avatar {
+      id
+    }
     participants {
+      chat {
+        avatar {
+          id
+        }
+      }
       id
       user {
         fullname
@@ -7135,51 +7143,40 @@ export function useGetChatLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Ge
 export type GetChatQueryHookResult = ReturnType<typeof useGetChatQuery>;
 export type GetChatLazyQueryHookResult = ReturnType<typeof useGetChatLazyQuery>;
 export type GetChatQueryResult = Apollo.QueryResult<GetChatQuery, GetChatQueryVariables>;
-export const GetChatsDocument = gql`
-    query GetChats {
-  getChats {
-    result {
-      name
-      id
-      modified
-      participants {
-        id
-        user {
-          fullname
-          id
-        }
-      }
-    }
+export const GetChatSettingsDocument = gql`
+    query GetChatSettings {
+  getSettings {
+    chatActive
   }
 }
     `;
 
 /**
- * __useGetChatsQuery__
+ * __useGetChatSettingsQuery__
  *
- * To run a query within a React component, call `useGetChatsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetChatsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetChatSettingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChatSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetChatsQuery({
+ * const { data, loading, error } = useGetChatSettingsQuery({
  *   variables: {
  *   },
  * });
  */
-export function useGetChatsQuery(baseOptions?: Apollo.QueryHookOptions<GetChatsQuery, GetChatsQueryVariables>) {
+export function useGetChatSettingsQuery(baseOptions?: Apollo.QueryHookOptions<GetChatSettingsQuery, GetChatSettingsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetChatsQuery, GetChatsQueryVariables>(GetChatsDocument, options);
+        return Apollo.useQuery<GetChatSettingsQuery, GetChatSettingsQueryVariables>(GetChatSettingsDocument, options);
       }
-export function useGetChatsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChatsQuery, GetChatsQueryVariables>) {
+export function useGetChatSettingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChatSettingsQuery, GetChatSettingsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetChatsQuery, GetChatsQueryVariables>(GetChatsDocument, options);
+          return Apollo.useLazyQuery<GetChatSettingsQuery, GetChatSettingsQueryVariables>(GetChatSettingsDocument, options);
         }
-export type GetChatsQueryHookResult = ReturnType<typeof useGetChatsQuery>;
-export type GetChatsLazyQueryHookResult = ReturnType<typeof useGetChatsLazyQuery>;
-export type GetChatsQueryResult = Apollo.QueryResult<GetChatsQuery, GetChatsQueryVariables>;
+export type GetChatSettingsQueryHookResult = ReturnType<typeof useGetChatSettingsQuery>;
+export type GetChatSettingsLazyQueryHookResult = ReturnType<typeof useGetChatSettingsLazyQuery>;
+export type GetChatSettingsQueryResult = Apollo.QueryResult<GetChatSettingsQuery, GetChatSettingsQueryVariables>;
 export const GetEventDocument = gql`
     query GetEvent($id: String!) {
   getEvent(entity: {id: $id}) {
@@ -7794,6 +7791,9 @@ export const GetMeBasicDocument = gql`
     phone
     password
     email
+    roles {
+      key
+    }
     profilePicture {
       id
     }
@@ -7834,6 +7834,9 @@ export const GetMeChatsDocument = gql`
     participants {
       id
       chat {
+        avatar {
+          id
+        }
         id
         name
         lastMessage {

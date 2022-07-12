@@ -78,23 +78,6 @@ const AddMemberToGroup = () => {
         (el: UserEntity | undefined | null) => user?.id !== el?.id
       )
   );
-  // const [addToChat] = useSaveChatMutation();
-  const [addToChat] = useSaveUserMutation();
-  const addMemberHandler = (memberId: string | undefined | null) => {
-    // const existingParticipants: any = groupChat?.data?.getChat?.participants;
-    addToChat({
-      variables: {
-        entity: {
-          id: memberId,
-          group: {
-            chat: {
-              id: id,
-            },
-          },
-        },
-      },
-    }).then(() => groupChat.refetch());
-  };
 
   return (
     <div className="absolute md:relative pb-5  w-full h-full z-50 bg-white top-0 md:h-screen     ">
@@ -114,7 +97,6 @@ const AddMemberToGroup = () => {
         {notGroupMemberUsers?.map((user: UserEntity | undefined | null) => {
           return (
             <Item
-              onClick={() => addMemberHandler(user?.id)}
               key={user?.id}
               imgUrl={
                 user?.profilePicture?.id &&

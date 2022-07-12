@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 const ChatOverview = () => {
   return (
-    <div className="w-full h-full px-8 mt-10">
+    <div className="w-full h-full   mt-10">
       <nav className="text-2xl flex justify-around text-gray-500 mb-5">
         <NavLink
           className={({ isActive }) =>

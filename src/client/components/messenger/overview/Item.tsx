@@ -1,3 +1,4 @@
+import { PlusCircleIcon, XCircleIcon } from "@heroicons/react/outline";
 import React from "react";
 import { Link } from "react-router-dom";
 import Avatar from "../../../../shared/components/header/sideBar/Avatar";
@@ -9,9 +10,9 @@ interface ItemProps {
   imgUrl?: any;
   href?: string;
   onClick?: () => void;
+  addMember?: () => void;
+  deleteMember?: () => void;
 }
-
-///assets/avatarSmall2.png
 
 const Item: React.FC<ItemProps> = ({
   name,
@@ -20,6 +21,8 @@ const Item: React.FC<ItemProps> = ({
   imgUrl,
   href,
   onClick,
+  addMember,
+  deleteMember,
 }) => {
   console.log(imgUrl, "imgurl");
 
@@ -48,6 +51,18 @@ border-gray-500 justify-between ml-3 pb-1 items-center"
               <div className="text-xl text-center text-gray-border-gray-500">
                 {rightInfo}
               </div>
+            )}
+            {addMember && (
+              <PlusCircleIcon
+                onClick={addMember}
+                className="w-7 text-green-600"
+              />
+            )}
+            {deleteMember && (
+              <XCircleIcon
+                onClick={deleteMember}
+                className="w-7 text-red-600"
+              />
             )}
           </div>
         </div>

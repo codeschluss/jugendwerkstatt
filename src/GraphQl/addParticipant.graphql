@@ -1,0 +1,3 @@
+# mutation AddParticipant($chatId: String, $userId: String) {
+#   addParticipant(chatId: $chatId, userId: $userId)
+# }

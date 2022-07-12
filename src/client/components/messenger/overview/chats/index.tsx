@@ -4,7 +4,6 @@ import { API_URL } from "../../../../../config/app";
 import {
   ChatEntity,
   ParticipantEntity,
-  useGetChatsQuery,
   useGetMeBasicQuery,
   useGetMeChatsQuery,
   UserEntity,
@@ -21,7 +20,7 @@ const Chats = () => {
   }, []);
 
   return (
-    <div>
+    <div className="px-8">
       {getChats.data?.me?.participants
         ?.slice()
         .sort((a, b) => {
@@ -52,8 +51,10 @@ const Chats = () => {
                 </span>
               }
               imgUrl={
-                notMe[0]?.user?.profilePicture &&
-                `${API_URL}media/${notMe[0]?.user?.profilePicture?.id}`
+                el?.chat?.avatar?.id
+                  ? `${API_URL}media/${el?.chat?.avatar?.id}`
+                  : notMe[0]?.user?.profilePicture &&
+                    `${API_URL}media/${notMe[0]?.user?.profilePicture?.id}`
               }
               rightInfo={
                 <span className="text-sm">

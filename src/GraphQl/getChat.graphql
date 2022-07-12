@@ -3,7 +3,15 @@ query GetChat($entity: ChatEntityInput) {
     id
     name
     admin
+    avatar {
+      id
+    }
     participants {
+      chat {
+        avatar {
+          id
+        }
+      }
       id
       user {
         fullname
