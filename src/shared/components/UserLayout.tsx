@@ -1,5 +1,6 @@
 import { FC, useContext } from "react";
 import Evaluation from "../../client/components/Evaluation";
+import Footer from "../../client/components/footer";
 
 import Modal from "../../client/components/modals/courseReviewPopUp";
 import SideBarContext from "../../contexts/SideBarContext";
@@ -61,44 +62,46 @@ export const UserLayout: FC = ({ children }) => {
   }
 
   return (
-    <main
-      className={`flex flex-col  min-h-screen transition-all duration-500 ${
-        sideBar && isAuthenticated ? "md:pl-60" : "md:pl-20"
-      }`}
-    >
-      {filteredAssignment?.map(
-        (assignment: AssignmentEntity | undefined | null) => {
-          return (
-            <Evaluation
-              key={assignment?.id}
-              visible={true}
-              assignment={assignment}
-              refetchParent={() => assignments.refetch()}
-            />
-          );
-        }
-      )}
-
-      {feedback?.data?.me?.feedbacks?.map(
-        (el: FeedbackEntity | undefined | null) => {
-          if (el?.rating === null) {
+    <>
+      <main
+        className={`flex flex-col  min-h-screen transition-all duration-500 ${
+          sideBar && isAuthenticated ? "md:pl-60" : "md:pl-20"
+        }`}
+      >
+        {filteredAssignment?.map(
+          (assignment: AssignmentEntity | undefined | null) => {
             return (
-              <Modal
-                key={el?.id}
-                id={el?.id}
+              <Evaluation
+                key={assignment?.id}
                 visible={true}
-                course={el?.course?.name}
-                refetchParent={() => feedback.refetch()}
-              ></Modal>
+                assignment={assignment}
+                refetchParent={() => assignments.refetch()}
+              />
             );
           }
-        }
-      )}
-      {isAuthenticated && <Header />}
-      <div className="">
-        <div>{children}</div>
-      </div>
-      {/* <Footer /> */}
-    </main>
+        )}
+
+        {feedback?.data?.me?.feedbacks?.map(
+          (el: FeedbackEntity | undefined | null) => {
+            if (el?.rating === null) {
+              return (
+                <Modal
+                  key={el?.id}
+                  id={el?.id}
+                  visible={true}
+                  course={el?.course?.name}
+                  refetchParent={() => feedback.refetch()}
+                ></Modal>
+              );
+            }
+          }
+        )}
+        {isAuthenticated && <Header />}
+        <div className="">
+          <div>{children}</div>
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 };

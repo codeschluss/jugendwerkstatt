@@ -6,6 +6,7 @@ import useInput from "../../../hooks/use-input";
 import AuthInput from "../../../shared/components/authentication/AuthInput";
 import AuthWrapper from "../../../shared/components/authentication/AuthWrapper";
 import { useTempEmailStore } from "../../../store/tempEmail/tempEmail.store";
+import Footer from "../footer";
 import Button from "../ui/Button";
 import { RegisterValidations } from "./registerfooter/RegisterValidations";
 
@@ -134,66 +135,69 @@ const Register = () => {
   };
 
   return (
-    <AuthWrapper page="register" title={"Registrierung"}>
-      <form className="w-full" onSubmit={onSubmitHandler}>
-        <div className="p-12 pb-0">
-          <AuthInput
-            id="Name"
-            type="text"
-            inputClassName={`${
-              usernameInputError && "border-500-red"
-            }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
-            onChange={usernameChangeHandler}
-            onBlur={usernameBlurHandler}
-            value={enteredUsername}
-            error={usernameInputError ? "Darf nicht leer sein" : ""}
-          />
-          <AuthInput
-            id="Email-Adresse"
-            type="text"
-            onChange={emailChangeHandler}
-            onBlur={emailBlurHandler}
-            value={enteredEmail}
-            error={emailInputError ? "E-Mail Adresse nicht gültig" : ""}
-            inputClassName={`${
-              emailInputError && "border-500-red"
-            }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
-          />
-          <AuthInput
-            id="Passwort"
-            type="password"
-            onChange={twoCalls}
-            onBlur={passwordBlurHandler}
-            value={enteredPassword}
-            error={passwordInputError ? "Passwort nicht stark genug" : ""}
-            inputClassName={`${
-              passwordInputError && "border-500-red"
-            }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
-          />
-          <AuthInput
-            id="Passwort wiederholen"
-            type="password"
-            onChange={cPasswordChangeHandler}
-            onBlur={cPasswordBlurHandler}
-            value={enteredCPassword}
-            error={cPasswordInputError ? "Password must match" : ""}
-            inputClassName={`${
-              cPasswordInputError && "border-500-red"
-            }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
-          />
-          <RegisterValidations passwordBits={passwordBits} />
-        </div>
-        <span className="w-[80%] block m-auto">
-          <Button
-            isValidated={inputsAreValid}
-            isDisabled={inputsAreValid}
-            buttonType={"submit"}
-          >
-            Registrieren
-          </Button>
-        </span>
-      </form>
-    </AuthWrapper>
+    <>
+      <AuthWrapper page="register" title={"Registrierung"}>
+        <form className="w-full" onSubmit={onSubmitHandler}>
+          <div className="p-12 pb-0">
+            <AuthInput
+              id="Name"
+              type="text"
+              inputClassName={`${
+                usernameInputError && "border-500-red"
+              }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
+              onChange={usernameChangeHandler}
+              onBlur={usernameBlurHandler}
+              value={enteredUsername}
+              error={usernameInputError ? "Darf nicht leer sein" : ""}
+            />
+            <AuthInput
+              id="Email-Adresse"
+              type="text"
+              onChange={emailChangeHandler}
+              onBlur={emailBlurHandler}
+              value={enteredEmail}
+              error={emailInputError ? "E-Mail Adresse nicht gültig" : ""}
+              inputClassName={`${
+                emailInputError && "border-500-red"
+              }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
+            />
+            <AuthInput
+              id="Passwort"
+              type="password"
+              onChange={twoCalls}
+              onBlur={passwordBlurHandler}
+              value={enteredPassword}
+              error={passwordInputError ? "Passwort nicht stark genug" : ""}
+              inputClassName={`${
+                passwordInputError && "border-500-red"
+              }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
+            />
+            <AuthInput
+              id="Passwort wiederholen"
+              type="password"
+              onChange={cPasswordChangeHandler}
+              onBlur={cPasswordBlurHandler}
+              value={enteredCPassword}
+              error={cPasswordInputError ? "Password must match" : ""}
+              inputClassName={`${
+                cPasswordInputError && "border-500-red"
+              }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
+            />
+            <RegisterValidations passwordBits={passwordBits} />
+          </div>
+          <span className="w-[80%] block m-auto">
+            <Button
+              isValidated={inputsAreValid}
+              isDisabled={inputsAreValid}
+              buttonType={"submit"}
+            >
+              Registrieren
+            </Button>
+          </span>
+        </form>
+      </AuthWrapper>
+      <Footer />
+    </>
   );
 };
 

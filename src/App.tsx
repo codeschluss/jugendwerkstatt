@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import { RequireAuthRoute, RequireNonAuthRoute } from "./shared/components";
@@ -92,13 +92,23 @@ import AddMemberPanel from "./client/pages/messenger/adminPanel/AddMemberPanel";
 import GroupNamePanel from "./client/pages/messenger/adminPanel/GroupNamePanel";
 import ChatAccessRules from "./client/pages/messenger/adminPanel/ChatAccessRules";
 import { useGetChatSettingsQuery } from "./GraphQl/graphql";
+import { useAuthStore } from "./store";
+import GlobalPages from "./client/pages/globalPages";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
+  const { isAuthenticated } = useAuthStore();
 
   const chatEnabled = useGetChatSettingsQuery({
     fetchPolicy: "network-only",
+    skip: !isAuthenticated,
   });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      chatEnabled.refetch();
+    }
+  }, [isAuthenticated]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -117,7 +127,6 @@ const App = (): ReactElement => {
 
         <Route path="/reVerifyEmail" element={<ReVerifyUser />} />
         <Route path="/pending-approval" element={<ApprovalPending />} />
-        <Route path="/verification/:id" element={<RegisteredSuccessfully />} />
 
         {chatEnabled?.data?.getSettings?.chatActive && (
           <>
@@ -138,8 +147,10 @@ const App = (): ReactElement => {
           </>
         )}
       </Route>
+      <Route path="/verification/:id" element={<RegisteredSuccessfully />} />
 
       <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />
+      <Route path="/infoPage/:id" element={<GlobalPages />} />
 
       <Route element={<RequireNonAuthRoute />}>
         <Route path="/login" element={<LoginPage />} />

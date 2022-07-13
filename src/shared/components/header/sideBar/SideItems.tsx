@@ -10,6 +10,7 @@ import {
   QuestionMarkCircleIcon,
   ChevronDoubleRightIcon,
   MapIcon,
+  GlobeIcon,
 } from "@heroicons/react/outline";
 import { HeartIcon } from "@heroicons/react/solid";
 import { useContext } from "react";
@@ -84,15 +85,15 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
       </ul>
       {sideBar ? (
         <span
-          className="w-full text-center text-white"
+          className="w-full text-center text-white cursor-pointer"
           onClick={() => setSideBar(false)}
         >
-          Menu schliesen
+          Menu einkippen
         </span>
       ) : (
         <span
           onClick={() => setSideBar(true)}
-          className="flex justify-end w-full pr-6 text-white"
+          className="flex justify-end w-full pr-6 text-white cursor-pointer"
         >
           <ChevronDoubleRightIcon className="w-8" />
         </span>

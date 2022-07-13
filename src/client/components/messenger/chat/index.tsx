@@ -21,6 +21,7 @@ import {
 } from "@heroicons/react/outline";
 import { readAuthToken } from "../../../../shared/utils";
 import TypeInput from "../../forms/upload/TypeInput";
+import { API_URL } from "../../../../config/app";
 
 const Chat = () => {
   const accessToken = readAuthToken("accessToken") || "";

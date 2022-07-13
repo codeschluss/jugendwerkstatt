@@ -50,6 +50,31 @@ const ChatText: React.FC<TextProps> = ({
     }
   }, [media]);
 
+  const downloadTemplateDocx = async (
+    mediaId: any,
+    mediaName: any,
+    mediaMimeType: any
+  ) => {
+    const requestOptions = {
+      method: "GET",
+    };
+    await fetch(API_URL + `media/download/${mediaId}`, requestOptions)
+      .then((resp) => resp.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = `${mediaName}.${mediaMimeType}`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        alert("your file has downloaded!");
+      })
+
+      .catch((e) => console.log(e));
+  };
+
   return (
     <div
       className={`w-full flex px-6  ${me ? "justify-end" : "justify-start"}`}
@@ -97,7 +122,18 @@ const ChatText: React.FC<TextProps> = ({
         {content && <p>{content}</p>}
         {media && (
           <>
-            <div className="w-32  border-2 border-gray-200">{mediaContent}</div>
+            <div
+              onClick={() =>
+                downloadTemplateDocx(
+                  media.id,
+                  media?.name,
+                  media?.mimeType?.split("/")[1]
+                )
+              }
+              className="w-32  border-2 border-gray-200"
+            >
+              {mediaContent}
+            </div>
             <p>{media.name}</p>
           </>
         )}

@@ -3673,6 +3673,23 @@ export type MeRolesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeRolesQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, roles?: Array<{ __typename?: 'RoleEntity', key?: string | null } | null> | null } | null };
 
+export type PublicPagesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PublicPagesQuery = { __typename?: 'Query', getPages?: { __typename?: 'PageableList_PageEntity', result?: Array<{ __typename?: 'PageEntity', id?: string | null, content?: string | null, name?: string | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null } | null> | null, video?: { __typename?: 'MediaEntity', id?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null } | null> | null } | null };
+
+export type PublicPagesBasicQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PublicPagesBasicQuery = { __typename?: 'Query', getPages?: { __typename?: 'PageableList_PageEntity', result?: Array<{ __typename?: 'PageEntity', id?: string | null, name?: string | null } | null> | null } | null };
+
+export type GetSinglePublicPageQueryVariables = Exact<{
+  entity?: InputMaybe<PageEntityInput>;
+}>;
+
+
+export type GetSinglePublicPageQuery = { __typename?: 'Query', getPage?: { __typename?: 'PageEntity', content?: string | null, id?: string | null, name?: string | null, slug?: string | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null } | null> | null, video?: { __typename?: 'MediaEntity', id?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null } | null };
+
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars['String'];
 }>;
@@ -8498,6 +8515,137 @@ export function useMeRolesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Me
 export type MeRolesQueryHookResult = ReturnType<typeof useMeRolesQuery>;
 export type MeRolesLazyQueryHookResult = ReturnType<typeof useMeRolesLazyQuery>;
 export type MeRolesQueryResult = Apollo.QueryResult<MeRolesQuery, MeRolesQueryVariables>;
+export const PublicPagesDocument = gql`
+    query PublicPages {
+  getPages {
+    result {
+      id
+      content
+      name
+      images {
+        id
+      }
+      video {
+        id
+      }
+      titleImage {
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __usePublicPagesQuery__
+ *
+ * To run a query within a React component, call `usePublicPagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePublicPagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePublicPagesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePublicPagesQuery(baseOptions?: Apollo.QueryHookOptions<PublicPagesQuery, PublicPagesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PublicPagesQuery, PublicPagesQueryVariables>(PublicPagesDocument, options);
+      }
+export function usePublicPagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PublicPagesQuery, PublicPagesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PublicPagesQuery, PublicPagesQueryVariables>(PublicPagesDocument, options);
+        }
+export type PublicPagesQueryHookResult = ReturnType<typeof usePublicPagesQuery>;
+export type PublicPagesLazyQueryHookResult = ReturnType<typeof usePublicPagesLazyQuery>;
+export type PublicPagesQueryResult = Apollo.QueryResult<PublicPagesQuery, PublicPagesQueryVariables>;
+export const PublicPagesBasicDocument = gql`
+    query PublicPagesBasic {
+  getPages {
+    result {
+      id
+      name
+    }
+  }
+}
+    `;
+
+/**
+ * __usePublicPagesBasicQuery__
+ *
+ * To run a query within a React component, call `usePublicPagesBasicQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePublicPagesBasicQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePublicPagesBasicQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePublicPagesBasicQuery(baseOptions?: Apollo.QueryHookOptions<PublicPagesBasicQuery, PublicPagesBasicQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PublicPagesBasicQuery, PublicPagesBasicQueryVariables>(PublicPagesBasicDocument, options);
+      }
+export function usePublicPagesBasicLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PublicPagesBasicQuery, PublicPagesBasicQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PublicPagesBasicQuery, PublicPagesBasicQueryVariables>(PublicPagesBasicDocument, options);
+        }
+export type PublicPagesBasicQueryHookResult = ReturnType<typeof usePublicPagesBasicQuery>;
+export type PublicPagesBasicLazyQueryHookResult = ReturnType<typeof usePublicPagesBasicLazyQuery>;
+export type PublicPagesBasicQueryResult = Apollo.QueryResult<PublicPagesBasicQuery, PublicPagesBasicQueryVariables>;
+export const GetSinglePublicPageDocument = gql`
+    query GetSinglePublicPage($entity: PageEntityInput) {
+  getPage(entity: $entity) {
+    content
+    id
+    images {
+      id
+    }
+    name
+    slug
+    video {
+      id
+    }
+    titleImage {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetSinglePublicPageQuery__
+ *
+ * To run a query within a React component, call `useGetSinglePublicPageQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSinglePublicPageQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSinglePublicPageQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetSinglePublicPageQuery(baseOptions?: Apollo.QueryHookOptions<GetSinglePublicPageQuery, GetSinglePublicPageQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSinglePublicPageQuery, GetSinglePublicPageQueryVariables>(GetSinglePublicPageDocument, options);
+      }
+export function useGetSinglePublicPageLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSinglePublicPageQuery, GetSinglePublicPageQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSinglePublicPageQuery, GetSinglePublicPageQueryVariables>(GetSinglePublicPageDocument, options);
+        }
+export type GetSinglePublicPageQueryHookResult = ReturnType<typeof useGetSinglePublicPageQuery>;
+export type GetSinglePublicPageLazyQueryHookResult = ReturnType<typeof useGetSinglePublicPageLazyQuery>;
+export type GetSinglePublicPageQueryResult = Apollo.QueryResult<GetSinglePublicPageQuery, GetSinglePublicPageQueryVariables>;
 export const RefreshTokenDocument = gql`
     mutation refreshToken($refreshToken: String!) {
   refreshToken(refreshToken: $refreshToken) {

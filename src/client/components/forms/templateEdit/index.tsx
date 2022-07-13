@@ -123,6 +123,42 @@ const TemplateEdit: React.FC = () => {
     }
   }, [userTemplateContent, templateContentResult]);
 
+  function uploadAdapter(loader: any) {
+    return {
+      upload: () => {
+        return new Promise((resolve, reject) => {
+          const body = new FormData();
+          loader.file.then((file: any) => {
+            body.append("files", file);
+            // let headers = new Headers();
+            // headers.append("Origin", "http://localhost:3000");
+            fetch(`${API_URL}`, {
+              method: "post",
+              body: body,
+              // mode: "no-cors"
+            })
+              .then((res) => res.json())
+              .then((res) => {
+                resolve({
+                  default: `${API_URL}/${res.filename}`,
+                });
+              })
+              .catch((err) => {
+                reject(err);
+              });
+          });
+        });
+      },
+    };
+  }
+  function uploadPlugin(editor: any) {
+    editor.plugins.get("FileRepository").createUploadAdapter = (
+      loader: any
+    ) => {
+      return uploadAdapter(loader);
+    };
+  }
+
   return (
     <div className="container px-4 pt-4 mx-auto">
       <h5 className="text-2xl font-bold">
@@ -165,6 +201,9 @@ const TemplateEdit: React.FC = () => {
 
       <div className="pt-4 pb-6">
         <CKEditor
+          config={{
+            extraPlugins: [uploadPlugin],
+          }}
           editor={ClassicEditor}
           data={templateContent}
           onChange={(event: any, editor: any) => {
