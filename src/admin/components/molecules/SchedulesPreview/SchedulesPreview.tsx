@@ -1,7 +1,7 @@
-import dayjs from "dayjs";
-import { FC, ReactElement } from "react";
-import { Badge, Button } from "../../atoms";
-import { SchedulesPreviewProps } from "./SchedulesPreview.props";
+import dayjs from 'dayjs';
+import { FC, ReactElement } from 'react';
+import { Badge, Button } from '../../atoms';
+import { SchedulesPreviewProps } from './SchedulesPreview.props';
 
 export const SchedulesPreview: FC<SchedulesPreviewProps> = ({
   schedules,
@@ -16,11 +16,11 @@ export const SchedulesPreview: FC<SchedulesPreviewProps> = ({
       <div className="flex flex-col space-y-5 overflow-y-auto h-80">
         {schedules?.map((date, idx) => (
           <Badge key={idx} onRemove={handleDelete(idx)}>
-            {`${dayjs(date.startDate).format("DD-MM-YYYY")} - ${dayjs(
+            {`${dayjs(date.startDate).format('DD.MM.YYYY')} - ${dayjs(
               date.endDate
-            ).format("DD-MM-YYYY")}, ${dayjs(date.startDate).format(
-              "HH:mm"
-            )} - ${dayjs(date.endDate).format("HH:mm")}`}
+            ).format('DD.MM.YYYY')}, ${dayjs(date.startDate).format(
+              'HH:mm'
+            )} - ${dayjs(date.endDate).format('HH:mm')}`}
           </Badge>
         ))}
       </div>

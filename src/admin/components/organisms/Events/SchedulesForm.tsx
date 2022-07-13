@@ -63,6 +63,7 @@ export const SchedulesForm = ({
                   minDate={new Date()}
                   onChange={(date) => field.onChange(date)}
                   selected={field.value}
+                  dateFormat="dd.MM.yyyy"
                 />
               )}
             />
@@ -99,6 +100,7 @@ export const SchedulesForm = ({
                   minDate={new Date()}
                   onChange={(date) => field.onChange(date)}
                   selected={field.value}
+                  dateFormat="dd.MM.yyyy"
                 />
               )}
             />

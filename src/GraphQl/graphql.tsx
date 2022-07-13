@@ -126,7 +126,7 @@ export type CallEntity = {
   chat?: Maybe<ChatEntity>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   id?: Maybe<Scalars['String']>;
-  initiator?: Maybe<UserEntity>;
+  initiator?: Maybe<ParticipantEntity>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
 };
 
@@ -134,7 +134,7 @@ export type CallEntityInput = {
   chat?: InputMaybe<ChatEntityInput>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   id?: InputMaybe<Scalars['String']>;
-  initiator?: InputMaybe<UserEntityInput>;
+  initiator?: InputMaybe<ParticipantEntityInput>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
 };
 
@@ -1909,6 +1909,7 @@ export type PageableList_UserTemplateEntity = {
 
 export type ParticipantEntity = {
   __typename?: 'ParticipantEntity';
+  calls?: Maybe<Array<Maybe<CallEntity>>>;
   chat?: Maybe<ChatEntity>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   id?: Maybe<Scalars['String']>;
@@ -1919,6 +1920,7 @@ export type ParticipantEntity = {
 };
 
 export type ParticipantEntityInput = {
+  calls?: InputMaybe<Array<InputMaybe<CallEntityInput>>>;
   chat?: InputMaybe<ChatEntityInput>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   id?: InputMaybe<Scalars['String']>;
@@ -2753,7 +2755,6 @@ export type UserEntity = {
   __typename?: 'UserEntity';
   approved?: Maybe<Scalars['Boolean']>;
   assignments?: Maybe<Array<Maybe<AssignmentEntity>>>;
-  calls?: Maybe<Array<Maybe<CallEntity>>>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   email?: Maybe<Scalars['String']>;
   favoriteEvents?: Maybe<Array<Maybe<EventEntity>>>;
@@ -2780,7 +2781,6 @@ export type UserEntity = {
 export type UserEntityInput = {
   approved?: InputMaybe<Scalars['Boolean']>;
   assignments?: InputMaybe<Array<InputMaybe<AssignmentEntityInput>>>;
-  calls?: InputMaybe<Array<InputMaybe<CallEntityInput>>>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   email?: InputMaybe<Scalars['String']>;
   favoriteEvents?: InputMaybe<Array<InputMaybe<EventEntityInput>>>;
@@ -3585,7 +3585,7 @@ export type GetMeBasicQuery = { __typename?: 'Query', me?: { __typename?: 'UserE
 export type GetMeChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMeChatsQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, chat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, modified?: any | null, lastMessage?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, created?: any | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null } | null } | null, messages?: Array<{ __typename?: 'MessageEntity', created?: any | null, content?: string | null, id?: string | null } | null> | null, participants?: Array<{ __typename?: 'ParticipantEntity', user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null> | null } | null } | null> | null } | null };
+export type GetMeChatsQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, chat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, modified?: any | null, lastMessage?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, created?: any | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null } | null, messages?: Array<{ __typename?: 'MessageEntity', created?: any | null, content?: string | null, id?: string | null } | null> | null, participants?: Array<{ __typename?: 'ParticipantEntity', user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null> | null } | null } | null> | null } | null };
 
 export type GetMeFavoritesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7806,6 +7806,9 @@ export const GetMeChatsDocument = gql`
             user {
               id
               fullname
+              profilePicture {
+                id
+              }
             }
           }
         }
