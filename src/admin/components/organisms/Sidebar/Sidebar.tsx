@@ -1,7 +1,7 @@
 import { FC, ReactElement } from 'react';
+import Nav from '../../molecules/Nav/Nav';
 import { useGetGroupsQuery } from '../../../../GraphQl/graphql';
 import { navItems } from '../../../static/navItems';
-import Nav from '../../molecules/Nav/Nav';
 import { SidebarProps } from './Sidebar.props';
 
 export const Sidebar: FC<SidebarProps> = (): ReactElement => {
@@ -10,7 +10,11 @@ export const Sidebar: FC<SidebarProps> = (): ReactElement => {
   const mappedGroups =
     groups?.result?.map((group) => ({
       name: group?.name || '',
-      location: `groups/${group?.id || ''}/members`,
+      location: `groups/${group?.id}/view`,
+      items: group?.courses?.map((course) => ({
+        name: course?.name,
+        location: `courses/${course?.id}`,
+      })),
     })) || [];
 
   return (

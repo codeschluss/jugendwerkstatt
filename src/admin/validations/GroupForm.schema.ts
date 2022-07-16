@@ -1,11 +1,12 @@
 import Joi from 'joi';
 
-const CourseSchema = Joi.object({
-  name: Joi.string().required().label('Course Name'),
-  isActive: Joi.boolean(),
-});
-
 export const GroupFormSchema = Joi.object({
   name: Joi.string().required().label('Name'),
-  courses: Joi.array().min(1).required().items(CourseSchema).label('Courses'),
+  description: Joi.string().required().label('Description'),
+});
+
+export const GroupCourseFormSchema = Joi.object({
+  name: Joi.string().required().label('Name'),
+  group: Joi.string().required().label('Group'),
+  description: Joi.string().required().label('Description'),
 });

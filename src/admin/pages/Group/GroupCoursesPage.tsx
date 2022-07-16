@@ -30,10 +30,10 @@ const GroupCoursesPage = (): ReactElement => {
       <div className="flex-1 p-10 bg-white ">
         <CustomTable
           headerData={[`Kurs - ${group?.name}`, 'Bewertung Ø']}
-          bodyData={groupCourses.map((group) => (
-            <Table.Row key={group?.id}>
-              <Table.Data>{group?.name}</Table.Data>
-              <Table.Data>{group?.averageRating}</Table.Data>
+          bodyData={groupCourses.map((course) => (
+            <Table.Row key={course?.id}>
+              <Table.Data>{course?.name}</Table.Data>
+              <Table.Data>{course?.averageRating}</Table.Data>
             </Table.Row>
           ))}
         />

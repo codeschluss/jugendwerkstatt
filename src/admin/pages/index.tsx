@@ -204,8 +204,15 @@ export const GroupCoursesPage = loadable(
   }
 );
 
-export const GroupMembersPage = loadable(
-  () => timeout(import('./Group/GroupMembersPage'), PAGE_LOAD_TIMEOUT),
+export const GroupCourseFormPage = loadable(
+  () => timeout(import('./Group/GroupCourseFormPage'), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+
+export const GroupPage = loadable(
+  () => timeout(import('./Group/GroupPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }
@@ -218,8 +225,15 @@ export const GroupFormPage = loadable(
   }
 );
 
-export const CreateGroupMembersPage = loadable(
-  () => timeout(import('./Group/CreateGroupMembersPage'), PAGE_LOAD_TIMEOUT),
+// Courses pages
+export const CourseMembersPage = loadable(
+  () => timeout(import('./Group/CourseMembersPage'), PAGE_LOAD_TIMEOUT),
+  {
+    fallback: <PageLoader />,
+  }
+);
+export const CreateCourseMembersPage = loadable(
+  () => timeout(import('./Group/CreateCourseMembersPage'), PAGE_LOAD_TIMEOUT),
   {
     fallback: <PageLoader />,
   }

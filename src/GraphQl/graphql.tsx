@@ -206,13 +206,13 @@ export type CoordinateInput = {
 
 export type CourseEntity = {
   __typename?: 'CourseEntity';
-  active?: Maybe<Scalars['Boolean']>;
-  activeOrder?: Maybe<Scalars['Int']>;
   averageRating?: Maybe<Scalars['Float']>;
   created?: Maybe<Scalars['OffsetDateTime']>;
+  description?: Maybe<Scalars['String']>;
   feedbacks?: Maybe<Array<Maybe<FeedbackEntity>>>;
   group?: Maybe<GroupEntity>;
   id?: Maybe<Scalars['String']>;
+  members?: Maybe<Array<Maybe<UserEntity>>>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   name?: Maybe<Scalars['String']>;
 };
@@ -223,12 +223,12 @@ export type CourseEntityAverageRatingArgs = {
 };
 
 export type CourseEntityInput = {
-  active?: InputMaybe<Scalars['Boolean']>;
-  activeOrder?: InputMaybe<Scalars['Int']>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
+  description?: InputMaybe<Scalars['String']>;
   feedbacks?: InputMaybe<Array<InputMaybe<FeedbackEntityInput>>>;
   group?: InputMaybe<GroupEntityInput>;
   id?: InputMaybe<Scalars['String']>;
+  members?: InputMaybe<Array<InputMaybe<UserEntityInput>>>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   name?: InputMaybe<Scalars['String']>;
 };
@@ -354,20 +354,20 @@ export type GroupEntity = {
   chat?: Maybe<ChatEntity>;
   courses?: Maybe<Array<Maybe<CourseEntity>>>;
   created?: Maybe<Scalars['OffsetDateTime']>;
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   name?: Maybe<Scalars['String']>;
-  users?: Maybe<Array<Maybe<UserEntity>>>;
 };
 
 export type GroupEntityInput = {
   chat?: InputMaybe<ChatEntityInput>;
   courses?: InputMaybe<Array<InputMaybe<CourseEntityInput>>>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
+  description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   name?: InputMaybe<Scalars['String']>;
-  users?: InputMaybe<Array<InputMaybe<UserEntityInput>>>;
 };
 
 export type Hint = {
@@ -584,6 +584,7 @@ export type Mutation = {
   addEventFavorite?: Maybe<UserEntity>;
   addJobAdFavorite?: Maybe<UserEntity>;
   addMember: Scalars['Boolean'];
+  addParticipant: Scalars['Boolean'];
   addUploads?: Maybe<UserEntity>;
   createToken?: Maybe<TokenDto>;
   deleteAddress?: Maybe<Scalars['Boolean']>;
@@ -656,6 +657,7 @@ export type Mutation = {
   deleteUserTemplates?: Maybe<Scalars['Boolean']>;
   deleteUsers?: Maybe<Scalars['Boolean']>;
   refreshToken?: Maybe<TokenDto>;
+  removeParticipant: Scalars['Boolean'];
   resetPassword?: Maybe<Scalars['Boolean']>;
   saveAddress?: Maybe<AddressEntity>;
   saveAddresses?: Maybe<Array<Maybe<AddressEntity>>>;
@@ -747,7 +749,14 @@ export type MutationAddJobAdFavoriteArgs = {
 
 /** Mutation root */
 export type MutationAddMemberArgs = {
-  groupId?: InputMaybe<Scalars['String']>;
+  courseId?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationAddParticipantArgs = {
+  chatId?: InputMaybe<Scalars['String']>;
   userId?: InputMaybe<Scalars['String']>;
 };
 
@@ -984,7 +993,7 @@ export type MutationDeleteMeArgs = {
 
 /** Mutation root */
 export type MutationDeleteMemberArgs = {
-  groupId?: InputMaybe<Scalars['String']>;
+  courseId?: InputMaybe<Scalars['String']>;
   userId?: InputMaybe<Scalars['String']>;
 };
 
@@ -1184,6 +1193,13 @@ export type MutationDeleteUsersArgs = {
 /** Mutation root */
 export type MutationRefreshTokenArgs = {
   refreshToken?: InputMaybe<Scalars['String']>;
+};
+
+
+/** Mutation root */
+export type MutationRemoveParticipantArgs = {
+  chatId?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -2755,13 +2771,13 @@ export type UserEntity = {
   __typename?: 'UserEntity';
   approved?: Maybe<Scalars['Boolean']>;
   assignments?: Maybe<Array<Maybe<AssignmentEntity>>>;
+  course?: Maybe<CourseEntity>;
   created?: Maybe<Scalars['OffsetDateTime']>;
   email?: Maybe<Scalars['String']>;
   favoriteEvents?: Maybe<Array<Maybe<EventEntity>>>;
   favoriteJobAds?: Maybe<Array<Maybe<JobAdEntity>>>;
   feedbacks?: Maybe<Array<Maybe<FeedbackEntity>>>;
   fullname?: Maybe<Scalars['String']>;
-  group?: Maybe<GroupEntity>;
   id?: Maybe<Scalars['String']>;
   modified?: Maybe<Scalars['OffsetDateTime']>;
   notifications?: Maybe<Array<Maybe<NotificationEntity>>>;
@@ -2781,13 +2797,13 @@ export type UserEntity = {
 export type UserEntityInput = {
   approved?: InputMaybe<Scalars['Boolean']>;
   assignments?: InputMaybe<Array<InputMaybe<AssignmentEntityInput>>>;
+  course?: InputMaybe<CourseEntityInput>;
   created?: InputMaybe<Scalars['OffsetDateTime']>;
   email?: InputMaybe<Scalars['String']>;
   favoriteEvents?: InputMaybe<Array<InputMaybe<EventEntityInput>>>;
   favoriteJobAds?: InputMaybe<Array<InputMaybe<JobAdEntityInput>>>;
   feedbacks?: InputMaybe<Array<InputMaybe<FeedbackEntityInput>>>;
   fullname?: InputMaybe<Scalars['String']>;
-  group?: InputMaybe<GroupEntityInput>;
   id?: InputMaybe<Scalars['String']>;
   modified?: InputMaybe<Scalars['OffsetDateTime']>;
   notifications?: InputMaybe<Array<InputMaybe<NotificationEntityInput>>>;
@@ -2871,7 +2887,7 @@ export type CompanyFieldFragment = { __typename?: 'CompanyEntity', id?: string |
 
 export type CompanyFragment = { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', id?: string | null, houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null, longitude?: number | null, latitude?: number | null } | null };
 
-export type CourseFieldFragment = { __typename?: 'CourseEntity', id?: string | null, name?: string | null, active?: boolean | null };
+export type CourseFieldFragment = { __typename?: 'CourseEntity', id?: string | null, name?: string | null, description?: string | null, group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null, members?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null };
 
 export type EventFieldFragment = { __typename?: 'EventEntity', id?: string | null, name?: string | null, description?: string | null };
 
@@ -2881,7 +2897,7 @@ export type EventFragment = { __typename?: 'EventEntity', id?: string | null, na
 
 export type FileFieldFragment = { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null, name?: string | null };
 
-export type GroupFieldFragment = { __typename?: 'GroupEntity', id?: string | null, name?: string | null };
+export type GroupFieldFragment = { __typename?: 'GroupEntity', id?: string | null, name?: string | null, description?: string | null };
 
 export type JobAdFieldFragment = { __typename?: 'JobAdEntity', id?: string | null, title?: string | null, startDate?: any | null, dueDate?: any | null, content?: string | null };
 
@@ -2919,7 +2935,7 @@ export type TemplateFragment = { __typename?: 'TemplateEntity', id?: string | nu
 
 export type UserTemplateFragment = { __typename?: 'UserTemplateEntity', id?: string | null, name?: string | null, content?: string | null, created?: any | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null };
 
-export type UserFieldFragment = { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null };
+export type UserFieldFragment = { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null, course?: { __typename?: 'CourseEntity', id?: string | null, name?: string | null, description?: string | null, group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null, members?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null } | null };
 
 export type SaveAddressMutationVariables = Exact<{
   entity?: InputMaybe<AddressEntityInput>;
@@ -2962,6 +2978,36 @@ export type DeleteCompanyMutationVariables = Exact<{
 
 
 export type DeleteCompanyMutation = { __typename?: 'Mutation', deleteCompany?: boolean | null };
+
+export type SaveCourseMutationVariables = Exact<{
+  entity?: InputMaybe<CourseEntityInput>;
+}>;
+
+
+export type SaveCourseMutation = { __typename?: 'Mutation', saveCourse?: { __typename?: 'CourseEntity', id?: string | null } | null };
+
+export type DeleteCourseMutationVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteCourseMutation = { __typename?: 'Mutation', deleteCourse?: boolean | null };
+
+export type AddCourseMemberMutationVariables = Exact<{
+  userId?: InputMaybe<Scalars['String']>;
+  courseId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type AddCourseMemberMutation = { __typename?: 'Mutation', addMember: boolean };
+
+export type DeleteCourseMemberMutationVariables = Exact<{
+  userId?: InputMaybe<Scalars['String']>;
+  courseId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteCourseMemberMutation = { __typename?: 'Mutation', deleteMember: boolean };
 
 export type SaveEventMutationVariables = Exact<{
   entity?: InputMaybe<EventEntityInput>;
@@ -3011,22 +3057,6 @@ export type DeleteGroupMutationVariables = Exact<{
 
 
 export type DeleteGroupMutation = { __typename?: 'Mutation', deleteGroup?: boolean | null };
-
-export type AddGroupMemberMutationVariables = Exact<{
-  userId?: InputMaybe<Scalars['String']>;
-  groupId?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type AddGroupMemberMutation = { __typename?: 'Mutation', addMember: boolean };
-
-export type DeleteGroupMemberMutationVariables = Exact<{
-  userId?: InputMaybe<Scalars['String']>;
-  groupId?: InputMaybe<Scalars['String']>;
-}>;
-
-
-export type DeleteGroupMemberMutation = { __typename?: 'Mutation', deleteMember: boolean };
 
 export type SaveJobAdMutationVariables = Exact<{
   entity?: InputMaybe<JobAdEntityInput>;
@@ -3212,14 +3242,14 @@ export type GetAddressesQuery = { __typename?: 'Query', addresses?: { __typename
 export type GetAssignmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAssignmentsQuery = { __typename?: 'Query', assignments?: { __typename?: 'PageableList_AssignmentEntity', result?: Array<{ __typename?: 'AssignmentEntity', id?: string | null, created?: any | null, comment?: string | null, assignmentState?: { __typename?: 'AssignmentStateEntity', id?: string | null, name?: string | null } | null, user?: { __typename?: 'UserEntity', approved?: boolean | null, id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null, questionnaire?: { __typename?: 'QuestionnaireEntity', id?: string | null, name?: string | null, created?: any | null } | null } | null> | null } | null };
+export type GetAssignmentsQuery = { __typename?: 'Query', assignments?: { __typename?: 'PageableList_AssignmentEntity', result?: Array<{ __typename?: 'AssignmentEntity', id?: string | null, created?: any | null, comment?: string | null, assignmentState?: { __typename?: 'AssignmentStateEntity', id?: string | null, name?: string | null } | null, user?: { __typename?: 'UserEntity', approved?: boolean | null, id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null, course?: { __typename?: 'CourseEntity', id?: string | null, name?: string | null, description?: string | null, group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null, members?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null } | null } | null, questionnaire?: { __typename?: 'QuestionnaireEntity', id?: string | null, name?: string | null, created?: any | null } | null } | null> | null } | null };
 
 export type GetAssignmentQueryVariables = Exact<{
   entity?: InputMaybe<AssignmentEntityInput>;
 }>;
 
 
-export type GetAssignmentQuery = { __typename?: 'Query', assignment?: { __typename?: 'AssignmentEntity', user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null, questionnaire?: { __typename?: 'QuestionnaireEntity', id?: string | null, name?: string | null, created?: any | null } | null } | null };
+export type GetAssignmentQuery = { __typename?: 'Query', assignment?: { __typename?: 'AssignmentEntity', user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null, course?: { __typename?: 'CourseEntity', id?: string | null, name?: string | null, description?: string | null, group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null, members?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null } | null } | null, questionnaire?: { __typename?: 'QuestionnaireEntity', id?: string | null, name?: string | null, created?: any | null } | null } | null };
 
 export type GetCompaniesQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3234,6 +3264,13 @@ export type GetCompanyQueryVariables = Exact<{
 
 
 export type GetCompanyQuery = { __typename?: 'Query', getCompany?: { __typename?: 'CompanyEntity', id?: string | null, mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, address?: { __typename?: 'AddressEntity', id?: string | null, houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null, longitude?: number | null, latitude?: number | null } | null } | null };
+
+export type GetCourseQueryVariables = Exact<{
+  id?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetCourseQuery = { __typename?: 'Query', course?: { __typename?: 'CourseEntity', id?: string | null, name?: string | null, description?: string | null, group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null, members?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null } | null };
 
 export type GetEventsAdminQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3264,14 +3301,14 @@ export type GetEventCategoryQuery = { __typename?: 'Query', category?: { __typen
 export type GetGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetGroupsQuery = { __typename?: 'Query', groups?: { __typename?: 'PageableList_GroupEntity', result?: Array<{ __typename?: 'GroupEntity', id?: string | null, name?: string | null, courses?: Array<{ __typename?: 'CourseEntity', id?: string | null, name?: string | null, active?: boolean | null } | null> | null, users?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null> | null } | null };
+export type GetGroupsQuery = { __typename?: 'Query', groups?: { __typename?: 'PageableList_GroupEntity', result?: Array<{ __typename?: 'GroupEntity', id?: string | null, name?: string | null, description?: string | null, courses?: Array<{ __typename?: 'CourseEntity', id?: string | null, name?: string | null, description?: string | null, group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null, members?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null } | null> | null } | null> | null } | null };
 
 export type GetGroupQueryVariables = Exact<{
   entity?: InputMaybe<GroupEntityInput>;
 }>;
 
 
-export type GetGroupQuery = { __typename?: 'Query', group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null, users?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null, courses?: Array<{ __typename?: 'CourseEntity', id?: string | null, name?: string | null, active?: boolean | null } | null> | null } | null };
+export type GetGroupQuery = { __typename?: 'Query', group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null, description?: string | null, courses?: Array<{ __typename?: 'CourseEntity', id?: string | null, name?: string | null, description?: string | null, group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null, members?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null } | null> | null } | null };
 
 export type GetGroupCoursesQueryVariables = Exact<{
   entity?: InputMaybe<GroupEntityInput>;
@@ -3279,7 +3316,7 @@ export type GetGroupCoursesQueryVariables = Exact<{
 }>;
 
 
-export type GetGroupCoursesQuery = { __typename?: 'Query', group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null, courses?: Array<{ __typename?: 'CourseEntity', averageRating?: number | null, id?: string | null, name?: string | null, active?: boolean | null } | null> | null } | null };
+export type GetGroupCoursesQuery = { __typename?: 'Query', group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null, description?: string | null, courses?: Array<{ __typename?: 'CourseEntity', averageRating?: number | null, id?: string | null, name?: string | null, description?: string | null, group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null, members?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null } | null> | null } | null };
 
 export type GetJobAdsAdminQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3445,7 +3482,7 @@ export type GetUsersAdminQueryVariables = Exact<{
 }>;
 
 
-export type GetUsersAdminQuery = { __typename?: 'Query', users?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null> | null } | null };
+export type GetUsersAdminQuery = { __typename?: 'Query', users?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, email?: string | null, phone?: string | null, created?: any | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null, course?: { __typename?: 'CourseEntity', id?: string | null, name?: string | null, description?: string | null, group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null, members?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null } | null } | null> | null } | null };
 
 export type GetUsersListQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3833,13 +3870,6 @@ export const CompanyFragmentDoc = gql`
 }
     ${CompanyFieldFragmentDoc}
 ${AddressFieldFragmentDoc}`;
-export const CourseFieldFragmentDoc = gql`
-    fragment CourseField on CourseEntity {
-  id
-  name
-  active
-}
-    `;
 export const EventFieldFragmentDoc = gql`
     fragment EventField on EventEntity {
   id
@@ -3877,6 +3907,7 @@ export const GroupFieldFragmentDoc = gql`
     fragment GroupField on GroupEntity {
   id
   name
+  description
 }
     `;
 export const JobAdFieldFragmentDoc = gql`
@@ -4032,6 +4063,21 @@ export const RoleFieldFragmentDoc = gql`
   name
 }
     `;
+export const CourseFieldFragmentDoc = gql`
+    fragment CourseField on CourseEntity {
+  id
+  name
+  description
+  group {
+    id
+    name
+  }
+  members {
+    id
+    fullname
+  }
+}
+    `;
 export const UserFieldFragmentDoc = gql`
     fragment UserField on UserEntity {
   id
@@ -4039,11 +4085,15 @@ export const UserFieldFragmentDoc = gql`
   roles {
     ...RoleField
   }
+  course {
+    ...CourseField
+  }
   email
   phone
   created
 }
-    ${RoleFieldFragmentDoc}`;
+    ${RoleFieldFragmentDoc}
+${CourseFieldFragmentDoc}`;
 export const AddEventFavoriteDocument = gql`
     mutation AddEventFavorite($jobAdId: String) {
   addEventFavorite(eventId: $jobAdId) {
@@ -4335,6 +4385,134 @@ export function useDeleteCompanyMutation(baseOptions?: Apollo.MutationHookOption
 export type DeleteCompanyMutationHookResult = ReturnType<typeof useDeleteCompanyMutation>;
 export type DeleteCompanyMutationResult = Apollo.MutationResult<DeleteCompanyMutation>;
 export type DeleteCompanyMutationOptions = Apollo.BaseMutationOptions<DeleteCompanyMutation, DeleteCompanyMutationVariables>;
+export const SaveCourseDocument = gql`
+    mutation SaveCourse($entity: CourseEntityInput) {
+  saveCourse(entity: $entity) {
+    id
+  }
+}
+    `;
+export type SaveCourseMutationFn = Apollo.MutationFunction<SaveCourseMutation, SaveCourseMutationVariables>;
+
+/**
+ * __useSaveCourseMutation__
+ *
+ * To run a mutation, you first call `useSaveCourseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveCourseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveCourseMutation, { data, loading, error }] = useSaveCourseMutation({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useSaveCourseMutation(baseOptions?: Apollo.MutationHookOptions<SaveCourseMutation, SaveCourseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveCourseMutation, SaveCourseMutationVariables>(SaveCourseDocument, options);
+      }
+export type SaveCourseMutationHookResult = ReturnType<typeof useSaveCourseMutation>;
+export type SaveCourseMutationResult = Apollo.MutationResult<SaveCourseMutation>;
+export type SaveCourseMutationOptions = Apollo.BaseMutationOptions<SaveCourseMutation, SaveCourseMutationVariables>;
+export const DeleteCourseDocument = gql`
+    mutation DeleteCourse($id: String) {
+  deleteCourse(id: $id)
+}
+    `;
+export type DeleteCourseMutationFn = Apollo.MutationFunction<DeleteCourseMutation, DeleteCourseMutationVariables>;
+
+/**
+ * __useDeleteCourseMutation__
+ *
+ * To run a mutation, you first call `useDeleteCourseMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCourseMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCourseMutation, { data, loading, error }] = useDeleteCourseMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteCourseMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCourseMutation, DeleteCourseMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteCourseMutation, DeleteCourseMutationVariables>(DeleteCourseDocument, options);
+      }
+export type DeleteCourseMutationHookResult = ReturnType<typeof useDeleteCourseMutation>;
+export type DeleteCourseMutationResult = Apollo.MutationResult<DeleteCourseMutation>;
+export type DeleteCourseMutationOptions = Apollo.BaseMutationOptions<DeleteCourseMutation, DeleteCourseMutationVariables>;
+export const AddCourseMemberDocument = gql`
+    mutation AddCourseMember($userId: String, $courseId: String) {
+  addMember(userId: $userId, courseId: $courseId)
+}
+    `;
+export type AddCourseMemberMutationFn = Apollo.MutationFunction<AddCourseMemberMutation, AddCourseMemberMutationVariables>;
+
+/**
+ * __useAddCourseMemberMutation__
+ *
+ * To run a mutation, you first call `useAddCourseMemberMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddCourseMemberMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addCourseMemberMutation, { data, loading, error }] = useAddCourseMemberMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      courseId: // value for 'courseId'
+ *   },
+ * });
+ */
+export function useAddCourseMemberMutation(baseOptions?: Apollo.MutationHookOptions<AddCourseMemberMutation, AddCourseMemberMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddCourseMemberMutation, AddCourseMemberMutationVariables>(AddCourseMemberDocument, options);
+      }
+export type AddCourseMemberMutationHookResult = ReturnType<typeof useAddCourseMemberMutation>;
+export type AddCourseMemberMutationResult = Apollo.MutationResult<AddCourseMemberMutation>;
+export type AddCourseMemberMutationOptions = Apollo.BaseMutationOptions<AddCourseMemberMutation, AddCourseMemberMutationVariables>;
+export const DeleteCourseMemberDocument = gql`
+    mutation DeleteCourseMember($userId: String, $courseId: String) {
+  deleteMember(userId: $userId, courseId: $courseId)
+}
+    `;
+export type DeleteCourseMemberMutationFn = Apollo.MutationFunction<DeleteCourseMemberMutation, DeleteCourseMemberMutationVariables>;
+
+/**
+ * __useDeleteCourseMemberMutation__
+ *
+ * To run a mutation, you first call `useDeleteCourseMemberMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCourseMemberMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCourseMemberMutation, { data, loading, error }] = useDeleteCourseMemberMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      courseId: // value for 'courseId'
+ *   },
+ * });
+ */
+export function useDeleteCourseMemberMutation(baseOptions?: Apollo.MutationHookOptions<DeleteCourseMemberMutation, DeleteCourseMemberMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteCourseMemberMutation, DeleteCourseMemberMutationVariables>(DeleteCourseMemberDocument, options);
+      }
+export type DeleteCourseMemberMutationHookResult = ReturnType<typeof useDeleteCourseMemberMutation>;
+export type DeleteCourseMemberMutationResult = Apollo.MutationResult<DeleteCourseMemberMutation>;
+export type DeleteCourseMemberMutationOptions = Apollo.BaseMutationOptions<DeleteCourseMemberMutation, DeleteCourseMemberMutationVariables>;
 export const SaveEventDocument = gql`
     mutation SaveEvent($entity: EventEntityInput) {
   saveEvent(entity: $entity) {
@@ -4558,70 +4736,6 @@ export function useDeleteGroupMutation(baseOptions?: Apollo.MutationHookOptions<
 export type DeleteGroupMutationHookResult = ReturnType<typeof useDeleteGroupMutation>;
 export type DeleteGroupMutationResult = Apollo.MutationResult<DeleteGroupMutation>;
 export type DeleteGroupMutationOptions = Apollo.BaseMutationOptions<DeleteGroupMutation, DeleteGroupMutationVariables>;
-export const AddGroupMemberDocument = gql`
-    mutation AddGroupMember($userId: String, $groupId: String) {
-  addMember(userId: $userId, groupId: $groupId)
-}
-    `;
-export type AddGroupMemberMutationFn = Apollo.MutationFunction<AddGroupMemberMutation, AddGroupMemberMutationVariables>;
-
-/**
- * __useAddGroupMemberMutation__
- *
- * To run a mutation, you first call `useAddGroupMemberMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddGroupMemberMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [addGroupMemberMutation, { data, loading, error }] = useAddGroupMemberMutation({
- *   variables: {
- *      userId: // value for 'userId'
- *      groupId: // value for 'groupId'
- *   },
- * });
- */
-export function useAddGroupMemberMutation(baseOptions?: Apollo.MutationHookOptions<AddGroupMemberMutation, AddGroupMemberMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddGroupMemberMutation, AddGroupMemberMutationVariables>(AddGroupMemberDocument, options);
-      }
-export type AddGroupMemberMutationHookResult = ReturnType<typeof useAddGroupMemberMutation>;
-export type AddGroupMemberMutationResult = Apollo.MutationResult<AddGroupMemberMutation>;
-export type AddGroupMemberMutationOptions = Apollo.BaseMutationOptions<AddGroupMemberMutation, AddGroupMemberMutationVariables>;
-export const DeleteGroupMemberDocument = gql`
-    mutation DeleteGroupMember($userId: String, $groupId: String) {
-  deleteMember(userId: $userId, groupId: $groupId)
-}
-    `;
-export type DeleteGroupMemberMutationFn = Apollo.MutationFunction<DeleteGroupMemberMutation, DeleteGroupMemberMutationVariables>;
-
-/**
- * __useDeleteGroupMemberMutation__
- *
- * To run a mutation, you first call `useDeleteGroupMemberMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useDeleteGroupMemberMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [deleteGroupMemberMutation, { data, loading, error }] = useDeleteGroupMemberMutation({
- *   variables: {
- *      userId: // value for 'userId'
- *      groupId: // value for 'groupId'
- *   },
- * });
- */
-export function useDeleteGroupMemberMutation(baseOptions?: Apollo.MutationHookOptions<DeleteGroupMemberMutation, DeleteGroupMemberMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteGroupMemberMutation, DeleteGroupMemberMutationVariables>(DeleteGroupMemberDocument, options);
-      }
-export type DeleteGroupMemberMutationHookResult = ReturnType<typeof useDeleteGroupMemberMutation>;
-export type DeleteGroupMemberMutationResult = Apollo.MutationResult<DeleteGroupMemberMutation>;
-export type DeleteGroupMemberMutationOptions = Apollo.BaseMutationOptions<DeleteGroupMemberMutation, DeleteGroupMemberMutationVariables>;
 export const SaveJobAdDocument = gql`
     mutation SaveJobAd($entity: JobAdEntityInput) {
   saveJobAd(entity: $entity) {
@@ -5627,6 +5741,41 @@ export function useGetCompanyLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetCompanyQueryHookResult = ReturnType<typeof useGetCompanyQuery>;
 export type GetCompanyLazyQueryHookResult = ReturnType<typeof useGetCompanyLazyQuery>;
 export type GetCompanyQueryResult = Apollo.QueryResult<GetCompanyQuery, GetCompanyQueryVariables>;
+export const GetCourseDocument = gql`
+    query GetCourse($id: String) {
+  course: getCourse(entity: {id: $id}) {
+    ...CourseField
+  }
+}
+    ${CourseFieldFragmentDoc}`;
+
+/**
+ * __useGetCourseQuery__
+ *
+ * To run a query within a React component, call `useGetCourseQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCourseQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCourseQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetCourseQuery(baseOptions?: Apollo.QueryHookOptions<GetCourseQuery, GetCourseQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCourseQuery, GetCourseQueryVariables>(GetCourseDocument, options);
+      }
+export function useGetCourseLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCourseQuery, GetCourseQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCourseQuery, GetCourseQueryVariables>(GetCourseDocument, options);
+        }
+export type GetCourseQueryHookResult = ReturnType<typeof useGetCourseQuery>;
+export type GetCourseLazyQueryHookResult = ReturnType<typeof useGetCourseLazyQuery>;
+export type GetCourseQueryResult = Apollo.QueryResult<GetCourseQuery, GetCourseQueryVariables>;
 export const GetEventsAdminDocument = gql`
     query GetEventsAdmin($params: FilterSortPaginateInput) {
   getEvents(params: $params) {
@@ -5810,19 +5959,15 @@ export const GetGroupsDocument = gql`
     query GetGroups {
   groups: getGroups {
     result {
-      id
-      name
+      ...GroupField
       courses {
         ...CourseField
-      }
-      users {
-        ...UserField
       }
     }
   }
 }
-    ${CourseFieldFragmentDoc}
-${UserFieldFragmentDoc}`;
+    ${GroupFieldFragmentDoc}
+${CourseFieldFragmentDoc}`;
 
 /**
  * __useGetGroupsQuery__
@@ -5854,16 +5999,12 @@ export const GetGroupDocument = gql`
     query GetGroup($entity: GroupEntityInput) {
   group: getGroup(entity: $entity) {
     ...GroupField
-    users {
-      ...UserField
-    }
     courses {
       ...CourseField
     }
   }
 }
     ${GroupFieldFragmentDoc}
-${UserFieldFragmentDoc}
 ${CourseFieldFragmentDoc}`;
 
 /**

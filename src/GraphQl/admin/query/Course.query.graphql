@@ -1,0 +1,5 @@
+query GetCourse($id: String) {
+  course: getCourse(entity: { id: $id }) {
+    ...CourseField
+  }
+}

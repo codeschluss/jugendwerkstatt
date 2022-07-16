@@ -45,6 +45,7 @@ export const NavItem: FC<NavItemProps> = ({
    * constants
    */
   const hasChild = !!item.items;
+  const shouldNavigate = item.location;
   const paramIndex = pathname.split('/').findIndex((item) => item === id);
   const activeLink =
     pathname
@@ -58,7 +59,7 @@ export const NavItem: FC<NavItemProps> = ({
 
   return (
     <li className={clsx('w-full text-white', !isLastChild && 'mb-8')} {...rest}>
-      {hasChild ? (
+      {hasChild && !shouldNavigate ? (
         <button
           className="flex items-center justify-between w-full"
           onClick={handleItemDisplayClick}

@@ -26,6 +26,7 @@ const UsersListPage = () => {
       <CustomTable
         headerData={[
           'Benutzer/in',
+          'Aktiver Kurs',
           'Rolle',
           'E-Mail',
           'Telefonnummer',
@@ -36,6 +37,7 @@ const UsersListPage = () => {
           users?.result?.map((user) => (
             <Table.Row key={user?.id}>
               <Table.Data>{user?.fullname}</Table.Data>
+              <Table.Data>{user?.course?.name}</Table.Data>
               <Table.Data>
                 {user?.roles?.map((role, idx) => (
                   <p key={role?.id}>

@@ -9,26 +9,28 @@ import {
 } from '../../../GraphQl/graphql';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
+  DescriptionFrom,
   GroupCoursesForm,
   GroupCoursesInput,
 } from '../../components/organisms';
 import { twClsx } from '../../utils';
+import { GroupFormInputs } from './GroupForm.props';
 
 const GroupFormPage = (): ReactElement => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const methods = useForm<GroupCoursesInput>({
+
+  const methods = useForm<GroupFormInputs>({
     mode: 'onChange',
     resolver: joiResolver(GroupFormSchema),
   });
   const {
     reset,
-    control,
-    clearErrors,
     register,
     handleSubmit,
     formState: { errors },
   } = methods;
+
   const { data: { group = null } = {} } = useGetGroupQuery({
     variables: { entity: { id } },
     skip: !id,
@@ -38,35 +40,27 @@ const GroupFormPage = (): ReactElement => {
   });
 
   useEffect(() => {
-    if (id && group) {
+    if (id && group)
       reset({
         name: group.name || '',
-        courses: group.courses?.map((course) => ({
-          name: course?.name || '',
-          isActive: course?.active || false,
-        })),
+        description: group.description || '',
       });
-    }
-  }, [id, reset, group]);
+  }, [id, group, reset]);
 
-  const handleOnSubmit = (data: GroupCoursesInput) =>
+  const onSubmit = ({ name, description }: GroupFormInputs) =>
     saveGroup({
       variables: {
         entity: {
           ...(id && { id }),
-          name: data.name,
-          courses: data.courses.map((course, index) => ({
-            name: course.name,
-            active: course.isActive,
-            activeOrder: index + 1,
-          })),
+          name,
+          description,
         },
       },
     });
 
   return (
     <FormProvider {...methods}>
-      <div className="max-w-6xl">
+      <form className="max-w-6xl">
         <Accordion
           title="Stammdaten"
           open={!!id}
@@ -81,20 +75,14 @@ const GroupFormPage = (): ReactElement => {
         </Accordion>
 
         <Accordion
-          title="Kurs"
-          open={!!id}
-          className={twClsx(errors.courses && 'border border-primary')}
+          title="Beschreibung"
+          className={twClsx(errors.description && 'border border-primary')}
         >
-          <GroupCoursesForm
-            errors={errors?.courses}
-            error={errors.courses as unknown as FieldError}
-            clearErrors={clearErrors}
-            control={control}
-            register={register}
-          />
+          <DescriptionFrom />
         </Accordion>
-        <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
-      </div>
+
+        <FormActions onSubmit={handleSubmit(onSubmit)} />
+      </form>
     </FormProvider>
   );
 };
