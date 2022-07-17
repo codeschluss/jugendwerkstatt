@@ -2,15 +2,15 @@ export const DEFAULT_DATE_FORMAT = 'DD.MM.YYYY';
 
 export let API_URL: string;
 export let BASE_URL: string = '';
-export let WS_URL: string = 'ws://localhost:8061/api/';
+export let WS_URL: string = 'ws://www.alphaev.app/api/';
 switch (process.env.NODE_ENV) {
   case 'production':
-    BASE_URL = 'http://localhost:8061/';
-    WS_URL = 'wss://localhost:8061/api/';
+    BASE_URL = 'https://www.alphaev.app/';
+    WS_URL = 'wss://www.alphaev.app/api/';
     break;
   case 'development':
   default:
-    BASE_URL = 'http://localhost:8061/';
+    BASE_URL = 'https://www.alphaev.app/';
 }
 
 API_URL = BASE_URL + 'api/';
