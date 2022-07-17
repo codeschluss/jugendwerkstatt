@@ -46,16 +46,16 @@ export const NavItem: FC<NavItemProps> = ({
    */
   const hasChild = !!item.items;
   const shouldNavigate = item.location;
-  const paramIndex = pathname.split('/').findIndex((item) => item === id);
-  const activeLink =
-    pathname
-      .split('/')
-      .filter((item) =>
-        id && paramIndex === pathname.split('/').length - 1
-          ? item !== id
-          : item !== 'new'
-      )
-      .join('/') === `${BASE_HREF}/${item.location}`;
+  // const paramIndex = pathname.split('/').findIndex((item) => item === id);
+  // const activeLink =
+  //   pathname
+  //     .split('/')
+  //     .filter((item) =>
+  //       id && paramIndex === pathname.split('/').length - 1
+  //         ? item !== id
+  //         : item !== 'new'
+  //     )
+  //     .join('/') === `${BASE_HREF}/${item.location}`;
 
   return (
     <li className={clsx('w-full text-white', !isLastChild && 'mb-8')} {...rest}>
@@ -78,7 +78,7 @@ export const NavItem: FC<NavItemProps> = ({
           to={
             item.noItems ? `${item.location}` : `${BASE_HREF}/${item.location}`
           }
-          className={activeLink ? 'text-charcoal' : ''}
+          // className={activeLink ? 'text-charcoal' : ''}
         >
           {item.noItems ? (
             <div className="flex items-center space-x-2">
