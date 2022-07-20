@@ -1,4 +1,8 @@
 export interface GroupFormInputs {
   name: string;
-  courses: string;
+  description: string;
+}
+
+export interface GroupCourseFormInputs extends GroupFormInputs {
+  group: string;
 }

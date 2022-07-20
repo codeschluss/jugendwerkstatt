@@ -2,15 +2,16 @@ import { ReactElement } from 'react';
 import { useParams } from 'react-router-dom';
 import {
   QueryOperator,
-  useAddGroupMemberMutation,
-  useGetGroupQuery,
+  useAddCourseMemberMutation,
+  useGetCourseQuery,
   useGetUsersAdminQuery,
 } from '../../../GraphQl/graphql';
 import { Action, Panel, Table } from '../../components/atoms';
 import { BackButton, CustomTable } from '../../components/molecules';
 
-const CreateGroupMembersPage = (): ReactElement => {
+const CreateCourseMembersPage = (): ReactElement => {
   const { id } = useParams();
+
   const { data: { users = null } = {}, refetch: refetchUsers } =
     useGetUsersAdminQuery({
       variables: {
@@ -18,23 +19,23 @@ const CreateGroupMembersPage = (): ReactElement => {
           expression: {
             entity: {
               operator: QueryOperator.NotEqual,
-              path: 'group.id',
+              path: 'course.id',
               value: id,
             },
           },
         },
       },
     });
-  const { data: { group = null } = {} } = useGetGroupQuery({
-    variables: { entity: { id } },
+  const { data: { course = null } = {} } = useGetCourseQuery({
+    variables: { id },
   });
 
-  const [addMember] = useAddGroupMemberMutation({
+  const [addMember] = useAddCourseMemberMutation({
     onCompleted: () => refetchUsers(),
   });
 
-  const handleAddGroupMember = (userId: string) => () =>
-    addMember({ variables: { userId, groupId: group?.id || '' } });
+  const handleAddCourseMember = (userId: string) => () =>
+    addMember({ variables: { userId, courseId: course?.id || '' } });
 
   return (
     <Panel.Wrapper>
@@ -45,9 +46,9 @@ const CreateGroupMembersPage = (): ReactElement => {
             users.result.map((user) => (
               <Table.Row key={user?.id}>
                 <Table.Data>{user?.fullname}</Table.Data>
-                <Table.Data>{group?.name}</Table.Data>
+                <Table.Data>{course?.group?.name}</Table.Data>
                 <Table.Data>
-                  <Action onApprove={handleAddGroupMember(user?.id || '')} />
+                  <Action onApprove={handleAddCourseMember(user?.id || '')} />
                 </Table.Data>
               </Table.Row>
             ))) ||
@@ -59,4 +60,4 @@ const CreateGroupMembersPage = (): ReactElement => {
   );
 };
 
-export default CreateGroupMembersPage;
+export default CreateCourseMembersPage;

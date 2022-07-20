@@ -1,4 +1,4 @@
-schema: "https://www.alphaev.app/api/graphql"
+schema: "http://localhost:8061/api/graphql"
 documents: "src/**/*.graphql"
 generates:
   src/GraphQl/graphql.tsx:

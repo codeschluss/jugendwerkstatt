@@ -13,31 +13,31 @@ export const GroupCoursesForm = ({
   control,
   register,
 }: GroupCoursesProps) => {
-  const { fields, append, remove, move } = useFieldArray({
-    name: 'courses',
-    control,
-  });
-  const { setValue, getValues } = useFormContext<GroupCoursesInput>();
+  // const { fields, append, remove, move } = useFieldArray({
+  //   name: 'courses',
+  //   control,
+  // });
+  // const { setValue, getValues } = useFormContext<GroupCoursesInput>();
 
   // handlers
-  const handleAddNew = () => {
-    append({ name: '', isActive: false }, { shouldFocus: true });
-    clearErrors('courses');
-  };
+  // const handleAddNew = () => {
+  //   append({ name: '', isActive: false }, { shouldFocus: true });
+  //   // clearErrors('courses');
+  // };
 
-  const handleOnSortEnd = useCallback(
-    ({ oldIndex, newIndex }: SortOver, _event: SortEvent) =>
-      move(oldIndex, newIndex),
-    [move]
-  );
+  // const handleOnSortEnd = useCallback(
+  //   ({ oldIndex, newIndex }: SortOver, _event: SortEvent) =>
+  //     move(oldIndex, newIndex),
+  //   [move]
+  // );
 
-  const handleOnDelete = (id: number) => () => remove(id);
-  const handleApproveCourse = (index: number) => () => {
-    getValues('courses').forEach((_, idx) =>
-      setValue(`courses.${idx}.isActive`, false)
-    );
-    setValue(`courses.${index}.isActive`, true, { shouldValidate: true });
-  };
+  // const handleOnDelete = (id: number) => () => remove(id);
+  // const handleApproveCourse = (index: number) => () => {
+  //   getValues('courses').forEach((_, idx) =>
+  //     setValue(`courses.${idx}.isActive`, false)
+  //   );
+  //   setValue(`courses.${index}.isActive`, true, { shouldValidate: true });
+  // };
 
   return (
     <>
@@ -48,10 +48,10 @@ export const GroupCoursesForm = ({
           useDragHandle
           lockToContainerEdges
           lockOffset={['0%', '0%']}
-          onSortOver={handleOnSortEnd}
+          // onSortOver={handleOnSortEnd}
           className="mb-3"
         >
-          {fields.map((_course, index) => (
+          {/* {fields.map((_course, index) => (
             <DragItem key={index} index={index}>
               <InputField
                 {...register(`courses.${index}.name`)}
@@ -63,14 +63,14 @@ export const GroupCoursesForm = ({
                 onApprove={handleApproveCourse(index)}
               />
             </DragItem>
-          ))}
+          ))} */}
         </DragList>
       </div>
       <div className="flex items-center gap-x-4">
         <Button
           iconOnly
           type="button"
-          onClick={handleAddNew}
+          // onClick={handleAddNew}
           iconLeft={<PlusCircleIcon />}
         />
         {error && <p className="text-primary">{error.message}</p>}
