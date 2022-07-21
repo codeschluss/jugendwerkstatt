@@ -47,7 +47,6 @@ import {
   CreateEventsPage,
   CreateFormsCategories,
   CreateFormsPage,
-  CreateGroupMembersPage,
   CreateMediaCategoriesPage,
   CreateMediaPage,
   CreateOrganizersPage,
@@ -69,8 +68,11 @@ import {
   GeneralAddressPage,
   GroupCoursesPage,
   GroupFormPage,
+  GroupCourseFormPage,
   GroupListPage,
-  GroupMembersPage,
+  GroupPage,
+  CourseMembersPage,
+  CreateCourseMembersPage,
   MediaCategoriesListPage,
   MediaListPage,
   OrganizersListPage,
@@ -275,11 +277,20 @@ const App = (): ReactElement => {
 
         <Route path="/admin/groups">
           <Route index element={<GroupListPage />} />
+          <Route path=":id/view" element={<GroupPage />} />
           <Route path="new" element={<GroupFormPage />} />
           <Route path=":id" element={<GroupFormPage />} />
           <Route path=":id/courses" element={<GroupCoursesPage />} />
-          <Route path=":id/members" element={<GroupMembersPage />} />
-          <Route path=":id/members/new" element={<CreateGroupMembersPage />} />
+          <Route
+            path=":id/courses/:courseId"
+            element={<GroupCourseFormPage />}
+          />
+          <Route path=":id/courses/new" element={<GroupCourseFormPage />} />
+        </Route>
+
+        <Route path="/admin/courses">
+          <Route path=":id" element={<CourseMembersPage />} />
+          <Route path=":id/members/new" element={<CreateCourseMembersPage />} />
         </Route>
 
         <Route path="/admin/evaluations">

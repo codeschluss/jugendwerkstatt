@@ -74,13 +74,6 @@ const UsersRequestsListPage = () => {
           []
         }
       />
-      <Button
-        onClick={handleGoBack}
-        className="md:mr-6 border-[#424242] text-[#424242]"
-        type="button"
-      >
-        Zurücksetzen
-      </Button>
     </Panel.Wrapper>
   );
 };

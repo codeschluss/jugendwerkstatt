@@ -5,13 +5,18 @@ import {
   NotificationType,
   useSendGlobalPushMutation,
 } from '../../../GraphQl/graphql';
+import { SnackbarTypeEnum } from '../../../interfaces/enums/SnackbarType.enum';
+import { snackbarStore } from '../../../store';
 import { Accordion, FormActions, InputField } from '../../components/molecules';
 import { twClsx } from '../../utils';
 import { PushMessagesPageSchema } from '../../validations/PushMessagesForm.schema';
 import { PushMessagesInputs } from './PushMessages.props';
 
 const PushMessagesPage = (): ReactElement => {
+  const { handleOpen } = snackbarStore();
+
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -19,7 +24,15 @@ const PushMessagesPage = (): ReactElement => {
     mode: 'onChange',
     resolver: joiResolver(PushMessagesPageSchema),
   });
-  const [sendGlobalPush] = useSendGlobalPushMutation();
+  const [sendGlobalPush] = useSendGlobalPushMutation({
+    onCompleted: () => {
+      reset();
+      handleOpen({
+        type: SnackbarTypeEnum.SUCCESS,
+        message: 'Push-Benachrichtigung erfolgreich gesendet',
+      });
+    },
+  });
 
   const handleOnSubmit = ({ title, message: content }: PushMessagesInputs) =>
     sendGlobalPush({

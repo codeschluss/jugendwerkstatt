@@ -1,0 +1,17 @@
+mutation SaveCourse($entity: CourseEntityInput) {
+  saveCourse(entity: $entity) {
+    id
+  }
+}
+
+mutation DeleteCourse($id: String) {
+  deleteCourse(id: $id)
+}
+
+mutation AddCourseMember($userId: String, $courseId: String) {
+  addMember(userId: $userId, courseId: $courseId)
+}
+
+mutation DeleteCourseMember($userId: String, $courseId: String) {
+  deleteMember(userId: $userId, courseId: $courseId)
+}
