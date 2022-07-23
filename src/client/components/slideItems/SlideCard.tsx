@@ -58,7 +58,7 @@ const SlideCard: React.FC<SlideCardProps> = ({
   const weekDay = weekDays[theDate.getDay()];
 
   return (
-    <div className={`${className} snap-center ${width} h-60 flex-none md:px-2`}>
+    <div className={`${className} snap-center ${width} h-60 flex-none px-2`}>
       <div className="relative h-full overflow-hidden rounded-md">
         <Link to={route}>
           {imgUrl ? (
