@@ -1,0 +1,14 @@
+query GetGroupAndCourse {
+  me {
+    course {
+      id
+      description
+      name
+      group {
+        id
+        description
+        name
+      }
+    }
+  }
+}

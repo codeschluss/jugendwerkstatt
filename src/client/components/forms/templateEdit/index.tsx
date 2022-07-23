@@ -12,10 +12,11 @@ import {
 } from "../../../../GraphQl/graphql";
 import I from "../../../../shared/components/ui/IconWrapper";
 import DropDown from "../../../../shared/components/ui/DropDown";
+import { readAuthToken } from "../../../../shared/utils";
 
 const TemplateEdit: React.FC = () => {
   const { id } = useParams();
-
+  const token = readAuthToken("accessToken");
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -51,7 +52,10 @@ const TemplateEdit: React.FC = () => {
   const downloadTemplateDocx = async () => {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         html: templateContent,
         name: templateName,
@@ -76,7 +80,10 @@ const TemplateEdit: React.FC = () => {
   const downloadTemplatePdf = async () => {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         html: templateContent,
         name: templateName,

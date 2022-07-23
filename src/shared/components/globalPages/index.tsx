@@ -21,7 +21,7 @@ const GlobalPage = () => {
   });
 
   return (
-    <div className="bg-gray-200 h-screen">
+    <div className="bg-gray-100 h-screen flex flex-col items-center">
       <header
         className={`w-full h-16 bg-primary flex ${
           isAuthenticated ? "justify-start" : "justify-end"
@@ -39,28 +39,30 @@ const GlobalPage = () => {
         ) : (
           <>
             <ChevronLeftIcon className="w-6 mr-2" />
-            <p onClick={() => navigate(-1)}>Zuruck</p>
+            <p className="cursor-pointer" onClick={() => navigate(-1)}>
+              Zuruck
+            </p>
           </>
         )}
       </header>
       {page.data?.getPage?.titleImage && (
-        <div className="w-full p-2 my-5 bg-white ">
+        <div className="w-4/5 p-2 my-5 bg-white  ">
           <img
             className="md:w-1/5 w-1/2 mx-auto "
             src={`${API_URL}media/${page.data?.getPage?.titleImage?.id}`}
           />
         </div>
       )}
-      <div className="w-full p-2 my-5 text-center bg-white ">
+      <div className=" p-2 my-5 text-center bg-white w-4/5 ">
         <p className="w-full font-semibold text-2xl ">
           {page.data?.getPage?.name}
         </p>
       </div>
-      <div className="w-full p-2 my-5  bg-white ">
+      <div className=" p-2 my-5  bg-white w-4/5 ">
         <p className="w-full  text-base ">{page.data?.getPage?.content}</p>
       </div>
       {page.data?.getPage?.video && (
-        <div className="w-full p-2 my-5 bg-white ">
+        <div className=" p-2 my-5 bg-white w-4/5">
           <video
             width="320"
             height="240"

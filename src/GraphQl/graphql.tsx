@@ -3581,6 +3581,11 @@ export type GetEventsQueryVariables = Exact<{
 
 export type GetEventsQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', result?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, nextSchedule?: { __typename?: 'ScheduleEntity', startDate?: any | null, endDate?: any | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null, postalCode?: string | null, latitude?: number | null, longitude?: number | null, id?: string | null, houseNumber?: string | null, created?: any | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, endDate?: any | null, startDate?: any | null } | null> | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null, name?: string | null, phone?: string | null, website?: string | null, mail?: string | null } | null } | null> | null } | null };
 
+export type GetGroupAndCourseQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetGroupAndCourseQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', course?: { __typename?: 'CourseEntity', id?: string | null, description?: string | null, name?: string | null, group?: { __typename?: 'GroupEntity', id?: string | null, description?: string | null, name?: string | null } | null } | null } | null };
+
 export type GetJobAdQueryVariables = Exact<{
   entity?: InputMaybe<JobAdEntityInput>;
 }>;
@@ -7626,6 +7631,49 @@ export function useGetEventsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type GetEventsQueryHookResult = ReturnType<typeof useGetEventsQuery>;
 export type GetEventsLazyQueryHookResult = ReturnType<typeof useGetEventsLazyQuery>;
 export type GetEventsQueryResult = Apollo.QueryResult<GetEventsQuery, GetEventsQueryVariables>;
+export const GetGroupAndCourseDocument = gql`
+    query GetGroupAndCourse {
+  me {
+    course {
+      id
+      description
+      name
+      group {
+        id
+        description
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetGroupAndCourseQuery__
+ *
+ * To run a query within a React component, call `useGetGroupAndCourseQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetGroupAndCourseQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetGroupAndCourseQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetGroupAndCourseQuery(baseOptions?: Apollo.QueryHookOptions<GetGroupAndCourseQuery, GetGroupAndCourseQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetGroupAndCourseQuery, GetGroupAndCourseQueryVariables>(GetGroupAndCourseDocument, options);
+      }
+export function useGetGroupAndCourseLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetGroupAndCourseQuery, GetGroupAndCourseQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetGroupAndCourseQuery, GetGroupAndCourseQueryVariables>(GetGroupAndCourseDocument, options);
+        }
+export type GetGroupAndCourseQueryHookResult = ReturnType<typeof useGetGroupAndCourseQuery>;
+export type GetGroupAndCourseLazyQueryHookResult = ReturnType<typeof useGetGroupAndCourseLazyQuery>;
+export type GetGroupAndCourseQueryResult = Apollo.QueryResult<GetGroupAndCourseQuery, GetGroupAndCourseQueryVariables>;
 export const GetJobAdDocument = gql`
     query GetJobAd($entity: JobAdEntityInput) {
   getJobAd(entity: $entity) {

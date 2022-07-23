@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { API_URL } from "../../../../config/app";
 import { MediaEntity, MessageDto } from "../../../../GraphQl/graphql";
 import DropDown from "../../../../shared/components/ui/DropDown";
+import { readAuthToken } from "../../../../shared/utils";
 
 interface TextProps {
   content?: string | null;
@@ -28,8 +29,8 @@ const ChatText: React.FC<TextProps> = ({
   unsend,
   parent,
 }) => {
-  console.log(media, "media");
   const [mediaContent, setMediaContent] = useState<any>();
+  const token = readAuthToken("accessToken");
 
   useEffect(() => {
     if (media?.mimeType?.includes("image")) {
@@ -57,6 +58,9 @@ const ChatText: React.FC<TextProps> = ({
   ) => {
     const requestOptions = {
       method: "GET",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     };
     await fetch(API_URL + `media/download/${mediaId}`, requestOptions)
       .then((resp) => resp.blob())
