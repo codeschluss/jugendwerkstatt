@@ -81,13 +81,11 @@ const Chat = () => {
   const me = useGetMeBasicQuery({
     skip: !accessToken,
   });
-  console.log("me in chat");
-  const myId = me.data?.me?.id;
   const [focus, setFocus] = useState<boolean>(false);
 
   useEffect(() => {
     getMessages.refetch();
-  }, [chatAddlistener.data?.addChatListener]);
+  }, [chatAddlistener.data]);
 
   const getChat = useGetChatQuery({
     fetchPolicy: "network-only",
@@ -228,7 +226,7 @@ const Chat = () => {
           media: null,
         },
       },
-    });
+    }).then(() => getMessages.refetch());
   };
 
   const cantWrite: any =

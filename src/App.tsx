@@ -1,5 +1,5 @@
 import { ReactElement, useEffect } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import { RequireAuthRoute, RequireNonAuthRoute } from "./shared/components";
 
@@ -97,6 +97,18 @@ import { useGetChatSettingsQuery } from "./GraphQl/graphql";
 import { useAuthStore } from "./store";
 import GlobalPages from "./client/pages/globalPages";
 
+import {
+  ActionPerformed,
+  PushNotifications,
+  PushNotificationSchema,
+  Token,
+} from "@capacitor/push-notifications";
+import { Toast } from "@capacitor/toast";
+import {
+  useGetMeBasicQuery,
+  useSaveSubscriptionMutation,
+} from "./GraphQl/graphql";
+
 const App = (): ReactElement => {
   const { loading } = useAuth();
   const { isAuthenticated } = useAuthStore();
@@ -111,6 +123,79 @@ const App = (): ReactElement => {
       chatEnabled.refetch();
     }
   }, [isAuthenticated]);
+
+  const me = useGetMeBasicQuery();
+
+  const [subs] = useSaveSubscriptionMutation();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      PushNotifications.checkPermissions().then((res) => {
+        if (res.receive !== "granted") {
+          PushNotifications.requestPermissions().then((res) => {
+            if (res.receive === "denied") {
+              showToast("Push Notification permission denied");
+            } else {
+              showToast("Push Notification permission granted");
+              register();
+            }
+          });
+        } else {
+          register();
+        }
+      });
+    }
+  }, [isAuthenticated]);
+  const navigate = useNavigate();
+
+  const register = () => {
+    PushNotifications.register();
+
+    PushNotifications.addListener("registration", (token: Token) => {
+      const entity = {
+        deviceToken: token.value,
+        user: {
+          id: me.data?.me?.id,
+        },
+      };
+      subs({
+        variables: {
+          entity,
+        },
+      });
+    });
+
+    // PushNotifications.addListener("registrationError", (error: any) => {
+    //   alert("Error on registration: " + JSON.stringify(error));
+    // });
+
+    PushNotifications.addListener(
+      "pushNotificationReceived",
+      (notification: PushNotificationSchema) => {
+        console.log(notification.body, "other notification body");
+        console.log(notification.title, "other notification body");
+        console.log(
+          notification.click_action,
+          "other notification action link"
+        );
+      }
+    );
+    PushNotifications.addListener(
+      "pushNotificationActionPerformed",
+      (notification: ActionPerformed) => {
+        console.log(notification.actionId, " actionid");
+        console.log(notification.notification, " noti");
+        console.log(notification.inputValue, " noti");
+        navigate("/map");
+      }
+    );
+  };
+
+  const showToast = async (msg: string) => {
+    await Toast.show({
+      text: msg,
+    });
+  };
 
   if (loading) return <div>Loading...</div>;
 
