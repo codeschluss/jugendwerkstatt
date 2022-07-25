@@ -21,6 +21,7 @@ import {
 } from "@heroicons/react/outline";
 import { readAuthToken } from "../../../../shared/utils";
 import TypeInput from "../../forms/upload/TypeInput";
+import { API_URL } from "../../../../config/app";
 
 const Chat = () => {
   const accessToken = readAuthToken("accessToken") || "";
@@ -80,14 +81,14 @@ const Chat = () => {
   const me = useGetMeBasicQuery({
     skip: !accessToken,
   });
-  const myId = me.data?.me?.id;
   const [focus, setFocus] = useState<boolean>(false);
 
   useEffect(() => {
     getMessages.refetch();
-  }, [chatAddlistener.data?.addChatListener]);
+  }, [chatAddlistener.data]);
 
   const getChat = useGetChatQuery({
+    fetchPolicy: "network-only",
     variables: {
       entity: { id: id },
     },
@@ -225,8 +226,14 @@ const Chat = () => {
           media: null,
         },
       },
-    });
+    }).then(() => getMessages.refetch());
   };
+
+  const cantWrite: any =
+    getChat.data?.getChat?.admin &&
+    me.data?.me?.roles?.some((el) => el?.key === "student")
+      ? true
+      : false;
 
   return (
     <div
@@ -241,15 +248,17 @@ const Chat = () => {
                 return el?.user?.fullname;
               })}
         </h2>
-        <div
-          onClick={() =>
-            navigate(`/adminMsnPanel/${getChat.data?.getChat?.id}`)
-          }
-          className="flex text-gray-600 cursor-pointer md:mr-5"
-        >
-          <CogIcon className="w-5" />
-          <p>Einstellungen</p>
-        </div>
+        {getChat.data?.getChat?.name && (
+          <div
+            onClick={() =>
+              navigate(`/adminMsnPanel/${getChat.data?.getChat?.id}`)
+            }
+            className="flex text-gray-600 cursor-pointer mr-5 "
+          >
+            <CogIcon className="w-5" />
+            <p>Einstellungen</p>
+          </div>
+        )}
       </div>
       <div className="py-3 h-full overflow-y-scroll">
         <p
@@ -302,27 +311,32 @@ const Chat = () => {
         onSubmit={(e) => handleSubmit(e)}
         className="md:py-6 py-3 md:pl-6 pl-3 pr-3 bg-[#e9e9e9] flex items-center rounded-b-lg sticky bottom-0 overflow-hidden"
       >
-        <TypeInput onChange={uploadHandler}>
-          <PaperClipIcon className="w-5 mr-2 text-black text-opacity-40" />
-        </TypeInput>
+        {!cantWrite && (
+          <TypeInput onChange={uploadHandler}>
+            <PaperClipIcon className="w-5 mr-2 text-black text-opacity-40" />
+          </TypeInput>
+        )}
 
         <input
+          disabled={cantWrite}
           type="text"
           ref={inputRef}
           className="relative bottom-0 left-0 w-full h-10 px-4 transition-all duration-500 rounded-full outline-none focus:shadow "
-          placeholder="Nachricht"
+          placeholder={cantWrite ? "Only admins can write" : "Nachricht"}
           onFocus={() => setFocus(true)}
           onBlur={() => setFocus(false)}
         />
 
-        <button
-          type="submit"
-          className={`hover:-translate-y-1 flex justify-center text-black text-opacity-40 duration-500 transform-gpu transition-all ${
-            focus ? "translate-x-0 w-14" : "translate-x-6 w-0"
-          }`}
-        >
-          <PaperAirplaneIcon className="w-5 h-5" />
-        </button>
+        {!cantWrite && (
+          <button
+            type="submit"
+            className={`hover:-translate-y-1 flex justify-center text-black text-opacity-40 duration-500 transform-gpu transition-all ${
+              focus ? "translate-x-0 w-14" : "translate-x-6 w-0"
+            }`}
+          >
+            <PaperAirplaneIcon className="w-5 h-5" />
+          </button>
+        )}
       </form>
     </div>
   );

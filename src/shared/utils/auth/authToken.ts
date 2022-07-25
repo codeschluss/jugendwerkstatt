@@ -41,7 +41,7 @@ export const validateAuthToken = (token: string): boolean => {
       // Check if now (in ms) is less then exp time
       return now <= decoded.exp;
     } catch (error) {
-      console.error("👾 invalid token format", error);
+      console.error(" invalid token format", error);
       return false;
     }
   }

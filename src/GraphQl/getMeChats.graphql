@@ -4,6 +4,9 @@ query GetMeChats {
     participants {
       id
       chat {
+        avatar {
+          id
+        }
         id
         name
         lastMessage {

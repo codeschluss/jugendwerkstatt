@@ -87,7 +87,7 @@ const Contacts = () => {
     });
   };
   return (
-    <div>
+    <div className="px-8">
       <ContactOptions
         clicked={() => setModal(false)}
         visible={modal}

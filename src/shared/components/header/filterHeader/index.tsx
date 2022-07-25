@@ -20,8 +20,8 @@ const FilterHeader = () => {
         <div className="bg-[#9E002A] md:bg-primary h-8 pl-3 pr-1 flex items-center rounded-full text-white text-xs md:text-base">
           <p>{`${dates.startDate.$D}.${
             dates.startDate.$M < 9
-              ? "0" + dates.startDate.$M + 1
-              : dates.startDate.$M + 1
+              ? "0" + (dates.startDate.$M + 1)
+              : dates.startDate.$M
           }.${dates.startDate.$y}`}</p>
           <XCircleIcon
             className="w-6   rounded-full p-0 ml-1 "
@@ -33,7 +33,7 @@ const FilterHeader = () => {
         <div className="bg-[#9E002A] md:bg-primary h-8 pl-3 pr-1 flex items-center rounded-full text-white text-xs md:text-base">
           <p>{`${dates?.endDate.$D}.${
             dates?.endDate.$M < 9
-              ? "0" + dates?.endDate.$M + 1
+              ? "0" + (dates?.endDate.$M + 1)
               : dates?.endDate.$M + 1
           }.${dates.endDate.$y}`}</p>
           <XCircleIcon
