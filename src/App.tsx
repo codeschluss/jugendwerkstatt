@@ -129,23 +129,21 @@ const App = (): ReactElement => {
   const [subs] = useSaveSubscriptionMutation();
 
   useEffect(() => {
-    if (isAuthenticated) {
-      PushNotifications.checkPermissions().then((res) => {
-        if (res.receive !== "granted") {
-          PushNotifications.requestPermissions().then((res) => {
-            if (res.receive === "denied") {
-              showToast("Push Notification permission denied");
-            } else {
-              showToast("Push Notification permission granted");
-              register();
-            }
-          });
-        } else {
-          register();
-        }
-      });
-    }
-  }, [isAuthenticated]);
+    PushNotifications.checkPermissions().then((res) => {
+      if (res.receive !== "granted") {
+        PushNotifications.requestPermissions().then((res) => {
+          if (res.receive === "denied") {
+            showToast("Push Notification permission denied");
+          } else {
+            showToast("Push Notification permission granted");
+            register();
+          }
+        });
+      } else {
+        register();
+      }
+    });
+  }, [me.data]);
   const navigate = useNavigate();
 
   const register = () => {
@@ -183,9 +181,7 @@ const App = (): ReactElement => {
     PushNotifications.addListener(
       "pushNotificationActionPerformed",
       (notification: ActionPerformed) => {
-        console.log(notification.actionId, " actionid");
-        console.log(notification.notification, " noti");
-        console.log(notification.inputValue, " noti");
+        console.log(notification, " noti");
         navigate("/map");
       }
     );
