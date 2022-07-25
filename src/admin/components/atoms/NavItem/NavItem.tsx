@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { NavLink, useLocation, useParams } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid';
 import clsx from 'clsx';
 import { BASE_HREF } from '../../../config/global';
@@ -13,13 +13,14 @@ export const NavItem: FC<NavItemProps> = ({
   handleSidebarToggler,
   isLastChild,
   children,
+  className,
   ...rest
 }) => {
   /**
    * hooks
    */
   const { pathname } = useLocation();
-  const { id } = useParams();
+  // const { id } = useParams();
 
   /**
    * local state
@@ -58,7 +59,10 @@ export const NavItem: FC<NavItemProps> = ({
   //     .join('/') === `${BASE_HREF}/${item.location}`;
 
   return (
-    <li className={clsx('w-full text-white', !isLastChild && 'mb-8')} {...rest}>
+    <li
+      className={clsx('w-full text-white', !isLastChild && 'mb-8', className)}
+      {...rest}
+    >
       {hasChild && !shouldNavigate ? (
         <button
           className="flex items-center justify-between w-full"
@@ -66,9 +70,9 @@ export const NavItem: FC<NavItemProps> = ({
         >
           <div className="flex items-center space-x-2">
             {item.icon && <Icon icon={item.icon} />}
-            {isSidebarToggled && <span>{item.name}</span>}
+            <span>{item.name}</span>
           </div>
-          {isSidebarToggled && item.icon && (
+          {item.icon && (
             <Icon icon={showItems ? <ChevronUpIcon /> : <ChevronDownIcon />} />
           )}
         </button>
@@ -83,7 +87,7 @@ export const NavItem: FC<NavItemProps> = ({
           {item.noItems ? (
             <div className="flex items-center space-x-2">
               {item.icon && <Icon icon={item.icon} />}
-              {isSidebarToggled && <span>{item.name}</span>}
+              <span>{item.name}</span>
             </div>
           ) : (
             item.name
@@ -91,7 +95,7 @@ export const NavItem: FC<NavItemProps> = ({
         </NavLink>
       )}
 
-      {isSidebarToggled && showItems && hasChild && (
+      {showItems && hasChild && (
         <div className="flex flex-col ml-2">
           <Nav data={{ items: item.items || [] }} showToggler={false} />
         </div>

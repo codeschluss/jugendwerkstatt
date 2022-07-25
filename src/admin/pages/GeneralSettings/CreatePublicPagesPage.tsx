@@ -7,6 +7,7 @@ import {
   useForm,
 } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
+import { API_URL } from '../../../config/app';
 import { useGetPageQuery, useSavePageMutation } from '../../../GraphQl/graphql';
 import { Button } from '../../components/atoms';
 import {
@@ -22,8 +23,9 @@ import { PublicPagesFormSchema } from '../../validations';
 import { PublicPageFormInputs } from './PublicPageForm.props';
 
 const CreatePublicPagesPage = (): ReactElement => {
-  const navigate = useNavigate();
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const [images, setImages] = useState<FieldArrayWithId<
     PublicPageFormInputs,
     'images',
@@ -34,24 +36,26 @@ const CreatePublicPagesPage = (): ReactElement => {
     null
   );
 
-  const methods = useForm<PublicPageFormInputs>({
-    resolver: joiResolver(PublicPagesFormSchema),
-    mode: 'onChange',
-    defaultValues: {
-      images: [{ file: null }],
-    },
-  });
-
   const { data: { page = null } = {} } = useGetPageQuery({
     skip: !id,
     variables: { entity: { id } },
   });
 
-  const [savePage] = useSavePageMutation({
+  const methods = useForm<PublicPageFormInputs>({
+    resolver: joiResolver(PublicPagesFormSchema),
+    mode: 'onChange',
+    defaultValues: {
+      images: [{ file: null }],
+      video: { file: null },
+    },
+  });
+
+  const [savePage, { loading }] = useSavePageMutation({
     onCompleted: () => navigate('/admin/general-settings/public-pages'),
   });
 
   const {
+    watch,
     reset,
     resetField,
     control,
@@ -60,7 +64,7 @@ const CreatePublicPagesPage = (): ReactElement => {
     formState: { errors },
   } = methods;
 
-  console.log(errors);
+  console.log(page);
 
   const { fields, append, remove, update } = useFieldArray({
     name: 'images',
@@ -73,9 +77,27 @@ const CreatePublicPagesPage = (): ReactElement => {
     for (const field of fields) {
       if (!!field.file) {
         const object = await fileObject(field.file);
-        images.push(object);
+        images.push({ ...object });
       }
     }
+
+    let videos: File[] = data.video as unknown as File[];
+    let choosedVideo: {
+      name: string;
+      mimeType: string;
+      base64: string;
+    } | null = null;
+    for (const v of videos) {
+      const obj = await fileObject(v);
+      choosedVideo = {
+        name: obj.name,
+        mimeType: obj.mimeType,
+        base64: obj.base64,
+      };
+    }
+    console.log('videos', videos[0]);
+    // for (const video of data.video) console.log(data.video[0] as FileList);
+    // const video = await fileObject(data.video as unknown as File);
 
     savePage({
       variables: {
@@ -84,11 +106,12 @@ const CreatePublicPagesPage = (): ReactElement => {
           slug: data.pageName,
           name: data.pageName,
           content: data.description,
-          video: data.video && (await fileObject(data.video)),
           images,
-          ...(!!imageFile?.file && {
-            titleImage: await fileObject(imageFile.file),
-          }),
+          ...(!!imageFile?.file &&
+            imageFile?.file?.size !== 0 && {
+              titleImage: await fileObject(imageFile.file),
+            }),
+          video: { ...choosedVideo },
         },
       },
     });
@@ -117,21 +140,26 @@ const CreatePublicPagesPage = (): ReactElement => {
 
   useEffect(() => {
     if (!!page) {
+      const images =
+        page?.images?.map((item) => ({
+          file: base64ImageToFile(
+            item?.base64 || '',
+            item?.mimeType || '',
+            item?.name || ''
+          ),
+        })) || [];
+
       reset({
         pageName: page.name || '',
         description: page.content || '',
-        images: page?.images?.map((image) => ({
+        images: [...images, { file: null }],
+        video: {
           file: base64ImageToFile(
-            image?.base64 || '',
-            image?.mimeType || '',
-            image?.name || ''
+            page?.video?.base64 || '',
+            page?.video?.mimeType || '',
+            page?.video?.name || ''
           ),
-        })),
-        video: base64ImageToFile(
-          page?.video?.base64 || '',
-          page?.video?.mimeType || '',
-          page?.video?.name || ''
-        ),
+        },
       });
       setImageFile({
         id: page?.titleImage?.id || '',
@@ -143,6 +171,8 @@ const CreatePublicPagesPage = (): ReactElement => {
       });
     }
   }, [page, reset]);
+
+  console.log(errors, watch());
 
   return (
     <FormProvider {...methods}>
@@ -167,7 +197,13 @@ const CreatePublicPagesPage = (): ReactElement => {
             images && (
               <EventImagePreview
                 id={images.id}
-                file={images.file || null}
+                {...(images?.file && {
+                  src:
+                    images.file.size === 0
+                      ? `${API_URL}media/${images?.id}`
+                      : URL.createObjectURL(images.file),
+                })}
+                file={images.file}
                 onHandle={onHandle}
                 isTitleBild={imageFile?.id === images.id}
                 onRemoveImage={handleRemoveImage}
@@ -188,7 +224,10 @@ const CreatePublicPagesPage = (): ReactElement => {
                 {...register(`images.${index}.file`)}
                 error={errors.images?.[index]?.file?.message}
                 {...(!!item.file && {
-                  src: URL.createObjectURL(item.file),
+                  src:
+                    item.file.size !== 0
+                      ? URL.createObjectURL(item.file)
+                      : `${API_URL}media/${item?.id}`,
                 })}
               />
             ))}
@@ -220,6 +259,7 @@ const CreatePublicPagesPage = (): ReactElement => {
           </div>
         </Accordion>
         <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
+        {loading && <p>Processing...</p>}
       </form>
     </FormProvider>
   );

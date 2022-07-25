@@ -109,6 +109,13 @@ const App = (): ReactElement => {
           path="/profile-upload-picture"
           element={<ProfileImageUpload />}
         />
+        {/* <Route path="/admin/profile" element={<ProfileSettings />} />
+        <Route path="/admin/profile-personal" element={<PersonalData />} />
+        <Route path="/admin/profile-password" element={<ChangePassword />} />
+        <Route
+          path="/admin/profile-upload-picture"
+          element={<ProfileImageUpload />}
+        /> */}
 
         <Route path="/reVerifyEmail" element={<ReVerifyUser />} />
         <Route path="/pending-approval" element={<ApprovalPending />} />
