@@ -1,12 +1,16 @@
 import React from "react";
 import {
-  useGetNotificationsQuery,
+  useGetMeNotificationsQuery,
   useSaveNotificationMutation,
 } from "../../../GraphQl/graphql";
 
 const Notifications = () => {
-  const notifications = useGetNotificationsQuery();
+  const notifications = useGetMeNotificationsQuery({
+    fetchPolicy: "cache-and-network",
+  });
   const [saveNotification] = useSaveNotificationMutation();
+
+  console.log(notifications.data, "noti");
 
   const sorted = notifications.data?.me?.notifications?.slice().sort((a, b) => {
     const contentA: any = new Date(a?.created);

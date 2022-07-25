@@ -1,6 +1,8 @@
-import React from "react";
+import { PlusCircleIcon, XCircleIcon } from "@heroicons/react/outline";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "../../../../shared/components/header/sideBar/Avatar";
+import { readAuthToken } from "../../../../shared/utils";
 
 interface ItemProps {
   name?: string | undefined | null;
@@ -9,9 +11,9 @@ interface ItemProps {
   imgUrl?: any;
   href?: string;
   onClick?: () => void;
+  addMember?: () => void;
+  deleteMember?: () => void;
 }
-
-///assets/avatarSmall2.png
 
 const Item: React.FC<ItemProps> = ({
   name,
@@ -20,8 +22,31 @@ const Item: React.FC<ItemProps> = ({
   imgUrl,
   href,
   onClick,
+  addMember,
+  deleteMember,
 }) => {
-  console.log(imgUrl, "imgurl");
+  const token = readAuthToken("accessToken");
+  const [img, setImg] = useState<any>();
+
+  const requestOptions: any = {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+      responseType: "arraybuffer",
+    },
+  };
+  const fetchImage = async () => {
+    const res = await fetch(imgUrl, requestOptions);
+    const imageBlob = await res.blob();
+    const imageObjectURL = URL.createObjectURL(imageBlob);
+    setImg(imageObjectURL);
+  };
+
+  useEffect(() => {
+    if (imgUrl) {
+      fetchImage();
+    }
+  }, [imgUrl, token]);
 
   return (
     <div>
@@ -29,7 +54,7 @@ const Item: React.FC<ItemProps> = ({
         <div className="flex flex-row w-full md:w-1/4  my-3" onClick={onClick}>
           {imgUrl ? (
             <img
-              src={imgUrl}
+              src={img}
               className="w-10 h-10 rounded-full"
               alt={name || null || undefined}
             />
@@ -48,6 +73,18 @@ border-gray-500 justify-between ml-3 pb-1 items-center"
               <div className="text-xl text-center text-gray-border-gray-500">
                 {rightInfo}
               </div>
+            )}
+            {addMember && (
+              <PlusCircleIcon
+                onClick={addMember}
+                className="w-7 text-green-600"
+              />
+            )}
+            {deleteMember && (
+              <XCircleIcon
+                onClick={deleteMember}
+                className="w-7 text-red-600"
+              />
             )}
           </div>
         </div>

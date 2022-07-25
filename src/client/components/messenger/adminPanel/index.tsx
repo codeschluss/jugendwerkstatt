@@ -11,8 +11,10 @@ import { API_URL } from "../../../../config/app";
 import {
   ParticipantEntity,
   useGetChatQuery,
+  useSaveChatMutation,
 } from "../../../../GraphQl/graphql";
 import DropDown from "../../../../shared/components/ui/DropDown";
+import TypeInput from "../../forms/upload/TypeInput";
 import Item from "../overview/Item";
 
 const AdminPanel = () => {
@@ -27,42 +29,42 @@ const AdminPanel = () => {
     },
   });
 
+  const [saveChat] = useSaveChatMutation();
+
   console.log(groupChat.data?.getChat?.participants, "chat part");
   const participants: any = groupChat?.data?.getChat?.participants;
-  //   const uploadHandler = async (e: any) => {
-  //     const file = e.target.files[0];
-  //     const base64: string | any = await convertBase64(file);
+  const uploadHandler = async (e: any) => {
+    const file = e.target.files[0];
+    const base64: string | any = await convertBase64(file);
 
-  //     saveMessage({
-  //       variables: {
-  //         entity: {
-  //           chat: {
-  //             id: id,
-  //           },
-  //           media: {
-  //             base64: base64.split(",")[1],
-  //             mimeType: file.type,
-  //             name: file.name,
-  //           },
-  //         },
-  //       },
-  //     }).finally(() => {
-  //       getMessages.refetch();
-  //     });
-  //   };
+    saveChat({
+      variables: {
+        entity: {
+          id: id,
+          avatar: {
+            base64: base64.split(",")[1],
+            mimeType: file.type,
+            name: file.name,
+          },
+        },
+      },
+    }).finally(() => {
+      groupChat.refetch();
+    });
+  };
 
-  //   const convertBase64 = (file: any) => {
-  //     return new Promise((resolve, reject) => {
-  //       const fileReader = new FileReader();
-  //       fileReader.readAsDataURL(file);
-  //       fileReader.onload = () => {
-  //         resolve(fileReader.result);
-  //       };
-  //       fileReader.onerror = (error) => {
-  //         reject(error);
-  //       };
-  //     });
-  //   };
+  const convertBase64 = (file: any) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
 
   return (
     <div className="absolute md:relative pb-5  w-full h-full z-50 bg-white top-0 md:h-screen     ">
@@ -89,19 +91,38 @@ const AdminPanel = () => {
               >
                 Teilnehmer hinzufügen
               </p>
-              <p className="cursor-pointer">Gruppennamen ändern</p>
-              <p className="cursor-pointer">Gruppeneinstellungen</p>
+              <p
+                onClick={() => navigate(`/groupChatNameChange/${id}`)}
+                className="cursor-pointer"
+              >
+                Gruppennamen ändern
+              </p>
+              <p
+                onClick={() => navigate(`/groupChatRules/${id}`)}
+                className="cursor-pointer"
+              >
+                Gruppeneinstellungen
+              </p>
             </DropDown>
           </div>
         </div>
         <div className="relative rounded-full mx-auto w-28 h-28 flex items-center justify-center bg-white">
           {" "}
-          <UserGroupIcon className="w-16 text-primary" />{" "}
+          {groupChat.data?.getChat?.avatar?.id ? (
+            <img
+              src={`${API_URL}media/${groupChat.data?.getChat?.avatar?.id}`}
+              className="w-full h-full rounded-full"
+            />
+          ) : (
+            <UserGroupIcon className="w-16 text-primary" />
+          )}
           <div
             className="w-8 h-8 absolute bg-white rounded-full right-0 bottom-1 flex items-center 
           justify-center border-2 border-gray-400"
           >
-            <PencilIcon className="w-5 text-gray-500" />
+            <TypeInput onChange={uploadHandler}>
+              <PencilIcon className="w-5 text-gray-500" />
+            </TypeInput>
           </div>
         </div>
       </div>

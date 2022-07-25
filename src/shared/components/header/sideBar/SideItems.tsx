@@ -115,7 +115,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
             handleToggle();
           }}
         >
-          Menu schliesen
+          Menu einkippen
         </span>
       ) : (
         <span

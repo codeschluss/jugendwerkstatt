@@ -45,7 +45,7 @@ const SliderC: React.FC<SliderProps> = ({
       </p>
       {isTouch ? (
         <div
-          className={`relative w-full flex gap-4 snap-x px-4 snap-mandatory overflow-x-auto scroll-container pb-3`}
+          className={`relative w-full flex    snap-x px-4 snap-mandatory overflow-x-auto scroll-container pb-3`}
         >
           {children}
         </div>

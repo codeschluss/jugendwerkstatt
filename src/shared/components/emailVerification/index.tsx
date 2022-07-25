@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../client/components/ui/Button";
 // import AuthContext from "../../../contexts/AuthContext";
 import { useSendVerificationMutation } from "../../../GraphQl/graphql";
+import { useAuth } from "../../../hooks/useAuth";
+import { useAuthStore } from "../../../store";
 import { useTempEmailStore } from "../../../store/tempEmail/tempEmail.store";
 import logo from "../../images/jugendwerkstatt-logo.png";
 
@@ -23,6 +25,15 @@ const RegistrationOrVerification: React.FC<CheckingProps> = ({
   pendingApproval,
 }) => {
   const { tempEmail } = useTempEmailStore();
+  const { handleLogout } = useAuth();
+  const { isAuthenticated } = useAuthStore();
+
+  const logoutHandler = () => {
+    if (isAuthenticated) {
+      handleLogout();
+    }
+    navigate("/");
+  };
 
   const [reSendVerification] = useSendVerificationMutation({
     variables: {
@@ -93,11 +104,7 @@ const RegistrationOrVerification: React.FC<CheckingProps> = ({
             </>
           )}
         </div>
-        <Button
-          click={() => navigate("/")}
-          isValidated={true}
-          isDisabled={true}
-        >
+        <Button click={logoutHandler} isValidated={true} isDisabled={true}>
           Zur App
         </Button>
       </div>

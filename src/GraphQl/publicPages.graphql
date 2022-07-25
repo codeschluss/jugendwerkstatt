@@ -1,0 +1,45 @@
+query PublicPages {
+  getPages {
+    result {
+      id
+      content
+      name
+      images {
+        id
+      }
+      video {
+        id
+      }
+      titleImage {
+        id
+      }
+    }
+  }
+}
+
+query PublicPagesBasic {
+  getPages {
+    result {
+      id
+      name
+    }
+  }
+}
+
+query GetSinglePublicPage($entity: PageEntityInput) {
+  getPage(entity: $entity) {
+    content
+    id
+    images {
+      id
+    }
+    name
+    slug
+    video {
+      id
+    }
+    titleImage {
+      id
+    }
+  }
+}

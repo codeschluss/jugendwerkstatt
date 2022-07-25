@@ -1,5 +1,6 @@
 import { ReactElement, useCallback } from "react";
 import { Link } from "react-router-dom";
+import Footer from "../../../../client/components/footer";
 import Button from "../../../../client/components/ui/Button";
 import { useCreateTokenMutation } from "../../../../GraphQl/graphql";
 import useInput from "../../../../hooks/use-input";
@@ -66,41 +67,44 @@ const Login = (): ReactElement => {
   };
 
   return (
-    <AuthWrapper title="Anmelden">
-      <form onSubmit={submitHandler} className="p-6 mt-5 text-right">
-        <AuthInput
-          value={enteredEmail}
-          onBlur={emailBlurHandler}
-          onChange={emailChangeHandler}
-          type="text"
-          error={emailInputError ? "Keine gültige E-Mail Adresse" : ""}
-          placeholder="E-Mail Adresse"
-          inputClassName="w-full px-4 text-xl p-3 peer focus:outline-none border-2 rounded-md"
-        />
-        <AuthInput
-          value={enteredPassword}
-          onBlur={passwordBlurHandler}
-          onChange={passwordChangeHandler}
-          error={passwordInputError ? "Passwort nicht stark genug" : ""}
-          type="password"
-          placeholder="Passwort"
-          inputClassName="w-full px-4 text-xl p-3 peer f
+    <>
+      <AuthWrapper title="Anmelden">
+        <form onSubmit={submitHandler} className="p-6 mt-5 text-right">
+          <AuthInput
+            value={enteredEmail}
+            onBlur={emailBlurHandler}
+            onChange={emailChangeHandler}
+            type="text"
+            error={emailInputError ? "Keine gültige E-Mail Adresse" : ""}
+            placeholder="E-Mail Adresse"
+            inputClassName="w-full px-4 text-xl p-3 peer focus:outline-none border-2 rounded-md"
+          />
+          <AuthInput
+            value={enteredPassword}
+            onBlur={passwordBlurHandler}
+            onChange={passwordChangeHandler}
+            error={passwordInputError ? "Passwort nicht stark genug" : ""}
+            type="password"
+            placeholder="Passwort"
+            inputClassName="w-full px-4 text-xl p-3 peer f
           ocus:outline-none border-2 rounded-md"
-        />
+          />
 
-        <Link className="my-10 underline" to="/forgot-password/email">
-          {" "}
-          <p>Passwort vergessen?</p>
-        </Link>
-        <Button
-          isValidated={enteredPasswordValidity && enteredEmailValidity}
-          isDisabled={!passwordInputError && !emailInputError}
-          buttonType={"submit"}
-        >
-          Anmelden
-        </Button>
-      </form>
-    </AuthWrapper>
+          <Link className="my-10 underline" to="/forgot-password/email">
+            {" "}
+            <p className="my-2">Passwort vergessen?</p>
+          </Link>
+          <Button
+            isValidated={enteredPasswordValidity && enteredEmailValidity}
+            isDisabled={!passwordInputError && !emailInputError}
+            buttonType={"submit"}
+          >
+            Anmelden
+          </Button>
+        </form>
+      </AuthWrapper>
+      <Footer />
+    </>
   );
 };
 

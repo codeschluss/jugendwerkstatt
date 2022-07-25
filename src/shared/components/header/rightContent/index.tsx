@@ -5,7 +5,7 @@ import {
   NotificationEntity,
   SearchDto,
   useGetMeBasicQuery,
-  useGetNotificationsQuery,
+  useGetMeNotificationsQuery,
   useSaveNotificationMutation,
   useSearchQuery,
 } from "../../../../GraphQl/graphql";
@@ -26,7 +26,7 @@ const RightContent: FC = () => {
   const [inputvalue, setInputValue] = useState();
   const { handleLogout } = useAuth();
   const user = useGetMeBasicQuery();
-  const notifications = useGetNotificationsQuery();
+  const notifications = useGetMeNotificationsQuery();
   const [saveNotification] = useSaveNotificationMutation();
   const navigate = useNavigate();
 

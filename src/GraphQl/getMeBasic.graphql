@@ -5,6 +5,9 @@ query GetMeBasic {
     phone
     password
     email
+    roles {
+      key
+    }
     profilePicture {
       id
     }
