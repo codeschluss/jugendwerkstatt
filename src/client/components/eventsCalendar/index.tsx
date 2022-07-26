@@ -262,7 +262,7 @@ const EventsCalendar: React.FC = () => {
   };
 
   return (
-    <div className="absolute md:m-12 lg:relative top-0 left-0 w-screen h-screen lg:w-full lg:h-full bg-[#f7f7f7] z-10 lg:z-auto pt-0">
+    <div className=" md:m-12 lg:relative top-0 left-0  h-screen lg:w-full lg:h-full bg-[#f7f7f7] z-10 lg:z-auto pt-0">
       <div className="lg:hidden flex bg-primary h-[6.5rem] text-white">
         <div className="relative my-auto">
           <button
@@ -313,7 +313,7 @@ const EventsCalendar: React.FC = () => {
         />
 
         <Calendar
-          className="customized-daily-calendar max-w-2xl min-w-[400px] ml-14 overflow-y-scroll hidden lg:inline "
+          className="customized-daily-calendar max-w-2xl min-w-[400px] ml-14 overflow-y-scroll hidden md:block lg:inline "
           localizer={localizer}
           events={finalHourlyEvents}
           components={{ event: event_hourly }}

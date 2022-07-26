@@ -108,6 +108,8 @@ import {
   useGetMeBasicQuery,
   useSaveSubscriptionMutation,
 } from "./GraphQl/graphql";
+import RolePending from "./client/pages/verify/RolePending";
+import { switchClasses } from "@mui/material";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
@@ -129,20 +131,22 @@ const App = (): ReactElement => {
   const [subs] = useSaveSubscriptionMutation();
 
   useEffect(() => {
-    PushNotifications.checkPermissions().then((res) => {
-      if (res.receive !== "granted") {
-        PushNotifications.requestPermissions().then((res) => {
-          if (res.receive === "denied") {
-            showToast("Push Notification permission denied");
-          } else {
-            showToast("Push Notification permission granted");
-            register();
-          }
-        });
-      } else {
-        register();
-      }
-    });
+    if (me.data) {
+      PushNotifications.checkPermissions().then((res) => {
+        if (res.receive !== "granted") {
+          PushNotifications.requestPermissions().then((res) => {
+            if (res.receive === "denied") {
+              showToast("Push Notification permission denied");
+            } else {
+              showToast("Push Notification permission granted");
+              register();
+            }
+          });
+        } else {
+          register();
+        }
+      });
+    }
   }, [me.data]);
   const navigate = useNavigate();
 
@@ -170,19 +174,24 @@ const App = (): ReactElement => {
     PushNotifications.addListener(
       "pushNotificationReceived",
       (notification: PushNotificationSchema) => {
-        console.log(notification.body, "other notification body");
-        console.log(notification.title, "other notification body");
-        console.log(
-          notification.click_action,
-          "other notification action link"
-        );
+        console.log(notification, "other notification body");
       }
     );
     PushNotifications.addListener(
       "pushNotificationActionPerformed",
       (notification: ActionPerformed) => {
-        console.log(notification, " noti");
-        navigate("/map");
+        console.log(notification.notification, " noti");
+
+        switch (notification.notification.data.type) {
+          case "chat":
+            navigate(`messenger/chat/${notification.notification.data?.id}`);
+            break;
+          case "event":
+            navigate(`event/${notification.notification.data?.id}`);
+            break;
+          case undefined:
+            navigate("notifications");
+        }
       }
     );
   };
@@ -209,6 +218,7 @@ const App = (): ReactElement => {
         />
 
         <Route path="/reVerifyEmail" element={<ReVerifyUser />} />
+        <Route path="/pendingRole" element={<RolePending />} />
         <Route path="/pending-approval" element={<ApprovalPending />} />
 
         {chatEnabled?.data?.getSettings?.chatActive && (
