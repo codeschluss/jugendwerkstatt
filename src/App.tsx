@@ -1,42 +1,42 @@
-import { ReactElement, useEffect } from "react";
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
-import { useAuth } from "./hooks/useAuth";
-import { RequireAuthRoute, RequireNonAuthRoute } from "./shared/components";
+import { ReactElement, useEffect } from 'react';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { useAuth } from './hooks/useAuth';
+import { RequireAuthRoute, RequireNonAuthRoute } from './shared/components';
 
 // pages
-import Map from "./client/components/map";
-import Calls from "./client/components/messenger/overview/calls";
-import Chats from "./client/components/messenger/overview/chats";
-import Contacts from "./client/components/messenger/overview/contacts";
-import RegisteredSuccessfully from "./client/components/register/success/registeredSuccessfully";
-import JobDetails from "./client/components/singleJobAdd";
-import LoginPage from "./client/pages/authentication/LoginPage";
-import RegisterPage from "./client/pages/authentication/Register";
-import EventDetail from "./client/pages/eventDetail";
-import Events from "./client/pages/events";
-import EventsCalendar from "./client/pages/eventsCalendar";
-import EventsTime from "./client/pages/eventsTime";
-import Favorites from "./client/pages/favorites";
-import Forms from "./client/pages/forms";
-import TemplateEdit from "./client/pages/forms/TemplateEdit";
-import Templates from "./client/pages/forms/Templates";
-import TemplateView from "./client/pages/forms/TemplateView";
-import UploadData from "./client/pages/forms/UploadData";
-import Jobs from "./client/pages/jobs";
-import MediaLibrary from "./client/pages/mediaLibrary";
-import Messenger from "./client/pages/messenger";
-import Chat from "./client/pages/messenger/Chat";
-import ChangePassword from "./client/pages/Profile/ChangePassword";
-import PersonalData from "./client/pages/Profile/PersonalData";
-import ProfileImageUpload from "./client/pages/Profile/ProfileImageUpload";
-import ProfileSettings from "./client/pages/Profile/ProfileSettings";
-import AlreadyVerifiedUser from "./client/pages/verify/AlreadyVerifiedUser";
-import ApprovalPending from "./client/pages/verify/ApprovalPending";
-import ReVerifyUser from "./client/pages/verify/ReVerifyUser";
-import ToVerifyUser from "./client/pages/verify/ToVerifyUser";
-import ForgotPassword from "./shared/components/authentication/forgotPassword";
-import Email from "./shared/components/authentication/forgotPassword/Email";
-import Password from "./shared/components/authentication/forgotPassword/Password";
+import Map from './client/components/map';
+import Calls from './client/components/messenger/overview/calls';
+import Chats from './client/components/messenger/overview/chats';
+import Contacts from './client/components/messenger/overview/contacts';
+import RegisteredSuccessfully from './client/components/register/success/registeredSuccessfully';
+import JobDetails from './client/components/singleJobAdd';
+import LoginPage from './client/pages/authentication/LoginPage';
+import RegisterPage from './client/pages/authentication/Register';
+import EventDetail from './client/pages/eventDetail';
+import Events from './client/pages/events';
+import EventsCalendar from './client/pages/eventsCalendar';
+import EventsTime from './client/pages/eventsTime';
+import Favorites from './client/pages/favorites';
+import Forms from './client/pages/forms';
+import TemplateEdit from './client/pages/forms/TemplateEdit';
+import Templates from './client/pages/forms/Templates';
+import TemplateView from './client/pages/forms/TemplateView';
+import UploadData from './client/pages/forms/UploadData';
+import Jobs from './client/pages/jobs';
+import MediaLibrary from './client/pages/mediaLibrary';
+import Messenger from './client/pages/messenger';
+import Chat from './client/pages/messenger/Chat';
+import ChangePassword from './client/pages/Profile/ChangePassword';
+import PersonalData from './client/pages/Profile/PersonalData';
+import ProfileImageUpload from './client/pages/Profile/ProfileImageUpload';
+import ProfileSettings from './client/pages/Profile/ProfileSettings';
+import AlreadyVerifiedUser from './client/pages/verify/AlreadyVerifiedUser';
+import ApprovalPending from './client/pages/verify/ApprovalPending';
+import ReVerifyUser from './client/pages/verify/ReVerifyUser';
+import ToVerifyUser from './client/pages/verify/ToVerifyUser';
+import ForgotPassword from './shared/components/authentication/forgotPassword';
+import Email from './shared/components/authentication/forgotPassword/Email';
+import Password from './shared/components/authentication/forgotPassword/Password';
 
 // admin pages
 import {
@@ -83,38 +83,38 @@ import {
   VacancyCategoriesListPage,
   VacancyCompaniesListPage,
   VacancyListPage,
-} from "./admin/pages";
+} from './admin/pages';
 
-import { GeneralAddressForm } from "./admin/components/organisms";
-import Home from "./client/pages/home";
-import { RequireAuthAll } from "./shared/components/RequireAuthRoute/RequireAuthAll";
-import Notifications from "./shared/components/notifications";
-import MainPanel from "./client/pages/messenger/adminPanel/MainPanel";
-import AddMemberPanel from "./client/pages/messenger/adminPanel/AddMemberPanel";
-import GroupNamePanel from "./client/pages/messenger/adminPanel/GroupNamePanel";
-import ChatAccessRules from "./client/pages/messenger/adminPanel/ChatAccessRules";
-import { useGetChatSettingsQuery } from "./GraphQl/graphql";
-import { useAuthStore } from "./store";
-import GlobalPages from "./client/pages/globalPages";
+import { GeneralAddressForm } from './admin/components/organisms';
+import Home from './client/pages/home';
+import { RequireAuthAll } from './shared/components/RequireAuthRoute/RequireAuthAll';
+import Notifications from './shared/components/notifications';
+import MainPanel from './client/pages/messenger/adminPanel/MainPanel';
+import AddMemberPanel from './client/pages/messenger/adminPanel/AddMemberPanel';
+import GroupNamePanel from './client/pages/messenger/adminPanel/GroupNamePanel';
+import ChatAccessRules from './client/pages/messenger/adminPanel/ChatAccessRules';
+import { useGetChatSettingsQuery } from './GraphQl/graphql';
+import { useAuthStore } from './store';
+import GlobalPages from './client/pages/globalPages';
 
 import {
   ActionPerformed,
   PushNotifications,
   PushNotificationSchema,
   Token,
-} from "@capacitor/push-notifications";
-import { Toast } from "@capacitor/toast";
+} from '@capacitor/push-notifications';
+import { Toast } from '@capacitor/toast';
 import {
   useGetMeBasicQuery,
   useSaveSubscriptionMutation,
-} from "./GraphQl/graphql";
+} from './GraphQl/graphql';
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
   const { isAuthenticated } = useAuthStore();
 
   const chatEnabled = useGetChatSettingsQuery({
-    fetchPolicy: "network-only",
+    fetchPolicy: 'network-only',
     skip: !isAuthenticated,
   });
 
@@ -131,12 +131,12 @@ const App = (): ReactElement => {
   useEffect(() => {
     if (isAuthenticated) {
       PushNotifications.checkPermissions().then((res) => {
-        if (res.receive !== "granted") {
+        if (res.receive !== 'granted') {
           PushNotifications.requestPermissions().then((res) => {
-            if (res.receive === "denied") {
-              showToast("Push Notification permission denied");
+            if (res.receive === 'denied') {
+              showToast('Push Notification permission denied');
             } else {
-              showToast("Push Notification permission granted");
+              showToast('Push Notification permission granted');
               register();
             }
           });
@@ -151,7 +151,7 @@ const App = (): ReactElement => {
   const register = () => {
     PushNotifications.register();
 
-    PushNotifications.addListener("registration", (token: Token) => {
+    PushNotifications.addListener('registration', (token: Token) => {
       const entity = {
         deviceToken: token.value,
         user: {
@@ -170,23 +170,23 @@ const App = (): ReactElement => {
     // });
 
     PushNotifications.addListener(
-      "pushNotificationReceived",
+      'pushNotificationReceived',
       (notification: PushNotificationSchema) => {
-        console.log(notification.body, "other notification body");
-        console.log(notification.title, "other notification body");
+        console.log(notification.body, 'other notification body');
+        console.log(notification.title, 'other notification body');
         console.log(
           notification.click_action,
-          "other notification action link"
+          'other notification action link'
         );
       }
     );
     PushNotifications.addListener(
-      "pushNotificationActionPerformed",
+      'pushNotificationActionPerformed',
       (notification: ActionPerformed) => {
-        console.log(notification.actionId, " actionid");
-        console.log(notification.notification, " noti");
-        console.log(notification.inputValue, " noti");
-        navigate("/map");
+        console.log(notification.actionId, ' actionid');
+        console.log(notification.notification, ' noti');
+        console.log(notification.inputValue, ' noti');
+        navigate('/map');
       }
     );
   };
@@ -217,7 +217,7 @@ const App = (): ReactElement => {
 
         {chatEnabled?.data?.getSettings?.chatActive && (
           <>
-            {" "}
+            {' '}
             <Route path="/messenger" element={<Messenger />}>
               <Route path="chats" element={<Chats />} />
               <Route path="calls" element={<Calls />} />
@@ -230,7 +230,7 @@ const App = (): ReactElement => {
               path="/groupChatNameChange/:id"
               element={<GroupNamePanel />}
             />
-            <Route path="/groupChatRules/:id" element={<ChatAccessRules />} />{" "}
+            <Route path="/groupChatRules/:id" element={<ChatAccessRules />} />{' '}
           </>
         )}
       </Route>
@@ -250,7 +250,7 @@ const App = (): ReactElement => {
         <Route path="/toVerifyEmail" element={<ToVerifyUser />} />
       </Route>
 
-      <Route element={<RequireAuthRoute accessRole={["student"]} />}>
+      <Route element={<RequireAuthRoute accessRole={['student']} />}>
         <Route path="/job-ad/:id" element={<JobDetails />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/jobs" element={<Jobs />} />
@@ -286,7 +286,7 @@ const App = (): ReactElement => {
       </Route>
 
       <Route
-        element={<RequireAuthRoute accessRole={["admin", "superviser"]} />}
+        element={<RequireAuthRoute accessRole={['admin', 'superviser']} />}
       >
         <Route path="/admin/events">
           <Route index element={<EventsListPage />} />
@@ -411,7 +411,7 @@ const App = (): ReactElement => {
 
       <Route
         path="/admin"
-        element={<Navigate to={{ pathname: "/admin/events" }} />}
+        element={<Navigate to={{ pathname: '/admin/events' }} />}
       />
 
       <Route

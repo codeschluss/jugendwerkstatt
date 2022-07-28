@@ -11,12 +11,12 @@ export interface BaseDataFormInputs {
 }
 
 export interface ScheduleProps {
-  start_date?: Date;
-  start_hour?: Date;
-  end_date?: Date;
-  end_hour?: Date;
-  repeat?: "week" | "month" | "year";
-  end_repeat?: Date;
+  start_date?: Date | null;
+  start_hour?: Date | null;
+  end_date?: Date | null;
+  end_hour?: Date | null;
+  repeat?: 'week' | 'month' | 'year' | '';
+  end_repeat?: Date | null;
 }
 export interface ScheduleInputs {
   startDate?: Date;

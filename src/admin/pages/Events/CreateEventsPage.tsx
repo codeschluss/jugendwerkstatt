@@ -1,19 +1,19 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from 'react';
 import {
   FieldArrayWithId,
   FormProvider,
   useFieldArray,
   useForm,
-} from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
-import { joiResolver } from "@hookform/resolvers/joi";
+} from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
+import { joiResolver } from '@hookform/resolvers/joi';
 
 import {
   Accordion,
   EventImagePreview,
   FormActions,
   UploadField,
-} from "../../components/molecules";
+} from '../../components/molecules';
 import {
   AddressForm,
   BaseDataForm,
@@ -21,15 +21,15 @@ import {
   EventsFormInputs,
   ScheduleInputs,
   SchedulesForm,
-} from "../../components/organisms";
+} from '../../components/organisms';
 import {
   useGetEventAdminQuery,
   useSaveEventMutation,
-} from "../../../GraphQl/graphql";
-import { EventsFormSchema } from "../../validations";
-import dayjs from "dayjs";
-import { base64ImageToFile, fileObject, twClsx } from "../../utils";
-import { API_URL } from "../../../config/app";
+} from '../../../GraphQl/graphql';
+import { EventsFormSchema } from '../../validations';
+import dayjs from 'dayjs';
+import { base64ImageToFile, fileObject, twClsx } from '../../utils';
+import { API_URL } from '../../../config/app';
 
 const CreateEventsPage = (): ReactElement => {
   const { id } = useParams();
@@ -37,14 +37,13 @@ const CreateEventsPage = (): ReactElement => {
 
   const [file, setFile] = useState<FieldArrayWithId<
     EventsFormInputs,
-    "files",
-    "id"
+    'files',
+    'id'
   > | null>(null);
 
   const [imageFile, setImageFile] = useState<{ file: File; id: string } | null>(
     null
   );
-
   const [schedules, setSchedules] = useState<ScheduleInputs[] | []>([]);
 
   const { data: { getEvent = null } = {} } = useGetEventAdminQuery({
@@ -53,7 +52,7 @@ const CreateEventsPage = (): ReactElement => {
   });
 
   const [saveEvent, { loading }] = useSaveEventMutation({
-    onCompleted: () => navigate("/admin/events"),
+    onCompleted: () => navigate('/admin/events'),
   });
 
   const methods = useForm<EventsFormInputs>({
@@ -61,11 +60,11 @@ const CreateEventsPage = (): ReactElement => {
     defaultValues: !getEvent
       ? {
           schedule: {
-            start_date: dayjs().startOf("date").toDate(),
-            end_date: dayjs().startOf("date").toDate(),
-            end_repeat: dayjs().startOf("date").toDate(),
-            start_hour: dayjs().startOf("h").toDate(),
-            end_hour: dayjs().startOf("h").toDate(),
+            start_date: dayjs().startOf('date').toDate(),
+            end_date: dayjs().startOf('date').toDate(),
+            end_repeat: dayjs().startOf('date').toDate(),
+            start_hour: dayjs().startOf('h').toDate(),
+            end_hour: dayjs().startOf('h').toDate(),
           },
           files: [{ file: null }],
         }
@@ -81,7 +80,7 @@ const CreateEventsPage = (): ReactElement => {
   } = methods;
 
   const { fields, append, remove, update } = useFieldArray({
-    name: "files",
+    name: 'files',
     control,
   });
 
@@ -125,7 +124,7 @@ const CreateEventsPage = (): ReactElement => {
   };
 
   const handleSetFile =
-    (item: FieldArrayWithId<EventsFormInputs, "files", "id">) => () => {
+    (item: FieldArrayWithId<EventsFormInputs, 'files', 'id'>) => () => {
       setFile(item);
     };
 
@@ -138,69 +137,61 @@ const CreateEventsPage = (): ReactElement => {
     setImageFile(data);
   };
 
-  const stringToDate = (value: string) => {
-    return dayjs(value, "YYYY-MM-DDTHH:mmZ[Z]").toDate();
-  };
-
   useEffect(() => {
+    console.log('getEvent', getEvent);
     if (!!getEvent) {
-      const start_date = stringToDate(getEvent.schedules?.at(-1)?.startDate);
-      const end_date = stringToDate(getEvent.schedules?.at(-1)?.endDate);
-      const end_repeat = stringToDate(getEvent.schedules?.[0]?.startDate);
-
-      const repeat = ["week", "month", "year"].find(
-        (i) =>
-          getEvent.schedules?.length ===
-          dayjs(end_repeat).diff(start_date, i as "week" | "month" | "year") + 2
-      );
+      const schedules = getEvent.schedules?.map((schedule) => ({
+        startDate: schedule?.startDate,
+        endDate: schedule?.endDate,
+      }));
+      setSchedules(schedules || []);
 
       const images =
         getEvent?.images?.map((item) => ({
           file: base64ImageToFile(
-            item?.base64 || "",
-            item?.mimeType || "",
-            item?.name || ""
+            item?.base64 || '',
+            item?.mimeType || '',
+            item?.name || ''
           ),
         })) || [];
 
       reset({
         baseData: {
-          name: getEvent?.name || "",
-          category: getEvent?.category?.id || "",
-          organizer: getEvent?.organizer?.id || "",
+          name: getEvent?.name || '',
+          category: getEvent?.category?.id || '',
+          organizer: getEvent?.organizer?.id || '',
         },
-        description: getEvent?.description || "",
+        description: getEvent?.description || '',
         address: {
-          houseNumber: getEvent?.address?.houseNumber || "",
-          place: getEvent?.address?.place || "",
-          postalCode: getEvent?.address?.postalCode || "",
-          street: getEvent?.address?.street || "",
+          houseNumber: getEvent?.address?.houseNumber || '',
+          place: getEvent?.address?.place || '',
+          postalCode: getEvent?.address?.postalCode || '',
+          street: getEvent?.address?.street || '',
         },
         schedule: {
-          start_date,
-          end_date,
-          end_repeat,
-          start_hour: dayjs(start_date).startOf("m").toDate(),
-          end_hour: dayjs(end_date).startOf("m").toDate(),
-          repeat: repeat as "week" | "month" | "year",
+          start_date: dayjs().startOf('date').toDate(),
+          end_date: dayjs().startOf('date').toDate(),
+          end_repeat: dayjs().startOf('date').toDate(),
+          start_hour: dayjs().startOf('h').toDate(),
+          end_hour: dayjs().startOf('h').toDate(),
         },
         files: [...images, { file: null }],
       });
 
       const titleImage = base64ImageToFile(
-        getEvent?.titleImage?.base64 || "",
-        getEvent?.titleImage?.mimeType || "",
-        getEvent?.titleImage?.name || ""
+        getEvent?.titleImage?.base64 || '',
+        getEvent?.titleImage?.mimeType || '',
+        getEvent?.titleImage?.name || ''
       );
 
       setImageFile({
-        id: getEvent?.titleImage?.id || "",
+        id: getEvent?.titleImage?.id || '',
         file: titleImage,
       });
 
       setFile({
         file: titleImage,
-        id: getEvent?.titleImage?.id || "",
+        id: getEvent?.titleImage?.id || '',
       });
     }
   }, [getEvent, reset]);
@@ -211,19 +202,19 @@ const CreateEventsPage = (): ReactElement => {
         <Accordion
           title="Stammdaten"
           open={!!id}
-          className={twClsx(errors.baseData && "border border-primary")}
+          className={twClsx(errors.baseData && 'border border-primary')}
         >
           <BaseDataForm />
         </Accordion>
         <Accordion
           title="Adresse"
-          className={twClsx(errors.address && "border border-primary")}
+          className={twClsx(errors.address && 'border border-primary')}
         >
           <AddressForm />
         </Accordion>
         <Accordion
           title="Beschreibung"
-          className={twClsx(errors.description && "border border-primary")}
+          className={twClsx(errors.description && 'border border-primary')}
         >
           <DescriptionFrom />
         </Accordion>
@@ -231,7 +222,7 @@ const CreateEventsPage = (): ReactElement => {
           title="Bilder"
           showSide
           sideClassName="w-auto"
-          className={twClsx(errors.files && "border border-primary")}
+          className={twClsx(errors.files && 'border border-primary')}
           sideContent={
             file && (
               <EventImagePreview

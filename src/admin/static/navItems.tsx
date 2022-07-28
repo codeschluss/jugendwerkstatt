@@ -156,6 +156,12 @@ export const navItems = (
           },
         ],
       },
+      {
+        name: 'Einstellungen',
+        icon: <CogIcon />,
+        location: 'profile',
+        noItems: true,
+      },
     ],
   };
 };
