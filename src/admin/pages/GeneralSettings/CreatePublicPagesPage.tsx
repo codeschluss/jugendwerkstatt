@@ -87,13 +87,15 @@ const CreatePublicPagesPage = (): ReactElement => {
       mimeType: string;
       base64: string;
     } | null = null;
-    for (const v of videos) {
-      const obj = await fileObject(v);
-      choosedVideo = {
-        name: obj.name,
-        mimeType: obj.mimeType,
-        base64: obj.base64,
-      };
+    if (!page) {
+      for (const v of videos) {
+        const obj = await fileObject(v);
+        choosedVideo = {
+          name: obj.name,
+          mimeType: obj.mimeType,
+          base64: obj.base64,
+        };
+      }
     }
     console.log('videos', videos[0]);
     // for (const video of data.video) console.log(data.video[0] as FileList);
@@ -111,7 +113,13 @@ const CreatePublicPagesPage = (): ReactElement => {
             imageFile?.file?.size !== 0 && {
               titleImage: await fileObject(imageFile.file),
             }),
-          video: { ...choosedVideo },
+          video: page
+            ? {
+                id: page.video?.id,
+                mimeType: page.video?.mimeType,
+                base64: page.video?.base64,
+              }
+            : { ...choosedVideo },
         },
       },
     });
@@ -258,8 +266,10 @@ const CreatePublicPagesPage = (): ReactElement => {
             </Button>
           </div>
         </Accordion>
-        <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
-        {loading && <p>Processing...</p>}
+        <FormActions
+          loading={loading}
+          onSubmit={handleSubmit(handleOnSubmit)}
+        />
       </form>
     </FormProvider>
   );

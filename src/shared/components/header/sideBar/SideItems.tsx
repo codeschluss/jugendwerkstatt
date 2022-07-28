@@ -44,8 +44,8 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
 
   return (
     <div className="flex flex-col justify-between h-full pb-4">
-      <ul>
-        {!user?.roles.includes('admin') ? (
+      {!user?.roles.includes('admin') ? (
+        <ul>
           <>
             <Item name="Start" icon={<HomeIcon />} clicked={clicked} href="/" />
             <Item
@@ -103,10 +103,10 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
               href="/profile"
             />
           </>
-        ) : (
-          <Nav data={navItems(mappedGroups)} />
-        )}
-      </ul>
+        </ul>
+      ) : (
+        <Nav data={navItems(mappedGroups)} />
+      )}
       {sideBar ? (
         <span
           className="w-full mt-10 text-center text-white"

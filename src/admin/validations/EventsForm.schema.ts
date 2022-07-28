@@ -11,7 +11,7 @@ export const FileSchema = Joi.object({
         (value, helpers) =>
           validateMethod(
             value,
-            5,
+            10,
             ['image/png', 'image/jpg', 'image/jpeg'],
             helpers
           ),
@@ -45,7 +45,8 @@ export const EventsFormSchema = Joi.object({
   baseData: EventBaseDataFormSchema,
   description: Joi.string().required().label('Beschreibung'),
   schedule: ScheduleFormSchema,
-  files: Joi.array().min(1).items(FileSchema).has(FileSchemaHasOne),
+  files: Joi.any(),
+  // array().min(1).items(FileSchema).has(FileSchemaHasOne),
 });
 
 export const OrganizerFormSchema = Joi.object({
