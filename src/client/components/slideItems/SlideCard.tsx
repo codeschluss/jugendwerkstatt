@@ -40,7 +40,7 @@ const SlideCard: React.FC<SlideCardProps> = ({
   route,
   color,
   isFavorite,
-  width = "w-9/12 md:w-full",
+  width = " w-80 md:w-full",
   setFavorite,
   removeFavorite,
   shareUrl,
@@ -85,8 +85,8 @@ const SlideCard: React.FC<SlideCardProps> = ({
   }, [token, imgUrl]);
 
   return (
-    <div className={`${className} snap-center ${width} h-60 flex-none px-2`}>
-      <div className="relative h-full overflow-hidden rounded-md">
+    <div className={`${className} snap-center ${width} h-60   flex-none px-2`}>
+      <div className="relative  h-full overflow-hidden rounded-md">
         <Link to={route}>
           {imgUrl ? (
             <img
