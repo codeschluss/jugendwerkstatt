@@ -1,9 +1,10 @@
 import { BellIcon, LogoutIcon, SearchIcon } from "@heroicons/react/outline";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   NotificationEntity,
   SearchDto,
+  useAddListenerSubscription,
   useGetMeBasicQuery,
   useGetMeNotificationsQuery,
   useSaveNotificationMutation,
@@ -20,15 +21,17 @@ import { BellIcon as FilledBell } from "@heroicons/react/solid";
 import { Autocomplete, TextField } from "@mui/material";
 import { Height } from "@mui/icons-material";
 import { idText } from "typescript";
+import { readAuthToken } from "../../../utils";
 
 const RightContent: FC = () => {
-  const isTouch = detectDevice();
-  const [inputvalue, setInputValue] = useState();
   const { handleLogout } = useAuth();
   const user = useGetMeBasicQuery();
-  const notifications = useGetMeNotificationsQuery();
+  const notifications = useGetMeNotificationsQuery({
+    fetchPolicy: "network-only",
+  });
   const [saveNotification] = useSaveNotificationMutation();
   const navigate = useNavigate();
+  const accessToken = readAuthToken("accessToken");
 
   const searchfield: any = [];
 
@@ -82,6 +85,18 @@ const RightContent: FC = () => {
   const unreadExist = notifications.data?.me?.notifications?.filter(
     (notification: NotificationEntity | undefined | null) => !notification?.read
   ).length;
+
+  const addListener = useAddListenerSubscription({
+    skip: !accessToken,
+    variables: {
+      token: accessToken,
+    },
+  });
+  let data = addListener.data?.addListener;
+
+  useEffect(() => {
+    notifications.refetch();
+  }, [data]);
 
   return (
     <div className="relative flex items-center justify-end flex-grow">

@@ -120,13 +120,16 @@ const App = (): ReactElement => {
     skip: !isAuthenticated,
   });
 
+  const me = useGetMeBasicQuery({
+    skip: !isAuthenticated,
+  });
+
   useEffect(() => {
     if (isAuthenticated) {
       chatEnabled.refetch();
+      me.refetch();
     }
   }, [isAuthenticated]);
-
-  const me = useGetMeBasicQuery();
 
   const [subs] = useSaveSubscriptionMutation();
 
@@ -152,7 +155,7 @@ const App = (): ReactElement => {
 
   const register = () => {
     PushNotifications.register();
-
+    console.log("im running");
     PushNotifications.addListener("registration", (token: Token) => {
       const entity = {
         deviceToken: token.value,
