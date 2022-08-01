@@ -9,7 +9,9 @@ import { CustomTable } from '../../components/molecules';
 
 const PublicPagesPage = (): ReactElement => {
   const navigate = useNavigate();
-  const { data: { pages = null } = {}, refetch } = useGetPagesQuery();
+  const { data: { pages = null } = {}, refetch } = useGetPagesQuery({
+    fetchPolicy: 'cache-and-network',
+  });
   const [deletePage] = useDeletePageMutation({ onCompleted: () => refetch() });
   const handleUpdatePage = (id: string) => () => navigate(id);
   const handleDeletePage = (id: string) => () => {

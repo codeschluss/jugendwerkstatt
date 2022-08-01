@@ -16,6 +16,7 @@ const EvaluationQuestionsViewPage = (): ReactElement => {
       entity: { id },
       year: queryString.year ? Number(queryString.year) : 0,
     },
+    fetchPolicy: 'cache-and-network',
   });
 
   const handleYearFilter = (year: string | number) => () =>

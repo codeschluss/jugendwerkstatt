@@ -1,15 +1,10 @@
 import { CalendarIcon, ClockIcon } from '@heroicons/react/outline';
-import {
-  Dispatch,
-  ReactElement,
-  SetStateAction,
-  useEffect,
-  useMemo,
-} from 'react';
+import { Dispatch, ReactElement, SetStateAction, useEffect } from 'react';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { twClsx } from '../../../utils';
 import { generateSchedules } from '../../../utils/generateSchedules';
 
-import { Select } from '../../atoms';
+import { Button, Select } from '../../atoms';
 import { Accordion, DatePicker } from '../../molecules';
 import { SchedulesPreview } from '../../molecules/SchedulesPreview/SchedulesPreview';
 import { EventsFormInputs, ScheduleInputs } from './Events.types';
@@ -21,22 +16,30 @@ export const SchedulesForm = ({
   setSchedules: Dispatch<SetStateAction<[] | ScheduleInputs[]>>;
   schedules: [] | ScheduleInputs[];
 }): ReactElement => {
-  const { register, control, getValues } = useFormContext<EventsFormInputs>();
-
+  const {
+    register,
+    control,
+    getValues,
+    formState: { errors },
+  } = useFormContext<EventsFormInputs>();
   const fields = useWatch({ control, name: 'schedule' });
 
   const handleDeleteAll = () => setSchedules([]);
-
   const handleDeleteById = (index: number) => {
     setSchedules(schedules.filter((_item, idx) => idx !== index));
   };
-  const dates = useMemo(() => generateSchedules(fields || {}), [fields]);
 
   useEffect(() => {
-    if (dates) {
-      setSchedules(dates);
+    if (fields) {
+      setSchedules(generateSchedules(fields));
     }
-  }, [dates, setSchedules]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleGenerateSchedules = () => {
+    console.log(fields);
+    setSchedules([...schedules, ...generateSchedules(fields)]);
+  };
 
   return (
     <Accordion
@@ -49,6 +52,7 @@ export const SchedulesForm = ({
           handleDeleteById={handleDeleteById}
         />
       }
+      className={twClsx(errors.schedule && 'border border-primary')}
     >
       <div className="max-w-md space-y-8">
         <div className="flex items-center">
@@ -147,6 +151,7 @@ export const SchedulesForm = ({
                     minDate={new Date()}
                     onChange={(date) => field.onChange(date)}
                     selected={field.value}
+                    dateFormat="dd.MM.yyyy"
                   />
                 )}
               />
@@ -154,6 +159,10 @@ export const SchedulesForm = ({
           )}
         </div>
       </div>
+
+      <Button type="button" className="mt-20" onClick={handleGenerateSchedules}>
+        Termin erstellen
+      </Button>
     </Accordion>
   );
 };
