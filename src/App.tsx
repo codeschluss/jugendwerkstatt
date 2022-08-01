@@ -155,7 +155,7 @@ const App = (): ReactElement => {
 
   const register = () => {
     PushNotifications.register();
-    console.log("im running");
+
     PushNotifications.addListener("registration", (token: Token) => {
       const entity = {
         deviceToken: token.value,
@@ -176,9 +176,7 @@ const App = (): ReactElement => {
 
     PushNotifications.addListener(
       "pushNotificationReceived",
-      (notification: PushNotificationSchema) => {
-        console.log(notification, "other notification body");
-      }
+      (notification: PushNotificationSchema) => {}
     );
     PushNotifications.addListener(
       "pushNotificationActionPerformed",
