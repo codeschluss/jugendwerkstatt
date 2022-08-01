@@ -13,7 +13,7 @@ const Footer = () => {
       <div>
         {pages?.data?.getPages?.result?.map(
           (page: PageEntity | undefined | null) => (
-            <p className="hover:text-red-400">
+            <p key={page?.id} className="hover:text-red-400">
               <Link to={`/infoPage/${page?.id}`}>{page?.name}</Link>
             </p>
           )

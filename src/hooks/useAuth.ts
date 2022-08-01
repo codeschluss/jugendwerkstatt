@@ -37,6 +37,9 @@ export const useAuth = (): {
       if (fields?.verified && !fields?.approved) {
         navigate("/pending-approval");
       }
+      if (fields?.verified && fields.approved && !fields.roles) {
+        navigate("/pendingRole");
+      }
 
       addAuth(
         {
