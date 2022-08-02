@@ -39,12 +39,12 @@ export const SingleJobAdd = () => {
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row md:bg-gray-100 md:p-3">
         <TitleImgSlider
           title={jobsQuery.data?.getJobAd?.title}
           colorBg={jobsQuery.data?.getJobAd?.type?.color}
         />
-        <div className="p-5 md:w-1/2 md:ml-8 md:flex-grow rounded-md bg-white">
+        <div className="p-5 md:w-1/2 md:ml-4 md:flex-grow rounded-md bg-white">
           <JobHeader
             isFavorite={hasId}
             url={`job/${params.id}`}
@@ -104,7 +104,7 @@ export const SingleJobAdd = () => {
           />
         </div>
       </div>
-      <div className="hidden md:block p-5 rounded-md bg-white mt-8">
+      <div className="hidden md:block p-5 rounded-md bg-white mt-8 md:mt-2">
         <p className="text-3xl">{jobsQuery.data?.getJobAd?.company?.name}</p>
         <p>{jobsQuery.data?.getJobAd?.content}</p>
       </div>

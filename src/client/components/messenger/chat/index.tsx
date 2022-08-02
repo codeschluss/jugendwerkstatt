@@ -248,17 +248,19 @@ const Chat = () => {
                 return el?.user?.fullname;
               })}
         </h2>
-        {getChat.data?.getChat?.name && (
-          <div
-            onClick={() =>
-              navigate(`/adminMsnPanel/${getChat.data?.getChat?.id}`)
-            }
-            className="flex text-gray-600 cursor-pointer mr-5 "
-          >
-            <CogIcon className="w-5" />
-            <p>Einstellungen</p>
-          </div>
-        )}
+        {getChat.data?.getChat?.name &&
+          (me.data?.me?.roles?.some((el) => el?.key === "admin") ||
+            me.data?.me?.roles?.some((el) => el?.key === "superviser")) && (
+            <div
+              onClick={() =>
+                navigate(`/adminMsnPanel/${getChat.data?.getChat?.id}`)
+              }
+              className="flex text-gray-600 cursor-pointer mr-5 "
+            >
+              <CogIcon className="w-5" />
+              <p>Einstellungen</p>
+            </div>
+          )}
       </div>
       <div className="py-3 h-full overflow-y-scroll">
         <p

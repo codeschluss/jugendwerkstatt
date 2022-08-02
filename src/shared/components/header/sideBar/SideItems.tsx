@@ -1,25 +1,32 @@
 import {
-  ChatAltIcon,
-  HomeIcon,
   CalendarIcon,
-  AcademicCapIcon,
-  DocumentTextIcon,
-  BookOpenIcon,
   PaperAirplaneIcon,
-  CogIcon,
   QuestionMarkCircleIcon,
   ChevronDoubleRightIcon,
   MapIcon,
-} from '@heroicons/react/outline';
-import { HeartIcon } from '@heroicons/react/solid';
-import { useContext } from 'react';
-import Nav from '../../../../admin/components/molecules/Nav/Nav';
-import { navItems } from '../../../../admin/static/navItems';
-import SideBarContext from '../../../../contexts/SideBarContext';
-import { useGetGroupsQuery } from '../../../../GraphQl/graphql';
-import { useAuthStore } from '../../../../store';
-import { sidebarStore } from '../../../../store/sidebar/sidebar.store';
-import Item from './Item';
+} from "@heroicons/react/outline";
+import {
+  ChevronDoubleLeftIcon,
+  HomeIcon,
+  ChatAltIcon,
+  AcademicCapIcon,
+  BookOpenIcon,
+  CogIcon,
+  HeartIcon,
+  DocumentTextIcon,
+  CalendarIcon as CalendarSolid,
+} from "@heroicons/react/solid";
+import { useContext } from "react";
+import Nav from "../../../../admin/components/molecules/Nav/Nav";
+import { navItems } from "../../../../admin/static/navItems";
+import SideBarContext from "../../../../contexts/SideBarContext";
+import {
+  useGetChatSettingsQuery,
+  useGetGroupsQuery,
+} from "../../../../GraphQl/graphql";
+import { useAuthStore } from "../../../../store";
+import { sidebarStore } from "../../../../store/sidebar/sidebar.store";
+import Item from "./Item";
 
 interface SideItemsProps {
   clicked?: () => void;
@@ -30,11 +37,18 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
   const { sideBar, setSideBar } = useContext(SideBarContext);
   const { handleToggle } = sidebarStore();
 
+  const { isAuthenticated } = useAuthStore();
+
+  const chatEnabled = useGetChatSettingsQuery({
+    fetchPolicy: "network-only",
+    skip: !isAuthenticated,
+  });
+
   const { data: { groups = null } = {} } = useGetGroupsQuery();
 
   const mappedGroups =
     groups?.result?.map((group) => ({
-      name: group?.name || '',
+      name: group?.name || "",
       location: `groups/${group?.id}/view`,
       items: group?.courses?.map((course) => ({
         name: course?.name,
@@ -44,7 +58,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
 
   return (
     <div className="flex flex-col justify-between h-full pb-4">
-      {!user?.roles.includes('admin') ? (
+      {!user?.roles.includes("admin") ? (
         <ul>
           <>
             <Item name="Start" icon={<HomeIcon />} clicked={clicked} href="/" />
@@ -56,7 +70,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
             />
             <Item
               name="Events"
-              icon={<PaperAirplaneIcon />}
+              icon={<CalendarSolid />}
               clicked={clicked}
               href="/events"
             />
@@ -66,12 +80,14 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
               clicked={clicked}
               href="/media-library"
             />
-            <Item
-              name="Messenger"
-              icon={<ChatAltIcon />}
-              clicked={clicked}
-              href="/messenger/chats"
-            />
+            {chatEnabled.data?.getSettings?.chatActive && (
+              <Item
+                name="Messenger"
+                icon={<ChatAltIcon />}
+                clicked={clicked}
+                href="/messenger/chats"
+              />
+            )}
             <Item
               name="Stellenausschreibung"
               icon={<BookOpenIcon />}
@@ -82,7 +98,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
               name="Kalendar"
               icon={<CalendarIcon />}
               clicked={clicked}
-              href="/events/calendar"
+              href="calendar"
             />
             <Item
               name="Favoriten"
@@ -115,7 +131,11 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
             handleToggle();
           }}
         >
-          Menu einkippen
+          <div className="flex items-center justify-center">
+            {" "}
+            <ChevronDoubleLeftIcon className="w-5 h-5 mr-2" />
+            Menü einklappen
+          </div>
         </span>
       ) : (
         <span

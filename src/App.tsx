@@ -276,12 +276,12 @@ const App = (): ReactElement => {
         <Route path="/notifications" element={<Notifications />} />
 
         <Route path="/event/:id" element={<EventDetail />} />
+        <Route path="/calendar" element={<EventsCalendar />} />
 
         <Route path="/events">
           <Route index element={<Events />} />
           <Route path=":id" element={<EventDetail />} />
           <Route path="time" element={<EventsTime />} />
-          <Route path="calendar" element={<EventsCalendar />} />
         </Route>
 
         <Route path="/forms">

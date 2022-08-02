@@ -37,11 +37,11 @@ const AuthInput: React.FC<AuthInputProps> = ({
     <>
       <div className="relative z-0 mb-6 group flex justify-center">
         <input
-          style={{ border: error ? "1px solid red" : "rounded-md" }}
+          // style={{ border: error ? "1px solid red" : "rounded-md" }}
           onChange={onChange}
           onBlur={onBlur}
           type={type === "password" && !isToggled ? "password" : "text"}
-          className={inputClassName}
+          className={`${error && "border-red-500"} ${inputClassName}`}
           value={value}
           placeholder={placeholder}
         />
@@ -56,7 +56,7 @@ const AuthInput: React.FC<AuthInputProps> = ({
         )}
         <label
           htmlFor={id}
-          className="transform transition-all top-4 text-lg peer-valid:text-gray-500 absolute left-0 h-full pl-4 peer-focus:text-sm peer-valid:text-sm peer-valid:pl-3 peer-valid:top-0"
+          className="transform transition-all pointer-events-none top-4 text-lg peer-valid:text-gray-500 absolute left-0 h-full pl-4 peer-focus:text-sm peer-valid:text-sm peer-valid:pl-3 peer-valid:top-0"
         >
           {id}
         </label>

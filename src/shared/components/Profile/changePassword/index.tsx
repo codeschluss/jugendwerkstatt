@@ -14,7 +14,7 @@ import SimpleBackdrop from "./Backdrop";
 const ChangePassword = () => {
   const user = useGetMeBasicQuery();
   const navigate = useNavigate();
-  const regex = /[^A-Za-z0-9_.]/g;
+  const regex = /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
   const {
     value: passwordOne,
     validity: passwordOneValidity,
@@ -22,7 +22,7 @@ const ChangePassword = () => {
     valueChangeHandler: passwordOneChangeHandler,
     inputBlurHandler: passwordOneBlurHandler,
     resetValue: resetPasswordOneInput,
-  } = useInput((value: any) => value.match(regex) && value.trim().length > 6);
+  } = useInput((value: any) => value.match(regex) && value.trim().length >= 8);
   const {
     value: passwordTwo,
     validity: passwordTwoValidity,
@@ -52,7 +52,7 @@ const ChangePassword = () => {
   };
 
   return (
-    <div className="text-[#676767] absolute md:static w-full md:w-2/5 m z-20 top-0 bg-white ">
+    <div className="text-[#676767] md:m-5 absolute md:static w-full md:w-2/5 m z-20 top-0 bg-white ">
       <CustomHeader>Passwort ändern</CustomHeader>
       <div className="">
         <form
@@ -82,6 +82,14 @@ const ChangePassword = () => {
                 passwordTwoError && "border-500-red"
               }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
             />
+          </div>
+          <div className=" mx-12 mb-5">
+            <p>Passwortstärke:</p>
+            <ul className="list-disc ml-5">
+              <li>8 Zeichen</li>
+              <li>Mindestens 1 Zahl</li>
+              <li>Mindestens 1 Buchstabe</li>
+            </ul>
           </div>
           <span className="w-4/6 md:w-2/5 md:my-5">
             <Button

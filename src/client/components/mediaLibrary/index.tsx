@@ -81,13 +81,13 @@ const MediaLibrary: React.FC = () => {
     ?.result as [LinkCategoryEntity];
 
   return (
-    <div className="pt-8 lg:p-0 ">
+    <div className="pt-8 md:p-4 ">
       {fetchedData?.map((singleTopic) => {
         return (
           <div className="relative">
             <div className="absolute h-[9rem] z-10">
               <button
-                className="mt-11 pl-4 h-[5.5rem] hidden lg:inline"
+                className="mt-11 pl-1 h-[5.5rem] hidden lg:inline"
                 onClick={scrollPrevious}
                 onMouseOver={MouseOver}
                 onMouseOut={MouseOut}
@@ -168,7 +168,7 @@ const MediaLibrary: React.FC = () => {
             </Slider>
             <div className="absolute h-[9rem] z-10 right-0 top-0">
               <button
-                className="mt-11 pr-1 h-[5.5rem]"
+                className="mt-11 pr-5 h-[5.5rem]"
                 onClick={scrollNext}
                 onMouseOver={MouseOver}
                 onMouseOut={MouseOut}

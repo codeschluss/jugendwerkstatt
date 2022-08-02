@@ -17,7 +17,7 @@ const Register = () => {
   const { setTempEmail } = useTempEmailStore();
 
   let disableInput = false;
-  const regex = /[^A-Za-z0-9_.]/g;
+  const regex = /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
   const {
     value: enteredUsername,
@@ -46,7 +46,7 @@ const Register = () => {
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     resetValue: resetPasswordInput,
-  } = useInput((value: any) => value.match(regex) && value.trim().length > 6);
+  } = useInput((value: any) => value.match(regex) && value.trim().length >= 8);
 
   const {
     value: enteredCPassword,
@@ -79,32 +79,7 @@ const Register = () => {
   // const { passwordBits, setPasswordBits } = useContext(AuthContext);
   const [passwordBits, setPasswordBits] = useState<any>();
 
-  function passwordStrength(event: any) {
-    passwordChangeHandler;
-    setPassword(event.target.value);
-    const passwordLength = password.length;
-    let possibleSymbols = 0;
-
-    if (password.match(/\d/)) {
-      possibleSymbols = 10;
-    }
-    if (password.match(/[a-z]/)) {
-      possibleSymbols += 26;
-    }
-    if (password.match(/[A-Z]/)) {
-      possibleSymbols += 26;
-    }
-    if (password.match(/[!@#$%^&*()_+\-=\[\]{};~':"\\|,.<>\/?]/)) {
-      possibleSymbols += 32;
-    }
-    const argument = Math.pow(possibleSymbols, passwordLength);
-
-    setPasswordBits(Math.log2(argument));
-    // setPasswordBits(Math.log2(argument));
-  }
-
   const twoCalls = (e: any) => {
-    passwordStrength(e);
     passwordChangeHandler(e);
   };
 
@@ -183,7 +158,14 @@ const Register = () => {
                 cPasswordInputError && "border-500-red"
               }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
             />
-            <RegisterValidations passwordBits={passwordBits} />
+          </div>
+          <div className=" mx-12 mb-5">
+            <p>Passwortstärke:</p>
+            <ul className="list-disc ml-5">
+              <li>8 Zeichen</li>
+              <li>Mindestens 1 Zahl</li>
+              <li>Mindestens 1 Buchstabe</li>
+            </ul>
           </div>
           <span className="w-[80%] block m-auto">
             <Button
