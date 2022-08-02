@@ -84,6 +84,7 @@ const PersonalData = () => {
     },
   };
 
+  //codi per foto below
   React.useEffect(() => {
     if (user.data?.me?.profilePicture) {
       fetchImage();
