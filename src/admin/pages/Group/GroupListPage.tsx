@@ -38,7 +38,7 @@ const GroupListPage = () => {
       }}
     >
       <CustomTable
-        headerData={['Gruppen', 'Gruppekurs', 'Aktionen']}
+        headerData={['Gruppen', 'Gruppenmitglieder', 'Aktionen']}
         bodyData={groupsData.map((group) => (
           <Table.Row key={group?.id}>
             <Table.Data>{group?.name}</Table.Data>

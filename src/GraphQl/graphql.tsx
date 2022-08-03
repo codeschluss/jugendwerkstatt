@@ -586,6 +586,7 @@ export type Mutation = {
   addMember: Scalars['Boolean'];
   addParticipant: Scalars['Boolean'];
   addUploads?: Maybe<UserEntity>;
+  changePassword?: Maybe<Scalars['Boolean']>;
   createToken?: Maybe<TokenDto>;
   deleteAddress?: Maybe<Scalars['Boolean']>;
   deleteAddresses?: Maybe<Scalars['Boolean']>;
@@ -764,6 +765,12 @@ export type MutationAddParticipantArgs = {
 /** Mutation root */
 export type MutationAddUploadsArgs = {
   uploads?: InputMaybe<Array<InputMaybe<MediaEntityInput>>>;
+};
+
+
+/** Mutation root */
+export type MutationChangePasswordArgs = {
+  newPassword?: InputMaybe<Scalars['String']>;
 };
 
 
@@ -3475,7 +3482,7 @@ export type GetUserAdminQueryVariables = Exact<{
 }>;
 
 
-export type GetUserAdminQuery = { __typename?: 'Query', user?: { __typename?: 'UserEntity', id?: string | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null };
+export type GetUserAdminQuery = { __typename?: 'Query', user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, roles?: Array<{ __typename?: 'RoleEntity', id?: string | null, name?: string | null } | null> | null } | null };
 
 export type GetUsersAdminQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -6943,6 +6950,7 @@ export const GetUserAdminDocument = gql`
     query GetUserAdmin($id: String) {
   user: getUser(entity: {id: $id}) {
     id
+    fullname
     roles {
       ...RoleField
     }

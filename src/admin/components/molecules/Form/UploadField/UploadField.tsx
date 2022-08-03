@@ -10,6 +10,7 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
       id,
       src,
       name,
+      placeholderTitle = 'bild auswählen',
       index,
       preview,
       error,
@@ -50,7 +51,7 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
             ) : (
               <>
                 <PhotographIcon width={24} />
-                <p className="m-2 text-lg font-medium">bild auswählen</p>
+                <p className="m-2 text-lg font-medium">{placeholderTitle}</p>
               </>
             )}
           </div>
