@@ -1,6 +1,7 @@
 query GetUserAdmin($id: String) {
   user: getUser(entity: { id: $id }) {
     id
+    fullname
     roles {
       ...RoleField
     }

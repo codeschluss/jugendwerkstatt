@@ -12,7 +12,8 @@ import {
 } from "@heroicons/react/solid";
 
 export const navItems = (
-  groups: Pick<NavItemModel, "name" | "location">[]
+  groups: Pick<NavItemModel, "name" | "location">[],
+  chatEnabled: boolean
 ): NavModel => {
   return {
     items: [
@@ -123,12 +124,16 @@ export const navItems = (
           },
         ],
       },
-      {
-        name: "Messenger",
-        icon: <ChatIcon />,
-        location: "messenger/chats",
-        noItems: true,
-      },
+      ...(chatEnabled
+        ? [
+            {
+              name: "Messenger",
+              icon: <ChatIcon />,
+              location: "messenger/chats",
+              noItems: true,
+            },
+          ]
+        : []),
       {
         name: "Allgemein",
         icon: <CogIcon />,

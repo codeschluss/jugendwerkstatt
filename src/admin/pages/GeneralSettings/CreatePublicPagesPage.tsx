@@ -111,14 +111,14 @@ const CreatePublicPagesPage = (): ReactElement => {
           images,
           ...(!!imageFile?.file &&
             imageFile?.file?.size !== 0 && {
-              titleImage: await fileObject(imageFile.file),
-            }),
+            titleImage: await fileObject(imageFile.file),
+          }),
           video: page
             ? {
-                id: page.video?.id,
-                mimeType: page.video?.mimeType,
-                base64: page.video?.base64,
-              }
+              id: page.video?.id,
+              mimeType: page.video?.mimeType,
+              base64: page.video?.base64,
+            }
             : { ...choosedVideo },
         },
       },
@@ -254,7 +254,9 @@ const CreatePublicPagesPage = (): ReactElement => {
           className={twClsx('p-5', errors.video && 'border border-primary')}
         >
           <div className="flex items-start justify-start">
-            <UploadField id="video" {...register('video')} />
+            <UploadField id="video"
+              placeholderTitle="bild hinzufügen"
+              {...register('video')} />
           </div>
           <div className="flex gap-x-2">
             <Button
