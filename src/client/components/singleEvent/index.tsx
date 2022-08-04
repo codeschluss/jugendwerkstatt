@@ -42,9 +42,9 @@ export const SingleEvent = () => {
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row">
+      <div className="flex flex-col md:flex-row  md:bg-gray-100 md:p-3 ">
         <TitleImgSlider imgUrl={eventQuery?.data?.getEvent?.titleImage?.id} />
-        <div className="p-5 md:w-1/2 md:ml-8 md:flex-grow rounded-md bg-white">
+        <div className="p-5 md:w-1/2 md:ml-4 md:flex-grow rounded-md bg-white">
           <EventHeader
             isFavorite={hasId}
             url={`event/${params.id}`}
@@ -112,7 +112,7 @@ export const SingleEvent = () => {
           />
         </div>
       </div>
-      <div className="hidden md:block p-5 rounded-md bg-white mt-8">
+      <div className="hidden md:block p-5 rounded-md bg-white mt-8 md:mt-1">
         <p className="text-3xl">{eventQuery?.data?.getEvent?.name}</p>
         <p>{eventQuery?.data?.getEvent?.description}</p>
       </div>

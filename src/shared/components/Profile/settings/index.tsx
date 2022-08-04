@@ -8,7 +8,7 @@ const ProfileSettings = () => {
   const { handleLogout } = useAuth();
 
   return (
-    <div className="absolute top-0 z-40 flex flex-col items-center justify-between w-full h-full bg-white md:static md:w-2/5">
+    <div className="absolute md:m-5 top-0 z-40 flex flex-col items-center justify-between w-full h-full bg-white md:static md:w-2/5">
       <div className="w-full">
         <CustomHeader>Profileinstellungen</CustomHeader>
         <div className="w-4/5 m-auto">

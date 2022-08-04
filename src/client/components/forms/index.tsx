@@ -36,8 +36,8 @@ const Forms: React.FC = () => {
   ];
 
   return (
-    <div className="container px-4 pt-4 mx-auto">
-      <h5 className="text-2xl font-bold">Formulare</h5>
+    <div className="container px-4 pt-4 mx-auto ">
+      <h5 className="text-2xl font-bold md:ml-4">Formulare</h5>
       <ul className="pl-4 text-base font-normal text-gray-600 list-none">
         {fetchedData?.map((template, index) => {
           return (
@@ -65,7 +65,7 @@ const Forms: React.FC = () => {
           );
         })}
       </ul>
-      <h5 className="pt-4 text-2xl font-bold">
+      <h5 className="pt-4 text-2xl font-bold md:ml-4">
         Eigene Dokumente
         <I className="float-right h-10 opacity-70">
           <Link to="/upload-file">

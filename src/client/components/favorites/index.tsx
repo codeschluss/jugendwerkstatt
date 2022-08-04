@@ -55,6 +55,7 @@ const Favorites = () => {
                   key={job.id}
                   isFavorite={true}
                   width="w-full md:w-1/2"
+                  gradient={false}
                   className="mb-4 md:h-72"
                   eventName={job?.company?.name}
                   location={`${job?.company?.address?.street}, 

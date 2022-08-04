@@ -137,7 +137,7 @@ const RightContent: FC = () => {
               <p className="text-lg">{user.data?.me?.fullname}</p>
               <p className="text-xs">{user.data?.me?.email}</p>
               <Link to="/profile">
-                <p className="mt-3 text-lg">Profil Bearbeiten</p>
+                <p className="mt-3 text-lg">Profil bearbeiten</p>
               </Link>
             </div>
           </div>
@@ -203,9 +203,7 @@ const RightContent: FC = () => {
                       }).then(() => notifications.refetch())
                     }
                     key={el.title}
-                    className={`border-b-[1px] p-2  border-gray-400 cursor-pointer ${
-                      !el.read && "bg-gray-100"
-                    }`}
+                    className={`border-b-[1px] p-2  border-white cursor-pointer`}
                   >
                     <p className={`text-base mt-2 ${!el.read && "font-bold"}`}>
                       {el?.title}
@@ -223,7 +221,7 @@ const RightContent: FC = () => {
                 style={{ color: "blue" }}
                 className="mt-2 text-sm text-center "
               >
-                see all notifications
+                Alle Benachrichtigungen ansehen
               </p>
             </Link>
           </ul>

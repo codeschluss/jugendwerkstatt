@@ -41,24 +41,22 @@ export const UserLayout: FC = ({ children }) => {
   });
   let data = addListener.data?.addListener;
 
-  switch (data?.type) {
-    // case NotificationType.DeletedUser:
-    //   handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
-    //   break;
-    case NotificationType.Evaluation:
+  // switch (data?.type) {
+  //   // case NotificationType.DeletedUser:
+  //   //   handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
+  //   //   break;
+  //   case NotificationType.Evaluation:
+  //     feedback.refetch();
+  //     assignments.refetch();
+  //     break;
+
+  // }
+  useEffect(() => {
+    if (data?.type === "evaluation") {
       feedback.refetch();
       assignments.refetch();
-      break;
-    // case NotificationType.Event:
-    //   handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
-    //   break;
-    // case NotificationType.JobAd:
-    //   handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
-    //   break;
-
-    // case NotificationType.Global:
-    //   handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
-  }
+    }
+  }, [addListener.data]);
 
   return (
     <>

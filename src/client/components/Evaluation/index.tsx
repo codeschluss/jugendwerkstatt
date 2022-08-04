@@ -35,7 +35,6 @@ const Evaluation: React.FC<ModalProps> = ({
   const [saveAssignment] = useSaveClientAssignmentMutation();
   const submitHandler = (e: any) => {
     e.preventDefault();
-    console.log(givenAnswers);
 
     saveAssignment({
       variables: {
@@ -52,9 +51,12 @@ const Evaluation: React.FC<ModalProps> = ({
       className={`${visible ? "inline-block" : "hidden"}
   absolute backdrop-blur-sm bg-white/30 w-screen h-screen z-50 grid place-items-center left-0`}
     >
-      <div className="w-[90vw] max-w-lg h-[80vh] mx-auto  border-[3px] rounded-md bg-gray-100">
+      <div className="w-[90vw] max-w-lg h-[80vh] mx-auto   border-[3px] rounded-md bg-gray-100">
         <TitleText />
-        <form onSubmit={submitHandler}>
+        <form
+          onSubmit={submitHandler}
+          className="md:flex md:flex-col md:items-center md:w-full"
+        >
           <div>
             <Svgs />
             {givenAnswers?.map(

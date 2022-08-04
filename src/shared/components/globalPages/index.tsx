@@ -40,7 +40,7 @@ const GlobalPage = () => {
           <>
             <ChevronLeftIcon className="w-6 mr-2" />
             <p className="cursor-pointer" onClick={() => navigate(-1)}>
-              Zuruck
+              Zurück
             </p>
           </>
         )}

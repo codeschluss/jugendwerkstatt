@@ -8,7 +8,7 @@ import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDiss
 const Svgs: React.FC = () => {
   return (
     <div className=" flex my-0.5">
-      <div className="text-xs w-36 bg-transparent h-16 ml-1 flex justify-center items-center p-1">
+      <div className="text-xs w-36 md:w-56 bg-transparent h-16 ml-1 flex justify-center items-center p-1">
         {" "}
         <p>{""}</p>
       </div>

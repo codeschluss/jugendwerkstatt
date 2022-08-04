@@ -16,7 +16,7 @@ const Question: React.FC<QuestionProps> = ({ answer, submitAnswer }) => {
 
   return (
     <div className=" flex my-0.5">
-      <div className="text-xs w-36 bg-white h-16 ml-1 flex justify-center items-center p-1">
+      <div className="text-xs w-36 bg-white md:w-56 h-16 ml-1 flex justify-center items-center p-1">
         {" "}
         <p>{answer?.question?.item}</p>
       </div>

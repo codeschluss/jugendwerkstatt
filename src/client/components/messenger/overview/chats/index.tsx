@@ -45,9 +45,11 @@ const Chats = () => {
                     el?.chat?.lastMessage?.participant?.user?.id ===
                     getChats?.data?.me?.id
                       ? "Du"
-                      : el?.chat?.lastMessage?.participant?.user?.fullname
+                      : el?.chat?.lastMessage?.participant?.user?.fullname || ""
                   }: `}
-                  {el?.chat?.lastMessage?.content}
+                  {el?.chat?.lastMessage?.content
+                    ? el?.chat?.lastMessage?.content
+                    : ""}
                 </span>
               }
               imgUrl={

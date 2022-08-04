@@ -5,7 +5,7 @@ const CourseMe: React.FC = () => {
 
   return (
     <div className="w-full bg-white my-12 rounded-md flex flex-col items-start p-8">
-      <div
+      <strong
         dangerouslySetInnerHTML={{
           __html: course.data?.me?.course?.name
             ? course.data?.me?.course?.name

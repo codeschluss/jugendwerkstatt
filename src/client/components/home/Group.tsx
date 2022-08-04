@@ -5,7 +5,7 @@ const GroupMe: React.FC = () => {
 
   return (
     <div className="w-full bg-white my-12 rounded-md flex flex-col items-start p-8">
-      <div
+      <strong
         dangerouslySetInnerHTML={{
           __html: group.data?.me?.course?.group?.name
             ? group.data?.me?.course?.group?.name
