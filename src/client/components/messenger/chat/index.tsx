@@ -314,7 +314,7 @@ const Chat = () => {
         className="md:py-6 py-3 md:pl-6 pl-3 pr-3 bg-[#e9e9e9] flex items-center rounded-b-lg sticky bottom-0 overflow-hidden"
       >
         {!cantWrite && (
-          <TypeInput onChange={uploadHandler}>
+          <TypeInput hasClass={true} onChange={uploadHandler}>
             <PaperClipIcon className="w-5 mr-2 text-black text-opacity-40" />
           </TypeInput>
         )}

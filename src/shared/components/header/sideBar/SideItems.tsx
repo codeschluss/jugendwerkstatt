@@ -131,7 +131,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
             handleToggle();
           }}
         >
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center cursor-pointer">
             {" "}
             <ChevronDoubleLeftIcon className="w-5 h-5 mr-2" />
             Menü einklappen

@@ -62,7 +62,7 @@ export const UserLayout: FC = ({ children }) => {
     <>
       <main
         className={`flex flex-col  min-h-screen transition-all duration-500 ${
-          sideBar && isAuthenticated ? "md:pl-60" : "md:pl-20"
+          sideBar && isAuthenticated ? "md:pl-72" : "md:pl-20"
         }`}
       >
         {filteredAssignment?.map(

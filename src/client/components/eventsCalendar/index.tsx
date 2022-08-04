@@ -52,7 +52,15 @@ const EventsCalendar: React.FC = () => {
             id: temmmpCounter,
             eventId: singleEvent.id,
             name: singleEvent.name,
-            description: singleEvent.description,
+            description: (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: singleEvent.description
+                    ? singleEvent.description
+                    : "",
+                }}
+              />
+            ),
             start: new Date(tempSchedules[i]?.startDate),
             end: new Date(tempSchedules[i]?.endDate),
             allDay: true,

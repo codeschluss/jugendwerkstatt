@@ -67,6 +67,9 @@ const PersonalData = () => {
             phone: enteredPhone === "" ? user.data?.me?.phone : enteredPhone,
           },
         },
+        onError: () => {
+          alert("Felder durfen nicht leer gelassen werden");
+        },
         onCompleted: () => {
           navigate("/profile");
         },
@@ -141,7 +144,7 @@ const PersonalData = () => {
                 onChange={nameChangeHandler}
                 onBlur={nameBlurHandler}
                 value={enteredName}
-                error={nameInputError ? "Kann nicht lehr gelassen werden" : ""}
+                error={nameInputError ? "Kann nicht leer gelassen werden" : ""}
                 inputClassName={`${
                   nameInputError && "border-500-red"
                 }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
