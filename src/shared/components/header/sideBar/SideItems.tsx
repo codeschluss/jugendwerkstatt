@@ -4,6 +4,7 @@ import {
   QuestionMarkCircleIcon,
   ChevronDoubleRightIcon,
   MapIcon,
+  ChatIcon,
 } from "@heroicons/react/outline";
 import {
   ChevronDoubleLeftIcon,
@@ -55,6 +56,8 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
         location: `courses/${course?.id}`,
       })),
     })) || [];
+
+  const isChatEnabled = chatEnabled.data?.getSettings?.chatActive || false;
 
   return (
     <div className="flex flex-col justify-between h-full pb-4">
@@ -121,7 +124,9 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
           </>
         </ul>
       ) : (
-        <Nav data={navItems(mappedGroups)} />
+        <div className="h-fit overflow-y-scroll scrollbar-hidden">
+          <Nav data={navItems(mappedGroups, isChatEnabled)} />
+        </div>
       )}
       {sideBar ? (
         <span

@@ -4,6 +4,9 @@ query GetGroups {
       ...GroupField
       courses {
         ...CourseField
+        members {
+          id
+        }
       }
     }
   }
