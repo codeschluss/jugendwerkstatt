@@ -5,7 +5,7 @@ import {
   PencilIcon,
   UserGroupIcon,
 } from "@heroicons/react/outline";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../../../../config/app";
 import {
@@ -14,12 +14,16 @@ import {
   useSaveChatMutation,
 } from "../../../../GraphQl/graphql";
 import DropDown from "../../../../shared/components/ui/DropDown";
+import { readAuthToken } from "../../../../shared/utils";
 import TypeInput from "../../forms/upload/TypeInput";
 import Item from "../overview/Item";
 
 const AdminPanel = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
+  const token = readAuthToken("accessToken");
+  const [img, setImg] = useState<any>();
 
   const groupChat = useGetChatQuery({
     variables: {
@@ -66,8 +70,31 @@ const AdminPanel = () => {
     });
   };
 
+  const requestOptions: any = {
+    method: "GET",
+    headers: {
+      authorization: `Bearer ${token}`,
+      responseType: "arraybuffer",
+    },
+  };
+  const fetchImage = async () => {
+    const res = await fetch(
+      `${API_URL}media/${groupChat.data?.getChat?.avatar?.id}`,
+      requestOptions
+    );
+    const imageBlob = await res.blob();
+    const imageObjectURL = URL.createObjectURL(imageBlob);
+    setImg(imageObjectURL);
+  };
+
+  useEffect(() => {
+    if (`${API_URL}media/${groupChat.data?.getChat?.avatar?.id}`) {
+      fetchImage();
+    }
+  }, [`${API_URL}media/${groupChat.data?.getChat?.avatar?.id}`, token]);
+
   return (
-    <div className="absolute md:relative pb-5  w-full h-full z-50 bg-white top-0 md:h-screen     ">
+    <div className="absolute left-0   md:relative pb-5  w-full  z-50 bg-white top-0   ">
       <div className="h-1/4 w-full bg-primary p-4">
         <div className="w-full flex justify-between">
           <div>
@@ -109,10 +136,7 @@ const AdminPanel = () => {
         <div className="relative rounded-full mx-auto w-28 h-28 flex items-center justify-center bg-white">
           {" "}
           {groupChat.data?.getChat?.avatar?.id ? (
-            <img
-              src={`${API_URL}media/${groupChat.data?.getChat?.avatar?.id}`}
-              className="w-full h-full rounded-full"
-            />
+            <img src={img} className="w-full h-full rounded-full" />
           ) : (
             <UserGroupIcon className="w-16 text-primary" />
           )}
@@ -120,7 +144,7 @@ const AdminPanel = () => {
             className="w-8 h-8 absolute bg-white rounded-full right-0 bottom-1 flex items-center 
           justify-center border-2 border-gray-400"
           >
-            <TypeInput onChange={uploadHandler}>
+            <TypeInput hasClass={true} onChange={uploadHandler}>
               <PencilIcon className="w-5 text-gray-500" />
             </TypeInput>
           </div>

@@ -2,6 +2,7 @@ import { ChevronRightIcon } from "@heroicons/react/outline";
 import UploadIcon from "@heroicons/react/solid/UploadIcon";
 import React from "react";
 import { Link } from "react-router-dom";
+import { API_URL } from "../../../config/app";
 import {
   MediaEntity,
   TemplateTypeEntity,
@@ -13,11 +14,12 @@ import Action from "../../../shared/components/table/Action";
 import Row from "../../../shared/components/table/Row";
 import TableName from "../../../shared/components/table/TableName";
 import I from "../../../shared/components/ui/IconWrapper";
+import { readAuthToken } from "../../../shared/utils";
 import detectDevice from "../../../shared/utils/isTouch";
 
 const Forms: React.FC = () => {
   const isTouch = detectDevice();
-
+  const token = readAuthToken("accessToken");
   const result = useGetTemplateTypesQuery({
     fetchPolicy: "network-only",
   });
@@ -34,6 +36,34 @@ const Forms: React.FC = () => {
   const fetchedUserUploads: [MediaEntity] = userUploads.data?.me?.uploads as [
     MediaEntity
   ];
+
+  const downloadHandler = async (
+    mediaId: any,
+    mediaName: any,
+    mediaMimeType: any
+  ) => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    };
+    await fetch(API_URL + `media/download/${mediaId}`, requestOptions)
+      .then((resp) => resp.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = `${mediaName}.${mediaMimeType}`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        alert("your file has downloaded!");
+      })
+
+      .catch((e) => console.log(e));
+  };
 
   return (
     <div className="container px-4 md:pl-12 pt-4 mx-auto ">
@@ -84,9 +114,16 @@ const Forms: React.FC = () => {
           <div>
             {fetchedUserUploads?.map((el) => {
               return (
-                <div className="flex justify-between w-full">
+                <div key={el.id} className="flex justify-between w-full">
                   <Row rowItem={el.name} />
                   <Action
+                    onDownload={() =>
+                      downloadHandler(
+                        el.id,
+                        el?.name,
+                        el?.mimeType?.split("/")[1]
+                      )
+                    }
                     onDelete={() =>
                       deleteUpload({
                         variables: {

@@ -109,12 +109,13 @@ import {
   useSaveSubscriptionMutation,
 } from "./GraphQl/graphql";
 import RolePending from "./client/pages/verify/RolePending";
-import { switchClasses } from "@mui/material";
+import { Capacitor } from "@capacitor/core";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
   const { isAuthenticated } = useAuthStore();
-
+  const isPushNotificationsAvailable =
+    Capacitor.isPluginAvailable("PushNotifications");
   const chatEnabled = useGetChatSettingsQuery({
     fetchPolicy: "network-only",
     skip: !isAuthenticated,
@@ -134,7 +135,7 @@ const App = (): ReactElement => {
   const [subs] = useSaveSubscriptionMutation();
 
   useEffect(() => {
-    if (me.data) {
+    if (isPushNotificationsAvailable && me.data) {
       PushNotifications.checkPermissions().then((res) => {
         if (res.receive !== "granted") {
           PushNotifications.requestPermissions().then((res) => {

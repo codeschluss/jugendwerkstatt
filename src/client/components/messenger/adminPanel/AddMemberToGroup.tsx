@@ -80,7 +80,7 @@ const AddMemberToGroup = () => {
   );
 
   return (
-    <div className="absolute md:relative pb-5  w-full h-full z-50 bg-white top-0 md:h-screen     ">
+    <div className="absolute left-0  md:relative pb-5  w-full  z-50 bg-white top-0      ">
       <div className="h-20 w-full bg-primary p-4 relative flex ">
         <div className=" absolute  top-[35%] ">
           <ChevronLeftIcon
