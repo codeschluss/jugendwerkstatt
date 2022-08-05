@@ -151,7 +151,7 @@ const App = (): ReactElement => {
         }
       });
     }
-  }, [me.data]);
+  }, [me.data?.me]);
   const navigate = useNavigate();
 
   const register = () => {
@@ -169,7 +169,9 @@ const App = (): ReactElement => {
           entity,
         },
       });
-    });
+    })
+      .catch(() => alert("Unnknown error, contact admin"))
+      .finally();
 
     // PushNotifications.addListener("registrationError", (error: any) => {
     //   alert("Error on registration: " + JSON.stringify(error));
