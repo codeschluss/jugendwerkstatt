@@ -36,7 +36,7 @@ const Forms: React.FC = () => {
   ];
 
   return (
-    <div className="container px-4 pt-4 mx-auto ">
+    <div className="container px-4 md:pl-12 pt-4 mx-auto ">
       <h5 className="text-2xl font-bold md:ml-4">Formulare</h5>
       <ul className="pl-4 text-base font-normal text-gray-600 list-none">
         {fetchedData?.map((template, index) => {

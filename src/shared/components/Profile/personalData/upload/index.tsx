@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   useGetMeBasicQuery,
-  useSaveUserMutation
+  useSaveUserMutation,
 } from "../../../../../GraphQl/graphql";
 import TypeInput from "./TypeInput";
 
@@ -72,15 +72,10 @@ const UploadImg = () => {
 
   return (
     <div className="flex justify-center">
-      <button
-        className="w-40 h-10 bg-primary rounded-md mt-10 text-white"
-        style={{ display: display }}
-      >
-        <TypeInput onChange={(e: any) => uploadHandler(e)}>
-          {" "}
-          Chose a file
-        </TypeInput>
-      </button>
+      <TypeInput onChange={(e: any) => uploadHandler(e)}>
+        {" "}
+        Chose a file
+      </TypeInput>
 
       {fileName !== "" && (
         <span className="flex items-center justify-center flex-col">

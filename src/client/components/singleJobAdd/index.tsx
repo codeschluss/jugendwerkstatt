@@ -104,9 +104,15 @@ export const SingleJobAdd = () => {
           />
         </div>
       </div>
-      <div className="hidden md:block p-5 rounded-md bg-white mt-8 md:mt-2">
+      <div className="hidden md:block p-5 rounded-md bg-white mt-8 md:mt-2 md:mx-3">
         <p className="text-3xl">{jobsQuery.data?.getJobAd?.company?.name}</p>
-        <p>{jobsQuery.data?.getJobAd?.content}</p>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: jobsQuery.data?.getJobAd?.content
+              ? jobsQuery.data?.getJobAd?.content
+              : "",
+          }}
+        />
       </div>
     </div>
   );
