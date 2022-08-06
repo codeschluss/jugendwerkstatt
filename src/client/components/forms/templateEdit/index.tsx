@@ -131,7 +131,7 @@ const TemplateEdit: React.FC = () => {
   }, [userTemplateContent, templateContentResult]);
 
   return (
-    <div className="container px-4 pt-4 mx-auto">
+    <div className="container md:px-4 pt-4 mx-auto">
       <h5 className="text-2xl font-bold">
         {templateType}
 

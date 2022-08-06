@@ -3,65 +3,68 @@
 @tailwind utilities;
 
 /* Admin */
-@import '../../admin/components/index.css';
+@import "../../admin/components/index.css";
 
 .scrollbar-hidden {
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
 }
-.scrollbar-hidden::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 
 /* CKEditor styles */
-.ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar, .ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+.ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar,
+.ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
-.ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    min-height: 500px;
+.ck-rounded-corners .ck.ck-editor__main > .ck-editor__editable,
+.ck.ck-editor__main > .ck-editor__editable.ck-rounded-corners {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  min-height: 500px;
 }
 
-
-.dashboard-content > .ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
-    min-height: 120px;
+.dashboard-content
+  > .ck-rounded-corners
+  .ck.ck-editor__main
+  > .ck-editor__editable,
+.ck.ck-editor__main > .ck-editor__editable.ck-rounded-corners {
+  min-height: 520px;
 }
 
-.sliderContainer .slick-arrow{
-    width:40px;
-    height: 40px;
-    cursor:pointer;
-    padding:5px;
-    position: absolute;
-    top:0;
-    bottom:0;
-    margin-top:auto;
-    margin-bottom: auto;
-    z-index:10;
-    border-radius: 100%;
-    transition:color .4s ease;
-    color:#888;
-
+.sliderContainer .slick-arrow {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  padding: 5px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  z-index: 10;
+  border-radius: 100%;
+  transition: color 0.4s ease;
+  color: #888;
 }
 .sliderContainer .slick-arrow:hover {
-    color:#000;
+  color: #000;
 }
 .sliderContainer .slick-prev {
-    left:0;
+  left: 0;
 }
 .sliderContainer .slick-next {
-    right:0;
+  right: 0;
 }
 .sliderContainer .slick-list {
-    @apply mx-10;
-
+  @apply mx-10;
 }
 
 @media screen and (min-width: 768px) {
-    body{
-        background: #f7f7f7;
-    }
+  body {
+    background: #f7f7f7;
+  }
 }

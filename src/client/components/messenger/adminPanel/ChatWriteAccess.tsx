@@ -40,7 +40,7 @@ const ChatWriteAccess = () => {
   };
 
   return (
-    <div className="absolute md:relative pb-5  w-full h-full z-50 bg-white top-0 md:h-screen     ">
+    <div className="absolute left-0  md:relative pb-5  w-full  z-50 bg-white top-0     ">
       <div className="h-20 w-full bg-primary p-4 relative flex ">
         <div className="  mx-auto w-full text-2xl text-white  flex items-center justify-center">
           <p>Gruppeneinstellungen</p>
