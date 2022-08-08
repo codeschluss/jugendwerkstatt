@@ -164,7 +164,7 @@ const Map: FunctionComponent = () => {
               location={`${selectedEvent?.address?.street}, ${selectedEvent?.address?.houseNumber}, ${selectedEvent?.address?.place}`}
               date={selectedEvent?.nextSchedule?.startDate}
               route={`/events/${selectedEvent?.id}`}
-              imgUrl={selectedEvent?.titleImage?.id}
+              imgUrl={`data:${selectedEvent?.titleImage?.mimeType};base64,${selectedEvent?.titleImage?.base64}`}
               setFavorite={() =>
                 eventFavorite({
                   variables: {

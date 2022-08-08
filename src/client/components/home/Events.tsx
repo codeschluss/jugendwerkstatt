@@ -44,7 +44,7 @@ const Events: React.FC<EventsProps> = () => {
               eventName={el?.name}
               location={el?.address?.street}
               date={el?.nextSchedule.startDate}
-              imgUrl={el?.titleImage?.id}
+              imgUrl={`data:${el?.titleImage?.mimeType};base64,${el?.titleImage?.base64}`}
               setFavorite={() =>
                 eventFavorite({
                   variables: {

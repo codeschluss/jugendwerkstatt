@@ -10,6 +10,8 @@ query GetMeBasic {
     }
     profilePicture {
       id
+      base64
+      mimeType
     }
   }
 }

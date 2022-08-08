@@ -25,36 +25,13 @@ const Item: React.FC<ItemProps> = ({
   addMember,
   deleteMember,
 }) => {
-  const token = readAuthToken("accessToken");
-  const [img, setImg] = useState<any>();
-
-  const requestOptions: any = {
-    method: "GET",
-    headers: {
-      authorization: `Bearer ${token}`,
-      responseType: "arraybuffer",
-    },
-  };
-  const fetchImage = async () => {
-    const res = await fetch(imgUrl, requestOptions);
-    const imageBlob = await res.blob();
-    const imageObjectURL = URL.createObjectURL(imageBlob);
-    setImg(imageObjectURL);
-  };
-
-  useEffect(() => {
-    if (imgUrl) {
-      fetchImage();
-    }
-  }, [imgUrl, token]);
-
   return (
     <div>
       <Link to={href || ""}>
         <div className="flex flex-row w-full md:w-1/4  my-3" onClick={onClick}>
           {imgUrl ? (
             <img
-              src={img}
+              src={imgUrl}
               className="w-10 h-10 rounded-full"
               alt={name || null || undefined}
             />

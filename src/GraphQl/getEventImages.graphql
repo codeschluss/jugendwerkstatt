@@ -3,6 +3,8 @@ query GetEventImages($entity: EventEntityInput) {
     images {
       id
       name
+      base64
+      mimeType
     }
   }
 }

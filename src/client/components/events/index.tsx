@@ -129,7 +129,7 @@ const Events = () => {
                         date={el?.nextSchedule.startDate}
                         shareUrl={`event/${el.id}`}
                         route={`/event/${el.id}`}
-                        imgUrl={el?.titleImage?.id}
+                        imgUrl={`data:${el?.titleImage?.mimeType};base64,${el?.titleImage?.base64}`}
                         setFavorite={() =>
                           eventFavorite({
                             variables: {
