@@ -57,7 +57,7 @@ const Templates: React.FC = () => {
       <ul className="list-none text-base font-normal pl-4 text-gray-600">
         {fetchedTemplates?.map((template, index) => {
           return (
-            <li className="pt-4" key={index}>
+            <li className="pt-4 " key={index}>
               <Link
                 to={{
                   pathname: `/Forms/Templates/Edit/${template.id}`,
@@ -85,11 +85,11 @@ const Templates: React.FC = () => {
           ?.map((template, index) => {
             return (
               <li
-                className="pt-4 flex justify-between items-center"
+                className="pt-4 flex  justify-between items-center"
                 key={index}
               >
                 {template.name}
-                <div className="h-5 flex  justify-between float-right items-center">
+                <div className="h-5 flex   justify-between float-right items-center">
                   <Link
                     to={{
                       pathname: `/Forms/Templates/Edit/${template.id}`,
@@ -132,7 +132,9 @@ const Templates: React.FC = () => {
                             variables: {
                               id: template?.id,
                             },
-                          }).then(() => userTemplatesResult.refetch())
+                          })
+                            .then(() => userTemplatesResult.refetch())
+                            .finally(() => setOpen(false))
                         }
                       >
                         sicher

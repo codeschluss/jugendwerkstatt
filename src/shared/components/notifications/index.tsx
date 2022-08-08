@@ -40,15 +40,17 @@ const Notifications = () => {
             }
             key={el.id}
             className={`border-b-[1px] p-2  border-gray-400 cursor-pointer md: 
-            flex justify-around items-center  ${!el.read && "bg-gray-100"}`}
+            flex md:justify-center md:ml-2 items-center  ${
+              !el.read && "bg-gray-100"
+            }`}
           >
-            <p className={`text-base mt-2 ${!el.read && "font-bold"}`}>
+            <p className={`text-base mt-2 w-2/5 ${!el.read && "font-bold"}`}>
               {el?.title}
             </p>
-            <p className={`text-sm  ${!el.read && "font-bold"} `}>
+            <p className={`text-sm  w-2/5 ${!el.read && "font-bold"} `}>
               {el?.content}
             </p>
-            <p className="text-sm ">{`${weekDay}, ${date}.${month}.${year}`}</p>
+            <p className="text-sm  w-1/5">{`${weekDay}, ${date}.${month}.${year}`}</p>
           </div>
         );
       })}

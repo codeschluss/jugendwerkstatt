@@ -39,8 +39,6 @@ const Map: FunctionComponent = () => {
   const { category, dates } = useContext(FilterContext);
 
   const filterOperands: any = [];
-  console.log(dates, "dates");
-  console.log(category, "category");
 
   category &&
     filterOperands.push({
@@ -95,11 +93,12 @@ const Map: FunctionComponent = () => {
     result.refetch();
     favorites.refetch();
   };
+  console.log(allEvents, "result");
 
   useEffect(() => {
     let events = result.data?.getEvents?.result;
     setAllEvents(events);
-  }, [result.data?.getEvents?.result, allEvents]);
+  }, [result.data?.getEvents?.result]);
 
   const checkId = (obj: any) => obj.id === selectedEvent?.id;
   const hasId = favorites?.data?.me?.favoriteEvents?.some(checkId);
@@ -115,11 +114,15 @@ const Map: FunctionComponent = () => {
           </div>
 
           <MapContainer
-            center={[
-              allEvents[0]?.address?.latitude,
-              allEvents[0]?.address?.longitude,
-            ]}
-            zoom={13}
+            center={
+              allEvents.length > 0
+                ? [
+                    allEvents[0]?.address?.latitude,
+                    allEvents[0]?.address?.longitude,
+                  ]
+                : [48.333, 9.888]
+            }
+            zoom={allEvents.length > 0 ? 13 : 11}
           >
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -139,8 +142,8 @@ const Map: FunctionComponent = () => {
                         click: () => setSelectedEvent(event),
                       }}
                       position={[
-                        event?.address?.latitude,
-                        event?.address?.longitude,
+                        allEvents === undefined ? 1 : event?.address?.latitude,
+                        allEvents === undefined ? 1 : event?.address?.longitude,
                       ]}
                     ></Marker>
                   </div>

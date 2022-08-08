@@ -1,4 +1,8 @@
-import { ChevronRightIcon } from "@heroicons/react/outline";
+import {
+  ChevronRightIcon,
+  DownloadIcon,
+  XIcon,
+} from "@heroicons/react/outline";
 import UploadIcon from "@heroicons/react/solid/UploadIcon";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -16,10 +20,30 @@ import TableName from "../../../shared/components/table/TableName";
 import I from "../../../shared/components/ui/IconWrapper";
 import { readAuthToken } from "../../../shared/utils";
 import detectDevice from "../../../shared/utils/isTouch";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const Forms: React.FC = () => {
   const isTouch = detectDevice();
   const token = readAuthToken("accessToken");
+  const [open, setOpen] = React.useState(false);
+  const [fileToDelete, setFileToDelete] = React.useState<
+    string | undefined | null
+  >(null);
+
+  const handleClickOpen = (IdToDelete: string | undefined | null) => {
+    setOpen(true);
+    setFileToDelete(IdToDelete);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setFileToDelete(null);
+  };
   const result = useGetTemplateTypesQuery({
     fetchPolicy: "network-only",
   });
@@ -72,7 +96,7 @@ const Forms: React.FC = () => {
         {fetchedData?.map((template, index) => {
           return (
             <li
-              className="flex items-center px-2 md:w-96 md:bg-white md:my-2 md:h-16 "
+              className="flex items-center px-2 md:w-96 md:bg-white my-2 md:h-16 "
               key={index}
             >
               <Link
@@ -124,13 +148,7 @@ const Forms: React.FC = () => {
                         el?.mimeType?.split("/")[1]
                       )
                     }
-                    onDelete={() =>
-                      deleteUpload({
-                        variables: {
-                          uploadIds: el.id,
-                        },
-                      }).then(() => userUploads.refetch())
-                    }
+                    onDelete={() => handleClickOpen(el?.id)}
                   />
                 </div>
               );
@@ -143,13 +161,59 @@ const Forms: React.FC = () => {
         <ul className="pl-4 text-base font-normal text-gray-600 list-none">
           {fetchedUserUploads?.map((file, index) => {
             return (
-              <li className="pt-4" key={index}>
-                {file.name}
+              <li className="pt-4 flex justify-between" key={index}>
+                {file.name}{" "}
+                <div className="flex">
+                  <DownloadIcon
+                    className="w-5 h-5 text-gray-800 "
+                    onClick={() =>
+                      downloadHandler(
+                        file.id,
+                        file?.name,
+                        file?.mimeType?.split("/")[1]
+                      )
+                    }
+                  />
+                  <XIcon
+                    className="w-5 h-5 text-red-500 ml-5 "
+                    onClick={() => handleClickOpen(file.id)}
+                  />
+                </div>
               </li>
             );
           })}
         </ul>
       )}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Vorlagen Loschen?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to permanently delete your template? you will
+            not be able to recover your files anytime soon.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>abbrechen</Button>
+          <Button
+            onClick={() =>
+              deleteUpload({
+                variables: {
+                  uploadIds: fileToDelete,
+                },
+              })
+                .then(() => userUploads.refetch())
+                .finally(() => handleClose())
+            }
+          >
+            sicher
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

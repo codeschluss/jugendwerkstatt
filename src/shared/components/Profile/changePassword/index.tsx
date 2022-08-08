@@ -77,7 +77,7 @@ const ChangePassword = () => {
               onChange={passwordTwoChangeHandler}
               onBlur={passwordTwoBlurHandler}
               value={passwordTwo}
-              error={passwordTwoError ? "Password must match" : ""}
+              error={passwordTwoError ? "Passwörter müssen übereinstimmen" : ""}
               inputClassName={`${
                 passwordTwoError && "border-500-red"
               }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}

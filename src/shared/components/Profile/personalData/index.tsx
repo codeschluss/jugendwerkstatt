@@ -155,7 +155,7 @@ const PersonalData = () => {
                 onChange={emailChangeHandler}
                 onBlur={emailBlurHandler}
                 value={enteredEmail}
-                error={emailInputError ? "Kann nicht lehr gelassen werden" : ""}
+                error={emailInputError ? "Kann nicht leer gelassen werden" : ""}
                 inputClassName={`${
                   emailInputError && "border-500-red"
                 }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
@@ -166,7 +166,7 @@ const PersonalData = () => {
                 onChange={phoneChangeHandler}
                 onBlur={phoneBlurHandler}
                 value={enteredPhone}
-                error={phoneInputError ? "Kann nicht lehr gelassen werden" : ""}
+                error={phoneInputError ? "Kann nicht leer gelassen werden" : ""}
                 inputClassName={`${
                   phoneInputError && "border-500-red"
                 }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
