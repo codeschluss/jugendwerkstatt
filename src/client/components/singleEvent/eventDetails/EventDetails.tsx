@@ -23,9 +23,11 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
   email,
   web,
   group,
-  schedule,
+  startSchedule,
+  endSchedule,
   dueDate,
   startDate,
+  endDate,
   theRest,
   description,
 }) => {
@@ -82,15 +84,26 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
           <I>
             <ClockIcon />
           </I>
-          <h3 className="ml-3 mt-2">{getHour(schedule)} Uhr</h3>
+          <h3 className="ml-3 mt-2">{formatDate(new Date(startDate || ""))}</h3>{" "}
+          <h3 className="ml-3 mt-2">{getHour(startSchedule)} Uhr</h3>
         </div>
       )}
-      <div className="flex text-md">
-        <I>
-          <CalendarIcon />
-        </I>
-        <h3 className="ml-3 mt-2">{formatDate(new Date(startDate || ""))}</h3>
-      </div>
+      {!dueDate ? (
+        <div className="flex text-md">
+          <I>
+            <CalendarIcon />
+          </I>
+          <h3 className="ml-3 mt-2">{formatDate(new Date(endDate || ""))}</h3>{" "}
+          <h3 className="ml-3 mt-2">{getHour(endSchedule)} Uhr</h3>
+        </div>
+      ) : (
+        <div className="flex text-md">
+          <I>
+            <CalendarIcon />
+          </I>
+          <h3 className="ml-3 mt-2">{formatDate(new Date(startDate || ""))}</h3>{" "}
+        </div>
+      )}
       <div className="flex text-md">
         <I>
           <OfficeBuildingIcon />

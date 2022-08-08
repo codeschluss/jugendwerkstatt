@@ -95,13 +95,21 @@ export const SingleEvent = () => {
             group={
               eventQuery?.data?.getEvent?.organizer?.name || null || undefined
             }
-            schedule={
+            startSchedule={
               eventQuery?.data?.getEvent?.nextSchedule &&
               eventQuery?.data?.getEvent?.nextSchedule?.startDate
             }
             startDate={
               eventQuery?.data?.getEvent?.nextSchedule &&
               eventQuery?.data?.getEvent?.nextSchedule?.startDate
+            }
+            endSchedule={
+              eventQuery?.data?.getEvent?.nextSchedule &&
+              eventQuery?.data?.getEvent?.nextSchedule?.endDate
+            }
+            endDate={
+              eventQuery?.data?.getEvent?.nextSchedule &&
+              eventQuery?.data?.getEvent?.nextSchedule?.endDate
             }
             theRest={
               eventQuery?.data?.getEvent?.category?.name || null || undefined
