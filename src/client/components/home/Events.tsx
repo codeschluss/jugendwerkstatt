@@ -3,7 +3,7 @@ import {
   useAddEventFavoriteMutation,
   useDeleteEventFavoriteMutation,
   useGetEventsQuery,
-  useGetMeFavoritesQuery,
+  useGetMeBasicFavoritesQuery,
 } from "../../../GraphQl/graphql";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
@@ -11,17 +11,25 @@ import Slider from "../slideItems/Slider";
 interface EventsProps {}
 
 const Events: React.FC<EventsProps> = () => {
-  const useEvents = useGetEventsQuery({});
+  let fetchedData = null;
+
+  const useEvents = useGetEventsQuery({
+    skip: !!fetchedData,
+    variables: {
+      params: {
+        page: 0,
+        size: 5,
+      },
+    },
+  });
 
   const [eventFavorite] = useAddEventFavoriteMutation();
 
-  const fetchedData: [EventEntity] = useEvents.data?.getEvents?.result as [
-    EventEntity
-  ];
+  fetchedData = useEvents.data?.getEvents?.result as [EventEntity];
 
   const [deleteEventFavorite] = useDeleteEventFavoriteMutation();
 
-  const favorites = useGetMeFavoritesQuery({});
+  const favorites = useGetMeBasicFavoritesQuery({});
   const refetchQueries = () => {
     useEvents.refetch();
     favorites.refetch();

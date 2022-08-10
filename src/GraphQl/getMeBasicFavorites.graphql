@@ -1,0 +1,11 @@
+query GetMeBasicFavorites {
+  me {
+    id
+    favoriteEvents {
+      id
+    }
+    favoriteJobAds {
+      id
+    }
+  }
+}

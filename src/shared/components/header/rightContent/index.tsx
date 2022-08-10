@@ -32,6 +32,7 @@ const RightContent: FC = () => {
   const [saveNotification] = useSaveNotificationMutation();
   const navigate = useNavigate();
   const accessToken = readAuthToken("accessToken");
+  const [searchActive, setSearchActive] = useState(false);
 
   const searchfield: any = [];
 
@@ -120,6 +121,7 @@ const RightContent: FC = () => {
             onChange={searching}
             {...params}
             label="Suche"
+            onBlur={() => setSearchActive(true)}
           />
         )}
       />

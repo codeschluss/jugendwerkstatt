@@ -3638,6 +3638,11 @@ export type GetMeBasicQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetMeBasicQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, phone?: string | null, password?: string | null, email?: string | null, roles?: Array<{ __typename?: 'RoleEntity', key?: string | null } | null> | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null } | null } | null };
 
+export type GetMeBasicFavoritesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMeBasicFavoritesQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, favoriteEvents?: Array<{ __typename?: 'EventEntity', id?: string | null } | null> | null, favoriteJobAds?: Array<{ __typename?: 'JobAdEntity', id?: string | null } | null> | null } | null };
+
 export type GetMeChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -8060,6 +8065,46 @@ export function useGetMeBasicLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetMeBasicQueryHookResult = ReturnType<typeof useGetMeBasicQuery>;
 export type GetMeBasicLazyQueryHookResult = ReturnType<typeof useGetMeBasicLazyQuery>;
 export type GetMeBasicQueryResult = Apollo.QueryResult<GetMeBasicQuery, GetMeBasicQueryVariables>;
+export const GetMeBasicFavoritesDocument = gql`
+    query GetMeBasicFavorites {
+  me {
+    id
+    favoriteEvents {
+      id
+    }
+    favoriteJobAds {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMeBasicFavoritesQuery__
+ *
+ * To run a query within a React component, call `useGetMeBasicFavoritesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMeBasicFavoritesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMeBasicFavoritesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMeBasicFavoritesQuery(baseOptions?: Apollo.QueryHookOptions<GetMeBasicFavoritesQuery, GetMeBasicFavoritesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMeBasicFavoritesQuery, GetMeBasicFavoritesQueryVariables>(GetMeBasicFavoritesDocument, options);
+      }
+export function useGetMeBasicFavoritesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMeBasicFavoritesQuery, GetMeBasicFavoritesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMeBasicFavoritesQuery, GetMeBasicFavoritesQueryVariables>(GetMeBasicFavoritesDocument, options);
+        }
+export type GetMeBasicFavoritesQueryHookResult = ReturnType<typeof useGetMeBasicFavoritesQuery>;
+export type GetMeBasicFavoritesLazyQueryHookResult = ReturnType<typeof useGetMeBasicFavoritesLazyQuery>;
+export type GetMeBasicFavoritesQueryResult = Apollo.QueryResult<GetMeBasicFavoritesQuery, GetMeBasicFavoritesQueryVariables>;
 export const GetMeChatsDocument = gql`
     query GetMeChats {
   me {

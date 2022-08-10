@@ -37,6 +37,14 @@ export const SingleJobAdd = () => {
     favorites.refetch();
   };
 
+  const desc: any =
+    jobsQuery.data?.getJobAd?.content?.substring(0, 1) === '"'
+      ? jobsQuery.data?.getJobAd?.content?.substring(
+          1,
+          jobsQuery.data?.getJobAd?.content?.length - 1
+        )
+      : jobsQuery.data?.getJobAd?.content;
+
   return (
     <div>
       <div className="flex flex-col md:flex-row md:bg-gray-100 md:p-3">
@@ -108,9 +116,7 @@ export const SingleJobAdd = () => {
         <p className="text-3xl">{jobsQuery.data?.getJobAd?.company?.name}</p>
         <div
           dangerouslySetInnerHTML={{
-            __html: jobsQuery.data?.getJobAd?.content
-              ? jobsQuery.data?.getJobAd?.content
-              : "",
+            __html: jobsQuery.data?.getJobAd?.content ? desc : "",
           }}
         />
       </div>

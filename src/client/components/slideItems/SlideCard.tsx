@@ -47,7 +47,7 @@ const SlideCard: React.FC<SlideCardProps> = ({
 }) => {
   const theDate = new Date(date);
   const year = theDate.getFullYear();
-  const month = theDate.getMonth();
+  const month = theDate.getMonth() + 1;
   const day = theDate.getDate();
 
   const token = readAuthToken("accessToken");

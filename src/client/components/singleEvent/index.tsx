@@ -40,6 +40,14 @@ export const SingleEvent = () => {
     favorites.refetch();
   };
 
+  const desc: any =
+    eventQuery?.data?.getEvent?.description?.substring(0, 1) === '"'
+      ? eventQuery?.data?.getEvent?.description?.substring(
+          1,
+          eventQuery?.data?.getEvent?.description.length - 1
+        )
+      : eventQuery?.data?.getEvent?.description;
+
   return (
     <div>
       <div className="flex flex-col md:flex-row  md:bg-gray-100 md:p-3 ">
@@ -126,9 +134,7 @@ export const SingleEvent = () => {
         <p className="text-3xl">{eventQuery?.data?.getEvent?.name}</p>
         <div
           dangerouslySetInnerHTML={{
-            __html: eventQuery?.data?.getEvent?.description
-              ? eventQuery?.data?.getEvent?.description
-              : "",
+            __html: eventQuery?.data?.getEvent?.description ? desc : "",
           }}
         />
       </div>

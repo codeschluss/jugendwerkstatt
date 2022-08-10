@@ -24,6 +24,7 @@ import SideBarContext from "../../../../contexts/SideBarContext";
 import {
   useGetChatSettingsQuery,
   useGetGroupsQuery,
+  useGetMeBasicQuery,
 } from "../../../../GraphQl/graphql";
 import { useAuthStore } from "../../../../store";
 import { sidebarStore } from "../../../../store/sidebar/sidebar.store";
@@ -45,7 +46,13 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
     skip: !isAuthenticated,
   });
 
-  const { data: { groups = null } = {} } = useGetGroupsQuery();
+  const meRole = useGetMeBasicQuery();
+
+  const { data: { groups = null } = {} } = useGetGroupsQuery({
+    skip: !meRole.data?.me?.roles?.some(
+      (el) => el === "admin" || el === "superviser"
+    ),
+  });
 
   const mappedGroups =
     groups?.result?.map((group) => ({
