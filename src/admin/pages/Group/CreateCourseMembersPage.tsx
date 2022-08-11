@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import { useParams } from 'react-router-dom';
 import {
+  ConjunctionOperator,
   QueryOperator,
   useAddCourseMemberMutation,
   useGetCourseQuery,
@@ -17,15 +18,51 @@ const CreateCourseMembersPage = (): ReactElement => {
       variables: {
         params: {
           expression: {
-            entity: {
-              operator: QueryOperator.NotEqual,
-              path: 'course.id',
-              value: id,
-            },
-          },
+            conjunction: {
+              operator: ConjunctionOperator.And,
+              operands: [
+                {
+                  conjunction: {
+                    operator: ConjunctionOperator.Or,
+                    operands: [
+                      {
+                        entity: {
+                          operator: QueryOperator.Equal,
+                          path: 'course.id',
+                          value: id
+                        }
+                      },
+                      {
+                        entity: {
+                          operator: QueryOperator.Equal,
+                          path: 'course.id',
+                          value: null
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  entity: {
+                    operator: QueryOperator.Equal,
+                    path: 'approved',
+                    value: 'true'
+                  }
+                },
+                {
+                  entity: {
+                    operator: QueryOperator.Equal,
+                    path: 'verified',
+                    value: 'true'
+                  }
+                }
+              ]
+            }
+          }
         },
       },
     });
+    
   const { data: { course = null } = {} } = useGetCourseQuery({
     variables: { id },
   });

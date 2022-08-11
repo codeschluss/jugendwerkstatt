@@ -16,6 +16,7 @@ const EvaluationQuestionFormPage = (): ReactElement => {
   const navigate = useNavigate();
   const { data: { questionnaire } = {} } = useGetQuestionnaireQuery({
     skip: !id,
+    fetchPolicy: "network-only",
     variables: { entity: { id } },
   });
 

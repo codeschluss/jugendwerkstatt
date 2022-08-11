@@ -37,7 +37,6 @@ export const SchedulesForm = ({
   }, []);
 
   const handleGenerateSchedules = () => {
-    console.log(fields);
     setSchedules([...schedules, ...generateSchedules(fields)]);
   };
 
