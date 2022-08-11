@@ -3308,7 +3308,7 @@ export type GetEventCategoryQuery = { __typename?: 'Query', category?: { __typen
 export type GetGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetGroupsQuery = { __typename?: 'Query', groups?: { __typename?: 'PageableList_GroupEntity', result?: Array<{ __typename?: 'GroupEntity', id?: string | null, name?: string | null, description?: string | null, courses?: Array<{ __typename?: 'CourseEntity', id?: string | null, name?: string | null, description?: string | null, group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null, members?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null } | null> | null } | null> | null } | null };
+export type GetGroupsQuery = { __typename?: 'Query', groups?: { __typename?: 'PageableList_GroupEntity', result?: Array<{ __typename?: 'GroupEntity', id?: string | null, name?: string | null, description?: string | null, courses?: Array<{ __typename?: 'CourseEntity', id?: string | null, name?: string | null, description?: string | null, members?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null, group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null } | null> | null } | null> | null } | null };
 
 export type GetGroupQueryVariables = Exact<{
   entity?: InputMaybe<GroupEntityInput>;
@@ -5998,6 +5998,9 @@ export const GetGroupsDocument = gql`
       ...GroupField
       courses {
         ...CourseField
+        members {
+          id
+        }
       }
     }
   }

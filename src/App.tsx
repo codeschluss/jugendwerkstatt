@@ -179,7 +179,7 @@ const App = (): ReactElement => {
 
     PushNotifications.addListener(
       "pushNotificationReceived",
-      (notification: PushNotificationSchema) => {}
+      (notification: PushNotificationSchema) => { }
     );
     PushNotifications.addListener(
       "pushNotificationActionPerformed",
@@ -276,7 +276,6 @@ const App = (): ReactElement => {
 
         <Route path="/map" element={<Map />} />
         <Route path="/media-library" element={<MediaLibrary />} />
-        <Route path="/notifications" element={<Notifications />} />
 
         <Route path="/event/:id" element={<EventDetail />} />
         <Route path="/calendar" element={<EventsCalendar />} />
@@ -293,6 +292,12 @@ const App = (): ReactElement => {
           <Route path="templates/:id" element={<TemplateView />} />
           <Route path="templates/edit/:id" element={<TemplateEdit />} />
         </Route>
+      </Route>
+
+      <Route
+        element={<RequireAuthRoute accessRole={["admin", "superviser", "student"]} />}
+      >
+        <Route path="/notifications" element={<Notifications />} />
       </Route>
 
       <Route
@@ -314,6 +319,7 @@ const App = (): ReactElement => {
             <Route path="new" element={<CreateCategoriesPage />} />
           </Route>
         </Route>
+
 
         <Route path="/admin/job-announcements">
           <Route index element={<VacancyListPage />} />

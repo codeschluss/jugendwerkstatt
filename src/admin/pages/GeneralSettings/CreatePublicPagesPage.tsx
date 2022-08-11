@@ -255,7 +255,7 @@ const CreatePublicPagesPage = (): ReactElement => {
         >
           <div className="flex items-start justify-start">
             <UploadField id="video"
-              placeholderTitle="bild hinzufügen"
+              placeholderTitle="Video hinzufügen"
               {...register('video')} />
           </div>
           <div className="flex gap-x-2">
