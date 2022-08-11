@@ -6,6 +6,8 @@ query GetMeChats {
       chat {
         avatar {
           id
+          mimeType
+          base64
         }
         id
         name
@@ -20,6 +22,8 @@ query GetMeChats {
               fullname
               profilePicture {
                 id
+                base64
+                mimeType
               }
             }
           }
@@ -36,6 +40,8 @@ query GetMeChats {
             id
             profilePicture {
               id
+              base64
+              mimeType
             }
           }
         }

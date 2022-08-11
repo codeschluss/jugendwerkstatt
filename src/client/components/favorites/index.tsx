@@ -24,6 +24,7 @@ const Favorites = () => {
             {favorites.data?.me?.favoriteEvents?.map((event: any) => {
               return (
                 <SlideCard
+                  key={event.id}
                   isFavorite={true}
                   width="w-full md:w-1/2"
                   className="mb-4 md:h-72"
@@ -31,7 +32,7 @@ const Favorites = () => {
                   location={`${event?.address?.street}, ${event?.address?.houseNumber}, ${event?.address?.place}`}
                   date={event?.nextSchedule?.startDate}
                   route={`/event/${event.id}`}
-                  imgUrl={event?.titleImage?.id}
+                  imgUrl={`data:${event?.titleImage?.mimeType};base64,${event?.titleImage?.base64}`}
                   removeFavorite={() =>
                     deleteEventFavorite({
                       variables: {

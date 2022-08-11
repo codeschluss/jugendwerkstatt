@@ -114,7 +114,7 @@ const Contacts = () => {
             name={el?.fullname}
             imgUrl={
               el?.profilePicture?.id &&
-              `${API_URL}media/${el?.profilePicture?.id}`
+              `data:${el?.profilePicture?.mimeType};base64,${el?.profilePicture?.base64}`
             }
           />
         )

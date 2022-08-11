@@ -35,38 +35,14 @@ function stringAvatar(name: string) {
 }
 
 const BackgroundLetterAvatars: React.FC<{ fullname: any }> = ({ fullname }) => {
-  const token = readAuthToken("accessToken");
-  const [img, setImg] = React.useState<any>();
-
   const me = useGetMeBasicQuery();
-
-  const requestOptions: any = {
-    method: "GET",
-    headers: {
-      authorization: `Bearer ${token}`,
-      responseType: "arraybuffer",
-    },
-  };
-
-  const fetchImage = async () => {
-    const res = await fetch(
-      `${API_URL}media/${me.data?.me?.profilePicture?.id}`,
-      requestOptions
-    );
-    const imageBlob = await res.blob();
-    const imageObjectURL = URL.createObjectURL(imageBlob);
-    setImg(imageObjectURL);
-  };
-
-  React.useEffect(() => {
-    if (me.data?.me?.profilePicture) {
-      fetchImage();
-    }
-  }, [me.data?.me?.profilePicture, token]);
 
   return me.data?.me?.profilePicture ? (
     <div className="w-12 h-12 ">
-      <img className="w-full h-full bg-cover rounded-full" src={img} />
+      <img
+        className="w-full h-full bg-cover rounded-full"
+        src={`data:${me.data?.me?.profilePicture?.mimeType};base64,${me.data?.me?.profilePicture?.base64}`}
+      />
     </div>
   ) : (
     <Avatar {...stringAvatar(fullname)} />

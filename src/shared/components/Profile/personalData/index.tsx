@@ -15,7 +15,6 @@ import React from "react";
 
 const PersonalData = () => {
   // const { bgColor } = useContext(AuthContext);
-  const [img, setImg] = useState<any>();
 
   const user = useGetMeBasicQuery();
   const navigate = useNavigate();
@@ -77,33 +76,6 @@ const PersonalData = () => {
     }
   };
 
-  const token = readAuthToken("accessToken");
-
-  const requestOptions: any = {
-    method: "GET",
-    headers: {
-      authorization: `Bearer ${token}`,
-      responseType: "arraybuffer",
-    },
-  };
-
-  //codi per foto below
-  React.useEffect(() => {
-    if (user.data?.me?.profilePicture) {
-      fetchImage();
-    }
-  }, [user.data?.me?.profilePicture, token]);
-
-  const fetchImage = async () => {
-    const res = await fetch(
-      `${API_URL}media/${user?.data?.me?.profilePicture?.id}`,
-      requestOptions
-    );
-    const imageBlob = await res.blob();
-    const imageObjectURL = URL.createObjectURL(imageBlob);
-    setImg(imageObjectURL);
-  };
-
   return (
     <div className="text-[#676767] md:m-5 absolute  md:static w-full md:w-2/5  z-20 top-0 bg-white">
       <CustomHeader>Personal Data</CustomHeader>
@@ -117,7 +89,7 @@ const PersonalData = () => {
               {user.data?.me?.profilePicture?.id ? (
                 <img
                   className="object-cover w-24 h-24 rounded-full"
-                  src={img}
+                  src={`data:${user?.data?.me?.profilePicture?.mimeType};base64,${user?.data?.me?.profilePicture?.base64}`}
                   alt=""
                 />
               ) : (

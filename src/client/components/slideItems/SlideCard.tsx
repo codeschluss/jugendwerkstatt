@@ -47,9 +47,8 @@ const SlideCard: React.FC<SlideCardProps> = ({
 }) => {
   const theDate = new Date(date);
   const year = theDate.getFullYear();
-  const month = theDate.getMonth();
+  const month = theDate.getMonth() + 1;
   const day = theDate.getDate();
-  const [img, setImg] = useState<any>();
 
   const token = readAuthToken("accessToken");
 
@@ -64,33 +63,13 @@ const SlideCard: React.FC<SlideCardProps> = ({
   ];
   const weekDay = weekDays[theDate.getDay()];
 
-  const requestOptions: any = {
-    method: "GET",
-    headers: {
-      authorization: `Bearer ${token}`,
-      responseType: "arraybuffer",
-    },
-  };
-  const fetchImage = async () => {
-    const res = await fetch(`${API_URL}media/${imgUrl}`, requestOptions);
-    const imageBlob = await res.blob();
-    const imageObjectURL = URL.createObjectURL(imageBlob);
-    setImg(imageObjectURL);
-  };
-
-  useEffect(() => {
-    if (imgUrl) {
-      fetchImage();
-    }
-  }, [token, imgUrl]);
-
   return (
     <div className={`${className} snap-center ${width} h-60   flex-none px-2`}>
       <div className="relative  h-full overflow-hidden rounded-md">
         <Link to={route}>
           {imgUrl ? (
             <img
-              src={img}
+              src={imgUrl}
               alt={eventName || ""}
               className="object-cover w-full h-full absolute inset-0"
             />

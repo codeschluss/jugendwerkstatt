@@ -40,10 +40,20 @@ export const SingleEvent = () => {
     favorites.refetch();
   };
 
+  const desc: any =
+    eventQuery?.data?.getEvent?.description?.substring(0, 1) === '"'
+      ? eventQuery?.data?.getEvent?.description?.substring(
+          1,
+          eventQuery?.data?.getEvent?.description.length - 1
+        )
+      : eventQuery?.data?.getEvent?.description;
+
   return (
     <div>
       <div className="flex flex-col md:flex-row  md:bg-gray-100 md:p-3 ">
-        <TitleImgSlider imgUrl={eventQuery?.data?.getEvent?.titleImage?.id} />
+        <TitleImgSlider
+          imgUrl={`data:${eventQuery.data?.getEvent?.titleImage?.mimeType};base64,${eventQuery.data?.getEvent?.titleImage?.base64}`}
+        />
         <div className="p-5 md:w-1/2 md:ml-4 md:flex-grow rounded-md bg-white">
           <EventHeader
             isFavorite={hasId}
@@ -124,15 +134,19 @@ export const SingleEvent = () => {
         <p className="text-3xl">{eventQuery?.data?.getEvent?.name}</p>
         <div
           dangerouslySetInnerHTML={{
-            __html: eventQuery?.data?.getEvent?.description
-              ? eventQuery?.data?.getEvent?.description
-              : "",
+            __html: eventQuery?.data?.getEvent?.description ? desc : "",
           }}
         />
       </div>
       <Slider title="Fotos">
         {eventImages?.data?.getEvent?.images?.map((el: any) => {
-          return <SlideCard key={el?.id} imgUrl={el?.id} route="#" />;
+          return (
+            <SlideCard
+              key={el?.id}
+              imgUrl={`data:${el?.mimeType};base64,${el?.base64}`}
+              route="#"
+            />
+          );
         })}
       </Slider>
     </div>

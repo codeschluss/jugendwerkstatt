@@ -175,6 +175,8 @@ const EventsTime: React.FC = () => {
         className="max-w-2xl mx-auto customized-day-calendar"
         localizer={localizer}
         date={currentDate}
+        onNavigate={() => null}
+        onView={() => null}
         events={tempEventsInfo}
         components={{ event: event }}
         view={"day"}

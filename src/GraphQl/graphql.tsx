@@ -3308,7 +3308,7 @@ export type GetEventCategoryQuery = { __typename?: 'Query', category?: { __typen
 export type GetGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetGroupsQuery = { __typename?: 'Query', groups?: { __typename?: 'PageableList_GroupEntity', result?: Array<{ __typename?: 'GroupEntity', id?: string | null, name?: string | null, description?: string | null, courses?: Array<{ __typename?: 'CourseEntity', id?: string | null, name?: string | null, description?: string | null, group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null, members?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null } | null> | null } | null> | null } | null };
+export type GetGroupsQuery = { __typename?: 'Query', groups?: { __typename?: 'PageableList_GroupEntity', result?: Array<{ __typename?: 'GroupEntity', id?: string | null, name?: string | null, description?: string | null, courses?: Array<{ __typename?: 'CourseEntity', id?: string | null, name?: string | null, description?: string | null, members?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null, group?: { __typename?: 'GroupEntity', id?: string | null, name?: string | null } | null } | null> | null } | null> | null } | null };
 
 export type GetGroupQueryVariables = Exact<{
   entity?: InputMaybe<GroupEntityInput>;
@@ -3546,7 +3546,7 @@ export type GetChatQueryVariables = Exact<{
 }>;
 
 
-export type GetChatQuery = { __typename?: 'Query', getChat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, admin?: boolean | null, avatar?: { __typename?: 'MediaEntity', id?: string | null } | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, chat?: { __typename?: 'ChatEntity', avatar?: { __typename?: 'MediaEntity', id?: string | null } | null } | null, user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null> | null } | null };
+export type GetChatQuery = { __typename?: 'Query', getChat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, admin?: boolean | null, avatar?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null } | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, chat?: { __typename?: 'ChatEntity', avatar?: { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null } | null } | null, user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null } | null } | null } | null> | null } | null };
 
 export type GetChatSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3558,7 +3558,7 @@ export type GetEventQueryVariables = Exact<{
 }>;
 
 
-export type GetEventQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, nextSchedule?: { __typename?: 'ScheduleEntity', startDate?: any | null, endDate?: any | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null, postalCode?: string | null, latitude?: number | null, longitude?: number | null, id?: string | null, houseNumber?: string | null, created?: any | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, endDate?: any | null, startDate?: any | null } | null> | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null, name?: string | null, phone?: string | null, website?: string | null, mail?: string | null } | null } | null };
+export type GetEventQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, nextSchedule?: { __typename?: 'ScheduleEntity', startDate?: any | null, endDate?: any | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null, postalCode?: string | null, latitude?: number | null, longitude?: number | null, id?: string | null, houseNumber?: string | null, created?: any | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, endDate?: any | null, startDate?: any | null } | null> | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null, name?: string | null, phone?: string | null, website?: string | null, mail?: string | null } | null } | null };
 
 export type GetEventCategorieNamesQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
@@ -3572,21 +3572,21 @@ export type GetEventCategoriesQueryVariables = Exact<{
 }>;
 
 
-export type GetEventCategoriesQuery = { __typename?: 'Query', getEventCategories?: { __typename?: 'PageableList_EventCategoryEntity', result?: Array<{ __typename?: 'EventCategoryEntity', name?: string | null, id?: string | null, events?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, nextSchedule?: { __typename?: 'ScheduleEntity', startDate?: any | null, endDate?: any | null } | null, titleImage?: { __typename?: 'MediaEntity', name?: string | null, id?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null, organizer?: { __typename?: 'OrganizerEntity', website?: string | null, phone?: string | null, name?: string | null, mail?: string | null, id?: string | null } | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, modified?: any | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null> | null } | null> | null } | null };
+export type GetEventCategoriesQuery = { __typename?: 'Query', getEventCategories?: { __typename?: 'PageableList_EventCategoryEntity', result?: Array<{ __typename?: 'EventCategoryEntity', name?: string | null, id?: string | null, events?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, nextSchedule?: { __typename?: 'ScheduleEntity', startDate?: any | null, endDate?: any | null } | null, titleImage?: { __typename?: 'MediaEntity', name?: string | null, id?: string | null, base64?: string | null, mimeType?: string | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, startDate?: any | null, endDate?: any | null } | null> | null, organizer?: { __typename?: 'OrganizerEntity', website?: string | null, phone?: string | null, name?: string | null, mail?: string | null, id?: string | null } | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, latitude?: number | null, longitude?: number | null, modified?: any | null, place?: string | null, postalCode?: string | null, street?: string | null } | null } | null> | null } | null> | null } | null };
 
 export type GetEventImagesQueryVariables = Exact<{
   entity?: InputMaybe<EventEntityInput>;
 }>;
 
 
-export type GetEventImagesQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', images?: Array<{ __typename?: 'MediaEntity', id?: string | null, name?: string | null } | null> | null } | null };
+export type GetEventImagesQuery = { __typename?: 'Query', getEvent?: { __typename?: 'EventEntity', images?: Array<{ __typename?: 'MediaEntity', id?: string | null, name?: string | null, base64?: string | null, mimeType?: string | null } | null> | null } | null };
 
 export type GetEventsQueryVariables = Exact<{
   params?: InputMaybe<FilterSortPaginateInput>;
 }>;
 
 
-export type GetEventsQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', result?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, nextSchedule?: { __typename?: 'ScheduleEntity', startDate?: any | null, endDate?: any | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null, postalCode?: string | null, latitude?: number | null, longitude?: number | null, id?: string | null, houseNumber?: string | null, created?: any | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, endDate?: any | null, startDate?: any | null } | null> | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null, name?: string | null, phone?: string | null, website?: string | null, mail?: string | null } | null } | null> | null } | null };
+export type GetEventsQuery = { __typename?: 'Query', getEvents?: { __typename?: 'PageableList_EventEntity', result?: Array<{ __typename?: 'EventEntity', name?: string | null, id?: string | null, description?: string | null, nextSchedule?: { __typename?: 'ScheduleEntity', startDate?: any | null, endDate?: any | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null } | null, address?: { __typename?: 'AddressEntity', street?: string | null, place?: string | null, postalCode?: string | null, latitude?: number | null, longitude?: number | null, id?: string | null, houseNumber?: string | null, created?: any | null } | null, schedules?: Array<{ __typename?: 'ScheduleEntity', id?: string | null, endDate?: any | null, startDate?: any | null } | null> | null, category?: { __typename?: 'EventCategoryEntity', id?: string | null, name?: string | null } | null, organizer?: { __typename?: 'OrganizerEntity', id?: string | null, name?: string | null, phone?: string | null, website?: string | null, mail?: string | null } | null } | null> | null } | null };
 
 export type GetGroupAndCourseQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3636,12 +3636,17 @@ export type GetMeAssignmentsQuery = { __typename?: 'Query', me?: { __typename?: 
 export type GetMeBasicQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMeBasicQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, phone?: string | null, password?: string | null, email?: string | null, roles?: Array<{ __typename?: 'RoleEntity', key?: string | null } | null> | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null };
+export type GetMeBasicQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, phone?: string | null, password?: string | null, email?: string | null, roles?: Array<{ __typename?: 'RoleEntity', key?: string | null } | null> | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null } | null } | null };
+
+export type GetMeBasicFavoritesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMeBasicFavoritesQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, favoriteEvents?: Array<{ __typename?: 'EventEntity', id?: string | null } | null> | null, favoriteJobAds?: Array<{ __typename?: 'JobAdEntity', id?: string | null } | null> | null } | null };
 
 export type GetMeChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMeChatsQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, chat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, modified?: any | null, avatar?: { __typename?: 'MediaEntity', id?: string | null } | null, lastMessage?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, created?: any | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null } | null, messages?: Array<{ __typename?: 'MessageEntity', created?: any | null, content?: string | null, id?: string | null } | null> | null, participants?: Array<{ __typename?: 'ParticipantEntity', user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null } | null> | null } | null } | null> | null } | null };
+export type GetMeChatsQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', id?: string | null, participants?: Array<{ __typename?: 'ParticipantEntity', id?: string | null, chat?: { __typename?: 'ChatEntity', id?: string | null, name?: string | null, modified?: any | null, avatar?: { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null } | null, lastMessage?: { __typename?: 'MessageEntity', id?: string | null, content?: string | null, created?: any | null, participant?: { __typename?: 'ParticipantEntity', id?: string | null, user?: { __typename?: 'UserEntity', id?: string | null, fullname?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null } | null } | null } | null } | null, messages?: Array<{ __typename?: 'MessageEntity', created?: any | null, content?: string | null, id?: string | null } | null> | null, participants?: Array<{ __typename?: 'ParticipantEntity', user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null } | null } | null } | null> | null } | null } | null> | null } | null };
 
 export type GetMeFavoritesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3715,7 +3720,7 @@ export type GetUsersQueryVariables = Exact<{
 }>;
 
 
-export type GetUsersQuery = { __typename?: 'Query', getUsers?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, phone?: string | null, email?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null } | null } | null> | null } | null };
+export type GetUsersQuery = { __typename?: 'Query', getUsers?: { __typename?: 'PageableList_UserEntity', result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null, phone?: string | null, email?: string | null, profilePicture?: { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null } | null } | null> | null } | null };
 
 export type MeRolesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3725,7 +3730,7 @@ export type MeRolesQuery = { __typename?: 'Query', me?: { __typename?: 'UserEnti
 export type PublicPagesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PublicPagesQuery = { __typename?: 'Query', getPages?: { __typename?: 'PageableList_PageEntity', result?: Array<{ __typename?: 'PageEntity', id?: string | null, content?: string | null, name?: string | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null } | null> | null, video?: { __typename?: 'MediaEntity', id?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null } | null> | null } | null };
+export type PublicPagesQuery = { __typename?: 'Query', getPages?: { __typename?: 'PageableList_PageEntity', result?: Array<{ __typename?: 'PageEntity', id?: string | null, content?: string | null, name?: string | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null } | null> | null, video?: { __typename?: 'MediaEntity', id?: string | null, base64?: string | null, mimeType?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null } | null } | null> | null } | null };
 
 export type PublicPagesBasicQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3737,7 +3742,7 @@ export type GetSinglePublicPageQueryVariables = Exact<{
 }>;
 
 
-export type GetSinglePublicPageQuery = { __typename?: 'Query', getPage?: { __typename?: 'PageEntity', content?: string | null, id?: string | null, name?: string | null, slug?: string | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null } | null> | null, video?: { __typename?: 'MediaEntity', id?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null } | null } | null };
+export type GetSinglePublicPageQuery = { __typename?: 'Query', getPage?: { __typename?: 'PageEntity', content?: string | null, id?: string | null, name?: string | null, slug?: string | null, images?: Array<{ __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null } | null> | null, video?: { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null } | null, titleImage?: { __typename?: 'MediaEntity', id?: string | null, mimeType?: string | null, base64?: string | null } | null } | null };
 
 export type RefreshTokenMutationVariables = Exact<{
   refreshToken: Scalars['String'];
@@ -5998,6 +6003,9 @@ export const GetGroupsDocument = gql`
       ...GroupField
       courses {
         ...CourseField
+        members {
+          id
+        }
       }
     }
   }
@@ -7267,11 +7275,15 @@ export const GetChatDocument = gql`
     admin
     avatar {
       id
+      base64
+      mimeType
     }
     participants {
       chat {
         avatar {
           id
+          mimeType
+          base64
         }
       }
       id
@@ -7280,6 +7292,8 @@ export const GetChatDocument = gql`
         id
         profilePicture {
           id
+          mimeType
+          base64
         }
       }
     }
@@ -7358,6 +7372,8 @@ export const GetEventDocument = gql`
     }
     titleImage {
       id
+      base64
+      mimeType
     }
     id
     description
@@ -7470,6 +7486,8 @@ export const GetEventCategoriesDocument = gql`
         titleImage {
           name
           id
+          base64
+          mimeType
         }
         schedules {
           id
@@ -7535,6 +7553,8 @@ export const GetEventImagesDocument = gql`
     images {
       id
       name
+      base64
+      mimeType
     }
   }
 }
@@ -7578,6 +7598,8 @@ export const GetEventsDocument = gql`
       }
       titleImage {
         id
+        base64
+        mimeType
       }
       id
       description
@@ -8010,6 +8032,8 @@ export const GetMeBasicDocument = gql`
     }
     profilePicture {
       id
+      base64
+      mimeType
     }
   }
 }
@@ -8041,6 +8065,46 @@ export function useGetMeBasicLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetMeBasicQueryHookResult = ReturnType<typeof useGetMeBasicQuery>;
 export type GetMeBasicLazyQueryHookResult = ReturnType<typeof useGetMeBasicLazyQuery>;
 export type GetMeBasicQueryResult = Apollo.QueryResult<GetMeBasicQuery, GetMeBasicQueryVariables>;
+export const GetMeBasicFavoritesDocument = gql`
+    query GetMeBasicFavorites {
+  me {
+    id
+    favoriteEvents {
+      id
+    }
+    favoriteJobAds {
+      id
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetMeBasicFavoritesQuery__
+ *
+ * To run a query within a React component, call `useGetMeBasicFavoritesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMeBasicFavoritesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMeBasicFavoritesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMeBasicFavoritesQuery(baseOptions?: Apollo.QueryHookOptions<GetMeBasicFavoritesQuery, GetMeBasicFavoritesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetMeBasicFavoritesQuery, GetMeBasicFavoritesQueryVariables>(GetMeBasicFavoritesDocument, options);
+      }
+export function useGetMeBasicFavoritesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMeBasicFavoritesQuery, GetMeBasicFavoritesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetMeBasicFavoritesQuery, GetMeBasicFavoritesQueryVariables>(GetMeBasicFavoritesDocument, options);
+        }
+export type GetMeBasicFavoritesQueryHookResult = ReturnType<typeof useGetMeBasicFavoritesQuery>;
+export type GetMeBasicFavoritesLazyQueryHookResult = ReturnType<typeof useGetMeBasicFavoritesLazyQuery>;
+export type GetMeBasicFavoritesQueryResult = Apollo.QueryResult<GetMeBasicFavoritesQuery, GetMeBasicFavoritesQueryVariables>;
 export const GetMeChatsDocument = gql`
     query GetMeChats {
   me {
@@ -8050,6 +8114,8 @@ export const GetMeChatsDocument = gql`
       chat {
         avatar {
           id
+          mimeType
+          base64
         }
         id
         name
@@ -8064,6 +8130,8 @@ export const GetMeChatsDocument = gql`
               fullname
               profilePicture {
                 id
+                base64
+                mimeType
               }
             }
           }
@@ -8080,6 +8148,8 @@ export const GetMeChatsDocument = gql`
             id
             profilePicture {
               id
+              base64
+              mimeType
             }
           }
         }
@@ -8642,6 +8712,8 @@ export const GetUsersDocument = gql`
       email
       profilePicture {
         id
+        mimeType
+        base64
       }
     }
   }
@@ -8721,12 +8793,18 @@ export const PublicPagesDocument = gql`
       name
       images {
         id
+        mimeType
+        base64
       }
       video {
         id
+        base64
+        mimeType
       }
       titleImage {
         id
+        mimeType
+        base64
       }
     }
   }
@@ -8803,14 +8881,20 @@ export const GetSinglePublicPageDocument = gql`
     id
     images {
       id
+      mimeType
+      base64
     }
     name
     slug
     video {
       id
+      mimeType
+      base64
     }
     titleImage {
       id
+      mimeType
+      base64
     }
   }
 }

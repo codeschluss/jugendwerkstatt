@@ -5,11 +5,15 @@ query GetChat($entity: ChatEntityInput) {
     admin
     avatar {
       id
+      base64
+      mimeType
     }
     participants {
       chat {
         avatar {
           id
+          mimeType
+          base64
         }
       }
       id
@@ -18,6 +22,8 @@ query GetChat($entity: ChatEntityInput) {
         id
         profilePicture {
           id
+          mimeType
+          base64
         }
       }
     }

@@ -100,7 +100,7 @@ const AddMemberToGroup = () => {
               key={user?.id}
               imgUrl={
                 user?.profilePicture?.id &&
-                `${API_URL}media/${user?.profilePicture?.id}`
+                `data:${user?.profilePicture?.mimeType};base64,${user?.profilePicture?.base64}`
               }
               name={user?.fullname}
             />
