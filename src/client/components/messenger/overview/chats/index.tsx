@@ -54,9 +54,9 @@ const Chats = () => {
               }
               imgUrl={
                 el?.chat?.avatar?.id
-                  ? `${API_URL}media/${el?.chat?.avatar?.id}`
+                  ? `data:${el?.chat?.avatar?.mimeType};base64,${el?.chat?.avatar?.base64}`
                   : notMe[0]?.user?.profilePicture &&
-                    `${API_URL}media/${notMe[0]?.user?.profilePicture?.id}`
+                    `data:${notMe[0]?.user?.titleImage?.mimeType};base64,${notMe[0]?.user?.titleImage?.base64}`
               }
               rightInfo={
                 <span className="text-sm">

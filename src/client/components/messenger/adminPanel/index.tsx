@@ -70,28 +70,28 @@ const AdminPanel = () => {
     });
   };
 
-  const requestOptions: any = {
-    method: "GET",
-    headers: {
-      authorization: `Bearer ${token}`,
-      responseType: "arraybuffer",
-    },
-  };
-  const fetchImage = async () => {
-    const res = await fetch(
-      `${API_URL}media/${groupChat.data?.getChat?.avatar?.id}`,
-      requestOptions
-    );
-    const imageBlob = await res.blob();
-    const imageObjectURL = URL.createObjectURL(imageBlob);
-    setImg(imageObjectURL);
-  };
+  // const requestOptions: any = {
+  //   method: "GET",
+  //   headers: {
+  //     authorization: `Bearer ${token}`,
+  //     responseType: "arraybuffer",
+  //   },
+  // };
+  // const fetchImage = async () => {
+  //   const res = await fetch(
+  //     `${API_URL}media/${groupChat.data?.getChat?.avatar?.id}`,
+  //     requestOptions
+  //   );
+  //   const imageBlob = await res.blob();
+  //   const imageObjectURL = URL.createObjectURL(imageBlob);
+  //   setImg(imageObjectURL);
+  // };
 
-  useEffect(() => {
-    if (`${API_URL}media/${groupChat.data?.getChat?.avatar?.id}`) {
-      fetchImage();
-    }
-  }, [`${API_URL}media/${groupChat.data?.getChat?.avatar?.id}`, token]);
+  // useEffect(() => {
+  //   if (`${API_URL}media/${groupChat.data?.getChat?.avatar?.id}`) {
+  //     fetchImage();
+  //   }
+  // }, [`${API_URL}media/${groupChat.data?.getChat?.avatar?.id}`, token]);
 
   return (
     <div className="absolute left-0   md:relative pb-5  w-full  z-50 bg-white top-0   ">
@@ -136,7 +136,10 @@ const AdminPanel = () => {
         <div className="relative rounded-full mx-auto w-28 h-28 flex items-center justify-center bg-white">
           {" "}
           {groupChat.data?.getChat?.avatar?.id ? (
-            <img src={img} className="w-full h-full rounded-full" />
+            <img
+              src={`data:${groupChat.data?.getChat?.avatar?.mimeType};base64,${groupChat?.data?.getChat?.avatar?.base64}`}
+              className="w-full h-full rounded-full"
+            />
           ) : (
             <UserGroupIcon className="w-16 text-primary" />
           )}
@@ -161,7 +164,7 @@ const AdminPanel = () => {
                 key={participant?.id}
                 imgUrl={
                   participant?.user?.profilePicture?.id &&
-                  `${API_URL}media/${participant?.user?.profilePicture?.id}`
+                  `data:${participant?.user?.profilePicture?.mimeType};base64,${participant?.user?.profilePicture?.base64}`
                 }
                 name={participant?.user?.fullname}
               />

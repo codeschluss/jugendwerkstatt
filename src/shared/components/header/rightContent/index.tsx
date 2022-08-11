@@ -32,6 +32,7 @@ const RightContent: FC = () => {
   const [saveNotification] = useSaveNotificationMutation();
   const navigate = useNavigate();
   const accessToken = readAuthToken("accessToken");
+  const [searchActive, setSearchActive] = useState(false);
 
   const searchfield: any = [];
 
@@ -105,7 +106,7 @@ const RightContent: FC = () => {
         id="combo-box-demo"
         options={searchfield}
         sx={{
-          width: 280,
+          width: 240,
           marginRight: 1,
           background: "white",
           borderRadius: 1,
@@ -120,6 +121,7 @@ const RightContent: FC = () => {
             onChange={searching}
             {...params}
             label="Suche"
+            onBlur={() => setSearchActive(true)}
           />
         )}
       />

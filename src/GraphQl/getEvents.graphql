@@ -8,6 +8,8 @@ query getEvents($params: FilterSortPaginateInput) {
       }
       titleImage {
         id
+        base64
+        mimeType
       }
       id
       description

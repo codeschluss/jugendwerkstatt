@@ -35,7 +35,10 @@ const ChatText: React.FC<TextProps> = ({
   useEffect(() => {
     if (media?.mimeType?.includes("image")) {
       setMediaContent(
-        <img src={`${API_URL}media/${media.id}`} className="w-full" />
+        <img
+          src={`data:${media?.mimeType};base64,${media?.base64}`}
+          className="w-full"
+        />
       );
     } else if (media?.mimeType?.includes("pdf")) {
       setMediaContent(<img src="/assets/pdf.png" className="w-full" />);

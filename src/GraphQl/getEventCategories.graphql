@@ -12,6 +12,8 @@ query GetEventCategories($params: FilterSortPaginateInput) {
         titleImage {
           name
           id
+          base64
+          mimeType
         }
         schedules {
           id
