@@ -37,7 +37,6 @@ const EvaluationQuestionFormPage = (): ReactElement => {
 
   useEffect(() => {
     if (id && questionnaire) {
-      console.log(questionnaire);
       reset({
         name: questionnaire.name || '',
         questions: questionnaire.questions?.map((question) => ({
