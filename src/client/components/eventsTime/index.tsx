@@ -37,6 +37,14 @@ const EventsTime: React.FC = () => {
     eventsData?.map((singleEvent: EventEntity) => {
       var tempSchedules = singleEvent?.schedules as any;
 
+      const desc: any =
+        singleEvent?.description?.substring(0, 1) === '"'
+          ? singleEvent?.description?.substring(
+              1,
+              singleEvent?.description?.length - 1
+            )
+          : singleEvent?.description;
+
       for (let i = 0; i < tempSchedules?.length; i++) {
         if (
           new Date(tempSchedules[i]?.startDate) <=
@@ -50,9 +58,7 @@ const EventsTime: React.FC = () => {
             description: (
               <div
                 dangerouslySetInnerHTML={{
-                  __html: singleEvent.description
-                    ? singleEvent.description
-                    : "",
+                  __html: singleEvent.description ? desc : "",
                 }}
               />
             ),

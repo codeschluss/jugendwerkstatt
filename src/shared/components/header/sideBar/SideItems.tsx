@@ -49,7 +49,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
   const meRole = useGetMeBasicQuery();
 
   const { data: { groups = null } = {} } = useGetGroupsQuery({
-    skip: !meRole.data?.me?.roles?.some(
+    skip: !!meRole.data?.me?.roles?.some(
       (el) => el === "admin" || el === "superviser"
     ),
   });
