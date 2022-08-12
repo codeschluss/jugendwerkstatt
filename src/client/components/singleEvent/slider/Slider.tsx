@@ -24,7 +24,7 @@ export const TitleImgSlider: React.FC<SliderProps> = ({
       {imgUrl && <img className="md:rounded-md" src={imgUrl} alt="" />}
       {colorBg && (
         <div
-          className="w-full h-full flex justify-center items-center text-2xl"
+          className="w-full h-full flex justify-center items-center text-white text-2xl"
           style={{ background: `${colorBg}` }}
         >
           {title}

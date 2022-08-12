@@ -5,6 +5,7 @@ import {
   useAddJobAdFavoriteMutation,
   useDeleteJobAdFavoriteMutation,
   useGetJobAdQuery,
+  useGetMeBasicFavoritesQuery,
   useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
 import { EventDetails } from "../singleEvent/eventDetails/EventDetails";
@@ -25,7 +26,7 @@ export const SingleJobAdd = () => {
   const [jobFavorites] = useAddJobAdFavoriteMutation();
   const [deleteJobAdFavorite] = useDeleteJobAdFavoriteMutation();
 
-  const favorites = useGetMeFavoritesQuery({
+  const favorites = useGetMeBasicFavoritesQuery({
     fetchPolicy: "network-only",
   });
 

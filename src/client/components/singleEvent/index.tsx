@@ -4,6 +4,7 @@ import {
   useDeleteEventFavoriteMutation,
   useGetEventImagesQuery,
   useGetEventQuery,
+  useGetMeBasicFavoritesQuery,
   useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
 import SlideCard from "../slideItems/SlideCard";
@@ -28,7 +29,7 @@ export const SingleEvent = () => {
   const [eventFavorite] = useAddEventFavoriteMutation({});
   const [deleteEventFavorite] = useDeleteEventFavoriteMutation();
 
-  const favorites = useGetMeFavoritesQuery({
+  const favorites = useGetMeBasicFavoritesQuery({
     fetchPolicy: "network-only",
   });
 
@@ -74,6 +75,7 @@ export const SingleEvent = () => {
               }).then(() => refetchQueries())
             }
           />
+
           <EventDetails
             street={
               eventQuery?.data?.getEvent?.address?.street || null || undefined
@@ -138,17 +140,19 @@ export const SingleEvent = () => {
           }}
         />
       </div>
-      <Slider title="Fotos">
-        {eventImages?.data?.getEvent?.images?.map((el: any) => {
-          return (
-            <SlideCard
-              key={el?.id}
-              imgUrl={`data:${el?.mimeType};base64,${el?.base64}`}
-              route="#"
-            />
-          );
-        })}
-      </Slider>
+      {eventImages?.data?.getEvent?.images?.length != 0 && (
+        <Slider title="Fotos">
+          {eventImages?.data?.getEvent?.images?.map((el: any) => {
+            return (
+              <SlideCard
+                key={el?.id}
+                imgUrl={`data:${el?.mimeType};base64,${el?.base64}`}
+                route="#"
+              />
+            );
+          })}
+        </Slider>
+      )}
     </div>
   );
 };
