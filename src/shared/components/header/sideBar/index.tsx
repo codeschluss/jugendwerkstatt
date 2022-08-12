@@ -11,7 +11,7 @@ const SideBar: FC = () => {
   const { sideBar, setSideBar } = useContext(SideBarContext);
   return (
     <>
-      <div className=" flex justify-around items-center w-full -ml-3 mr-1 text-white">
+      <div className=" flex justify-around items-center w-full -ml-3 mr-2 text-white">
         <ChevronLeftIcon
           onClick={() => navigate(-1)}
           className="w-5 h-5 md:hidden"
