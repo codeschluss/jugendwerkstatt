@@ -87,7 +87,10 @@ const SlideCard: React.FC<SlideCardProps> = ({
             gradient ? "bg-gradient-to-b from-black to-transparent" : ""
           }  text-white px-3 pb-8 pt-3 flex justify-between items-center`}
         >
-          <small className="font-bold">{eventName}</small>
+          <Link to={route}>
+            {" "}
+            <small className="font-bold">{eventName}</small>
+          </Link>
           {(location || date) && (
             <div className="flex items-center w-14 md:w-20 justify-between">
               <SocialMedia url={shareUrl} /> |

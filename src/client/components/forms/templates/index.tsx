@@ -115,13 +115,13 @@ const Templates: React.FC = () => {
                     aria-describedby="alert-dialog-description"
                   >
                     <DialogTitle id="alert-dialog-title">
-                      {"Vorlagen Loschen?"}
+                      {"Vorlage Löschen?"}
                     </DialogTitle>
                     <DialogContent>
                       <DialogContentText id="alert-dialog-description">
-                        Are you sure you want to permanently delete your
-                        template? you will not be able to recover your files
-                        anytime soon.
+                        Bist du sicher, dass du die Vorlage unwiderruflich
+                        löschen möchtest? Die Vorlage kann nicht
+                        wiederhergestellt werden.
                       </DialogContentText>
                     </DialogContent>
                     <DialogActions>

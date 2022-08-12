@@ -190,11 +190,13 @@ const Forms: React.FC = () => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Vorlagen Loschen?"}</DialogTitle>
+        <DialogTitle id="alert-dialog-title">
+          {" Dokument Löschen??"}
+        </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to permanently delete your template? you will
-            not be able to recover your files anytime soon.
+            Bist du sicher, dass du die Dokumente unwiderruflich löschen
+            möchtest? Die Dokumente kann nicht wiederhergestellt werden.
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -71,10 +71,12 @@ const UploadFile = () => {
 
   return (
     <div className="flex justify-center">
-      <TypeInput onChange={(e: any) => uploadHandler(e)}>
-        {" "}
-        Chose a file
-      </TypeInput>
+      {!fileName && (
+        <TypeInput onChange={(e: any) => uploadHandler(e)}>
+          {" "}
+          Datei auswählen
+        </TypeInput>
+      )}
 
       {fileName !== "" && (
         <span className="flex flex-col items-center justify-center">
