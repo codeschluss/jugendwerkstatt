@@ -105,7 +105,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
               href="/jobs"
             />
             <Item
-              name="Kalendar"
+              name="Kalender"
               icon={<CalendarIcon />}
               clicked={clicked}
               href="calendar"
