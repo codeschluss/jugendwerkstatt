@@ -162,7 +162,7 @@ const RightContent: FC = () => {
 
       <DropDown
         position="right"
-        className="block pr-3 ml-3 mr-3 md:border-r md:border-gray-200 "
+        className="block pr-3 ml-1 mr-3 md:border-r md:border-gray-200 "
         boxClassName=" mt-3 w-72 md:w-96 py-2.5 px-2 "
         withArrow={false}
         name={
