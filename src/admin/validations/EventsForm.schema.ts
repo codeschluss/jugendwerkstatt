@@ -9,7 +9,7 @@ export const FileSchema = Joi.object({
         .try(
             Joi.custom(
                 (value, helpers) =>
-                    validateMethod(value, 10, ["image/png", "image/jpg", "image/jpeg"], helpers),
+                    validateMethod(value, 5, ["image/png", "image/jpg", "image/jpeg"], helpers),
                 "file-validate",
             ),
         )

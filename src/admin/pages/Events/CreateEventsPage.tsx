@@ -237,10 +237,7 @@ const CreateEventsPage = (): ReactElement => {
                                 {...register(`files.${index}.file`)}
                                 error={errors.files?.[index]?.file?.message}
                                 {...(!!item.file && {
-                                    src:
-                                        item.file.size !== 0
-                                            ? URL.createObjectURL(item.file)
-                                            : `${API_URL}media/${item?.id}`,
+                                    src: URL.createObjectURL(item.file),
                                 })}
                             />
                         ))}
