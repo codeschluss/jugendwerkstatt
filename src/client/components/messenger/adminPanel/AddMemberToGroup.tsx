@@ -12,6 +12,7 @@ import {
   ConjunctionOperator,
   ParticipantEntity,
   QueryOperator,
+  useAddParticipantToChatMutation,
   useGetChatQuery,
   useGetUsersQuery,
   UserEntity,
@@ -74,10 +75,21 @@ const AddMemberToGroup = () => {
   );
   const notGroupMemberUsers = users.data?.getUsers?.result?.filter(
     (user: UserEntity | undefined | null) =>
-      participants.every(
+      participants?.every(
         (el: UserEntity | undefined | null) => user?.id !== el?.id
       )
   );
+
+  const [addMember] = useAddParticipantToChatMutation();
+
+  const addParticipant = (userId: string | undefined | null) => {
+    addMember({
+      variables: {
+        chatId: id,
+        userId: userId,
+      },
+    }).then(() => groupChat.refetch());
+  };
 
   return (
     <div className="absolute left-0  md:relative pb-5  w-full  z-50 bg-white top-0      ">
@@ -98,6 +110,7 @@ const AddMemberToGroup = () => {
           return (
             <Item
               key={user?.id}
+              addMember={() => addParticipant(user?.id)}
               imgUrl={
                 user?.profilePicture?.id &&
                 `data:${user?.profilePicture?.mimeType};base64,${user?.profilePicture?.base64}`

@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../../../../config/app";
 import {
   ParticipantEntity,
+  useDeleteParticipantMutation,
   useGetChatQuery,
   useSaveChatMutation,
 } from "../../../../GraphQl/graphql";
@@ -22,10 +23,8 @@ const AdminPanel = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const token = readAuthToken("accessToken");
-  const [img, setImg] = useState<any>();
-
   const groupChat = useGetChatQuery({
+    fetchPolicy: "network-only",
     variables: {
       entity: {
         id: id,
@@ -35,7 +34,6 @@ const AdminPanel = () => {
 
   const [saveChat] = useSaveChatMutation();
 
-  console.log(groupChat.data?.getChat?.participants, "chat part");
   const participants: any = groupChat?.data?.getChat?.participants;
   const uploadHandler = async (e: any) => {
     const file = e.target.files[0];
@@ -70,28 +68,7 @@ const AdminPanel = () => {
     });
   };
 
-  // const requestOptions: any = {
-  //   method: "GET",
-  //   headers: {
-  //     authorization: `Bearer ${token}`,
-  //     responseType: "arraybuffer",
-  //   },
-  // };
-  // const fetchImage = async () => {
-  //   const res = await fetch(
-  //     `${API_URL}media/${groupChat.data?.getChat?.avatar?.id}`,
-  //     requestOptions
-  //   );
-  //   const imageBlob = await res.blob();
-  //   const imageObjectURL = URL.createObjectURL(imageBlob);
-  //   setImg(imageObjectURL);
-  // };
-
-  // useEffect(() => {
-  //   if (`${API_URL}media/${groupChat.data?.getChat?.avatar?.id}`) {
-  //     fetchImage();
-  //   }
-  // }, [`${API_URL}media/${groupChat.data?.getChat?.avatar?.id}`, token]);
+  const [deleteParticipant] = useDeleteParticipantMutation();
 
   return (
     <div className="absolute left-0   md:relative pb-5  w-full  z-50 bg-white top-0   ">
@@ -162,6 +139,13 @@ const AdminPanel = () => {
             return (
               <Item
                 key={participant?.id}
+                deleteMember={() =>
+                  deleteParticipant({
+                    variables: {
+                      deleteParticipantId: participant?.id,
+                    },
+                  }).then(() => groupChat.refetch())
+                }
                 imgUrl={
                   participant?.user?.profilePicture?.id &&
                   `data:${participant?.user?.profilePicture?.mimeType};base64,${participant?.user?.profilePicture?.base64}`

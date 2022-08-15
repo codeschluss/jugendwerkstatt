@@ -2886,6 +2886,21 @@ export type AddListenerSubscriptionVariables = Exact<{
 
 export type AddListenerSubscription = { __typename?: 'Subscription', addListener?: { __typename?: 'MessageDto', type?: NotificationType | null, title?: string | null, data?: any | null, content?: string | null } | null };
 
+export type AddParticipantToChatMutationVariables = Exact<{
+  chatId?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type AddParticipantToChatMutation = { __typename?: 'Mutation', addParticipant: boolean };
+
+export type DeleteParticipantMutationVariables = Exact<{
+  deleteParticipantId?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type DeleteParticipantMutation = { __typename?: 'Mutation', deleteParticipant?: boolean | null };
+
 export type AddressFieldFragment = { __typename?: 'AddressEntity', id?: string | null, houseNumber?: string | null, place?: string | null, postalCode?: string | null, street?: string | null, longitude?: number | null, latitude?: number | null };
 
 export type AssignmentFieldFragment = { __typename?: 'AssignmentEntity', id?: string | null, created?: any | null, comment?: string | null };
@@ -4234,6 +4249,69 @@ export function useAddListenerSubscription(baseOptions?: Apollo.SubscriptionHook
       }
 export type AddListenerSubscriptionHookResult = ReturnType<typeof useAddListenerSubscription>;
 export type AddListenerSubscriptionResult = Apollo.SubscriptionResult<AddListenerSubscription>;
+export const AddParticipantToChatDocument = gql`
+    mutation AddParticipantToChat($chatId: String, $userId: String) {
+  addParticipant(chatId: $chatId, userId: $userId)
+}
+    `;
+export type AddParticipantToChatMutationFn = Apollo.MutationFunction<AddParticipantToChatMutation, AddParticipantToChatMutationVariables>;
+
+/**
+ * __useAddParticipantToChatMutation__
+ *
+ * To run a mutation, you first call `useAddParticipantToChatMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddParticipantToChatMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addParticipantToChatMutation, { data, loading, error }] = useAddParticipantToChatMutation({
+ *   variables: {
+ *      chatId: // value for 'chatId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useAddParticipantToChatMutation(baseOptions?: Apollo.MutationHookOptions<AddParticipantToChatMutation, AddParticipantToChatMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddParticipantToChatMutation, AddParticipantToChatMutationVariables>(AddParticipantToChatDocument, options);
+      }
+export type AddParticipantToChatMutationHookResult = ReturnType<typeof useAddParticipantToChatMutation>;
+export type AddParticipantToChatMutationResult = Apollo.MutationResult<AddParticipantToChatMutation>;
+export type AddParticipantToChatMutationOptions = Apollo.BaseMutationOptions<AddParticipantToChatMutation, AddParticipantToChatMutationVariables>;
+export const DeleteParticipantDocument = gql`
+    mutation DeleteParticipant($deleteParticipantId: String) {
+  deleteParticipant(id: $deleteParticipantId)
+}
+    `;
+export type DeleteParticipantMutationFn = Apollo.MutationFunction<DeleteParticipantMutation, DeleteParticipantMutationVariables>;
+
+/**
+ * __useDeleteParticipantMutation__
+ *
+ * To run a mutation, you first call `useDeleteParticipantMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteParticipantMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteParticipantMutation, { data, loading, error }] = useDeleteParticipantMutation({
+ *   variables: {
+ *      deleteParticipantId: // value for 'deleteParticipantId'
+ *   },
+ * });
+ */
+export function useDeleteParticipantMutation(baseOptions?: Apollo.MutationHookOptions<DeleteParticipantMutation, DeleteParticipantMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteParticipantMutation, DeleteParticipantMutationVariables>(DeleteParticipantDocument, options);
+      }
+export type DeleteParticipantMutationHookResult = ReturnType<typeof useDeleteParticipantMutation>;
+export type DeleteParticipantMutationResult = Apollo.MutationResult<DeleteParticipantMutation>;
+export type DeleteParticipantMutationOptions = Apollo.BaseMutationOptions<DeleteParticipantMutation, DeleteParticipantMutationVariables>;
 export const SaveAddressDocument = gql`
     mutation SaveAddress($entity: AddressEntityInput) {
   saveAddress(entity: $entity) {
