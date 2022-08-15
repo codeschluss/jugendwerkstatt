@@ -10,6 +10,7 @@ import {
     FormActions,
     InputField,
     UploadField,
+    UploadVideo,
 } from "../../components/molecules";
 import { DescriptionFrom } from "../../components/organisms";
 import { base64ImageToFile, fileObject, twClsx } from "../../utils";
@@ -220,7 +221,8 @@ const CreatePublicPagesPage = (): ReactElement => {
                     className={twClsx("p-5", errors.video && "border border-primary")}
                 >
                     <div className="flex items-start justify-start">
-                        <UploadField
+                        <UploadVideo
+                            video
                             id="video"
                             placeholderTitle="Video hinzufügen"
                             {...register("video")}
