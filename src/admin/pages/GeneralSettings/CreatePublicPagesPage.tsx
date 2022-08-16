@@ -69,6 +69,12 @@ const CreatePublicPagesPage = (): ReactElement => {
             }
         }
 
+        const videos = Array.from(data.video as unknown as FileList);
+        let pageVideo;
+        for (let video of videos) {
+            pageVideo = video;
+        }
+
         savePage({
             variables: {
                 entity: {
@@ -81,9 +87,9 @@ const CreatePublicPagesPage = (): ReactElement => {
                         file?.file?.size !== 0 && {
                             titleImage: await fileObject(imageFile.file),
                         }),
-                    ...(!!data?.video?.file &&
-                        data?.video?.file?.size !== 0 && {
-                            video: await fileObject(data?.video?.file),
+                    ...(!!pageVideo &&
+                        pageVideo?.size !== 0 && {
+                            video: await fileObject(pageVideo),
                         }),
                 },
             },
@@ -151,8 +157,6 @@ const CreatePublicPagesPage = (): ReactElement => {
             });
         }
     }, [page, reset]);
-
-    console.log("first", errors);
 
     return (
         <FormProvider {...methods}>
@@ -224,7 +228,6 @@ const CreatePublicPagesPage = (): ReactElement => {
                         <UploadVideo
                             video
                             id="video"
-                            placeholderTitle="Video hinzufügen"
                             {...register("video")}
                         />
                     </div>

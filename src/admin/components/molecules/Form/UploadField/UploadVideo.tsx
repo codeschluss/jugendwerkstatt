@@ -1,5 +1,5 @@
 import { PhotographIcon } from "@heroicons/react/outline";
-import { forwardRef, useEffect, useMemo, useRef } from "react";
+import { forwardRef, useMemo, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { twClsx } from "../../../../utils";
 import { Input, Label } from "../../../atoms";
@@ -13,16 +13,7 @@ export const UploadVideo = forwardRef<HTMLInputElement, UploadFieldProps>(
     ) => {
         const { watch } = useFormContext();
 
-        const videoFile = watch("video") as FileList | null;
-
-        console.log(
-            "videoFile",
-            videoFile,
-            videoFile &&
-                videoFile?.[0] &&
-                videoFile?.length !== 0 &&
-                URL.createObjectURL(videoFile?.[0]),
-        );
+        const videoFile = watch("video") as any;
 
         const isPreview = useMemo(
             () => !!preview && (!!src || !!videoFile),
@@ -35,6 +26,8 @@ export const UploadVideo = forwardRef<HTMLInputElement, UploadFieldProps>(
         //     if (videoRef.current) videoRef.current?.load();
         // }, []);
 
+
+        const pageVideo = videoFile[0] ?? videoFile.file
         return (
             <Label
                 {...(isPreview ? { as: "div" } : { htmlFor: id || name })}
@@ -52,32 +45,29 @@ export const UploadVideo = forwardRef<HTMLInputElement, UploadFieldProps>(
                                 className="object-contain h-full"
                                 width="360"
                                 height="250"
-                                {...(!!videoFile?.[0] && {
+                                {...(!!pageVideo && {
                                     url:
-                                        videoFile[0].size !== 0
-                                            ? URL.createObjectURL(videoFile[0])
+                                        pageVideo.size !== 0
+                                            ? URL.createObjectURL(pageVideo)
                                             : src,
                                 })}
                                 controls
                             />
                         ) : (
                             <>
-                                {videoFile &&
-                                    videoFile?.[0] &&
-                                    videoFile?.length !== 0 &&
-                                    URL.createObjectURL(videoFile?.[0]) && (
+                                {!!pageVideo &&
+                                    URL.createObjectURL(pageVideo) && (
                                         <ReactPlayer
+                                            width="360"
+                                            height="250"
                                             url={
-                                                (videoFile &&
-                                                    videoFile?.[0] &&
-                                                    videoFile?.length !== 0 &&
-                                                    URL.createObjectURL(videoFile?.[0])) ||
-                                                ""
+                                                (
+                                                    URL.createObjectURL(pageVideo))
                                             }
                                         />
                                     )}
                                 <PhotographIcon width={24} />
-                                <p className="m-2 text-lg font-medium">bild auswählen</p>
+                                <p className="m-2 text-lg font-medium">Video hinzufügen</p>
                             </>
                         )}
                     </div>
