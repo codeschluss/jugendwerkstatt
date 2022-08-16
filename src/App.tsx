@@ -110,6 +110,7 @@ import {
 } from "./GraphQl/graphql";
 import RolePending from "./client/pages/verify/RolePending";
 import { Capacitor } from "@capacitor/core";
+import Video from "./client/components/messenger/video";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
@@ -179,7 +180,7 @@ const App = (): ReactElement => {
 
     PushNotifications.addListener(
       "pushNotificationReceived",
-      (notification: PushNotificationSchema) => { }
+      (notification: PushNotificationSchema) => {}
     );
     PushNotifications.addListener(
       "pushNotificationActionPerformed",
@@ -216,6 +217,7 @@ const App = (): ReactElement => {
         <Route path="/profile" element={<ProfileSettings />} />
         <Route path="/profile-personal" element={<PersonalData />} />
         <Route path="/profile-password" element={<ChangePassword />} />
+        <Route path="video" element={<Video />} />
         <Route
           path="/profile-upload-picture"
           element={<ProfileImageUpload />}
@@ -265,13 +267,6 @@ const App = (): ReactElement => {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/jobs" element={<Jobs />} />
 
-        {/* <Route path="/messenger" element={<Messenger />}>
-          <Route path="chats" element={<Chats />} />
-          <Route path="calls" element={<Calls />} />
-          <Route path="contacts" element={<Contacts />} />
-          <Route path="chat/:id" element={<Chat />} />
-        </Route> */}
-
         <Route path="/upload-file" element={<UploadData />} />
 
         <Route path="/map" element={<Map />} />
@@ -295,7 +290,9 @@ const App = (): ReactElement => {
       </Route>
 
       <Route
-        element={<RequireAuthRoute accessRole={["admin", "superviser", "student"]} />}
+        element={
+          <RequireAuthRoute accessRole={["admin", "superviser", "student"]} />
+        }
       >
         <Route path="/notifications" element={<Notifications />} />
       </Route>
@@ -319,7 +316,6 @@ const App = (): ReactElement => {
             <Route path="new" element={<CreateCategoriesPage />} />
           </Route>
         </Route>
-
 
         <Route path="/admin/job-announcements">
           <Route index element={<VacancyListPage />} />

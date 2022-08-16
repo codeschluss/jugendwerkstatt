@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useContext } from "react";
 import ReactDOM from "react-dom";
 import { ApolloProvider } from "@apollo/client";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -14,18 +14,21 @@ import { ErrorSnackbar } from "./shared/components/ErrorSnackbar/ErrorSnackbar";
 import "./shared/styles/index.css";
 import "./shared/styles/SlickSlider.css";
 import "react-datepicker/dist/react-datepicker.css";
+import { VideoProvider } from "./contexts/VideoContext";
 
 ReactDOM.render(
   <Suspense fallback={<div>Loading...</div>}>
     <ApolloProvider client={apolloClient}>
       <SideBarProvider>
         <FilterProvider>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <BrowserRouter>
-              <App />
-              <ErrorSnackbar />
-            </BrowserRouter>
-          </LocalizationProvider>
+          <VideoProvider>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <BrowserRouter>
+                <App />
+                <ErrorSnackbar />
+              </BrowserRouter>
+            </LocalizationProvider>
+          </VideoProvider>
         </FilterProvider>
       </SideBarProvider>
     </ApolloProvider>
