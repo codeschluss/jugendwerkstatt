@@ -29,7 +29,6 @@ export const generateSchedules = ({
     ];
 
   const diff = dayjs(end_repeat).diff(start_date, repeat) + 1;
-  console.log(repeat);
   const dates = Array.from(Array(diff).keys()).map((_item, idx) => {
     return {
       startDate: dayjs(start_date)
