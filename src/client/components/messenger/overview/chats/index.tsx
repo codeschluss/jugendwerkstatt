@@ -59,7 +59,7 @@ const Chats = () => {
                 el?.chat?.avatar?.id
                   ? `data:${el?.chat?.avatar?.mimeType};base64,${el?.chat?.avatar?.base64}`
                   : notMe[0]?.user?.profilePicture &&
-                    `data:${notMe[0]?.user?.titleImage?.mimeType};base64,${notMe[0]?.user?.titleImage?.base64}`
+                    `data:${notMe[0]?.user?.profilePicture?.mimeType};base64,${notMe[0]?.user?.profilePicture?.base64}`
               }
               rightInfo={
                 <span className="text-sm">

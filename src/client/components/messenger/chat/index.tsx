@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   MessageEntity,
@@ -38,6 +38,15 @@ const Chat = () => {
     },
   });
   const [saveRec] = useSaveReadReceiptsMutation();
+
+  //prej qetuhit!
+  // useEffect(() => {
+  //   setVideo(true);
+  // }, []);
+  //tokeni eshte accessToken var
+  //chat id esht id (from params)
+
+  //deri qetu e ma shume
 
   const getMessages = useGetMessagesQuery({
     fetchPolicy: "network-only",
@@ -241,7 +250,7 @@ const Chat = () => {
       style={{ height: "calc(100vh - 10.5rem)" }}
     >
       <div className="flex items-center bg-white justify-between">
-        <h2 className="sticky px-4 py-3 text-gray-700    top-14 ">
+        <h2 className="sticky px-4 py-3 text-gray-700  cursor-pointer   top-14 ">
           {getChat.data?.getChat?.name
             ? getChat.data?.getChat?.name
             : notMe?.map((el: ParticipantEntity | undefined | null) => {

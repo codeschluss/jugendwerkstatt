@@ -3513,6 +3513,13 @@ export type GetUsersListQueryVariables = Exact<{
 
 export type GetUsersListQuery = { __typename?: 'Query', getUsers?: { __typename?: 'PageableList_UserEntity', total: any, result?: Array<{ __typename?: 'UserEntity', id?: string | null, fullname?: string | null } | null> | null } | null };
 
+export type ChangePasswordMutationVariables = Exact<{
+  newPassword?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword?: boolean | null };
+
 export type ChatlistenerSubscriptionVariables = Exact<{
   token: Scalars['String'];
 }>;
@@ -3646,7 +3653,7 @@ export type GetLinkCategoriesQuery = { __typename?: 'Query', getLinkCategories?:
 export type GetMeAssignmentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMeAssignmentsQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', assignments?: Array<{ __typename?: 'AssignmentEntity', id?: string | null, assignmentState?: { __typename?: 'AssignmentStateEntity', name?: string | null } | null, questionnaire?: { __typename?: 'QuestionnaireEntity', questions?: Array<{ __typename?: 'QuestionEntity', id?: string | null, item?: string | null } | null> | null } | null } | null> | null } | null };
+export type GetMeAssignmentsQuery = { __typename?: 'Query', me?: { __typename?: 'UserEntity', assignments?: Array<{ __typename?: 'AssignmentEntity', id?: string | null, assignmentState?: { __typename?: 'AssignmentStateEntity', name?: string | null } | null, questionnaire?: { __typename?: 'QuestionnaireEntity', questions?: Array<{ __typename?: 'QuestionEntity', id?: string | null, item?: string | null, sequenceOrder?: number | null } | null> | null } | null } | null> | null } | null };
 
 export type GetMeBasicQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3800,7 +3807,7 @@ export type SaveClientAssignmentMutationVariables = Exact<{
 }>;
 
 
-export type SaveClientAssignmentMutation = { __typename?: 'Mutation', saveAssignment?: { __typename?: 'AssignmentEntity', id?: string | null, assignmentState?: { __typename?: 'AssignmentStateEntity', name?: string | null } | null, answers?: Array<{ __typename?: 'AnswerEntity', rating?: number | null, question?: { __typename?: 'QuestionEntity', id?: string | null, item?: string | null } | null } | null> | null } | null };
+export type SaveClientAssignmentMutation = { __typename?: 'Mutation', saveAssignment?: { __typename?: 'AssignmentEntity', id?: string | null, comment?: string | null, assignmentState?: { __typename?: 'AssignmentStateEntity', name?: string | null } | null, answers?: Array<{ __typename?: 'AnswerEntity', rating?: number | null, question?: { __typename?: 'QuestionEntity', id?: string | null, item?: string | null } | null } | null> | null } | null };
 
 export type SaveFeedbackMutationVariables = Exact<{
   entity?: InputMaybe<FeedbackEntityInput>;
@@ -7147,6 +7154,37 @@ export function useGetUsersListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type GetUsersListQueryHookResult = ReturnType<typeof useGetUsersListQuery>;
 export type GetUsersListLazyQueryHookResult = ReturnType<typeof useGetUsersListLazyQuery>;
 export type GetUsersListQueryResult = Apollo.QueryResult<GetUsersListQuery, GetUsersListQueryVariables>;
+export const ChangePasswordDocument = gql`
+    mutation ChangePassword($newPassword: String) {
+  changePassword(newPassword: $newPassword)
+}
+    `;
+export type ChangePasswordMutationFn = Apollo.MutationFunction<ChangePasswordMutation, ChangePasswordMutationVariables>;
+
+/**
+ * __useChangePasswordMutation__
+ *
+ * To run a mutation, you first call `useChangePasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangePasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changePasswordMutation, { data, loading, error }] = useChangePasswordMutation({
+ *   variables: {
+ *      newPassword: // value for 'newPassword'
+ *   },
+ * });
+ */
+export function useChangePasswordMutation(baseOptions?: Apollo.MutationHookOptions<ChangePasswordMutation, ChangePasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangePasswordMutation, ChangePasswordMutationVariables>(ChangePasswordDocument, options);
+      }
+export type ChangePasswordMutationHookResult = ReturnType<typeof useChangePasswordMutation>;
+export type ChangePasswordMutationResult = Apollo.MutationResult<ChangePasswordMutation>;
+export type ChangePasswordMutationOptions = Apollo.BaseMutationOptions<ChangePasswordMutation, ChangePasswordMutationVariables>;
 export const ChatlistenerDocument = gql`
     subscription Chatlistener($token: String!) {
   addChatListener(token: $token) {
@@ -8064,6 +8102,7 @@ export const GetMeAssignmentsDocument = gql`
         questions {
           id
           item
+          sequenceOrder
         }
       }
     }
@@ -9180,6 +9219,7 @@ export const SaveClientAssignmentDocument = gql`
     mutation SaveClientAssignment($entity: AssignmentEntityInput) {
   saveAssignment(entity: $entity) {
     id
+    comment
     assignmentState {
       name
     }

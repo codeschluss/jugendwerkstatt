@@ -97,8 +97,9 @@ const Contacts = () => {
         imgSrc={picId && `${API_URL}media/${picId}`}
         openChat={() => handleCreateChat(contactId)}
       />
-      {getUsers.data?.getUsers?.result?.map(
-        (el: UserEntity | undefined | null) => (
+      {getUsers.data?.getUsers?.result
+        ?.filter((usr) => usr?.id !== meRoles?.data?.me?.id)
+        .map((el: UserEntity | undefined | null) => (
           <Item
             key={el?.id}
             // onClick={() => handleCreateChat(el?.id)}
@@ -117,8 +118,7 @@ const Contacts = () => {
               `data:${el?.profilePicture?.mimeType};base64,${el?.profilePicture?.base64}`
             }
           />
-        )
-      )}
+        ))}
     </div>
   );
 };

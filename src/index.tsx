@@ -14,21 +14,18 @@ import { ErrorSnackbar } from "./shared/components/ErrorSnackbar/ErrorSnackbar";
 import "./shared/styles/index.css";
 import "./shared/styles/SlickSlider.css";
 import "react-datepicker/dist/react-datepicker.css";
-import { VideoProvider } from "./contexts/VideoContext";
 
 ReactDOM.render(
   <Suspense fallback={<div>Loading...</div>}>
     <ApolloProvider client={apolloClient}>
       <SideBarProvider>
         <FilterProvider>
-          <VideoProvider>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <BrowserRouter>
-                <App />
-                <ErrorSnackbar />
-              </BrowserRouter>
-            </LocalizationProvider>
-          </VideoProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <BrowserRouter>
+              <App />
+              <ErrorSnackbar />
+            </BrowserRouter>
+          </LocalizationProvider>
         </FilterProvider>
       </SideBarProvider>
     </ApolloProvider>

@@ -5,7 +5,6 @@ import {
   VideoCameraIcon,
 } from "@heroicons/react/outline";
 import Avatar from "../../../shared/components/header/sideBar/Avatar";
-import VideoContext from "../../../contexts/VideoContext";
 
 interface ModalProps {
   visible: boolean;
@@ -26,8 +25,6 @@ const ContactOptions: FunctionComponent<ModalProps> = ({
   imgSrc,
   openChat,
 }) => {
-  const { testcall } = useContext(VideoContext);
-
   return (
     <div
       onClick={clicked}
@@ -50,12 +47,7 @@ const ContactOptions: FunctionComponent<ModalProps> = ({
           <p className="text-sm text-center">{guestEmail}</p>
         </div>
         <div className="flex justify-around w-3/5 ">
-          <PhoneIcon className="w-7" onClick={() => testcall("1234567")} />
-          <ChatAltIcon className="w-7" onClick={openChat} />
-          <VideoCameraIcon
-            className="w-7"
-            onClick={() => alert("video call")}
-          />
+          <ChatAltIcon className="w-7 cursor-pointer" onClick={openChat} />
         </div>
       </div>
     </div>

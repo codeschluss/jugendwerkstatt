@@ -43,10 +43,11 @@ const Register = () => {
     value: enteredPassword,
     validity: enteredPasswordValidity,
     hasError: passwordInputError,
+    passwordExtraInputError: passWordExtraError,
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
     resetValue: resetPasswordInput,
-  } = useInput((value: any) => value.match(regex) && value.trim().length >= 8);
+  } = useInput((value: any) => value.trim().length >= 8 && value.match(regex));
 
   const {
     value: enteredCPassword,
@@ -142,7 +143,11 @@ const Register = () => {
               onChange={twoCalls}
               onBlur={passwordBlurHandler}
               value={enteredPassword}
-              error={passwordInputError ? "Passwort nicht stark genug" : ""}
+              error={
+                passwordInputError
+                  ? "password not strong enough or does not match pasword requirements"
+                  : ""
+              }
               inputClassName={`${
                 passwordInputError && "border-500-red"
               }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
@@ -162,9 +167,15 @@ const Register = () => {
           <div className=" mx-12 mb-5">
             <p>Passwortstärke:</p>
             <ul className="list-disc ml-5">
-              <li>8 Zeichen</li>
-              <li>Mindestens 1 Zahl</li>
-              <li>Mindestens 1 Buchstabe</li>
+              <li className={`${passWordExtraError && "text-red-400"}`}>
+                8 Zeichen
+              </li>
+              <li className={`${passWordExtraError && "text-red-400"}`}>
+                Mindestens 1 Zahl
+              </li>
+              <li className={`${passWordExtraError && "text-red-400"}`}>
+                Mindestens 1 Buchstabe
+              </li>
             </ul>
           </div>
           <span className="w-[80%] block m-auto">

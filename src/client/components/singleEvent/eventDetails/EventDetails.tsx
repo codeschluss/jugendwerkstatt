@@ -77,7 +77,9 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
           <I>
             <CalendarIcon />
           </I>
-          <h3 className="ml-3 mt-2">{formatDate(new Date(dueDate || ""))}</h3>
+          <h3 className="ml-3 mt-2">
+            Bewerbungsfrist: {formatDate(new Date(dueDate || ""))}
+          </h3>
         </div>
       ) : (
         <div className="flex text-md">
@@ -107,7 +109,9 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
           <I>
             <CalendarIcon />
           </I>
-          <h3 className="ml-3 mt-2">{formatDate(new Date(startDate || ""))}</h3>{" "}
+          <h3 className="ml-3 mt-2">
+            Berufsstart: {formatDate(new Date(startDate || ""))}
+          </h3>{" "}
         </div>
       )}
       <div className="flex text-md">

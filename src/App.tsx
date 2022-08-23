@@ -110,7 +110,7 @@ import {
 } from "./GraphQl/graphql";
 import RolePending from "./client/pages/verify/RolePending";
 import { Capacitor } from "@capacitor/core";
-import Video from "./client/components/messenger/video";
+import Video from "./client/components/messenger/Video";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
@@ -217,7 +217,7 @@ const App = (): ReactElement => {
         <Route path="/profile" element={<ProfileSettings />} />
         <Route path="/profile-personal" element={<PersonalData />} />
         <Route path="/profile-password" element={<ChangePassword />} />
-        <Route path="video" element={<Video />} />
+        <Route path="/chatvideo" element={<Video />} />
         <Route
           path="/profile-upload-picture"
           element={<ProfileImageUpload />}
