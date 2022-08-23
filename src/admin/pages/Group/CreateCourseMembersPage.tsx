@@ -27,7 +27,7 @@ const CreateCourseMembersPage = (): ReactElement => {
                     operands: [
                       {
                         entity: {
-                          operator: QueryOperator.Equal,
+                          operator: QueryOperator.NotEqual,
                           path: 'course.id',
                           value: id
                         }
@@ -61,6 +61,7 @@ const CreateCourseMembersPage = (): ReactElement => {
           }
         },
       },
+      fetchPolicy: 'cache-and-network'
     });
     
   const { data: { course = null } = {} } = useGetCourseQuery({
