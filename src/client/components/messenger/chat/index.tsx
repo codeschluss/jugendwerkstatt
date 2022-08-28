@@ -22,6 +22,7 @@ import {
 import { readAuthToken } from "../../../../shared/utils";
 import TypeInput from "../../forms/upload/TypeInput";
 import { API_URL } from "../../../../config/app";
+import VideoChatContext from "../../../../contexts/VideoChatContext";
 
 const Chat = () => {
   const accessToken = readAuthToken("accessToken") || "";
@@ -244,13 +245,18 @@ const Chat = () => {
       ? true
       : false;
 
+  const { sendOrAcceptInvitation } = useContext(VideoChatContext);
+
   return (
     <div
       className="flex flex-col bg-yellow-50   md:mx-0"
       style={{ height: "calc(100vh - 10.5rem)" }}
     >
       <div className="flex items-center bg-white justify-between">
-        <h2 className="sticky px-4 py-3 text-gray-700  cursor-pointer   top-14 ">
+        <h2
+          className="sticky px-4 py-3 text-gray-700  cursor-pointer   top-14 "
+          onClick={() => sendOrAcceptInvitation(true)}
+        >
           {getChat.data?.getChat?.name
             ? getChat.data?.getChat?.name
             : notMe?.map((el: ParticipantEntity | undefined | null) => {

@@ -14,6 +14,7 @@ import { ErrorSnackbar } from "./shared/components/ErrorSnackbar/ErrorSnackbar";
 import "./shared/styles/index.css";
 import "./shared/styles/SlickSlider.css";
 import "react-datepicker/dist/react-datepicker.css";
+import { VideoChatProvider } from "./contexts/VideoChatContext";
 
 ReactDOM.render(
   <Suspense fallback={<div>Loading...</div>}>
@@ -21,10 +22,12 @@ ReactDOM.render(
       <SideBarProvider>
         <FilterProvider>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <BrowserRouter>
-              <App />
-              <ErrorSnackbar />
-            </BrowserRouter>
+            <VideoChatProvider>
+              <BrowserRouter>
+                <App />
+                <ErrorSnackbar />
+              </BrowserRouter>
+            </VideoChatProvider>
           </LocalizationProvider>
         </FilterProvider>
       </SideBarProvider>

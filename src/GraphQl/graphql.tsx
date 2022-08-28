@@ -2790,14 +2790,14 @@ export type UserEntity = {
   notifications?: Maybe<Array<Maybe<NotificationEntity>>>;
   participants?: Maybe<Array<Maybe<ParticipantEntity>>>;
   password?: Maybe<Scalars['String']>;
-  passwordReset?: Maybe<PasswordResetEntity>;
+  passwordResets?: Maybe<Array<Maybe<PasswordResetEntity>>>;
   phone?: Maybe<Scalars['String']>;
   profilePicture?: Maybe<MediaEntity>;
   roles?: Maybe<Array<Maybe<RoleEntity>>>;
   subscriptions?: Maybe<Array<Maybe<SubscriptionEntity>>>;
   uploads?: Maybe<Array<Maybe<MediaEntity>>>;
   userTemplates?: Maybe<Array<Maybe<UserTemplateEntity>>>;
-  verification?: Maybe<VerificationEntity>;
+  verifications?: Maybe<Array<Maybe<VerificationEntity>>>;
   verified?: Maybe<Scalars['Boolean']>;
 };
 
@@ -2816,14 +2816,14 @@ export type UserEntityInput = {
   notifications?: InputMaybe<Array<InputMaybe<NotificationEntityInput>>>;
   participants?: InputMaybe<Array<InputMaybe<ParticipantEntityInput>>>;
   password?: InputMaybe<Scalars['String']>;
-  passwordReset?: InputMaybe<PasswordResetEntityInput>;
+  passwordResets?: InputMaybe<Array<InputMaybe<PasswordResetEntityInput>>>;
   phone?: InputMaybe<Scalars['String']>;
   profilePicture?: InputMaybe<MediaEntityInput>;
   roles?: InputMaybe<Array<InputMaybe<RoleEntityInput>>>;
   subscriptions?: InputMaybe<Array<InputMaybe<SubscriptionEntityInput>>>;
   uploads?: InputMaybe<Array<InputMaybe<MediaEntityInput>>>;
   userTemplates?: InputMaybe<Array<InputMaybe<UserTemplateEntityInput>>>;
-  verification?: InputMaybe<VerificationEntityInput>;
+  verifications?: InputMaybe<Array<InputMaybe<VerificationEntityInput>>>;
   verified?: InputMaybe<Scalars['Boolean']>;
 };
 
@@ -3575,6 +3575,13 @@ export type GetChatSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetChatSettingsQuery = { __typename?: 'Query', getSettings?: { __typename?: 'SettingsEntity', chatActive?: boolean | null } | null };
 
+export type GetChatWithUserOnlyQueryVariables = Exact<{
+  entity?: InputMaybe<ChatEntityInput>;
+}>;
+
+
+export type GetChatWithUserOnlyQuery = { __typename?: 'Query', getChat?: { __typename?: 'ChatEntity', participants?: Array<{ __typename?: 'ParticipantEntity', user?: { __typename?: 'UserEntity', fullname?: string | null, id?: string | null } | null } | null> | null } | null };
+
 export type GetEventQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -3856,7 +3863,7 @@ export type SaveUserMutationVariables = Exact<{
 }>;
 
 
-export type SaveUserMutation = { __typename?: 'Mutation', saveUser?: { __typename?: 'UserEntity', email?: string | null, fullname?: string | null, id?: string | null, phone?: string | null, assignments?: Array<{ __typename?: 'AssignmentEntity', id?: string | null, questionnaire?: { __typename?: 'QuestionnaireEntity', name?: string | null, id?: string | null, questions?: Array<{ __typename?: 'QuestionEntity', id?: string | null, item?: string | null, answers?: Array<{ __typename?: 'AnswerEntity', rating?: number | null, id?: string | null } | null> | null } | null> | null } | null } | null> | null, favoriteEvents?: Array<{ __typename?: 'EventEntity', id?: string | null, name?: string | null, titleImage?: { __typename?: 'MediaEntity', base64?: string | null, id?: string | null, modified?: any | null, name?: string | null } | null, images?: Array<{ __typename?: 'MediaEntity', base64?: string | null, id?: string | null, mimeType?: string | null, name?: string | null } | null> | null, nextSchedule?: { __typename?: 'ScheduleEntity', endDate?: any | null, id?: string | null, startDate?: any | null } | null } | null> | null, favoriteJobAds?: Array<{ __typename?: 'JobAdEntity', startDate?: any | null, dueDate?: any | null, title?: string | null, type?: { __typename?: 'JobTypeEntity', color?: string | null } | null, company?: { __typename?: 'CompanyEntity', mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, id?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, street?: string | null, postalCode?: string | null } | null } | null } | null> | null, profilePicture?: { __typename?: 'MediaEntity', base64?: string | null, id?: string | null, mimeType?: string | null, name?: string | null } | null, uploads?: Array<{ __typename?: 'MediaEntity', base64?: string | null, id?: string | null, mimeType?: string | null, name?: string | null } | null> | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', name?: string | null, id?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null } | null> | null, verification?: { __typename?: 'VerificationEntity', id?: string | null, key?: string | null } | null } | null };
+export type SaveUserMutation = { __typename?: 'Mutation', saveUser?: { __typename?: 'UserEntity', email?: string | null, fullname?: string | null, id?: string | null, phone?: string | null, assignments?: Array<{ __typename?: 'AssignmentEntity', id?: string | null, questionnaire?: { __typename?: 'QuestionnaireEntity', name?: string | null, id?: string | null, questions?: Array<{ __typename?: 'QuestionEntity', id?: string | null, item?: string | null, answers?: Array<{ __typename?: 'AnswerEntity', rating?: number | null, id?: string | null } | null> | null } | null> | null } | null } | null> | null, favoriteEvents?: Array<{ __typename?: 'EventEntity', id?: string | null, name?: string | null, titleImage?: { __typename?: 'MediaEntity', base64?: string | null, id?: string | null, modified?: any | null, name?: string | null } | null, images?: Array<{ __typename?: 'MediaEntity', base64?: string | null, id?: string | null, mimeType?: string | null, name?: string | null } | null> | null, nextSchedule?: { __typename?: 'ScheduleEntity', endDate?: any | null, id?: string | null, startDate?: any | null } | null } | null> | null, favoriteJobAds?: Array<{ __typename?: 'JobAdEntity', startDate?: any | null, dueDate?: any | null, title?: string | null, type?: { __typename?: 'JobTypeEntity', color?: string | null } | null, company?: { __typename?: 'CompanyEntity', mail?: string | null, name?: string | null, phone?: string | null, website?: string | null, id?: string | null, address?: { __typename?: 'AddressEntity', houseNumber?: string | null, id?: string | null, street?: string | null, postalCode?: string | null } | null } | null } | null> | null, profilePicture?: { __typename?: 'MediaEntity', base64?: string | null, id?: string | null, mimeType?: string | null, name?: string | null } | null, uploads?: Array<{ __typename?: 'MediaEntity', base64?: string | null, id?: string | null, mimeType?: string | null, name?: string | null } | null> | null, userTemplates?: Array<{ __typename?: 'UserTemplateEntity', name?: string | null, id?: string | null, content?: string | null, templateType?: { __typename?: 'TemplateTypeEntity', id?: string | null, name?: string | null } | null } | null> | null } | null };
 
 export type SaveUserTemplateMutationVariables = Exact<{
   name?: InputMaybe<Scalars['String']>;
@@ -7478,6 +7485,46 @@ export function useGetChatSettingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetChatSettingsQueryHookResult = ReturnType<typeof useGetChatSettingsQuery>;
 export type GetChatSettingsLazyQueryHookResult = ReturnType<typeof useGetChatSettingsLazyQuery>;
 export type GetChatSettingsQueryResult = Apollo.QueryResult<GetChatSettingsQuery, GetChatSettingsQueryVariables>;
+export const GetChatWithUserOnlyDocument = gql`
+    query GetChatWithUserOnly($entity: ChatEntityInput) {
+  getChat(entity: $entity) {
+    participants {
+      user {
+        fullname
+        id
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetChatWithUserOnlyQuery__
+ *
+ * To run a query within a React component, call `useGetChatWithUserOnlyQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChatWithUserOnlyQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChatWithUserOnlyQuery({
+ *   variables: {
+ *      entity: // value for 'entity'
+ *   },
+ * });
+ */
+export function useGetChatWithUserOnlyQuery(baseOptions?: Apollo.QueryHookOptions<GetChatWithUserOnlyQuery, GetChatWithUserOnlyQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChatWithUserOnlyQuery, GetChatWithUserOnlyQueryVariables>(GetChatWithUserOnlyDocument, options);
+      }
+export function useGetChatWithUserOnlyLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChatWithUserOnlyQuery, GetChatWithUserOnlyQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChatWithUserOnlyQuery, GetChatWithUserOnlyQueryVariables>(GetChatWithUserOnlyDocument, options);
+        }
+export type GetChatWithUserOnlyQueryHookResult = ReturnType<typeof useGetChatWithUserOnlyQuery>;
+export type GetChatWithUserOnlyLazyQueryHookResult = ReturnType<typeof useGetChatWithUserOnlyLazyQuery>;
+export type GetChatWithUserOnlyQueryResult = Apollo.QueryResult<GetChatWithUserOnlyQuery, GetChatWithUserOnlyQueryVariables>;
 export const GetEventDocument = gql`
     query GetEvent($id: String!) {
   getEvent(entity: {id: $id}) {
@@ -9541,10 +9588,6 @@ export const SaveUserDocument = gql`
         id
         name
       }
-    }
-    verification {
-      id
-      key
     }
   }
 }

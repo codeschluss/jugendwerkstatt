@@ -56,7 +56,6 @@
     "react-share": "^4.4.0",
     "react-slick": "^0.29.0",
     "react-sortable-hoc": "^2.0.0",
-    "react-webrtc": "^1.0.0",
     "simple-peer": "^9.11.1",
     "subscriptions-transport-ws": "^0.11.0",
     "swiper": "^8.1.4",
