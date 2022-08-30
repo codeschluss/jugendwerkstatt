@@ -11,6 +11,7 @@ import {
   useGetMeBasicQuery,
 } from "../GraphQl/graphql";
 import { PersonRemove } from "@mui/icons-material";
+import { useAuthStore } from "../store";
 
 export enum VideoState {
   NULL,
@@ -18,43 +19,64 @@ export enum VideoState {
   CALLING,
   CALLED,
 }
-
-const webSocketConnection = new WebSocket(`${WS_URL}videochat`);
 const accessToken = readAuthToken("accessToken") || "";
+
+let webSocketConnection = new WebSocket(`${WS_URL}videochat`);
 
 export const VideoChatContext = createContext<any>(null);
 
 export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
-  const [VideoChat, setVideoChat] = useState();
+  const [VideoChatId, setVideoChatId] = useState();
   const [called, setCalled] = useState<boolean>(false);
   const [offerSignal, setOfferSignal] = useState<SignalData>();
   const [simplePeer, setSimplePeer] = useState<Instance>();
   const [videoStatus, setVideoStatus] = useState<VideoState>(VideoState.NULL);
-  const accessToken = readAuthToken("accessToken") || "";
   const videoSelf = useRef<HTMLVideoElement | null>(null);
   const videoCaller = useRef<HTMLVideoElement | null>(null);
+  const accessToken = readAuthToken("accessToken") || "";
   const [selfPic, setSelfPic] = useState<boolean>(true);
   const [guestPic, setGuestPic] = useState<boolean>(false);
   let mediaStream2: MediaStream;
 
+  const { isAuthenticated } = useAuthStore();
+
+  const me = useGetMeBasicQuery({
+    fetchPolicy: "network-only",
+    skip: !isAuthenticated,
+  });
+  const users = useGetChatWithUserOnlyQuery({
+    skip: !isAuthenticated,
+    fetchPolicy: "network-only",
+    variables: {
+      entity: {
+        id: VideoChatId,
+      },
+    },
+  });
   useEffect(() => {
-    webSocketConnection.onopen = (ad) => {
-      console.log("inited", ad);
+    if (isAuthenticated) {
+      me.refetch();
+      users.refetch();
+    }
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (me.data) {
       webSocketConnection.send(
         JSON.stringify({
-          chatId: "10089483-f95f-4cf1-93a7-601e787da23d",
           token: accessToken,
           type: "init",
         })
       );
-    };
-  }, []);
+    }
+  }, [me.data]);
 
   useEffect(() => {
     webSocketConnection.onmessage = (message: any) => {
       const payload = JSON.parse(message.data);
       console.log(payload, "payload");
       if (payload?.type === "offer") {
+        setVideoChatId(payload.chatId);
         setCalled(true);
         setOfferSignal(payload);
         setVideoStatus(VideoState.CALLED);
@@ -71,17 +93,6 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
     };
   }, [simplePeer]);
 
-  const users = useGetChatWithUserOnlyQuery({
-    fetchPolicy: "network-only",
-    variables: {
-      entity: {
-        id: "10089483-f95f-4cf1-93a7-601e787da23d",
-      },
-    },
-  });
-
-  const me = useGetMeBasicQuery();
-
   const self = me?.data?.me?.fullname;
   const guest = users?.data?.getChat?.participants?.filter(
     (el) => el?.user?.id !== me?.data?.me?.id
@@ -93,10 +104,6 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
       ?.split(/\s/)
       .reduce((response, word) => (response += word.slice(0, 1)), "");
   }
-
-  const selfAcronym = self
-    ?.split(/\s/)
-    .reduce((response, word) => (response += word.slice(0, 1)), "");
 
   const sendOrAcceptInvitation = (
     isInitiator?: boolean,
@@ -141,7 +148,7 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
             sp.on("signal", (data: any) => {
               const payload = Object.assign(data, {
                 token: accessToken,
-                chatId: "10089483-f95f-4cf1-93a7-601e787da23d",
+                chatId: VideoChatId,
               });
               webSocketConnection.send(JSON.stringify(payload));
             });
@@ -165,12 +172,12 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
       });
   };
   const pay = JSON.stringify({
-    chatId: "10089483-f95f-4cf1-93a7-601e787da23d",
+    chatId: VideoChatId,
     token: accessToken,
     type: "abort",
   });
 
-  const clickiii = () => {
+  const endCall = () => {
     webSocketConnection.send(pay);
 
     videoSelf.current = null;
@@ -183,7 +190,9 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
   };
 
   return (
-    <VideoChatContext.Provider value={{ sendOrAcceptInvitation }}>
+    <VideoChatContext.Provider
+      value={{ sendOrAcceptInvitation, setVideoChatId }}
+    >
       {videoStatus !== VideoState.NULL ? (
         <div className=" w-screen h-screen relative top-0 left-0 bg-gray-700">
           {videoStatus === VideoState.CALLING && (
@@ -240,7 +249,7 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
               videoStatus === VideoState.CALLED ||
               videoStatus === VideoState.CALLING) && (
               <div className="w-14 h-14 rounded-full flex items-center justify-center bg-red-400 mx-7">
-                <CallEndIcon sx={{ color: "white" }} onClick={clickiii} />
+                <CallEndIcon sx={{ color: "white" }} onClick={endCall} />
               </div>
             )}
           </div>

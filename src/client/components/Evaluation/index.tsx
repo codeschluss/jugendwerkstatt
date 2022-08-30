@@ -28,14 +28,20 @@ const Evaluation: React.FC<ModalProps> = ({
     ?.map(
       (question: QuestionEntity | undefined | null) =>
         ({
-          question: { item: question?.item, id: question?.id },
+          question: {
+            item: question?.item,
+            id: question?.id,
+            sequenceOrder: question?.sequenceOrder,
+          },
           rating: null,
         } as AnswerEntityInput)
     )
-    .sort(
+    ?.sort(
       (a: any, b: any) =>
         a?.question?.sequenceOrder - b?.question?.sequenceOrder
     );
+
+  console.log(assignment?.questionnaire?.questions, "awd");
 
   const textComment: any = useRef();
   const [saveAssignment] = useSaveClientAssignmentMutation();

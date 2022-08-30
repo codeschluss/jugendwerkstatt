@@ -66,7 +66,7 @@ const Templates: React.FC = () => {
                   templateType: templateType.name,
                   name: template.name,
                   templateTypeId: templateType.id,
-                  edit: false,
+                  edit: true,
                 }}
               >
                 {template.name}

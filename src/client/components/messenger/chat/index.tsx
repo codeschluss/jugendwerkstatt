@@ -17,6 +17,7 @@ import {
   CogIcon,
   PaperAirplaneIcon,
   PaperClipIcon,
+  PhoneIcon,
   XIcon,
 } from "@heroicons/react/outline";
 import { readAuthToken } from "../../../../shared/utils";
@@ -30,6 +31,7 @@ const Chat = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
+  const chatId = id;
   const inputRef: any = useRef();
   const messageEnd: any = useRef(null);
   const chatAddlistener = useChatlistenerSubscription({
@@ -245,7 +247,12 @@ const Chat = () => {
       ? true
       : false;
 
-  const { sendOrAcceptInvitation } = useContext(VideoChatContext);
+  const { sendOrAcceptInvitation, setVideoChatId } =
+    useContext(VideoChatContext);
+
+  useEffect(() => {
+    setVideoChatId(chatId);
+  }, []);
 
   return (
     <div
@@ -253,10 +260,7 @@ const Chat = () => {
       style={{ height: "calc(100vh - 10.5rem)" }}
     >
       <div className="flex items-center bg-white justify-between">
-        <h2
-          className="sticky px-4 py-3 text-gray-700  cursor-pointer   top-14 "
-          onClick={() => sendOrAcceptInvitation(true)}
-        >
+        <h2 className="sticky px-4 py-3 text-gray-700  cursor-pointer   top-14 ">
           {getChat.data?.getChat?.name
             ? getChat.data?.getChat?.name
             : notMe?.map((el: ParticipantEntity | undefined | null) => {
@@ -276,6 +280,13 @@ const Chat = () => {
               <p>Einstellungen</p>
             </div>
           )}
+
+        {!getChat.data?.getChat?.name && (
+          <PhoneIcon
+            className="w-5 h-5 mr-7 cursor-pointer"
+            onClick={() => sendOrAcceptInvitation(true)}
+          />
+        )}
       </div>
       <div className="py-3 h-full overflow-y-scroll">
         <p
