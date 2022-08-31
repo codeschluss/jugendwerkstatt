@@ -1,21 +1,10 @@
 import {
-  CalendarIcon,
-  PaperAirplaneIcon,
-  QuestionMarkCircleIcon,
-  ChevronDoubleRightIcon,
-  MapIcon,
-  ChatIcon,
+  CalendarIcon, ChevronDoubleRightIcon,
+  MapIcon
 } from "@heroicons/react/outline";
 import {
-  ChevronDoubleLeftIcon,
-  HomeIcon,
-  ChatAltIcon,
   AcademicCapIcon,
-  BookOpenIcon,
-  CogIcon,
-  HeartIcon,
-  DocumentTextIcon,
-  CalendarIcon as CalendarSolid,
+  BookOpenIcon, CalendarIcon as CalendarSolid, ChatAltIcon, ChevronDoubleLeftIcon, CogIcon, DocumentTextIcon, HeartIcon, HomeIcon
 } from "@heroicons/react/solid";
 import { useContext } from "react";
 import Nav from "../../../../admin/components/molecules/Nav/Nav";
@@ -24,7 +13,7 @@ import SideBarContext from "../../../../contexts/SideBarContext";
 import {
   useGetChatSettingsQuery,
   useGetGroupsQuery,
-  useGetMeBasicQuery,
+  useGetMeBasicQuery
 } from "../../../../GraphQl/graphql";
 import { useAuthStore } from "../../../../store";
 import { sidebarStore } from "../../../../store/sidebar/sidebar.store";
@@ -50,7 +39,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
 
   const { data: { groups = null } = {} } = useGetGroupsQuery({
     skip: !!meRole.data?.me?.roles?.some(
-      (el) => el === "admin" || el === "superviser"
+      (el) => el === "admin" || el === "supervisor"
     ),
   });
 

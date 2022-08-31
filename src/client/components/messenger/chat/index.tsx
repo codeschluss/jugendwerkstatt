@@ -1,6 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
+import {
+  CogIcon,
+  PaperAirplaneIcon,
+  PaperClipIcon,
+  PhoneIcon,
+  XIcon
+} from "@heroicons/react/outline";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import VideoChatContext from "../../../../contexts/VideoChatContext";
 import {
   MessageEntity,
   ParticipantEntity,
@@ -10,20 +18,11 @@ import {
   useGetMeBasicQuery,
   useGetMessagesQuery,
   useSaveMessageMutation,
-  useSaveReadReceiptsMutation,
+  useSaveReadReceiptsMutation
 } from "../../../../GraphQl/graphql";
-import ChatText from "./ChatText";
-import {
-  CogIcon,
-  PaperAirplaneIcon,
-  PaperClipIcon,
-  PhoneIcon,
-  XIcon,
-} from "@heroicons/react/outline";
 import { readAuthToken } from "../../../../shared/utils";
 import TypeInput from "../../forms/upload/TypeInput";
-import { API_URL } from "../../../../config/app";
-import VideoChatContext from "../../../../contexts/VideoChatContext";
+import ChatText from "./ChatText";
 
 const Chat = () => {
   const accessToken = readAuthToken("accessToken") || "";
@@ -269,7 +268,7 @@ const Chat = () => {
         </h2>
         {getChat.data?.getChat?.name &&
           (me.data?.me?.roles?.some((el) => el?.key === "admin") ||
-            me.data?.me?.roles?.some((el) => el?.key === "superviser")) && (
+            me.data?.me?.roles?.some((el) => el?.key === "supervisor")) && (
             <div
               onClick={() =>
                 navigate(`/adminMsnPanel/${getChat.data?.getChat?.id}`)

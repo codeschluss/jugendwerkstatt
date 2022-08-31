@@ -8,7 +8,7 @@ import {
   useGetUsersQuery,
   useMeRolesQuery,
   UserEntity,
-  useSaveChatMutation,
+  useSaveChatMutation
 } from "../../../../../GraphQl/graphql";
 import ContactOptions from "../../../modals/ContactOptions";
 // import ContactOptions from "../../../modals/ContactOptions";
@@ -35,14 +35,14 @@ const Contacts = () => {
       entity: {
         operator: QueryOperator.Equal,
         path: "roles.key",
-        value: "superviser",
+        value: "supervisor",
       },
     },
   ];
 
   meRoles.data?.me?.roles?.some(
     (el: RoleEntity | undefined | null) =>
-      el?.key === "admin" || el?.key === "superviser"
+      el?.key === "admin" || el?.key === "supervisor"
   ) &&
     adminOperands.push({
       entity: {
