@@ -19,10 +19,6 @@ const Footer = () => {
           )
         )}
       </div>
-      <div>
-        <p className="hover:text-red-400 cursor-pointer">Über uns</p>
-        <p className="hover:text-red-400 cursor-pointer">Impressum</p>
-      </div>
       <div className="md:w-32  flex-col items-end  md:flex ">
         <img
           className="w-full hidden md:block my-1"

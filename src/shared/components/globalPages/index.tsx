@@ -94,6 +94,7 @@ const GlobalPage = () => {
           {page?.data?.getPage?.images?.map((el: any) => {
             return (
               <SlideCard
+                gradient={false}
                 key={el?.id}
                 imgUrl={`data:${el?.mimeType};base64,${el?.base64}`}
                 route="#"

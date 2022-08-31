@@ -82,13 +82,12 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
         setVideoStatus(VideoState.CALLED);
       } else if (payload?.type === "answer") simplePeer?.signal(payload);
       else if (payload?.type === "abort") {
+        setVideoChatId(undefined);
+        setSimplePeer(undefined);
         videoCaller.current = null;
         videoSelf.current = null;
         setVideoStatus(VideoState.NULL);
-        navigator.mediaDevices.getUserMedia().then((a) => {
-          a.getAudioTracks().forEach((track) => track.stop());
-          a.getVideoTracks().forEach((track) => track.stop());
-        });
+        mediaStream2?.getTracks().forEach((track) => track.stop());
       }
     };
   }, [simplePeer]);
@@ -164,6 +163,7 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
                 video!.play();
               } catch {
                 setGuestPic(true);
+                console.log("no guest pic");
               }
             });
 
@@ -171,6 +171,7 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
           });
       });
   };
+  console.log(videoCaller, "vcaller");
   const pay = JSON.stringify({
     chatId: VideoChatId,
     token: accessToken,
@@ -178,15 +179,17 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
   });
 
   const endCall = () => {
+    setSimplePeer(undefined);
     webSocketConnection.send(pay);
 
     videoSelf.current = null;
     videoCaller.current = null;
 
     setVideoStatus(VideoState.NULL);
-
+    setVideoChatId(undefined);
     mediaStream2?.getTracks().forEach((track) => track.stop());
-    simplePeer?.destroy(new Error("awd"));
+
+    if (simplePeer?.destroyed) console.log("is destroyed");
   };
 
   return (
@@ -218,7 +221,7 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
           )}
           {videoStatus === VideoState.INCALL && (
             <>
-              {!guestPic ? (
+              {videoCaller.current ? (
                 <video
                   className="w-full h-full object-cover"
                   ref={videoCaller}
@@ -248,8 +251,11 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
             {(videoStatus === VideoState.INCALL ||
               videoStatus === VideoState.CALLED ||
               videoStatus === VideoState.CALLING) && (
-              <div className="w-14 h-14 rounded-full flex items-center justify-center bg-red-400 mx-7">
-                <CallEndIcon sx={{ color: "white" }} onClick={endCall} />
+              <div
+                onClick={endCall}
+                className="w-14 h-14 rounded-full flex items-center justify-center bg-red-400 mx-7"
+              >
+                <CallEndIcon sx={{ color: "white" }} />
               </div>
             )}
           </div>
