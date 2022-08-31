@@ -29,12 +29,14 @@ const Chats = () => {
           return contentB - contentA;
         })
         .map((el: ParticipantEntity | undefined | null) => {
-          const unreadChats = el?.chat?.messages?.filter(
-            (fl) =>
-              !fl?.readReceipts?.some(
-                (a) => a?.participant?.user?.id === getChats.data?.me?.id
-              )
-          ).length;
+          const unreadChats = el?.chat?.messages
+            ?.filter((x) => x?.participant?.user?.id !== getChats.data?.me?.id)
+            .filter(
+              (fl) =>
+                !fl?.readReceipts?.some(
+                  (a) => a?.participant?.user?.id === getChats.data?.me?.id
+                )
+            ).length;
           console.log(unreadChats, "chaaats");
 
           const notMe: any = el?.chat?.participants?.filter(

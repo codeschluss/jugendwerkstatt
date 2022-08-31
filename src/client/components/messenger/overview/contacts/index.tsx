@@ -10,17 +10,9 @@ import {
   UserEntity,
   useSaveChatMutation
 } from "../../../../../GraphQl/graphql";
-import ContactOptions from "../../../modals/ContactOptions";
-// import ContactOptions from "../../../modals/ContactOptions";
 import Item from "../Item";
 
 const Contacts = () => {
-  const [contactName, setContactName] = useState<any>("");
-  const [picId, setPicId] = useState<any>("");
-  const [contactId, setContactId] = useState<any>("");
-  const [contactPhone, setContactPhone] = useState<any>("");
-  const [contactEmail, setContactEmail] = useState<any>("");
-
   const meRoles = useMeRolesQuery();
 
   const adminOperands = [
@@ -88,30 +80,12 @@ const Contacts = () => {
   };
   return (
     <div className="px-8">
-      <ContactOptions
-        clicked={() => setModal(false)}
-        visible={modal}
-        guestName={contactName}
-        guestNr={contactPhone}
-        guestEmail={contactEmail}
-        imgSrc={picId && `${API_URL}media/${picId}`}
-        openChat={() => handleCreateChat(contactId)}
-      />
       {getUsers.data?.getUsers?.result
         ?.filter((usr) => usr?.id !== meRoles?.data?.me?.id)
         .map((el: UserEntity | undefined | null) => (
           <Item
             key={el?.id}
-            // onClick={() => handleCreateChat(el?.id)}
-            // href={`/messenger/chat/${el?.id}`}
-            onClick={() => {
-              setContactName(el?.fullname);
-              setPicId(el?.profilePicture?.id);
-              setContactId(el?.id);
-              setContactPhone(el?.phone);
-              setContactEmail(el?.email);
-              setModal(true);
-            }}
+            onClick={() => handleCreateChat(el?.id)}
             name={el?.fullname}
             imgUrl={
               el?.profilePicture?.id &&

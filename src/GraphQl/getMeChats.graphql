@@ -41,6 +41,11 @@ query GetMeChats {
           content
           created
           id
+          participant {
+            user {
+              id
+            }
+          }
         }
         participants {
           user {

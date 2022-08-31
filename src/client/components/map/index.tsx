@@ -107,7 +107,7 @@ const Map: FunctionComponent = () => {
     <div className="overflow-hidden relative">
       {allEvents && (
         <div className="map relative">
-          <div className="pl-2 md:absolute  md:top-0 right-0 overflow-hidden bg-white md:bg-slate-400  border-t-2 border-white md:border-none    items-center  z-20 flex  h-16">
+          <div className="pl-2 md:fixed  md:top-20 right-0 overflow-hidden bg-white md:bg-slate-400  border-t-2 border-white md:border-none    items-center  z-20 flex  h-16">
             <SideBar type="EVENT" />
 
             <FilterHeader />
