@@ -1,6 +1,7 @@
 query GetMeChats {
   me {
     id
+
     participants {
       id
       chat {
@@ -30,8 +31,15 @@ query GetMeChats {
         }
         modified
         messages {
-          created
+          readReceipts {
+            participant {
+              user {
+                id
+              }
+            }
+          }
           content
+          created
           id
         }
         participants {

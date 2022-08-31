@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../client/components/ui/Button";
 import {
+  useChangePasswordMutation,
   useGetMeBasicQuery,
   useRegisterUserMutation,
 } from "../../../../GraphQl/graphql";
@@ -32,17 +33,14 @@ const ChangePassword = () => {
     resetValue: resetPasswordTwoInput,
   } = useInput((value: string) => value !== "" && value === passwordOne);
 
-  const [updateUser] = useRegisterUserMutation();
+  const [updateUser] = useChangePasswordMutation();
 
   const onSubmitHandler = (e: any) => {
     e.preventDefault();
     if (passwordOneValidity || passwordTwoValidity) {
       updateUser({
         variables: {
-          entity: {
-            id: user.data?.me?.id,
-            password: passwordOne,
-          },
+          newPassword: passwordOne,
         },
         onCompleted: () => {
           navigate("/");
@@ -61,12 +59,16 @@ const ChangePassword = () => {
         >
           <div className="flex w-full items-center flex-col mt-16 justify-between">
             <AuthInput
-              id="Passwort"
+              id="Neues Passwort"
               type="password"
               onChange={passwordOneChangeHandler}
               onBlur={passwordOneBlurHandler}
               value={passwordOne}
-              error={passwordOneError ? "Passwort nicht stark genug" : ""}
+              error={
+                passwordOneError
+                  ? "Password not strong enough or does not match recomandations"
+                  : ""
+              }
               inputClassName={`${
                 passwordOneError && "border-500-red"
               }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}

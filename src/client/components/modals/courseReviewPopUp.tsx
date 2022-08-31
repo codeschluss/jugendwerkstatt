@@ -198,8 +198,7 @@ const Modal: FunctionComponent<ModalProps> = ({
               </svg>
               <svg
                 onClick={() => giveRating(1)}
-                cursor-pointer
-                className="inline"
+                className="inline  cursor-pointer"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"

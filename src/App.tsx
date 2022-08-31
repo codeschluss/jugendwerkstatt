@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from "react";
+import { ReactElement, useContext, useEffect } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import { RequireAuthRoute, RequireNonAuthRoute } from "./shared/components";
@@ -110,7 +110,7 @@ import {
 } from "./GraphQl/graphql";
 import RolePending from "./client/pages/verify/RolePending";
 import { Capacitor } from "@capacitor/core";
-import Video from "./client/components/messenger/video";
+import VideoChatContext from "./contexts/VideoChatContext";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
@@ -217,7 +217,6 @@ const App = (): ReactElement => {
         <Route path="/profile" element={<ProfileSettings />} />
         <Route path="/profile-personal" element={<PersonalData />} />
         <Route path="/profile-password" element={<ChangePassword />} />
-        <Route path="video" element={<Video />} />
         <Route
           path="/profile-upload-picture"
           element={<ProfileImageUpload />}

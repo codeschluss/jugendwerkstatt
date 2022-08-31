@@ -44,7 +44,10 @@ const RegistrationOrVerification: React.FC<CheckingProps> = ({
   const navigate = useNavigate();
 
   const reverify = () => {
-    reSendVerification().then(() => navigate("/"));
+    reSendVerification().then(() => {
+      navigate("/");
+      alert("Neuer link erfolgreich gesendet");
+    });
   };
 
   return (

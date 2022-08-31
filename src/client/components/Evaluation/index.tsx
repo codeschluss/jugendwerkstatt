@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   AnswerEntity,
   AnswerEntityInput,
@@ -24,14 +24,26 @@ const Evaluation: React.FC<ModalProps> = ({
   refetchParent,
   assignment,
 }) => {
-  const givenAnswers = assignment?.questionnaire?.questions?.map(
-    (question: QuestionEntity | undefined | null) =>
-      ({
-        question: { item: question?.item, id: question?.id },
-        rating: null,
-      } as AnswerEntityInput)
-  );
+  const givenAnswers = assignment?.questionnaire?.questions
+    ?.map(
+      (question: QuestionEntity | undefined | null) =>
+        ({
+          question: {
+            item: question?.item,
+            id: question?.id,
+            sequenceOrder: question?.sequenceOrder,
+          },
+          rating: null,
+        } as AnswerEntityInput)
+    )
+    ?.sort(
+      (a: any, b: any) =>
+        a?.question?.sequenceOrder - b?.question?.sequenceOrder
+    );
 
+  console.log(assignment?.questionnaire?.questions, "awd");
+
+  const textComment: any = useRef();
   const [saveAssignment] = useSaveClientAssignmentMutation();
   const submitHandler = (e: any) => {
     e.preventDefault();
@@ -41,6 +53,7 @@ const Evaluation: React.FC<ModalProps> = ({
         entity: {
           id: assignment?.id,
           answers: givenAnswers,
+          comment: textComment.current.value,
         },
       },
     }).then(() => refetchParent());
@@ -78,6 +91,7 @@ const Evaluation: React.FC<ModalProps> = ({
 
           <div className="w-full h-32 p-1 my-1 md:w-full">
             <textarea
+              ref={textComment}
               placeholder="Was ich noch sagen wollte:"
               className="w-full h-full p-2 text-xs rounded-md resize-none md:text-base"
             />

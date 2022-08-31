@@ -28,7 +28,15 @@ const Chats = () => {
           const contentB: any = new Date(b?.chat?.lastMessage?.created);
           return contentB - contentA;
         })
-        .map((el: ParticipantEntity | undefined | null | any) => {
+        .map((el: ParticipantEntity | undefined | null) => {
+          const unreadChats = el?.chat?.messages?.filter(
+            (fl) =>
+              !fl?.readReceipts?.some(
+                (a) => a?.participant?.user?.id === getChats.data?.me?.id
+              )
+          ).length;
+          console.log(unreadChats, "chaaats");
+
           const notMe: any = el?.chat?.participants?.filter(
             (el: ParticipantEntity | undefined | null) =>
               el?.user?.id !== getChats.data?.me?.id
@@ -36,6 +44,7 @@ const Chats = () => {
           console.log(notMe, "ellll");
           return (
             <Item
+              unreadChats={unreadChats ? unreadChats : undefined}
               key={el?.id}
               href={`/messenger/chat/${el?.chat?.id}`}
               name={el?.chat?.name ? el.chat?.name : notMe[0]?.user?.fullname}
@@ -59,7 +68,7 @@ const Chats = () => {
                 el?.chat?.avatar?.id
                   ? `data:${el?.chat?.avatar?.mimeType};base64,${el?.chat?.avatar?.base64}`
                   : notMe[0]?.user?.profilePicture &&
-                    `data:${notMe[0]?.user?.titleImage?.mimeType};base64,${notMe[0]?.user?.titleImage?.base64}`
+                    `data:${notMe[0]?.user?.profilePicture?.mimeType};base64,${notMe[0]?.user?.profilePicture?.base64}`
               }
               rightInfo={
                 <span className="text-sm">

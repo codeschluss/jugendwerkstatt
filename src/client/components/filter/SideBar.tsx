@@ -116,6 +116,7 @@ const SideBar: React.FC<{ type?: string }> = ({ type }) => {
       <FormControl sx={{ m: 3 }}>
         <DatePicker
           disablePast
+          inputFormat="DD.MM.YYYY"
           label={type === "EVENT" ? "Start date" : "Due Date"}
           value={tempDates.tempStartDate}
           onChange={(newValue) => {
@@ -127,6 +128,7 @@ const SideBar: React.FC<{ type?: string }> = ({ type }) => {
       <FormControl sx={{ m: 3 }}>
         <DatePicker
           disablePast
+          inputFormat="DD.MM.YYYY"
           label={type === "EVENT" ? "End date" : "Start date"}
           value={tempDates.tempEndDate}
           onChange={(newValue) => {

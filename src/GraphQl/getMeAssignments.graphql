@@ -9,6 +9,7 @@ query GetMeAssignments {
         questions {
           id
           item
+          sequenceOrder
         }
       }
     }

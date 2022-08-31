@@ -82,9 +82,5 @@ mutation SaveUser($entity: UserEntityInput) {
         name
       }
     }
-    verification {
-      id
-      key
-    }
   }
 }

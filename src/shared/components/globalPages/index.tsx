@@ -20,6 +20,14 @@ const GlobalPage = () => {
     },
   });
 
+  const desc: any =
+    page.data?.getPage?.content?.substring(0, 1) === '"'
+      ? page.data?.getPage?.content?.substring(
+          1,
+          page.data?.getPage?.content?.length - 1
+        )
+      : page.data?.getPage?.content;
+
   return (
     <div className="bg-gray-100 h-screen flex flex-col items-center">
       <header
@@ -49,7 +57,7 @@ const GlobalPage = () => {
         <div className="w-4/5 p-2 my-5 bg-white  ">
           <img
             className="md:w-1/5 w-1/2 mx-auto "
-            src={`${API_URL}media/${page.data?.getPage?.titleImage?.id}`}
+            src={`data:${page?.data?.getPage?.titleImage?.mimeType};base64,${page?.data?.getPage?.titleImage?.base64}`}
           />
         </div>
       )}
@@ -59,7 +67,11 @@ const GlobalPage = () => {
         </p>
       </div>
       <div className=" p-2 my-5  bg-white w-4/5 ">
-        <p className="w-full  text-base ">{page.data?.getPage?.content}</p>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: page.data?.getPage?.content ? desc : "",
+          }}
+        />
       </div>
       {page.data?.getPage?.video && (
         <div className=" p-2 my-5 bg-white w-4/5">
@@ -70,7 +82,7 @@ const GlobalPage = () => {
             className="w-1/2 md:w-1/4 mx-auto "
           >
             <source
-              src={`${API_URL}media/${page.data?.getPage?.video?.id}`}
+              src={`data:${page?.data?.getPage?.video?.mimeType};base64,${page?.data?.getPage?.video?.base64}`}
               type="video/mp4"
             />
           </video>
@@ -78,9 +90,15 @@ const GlobalPage = () => {
       )}
 
       {page?.data?.getPage?.images?.length !== 0 ? (
-        <Slider title="Fotos">
+        <Slider title="Fotos " className="w-full md:w-4/5">
           {page?.data?.getPage?.images?.map((el: any) => {
-            return <SlideCard key={el?.id} imgUrl={el?.id} route="#" />;
+            return (
+              <SlideCard
+                key={el?.id}
+                imgUrl={`data:${el?.mimeType};base64,${el?.base64}`}
+                route="#"
+              />
+            );
           })}
         </Slider>
       ) : (
