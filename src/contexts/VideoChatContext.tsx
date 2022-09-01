@@ -36,7 +36,8 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
   const accessToken = readAuthToken("accessToken") || "";
   const [selfPic, setSelfPic] = useState<boolean>(true);
   const [guestPic, setGuestPic] = useState<boolean>(false);
-  let mediaStream2: MediaStream;
+  const [mediaStream2, setMediaStream2] = useState<MediaStream>();
+  // let mediaStream2: MediaStream;
 
   const { isAuthenticated } = useAuthStore();
 
@@ -123,12 +124,12 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
         navigator.mediaDevices
           .getUserMedia({ video: hasVideo, audio: hasAudio })
           .then((mediaStream) => {
-            mediaStream2 = mediaStream;
+            setMediaStream2(mediaStream);
 
             let sp = new SimplePeer({
               trickle: false,
               initiator: isInitiator,
-              stream: mediaStream2,
+              stream: mediaStream,
             });
 
             if (isInitiator) setVideoStatus(VideoState.CALLING);
@@ -138,7 +139,7 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
 
             try {
               const video = videoSelf.current;
-              video!.srcObject = mediaStream2;
+              video!.srcObject = mediaStream;
             } catch {
               setSelfPic(true);
             }
@@ -169,7 +170,6 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
           });
       });
   };
-  console.log(videoCaller, "vcaller");
   const pay = JSON.stringify({
     chatId: VideoChatId,
     token: accessToken,
@@ -177,6 +177,7 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
   });
 
   const endCall = () => {
+    console.log(mediaStream2, "md2");
     setSimplePeer(undefined);
     webSocketConnection.send(pay);
 
