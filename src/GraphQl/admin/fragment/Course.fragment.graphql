@@ -1,0 +1,13 @@
+fragment CourseField on CourseEntity {
+  id
+  name
+  description
+  group {
+    id
+    name
+  }
+  members {
+    id
+    fullname
+  }
+}

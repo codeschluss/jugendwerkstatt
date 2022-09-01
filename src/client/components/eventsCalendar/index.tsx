@@ -12,20 +12,19 @@ const EventsCalendar: React.FC = () => {
   let currentDate = new Date();
 
   const currentUrl = window.location.href;
-  if(currentUrl.indexOf('?date=')!==-1){
-    const currentListStringDate =  currentUrl.split("?date=")[1].split(".");
-    currentDate = new Date(parseInt(currentListStringDate[0]), (parseInt(currentListStringDate[1])-1), parseInt(currentListStringDate[2]));
+  if (currentUrl.indexOf("?date=") !== -1) {
+    const currentListStringDate = currentUrl.split("?date=")[1].split(".");
+    currentDate = new Date(
+      parseInt(currentListStringDate[0]),
+      parseInt(currentListStringDate[1]) - 1,
+      parseInt(currentListStringDate[2])
+    );
   }
 
   const navigate = useNavigate();
   function goBack() {
     navigate(-1);
   }
-
-  
-
-  
-  
 
   const localizer = momentLocalizer(moment);
 
@@ -43,17 +42,37 @@ const EventsCalendar: React.FC = () => {
     eventsData?.map((singleEvent: EventEntity) => {
       var tempSchedules = singleEvent?.schedules as any;
 
+      const desc: any =
+        singleEvent?.description?.substring(0, 1) === '"'
+          ? singleEvent?.description?.substring(
+              1,
+              singleEvent?.description?.length - 1
+            )
+          : singleEvent?.description;
+
       for (let i = 0; i < tempSchedules?.length; i++) {
-        datesOnEvents[temmmpCounter] = {
-          id: temmmpCounter,
-          eventId: singleEvent.id,
-          name: singleEvent.name,
-          description: singleEvent.description,
-          start: new Date(tempSchedules[i]?.startDate),
-          end: new Date(tempSchedules[i]?.endDate),
-          allDay: true,
-        };
-        temmmpCounter = temmmpCounter + 1;
+        if (
+          new Date(tempSchedules[i]?.startDate) <=
+          new Date(tempSchedules[i]?.endDate)
+        ) {
+          //validating bad schedules
+          datesOnEvents[temmmpCounter] = {
+            id: temmmpCounter,
+            eventId: singleEvent.id,
+            name: singleEvent.name,
+            description: (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: singleEvent.description ? desc : "",
+                }}
+              />
+            ),
+            start: new Date(tempSchedules[i]?.startDate),
+            end: new Date(tempSchedules[i]?.endDate),
+            allDay: true,
+          };
+          temmmpCounter = temmmpCounter + 1;
+        }
       }
     });
   }
@@ -138,9 +157,10 @@ const EventsCalendar: React.FC = () => {
       dateParameter.getDate();
     if (window.innerWidth >= 1024) {
       return (
-        <Link className="anchor-number-of-events "
-          to={"/EventsCalendar?date=" + dateParameter}
-          >
+        <Link
+          className="anchor-number-of-events "
+          to={{ search: "?date=" + dateParameter }}
+        >
           {event.numberOfEvents}{" "}
           V&shy;e&shy;r&shy;a&shy;n&shy;s&shy;t&shy;a&shy;l&shy;t&shy;u&shy;n&shy;g&shy;e&shy;n
         </Link>
@@ -149,7 +169,7 @@ const EventsCalendar: React.FC = () => {
       return (
         <Link
           className="anchor-number-of-events "
-          to={"/eventsTime?date=" + dateParameter}
+          to={"/events/time?date=" + dateParameter}
         >
           {event.numberOfEvents}{" "}
           V&shy;e&shy;r&shy;a&shy;n&shy;s&shy;t&shy;a&shy;l&shy;t&shy;u&shy;n&shy;g&shy;e&shy;n
@@ -256,9 +276,9 @@ const EventsCalendar: React.FC = () => {
   };
 
   return (
-    <div className="absolute lg:relative top-0 left-0 w-screen h-screen lg:w-full lg:h-full bg-[#f7f7f7] z-10 lg:z-auto pt-0">
+    <div className=" md:m-12 lg:relative top-0 left-0  h-screen lg:w-full lg:h-full bg-[#f7f7f7] z-10 lg:z-auto pt-0">
       <div className="lg:hidden flex bg-primary h-[6.5rem] text-white">
-        <div className="my-auto relative">
+        <div className="relative my-auto">
           <button
             className="absolute inline ml-5 -mt-3"
             onClick={goBack}
@@ -279,45 +299,51 @@ const EventsCalendar: React.FC = () => {
             </svg>
           </button>
           <div
-            className="inline w-screen absolute left-0 text-center -mt-4"
+            className="absolute left-0 inline w-screen -mt-4 text-center"
             style={{ zIndex: 1 }}
           >
-            <span id="testId" className="text-2xl font-light text-center pt-20">
+            <span id="testId" className="pt-20 text-2xl font-light text-center">
               Veranstaltungskalender
             </span>
           </div>
         </div>
       </div>
-      <div className="hidden lg:flex items-center justify-center text-3xl font-semibold">
-        <div className="bg-white w-full p-2 rounded-md">Kalender</div>
+      <div className="items-center justify-center hidden text-3xl font-semibold lg:flex">
+        <div className="w-full p-2 bg-white rounded-md">Kalender</div>
       </div>
-      <div className="flex items-center justify-center lg:justify-start mt-0 lg:mt-5">
+      <div className="flex items-center justify-center mt-0 lg:justify-start lg:mt-5">
         <Calendar
-          className="customized-monthly-calendar max-w-2xl w-full mx-auto lg:mx-0 bg-white pb-10"
+          className="w-full max-w-2xl pb-10 mx-auto bg-white customized-monthly-calendar lg:mx-0"
           localizer={localizer}
           events={finalDatesEvents}
           components={{ event: event_dates }}
           view={"month"}
           views={{ month: true }}
+          onView={() => null}
           startAccessor="start"
           endAccessor="end"
+          onNavigate={() => null}
           style={{ maxHeight: 520 }}
           dayLayoutAlgorithm={"no-overlap"}
           defaultDate={currentDate}
+          messages={{ next: "Nächste", previous: "Zurück", today: "Heute" }}
         />
 
         <Calendar
-          className="customized-daily-calendar max-w-2xl min-w-[400px] ml-14 overflow-y-scroll hidden lg:inline "
+          className="customized-daily-calendar max-w-2xl min-w-[400px] ml-14 overflow-y-scroll hidden md:block lg:inline "
           localizer={localizer}
           events={finalHourlyEvents}
           components={{ event: event_hourly }}
           view={"day"}
           views={{ day: true }}
+          onView={() => null}
           startAccessor="start"
           endAccessor="end"
           style={{ maxHeight: 500, backgroundColor: "white" }}
           dayLayoutAlgorithm={"no-overlap"}
           showMultiDayTimes={false}
+          onNavigate={() => null}
+          messages={{ next: "Nächste", previous: "Zurück", today: "Heute" }}
           // defaultDate={currentDate} //if this parameter is used and not date, then it doesn't change the date of this calendar when a date is clicked on the previous calendar
           date={currentDate} //if this parameter is used and not defaultDate, then the date of this calndar changes when a date is click in the previous calendar BUT you can't use the buttons on toolbar
         />

@@ -7,6 +7,8 @@ query GetEvent($id: String!) {
     }
     titleImage {
       id
+      base64
+      mimeType
     }
     id
     description

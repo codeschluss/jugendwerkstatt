@@ -1,8 +1,8 @@
 import { Props } from 'react-select';
 
 export type OptionType = {
-  id: string;
   label: string;
+  value: string;
 };
 
 export interface MultiSelectProps extends Props {

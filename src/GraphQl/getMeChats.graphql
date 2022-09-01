@@ -1,0 +1,64 @@
+query GetMeChats {
+  me {
+    id
+
+    participants {
+      id
+      chat {
+        avatar {
+          id
+          mimeType
+          base64
+        }
+        id
+        name
+        lastMessage {
+          id
+          content
+          created
+          participant {
+            id
+            user {
+              id
+              fullname
+              profilePicture {
+                id
+                base64
+                mimeType
+              }
+            }
+          }
+        }
+        modified
+        messages {
+          readReceipts {
+            participant {
+              user {
+                id
+              }
+            }
+          }
+          content
+          created
+          id
+          participant {
+            user {
+              id
+            }
+          }
+        }
+        participants {
+          user {
+            fullname
+            id
+            profilePicture {
+              id
+              base64
+              mimeType
+            }
+          }
+        }
+      }
+    }
+  }
+}

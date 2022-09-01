@@ -1,0 +1,17 @@
+query GetMeAssignments {
+  me {
+    assignments {
+      assignmentState {
+        name
+      }
+      id
+      questionnaire {
+        questions {
+          id
+          item
+          sequenceOrder
+        }
+      }
+    }
+  }
+}

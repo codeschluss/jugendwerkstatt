@@ -3,10 +3,17 @@ query GetEventCategories($params: FilterSortPaginateInput) {
     result {
       name
       id
+
       events {
+        nextSchedule {
+          startDate
+          endDate
+        }
         titleImage {
           name
           id
+          base64
+          mimeType
         }
         schedules {
           id

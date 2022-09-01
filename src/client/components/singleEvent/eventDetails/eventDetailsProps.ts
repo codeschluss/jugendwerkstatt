@@ -7,8 +7,10 @@ export interface EventDetailsProps {
   email?: string;
   web?: string;
   group?: string;
-  schedule?: any;
+  startSchedule?: any;
+  endSchedule?: any;
   startDate?: string;
+  endDate?: string;
   theRest?: string;
   description?: string;
   dueDate?: any;

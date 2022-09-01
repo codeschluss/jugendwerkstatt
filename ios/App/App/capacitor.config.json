@@ -1,0 +1,6 @@
+{
+	"appId": "app.alphaev",
+	"appName": "Jugendwerkstatt",
+	"webDir": "build",
+	"bundledWebRuntime": false
+}

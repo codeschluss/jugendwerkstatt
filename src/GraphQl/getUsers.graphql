@@ -1,0 +1,15 @@
+query GetUsers($params: FilterSortPaginateInput) {
+  getUsers(params: $params) {
+    result {
+      id
+      fullname
+      phone
+      email
+      profilePicture {
+        id
+        mimeType
+        base64
+      }
+    }
+  }
+}

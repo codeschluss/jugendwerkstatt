@@ -1,0 +1,9 @@
+mutation SavePage($entity: PageEntityInput) {
+  savePage(entity: $entity) {
+    ...PageField
+  }
+}
+
+mutation DeletePage($id: String) {
+  deletePage(id: $id)
+}

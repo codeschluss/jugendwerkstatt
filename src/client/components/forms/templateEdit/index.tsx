@@ -1,22 +1,22 @@
+import React, { useEffect, useState } from "react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import DownloadIcon from "@heroicons/react/solid/DownloadIcon";
-import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { API_URL } from "../../../../config/app";
-import AuthContext from "../../../../contexts/AuthContext";
 import {
   useGetMeBasicQuery,
   useGetTemplateQuery,
   useGetUserTemplateQuery,
-  UserEntity,
   useSaveUserTemplateMutation,
 } from "../../../../GraphQl/graphql";
 import I from "../../../../shared/components/ui/IconWrapper";
+import DropDown from "../../../../shared/components/ui/DropDown";
+import { readAuthToken } from "../../../../shared/utils";
 
 const TemplateEdit: React.FC = () => {
   const { id } = useParams();
-
+  const token = readAuthToken("accessToken");
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -45,17 +45,52 @@ const TemplateEdit: React.FC = () => {
         userId: userBasicId,
       },
       onCompleted: () => {
-        navigate("/Forms");
+        navigate("/forms");
       },
     });
 
-  const downloadTemplate = async () => {
+  const downloadTemplateDocx = async () => {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ html: templateContent, name: templateName }),
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        html: templateContent,
+        name: templateName,
+        type: "docx",
+      }),
     };
-    await fetch(API_URL + "media/pdf", requestOptions)
+    await fetch(API_URL + "media/export", requestOptions)
+      .then((resp) => resp.blob())
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = `${templateName}.docx`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        alert("your file has downloaded!");
+      })
+      .catch(() => alert("oh no!"));
+  };
+  const downloadTemplatePdf = async () => {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        html: templateContent,
+        name: templateName,
+        type: "pdf",
+      }),
+    };
+    await fetch(API_URL + "media/export", requestOptions)
       .then((resp) => resp.blob())
       .then((blob) => {
         const url = window.URL.createObjectURL(blob);
@@ -96,15 +131,33 @@ const TemplateEdit: React.FC = () => {
   }, [userTemplateContent, templateContentResult]);
 
   return (
-    <div className="container mx-auto px-4 pt-4">
+    <div className="container md:px-4 pt-4 mx-auto">
       <h5 className="text-2xl font-bold">
         {templateType}
 
-        <I className="h-5 float-right" onClick={downloadTemplate}>
-          <DownloadIcon />
-        </I>
+        <DropDown
+          position="right"
+          className="float-right mt-auto"
+          boxClassName="w-40 mt-3 py-2.5 px-1"
+          name={<DownloadIcon className="w-5" />}
+          withArrow={false}
+        >
+          <p className="text-sm font-normal text-center"> format:</p>
+          <p
+            onClick={downloadTemplatePdf}
+            className="text-base font-normal text-center my-1 cursor-pointer hover:bg-gray-100"
+          >
+            .pdf
+          </p>
+          <p
+            onClick={downloadTemplateDocx}
+            className="text-base font-normal text-center my-1 cursor-pointer hover:bg-gray-100"
+          >
+            .docx
+          </p>
+        </DropDown>
       </h5>
-      <h5 className="text-xl font-normal pt-4" onClick={handleClick}>
+      <h5 className="pt-4 text-xl font-normal" onClick={handleClick}>
         {editName ? (
           <input
             type="text"
@@ -119,6 +172,9 @@ const TemplateEdit: React.FC = () => {
 
       <div className="pt-4 pb-6">
         <CKEditor
+          config={{
+            removePlugins: ["EasyImage", "ImageUpload", "MediaEmbed"],
+          }}
           editor={ClassicEditor}
           data={templateContent}
           onChange={(event: any, editor: any) => {
@@ -128,9 +184,9 @@ const TemplateEdit: React.FC = () => {
         />
       </div>
 
-      <div className="w-full text-center pt-6">
+      <div className="w-full pt-6 text-center">
         <button
-          className="bg-primary text-white mb-2 w-3/4 h-10 rounded-2xl"
+          className="w-3/4 h-10 mb-2 text-white bg-primary rounded-2xl"
           onClick={saveTemplate}
         >
           Speichern

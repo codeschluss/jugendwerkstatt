@@ -5,23 +5,16 @@ import { InputFieldProps } from "./InputField.props";
 
 export const InputField = forwardRef<HTMLInputElement, InputFieldProps>(
   (
-    {
-      id,
-      name,
-      label,
-      className,
-      inputClassName,
-      labelProps,
-      required = true,
-      ...rest
-    },
+    { id, name, label, className, inputClassName, required = true, ...rest },
     ref
   ): ReactElement => (
     <div className={twClsx("w-full", className)}>
-      <Label {...labelProps} htmlFor={id || name} className="text-lg">
-        {label}
-        {required && <span className="p-1 text-primary">*</span>}
-      </Label>
+      {!!label && (
+        <Label htmlFor={id || name} className="text-lg">
+          {label}
+          {required && <span className="p-1 text-primary">*</span>}
+        </Label>
+      )}
       <Input
         {...rest}
         ref={ref}

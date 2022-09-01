@@ -1,21 +1,21 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import dayjs from "dayjs";
-import { ReactElement, useEffect } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { joiResolver } from '@hookform/resolvers/joi';
+import dayjs from 'dayjs';
+import { ReactElement, useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   useGetJobAdAdminQuery,
   useSaveJobAdMutation,
-} from "../../../GraphQl/graphql";
-import { Accordion, FormActions } from "../../components/molecules";
+} from '../../../GraphQl/graphql';
+import { Accordion, FormActions } from '../../components/molecules';
 import {
   DescriptionFrom,
   VacancyForm,
   VacancyFormInputs,
   VacancyTerminForm,
-} from "../../components/organisms";
-import { gqlVar } from "../../utils";
-import { VacancyFormSchema } from "../../validations";
+} from '../../components/organisms';
+import { gqlVar, twClsx } from '../../utils';
+import { VacancyFormSchema } from '../../validations';
 
 const CreateVacancyPage = (): ReactElement => {
   const { id } = useParams();
@@ -26,12 +26,16 @@ const CreateVacancyPage = (): ReactElement => {
     defaultValues: {
       date: {
         startDate: dayjs().format(),
-        dueDate: dayjs().add(7, "day").format(),
+        dueDate: dayjs().add(7, 'day').format(),
       },
     },
   });
 
-  const { reset, handleSubmit } = methods;
+  const {
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
 
   const { data: { getJobAd = null } = {} } = useGetJobAdAdminQuery({
     variables: { entity: { id } },
@@ -39,7 +43,7 @@ const CreateVacancyPage = (): ReactElement => {
   });
 
   const [saveJobAd] = useSaveJobAdMutation({
-    onCompleted: () => navigate("/admin/job-announcements"),
+    onCompleted: () => navigate('/admin/job-announcements'),
   });
 
   const handleOnSubmit = ({
@@ -60,40 +64,48 @@ const CreateVacancyPage = (): ReactElement => {
     );
   };
 
-  const handleReset = () => reset();
-
   useEffect(() => {
     if (!!getJobAd) {
       reset({
         baseData: {
-          title: getJobAd?.title || "",
-          company: getJobAd?.company?.id || "",
-          category: getJobAd?.type?.id || "",
+          title: getJobAd?.title || '',
+          company: getJobAd?.company?.id || '',
+          category: getJobAd?.type?.id || '',
         },
         date: {
           startDate: dayjs(getJobAd?.startDate).format(),
           dueDate: dayjs(getJobAd?.dueDate).format(),
         },
+        description: getJobAd?.content || '',
       });
     }
   }, [getJobAd, reset]);
 
+  console.log(getJobAd);
+
   return (
     <FormProvider {...methods}>
       <form className="min-h-full">
-        <Accordion title="Stammdaten" open={!!id}>
+        <Accordion
+          title="Stammdaten"
+          open={!!id}
+          className={twClsx(errors.baseData && 'border border-primary')}
+        >
           <VacancyForm />
         </Accordion>
-        <Accordion title="Beschreibung">
+        <Accordion
+          title="Beschreibung"
+          className={twClsx(errors.description && 'border border-primary')}
+        >
           <DescriptionFrom />
         </Accordion>
-        <Accordion title="Termine">
+        <Accordion
+          title="Termine"
+          className={twClsx(errors.date && 'border border-primary')}
+        >
           <VacancyTerminForm />
         </Accordion>
-        <FormActions
-          onReset={handleReset}
-          onSubmit={handleSubmit(handleOnSubmit)}
-        />
+        <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
       </form>
     </FormProvider>
   );

@@ -1,23 +1,35 @@
 import { ReactElement } from "react";
-import { Outlet, Navigate, useLocation } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "../../../contexts/AuthContext";
+import { Navigate, useLocation } from "react-router-dom";
+import { useExpireToken } from "../../../hooks/useExpireToken";
+import { AllowedRoles, UserRoleEnum } from "../../../interfaces";
 
-export const RequireAuthRoute = (): ReactElement => {
+// store
+import { useAuthStore } from "../../../store";
+import { RequireAuthLayout } from "./RequireAuthLayout";
+
+export const RequireAuthRoute = ({
+  accessRole,
+}: {
+  accessRole: AllowedRoles[];
+}): ReactElement => {
   // hooks
   const location = useLocation();
-  const { userRole } = useContext(AuthContext);
+  const { isAuthenticated, user } = useAuthStore();
+  useExpireToken();
 
-  // if (userRole === "") return <div>Loading...</div>;
+  const rolePath = !accessRole.includes(UserRoleEnum.STUDENT)
+    ? "admin/events"
+    : "/";
 
-  return !!userRole && userRole !== "Admin" ? (
-    <Outlet />
+  const hasAccess = user?.roles.some((role) =>
+    accessRole.includes(role as AllowedRoles)
+  );
+
+  return isAuthenticated && hasAccess ? (
+    <RequireAuthLayout accessRole={accessRole} />
   ) : (
     <Navigate
-      to={{
-        pathname:
-          !!userRole && userRole === "Admin" ? "/admin/events" : "/login",
-      }}
+      to={{ pathname: isAuthenticated ? rolePath : "/" }}
       state={{ from: location }}
     />
   );

@@ -1,0 +1,13 @@
+query GetPages {
+  pages: getPages {
+    result {
+      ...PageField
+    }
+  }
+}
+
+query GetPage($entity: PageEntityInput) {
+  page: getPage(entity: $entity) {
+    ...PageField
+  }
+}

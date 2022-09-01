@@ -1,23 +1,22 @@
-import { ReactElement, useEffect } from "react";
-import { joiResolver } from "@hookform/resolvers/joi";
-import { useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { ReactElement, useEffect } from 'react';
+import { joiResolver } from '@hookform/resolvers/joi';
+import { useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import { Accordion, FormActions, InputField } from "../../components/molecules";
-import { CategoryFormInputs } from "../../components/organisms";
-import { CategoryFormSchema } from "../../validations";
+import { Accordion, FormActions, InputField } from '../../components/molecules';
+import { CategoryFormInputs } from '../../components/organisms';
+import { CategoryFormSchema } from '../../validations';
 import {
   useGetTemplateTypeAdminQuery,
   useSaveTemplateTypeAdminMutation,
-} from "../../../GraphQl/graphql";
-import { gqlVar } from "../../utils";
+} from '../../../GraphQl/graphql';
+import { gqlVar, twClsx } from '../../utils';
 
 const CreateFormsCategories = (): ReactElement => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const {
-    reset,
     setValue,
     register,
     handleSubmit,
@@ -33,7 +32,7 @@ const CreateFormsCategories = (): ReactElement => {
     });
 
   const [saveTemplateType] = useSaveTemplateTypeAdminMutation({
-    onCompleted: () => navigate("/admin/forms/categories"),
+    onCompleted: () => navigate('/admin/forms/categories'),
   });
 
   const handleOnSubmit = ({ name }: CategoryFormInputs) => {
@@ -42,29 +41,28 @@ const CreateFormsCategories = (): ReactElement => {
     );
   };
 
-  const handleReset = () => reset();
-
   useEffect(() => {
     if (!!getTemplateType) {
-      setValue("name", getTemplateType?.name || "");
+      setValue('name', getTemplateType?.name || '');
     }
   }, [getTemplateType, setValue]);
 
   return (
     <form className="min-h-full">
-      <Accordion open={!!id} title="Kategorie">
+      <Accordion
+        open={!!id}
+        title="Kategorie"
+        className={twClsx(errors.name && 'border border-primary')}
+      >
         <InputField
           id="name"
           label="Kategoriename"
           placeholder="Metallhandwerk"
-          {...register("name")}
+          {...register('name')}
           error={errors?.name?.message}
         />
       </Accordion>
-      <FormActions
-        onReset={handleReset}
-        onSubmit={handleSubmit(handleOnSubmit)}
-      />
+      <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
     </form>
   );
 };

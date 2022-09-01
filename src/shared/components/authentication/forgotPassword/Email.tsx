@@ -1,14 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../client/components/ui/Button";
-import AuthContext from "../../../../contexts/AuthContext";
+// import AuthContext from "../../../../contexts/AuthContext";
 import { useSendPasswordResetMutation } from "../../../../GraphQl/graphql";
 import useInput from "../../../../hooks/use-input";
+import { useTempEmailStore } from "../../../../store/tempEmail/tempEmail.store";
 import AuthInput from "../AuthInput";
 
 const Email: React.FC = () => {
   const [errorText, setErrorText] = useState(false);
-  const { setTempEmail } = useContext(AuthContext);
+  const { setTempEmail } = useTempEmailStore();
   const navigate = useNavigate();
 
   const {
@@ -48,7 +49,7 @@ const Email: React.FC = () => {
     <>
       <form
         onSubmit={submitHandler}
-        className="flex justify-between flex-col   mt-16 p-2"
+        className="flex flex-col justify-between p-2 mt-16"
       >
         <AuthInput
           value={enteredEmail}

@@ -3,7 +3,7 @@ import Item from "../Item";
 
 const Calls = () => {
   return (
-    <div>
+    <div className="px-8">
       <Item
         href=""
         name="Jane Cooper"

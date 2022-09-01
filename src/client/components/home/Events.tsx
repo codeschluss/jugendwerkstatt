@@ -1,8 +1,9 @@
 import {
   EventEntity,
   useAddEventFavoriteMutation,
+  useDeleteEventFavoriteMutation,
   useGetEventsQuery,
-  useGetMeFavoritesQuery
+  useGetMeBasicFavoritesQuery,
 } from "../../../GraphQl/graphql";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
@@ -10,15 +11,25 @@ import Slider from "../slideItems/Slider";
 interface EventsProps {}
 
 const Events: React.FC<EventsProps> = () => {
-  const useEvents = useGetEventsQuery({});
+  let fetchedData = null;
 
-  const [eventFavorite] = useAddEventFavoriteMutation({});
+  const useEvents = useGetEventsQuery({
+    skip: !!fetchedData,
+    variables: {
+      params: {
+        page: 0,
+        size: 5,
+      },
+    },
+  });
 
-  const fetchedData: [EventEntity] = useEvents.data?.getEvents?.result as [
-    EventEntity
-  ];
+  const [eventFavorite] = useAddEventFavoriteMutation();
 
-  const favorites = useGetMeFavoritesQuery({});
+  fetchedData = useEvents.data?.getEvents?.result as [EventEntity];
+
+  const [deleteEventFavorite] = useDeleteEventFavoriteMutation();
+
+  const favorites = useGetMeBasicFavoritesQuery({});
   const refetchQueries = () => {
     useEvents.refetch();
     favorites.refetch();
@@ -26,29 +37,39 @@ const Events: React.FC<EventsProps> = () => {
 
   return (
     <Slider title="Events" link={"/events"}>
-      {fetchedData?.map((el: any) => {
-        const checkId = (obj: any) => obj.id === el.id;
-        const hasId = favorites?.data?.me?.favoriteEvents?.some(checkId);
+      {fetchedData
+        ?.filter((event: EventEntity | undefined | null) => event?.nextSchedule)
+        .map((el: any) => {
+          const checkId = (obj: any) => obj.id === el.id;
+          const hasId = favorites?.data?.me?.favoriteEvents?.some(checkId);
 
-        return (
-          <SlideCard
-            route={`/event/${el.id}`}
-            key={el?.id}
-            isFavorite={hasId}
-            eventName={el?.name}
-            location={el?.address?.street}
-            date={el?.schedules[el?.schedules?.length - 1]?.startDate}
-            imgUrl={el?.titleImage?.id}
-            setFavorite={() =>
-              eventFavorite({
-                variables: {
-                  jobAdId: el.id,
-                },
-              }).then(() => refetchQueries())
-            }
-          />
-        );
-      })}
+          return (
+            <SlideCard
+              shareUrl={`event/${el.id}`}
+              route={`/event/${el.id}`}
+              key={el?.id}
+              isFavorite={hasId}
+              eventName={el?.name}
+              location={el?.address?.street}
+              date={el?.nextSchedule.startDate}
+              imgUrl={`data:${el?.titleImage?.mimeType};base64,${el?.titleImage?.base64}`}
+              setFavorite={() =>
+                eventFavorite({
+                  variables: {
+                    jobAdId: el.id,
+                  },
+                }).then(() => refetchQueries())
+              }
+              removeFavorite={() =>
+                deleteEventFavorite({
+                  variables: {
+                    eventId: el.id,
+                  },
+                }).then(() => refetchQueries())
+              }
+            />
+          );
+        })}
     </Slider>
   );
 };

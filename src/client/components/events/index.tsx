@@ -3,9 +3,12 @@ import FilterContext from "../../../contexts/FilterContext";
 import {
   ConjunctionOperator,
   EventCategoryEntity,
-
+  EventEntity,
   QueryOperator,
-  useGetEventCategoriesQuery
+  useAddEventFavoriteMutation,
+  useDeleteEventFavoriteMutation,
+  useGetEventCategoriesQuery,
+  useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
 import FilterHeader from "../../../shared/components/header/filterHeader";
 import SideBar from "../filter/SideBar";
@@ -18,40 +21,38 @@ const Events = () => {
   >();
   const { category, dates } = useContext(FilterContext);
 
+  const [eventFavorite] = useAddEventFavoriteMutation({});
+
+  const [deleteEventFavorite] = useDeleteEventFavoriteMutation();
+
   const filterOperands: any = [];
 
-  useEffect(() => {
-    category &&
-      filterOperands.push({
-        entity: {
-          operator: QueryOperator.Equal,
-          path: "id",
-          value: category?.id,
-        },
-      });
-  }, [category]);
+  category &&
+    filterOperands.push({
+      entity: {
+        operator: QueryOperator.Equal,
+        path: "id",
+        value: category?.id,
+      },
+    });
 
-  useEffect(() => {
-    dates.startDate &&
-      filterOperands.push({
-        entity: {
-          operator: QueryOperator.GreaterOrEqual,
-          path: "events.schedules.startDate",
-          value: dates?.startDate?.$d,
-        },
-      });
-  }, [dates.startDate]);
+  dates.startDate &&
+    filterOperands.push({
+      entity: {
+        operator: QueryOperator.GreaterOrEqual,
+        path: "events.schedules.startDate",
+        value: dates?.startDate?.$d,
+      },
+    });
 
-  useEffect(() => {
-    dates.endDate &&
-      filterOperands.push({
-        entity: {
-          operator: QueryOperator.LessOrEqual,
-          path: "events.schedules.endDate",
-          value: dates?.endDate?.$d,
-        },
-      });
-  }, [dates.endDate]);
+  dates.endDate &&
+    filterOperands.push({
+      entity: {
+        operator: QueryOperator.LessOrEqual,
+        path: "events.schedules.endDate",
+        value: dates?.endDate?.$d,
+      },
+    });
 
   const result = useGetEventCategoriesQuery(
     filterOperands &&
@@ -70,6 +71,12 @@ const Events = () => {
       }
   );
 
+  const favorites = useGetMeFavoritesQuery({});
+  const refetchQueries = () => {
+    result.refetch();
+    favorites.refetch();
+  };
+
   useEffect(() => {
     result.refetch();
   }, [category, dates]);
@@ -82,33 +89,67 @@ const Events = () => {
   }, [result.data]);
 
   return (
-    <div className=" m-auto">
-      <div className="pl-2 md:absolute  md:top-14 overflow-hidden bg-primary md:bg-transparent border-t-2 border-white md:border-none w-full items-center flex  h-16">
-        <SideBar />
+    <div className="m-auto md:m-12 md:mt-0">
+      <div className="flex items-center w-full h-16 pl-2 overflow-hidden border-t-2 border-white  bg-primary md:bg-transparent md:border-none">
+        <SideBar type="EVENT" />
 
         <FilterHeader />
       </div>
 
       <div className="p-4">
         {" "}
-        {categoriesData?.map((category: EventCategoryEntity) => {
-          return (
-            <Slider title={category?.name || ""} className="-mx-4">
-              {category?.events?.map((el: any) => {
-                console.log(el, "eventData");
-                return (
-                  <SlideCard
-                    eventName={el?.name}
-                    location={`${el?.address?.street}, ${el?.address?.houseNumber}, ${el?.address?.place}`}
-                    date={el?.schedules[el.schedules.length - 1]?.startDate}
-                    route={`/event/${el.id}`}
-                    imgUrl={el?.titleImage?.id}
-                  />
-                );
-              })}
-            </Slider>
-          );
-        })}
+        {categoriesData
+          ?.filter((cat: EventCategoryEntity | undefined | null) =>
+            cat?.events?.some(
+              (event: EventEntity | undefined | null) => event?.nextSchedule
+            )
+          )
+          .map((category: EventCategoryEntity) => {
+            return (
+              <Slider
+                title={category?.name || ""}
+                className="-mx-4"
+                key={category.id}
+              >
+                {category?.events
+                  ?.filter(
+                    (event: EventEntity | undefined | null) =>
+                      event?.nextSchedule
+                  )
+                  .map((el: any) => {
+                    const checkId = (obj: any) => obj.id === el.id;
+                    const hasId =
+                      favorites?.data?.me?.favoriteEvents?.some(checkId);
+                    return (
+                      <SlideCard
+                        key={el.id}
+                        isFavorite={hasId}
+                        eventName={el?.name}
+                        location={`${el?.address?.street}, ${el?.address?.houseNumber}, ${el?.address?.place}`}
+                        date={el?.nextSchedule.startDate}
+                        shareUrl={`event/${el.id}`}
+                        route={`/event/${el.id}`}
+                        imgUrl={`data:${el?.titleImage?.mimeType};base64,${el?.titleImage?.base64}`}
+                        setFavorite={() =>
+                          eventFavorite({
+                            variables: {
+                              jobAdId: el.id,
+                            },
+                          }).then(() => refetchQueries())
+                        }
+                        removeFavorite={() =>
+                          deleteEventFavorite({
+                            variables: {
+                              eventId: el.id,
+                            },
+                          }).then(() => refetchQueries())
+                        }
+                      />
+                    );
+                  })}
+              </Slider>
+            );
+          })}
       </div>
     </div>
   );

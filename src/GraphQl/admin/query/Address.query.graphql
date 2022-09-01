@@ -1,0 +1,13 @@
+query GetAddress($entity: AddressEntityInput) {
+  address: getAddress(entity: $entity) {
+    ...AddressField
+  }
+}
+
+query GetAddresses {
+  addresses: getAddresses {
+    result {
+      ...AddressField
+    }
+  }
+}

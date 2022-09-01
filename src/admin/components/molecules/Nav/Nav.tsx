@@ -1,13 +1,7 @@
 import { FC } from 'react';
-import {
-  ChevronDoubleLeftIcon,
-  ChevronDoubleRightIcon,
-} from '@heroicons/react/solid';
 import { NavComposition, NavProps } from './Nav.props';
 import { NavItem } from '../../atoms/NavItem/NavItem';
 import { NavWrapper } from '../../atoms/NavWrapper/NavWrapper';
-import { Icon } from '../../atoms';
-import { useToggle } from '../../../../hooks/useToggle';
 
 const Nav: FC<NavProps> & NavComposition = ({
   data,
@@ -15,39 +9,17 @@ const Nav: FC<NavProps> & NavComposition = ({
   children,
   ...rest
 }) => {
-  /**
-   * global state
-   */
-  const { isToggled, handleToggle } = useToggle(true);
-
   return (
-    <>
-      <ul className="px-5 pt-6" {...rest}>
-        {data.items.map((item, idx) => (
-          <Nav.Item
-            key={item.name}
-            item={item}
-            isSidebarToggled={isToggled}
-            handleSidebarToggler={handleToggle}
-            isLastChild={idx === data.items.length - 1}
-          />
-        ))}
-      </ul>
-
-      {showToggler && (
-        <button
-          onClick={handleToggle}
-          className="flex items-center self-end py-4 mx-auto mt-16 space-x-2 text-white"
-        >
-          {isToggled && <span>Menü einklappen</span>}
-          <Icon
-            icon={
-              isToggled ? <ChevronDoubleLeftIcon /> : <ChevronDoubleRightIcon />
-            }
-          />
-        </button>
-      )}
-    </>
+    <ul className="px-5 pt-6" {...rest}>
+      {data.items.map((item, idx) => (
+        <Nav.Item
+          key={item.name}
+          item={item}
+          isLastChild={idx === data.items.length - 1}
+          className="xs:text-black md:text-white"
+        />
+      ))}
+    </ul>
   );
 };
 

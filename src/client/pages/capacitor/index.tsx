@@ -1,22 +1,18 @@
 import { useEffect, useState } from "react";
 
 import {
-  ActionPerformed, PushNotifications, PushNotificationSchema, Token
+  ActionPerformed,
+  PushNotifications,
+  PushNotificationSchema,
+  Token,
 } from "@capacitor/push-notifications";
 import { Toast } from "@capacitor/toast";
 import {
   useGetMeBasicQuery,
-  useSaveSubscriptionMutation
+  useSaveSubscriptionMutation,
 } from "../../../GraphQl/graphql";
-// import {
-//   useGetMeBasicQuery,
-//   useSaveSubscriptionMutation,
-// } from "../../../GraphQl/graphql";
 
 export default function PushNotificationsContainer() {
-  const nullEntry: any[] = [];
-  const [notifications, setnotifications] = useState(nullEntry);
-
   const { data } = useGetMeBasicQuery();
 
   const [subs] = useSaveSubscriptionMutation();
@@ -52,9 +48,7 @@ export default function PushNotificationsContainer() {
         variables: {
           entity,
         },
-      })
-        .then((subs) => alert(subs.data?.saveSubscription?.id))
-        .catch((err) => alert(err));
+      });
     });
 
     PushNotifications.addListener("registrationError", (error: any) => {
@@ -64,30 +58,14 @@ export default function PushNotificationsContainer() {
     PushNotifications.addListener(
       "pushNotificationReceived",
       (notification: PushNotificationSchema) => {
-        setnotifications((notifications) => [
-          ...notifications,
-          {
-            id: notification.id,
-            title: notification.title,
-            body: notification.body,
-            type: "foreground",
-          },
-        ]);
+        console.log(notification);
       }
     );
 
     PushNotifications.addListener(
       "pushNotificationActionPerformed",
       (notification: ActionPerformed) => {
-        setnotifications((notifications) => [
-          ...notifications,
-          {
-            id: notification.notification.data.id,
-            title: notification.notification.data.title,
-            body: notification.notification.data.body,
-            type: "action",
-          },
-        ]);
+        console.log(notification);
       }
     );
   };
@@ -98,24 +76,5 @@ export default function PushNotificationsContainer() {
     });
   };
 
-  return (
-    <>
-      <h1 onClick={register}>GET NOTIFIED</h1>
-
-      {notifications.map((notif: any) => (
-        <div key={notif.id}>
-          <div>
-            <div>
-              <h3 className="notif-title">{notif.title}</h3>
-            </div>
-            <p>{notif.body}</p>
-            {notif.type === "foreground" && (
-              <p>This data was received in foreground</p>
-            )}
-            {notif.type === "action" && <p>This data was received on tap</p>}
-          </div>
-        </div>
-      ))}
-    </>
-  );
+  return <>""</>;
 }

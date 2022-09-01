@@ -1,0 +1,3 @@
+.dashboard-content {
+  @apply p-4 overflow-y-auto md:ml-64 lg:p-16;
+}

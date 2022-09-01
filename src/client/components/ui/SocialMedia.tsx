@@ -35,7 +35,7 @@ export const SocialMedia: React.FC<{ url?: string }> = ({ url }) => {
   const handleClose = () => setOpen(false);
 
   return (
-    <div>
+    <div className="cursor-pointer">
       <ShareIcon className="w-5" onClick={handleOpen} />
       <Modal
         open={open}

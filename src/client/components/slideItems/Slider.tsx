@@ -11,6 +11,43 @@ interface SliderProps {
   link?: any;
 }
 
+const SlickArrowLeft: React.FC<{ currentSlide?: any; slideCount?: any }> = ({
+  currentSlide,
+  slideCount,
+  ...props
+}) => (
+  <button
+    {...props}
+    className={
+      "slick-prev slick-arrow" + (currentSlide === 0 ? " slick-disabled" : "")
+    }
+    aria-hidden="true"
+    aria-disabled={currentSlide === 0 ? true : false}
+    type="button"
+  >
+    <ChevronLeftIcon />
+  </button>
+);
+
+const SlickArrowRight: React.FC<{ currentSlide?: any; slideCount?: any }> = ({
+  currentSlide,
+  slideCount,
+  ...props
+}) => (
+  <button
+    {...props}
+    className={
+      "slick-next slick-arrow" +
+      (currentSlide === slideCount - 1 ? " slick-disabled" : "")
+    }
+    aria-hidden="true"
+    aria-disabled={currentSlide === slideCount - 1 ? true : false}
+    type="button"
+  >
+    <ChevronRightIcon />
+  </button>
+);
+
 const SliderC: React.FC<SliderProps> = ({
   children,
   className,
@@ -24,8 +61,8 @@ const SliderC: React.FC<SliderProps> = ({
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
-    prevArrow: <ChevronLeftIcon />,
-    nextArrow: <ChevronRightIcon />,
+    prevArrow: <SlickArrowLeft />,
+    nextArrow: <SlickArrowRight />,
   };
   return (
     <div
@@ -45,7 +82,7 @@ const SliderC: React.FC<SliderProps> = ({
       </p>
       {isTouch ? (
         <div
-          className={`relative w-full flex gap-4 snap-x px-4 snap-mandatory overflow-x-auto scroll-container pb-3`}
+          className={`relative w-full flex    snap-x px-4 snap-mandatory overflow-x-auto scroll-container pb-3`}
         >
           {children}
         </div>

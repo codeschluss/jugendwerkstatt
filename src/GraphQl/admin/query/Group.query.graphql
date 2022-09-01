@@ -2,12 +2,31 @@ query GetGroups {
   groups: getGroups {
     result {
       ...GroupField
+      courses {
+        ...CourseField
+        members {
+          id
+        }
+      }
     }
   }
 }
 
-query GetGroup($groupId: String) {
-  group: getGroup(entity: { id: $groupId }) {
+query GetGroup($entity: GroupEntityInput) {
+  group: getGroup(entity: $entity) {
     ...GroupField
+    courses {
+      ...CourseField
+    }
+  }
+}
+
+query GetGroupCourses($entity: GroupEntityInput, $year: Int) {
+  group: getGroup(entity: $entity) {
+    ...GroupField
+    courses {
+      ...CourseField
+      averageRating(year: $year)
+    }
   }
 }

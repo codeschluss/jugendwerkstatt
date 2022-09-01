@@ -1,5 +1,5 @@
 mutation AddRoles($userId: String, $roleIds: [String]) {
-  addRoles(userId: $userId, roleIds: $roleIds) {
+  saveUser(entity: { id: "dasadasda" }) {
     id
   }
 }

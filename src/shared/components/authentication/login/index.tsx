@@ -1,14 +1,36 @@
-import { useContext } from "react";
+import { ReactElement, useCallback } from "react";
 import { Link } from "react-router-dom";
+import Footer from "../../../../client/components/footer";
 import Button from "../../../../client/components/ui/Button";
-import AuthContext from "../../../../contexts/AuthContext";
+import { useCreateTokenMutation } from "../../../../GraphQl/graphql";
 import useInput from "../../../../hooks/use-input";
-import useAuth from "../../../../hooks/useAuth";
+import { useAuthStore } from "../../../../store";
+import { getSingleJWTField, writeAuthToken } from "../../../utils";
 import AuthInput from "../AuthInput";
 import AuthWrapper from "../AuthWrapper";
 
-const Login = () => {
-  const { setTempEmail } = useContext(AuthContext);
+const Login = (): ReactElement => {
+  const { addAuth } = useAuthStore();
+
+  const handleStoreUser = useCallback(
+    (access: string, refresh: string) => {
+      writeAuthToken("refreshToken", refresh);
+      writeAuthToken("accessToken", access);
+      const fileds = getSingleJWTField(access);
+      addAuth(
+        {
+          roles: fileds?.roles || [],
+          scopes: fileds?.scopes || [],
+          approved: fileds?.approved || false,
+          verified: fileds?.verified || false,
+          email: fileds?.sub || "",
+        },
+        true,
+        false
+      );
+    },
+    [addAuth]
+  );
 
   const {
     value: enteredEmail,
@@ -16,7 +38,6 @@ const Login = () => {
     hasError: emailInputError,
     valueChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
-    resetValue: resetEmailInput,
   } = useInput(
     (value: any) => value.includes("@") && value !== "" && value.includes(".")
   );
@@ -27,54 +48,63 @@ const Login = () => {
     hasError: passwordInputError,
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
-    resetValue: resetPasswordInput,
   } = useInput((value: any) => value.trim().length !== 0);
 
-  const { handleLogin } = useAuth();
+  const [createToken] = useCreateTokenMutation({
+    onCompleted: ({ createToken }) => {
+      handleStoreUser(createToken?.access || "", createToken?.refresh || "");
+    },
+  });
 
   const submitHandler = async (e: any) => {
     e.preventDefault();
-    handleLogin(enteredEmail, enteredPassword);
-    // resetEmailInput();
-    // resetPasswordInput();
-    setTempEmail(enteredEmail);
+    createToken({
+      variables: {
+        username: enteredEmail,
+        password: enteredPassword,
+      },
+    });
   };
-  return (
-    <AuthWrapper title="Anmelden">
-      <form onSubmit={submitHandler} className="p-6 mt-5 text-right">
-        <AuthInput
-          value={enteredEmail}
-          onBlur={emailBlurHandler}
-          onChange={emailChangeHandler}
-          type="text"
-          error={emailInputError ? "Keine gültige E-Mail Adresse" : ""}
-          placeholder="E-Mail Adresse"
-          inputClassName="w-full px-4 text-xl p-3 peer focus:outline-none border-2 rounded-md"
-        />
-        <AuthInput
-          value={enteredPassword}
-          onBlur={passwordBlurHandler}
-          onChange={passwordChangeHandler}
-          error={passwordInputError ? "Passwort nicht stark genug" : ""}
-          type="password"
-          placeholder="Passwort"
-          inputClassName="w-full px-4 text-xl p-3 peer f
-          ocus:outline-none border-2 rounded-md"
-        />
 
-        <Link className="my-10 underline" to="/forgot-password/email">
-          {" "}
-          <p>Passwort vergessen?</p>
-        </Link>
-        <Button
-          isValidated={enteredPasswordValidity && enteredEmailValidity}
-          isDisabled={!passwordInputError && !emailInputError}
-          buttonType={"submit"}
-        >
-          Anmelden
-        </Button>
-      </form>
-    </AuthWrapper>
+  return (
+    <>
+      <AuthWrapper title="Anmelden">
+        <form onSubmit={submitHandler} className="p-6 mt-5 text-right">
+          <AuthInput
+            value={enteredEmail}
+            onBlur={emailBlurHandler}
+            onChange={emailChangeHandler}
+            type="text"
+            error={emailInputError ? "Keine gültige E-Mail Adresse" : ""}
+            placeholder="E-Mail Adresse"
+            inputClassName="w-full px-4 text-xl p-3 peer focus:outline-none border-2 rounded-md"
+          />
+          <AuthInput
+            value={enteredPassword}
+            onBlur={passwordBlurHandler}
+            onChange={passwordChangeHandler}
+            error={passwordInputError ? "Passwort nicht stark genug" : ""}
+            type="password"
+            placeholder="Passwort"
+            inputClassName="w-full px-4 text-xl p-3 peer f
+          ocus:outline-none border-2 rounded-md"
+          />
+
+          <Link className="my-10 underline" to="/forgot-password/email">
+            {" "}
+            <p className="my-2">Passwort vergessen?</p>
+          </Link>
+          <Button
+            isValidated={enteredPasswordValidity && enteredEmailValidity}
+            isDisabled={!passwordInputError && !emailInputError}
+            buttonType={"submit"}
+          >
+            Anmelden
+          </Button>
+        </form>
+      </AuthWrapper>
+      <Footer />
+    </>
   );
 };
 

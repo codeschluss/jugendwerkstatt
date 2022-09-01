@@ -13,12 +13,12 @@ import TextField from "@mui/material/TextField";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import {
   useGetEventCategorieNamesQuery,
-  useGetEventCategoriesQuery,
+  useGetJobTypeNamesQuery,
 } from "../../../GraphQl/graphql";
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
-const SideBar: React.FC = () => {
+const SideBar: React.FC<{ type?: string }> = ({ type }) => {
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -37,6 +37,8 @@ const SideBar: React.FC = () => {
     setTempCategory(event.target.value);
   };
   const eventCategories = useGetEventCategorieNamesQuery();
+  const jobTypeNames = useGetJobTypeNamesQuery();
+
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -58,13 +60,12 @@ const SideBar: React.FC = () => {
     });
 
     tempCategory && setCategory(tempCategory);
-    tempCategory &&
+    tempDates &&
       setDates({
         startDate: tempDates.tempStartDate,
         endDate: tempDates.tempEndDate,
       });
   };
-  console.log(tempDates.tempStartDate, "the date");
 
   const list = (anchor: Anchor) => (
     <Box
@@ -73,13 +74,15 @@ const SideBar: React.FC = () => {
       // onClick={toggleDrawer(anchor, false)}
       // onKeyDown={toggleDrawer(anchor, false)}
     >
-      <div className="h-28  bg-yellow-400 relative flex items-center justify-between px-7 ">
+      <div className="relative flex items-center justify-between bg-yellow-400 h-28 px-7 ">
         <p className="text-2xl">Filter</p>
         <CheckIcon className="w-10" onClick={applyFilter} />
       </div>
 
       <FormControl sx={{ m: 3, minWidth: 200 }}>
-        <InputLabel id="demo-simple-select-helper-label">Kategorie</InputLabel>
+        <InputLabel id="demo-simple-select-helper-label">
+          {type === "EVENT" ? "Kategorie" : "JobType"}
+        </InputLabel>
         <Select
           labelId="demo-simple-select-helper-label"
           id="demo-simple-select-helper"
@@ -90,20 +93,31 @@ const SideBar: React.FC = () => {
           <MenuItem value="">
             <em></em>
           </MenuItem>
-          {eventCategories.data?.getEventCategories?.result?.map((cat: any) => {
-            return (
-              <MenuItem key={cat.id} value={cat}>
-                {cat.name}
-              </MenuItem>
-            );
-          })}
+          {type === "EVENT"
+            ? eventCategories.data?.getEventCategories?.result?.map(
+                (cat: any) => {
+                  return (
+                    <MenuItem key={cat.id} value={cat}>
+                      {cat.name}
+                    </MenuItem>
+                  );
+                }
+              )
+            : jobTypeNames.data?.getJobTypes?.result?.map((typeName: any) => {
+                return (
+                  <MenuItem key={typeName.id} value={typeName}>
+                    {typeName.name}
+                  </MenuItem>
+                );
+              })}
         </Select>
       </FormControl>
 
       <FormControl sx={{ m: 3 }}>
         <DatePicker
           disablePast
-          label="Start Date"
+          inputFormat="DD.MM.YYYY"
+          label={type === "EVENT" ? "Start date" : "Due Date"}
           value={tempDates.tempStartDate}
           onChange={(newValue) => {
             setTempDates({ ...tempDates, tempStartDate: newValue });
@@ -114,7 +128,8 @@ const SideBar: React.FC = () => {
       <FormControl sx={{ m: 3 }}>
         <DatePicker
           disablePast
-          label="endDate"
+          inputFormat="DD.MM.YYYY"
+          label={type === "EVENT" ? "End date" : "Start date"}
           value={tempDates.tempEndDate}
           onChange={(newValue) => {
             setTempDates({ ...tempDates, tempEndDate: newValue });
@@ -130,7 +145,7 @@ const SideBar: React.FC = () => {
       <React.Fragment>
         <span
           onClick={toggleDrawer("right", true)}
-          className="bg-red-800 md:bg-primary rounded-full w-8 h-8 flex items-center justify-center mr-2 md:mr-10"
+          className="flex cursor-pointer items-center justify-center w-8 h-8 mr-2 bg-red-800 rounded-full md:bg-primary md:mr-10"
         >
           {" "}
           <FilterIcon className="w-6 text-white" />

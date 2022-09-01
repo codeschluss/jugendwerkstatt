@@ -1,43 +1,51 @@
-import React, { useContext } from 'react';
-import { API_URL } from '../../../../config/app';
-import AuthContext from '../../../../contexts/AuthContext';
-import { useGetMeBasicQuery } from '../../../../GraphQl/graphql';
-import { cx } from '../../../utils/ClassNames';
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Stack from "@mui/material/Stack";
+import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
+import { readAuthToken } from "../../../utils";
+import { API_URL } from "../../../../config/app";
 
-const Avatar: React.FC<{ size: string; className?: string }> = ({
-  size,
-  className,
-}) => {
-  const { bgColor } = useContext(AuthContext);
-  const { data } = useGetMeBasicQuery();
+function stringToColor(string: string) {
+  let hash = 0;
+  let i;
 
-  let letter;
-  data?.me?.fullname &&
-    (letter = data?.me?.fullname?.substring(0, 1).toUpperCase());
-  return (
-    <div>
-      {data?.me?.profilePicture?.id ? (
-        <img
-          className={cx([
-            `h-${size} w-${size} object-cover rounded-full`,
-            className,
-          ])}
-          src={`${API_URL}media/${data?.me?.profilePicture?.id}`}
-          alt=""
-        />
-      ) : (
-        <span
-          //   style={{ height: size + "px", width: size + "px" }}
-          className={cx([
-            `w-${size} h-${size} rounded-full ${bgColor} flex justify-center items-center text-white`,
-            className,
-          ])}
-        >
-          {letter}
-        </span>
-      )}
+  /* eslint-disable no-bitwise */
+  for (i = 0; i < string?.length; i += 1) {
+    hash = string?.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = "#";
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.slice(-2);
+  }
+  /* eslint-enable no-bitwise */
+
+  return color;
+}
+
+function stringAvatar(name: string) {
+  return {
+    sx: {
+      bgcolor: stringToColor(name),
+    },
+    children: name && `${name?.split(" ")[0][0].toUpperCase()}`,
+  };
+}
+
+const BackgroundLetterAvatars: React.FC<{ fullname: any }> = ({ fullname }) => {
+  const me = useGetMeBasicQuery();
+
+  return me.data?.me?.profilePicture ? (
+    <div className="w-12 h-12 ">
+      <img
+        className="w-full h-full bg-cover rounded-full"
+        src={`data:${me.data?.me?.profilePicture?.mimeType};base64,${me.data?.me?.profilePicture?.base64}`}
+      />
     </div>
+  ) : (
+    <Avatar {...stringAvatar(fullname)} />
   );
 };
-
-export default Avatar;
+export default BackgroundLetterAvatars;

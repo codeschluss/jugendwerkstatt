@@ -1,90 +1,185 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { EventEntity, useGetEventsQuery } from "../../../GraphQl/graphql";
-import { Swiper, SwiperSlide } from "swiper/react";
+import React, {
+  FunctionComponent,
+  useState,
+  useEffect,
+  useCallback,
+  useContext,
+} from "react";
+import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
+import {
+  ConjunctionOperator,
+  EventEntity,
+  QueryOperator,
+  useAddEventFavoriteMutation,
+  useDeleteEventFavoriteMutation,
+  useGetEventsQuery,
+  useGetMeFavoritesQuery,
+} from "../../../GraphQl/graphql";
 import "./style.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import SwiperCore, { Virtual } from "swiper";
+import { API_URL } from "../../../config/app";
+import { getHour } from "../../../shared/utils/date/getHour";
+import { MapSocial } from "./MapSocial";
+import FilterContext from "../../../contexts/FilterContext";
+import SideBar from "../filter/SideBar";
+import FilterHeader from "../../../shared/components/header/filterHeader";
+import SlideCard from "../slideItems/SlideCard";
+
 SwiperCore.use([Virtual]);
 
 const Map: FunctionComponent = () => {
   const [allEvents, setAllEvents] = useState<any>();
-  const [swiperRef, setSwiperRef] = useState<any>(null);
+  const [selectedEvent, setSelectedEvent] = useState<
+    EventEntity | null | undefined
+  >();
 
-  const result = useGetEventsQuery({
-    variables: {
-      params: {
-        //FilterSortPaginate fields
+  const { category, dates } = useContext(FilterContext);
+
+  const filterOperands: any = [];
+
+  category &&
+    filterOperands.push({
+      entity: {
+        operator: QueryOperator.Equal,
+        path: "category.id",
+        value: category?.id,
       },
-    },
-  });
+    });
 
-  const slideTo = (index: any) => {
-    swiperRef.slideTo(index - 1, 0);
+  dates.startDate &&
+    filterOperands.push({
+      entity: {
+        operator: QueryOperator.GreaterOrEqual,
+        path: "schedules.startDate",
+        value: dates?.startDate?.$d,
+      },
+    });
+
+  dates.endDate &&
+    filterOperands.push({
+      entity: {
+        operator: QueryOperator.LessOrEqual,
+        path: "schedules.endDate",
+        value: dates?.endDate?.$d,
+      },
+    });
+
+  const result = useGetEventsQuery(
+    filterOperands &&
+      filterOperands.length && {
+        fetchPolicy: "network-only",
+        variables: {
+          params: {
+            expression: {
+              conjunction: {
+                operator: ConjunctionOperator.And,
+                operands: filterOperands,
+              },
+            },
+          },
+        },
+      }
+  );
+
+  const [eventFavorite] = useAddEventFavoriteMutation({});
+
+  const [deleteEventFavorite] = useDeleteEventFavoriteMutation();
+
+  const favorites = useGetMeFavoritesQuery({});
+  const refetchQueries = () => {
+    result.refetch();
+    favorites.refetch();
   };
+  console.log(allEvents, "result");
 
   useEffect(() => {
     let events = result.data?.getEvents?.result;
     setAllEvents(events);
-  }, [result.data?.getEvents?.result, allEvents]);
+  }, [result.data?.getEvents?.result]);
+
+  const checkId = (obj: any) => obj.id === selectedEvent?.id;
+  const hasId = favorites?.data?.me?.favoriteEvents?.some(checkId);
 
   return (
-    <div>
+    <div className="overflow-hidden relative">
       {allEvents && (
-        <div className="map">
+        <div className="map relative">
+          <div className="pl-2 md:fixed  md:top-20 right-0 overflow-hidden bg-white md:bg-slate-400  border-t-2 border-white md:border-none    items-center  z-20 flex  h-16">
+            <SideBar type="EVENT" />
+
+            <FilterHeader />
+          </div>
+
           <MapContainer
-            center={[
-              allEvents[0].address.latitude,
-              allEvents[0].address.longitude,
-            ]}
-            zoom={13}
+            center={
+              allEvents.length > 0
+                ? [
+                    allEvents[0]?.address?.latitude,
+                    allEvents[0]?.address?.longitude,
+                  ]
+                : [48.333, 9.888]
+            }
+            zoom={allEvents.length > 0 ? 13 : 11}
           >
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://api.maptiler.com/maps/openstreetmap/{z}/{x}/{y}@2x.jpg?key=MjiCJwnWXgOykin9V6Np"
             />
 
-            {allEvents?.map((event: any, index: number) => {
-              return (
-                <div key={event.id} onClick={() => slideTo(index)}>
-                  <Marker
-                    position={[event.address.latitude, event.address.longitude]}
-                  >
-                    <Popup>
-                      <p>Stadt : {event.address.place}</p>
-                      <p>Straße : {event.address.street}</p>
-                      <p>Postleitzahl: {event.address.postalCode}</p>
-                    </Popup>
-                  </Marker>
-                </div>
-              );
-            })}
-          </MapContainer>
-
-          <div className="slider">
-            <Swiper
-              onSwiper={setSwiperRef}
-              modules={[Virtual]}
-              spaceBetween={0}
-              slidesPerView={1.5}
-            >
-              {allEvents?.map((el: EventEntity, index: number) => {
-                console.log(el);
-
+            {allEvents
+              ?.filter(
+                (event: EventEntity | undefined | null) =>
+                  event?.nextSchedule && event.address?.latitude
+              )
+              .map((event: any, index: number) => {
                 return (
-                  <SwiperSlide key={el.id}>
-                    <div className="w-full h-32  bottom-0 z-50">
-                      <img
-                        src={`http://localhost:8061/api/media/${el.titleImage?.id}`}
-                        alt=""
-                      />
-                    </div>
-                  </SwiperSlide>
+                  <div key={event?.id}>
+                    <Marker
+                      eventHandlers={{
+                        click: () => setSelectedEvent(event),
+                      }}
+                      position={[
+                        allEvents === undefined ? 1 : event?.address?.latitude,
+                        allEvents === undefined ? 1 : event?.address?.longitude,
+                      ]}
+                    ></Marker>
+                  </div>
                 );
               })}
-            </Swiper>
+          </MapContainer>
+
+          <div
+            className={`absolute bg-white transform-gpu transition-all duration-200 text-white ${
+              selectedEvent ? "-bottom-0 md:-left-0" : "-bottom-64 md:left-full"
+            }  h-64 z-10 w-full md:w-1/3 p-3`}
+          >
+            <SlideCard
+              isFavorite={hasId}
+              width="w-full"
+              className=""
+              eventName={selectedEvent?.name}
+              location={`${selectedEvent?.address?.street}, ${selectedEvent?.address?.houseNumber}, ${selectedEvent?.address?.place}`}
+              date={selectedEvent?.nextSchedule?.startDate}
+              route={`/events/${selectedEvent?.id}`}
+              imgUrl={`data:${selectedEvent?.titleImage?.mimeType};base64,${selectedEvent?.titleImage?.base64}`}
+              setFavorite={() =>
+                eventFavorite({
+                  variables: {
+                    jobAdId: selectedEvent?.id,
+                  },
+                }).then(() => favorites.refetch())
+              }
+              removeFavorite={() =>
+                deleteEventFavorite({
+                  variables: {
+                    eventId: selectedEvent?.id,
+                  },
+                }).then(() => favorites.refetch())
+              }
+            />
           </div>
         </div>
       )}

@@ -6,3 +6,9 @@ export const formatDate = (
 ) => {
   return dayjs(date).format(DEFAULT_DATE_FORMAT);
 };
+
+export const formatDateTime = (
+  date?: string | number | Date | null | undefined
+) => {
+  return dayjs(date).format("HH:mm");
+};

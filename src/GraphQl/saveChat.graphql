@@ -1,0 +1,5 @@
+mutation SaveChat($entity: ChatEntityInput) {
+  saveChat(entity: $entity) {
+    id
+  }
+}

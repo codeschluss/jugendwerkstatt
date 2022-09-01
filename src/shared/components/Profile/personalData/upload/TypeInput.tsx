@@ -11,7 +11,10 @@ const TypeInput: React.FC<TypeInputProps> = ({
   disabled,
 }) => {
   return (
-    <label htmlFor="contained-button-file" className="m-0 h-full w-full">
+    <label
+      htmlFor="contained-button-file"
+      className=" bg-primary w-40 mt-10 text-white  rounded-md h-10 flex items-center justify-center cursor-pointer"
+    >
       <input
         accept="image/png, image/gif, image/jpeg"
         value={value}

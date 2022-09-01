@@ -4,8 +4,13 @@ query GetMeBasic {
     fullname
     phone
     email
+    roles {
+      key
+    }
     profilePicture {
       id
+      base64
+      mimeType
     }
   }
 }

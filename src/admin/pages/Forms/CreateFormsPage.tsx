@@ -1,19 +1,19 @@
-import { joiResolver } from "@hookform/resolvers/joi";
-import { ReactElement, useEffect } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { joiResolver } from '@hookform/resolvers/joi';
+import { ReactElement, useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   useGetTemplateAdminQuery,
   useSaveTemplateAdminMutation,
-} from "../../../GraphQl/graphql";
-import { Accordion, FormActions } from "../../components/molecules";
+} from '../../../GraphQl/graphql';
+import { Accordion, FormActions } from '../../components/molecules';
 import {
   DescriptionFrom,
   FormsBaseForm,
   FormsFormInputs,
-} from "../../components/organisms";
-import { gqlVar } from "../../utils";
-import { FormsFormSchema } from "../../validations";
+} from '../../components/organisms';
+import { gqlVar, twClsx } from '../../utils';
+import { FormsFormSchema } from '../../validations';
 
 const CreateFormsPage = (): ReactElement => {
   const { id } = useParams();
@@ -23,7 +23,11 @@ const CreateFormsPage = (): ReactElement => {
     resolver: joiResolver(FormsFormSchema),
   });
 
-  const { reset, handleSubmit } = methods;
+  const {
+    reset,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
 
   const { data: { getTemplate = null } = {} } = useGetTemplateAdminQuery({
     variables: { entity: { id } },
@@ -31,7 +35,7 @@ const CreateFormsPage = (): ReactElement => {
   });
 
   const [saveTemplate] = useSaveTemplateAdminMutation({
-    onCompleted: () => navigate("/admin/forms/templates"),
+    onCompleted: () => navigate('/admin/forms/templates'),
   });
 
   const handleOnSubmit = ({
@@ -48,16 +52,14 @@ const CreateFormsPage = (): ReactElement => {
     );
   };
 
-  const handleReset = () => reset();
-
   useEffect(() => {
     if (!!getTemplate) {
       reset({
         baseData: {
-          name: getTemplate?.name || "",
-          category: getTemplate?.templateType?.id || "",
+          name: getTemplate?.name || '',
+          category: getTemplate?.templateType?.id || '',
         },
-        description: getTemplate?.content || "",
+        description: getTemplate?.content || '',
       });
     }
   }, [getTemplate, reset]);
@@ -65,16 +67,20 @@ const CreateFormsPage = (): ReactElement => {
   return (
     <FormProvider {...methods}>
       <form className="min-h-full">
-        <Accordion title="Stammdaten" open={!!id}>
+        <Accordion
+          title="Stammdaten"
+          open={!!id}
+          className={twClsx(errors.baseData && 'border border-primary')}
+        >
           <FormsBaseForm />
         </Accordion>
-        <Accordion title="Beschreibung">
+        <Accordion
+          title="Beschreibung"
+          className={twClsx(errors.description && 'border border-primary')}
+        >
           <DescriptionFrom />
         </Accordion>
-        <FormActions
-          onReset={handleReset}
-          onSubmit={handleSubmit(handleOnSubmit)}
-        />
+        <FormActions onSubmit={handleSubmit(handleOnSubmit)} />
       </form>
     </FormProvider>
   );

@@ -1,40 +1,68 @@
-import { joiResolver } from '@hookform/resolvers/joi';
-import { ReactElement } from 'react';
-import { useForm } from 'react-hook-form';
-import { GeneralAddressFormSchema } from '../../../validations';
-import { Button } from '../../atoms';
-import { Accordion, InputField } from '../../molecules';
-import { GeneralAddressFormProps } from './GeneralAddressForm.props';
+import { joiResolver } from "@hookform/resolvers/joi";
+import { ReactElement, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  useGetAddressQuery,
+  useSaveAddressMutation,
+} from "../../../../GraphQl/graphql";
+import { GeneralAddressFormSchema } from "../../../validations";
+import { Button } from "../../atoms";
+import { Accordion, InputField } from "../../molecules";
+import { GeneralAddressFormProps } from "./GeneralAddressForm.props";
 
 export const GeneralAddressForm = (): ReactElement => {
+  const navigate = useNavigate();
+  const { id } = useParams();
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<GeneralAddressFormProps>({
     resolver: joiResolver(GeneralAddressFormSchema),
   });
+  const { data: { address = null } = {} } = useGetAddressQuery({
+    variables: { entity: { id } },
+  });
 
-  const onSubmit = (data: GeneralAddressFormProps) => console.log(data);
+  const [saveAddress] = useSaveAddressMutation({
+    onCompleted: () => navigate("/admin/general-settings/addresses"),
+  });
+
+  useEffect(() => {
+    if (id)
+      reset({
+        street: address?.street || "",
+        place: address?.place || "",
+        houseNumber: address?.houseNumber || "",
+        postalCode: address?.postalCode || "",
+        latitude: address?.latitude || 0,
+        longitude: address?.longitude || 0,
+      });
+  }, [id, reset, address]);
+
+  const onSubmit = (data: GeneralAddressFormProps) =>
+    saveAddress({ variables: { entity: { id, ...data } } });
 
   return (
-    <Accordion title="Adresse" className="max-w-4xl">
+    <Accordion title="Adresse" className="max-w-4xl" open>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid gap-8 md:grid-cols-2">
           <div className="flex flex-col justify-start w-full space-y-6">
             <InputField
               id="street"
               label="Straße"
-              {...register('street')}
+              {...register("street")}
               error={errors.street?.message}
               placeholder="Heinz-Kluncker-Straße"
             />
             <InputField
-              id="city"
+              id="place"
               label="Stadt"
-              {...register('city')}
+              {...register("place")}
               placeholder="Wuppertal"
-              error={errors.city?.message}
+              error={errors.place?.message}
             />
           </div>
           <div className="flex flex-col justify-start w-full space-y-6">
@@ -43,7 +71,7 @@ export const GeneralAddressForm = (): ReactElement => {
               placeholder="4"
               id="houseNumber"
               label="Hausnummer"
-              {...register('houseNumber')}
+              {...register("houseNumber")}
               error={errors.houseNumber?.message}
             />
             <InputField
@@ -51,7 +79,7 @@ export const GeneralAddressForm = (): ReactElement => {
               id="postalCode"
               label="Postleitzahl"
               placeholder="42285"
-              {...register('postalCode')}
+              {...register("postalCode")}
               error={errors.postalCode?.message}
             />
           </div>
@@ -62,15 +90,15 @@ export const GeneralAddressForm = (): ReactElement => {
             id="longitude"
             label="Längengrad"
             placeholder="7.1507636"
-            {...register('long')}
-            error={errors?.long?.message}
+            {...register("longitude")}
+            error={errors?.longitude?.message}
           />
           <InputField
             id="latitude"
             label="Breitengrad"
             placeholder="7.1507636"
-            {...register('lat')}
-            error={errors?.lat?.message}
+            {...register("latitude")}
+            error={errors?.latitude?.message}
           />
         </div>
 

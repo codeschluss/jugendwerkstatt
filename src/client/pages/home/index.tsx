@@ -1,15 +1,30 @@
-import Homepage from "../../components/home/Homepage";
+import { Navigate } from "react-router-dom";
+import { UserRoleEnum } from "../../../interfaces";
+import { UserLayout } from "../../../shared/components/UserLayout";
+import { useAuthStore } from "../../../store";
 import DefaultHome from "../../components/home/defaultHome";
-import { useContext } from "react";
-import AuthContext from "../../../contexts/AuthContext";
+import Homepage from "../../components/home/Homepage";
 
 const Home = () => {
-  const { isLogedIn } = useContext(AuthContext);
-  let page;
-  if (isLogedIn) page = <Homepage />;
-  else if (isLogedIn === undefined) page = null;
-  else page = <DefaultHome />;
-  return page;
+  const { isAuthenticated, user } = useAuthStore();
+
+  const { ADMIN, SUPERVISER } = UserRoleEnum;
+
+  const hasAccess = user?.roles.some((role) =>
+    [ADMIN, SUPERVISER].includes(role as UserRoleEnum)
+  );
+
+  if (isAuthenticated && hasAccess) {
+    return <Navigate to={{ pathname: "/admin" }} />;
+  }
+
+  return isAuthenticated && user?.roles.includes(UserRoleEnum.STUDENT) ? (
+    <UserLayout>
+      <Homepage />
+    </UserLayout>
+  ) : (
+    <DefaultHome />
+  );
 };
 
 export default Home;

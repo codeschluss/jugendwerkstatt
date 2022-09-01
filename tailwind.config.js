@@ -16,14 +16,12 @@ module.exports = {
       xs: "320px",
       // => @media (min-width: 320px) { ... }
 
-      sm: "576px",
+      sm: "750px",
       // => @media (min-width: 576px) { ... }
 
-      md: "960px",
+      md: "1390px",
       // => @media (min-width: 960px) { ... }
-
       lg: "1440px",
-      // => @media (min-width: 1440px) { ... }
     },
     colors: {
       primary: "#c20639",

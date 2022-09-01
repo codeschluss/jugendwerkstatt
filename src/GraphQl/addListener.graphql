@@ -1,0 +1,8 @@
+subscription AddListener($token: String) {
+  addListener(token: $token) {
+    type
+    title
+    data
+    content
+  }
+}

@@ -1,23 +1,16 @@
-import { ReactElement } from "react";
-import { Button } from "../../atoms";
-import { FormActionsProps } from "./FormActions.types";
+import { ReactElement } from 'react';
+import { Button } from '../../atoms';
+import { BackButton } from '../BackButton/BackButton';
+import { FormActionsProps } from './FormActions.types';
 
 export const FormActions = ({
   onSubmit,
-  onReset,
-}: FormActionsProps): ReactElement => {
-  return (
-    <div className="flex md:justify-start justify-between flex-row mt-4">
-      <Button
-        onClick={onReset}
-        className="md:mr-6 border-[#424242] text-[#424242]"
-        type="button"
-      >
-        Zurücksetzen
-      </Button>
-      <Button className="md:mr-6" onClick={onSubmit}>
-        Absenden
-      </Button>
-    </div>
-  );
-};
+  loading,
+}: FormActionsProps): ReactElement => (
+  <div className="flex flex-row justify-between mt-4 md:justify-start">
+    <BackButton />
+    <Button disabled={loading} className="md:mr-6" onClick={onSubmit}>
+      {loading ? 'Processing...' : 'Absenden'}
+    </Button>
+  </div>
+);

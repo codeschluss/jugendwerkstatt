@@ -1,11 +1,6 @@
-import React, { useContext } from "react";
-import { Navigate } from "react-router-dom";
+import { ReactElement } from "react";
 import Register from "../../components/register";
-import AuthContext from "../../../contexts/AuthContext";
 
-const RegisterPage = () => {
-  const { isLogedIn } = useContext(AuthContext);
-  return isLogedIn ? <Navigate to="/" replace /> : <Register />;
-};
+const RegisterPage = (): ReactElement => <Register />;
 
 export default RegisterPage;

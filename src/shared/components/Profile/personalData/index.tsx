@@ -1,9 +1,6 @@
-import { useMutation } from "@apollo/client";
 import { PencilIcon } from "@heroicons/react/solid";
-import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../../../../config/app";
-import AuthContext from "../../../../contexts/AuthContext";
 import {
   useGetMeBasicQuery,
   useRegisterUserMutation,
@@ -11,11 +8,14 @@ import {
 import useInput from "../../../../hooks/use-input";
 import CustomHeader from "../../header/customHeader/CustomHeader";
 import Button from "../../../../client/components/ui/Button";
-import Input from "./Input";
 import AuthInput from "../../authentication/AuthInput";
+import { useState } from "react";
+import { readAuthToken } from "../../../utils";
+import React from "react";
 
 const PersonalData = () => {
-  const { bgColor } = useContext(AuthContext);
+  // const { bgColor } = useContext(AuthContext);
+
   const user = useGetMeBasicQuery();
   const navigate = useNavigate();
   const {
@@ -24,7 +24,6 @@ const PersonalData = () => {
     hasError: nameInputError,
     valueChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurHandler,
-    resetValue: resetNameInput,
   } = useInput((value: string) => value !== "", user.data?.me?.fullname);
   const {
     value: enteredEmail,
@@ -32,7 +31,6 @@ const PersonalData = () => {
     hasError: emailInputError,
     valueChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
-    resetValue: resetEmailInput,
   } = useInput(
     (value: string) =>
       value.includes("@") && value !== "" && value.includes("."),
@@ -40,11 +38,9 @@ const PersonalData = () => {
   );
   const {
     value: enteredPhone,
-    validity: enteredPhoneValidity,
     hasError: phoneInputError,
     valueChangeHandler: phoneChangeHandler,
     inputBlurHandler: phoneBlurHandler,
-    resetValue: resetPhoneInput,
   } = useInput(
     (value: string) =>
       value.includes("@") && value !== "" && value.includes("."),
@@ -70,6 +66,9 @@ const PersonalData = () => {
             phone: enteredPhone === "" ? user.data?.me?.phone : enteredPhone,
           },
         },
+        onError: () => {
+          alert("Felder durfen nicht leer gelassen werden");
+        },
         onCompleted: () => {
           navigate("/profile");
         },
@@ -78,24 +77,24 @@ const PersonalData = () => {
   };
 
   return (
-    <div className="text-[#676767] absolute  md:static w-full md:w-2/5  z-20 top-0 bg-white">
+    <div className="text-[#676767] md:m-5 absolute  md:static w-full md:w-2/5  z-20 top-0 bg-white">
       <CustomHeader>Personal Data</CustomHeader>
       <div className="">
         <form
           onSubmit={onSubmitHandler}
-          className="w-full flex flex-col items-center justify-between md:justify-start pb-20 h-full "
+          className="flex flex-col items-center justify-between w-full h-full pb-20 md:justify-start "
         >
-          <div className="flex w-full items-center flex-col  justify-between">
-            <div className="w-full flex flex-row pt-5 justify-end pr-10 relative">
+          <div className="flex flex-col items-center justify-between w-full">
+            <div className="relative flex flex-row justify-end w-full pt-5 pr-10">
               {user.data?.me?.profilePicture?.id ? (
                 <img
-                  className="h-24 w-24 object-cover rounded-full"
-                  src={`${API_URL}media/${user.data.me?.profilePicture?.id}`}
+                  className="object-cover w-24 h-24 rounded-full"
+                  src={`data:${user?.data?.me?.profilePicture?.mimeType};base64,${user?.data?.me?.profilePicture?.base64}`}
                   alt=""
                 />
               ) : (
                 <span
-                  className={`w-24 h-24 rounded-full ${bgColor} flex justify-center 
+                  className={`w-24 h-24 rounded-full bg-primary flex justify-center 
                   items-center text-white text-4xl`}
                 >
                   {letter}
@@ -117,7 +116,7 @@ const PersonalData = () => {
                 onChange={nameChangeHandler}
                 onBlur={nameBlurHandler}
                 value={enteredName}
-                error={nameInputError ? "Kann nicht lehr gelassen werden" : ""}
+                error={nameInputError ? "Kann nicht leer gelassen werden" : ""}
                 inputClassName={`${
                   nameInputError && "border-500-red"
                 }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
@@ -128,7 +127,7 @@ const PersonalData = () => {
                 onChange={emailChangeHandler}
                 onBlur={emailBlurHandler}
                 value={enteredEmail}
-                error={emailInputError ? "Kann nicht lehr gelassen werden" : ""}
+                error={emailInputError ? "Kann nicht leer gelassen werden" : ""}
                 inputClassName={`${
                   emailInputError && "border-500-red"
                 }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
@@ -139,7 +138,7 @@ const PersonalData = () => {
                 onChange={phoneChangeHandler}
                 onBlur={phoneBlurHandler}
                 value={enteredPhone}
-                error={phoneInputError ? "Kann nicht lehr gelassen werden" : ""}
+                error={phoneInputError ? "Kann nicht leer gelassen werden" : ""}
                 inputClassName={`${
                   phoneInputError && "border-500-red"
                 }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}

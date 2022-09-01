@@ -1,0 +1,31 @@
+query GetChat($entity: ChatEntityInput) {
+  getChat(entity: $entity) {
+    id
+    name
+    admin
+    avatar {
+      id
+      base64
+      mimeType
+    }
+    participants {
+      chat {
+        avatar {
+          id
+          mimeType
+          base64
+        }
+      }
+      id
+      user {
+        fullname
+        id
+        profilePicture {
+          id
+          mimeType
+          base64
+        }
+      }
+    }
+  }
+}

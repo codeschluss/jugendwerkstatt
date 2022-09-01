@@ -1,16 +1,30 @@
 import { FC, ReactElement } from "react";
-import { CheckIcon, PencilIcon, XIcon } from "@heroicons/react/outline";
+import {
+  ChartBarIcon,
+  CheckIcon,
+  PencilIcon,
+  XIcon,
+} from "@heroicons/react/outline";
 
 import { ActionProps } from "./Table.types";
 import { Button } from "../Form/Button/Button";
 
 export const Action: FC<ActionProps> = ({
+  onNavigate,
   onUpdate,
   onDelete,
   onSend,
   onApprove,
 }): ReactElement => (
-  <span className="flex justify-center items-center py-[4px]">
+  <span className="flex items-center justify-center py-3">
+    {onNavigate && (
+      <Button
+        onClick={onNavigate}
+        className="p-0 bg-transparent border-none shadow-none hover:shadow-none"
+      >
+        <ChartBarIcon className="w-5 mx-1 text-black" />
+      </Button>
+    )}
     {onApprove && (
       <Button
         onClick={onApprove}

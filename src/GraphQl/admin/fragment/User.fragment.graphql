@@ -4,6 +4,9 @@ fragment UserField on UserEntity {
   roles {
     ...RoleField
   }
+  course {
+    ...CourseField
+  }
   email
   phone
   created
