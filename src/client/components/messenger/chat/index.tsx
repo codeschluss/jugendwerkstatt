@@ -247,8 +247,7 @@ const Chat = () => {
       ? true
       : false;
 
-  const { sendOrAcceptInvitation, setVideoChatId } =
-    useContext(VideoChatContext);
+  const { callPartner, setVideoChatId } = useContext(VideoChatContext);
 
   useEffect(() => {
     setVideoChatId(chatId);
@@ -284,7 +283,7 @@ const Chat = () => {
         {!getChat.data?.getChat?.name && (
           <PhoneIcon
             className="w-5 h-5 mr-7 cursor-pointer"
-            onClick={() => sendOrAcceptInvitation(true)}
+            onClick={callPartner}
           />
         )}
       </div>
