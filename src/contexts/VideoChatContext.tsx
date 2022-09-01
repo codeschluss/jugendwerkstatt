@@ -139,7 +139,6 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
             try {
               const video = videoSelf.current;
               video!.srcObject = mediaStream2;
-              video!.play();
             } catch {
               setSelfPic(true);
             }
@@ -151,12 +150,12 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
               });
               webSocketConnection.send(JSON.stringify(payload));
             });
-            sp.on("connect", () => {
-              setVideoStatus(VideoState.INCALL);
-            });
+            // sp.on("connect", () => {
+            //   setVideoStatus(VideoState.INCALL);
+            // });
             sp.on("stream", (stream: any) => {
               setVideoStatus(VideoState.INCALL);
-
+              console.log(stream, "stream");
               try {
                 const video = videoCaller.current;
                 video!.srcObject = stream;
@@ -166,7 +165,6 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
                 console.log("no guest pic");
               }
             });
-
             setSimplePeer(sp);
           });
       });
@@ -221,25 +219,22 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
           )}
           {videoStatus === VideoState.INCALL && (
             <>
-              {videoCaller.current ? (
-                <video
-                  className="w-full h-full object-cover"
-                  ref={videoCaller}
-                  autoPlay
-                />
-              ) : (
-                <div className=" w-full h-full flex justify-center items-center ">
-                  <div className="w-56 h-56 rounded-full bg-green-600 flex items-center justify-center text-white text-6xl">
-                    {guestAcronym}
-                  </div>
+              <div className=" w-full h-full flex justify-center items-center  top-0 absolute">
+                <div className="w-56 h-56 rounded-full bg-green-600 flex items-center justify-center text-white text-6xl">
+                  {guestAcronym}
                 </div>
-              )}
+              </div>
+              <video
+                className="w-full h-full object-cover absolute top-0 z-20"
+                ref={videoCaller}
+                autoPlay
+              />
             </>
           )}
-          <div className=" w-32 h-32 absolute top-5 right-5 ">
+          <div className=" w-32 h-32 absolute top-5 right-5 z-30 ">
             <video autoPlay ref={videoSelf} />
           </div>
-          <div className="absolute left-0 bottom-20 w-full flex justify-center items-center  ">
+          <div className="absolute left-0 bottom-20 w-full flex justify-center items-center z-30 ">
             {videoStatus === VideoState.CALLED && (
               <div className="w-14 h-14 rounded-full flex items-center justify-center bg-green-400 mx-7">
                 <CallIcon
