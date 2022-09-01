@@ -1,7 +1,6 @@
 mutation SaveClientAssignment($entity: AssignmentEntityInput) {
   saveAssignment(entity: $entity) {
     id
-    comment
     assignmentState {
       name
     }
