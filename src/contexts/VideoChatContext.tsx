@@ -36,7 +36,8 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
   const accessToken = readAuthToken("accessToken") || "";
   const [selfPic, setSelfPic] = useState<boolean>(true);
   const [guestPic, setGuestPic] = useState<boolean>(false);
-  const [stream, setStream] = useState<MediaStream>();
+  const [mediaStream2, setMediaStream2] = useState<MediaStream>();
+  // let mediaStream2: MediaStream;
 
   const { isAuthenticated } = useAuthStore();
 
@@ -72,29 +73,6 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
   }, [me.data]);
 
   useEffect(() => {
-    let hasAudio = false;
-    let hasVideo = false;
-    navigator.mediaDevices
-      .enumerateDevices()
-      .then((devices) => {
-        console.log(devices, "devices");
-        devices.forEach(function (device) {
-          if (device.kind === "videoinput") hasVideo = true;
-          if (device.kind === "audioinput") hasAudio = true;
-        });
-      })
-      .then(() => {
-        navigator.mediaDevices
-          .getUserMedia({ video: hasVideo, audio: hasAudio })
-          .then((stream) => {
-            setStream(stream);
-            const video = videoSelf.current;
-            video!.srcObject = stream;
-          });
-      });
-  }, []);
-
-  useEffect(() => {
     webSocketConnection.onmessage = (message: any) => {
       const payload = JSON.parse(message.data);
       console.log(payload, "payload");
@@ -110,6 +88,7 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
         videoCaller.current = null;
         videoSelf.current = null;
         setVideoStatus(VideoState.NULL);
+        mediaStream2?.getTracks().forEach((track) => track.stop());
       }
     };
   }, [simplePeer]);
@@ -126,134 +105,71 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
       .reduce((response, word) => (response += word.slice(0, 1)), "");
   }
 
-  const callPartner = () => {
-    const peer = new SimplePeer({
-      trickle: false,
-      initiator: true,
-      stream: stream,
-    });
+  const sendOrAcceptInvitation = (
+    isInitiator?: boolean,
+    offer?: SignalData
+  ) => {
+    let hasAudio = false;
+    let hasVideo = false;
+    navigator.mediaDevices
+      .enumerateDevices()
+      .then((devices) => {
+        console.log(devices, "devices");
+        devices.forEach(function (device) {
+          if (device.kind === "videoinput") hasVideo = true;
+          if (device.kind === "audioinput") hasAudio = true;
+        });
+      })
+      .finally(() => {
+        navigator.mediaDevices
+          .getUserMedia({ video: hasVideo, audio: hasAudio })
+          .then((mediaStream) => {
+            setMediaStream2(mediaStream);
 
-    peer.on("signal", (data: any) => {
-      const payload = Object.assign(data, {
-        token: accessToken,
-        chatId: VideoChatId,
+            let sp = new SimplePeer({
+              trickle: false,
+              initiator: isInitiator,
+              stream: mediaStream,
+            });
+
+            if (isInitiator) setVideoStatus(VideoState.CALLING);
+            else {
+              offer && sp.signal(offer);
+            }
+
+            try {
+              const video = videoSelf.current;
+              video!.srcObject = mediaStream;
+            } catch {
+              setSelfPic(true);
+            }
+
+            sp.on("signal", (data: any) => {
+              const payload = Object.assign(data, {
+                token: accessToken,
+                chatId: VideoChatId,
+              });
+              webSocketConnection.send(JSON.stringify(payload));
+            });
+            // sp.on("connect", () => {
+            //   setVideoStatus(VideoState.INCALL);
+            // });
+            sp.on("stream", (stream: any) => {
+              setVideoStatus(VideoState.INCALL);
+              console.log(stream, "stream");
+              try {
+                const video = videoCaller.current;
+                video!.srcObject = stream;
+                video!.play();
+              } catch {
+                setGuestPic(true);
+                console.log("no guest pic");
+              }
+            });
+            setSimplePeer(sp);
+          });
       });
-      webSocketConnection.send(JSON.stringify(payload));
-    });
-
-    peer.on("stream", (stream: any) => {
-      setVideoStatus(VideoState.INCALL);
-      console.log(stream, "stream");
-      try {
-        const video = videoCaller.current;
-        video!.srcObject = stream;
-        video!.play();
-      } catch {
-        setGuestPic(true);
-        console.log("no guest pic");
-      }
-    });
-    setSimplePeer(peer);
   };
-
-  const answerPartner = (offer?: SignalData) => {
-    const peer = new SimplePeer({
-      trickle: false,
-      initiator: false,
-      stream: stream,
-    });
-    offer && peer.signal(offer);
-
-    peer.on("signal", (data: any) => {
-      const payload = Object.assign(data, {
-        token: accessToken,
-        chatId: VideoChatId,
-      });
-      webSocketConnection.send(JSON.stringify(payload));
-    });
-
-    peer.on("stream", (stream: any) => {
-      setVideoStatus(VideoState.INCALL);
-      console.log(stream, "stream");
-      try {
-        const video = videoCaller.current;
-        video!.srcObject = stream;
-        video!.play();
-      } catch {
-        setGuestPic(true);
-        console.log("no guest pic");
-      }
-    });
-    setSimplePeer(peer);
-  };
-
-  // const sendOrAcceptInvitation = (
-  //   isInitiator?: boolean,
-  //   offer?: SignalData
-  // ) => {
-  //   let hasAudio = false;
-  //   let hasVideo = false;
-  //   navigator.mediaDevices
-  //     .enumerateDevices()
-  //     .then((devices) => {
-  //       console.log(devices, "devices");
-  //       devices.forEach(function (device) {
-  //         if (device.kind === "videoinput") hasVideo = true;
-  //         if (device.kind === "audioinput") hasAudio = true;
-  //       });
-  //     })
-  //     .finally(() => {
-  //       navigator.mediaDevices
-  //         .getUserMedia({ video: hasVideo, audio: hasAudio })
-  //         .then((mediaStream) => {
-  //           mediaStream2 = mediaStream;
-
-  //           let sp = new SimplePeer({
-  //             trickle: false,
-  //             initiator: isInitiator,
-  //             stream: mediaStream2,
-  //           });
-
-  //           if (isInitiator) setVideoStatus(VideoState.CALLING);
-  //           else {
-  //             offer && sp.signal(offer);
-  //           }
-
-  //           try {
-  //             const video = videoSelf.current;
-  //             video!.srcObject = mediaStream2;
-  //             video?.play();
-  //           } catch {
-  //             setSelfPic(true);
-  //           }
-
-  //           sp.on("signal", (data: any) => {
-  //             const payload = Object.assign(data, {
-  //               token: accessToken,
-  //               chatId: VideoChatId,
-  //             });
-  //             webSocketConnection.send(JSON.stringify(payload));
-  //           });
-  //           // sp.on("connect", () => {
-  //           //   setVideoStatus(VideoState.INCALL);
-  //           // });
-  //           sp.on("stream", (stream: any) => {
-  //             setVideoStatus(VideoState.INCALL);
-  //             console.log(stream, "stream");
-  //             try {
-  //               const video = videoCaller.current;
-  //               video!.srcObject = stream;
-  //               video!.play();
-  //             } catch {
-  //               setGuestPic(true);
-  //               console.log("no guest pic");
-  //             }
-  //           });
-  //           setSimplePeer(sp);
-  //         });
-  //     });
-  // };
-  console.log(videoCaller, "vcaller");
   const pay = JSON.stringify({
     chatId: VideoChatId,
     token: accessToken,
@@ -261,17 +177,24 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
   });
 
   const endCall = () => {
-    videoSelf.current = null;
-    videoCaller.current = null;
+    console.log(mediaStream2, "md2");
     setSimplePeer(undefined);
     webSocketConnection.send(pay);
 
+    videoSelf.current = null;
+    videoCaller.current = null;
+
     setVideoStatus(VideoState.NULL);
     setVideoChatId(undefined);
+    mediaStream2?.getTracks().forEach((track) => track.stop());
+
+    if (simplePeer?.destroyed) console.log("is destroyed");
   };
 
   return (
-    <VideoChatContext.Provider value={{ callPartner, setVideoChatId }}>
+    <VideoChatContext.Provider
+      value={{ sendOrAcceptInvitation, setVideoChatId }}
+    >
       {videoStatus !== VideoState.NULL ? (
         <div className=" w-screen h-screen relative top-0 left-0 bg-gray-700">
           {videoStatus === VideoState.CALLING && (
@@ -305,19 +228,19 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
               <video
                 className="w-full h-full object-cover absolute top-0 z-20"
                 ref={videoCaller}
-                playsInline
+                autoPlay
               />
             </>
           )}
           <div className=" w-32 h-32 absolute top-5 right-5 z-30 ">
-            <video autoPlay ref={videoSelf} playsInline muted />
+            <video autoPlay ref={videoSelf} />
           </div>
           <div className="absolute left-0 bottom-20 w-full flex justify-center items-center z-30 ">
             {videoStatus === VideoState.CALLED && (
               <div className="w-14 h-14 rounded-full flex items-center justify-center bg-green-400 mx-7">
                 <CallIcon
                   sx={{ color: "white" }}
-                  onClick={() => answerPartner(offerSignal)}
+                  onClick={() => sendOrAcceptInvitation(false, offerSignal)}
                 />
               </div>
             )}
