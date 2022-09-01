@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { validateFileSize, validateFileType } from "./validateFile";
+import { validateFileType } from "./validateFile";
 
 // file validation
 export const validateMethod = (
@@ -10,9 +10,9 @@ export const validateMethod = (
 ): File | Joi.ErrorReport | null => {
     // validate
     if (file !== null) {
-        if (!validateFileSize(file, size)) {
-            return helpers.error("any.fileSize");
-        }
+        // if (!validateFileSize(file, size)) {
+        //     return helpers.error("any.fileSize");
+        // }
 
         if (!validateFileType(file, type)) {
             return helpers.error("any.fileType");
