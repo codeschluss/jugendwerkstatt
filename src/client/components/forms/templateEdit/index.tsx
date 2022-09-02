@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import ClassicEditor from "ckeditor5-custom-build-jugendwerkstatt";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import DownloadIcon from "@heroicons/react/solid/DownloadIcon";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -173,7 +173,7 @@ const TemplateEdit: React.FC = () => {
       <div className="pt-4 pb-6">
         <CKEditor
           config={{
-            removePlugins: ["EasyImage", "ImageUpload", "MediaEmbed"],
+            removePlugins: ["MediaEmbed"],
           }}
           editor={ClassicEditor}
           data={templateContent}
