@@ -81,8 +81,6 @@ const CreateVacancyPage = (): ReactElement => {
     }
   }, [getJobAd, reset]);
 
-  console.log(getJobAd);
-
   return (
     <FormProvider {...methods}>
       <form className="min-h-full">

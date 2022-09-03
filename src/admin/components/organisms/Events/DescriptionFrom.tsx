@@ -11,12 +11,12 @@ export const DescriptionFrom = (): ReactElement => {
   } = useFormContext();
 
   const handleSetValue = (_event: any, editor: any) => {
-    setValue('description', JSON.stringify(editor.getData() || ''));
+    setValue('description', editor.getData() || '');
   };
 
   const handleGetValue = (editor: any) => {
     editor.setData(
-      getValues('description') ? JSON.parse(getValues('description')) : ''
+      getValues('description') ? getValues('description') : ''
     );
   };
 

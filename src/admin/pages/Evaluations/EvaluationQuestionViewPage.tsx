@@ -14,7 +14,7 @@ const EvaluationQuestionsViewPage = (): ReactElement => {
   const { data: { questionnaire = null } = {} } = useGetQuestionnaireQuery({
     variables: {
       entity: { id },
-      year: queryString.year ? Number(queryString.year) : 0,
+      ...(queryString.year && { year: Number(queryString.year) })
     },
     fetchPolicy: 'cache-and-network',
   });

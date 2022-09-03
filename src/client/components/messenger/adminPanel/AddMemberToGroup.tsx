@@ -1,13 +1,7 @@
 import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  DotsVerticalIcon,
-  PencilIcon,
-  UserGroupIcon,
+  ChevronLeftIcon
 } from "@heroicons/react/outline";
-import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { API_URL } from "../../../../config/app";
 import {
   ConjunctionOperator,
   ParticipantEntity,
@@ -15,11 +9,8 @@ import {
   useAddParticipantToChatMutation,
   useGetChatQuery,
   useGetUsersQuery,
-  UserEntity,
-  useSaveChatMutation,
-  useSaveUserMutation,
+  UserEntity
 } from "../../../../GraphQl/graphql";
-import DropDown from "../../../../shared/components/ui/DropDown";
 import Item from "../overview/Item";
 
 const AddMemberToGroup = () => {
@@ -47,7 +38,7 @@ const AddMemberToGroup = () => {
       entity: {
         operator: QueryOperator.Equal,
         path: "roles.key",
-        value: "superviser",
+        value: "supervisor",
       },
     },
     {

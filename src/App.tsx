@@ -1,4 +1,4 @@
-import { ReactElement, useContext, useEffect } from "react";
+import { ReactElement, useEffect } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import { RequireAuthRoute, RequireNonAuthRoute } from "./shared/components";
@@ -41,9 +41,7 @@ import Password from "./shared/components/authentication/forgotPassword/Password
 // admin pages
 import {
   CategoriesListPage,
-  ChatActivationPage,
-  CreateCategoriesPage,
-  CreateEvaluationAssignmentPage,
+  ChatActivationPage, CourseMembersPage, CreateCategoriesPage, CreateCourseMembersPage, CreateEvaluationAssignmentPage,
   CreateEventsPage,
   CreateFormsCategories,
   CreateFormsPage,
@@ -65,15 +63,9 @@ import {
   FormsCategoriesListPage,
   FormsListPage,
   FormsUserListPage,
-  GeneralAddressPage,
-  GroupCoursesPage,
-  GroupFormPage,
-  GroupCourseFormPage,
-  GroupListPage,
-  GroupPage,
-  CourseMembersPage,
-  CreateCourseMembersPage,
-  MediaCategoriesListPage,
+  GeneralAddressPage, GroupCourseFormPage, GroupCoursesPage,
+  GroupFormPage, GroupListPage,
+  GroupPage, MediaCategoriesListPage,
   MediaListPage,
   OrganizersListPage,
   PublicPagesPage,
@@ -82,35 +74,34 @@ import {
   UsersRequestsListPage,
   VacancyCategoriesListPage,
   VacancyCompaniesListPage,
-  VacancyListPage,
+  VacancyListPage
 } from "./admin/pages";
 
 import { GeneralAddressForm } from "./admin/components/organisms";
-import Home from "./client/pages/home";
-import { RequireAuthAll } from "./shared/components/RequireAuthRoute/RequireAuthAll";
-import Notifications from "./shared/components/notifications";
-import MainPanel from "./client/pages/messenger/adminPanel/MainPanel";
-import AddMemberPanel from "./client/pages/messenger/adminPanel/AddMemberPanel";
-import GroupNamePanel from "./client/pages/messenger/adminPanel/GroupNamePanel";
-import ChatAccessRules from "./client/pages/messenger/adminPanel/ChatAccessRules";
-import { useGetChatSettingsQuery } from "./GraphQl/graphql";
-import { useAuthStore } from "./store";
 import GlobalPages from "./client/pages/globalPages";
+import Home from "./client/pages/home";
+import AddMemberPanel from "./client/pages/messenger/adminPanel/AddMemberPanel";
+import ChatAccessRules from "./client/pages/messenger/adminPanel/ChatAccessRules";
+import GroupNamePanel from "./client/pages/messenger/adminPanel/GroupNamePanel";
+import MainPanel from "./client/pages/messenger/adminPanel/MainPanel";
+import { useGetChatSettingsQuery } from "./GraphQl/graphql";
+import Notifications from "./shared/components/notifications";
+import { RequireAuthAll } from "./shared/components/RequireAuthRoute/RequireAuthAll";
+import { useAuthStore } from "./store";
 
+import { Capacitor } from "@capacitor/core";
 import {
   ActionPerformed,
   PushNotifications,
   PushNotificationSchema,
-  Token,
+  Token
 } from "@capacitor/push-notifications";
 import { Toast } from "@capacitor/toast";
+import RolePending from "./client/pages/verify/RolePending";
 import {
   useGetMeBasicQuery,
-  useSaveSubscriptionMutation,
+  useSaveSubscriptionMutation
 } from "./GraphQl/graphql";
-import RolePending from "./client/pages/verify/RolePending";
-import { Capacitor } from "@capacitor/core";
-import VideoChatContext from "./contexts/VideoChatContext";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
@@ -290,14 +281,14 @@ const App = (): ReactElement => {
 
       <Route
         element={
-          <RequireAuthRoute accessRole={["admin", "superviser", "student"]} />
+          <RequireAuthRoute accessRole={["admin", "supervisor", "student"]} />
         }
       >
         <Route path="/notifications" element={<Notifications />} />
       </Route>
 
       <Route
-        element={<RequireAuthRoute accessRole={["admin", "superviser"]} />}
+        element={<RequireAuthRoute accessRole={["admin", "supervisor"]} />}
       >
         <Route path="/admin/events">
           <Route index element={<EventsListPage />} />
