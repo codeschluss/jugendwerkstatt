@@ -160,7 +160,6 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
               try {
                 const video = videoCaller.current;
                 video!.srcObject = stream;
-                video!.play();
               } catch {
                 setGuestPic(true);
                 console.log("no guest pic");
@@ -226,14 +225,15 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
                 </div>
               </div>
               <video
+                autoPlay
                 className="w-full h-full object-cover absolute top-0 z-20"
                 ref={videoCaller}
-                autoPlay
+                playsInline
               />
             </>
           )}
           <div className=" w-32 h-32 absolute top-5 right-5 z-30 ">
-            <video autoPlay ref={videoSelf} />
+            <video ref={videoSelf} playsInline autoPlay />
           </div>
           <div className="absolute left-0 bottom-20 w-full flex justify-center items-center z-30 ">
             {videoStatus === VideoState.CALLED && (

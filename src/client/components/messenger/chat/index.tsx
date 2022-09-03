@@ -247,7 +247,8 @@ const Chat = () => {
       ? true
       : false;
 
-  const { callPartner, setVideoChatId } = useContext(VideoChatContext);
+  const { sendOrAcceptInvitation, setVideoChatId } =
+    useContext(VideoChatContext);
 
   useEffect(() => {
     setVideoChatId(chatId);
@@ -283,7 +284,7 @@ const Chat = () => {
         {!getChat.data?.getChat?.name && (
           <PhoneIcon
             className="w-5 h-5 mr-7 cursor-pointer"
-            onClick={callPartner}
+            onClick={() => sendOrAcceptInvitation(true)}
           />
         )}
       </div>
@@ -292,7 +293,7 @@ const Chat = () => {
           onClick={moreMessages}
           className="mx-auto text-center text-xs cursor-pointer text-[#3279a8]"
         >
-          show previous messages
+          zeige vorhergehende Nachrichten
         </p>
         {reverseMessages?.map((el: any) => {
           const _me: boolean = meParticipant?.every(

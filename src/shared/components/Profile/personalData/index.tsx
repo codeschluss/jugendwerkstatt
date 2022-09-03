@@ -9,7 +9,7 @@ import useInput from "../../../../hooks/use-input";
 import CustomHeader from "../../header/customHeader/CustomHeader";
 import Button from "../../../../client/components/ui/Button";
 import AuthInput from "../../authentication/AuthInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { readAuthToken } from "../../../utils";
 import React from "react";
 
@@ -19,13 +19,15 @@ const PersonalData = () => {
   const user = useGetMeBasicQuery();
   const navigate = useNavigate();
   const {
+    setEnteredValue: setNameValue,
     value: enteredName,
     validity: enteredNameValidity,
     hasError: nameInputError,
     valueChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurHandler,
-  } = useInput((value: string) => value !== "", user.data?.me?.fullname);
+  } = useInput((value: string) => value !== "");
   const {
+    setEnteredValue: setEmailValue,
     value: enteredEmail,
     validity: enteredEmailValidity,
     hasError: emailInputError,
@@ -33,23 +35,22 @@ const PersonalData = () => {
     inputBlurHandler: emailBlurHandler,
   } = useInput(
     (value: string) =>
-      value.includes("@") && value !== "" && value.includes("."),
-    user.data?.me?.email
+      value?.includes("@") && value !== "" && value?.includes(".")
   );
   const {
+    setEnteredValue: setPhoneValue,
     value: enteredPhone,
     hasError: phoneInputError,
     valueChangeHandler: phoneChangeHandler,
     inputBlurHandler: phoneBlurHandler,
   } = useInput(
     (value: string) =>
-      value.includes("@") && value !== "" && value.includes("."),
-    user?.data?.me?.phone
+      value?.includes("@") && value !== "" && value?.includes(".")
   );
 
   let letter;
   user.data?.me?.fullname &&
-    (letter = user.data.me.fullname.substring(0, 1).toUpperCase());
+    (letter = user?.data?.me?.fullname.substring(0, 1).toUpperCase());
 
   const [saveNewUser] = useRegisterUserMutation();
 
@@ -75,6 +76,12 @@ const PersonalData = () => {
       });
     }
   };
+
+  useEffect(() => {
+    setNameValue(user.data?.me?.fullname);
+    setEmailValue(user.data?.me?.email);
+    setPhoneValue(user.data?.me?.phone);
+  }, [user.data]);
 
   return (
     <div className="text-[#676767] md:m-5 absolute  md:static w-full md:w-2/5  z-20 top-0 bg-white">
@@ -147,8 +154,12 @@ const PersonalData = () => {
           </div>
           <span className="w-4/6 md:w-2/5 md:mt-5">
             <Button
-              isDisabled={enteredNameValidity || enteredEmailValidity}
-              isValidated={enteredEmailValidity || enteredNameValidity}
+              isDisabled={
+                enteredNameValidity && enteredEmailValidity ? true : false
+              }
+              isValidated={
+                enteredNameValidity && enteredEmailValidity ? true : false
+              }
               buttonType={"submit"}
             >
               Änderungen speichern

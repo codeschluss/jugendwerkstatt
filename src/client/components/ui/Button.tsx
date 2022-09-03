@@ -2,7 +2,7 @@ import React from "react";
 
 interface ButtonProps {
   isValidated?: boolean;
-  isDisabled?: boolean;
+  isDisabled?: boolean | undefined;
   buttonType?: any;
   click?: () => void;
 }

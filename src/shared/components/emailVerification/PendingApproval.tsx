@@ -16,8 +16,8 @@ const PendingApproval: React.FC = () => {
       <div className="flex flex-col items-center justify-around h-1/4">
         <LockOpenIcon className="w-24 h-24 text-[#04915C]" />
         <div className="flex flex-col row-span-6 mx-2 -mt-10 text-xs text-center text-gray-500 px- ">
-          You are not yet approved, please wait some more days, weeks, years or
-          something
+          Dein Account wurde noch nicht genehmigt. Bitte warte noch etwas oder
+          kontaktiere die Jugendwerkstatt
         </div>
       </div>
 

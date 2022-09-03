@@ -66,7 +66,7 @@ const ChangePassword = () => {
               value={passwordOne}
               error={
                 passwordOneError
-                  ? "Password not strong enough or does not match recomandations"
+                  ? "Passwort ist nicht stark genug oder erfüllt nicht die Passwortanforderungen"
                   : ""
               }
               inputClassName={`${
@@ -79,7 +79,7 @@ const ChangePassword = () => {
               onChange={passwordTwoChangeHandler}
               onBlur={passwordTwoBlurHandler}
               value={passwordTwo}
-              error={passwordTwoError ? "Passwörter müssen übereinstimmen" : ""}
+              error={passwordTwoError ? "Passwörter stimmen nicht überein" : ""}
               inputClassName={`${
                 passwordTwoError && "border-500-red"
               }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
@@ -91,6 +91,7 @@ const ChangePassword = () => {
               <li>8 Zeichen</li>
               <li>Mindestens 1 Zahl</li>
               <li>Mindestens 1 Buchstabe</li>
+              <li>Keine Zonderzeichen</li>
             </ul>
           </div>
           <span className="w-4/6 md:w-2/5 md:my-5">

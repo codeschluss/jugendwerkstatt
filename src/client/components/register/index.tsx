@@ -145,7 +145,7 @@ const Register = () => {
               value={enteredPassword}
               error={
                 passwordInputError
-                  ? "password not strong enough or does not match pasword requirements"
+                  ? "Passwort ist nicht stark genug oder erfüllt nicht die Passwortanforderungen"
                   : ""
               }
               inputClassName={`${
@@ -158,7 +158,9 @@ const Register = () => {
               onChange={cPasswordChangeHandler}
               onBlur={cPasswordBlurHandler}
               value={enteredCPassword}
-              error={cPasswordInputError ? "Password must match" : ""}
+              error={
+                cPasswordInputError ? "Passwörter stimmen nicht überein" : ""
+              }
               inputClassName={`${
                 cPasswordInputError && "border-500-red"
               }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
@@ -175,6 +177,9 @@ const Register = () => {
               </li>
               <li className={`${passWordExtraError && "text-red-400"}`}>
                 Mindestens 1 Buchstabe
+              </li>
+              <li className={`${passWordExtraError && "text-red-400"}`}>
+                Keine Zonderzeichen
               </li>
             </ul>
           </div>
