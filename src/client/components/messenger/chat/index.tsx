@@ -4,7 +4,7 @@ import {
   PaperAirplaneIcon,
   PaperClipIcon,
   PhoneIcon,
-  XIcon
+  XIcon,
 } from "@heroicons/react/outline";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -18,7 +18,7 @@ import {
   useGetMeBasicQuery,
   useGetMessagesQuery,
   useSaveMessageMutation,
-  useSaveReadReceiptsMutation
+  useSaveReadReceiptsMutation,
 } from "../../../../GraphQl/graphql";
 import { readAuthToken } from "../../../../shared/utils";
 import TypeInput from "../../forms/upload/TypeInput";
@@ -268,7 +268,7 @@ const Chat = () => {
         </h2>
         {getChat.data?.getChat?.name &&
           (me.data?.me?.roles?.some((el) => el?.key === "admin") ||
-            me.data?.me?.roles?.some((el) => el?.key === "supervisor")) && (
+            me.data?.me?.roles?.some((el) => el?.key === "betreuer")) && (
             <div
               onClick={() =>
                 navigate(`/adminMsnPanel/${getChat.data?.getChat?.id}`)
@@ -292,7 +292,7 @@ const Chat = () => {
           onClick={moreMessages}
           className="mx-auto text-center text-xs cursor-pointer text-[#3279a8]"
         >
-          show previous messages
+          zeige vorhergehende Nachrichten
         </p>
         {reverseMessages?.map((el: any) => {
           const _me: boolean = meParticipant?.every(

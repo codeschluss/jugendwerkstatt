@@ -11,7 +11,7 @@ const useInput = (inputValidation: any, initialValue?: any | undefined) => {
   const validValue = inputValidation(enteredValue);
   const hasError = !validValue && isBlured;
   const passwordExtraInputError: boolean =
-    !enteredValue.match(regex) && isBlured;
+    !enteredValue?.match(regex) && isBlured;
 
   const valueChangeHandler = (event: any) => {
     setEnteredValue(event.target.value);
@@ -30,6 +30,7 @@ const useInput = (inputValidation: any, initialValue?: any | undefined) => {
     value: enteredValue,
     validity: validValue,
     hasError,
+    setEnteredValue,
     passwordExtraInputError,
     valueChangeHandler,
     inputBlurHandler,

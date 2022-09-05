@@ -117,7 +117,7 @@ const SideBar: React.FC<{ type?: string }> = ({ type }) => {
         <DatePicker
           disablePast
           inputFormat="DD.MM.YYYY"
-          label={type === "EVENT" ? "Start date" : "Due Date"}
+          label={type === "EVENT" ? "Start date" : "Bewerbungsfrist bis "}
           value={tempDates.tempStartDate}
           onChange={(newValue) => {
             setTempDates({ ...tempDates, tempStartDate: newValue });
@@ -129,7 +129,7 @@ const SideBar: React.FC<{ type?: string }> = ({ type }) => {
         <DatePicker
           disablePast
           inputFormat="DD.MM.YYYY"
-          label={type === "EVENT" ? "End date" : "Start date"}
+          label={type === "EVENT" ? "End date" : "Berufsstart ab"}
           value={tempDates.tempEndDate}
           onChange={(newValue) => {
             setTempDates({ ...tempDates, tempEndDate: newValue });

@@ -5,6 +5,7 @@ import Modal from "@mui/material/Modal";
 import Button from "../../../../client/components/ui/Button";
 import AuthInput from "../../authentication/AuthInput";
 import { useDeleteMeMutation } from "../../../../GraphQl/graphql";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute" as "absolute",
@@ -23,6 +24,8 @@ export default function DeleteConfirmation() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const navigate = useNavigate();
+
   const passwordHandler = (event: any) => {
     setPassword(event.target.value);
   };
@@ -34,6 +37,9 @@ export default function DeleteConfirmation() {
       variables: {
         password: password,
       },
+    }).then(() => {
+      alert("Ihr Profil wurde gelöscht");
+      navigate("/");
     });
   };
 

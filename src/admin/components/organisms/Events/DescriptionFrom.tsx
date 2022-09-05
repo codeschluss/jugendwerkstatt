@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import ClassicEditor from "ckeditor5-custom-build-jugendwerkstatt";
 
 export const DescriptionFrom = (): ReactElement => {
   const {

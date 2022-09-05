@@ -21,7 +21,7 @@ export enum VideoState {
 }
 const accessToken = readAuthToken("accessToken") || "";
 
-let webSocketConnection = new WebSocket(`${WS_URL}videochat`);
+let webSocketConnection: WebSocket;
 
 export const VideoChatContext = createContext<any>(null);
 
@@ -41,19 +41,21 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
 
   const { isAuthenticated } = useAuthStore();
 
-  const me = useGetMeBasicQuery({
-    fetchPolicy: "network-only",
-    skip: !isAuthenticated,
-  });
   const users = useGetChatWithUserOnlyQuery({
-    skip: !isAuthenticated,
     fetchPolicy: "network-only",
+    skip: !isAuthenticated,
     variables: {
       entity: {
         id: VideoChatId,
       },
     },
   });
+
+  const me = useGetMeBasicQuery({
+    fetchPolicy: "network-only",
+    skip: !isAuthenticated,
+  });
+
   useEffect(() => {
     if (isAuthenticated) {
       me.refetch();
@@ -62,36 +64,42 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
   }, [isAuthenticated]);
 
   useEffect(() => {
-    if (me.data) {
-      webSocketConnection.send(
-        JSON.stringify({
-          token: accessToken,
-          type: "init",
-        })
-      );
+    if (isAuthenticated) {
+      webSocketConnection = new WebSocket(`${WS_URL}videochat`);
+      webSocketConnection.onopen = () => {
+        console.log("initinggggg");
+        webSocketConnection.send(
+          JSON.stringify({
+            token: accessToken,
+            type: "init",
+          })
+        );
+      };
     }
-  }, [me.data]);
+  }, [me.data?.me?.id]);
 
   useEffect(() => {
-    webSocketConnection.onmessage = (message: any) => {
-      const payload = JSON.parse(message.data);
-      console.log(payload, "payload");
-      if (payload?.type === "offer") {
-        setVideoChatId(payload.chatId);
-        setCalled(true);
-        setOfferSignal(payload);
-        setVideoStatus(VideoState.CALLED);
-      } else if (payload?.type === "answer") simplePeer?.signal(payload);
-      else if (payload?.type === "abort") {
-        setVideoChatId(undefined);
-        setSimplePeer(undefined);
-        videoCaller.current = null;
-        videoSelf.current = null;
-        setVideoStatus(VideoState.NULL);
-        mediaStream2?.getTracks().forEach((track) => track.stop());
-      }
-    };
-  }, [simplePeer]);
+    if (isAuthenticated) {
+      webSocketConnection.onmessage = (message: any) => {
+        const payload = JSON.parse(message.data);
+        console.log(payload, "payload");
+        if (payload?.type === "offer") {
+          setVideoChatId(payload.chatId);
+          setCalled(true);
+          setOfferSignal(payload);
+          setVideoStatus(VideoState.CALLED);
+        } else if (payload?.type === "answer") simplePeer?.signal(payload);
+        else if (payload?.type === "abort") {
+          setVideoChatId(undefined);
+          setSimplePeer(undefined);
+          videoCaller.current = null;
+          videoSelf.current = null;
+          setVideoStatus(VideoState.NULL);
+          mediaStream2?.getTracks().forEach((track) => track.stop());
+        }
+      };
+    }
+  }, [simplePeer, me.data?.me?.id]);
 
   const self = me?.data?.me?.fullname;
   const guest = users?.data?.getChat?.participants?.filter(
@@ -160,7 +168,6 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
               try {
                 const video = videoCaller.current;
                 video!.srcObject = stream;
-                video!.play();
               } catch {
                 setGuestPic(true);
                 console.log("no guest pic");
@@ -226,14 +233,15 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
                 </div>
               </div>
               <video
+                autoPlay
                 className="w-full h-full object-cover absolute top-0 z-20"
                 ref={videoCaller}
-                autoPlay
+                playsInline
               />
             </>
           )}
           <div className=" w-32 h-32 absolute top-5 right-5 z-30 ">
-            <video autoPlay ref={videoSelf} />
+            <video ref={videoSelf} playsInline autoPlay />
           </div>
           <div className="absolute left-0 bottom-20 w-full flex justify-center items-center z-30 ">
             {videoStatus === VideoState.CALLED && (

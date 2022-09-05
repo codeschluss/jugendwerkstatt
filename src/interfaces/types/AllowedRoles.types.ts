@@ -1,1 +1,1 @@
-export type AllowedRoles = 'admin' | 'student' | 'supervisor';
+export type AllowedRoles = "admin" | "student" | "betreuer";

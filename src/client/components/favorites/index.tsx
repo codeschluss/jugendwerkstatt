@@ -82,7 +82,9 @@ const Favorites = () => {
       favorites.data?.me?.favoriteEvents?.length === 0 ? (
         <div className="w-full h-full flex justify-center items-center text-4xl">
           <FavoriteBorderIcon fontSize="large" />
-          <p>Upss... looks like you have not added any favorites...</p>
+          <p>
+            Upss… sieht so aus als ob du noch keine Favoriten hinzugefügt hast.
+          </p>
         </div>
       ) : (
         ""

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AnswerEntity,
   AnswerEntityInput,
@@ -24,6 +24,8 @@ const Evaluation: React.FC<ModalProps> = ({
   refetchParent,
   assignment,
 }) => {
+  const [disable, setDisable] = useState(false);
+  const [count, setCount] = useState<any>();
   const givenAnswers = assignment?.questionnaire?.questions
     ?.map(
       (question: QuestionEntity | undefined | null) =>
@@ -40,8 +42,7 @@ const Evaluation: React.FC<ModalProps> = ({
       (a: any, b: any) =>
         a?.question?.sequenceOrder - b?.question?.sequenceOrder
     );
-
-  console.log(assignment?.questionnaire?.questions, "awd");
+  let disa = 1;
 
   const textComment: any = useRef();
   const [saveAssignment] = useSaveClientAssignmentMutation();
@@ -57,6 +58,15 @@ const Evaluation: React.FC<ModalProps> = ({
         },
       },
     }).then(() => refetchParent());
+  };
+
+  useEffect(() => {
+    if (givenAnswers?.every((a) => a.rating !== undefined)) setDisable(true);
+  }, [count]);
+
+  const isDisabledButton = () => {
+    if (givenAnswers?.every((a) => a.rating !== undefined)) return true;
+    else return false;
   };
 
   return (
@@ -76,6 +86,7 @@ const Evaluation: React.FC<ModalProps> = ({
               (answer: AnswerEntity | undefined | null, index: number) => {
                 const changeRating = (rating: number, question: string) => {
                   answer!.rating = rating;
+                  setCount(answer?.rating);
                 };
 
                 return (
@@ -97,7 +108,11 @@ const Evaluation: React.FC<ModalProps> = ({
             />
           </div>
 
-          <Button buttonType={"submit"} isDisabled={true} isValidated={true}>
+          <Button
+            buttonType={"submit"}
+            isDisabled={disable}
+            isValidated={disable}
+          >
             Send
           </Button>
         </form>

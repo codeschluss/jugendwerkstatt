@@ -7,8 +7,6 @@ import {
 import TypeInput from "./TypeInput";
 
 const UploadFile = () => {
-  const user = useGetMeBasicQuery();
-
   const [fileData, setFileData] = useState<any>({
     base64: "",
     mimeType: "",

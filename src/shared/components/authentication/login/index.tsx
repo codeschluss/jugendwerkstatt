@@ -5,12 +5,14 @@ import Button from "../../../../client/components/ui/Button";
 import { useCreateTokenMutation } from "../../../../GraphQl/graphql";
 import useInput from "../../../../hooks/use-input";
 import { useAuthStore } from "../../../../store";
+import { useTempEmailStore } from "../../../../store/tempEmail/tempEmail.store";
 import { getSingleJWTField, writeAuthToken } from "../../../utils";
 import AuthInput from "../AuthInput";
 import AuthWrapper from "../AuthWrapper";
 
 const Login = (): ReactElement => {
   const { addAuth } = useAuthStore();
+  const { setTempEmail } = useTempEmailStore();
 
   const handleStoreUser = useCallback(
     (access: string, refresh: string) => {
@@ -57,6 +59,7 @@ const Login = (): ReactElement => {
   });
 
   const submitHandler = async (e: any) => {
+    setTempEmail(enteredEmail);
     e.preventDefault();
     createToken({
       variables: {
