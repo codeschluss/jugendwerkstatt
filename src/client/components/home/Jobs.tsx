@@ -6,6 +6,7 @@ import {
   useGetMeBasicFavoritesQuery,
   useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
+import { useAuthStore } from "../../../store";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
 
@@ -24,13 +25,14 @@ const Jobs: React.FC<EventsProps> = () => {
       },
     },
   });
-
+  const { isAuthenticated } = useAuthStore();
   fetchedData = result.data?.getJobAds?.result as [JobAdEntity];
   const [jobFavorites] = useAddJobAdFavoriteMutation();
 
   const [deleteJobAdFavorite] = useDeleteJobAdFavoriteMutation();
 
   const favorites = useGetMeBasicFavoritesQuery({
+    skip: !isAuthenticated,
     fetchPolicy: "network-only",
   });
   const refetchQueries = () => {

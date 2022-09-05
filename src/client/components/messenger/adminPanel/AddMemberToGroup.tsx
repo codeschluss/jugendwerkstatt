@@ -1,6 +1,4 @@
-import {
-  ChevronLeftIcon
-} from "@heroicons/react/outline";
+import { ChevronLeftIcon } from "@heroicons/react/outline";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   ConjunctionOperator,
@@ -9,7 +7,7 @@ import {
   useAddParticipantToChatMutation,
   useGetChatQuery,
   useGetUsersQuery,
-  UserEntity
+  UserEntity,
 } from "../../../../GraphQl/graphql";
 import Item from "../overview/Item";
 
@@ -38,7 +36,7 @@ const AddMemberToGroup = () => {
       entity: {
         operator: QueryOperator.Equal,
         path: "roles.key",
-        value: "supervisor",
+        value: "betreuer",
       },
     },
     {

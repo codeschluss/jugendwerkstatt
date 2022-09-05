@@ -34,7 +34,7 @@ const GroupListPage = () => {
     <Panel.Wrapper
       action={{
         to: "/admin/groups/new",
-        label: "Neue Gruppen",
+        label: "Neue Gruppe",
       }}
     >
       <CustomTable

@@ -6,7 +6,6 @@ import {
   TemplateEntity,
   useDeleteTemplateMutation,
   useDeleteUserTemplateMutation,
-  useGetMeBasicQuery,
   useGetMeUserTemplatesQuery,
   useGetTemplatesQuery,
   UserTemplateEntity,
@@ -22,7 +21,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 const Templates: React.FC = () => {
   const location = useLocation();
   const { templateType }: any = location.state;
-  const user = useGetMeBasicQuery();
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {

@@ -5,6 +5,7 @@ import {
   useGetEventsQuery,
   useGetMeBasicFavoritesQuery,
 } from "../../../GraphQl/graphql";
+import { useAuthStore } from "../../../store";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
 
@@ -22,14 +23,16 @@ const Events: React.FC<EventsProps> = () => {
       },
     },
   });
-
+  const { isAuthenticated } = useAuthStore();
   const [eventFavorite] = useAddEventFavoriteMutation();
 
   fetchedData = useEvents.data?.getEvents?.result as [EventEntity];
 
   const [deleteEventFavorite] = useDeleteEventFavoriteMutation();
 
-  const favorites = useGetMeBasicFavoritesQuery({});
+  const favorites = useGetMeBasicFavoritesQuery({
+    skip: !isAuthenticated,
+  });
   const refetchQueries = () => {
     useEvents.refetch();
     favorites.refetch();

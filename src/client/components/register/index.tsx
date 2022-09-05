@@ -1,7 +1,10 @@
 /* eslint-disable */
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRegisterUserMutation } from "../../../GraphQl/graphql";
+import {
+  useRegisterUserMutation,
+  useSendVerificationMutation,
+} from "../../../GraphQl/graphql";
 import useInput from "../../../hooks/use-input";
 import AuthInput from "../../../shared/components/authentication/AuthInput";
 import AuthWrapper from "../../../shared/components/authentication/AuthWrapper";
@@ -85,6 +88,7 @@ const Register = () => {
   };
 
   const [registeredUser] = useRegisterUserMutation();
+  const [sendVerification] = useSendVerificationMutation();
 
   const onSubmitHandler = (e: any) => {
     e.preventDefault();
@@ -105,7 +109,15 @@ const Register = () => {
         onCompleted: () => {
           disableInput = true;
         },
-      }).then(() => navigate("/toVerifyEmail"));
+      })
+        .then(() => navigate("/toVerifyEmail"))
+        .finally(() => {
+          sendVerification({
+            variables: {
+              email: enteredEmail,
+            },
+          });
+        });
     }
     setTempEmail(enteredEmail);
   };

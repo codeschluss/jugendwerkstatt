@@ -8,10 +8,10 @@ import Homepage from "../../components/home/Homepage";
 const Home = () => {
   const { isAuthenticated, user } = useAuthStore();
 
-  const { ADMIN, SUPERVISOR } = UserRoleEnum;
+  const { ADMIN, BETREUER } = UserRoleEnum;
 
   const hasAccess = user?.roles.some((role) =>
-    [ADMIN, SUPERVISOR].includes(role as UserRoleEnum)
+    [ADMIN, BETREUER].includes(role as UserRoleEnum)
   );
 
   if (isAuthenticated && hasAccess) {

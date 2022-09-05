@@ -100,7 +100,7 @@ const RegistrationOrVerification: React.FC<CheckingProps> = ({
                 Du hast noch keinen verifizierungslink erhalten?
               </span>
               <span>
-                <p className="underline" onClick={reverify}>
+                <p className="underline cursor-pointer" onClick={reverify}>
                   Link nochmal senden
                 </p>
               </span>
