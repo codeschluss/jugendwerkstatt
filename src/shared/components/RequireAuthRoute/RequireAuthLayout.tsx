@@ -12,7 +12,7 @@ export const RequireAuthLayout = ({
   accessRole: AllowedRoles[];
 }): ReactElement => {
   const hasAccess = accessRole.some((role) =>
-    [UserRoleEnum.ADMIN, UserRoleEnum.BETREUER].includes(role as UserRoleEnum)
+    [UserRoleEnum.ADMIN, UserRoleEnum.SUPERVISOR].includes(role as UserRoleEnum)
   );
 
   return hasAccess ? (

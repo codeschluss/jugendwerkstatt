@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { API_URL } from "../../../../../config/app";
 import {
   ConjunctionOperator,
   QueryOperator,
@@ -8,7 +7,7 @@ import {
   useGetUsersQuery,
   useMeRolesQuery,
   UserEntity,
-  useSaveChatMutation,
+  useSaveChatMutation
 } from "../../../../../GraphQl/graphql";
 import Item from "../Item";
 
@@ -27,14 +26,14 @@ const Contacts = () => {
       entity: {
         operator: QueryOperator.Equal,
         path: "roles.key",
-        value: "betreuer",
+        value: "supervisor",
       },
     },
   ];
 
   meRoles.data?.me?.roles?.some(
     (el: RoleEntity | undefined | null) =>
-      el?.key === "admin" || el?.key === "betreuer"
+      el?.key === "admin" || el?.key === "supvervisor"
   ) &&
     adminOperands.push({
       entity: {

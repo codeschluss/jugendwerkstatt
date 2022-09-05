@@ -7,7 +7,7 @@ import {
   useAddParticipantToChatMutation,
   useGetChatQuery,
   useGetUsersQuery,
-  UserEntity,
+  UserEntity
 } from "../../../../GraphQl/graphql";
 import Item from "../overview/Item";
 
@@ -36,7 +36,7 @@ const AddMemberToGroup = () => {
       entity: {
         operator: QueryOperator.Equal,
         path: "roles.key",
-        value: "betreuer",
+        value: "supervisor",
       },
     },
     {

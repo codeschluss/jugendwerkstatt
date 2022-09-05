@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useMemo } from "react";
+import { ReactElement, useEffect } from "react";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import { RequireAuthRoute, RequireNonAuthRoute } from "./shared/components";
@@ -82,7 +82,7 @@ import {
   UsersRequestsListPage,
   VacancyCategoriesListPage,
   VacancyCompaniesListPage,
-  VacancyListPage,
+  VacancyListPage
 } from "./admin/pages";
 
 import { GeneralAddressForm } from "./admin/components/organisms";
@@ -102,13 +102,13 @@ import {
   ActionPerformed,
   PushNotifications,
   PushNotificationSchema,
-  Token,
+  Token
 } from "@capacitor/push-notifications";
 import { Toast } from "@capacitor/toast";
 import RolePending from "./client/pages/verify/RolePending";
 import {
   useGetMeBasicQuery,
-  useSaveSubscriptionMutation,
+  useSaveSubscriptionMutation
 } from "./GraphQl/graphql";
 
 const App = (): ReactElement => {
@@ -281,7 +281,7 @@ const App = (): ReactElement => {
 
       <Route
         element={
-          <RequireAuthRoute accessRole={["admin", "betreuer", "student"]} />
+          <RequireAuthRoute accessRole={["admin", "supervisor", "student"]} />
         }
       >
         <Route path="/notifications" element={<Notifications />} />
