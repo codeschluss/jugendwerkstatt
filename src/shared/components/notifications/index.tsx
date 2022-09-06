@@ -10,8 +10,6 @@ const Notifications = () => {
   });
   const [saveNotification] = useSaveNotificationMutation();
 
-  console.log(notifications.data, "noti");
-
   const sorted = notifications.data?.me?.notifications?.slice().sort((a, b) => {
     const contentA: any = new Date(a?.created);
     const contentB: any = new Date(b?.created);
