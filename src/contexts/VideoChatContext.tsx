@@ -11,7 +11,8 @@ import {
   useGetMeBasicQuery,
 } from "../GraphQl/graphql";
 import { useAuthStore } from "../store";
-
+import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
+import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
 export enum VideoState {
   NULL,
   INCALL,
@@ -36,6 +37,9 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
   const [selfPic, setSelfPic] = useState<boolean>(true);
   const [guestPic, setGuestPic] = useState<boolean>(false);
   const [mediaStream2, setMediaStream2] = useState<MediaStream>();
+  const [videoEnabled, setVideoEnabled] = useState<boolean>(true);
+  const [audioEnabled, setAudioEnabled] = useState<boolean>(true);
+
   // let mediaStream2: MediaStream;
 
   const { isAuthenticated } = useAuthStore();
@@ -191,6 +195,15 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
     mediaStream2?.getTracks().forEach((track) => track.stop());
   };
 
+  const pauseVideo = () => {
+    mediaStream2?.getVideoTracks().forEach((t) => (t.enabled = !t.enabled));
+    setVideoEnabled(!videoEnabled);
+  };
+  const pauseSound = () => {
+    mediaStream2?.getAudioTracks().forEach((t) => (t.enabled = !t.enabled));
+    setAudioEnabled(!audioEnabled);
+  };
+
   return (
     <VideoChatContext.Provider
       value={{ sendOrAcceptInvitation, setVideoChatId }}
@@ -233,7 +246,7 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
             </>
           )}
           <div className=" w-32 h-32 absolute top-5 right-5 z-30 ">
-            <video ref={videoSelf} playsInline />
+            <video ref={videoSelf} playsInline muted />
           </div>
           <div className="absolute left-0 bottom-20 w-full flex justify-center items-center z-30 ">
             {videoStatus === VideoState.CALLED && (
@@ -252,6 +265,55 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
                 className="w-14 h-14 rounded-full flex items-center justify-center bg-red-400 mx-7 cursor-pointer"
               >
                 <CallEndIcon sx={{ color: "white" }} />
+              </div>
+            )}
+            {videoStatus === VideoState.INCALL && (
+              <div
+                onClick={pauseVideo}
+                className="w-14 h-14 rounded-full flex items-center justify-center bg-gray-300 mx-7 cursor-pointer "
+              >
+                {!videoEnabled ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M4.5 18.75h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25h-9A2.25 2.25 0 002.25 7.5v9a2.25 2.25 0 002.25 2.25z"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 10.5l4.72-4.72a.75.75 0 011.28.53v11.38a.75.75 0 01-1.28.53l-4.72-4.72M12 18.75H4.5a2.25 2.25 0 01-2.25-2.25V9m12.841 9.091L16.5 19.5m-1.409-1.409c.407-.407.659-.97.659-1.591v-9a2.25 2.25 0 00-2.25-2.25h-9c-.621 0-1.184.252-1.591.659m12.182 12.182L2.909 5.909M1.5 4.5l1.409 1.409"
+                    />
+                  </svg>
+                )}
+              </div>
+            )}
+            {videoStatus === VideoState.INCALL && (
+              <div
+                onClick={pauseSound}
+                className="w-14 h-14 rounded-full flex items-center justify-center bg-gray-300 mx-7 cursor-pointer "
+              >
+                {!audioEnabled ? (
+                  <MicOffOutlinedIcon />
+                ) : (
+                  <MicNoneOutlinedIcon />
+                )}
               </div>
             )}
           </div>
