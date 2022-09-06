@@ -10,7 +10,6 @@ import {
   useGetChatWithUserOnlyQuery,
   useGetMeBasicQuery,
 } from "../GraphQl/graphql";
-import { PersonRemove } from "@mui/icons-material";
 import { useAuthStore } from "../store";
 
 export enum VideoState {
@@ -67,7 +66,6 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
     if (isAuthenticated) {
       webSocketConnection = new WebSocket(`${WS_URL}videochat`);
       webSocketConnection.onopen = () => {
-        console.log("initinggggg");
         webSocketConnection.send(
           JSON.stringify({
             token: accessToken,
@@ -82,7 +80,6 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
     if (isAuthenticated) {
       webSocketConnection.onmessage = (message: any) => {
         const payload = JSON.parse(message.data);
-        console.log(payload, "payload");
         if (payload?.type === "offer") {
           setVideoChatId(payload.chatId);
           setCalled(true);
@@ -122,7 +119,6 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
     navigator.mediaDevices
       .enumerateDevices()
       .then((devices) => {
-        console.log(devices, "devices");
         devices.forEach(function (device) {
           if (device.kind === "videoinput") hasVideo = true;
           if (device.kind === "audioinput") hasAudio = true;
@@ -148,6 +144,7 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
             try {
               const video = videoSelf.current;
               video!.srcObject = mediaStream;
+              video?.play();
             } catch {
               setSelfPic(true);
             }
@@ -164,13 +161,12 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
             // });
             sp.on("stream", (stream: any) => {
               setVideoStatus(VideoState.INCALL);
-              console.log(stream, "stream");
               try {
                 const video = videoCaller.current;
                 video!.srcObject = stream;
+                video?.play();
               } catch {
                 setGuestPic(true);
-                console.log("no guest pic");
               }
             });
             setSimplePeer(sp);
@@ -184,7 +180,6 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
   });
 
   const endCall = () => {
-    console.log(mediaStream2, "md2");
     setSimplePeer(undefined);
     webSocketConnection.send(pay);
 
@@ -194,8 +189,6 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
     setVideoStatus(VideoState.NULL);
     setVideoChatId(undefined);
     mediaStream2?.getTracks().forEach((track) => track.stop());
-
-    if (simplePeer?.destroyed) console.log("is destroyed");
   };
 
   return (
@@ -205,12 +198,12 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
       {videoStatus !== VideoState.NULL ? (
         <div className=" w-screen h-screen relative top-0 left-0 bg-gray-700">
           {videoStatus === VideoState.CALLING && (
-            <div className="text-white text-center absolute pt-44   h-full w-full text-2xl">
+            <div className="text-white text-center absolute pt-52   h-full w-full text-2xl">
               Calling {guest ? guest[0]?.user?.fullname : ""}
             </div>
           )}
           {videoStatus === VideoState.CALLED && (
-            <div className="text-white text-center absolute pt-44  h-full w-full text-2xl">
+            <div className="text-white text-center absolute pt-52  h-full w-full text-2xl">
               {guest ? guest[0]?.user?.fullname : ""} is Calling
             </div>
           )}
@@ -233,7 +226,6 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
                 </div>
               </div>
               <video
-                autoPlay
                 className="w-full h-full object-cover absolute top-0 z-20"
                 ref={videoCaller}
                 playsInline
@@ -241,15 +233,15 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
             </>
           )}
           <div className=" w-32 h-32 absolute top-5 right-5 z-30 ">
-            <video ref={videoSelf} playsInline autoPlay />
+            <video ref={videoSelf} playsInline />
           </div>
           <div className="absolute left-0 bottom-20 w-full flex justify-center items-center z-30 ">
             {videoStatus === VideoState.CALLED && (
-              <div className="w-14 h-14 rounded-full flex items-center justify-center bg-green-400 mx-7">
-                <CallIcon
-                  sx={{ color: "white" }}
-                  onClick={() => sendOrAcceptInvitation(false, offerSignal)}
-                />
+              <div
+                className="w-14 h-14 rounded-full flex items-center justify-center cursor-pointer bg-green-400 mx-7"
+                onClick={() => sendOrAcceptInvitation(false, offerSignal)}
+              >
+                <CallIcon sx={{ color: "white" }} />
               </div>
             )}
             {(videoStatus === VideoState.INCALL ||
@@ -257,7 +249,7 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
               videoStatus === VideoState.CALLING) && (
               <div
                 onClick={endCall}
-                className="w-14 h-14 rounded-full flex items-center justify-center bg-red-400 mx-7"
+                className="w-14 h-14 rounded-full flex items-center justify-center bg-red-400 mx-7 cursor-pointer"
               >
                 <CallEndIcon sx={{ color: "white" }} />
               </div>

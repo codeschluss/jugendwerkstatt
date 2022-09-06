@@ -37,13 +37,11 @@ const Chats = () => {
                   (a) => a?.participant?.user?.id === getChats.data?.me?.id
                 )
             ).length;
-          console.log(unreadChats, "chaaats");
 
           const notMe: any = el?.chat?.participants?.filter(
             (el: ParticipantEntity | undefined | null) =>
               el?.user?.id !== getChats.data?.me?.id
           ) as ParticipantEntity | undefined | null;
-          console.log(notMe, "ellll");
           return (
             <Item
               unreadChats={unreadChats ? unreadChats : undefined}

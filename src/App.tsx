@@ -184,8 +184,6 @@ const App = (): ReactElement => {
     PushNotifications.addListener(
       "pushNotificationActionPerformed",
       (notification: ActionPerformed) => {
-        console.log(notification.notification, " noti");
-
         switch (notification.notification.data.type) {
           case "chat":
             navigate(`messenger/chat/${notification.notification.data?.id}`);

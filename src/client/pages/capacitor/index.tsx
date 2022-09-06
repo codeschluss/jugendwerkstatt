@@ -57,9 +57,7 @@ export default function PushNotificationsContainer() {
 
     PushNotifications.addListener(
       "pushNotificationReceived",
-      (notification: PushNotificationSchema) => {
-        console.log(notification);
-      }
+      (notification: PushNotificationSchema) => {}
     );
 
     PushNotifications.addListener(

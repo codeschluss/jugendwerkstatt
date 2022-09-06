@@ -93,7 +93,6 @@ const Map: FunctionComponent = () => {
     result.refetch();
     favorites.refetch();
   };
-  console.log(allEvents, "result");
 
   useEffect(() => {
     let events = result.data?.getEvents?.result;
