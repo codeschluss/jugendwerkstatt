@@ -1,32 +1,25 @@
-import React, {
-  FunctionComponent,
-  useState,
-  useEffect,
-  useCallback,
-  useContext,
-} from "react";
-import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import {
-  ConjunctionOperator,
-  EventEntity,
-  QueryOperator,
-  useAddEventFavoriteMutation,
-  useDeleteEventFavoriteMutation,
-  useGetEventsQuery,
-  useGetMeFavoritesQuery,
-} from "../../../GraphQl/graphql";
-import "./style.css";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
+    FunctionComponent, useContext, useEffect, useState
+} from "react";
+import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import SwiperCore, { Virtual } from "swiper";
-import { API_URL } from "../../../config/app";
-import { getHour } from "../../../shared/utils/date/getHour";
-import { MapSocial } from "./MapSocial";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import FilterContext from "../../../contexts/FilterContext";
-import SideBar from "../filter/SideBar";
+import {
+    ConjunctionOperator,
+    EventEntity,
+    QueryOperator,
+    useAddEventFavoriteMutation,
+    useDeleteEventFavoriteMutation,
+    useGetEventsQuery,
+    useGetMeFavoritesQuery
+} from "../../../GraphQl/graphql";
 import FilterHeader from "../../../shared/components/header/filterHeader";
+import SideBar from "../filter/SideBar";
 import SlideCard from "../slideItems/SlideCard";
+import "./style.css";
 
 SwiperCore.use([Virtual]);
 

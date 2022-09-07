@@ -1,19 +1,13 @@
-import { HeartIcon as SolidHeart, ShareIcon } from "@heroicons/react/solid";
 import { HeartIcon as OutlineHeart } from "@heroicons/react/outline";
+import { HeartIcon as SolidHeart } from "@heroicons/react/solid";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
-  AddressEntity,
-  EventEntity,
-  useAddEventFavoriteMutation,
-  useAddJobAdFavoriteMutation,
-  useGetMeFavoritesQuery,
+    AddressEntity,
+    EventEntity
 } from "../../../GraphQl/graphql";
-import { API_URL } from "../../../config/app";
-import { SocialMedia } from "../ui/SocialMedia";
 import { readAuthToken } from "../../../shared/utils";
-import { useEffect, useRef, useState } from "react";
-import React from "react";
-import axios from "axios";
+import { SocialMedia } from "../ui/SocialMedia";
 export interface SlideCardProps {
   className?: string;
   imgUrl?: any;

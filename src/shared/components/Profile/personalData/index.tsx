@@ -1,17 +1,14 @@
 import { PencilIcon } from "@heroicons/react/solid";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { API_URL } from "../../../../config/app";
+import Button from "../../../../client/components/ui/Button";
 import {
-  useGetMeBasicQuery,
-  useRegisterUserMutation,
+    useGetMeBasicQuery,
+    useRegisterUserMutation
 } from "../../../../GraphQl/graphql";
 import useInput from "../../../../hooks/use-input";
-import CustomHeader from "../../header/customHeader/CustomHeader";
-import Button from "../../../../client/components/ui/Button";
 import AuthInput from "../../authentication/AuthInput";
-import { useEffect, useState } from "react";
-import { readAuthToken } from "../../../utils";
-import React from "react";
+import CustomHeader from "../../header/customHeader/CustomHeader";
 
 const PersonalData = () => {
   // const { bgColor } = useContext(AuthContext);

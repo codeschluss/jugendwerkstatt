@@ -1,22 +1,12 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
 import { ShareIcon } from "@heroicons/react/outline";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+import * as React from "react";
 
 import {
-  FacebookShareButton,
-  LinkedinShareButton,
-  TwitterShareButton,
-  ViberShareButton,
-  WhatsappShareButton,
-  WhatsappIcon,
-  ViberIcon,
-  FacebookIcon,
-  TwitterIcon,
-  LinkedinIcon,
+  FacebookIcon, FacebookShareButton, LinkedinIcon, LinkedinShareButton, TwitterIcon, TwitterShareButton, ViberIcon, ViberShareButton, WhatsappIcon, WhatsappShareButton
 } from "react-share";
-import { BASE_URL } from "../../../config/app";
 
 const style = {
   position: "absolute" as "absolute",
@@ -51,7 +41,7 @@ export const SocialMedia: React.FC<{ url?: string }> = ({ url }) => {
           <ul>
             <li>
               <FacebookShareButton
-                url={`${BASE_URL}${url}`}
+                url={`${process.env.REACT_APP_BASE_URL}${url}`}
                 className="flex  items-center"
               >
                 <FacebookIcon className="w-10 mr-1" /> <p>Facebook</p>
@@ -59,7 +49,7 @@ export const SocialMedia: React.FC<{ url?: string }> = ({ url }) => {
             </li>
             <li>
               <TwitterShareButton
-                url={`${BASE_URL}${url}`}
+                url={`${process.env.REACT_APP_BASE_URL}${url}`}
                 className="flex  items-center"
               >
                 <TwitterIcon className="w-10 mr-1" /> Twitter
@@ -68,7 +58,7 @@ export const SocialMedia: React.FC<{ url?: string }> = ({ url }) => {
 
             <li>
               <WhatsappShareButton
-                url={`${BASE_URL}${url}`}
+                url={`${process.env.REACT_APP_BASE_URL}${url}`}
                 className="flex  items-center"
               >
                 <WhatsappIcon className="w-10 mr-1" /> WhatsApp
@@ -76,7 +66,7 @@ export const SocialMedia: React.FC<{ url?: string }> = ({ url }) => {
             </li>
             <li>
               <ViberShareButton
-                url={`${BASE_URL}${url}`}
+                url={`${process.env.REACT_APP_BASE_URL}${url}`}
                 className="flex  items-center"
               >
                 <ViberIcon className="w-10 mr-1" /> Viber
@@ -84,7 +74,7 @@ export const SocialMedia: React.FC<{ url?: string }> = ({ url }) => {
             </li>
             <li>
               <LinkedinShareButton
-                url={`${BASE_URL}${url}`}
+                url={`${process.env.REACT_APP_BASE_URL}${url}`}
                 className="flex  items-center"
               >
                 <LinkedinIcon className="w-10 mr-1" /> LinkedIn

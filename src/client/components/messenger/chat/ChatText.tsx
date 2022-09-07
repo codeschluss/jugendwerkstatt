@@ -1,8 +1,7 @@
 import { ChevronDownIcon, ReplyIcon } from "@heroicons/react/outline";
 import { Done, DoneAll } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
-import { API_URL } from "../../../../config/app";
-import { MediaEntity, MessageDto } from "../../../../GraphQl/graphql";
+import { MediaEntity } from "../../../../GraphQl/graphql";
 import DropDown from "../../../../shared/components/ui/DropDown";
 import { readAuthToken } from "../../../../shared/utils";
 
@@ -65,7 +64,7 @@ const ChatText: React.FC<TextProps> = ({
         authorization: `Bearer ${token}`,
       },
     };
-    await fetch(API_URL + `media/download/${mediaId}`, requestOptions)
+    await fetch(process.env.REACT_APP_API_URL + `media/download/${mediaId}`, requestOptions)
       .then((resp) => resp.blob())
       .then((blob) => {
         const url = window.URL.createObjectURL(blob);

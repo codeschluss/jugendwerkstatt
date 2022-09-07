@@ -1,6 +1,8 @@
 FROM alpine:latest
 LABEL maintainer info@codeschluss.de
 COPY / /tmp/jugendwerkstatt.client
+ARG REACT_APP_HOST
+ENV REACT_APP_HOST $REACT_APP_HOST
 RUN \
   #
   # packages

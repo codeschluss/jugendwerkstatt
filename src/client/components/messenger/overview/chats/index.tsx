@@ -1,12 +1,7 @@
 import dayjs from "dayjs";
 import { useEffect } from "react";
-import { API_URL } from "../../../../../config/app";
 import {
-  ChatEntity,
-  ParticipantEntity,
-  useGetMeBasicQuery,
-  useGetMeChatsQuery,
-  UserEntity,
+    ParticipantEntity, useGetMeChatsQuery
 } from "../../../../../GraphQl/graphql";
 import Item from "../Item";
 

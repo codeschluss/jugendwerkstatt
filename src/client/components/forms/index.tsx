@@ -1,18 +1,23 @@
 import {
   ChevronRightIcon,
   DownloadIcon,
-  XIcon,
+  XIcon
 } from "@heroicons/react/outline";
 import UploadIcon from "@heroicons/react/solid/UploadIcon";
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 import React from "react";
 import { Link } from "react-router-dom";
-import { API_URL } from "../../../config/app";
 import {
   MediaEntity,
   TemplateTypeEntity,
   useDeleteUploadsMutation,
   useGetMeUploadsQuery,
-  useGetTemplateTypesQuery,
+  useGetTemplateTypesQuery
 } from "../../../GraphQl/graphql";
 import Action from "../../../shared/components/table/Action";
 import Row from "../../../shared/components/table/Row";
@@ -20,12 +25,6 @@ import TableName from "../../../shared/components/table/TableName";
 import I from "../../../shared/components/ui/IconWrapper";
 import { readAuthToken } from "../../../shared/utils";
 import detectDevice from "../../../shared/utils/isTouch";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 
 const Forms: React.FC = () => {
   const isTouch = detectDevice();
@@ -72,7 +71,7 @@ const Forms: React.FC = () => {
         authorization: `Bearer ${token}`,
       },
     };
-    await fetch(API_URL + `media/download/${mediaId}`, requestOptions)
+    await fetch(process.env.REACT_APP_API_URL + `media/download/${mediaId}`, requestOptions)
       .then((resp) => resp.blob())
       .then((blob) => {
         const url = window.URL.createObjectURL(blob);

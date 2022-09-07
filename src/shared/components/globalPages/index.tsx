@@ -1,9 +1,7 @@
-import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/outline";
-import React from "react";
+import { ChevronLeftIcon } from "@heroicons/react/outline";
 import { useNavigate, useParams } from "react-router-dom";
 import SlideCard from "../../../client/components/slideItems/SlideCard";
 import Slider from "../../../client/components/slideItems/Slider";
-import { API_URL } from "../../../config/app";
 import { useGetSinglePublicPageQuery } from "../../../GraphQl/graphql";
 import { useAuthStore } from "../../../store";
 

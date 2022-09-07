@@ -1,22 +1,21 @@
+import { joiResolver } from "@hookform/resolvers/joi";
 import { ReactElement, useEffect, useState } from "react";
 import { FieldArrayWithId, FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { joiResolver } from "@hookform/resolvers/joi";
 
+import dayjs from "dayjs";
+import { useGetEventAdminQuery, useSaveEventMutation } from "../../../GraphQl/graphql";
 import { Accordion, EventImagePreview, FormActions, UploadField } from "../../components/molecules";
 import {
-    AddressForm,
-    BaseDataForm,
-    DescriptionFrom,
-    EventsFormInputs,
-    ScheduleInputs,
-    SchedulesForm,
+  AddressForm,
+  BaseDataForm,
+  DescriptionFrom,
+  EventsFormInputs,
+  ScheduleInputs,
+  SchedulesForm
 } from "../../components/organisms";
-import { useGetEventAdminQuery, useSaveEventMutation } from "../../../GraphQl/graphql";
-import { EventsFormSchema } from "../../validations";
-import dayjs from "dayjs";
 import { base64ImageToFile, fileObject, twClsx } from "../../utils";
-import { API_URL } from "../../../config/app";
+import { EventsFormSchema } from "../../validations";
 
 const CreateEventsPage = (): ReactElement => {
     const { id } = useParams();
@@ -214,7 +213,7 @@ const CreateEventsPage = (): ReactElement => {
                                 {...(file?.file && {
                                     src:
                                         file.file.size === 0
-                                            ? `${API_URL}media/${file?.id}`
+                                            ? `${process.env.REACT_APP_API_URL}media/${file?.id}`
                                             : URL.createObjectURL(file.file),
                                 })}
                                 file={file.file}
