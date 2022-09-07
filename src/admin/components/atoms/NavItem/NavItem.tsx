@@ -1,14 +1,13 @@
-import { FC, useContext, useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/solid';
 import clsx from 'clsx';
-import { BASE_HREF } from '../../../config/global';
+import { FC, useContext, useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import SideBarContext from '../../../../contexts/SideBarContext';
+import { sidebarStore } from '../../../../store/sidebar/sidebar.store';
+import { twClsx } from '../../../utils';
 import Nav from '../../molecules/Nav/Nav';
 import { Icon } from '../Icons';
 import { NavItemProps } from './NavItem.props';
-import { twClsx } from '../../../utils';
-import SideBarContext from '../../../../contexts/SideBarContext';
-import { sidebarStore } from '../../../../store/sidebar/sidebar.store';
 
 export const NavItem: FC<NavItemProps> = ({
   item,
@@ -35,7 +34,7 @@ export const NavItem: FC<NavItemProps> = ({
    * effects
    */
   useEffect(() => {
-    if (pathname.includes(`${BASE_HREF}/${item.location}`)) setShowItems(true);
+    if (pathname.includes(`${process.env.REACT_APP_BASE_ADMIN_HREF}/${item.location}`)) setShowItems(true);
   }, [item.location, pathname]);
 
   useEffect(() => {
@@ -68,7 +67,7 @@ export const NavItem: FC<NavItemProps> = ({
   //         ? item !== id
   //         : item !== 'new'
   //     )
-  //     .join('/') === `${BASE_HREF}/${item.location}`;
+  //     .join('/') === `${process.env.REACT_APP_BASE_ADMIN_HREF}/${item.location}`;
 
   return (
     <li
@@ -95,7 +94,7 @@ export const NavItem: FC<NavItemProps> = ({
         <NavLink
           end
           to={
-            item.noItems ? `${item.location}` : `${BASE_HREF}/${item.location}`
+            item.noItems ? `${item.location}` : `${process.env.REACT_APP_BASE_ADMIN_HREF}/${item.location}`
           }
           // className={activeLink ? 'text-charcoal' : ''}
         >

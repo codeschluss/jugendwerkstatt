@@ -2,12 +2,11 @@ import { WebSocketLink } from "@apollo/client/link/ws";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 
 // config
-import { WS_URL } from "../../../config/app";
 
 // utils
 import { readAuthToken } from "../../../shared/utils";
 
-export const wsClient = new SubscriptionClient(WS_URL + "graphql", {
+export const wsClient = new SubscriptionClient(process.env.REACT_APP_WS_URL + "graphql", {
   reconnect: true,
   lazy: true,
   connectionParams: () => {

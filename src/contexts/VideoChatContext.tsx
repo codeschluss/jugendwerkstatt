@@ -1,18 +1,16 @@
-import { createContext, useEffect, useRef, useState } from "react";
-import SimplePeer, { Instance, SignalData } from "simple-peer";
 import CallIcon from "@mui/icons-material/Call";
 import CallEndIcon from "@mui/icons-material/CallEnd";
-import { WS_URL } from "../config/app";
-import { readAuthToken } from "../shared/utils";
-import { useNavigate } from "react-router-dom";
+import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
+import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
+import { createContext, useEffect, useRef, useState } from "react";
+import SimplePeer, { Instance, SignalData } from "simple-peer";
 import {
   ParticipantEntity,
   useGetChatWithUserOnlyQuery,
-  useGetMeBasicQuery,
+  useGetMeBasicQuery
 } from "../GraphQl/graphql";
+import { readAuthToken } from "../shared/utils";
 import { useAuthStore } from "../store";
-import MicNoneOutlinedIcon from "@mui/icons-material/MicNoneOutlined";
-import MicOffOutlinedIcon from "@mui/icons-material/MicOffOutlined";
 export enum VideoState {
   NULL,
   INCALL,
@@ -68,7 +66,7 @@ export const VideoChatProvider: React.FunctionComponent = ({ children }) => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      webSocketConnection = new WebSocket(`${WS_URL}videochat`);
+      webSocketConnection = new WebSocket(`${process.env.REACT_APP_WS_URL}videochat`);
       webSocketConnection.onopen = () => {
         webSocketConnection.send(
           JSON.stringify({

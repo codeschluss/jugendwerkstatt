@@ -1,10 +1,7 @@
-import { url } from "inspector";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "swiper/css";
 // import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { API_URL } from "../../../../config/app";
-import { readAuthToken } from "../../../../shared/utils";
 import "./style.css";
 
 // import "./style.css";

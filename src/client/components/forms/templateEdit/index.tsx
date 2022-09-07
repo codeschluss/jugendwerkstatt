@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
-import ClassicEditor from "ckeditor5-custom-build-jugendwerkstatt";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import DownloadIcon from "@heroicons/react/solid/DownloadIcon";
+import ClassicEditor from "ckeditor5-custom-build-jugendwerkstatt";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { API_URL } from "../../../../config/app";
 import {
   useGetMeBasicQuery,
   useGetTemplateQuery,
   useGetUserTemplateQuery,
-  useSaveUserTemplateMutation,
+  useSaveUserTemplateMutation
 } from "../../../../GraphQl/graphql";
-import I from "../../../../shared/components/ui/IconWrapper";
 import DropDown from "../../../../shared/components/ui/DropDown";
 import { readAuthToken } from "../../../../shared/utils";
 
@@ -62,7 +60,7 @@ const TemplateEdit: React.FC = () => {
         type: "docx",
       }),
     };
-    await fetch(API_URL + "media/export", requestOptions)
+    await fetch(process.env.REACT_APP_API_URL + "media/export", requestOptions)
       .then((resp) => resp.blob())
       .then((blob) => {
         const url = window.URL.createObjectURL(blob);
@@ -90,7 +88,7 @@ const TemplateEdit: React.FC = () => {
         type: "pdf",
       }),
     };
-    await fetch(API_URL + "media/export", requestOptions)
+    await fetch(process.env.REACT_APP_API_URL + "media/export", requestOptions)
       .then((resp) => resp.blob())
       .then((blob) => {
         const url = window.URL.createObjectURL(blob);

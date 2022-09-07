@@ -1,21 +1,16 @@
 import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  DotsVerticalIcon,
-  PencilIcon,
-  UserGroupIcon,
+    ChevronLeftIcon, DotsVerticalIcon,
+    PencilIcon,
+    UserGroupIcon
 } from "@heroicons/react/outline";
-import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { API_URL } from "../../../../config/app";
 import {
-  ParticipantEntity,
-  useDeleteParticipantMutation,
-  useGetChatQuery,
-  useSaveChatMutation,
+    ParticipantEntity,
+    useDeleteParticipantMutation,
+    useGetChatQuery,
+    useSaveChatMutation
 } from "../../../../GraphQl/graphql";
 import DropDown from "../../../../shared/components/ui/DropDown";
-import { readAuthToken } from "../../../../shared/utils";
 import TypeInput from "../../forms/upload/TypeInput";
 import Item from "../overview/Item";
 

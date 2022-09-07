@@ -1,9 +1,6 @@
-import * as React from "react";
 import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
+import * as React from "react";
 import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
-import { readAuthToken } from "../../../utils";
-import { API_URL } from "../../../../config/app";
 
 function stringToColor(string: string) {
   let hash = 0;
