@@ -15,7 +15,7 @@ RUN \
   # jugendwerkstatt.client
   cd /tmp/jugendwerkstatt.client && \
   npm install && \
-  npm run -- build && \
+  npm run -- REACT_APP_HOST=$REACT_APP_HOST build && \
   mkdir -p /usr/share/webapps && \
   mv build /usr/share/webapps/jugendwerkstatt.client && \
   #
