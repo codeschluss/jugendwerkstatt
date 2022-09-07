@@ -12,7 +12,7 @@ export interface GroupCourseInput {
 
 export interface GroupCoursesInput {
   name: string;
-  courses: GroupCourseInput[];
+  description: string;
 }
 
 export interface GroupCoursesProps {

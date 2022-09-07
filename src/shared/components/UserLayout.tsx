@@ -1,7 +1,9 @@
-import { FC, useContext } from "react";
+import { FC, useContext, useEffect } from "react";
 import Evaluation from "../../client/components/Evaluation";
+import Footer from "../../client/components/footer";
 
 import Modal from "../../client/components/modals/courseReviewPopUp";
+import PushNotificationsContainer from "../../client/pages/capacitor";
 import SideBarContext from "../../contexts/SideBarContext";
 import {
   AssignmentEntity,
@@ -39,66 +41,64 @@ export const UserLayout: FC = ({ children }) => {
   });
   let data = addListener.data?.addListener;
 
-  switch (data?.type) {
-    case NotificationType.DeletedUser:
-      handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
-      break;
-    case NotificationType.Evaluation:
+  // switch (data?.type) {
+  //   // case NotificationType.DeletedUser:
+  //   //   handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
+  //   //   break;
+  //   case NotificationType.Evaluation:
+  //     feedback.refetch();
+  //     assignments.refetch();
+  //     break;
+
+  // }
+  useEffect(() => {
+    if (data?.type === "evaluation") {
       feedback.refetch();
       assignments.refetch();
-      break;
-    case NotificationType.Event:
-      handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
-      break;
-    case NotificationType.JobAd:
-      handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
-      break;
-    case NotificationType.ReadReceipt:
-      handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
-      break;
-    case NotificationType.Global:
-      handleOpen({ type: SnackbarTypeEnum.INFO, message: data.content || "" });
-  }
+    }
+  }, [addListener.data]);
 
   return (
-    <main
-      className={`flex flex-col  min-h-screen transition-all duration-500 ${
-        sideBar && isAuthenticated ? "md:pl-60" : "md:pl-20"
-      }`}
-    >
-      {filteredAssignment?.map(
-        (assignment: AssignmentEntity | undefined | null) => {
-          return (
-            <Evaluation
-              key={assignment?.id}
-              visible={true}
-              assignment={assignment}
-              refetchParent={() => assignments.refetch()}
-            />
-          );
-        }
-      )}
-
-      {feedback?.data?.me?.feedbacks?.map(
-        (el: FeedbackEntity | undefined | null) => {
-          if (el?.rating === null) {
+    <>
+      <main
+        className={`flex flex-col  min-h-screen transition-all duration-500 ${
+          sideBar && isAuthenticated ? "md:pl-72" : "md:pl-20"
+        }`}
+      >
+        {filteredAssignment?.map(
+          (assignment: AssignmentEntity | undefined | null) => {
             return (
-              <Modal
-                key={el?.id}
-                id={el?.id}
+              <Evaluation
+                key={assignment?.id}
                 visible={true}
-                course={el?.course?.name}
-                refetchParent={() => feedback.refetch()}
-              ></Modal>
+                assignment={assignment}
+                refetchParent={() => assignments.refetch()}
+              />
             );
           }
-        }
-      )}
-      {isAuthenticated && <Header />}
-      <div className="">
-        <div>{children}</div>
-      </div>
-      {/* <Footer /> */}
-    </main>
+        )}
+
+        {feedback?.data?.me?.feedbacks?.map(
+          (el: FeedbackEntity | undefined | null) => {
+            if (el?.rating === null) {
+              return (
+                <Modal
+                  key={el?.id}
+                  id={el?.id}
+                  visible={true}
+                  course={el?.course?.name}
+                  refetchParent={() => feedback.refetch()}
+                ></Modal>
+              );
+            }
+          }
+        )}
+        {isAuthenticated && <Header />}
+        <div className="">
+          <div>{children}</div>
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 };

@@ -4,7 +4,6 @@ import { API_URL } from "../../../../../config/app";
 import {
   ChatEntity,
   ParticipantEntity,
-  useGetChatsQuery,
   useGetMeBasicQuery,
   useGetMeChatsQuery,
   UserEntity,
@@ -21,7 +20,7 @@ const Chats = () => {
   }, []);
 
   return (
-    <div>
+    <div className="px-8">
       {getChats.data?.me?.participants
         ?.slice()
         .sort((a, b) => {
@@ -29,30 +28,47 @@ const Chats = () => {
           const contentB: any = new Date(b?.chat?.lastMessage?.created);
           return contentB - contentA;
         })
-        .map((el: ParticipantEntity | undefined | null | any) => {
+        .map((el: ParticipantEntity | undefined | null) => {
+          const unreadChats = el?.chat?.messages
+            ?.filter((x) => x?.participant?.user?.id !== getChats.data?.me?.id)
+            .filter(
+              (fl) =>
+                !fl?.readReceipts?.some(
+                  (a) => a?.participant?.user?.id === getChats.data?.me?.id
+                )
+            ).length;
+
           const notMe: any = el?.chat?.participants?.filter(
             (el: ParticipantEntity | undefined | null) =>
               el?.user?.id !== getChats.data?.me?.id
           ) as ParticipantEntity | undefined | null;
-          console.log(el?.chat?.messages, "messages");
           return (
             <Item
+              unreadChats={unreadChats ? unreadChats : undefined}
               key={el?.id}
               href={`/messenger/chat/${el?.chat?.id}`}
               name={el?.chat?.name ? el.chat?.name : notMe[0]?.user?.fullname}
               description={
                 <span className="flex items-center">
                   {`${
-                    el?.chat?.lastMessage?.user?.id === getChats?.data?.me?.id
-                      ? "Du"
-                      : el?.chat?.lastMessage?.user?.fullname
-                  }: `}
-                  {el?.chat?.lastMessage?.content}
+                    el?.chat?.lastMessage?.participant?.user?.id ===
+                    getChats?.data?.me?.id
+                      ? "Du:"
+                      : el?.chat?.lastMessage?.participant?.user?.fullname
+                      ? el?.chat?.lastMessage?.participant?.user?.fullname +
+                          ":" || "awd"
+                      : ""
+                  } `}
+                  {el?.chat?.lastMessage?.content
+                    ? el?.chat?.lastMessage?.content
+                    : ""}
                 </span>
               }
               imgUrl={
-                notMe[0]?.user?.profilePicture &&
-                `${API_URL}media/${notMe[0]?.user?.profilePicture?.id}`
+                el?.chat?.avatar?.id
+                  ? `data:${el?.chat?.avatar?.mimeType};base64,${el?.chat?.avatar?.base64}`
+                  : notMe[0]?.user?.profilePicture &&
+                    `data:${notMe[0]?.user?.profilePicture?.mimeType};base64,${notMe[0]?.user?.profilePicture?.base64}`
               }
               rightInfo={
                 <span className="text-sm">

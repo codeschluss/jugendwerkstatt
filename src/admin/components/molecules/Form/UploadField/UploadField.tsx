@@ -10,6 +10,7 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
       id,
       src,
       name,
+      placeholderTitle = 'bild auswählen',
       index,
       preview,
       error,
@@ -23,10 +24,10 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
     ref
   ) => {
     const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
+      onChange && onChange(event);
       if (!!event.currentTarget.files?.length) {
         handleAppend && handleAppend(index || 0, event.currentTarget.files[0]);
       }
-      onChange && onChange(event);
     };
 
     const isPreview = !!preview && !!src;
@@ -50,7 +51,7 @@ export const UploadField = forwardRef<HTMLInputElement, UploadFieldProps>(
             ) : (
               <>
                 <PhotographIcon width={24} />
-                <p className="m-2 text-lg font-medium">bild auswählen</p>
+                <p className="m-2 text-lg font-medium">{placeholderTitle}</p>
               </>
             )}
           </div>

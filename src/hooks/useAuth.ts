@@ -27,11 +27,18 @@ export const useAuth = (): {
     (token: string) => {
       const fields = getSingleJWTField(token);
 
+      if (!fields?.verified && !fields?.approved) {
+        navigate("/toVerifyEmail");
+      }
+
       if (!fields?.verified) {
         navigate("/reVerifyEmail");
       }
       if (fields?.verified && !fields?.approved) {
         navigate("/pending-approval");
+      }
+      if (fields?.verified && fields.approved && !fields.roles) {
+        navigate("/pendingRole");
       }
 
       addAuth(

@@ -1,6 +1,6 @@
 export interface PublicPageFormInputs {
-  pageName: string;
-  description: string;
-  images: { file: File | null }[];
-  video: File | null;
+    pageName: string;
+    description: string;
+    files: { file: File | null }[];
+    video: { file: File | null };
 }

@@ -24,14 +24,15 @@ const Favorites = () => {
             {favorites.data?.me?.favoriteEvents?.map((event: any) => {
               return (
                 <SlideCard
+                  key={event.id}
                   isFavorite={true}
                   width="w-full md:w-1/2"
                   className="mb-4 md:h-72"
                   eventName={event?.name}
                   location={`${event?.address?.street}, ${event?.address?.houseNumber}, ${event?.address?.place}`}
-                  date={event?.nextSchedule}
+                  date={event?.nextSchedule?.startDate}
                   route={`/event/${event.id}`}
-                  imgUrl={event?.titleImage?.id}
+                  imgUrl={`data:${event?.titleImage?.mimeType};base64,${event?.titleImage?.base64}`}
                   removeFavorite={() =>
                     deleteEventFavorite({
                       variables: {
@@ -55,6 +56,7 @@ const Favorites = () => {
                   key={job.id}
                   isFavorite={true}
                   width="w-full md:w-1/2"
+                  gradient={false}
                   className="mb-4 md:h-72"
                   eventName={job?.company?.name}
                   location={`${job?.company?.address?.street}, 
@@ -80,7 +82,9 @@ const Favorites = () => {
       favorites.data?.me?.favoriteEvents?.length === 0 ? (
         <div className="w-full h-full flex justify-center items-center text-4xl">
           <FavoriteBorderIcon fontSize="large" />
-          <p>Upss... looks like you have not added any favorites...</p>
+          <p>
+            Upss… sieht so aus als ob du noch keine Favoriten hinzugefügt hast.
+          </p>
         </div>
       ) : (
         ""

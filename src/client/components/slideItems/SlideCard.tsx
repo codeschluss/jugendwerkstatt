@@ -10,6 +10,10 @@ import {
 } from "../../../GraphQl/graphql";
 import { API_URL } from "../../../config/app";
 import { SocialMedia } from "../ui/SocialMedia";
+import { readAuthToken } from "../../../shared/utils";
+import { useEffect, useRef, useState } from "react";
+import React from "react";
+import axios from "axios";
 export interface SlideCardProps {
   className?: string;
   imgUrl?: any;
@@ -36,15 +40,17 @@ const SlideCard: React.FC<SlideCardProps> = ({
   route,
   color,
   isFavorite,
-  width = "w-9/12 md:w-full",
+  width = " w-80 md:w-full",
   setFavorite,
   removeFavorite,
   shareUrl,
 }) => {
   const theDate = new Date(date);
   const year = theDate.getFullYear();
-  const month = theDate.getMonth();
+  const month = theDate.getMonth() + 1;
   const day = theDate.getDate();
+
+  const token = readAuthToken("accessToken");
 
   const weekDays = [
     "Sonntag",
@@ -58,14 +64,14 @@ const SlideCard: React.FC<SlideCardProps> = ({
   const weekDay = weekDays[theDate.getDay()];
 
   return (
-    <div className={`${className} snap-center ${width} h-60 flex-none md:px-2`}>
-      <div className="relative h-full overflow-hidden rounded-md">
+    <div className={`${className} snap-center ${width} h-60   flex-none px-2`}>
+      <div className="relative  h-full overflow-hidden rounded-md">
         <Link to={route}>
           {imgUrl ? (
             <img
+              src={imgUrl}
               alt={eventName || ""}
               className="object-cover w-full h-full absolute inset-0"
-              src={`${API_URL}media/${imgUrl}`}
             />
           ) : (
             <div
@@ -81,9 +87,12 @@ const SlideCard: React.FC<SlideCardProps> = ({
             gradient ? "bg-gradient-to-b from-black to-transparent" : ""
           }  text-white px-3 pb-8 pt-3 flex justify-between items-center`}
         >
-          <small className="font-bold">{eventName}</small>
+          <Link to={route}>
+            {" "}
+            <small className="font-bold">{eventName}</small>
+          </Link>
           {(location || date) && (
-            <div className="flex items-center md:w-20 justify-between">
+            <div className="flex items-center w-14 md:w-20 justify-between">
               <SocialMedia url={shareUrl} /> |
               {isFavorite ? (
                 <SolidHeart

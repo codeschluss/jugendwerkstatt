@@ -1,11 +1,12 @@
 import { BellIcon, LogoutIcon, SearchIcon } from "@heroicons/react/outline";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   NotificationEntity,
   SearchDto,
+  useAddListenerSubscription,
   useGetMeBasicQuery,
-  useGetNotificationsQuery,
+  useGetMeNotificationsQuery,
   useSaveNotificationMutation,
   useSearchQuery,
 } from "../../../../GraphQl/graphql";
@@ -20,15 +21,18 @@ import { BellIcon as FilledBell } from "@heroicons/react/solid";
 import { Autocomplete, TextField } from "@mui/material";
 import { Height } from "@mui/icons-material";
 import { idText } from "typescript";
+import { readAuthToken } from "../../../utils";
 
 const RightContent: FC = () => {
-  const isTouch = detectDevice();
-  const [inputvalue, setInputValue] = useState();
   const { handleLogout } = useAuth();
   const user = useGetMeBasicQuery();
-  const notifications = useGetNotificationsQuery();
+  const notifications = useGetMeNotificationsQuery({
+    fetchPolicy: "network-only",
+  });
   const [saveNotification] = useSaveNotificationMutation();
   const navigate = useNavigate();
+  const accessToken = readAuthToken("accessToken");
+  const [searchActive, setSearchActive] = useState(false);
 
   const searchfield: any = [];
 
@@ -49,6 +53,8 @@ const RightContent: FC = () => {
     search.refetch({
       params: {
         search: e.target.value,
+        page: 0,
+        size: 5,
       },
     });
   };
@@ -81,6 +87,18 @@ const RightContent: FC = () => {
     (notification: NotificationEntity | undefined | null) => !notification?.read
   ).length;
 
+  const addListener = useAddListenerSubscription({
+    skip: !accessToken,
+    variables: {
+      token: accessToken,
+    },
+  });
+  let data = addListener.data?.addListener;
+
+  useEffect(() => {
+    notifications.refetch();
+  }, [data]);
+
   return (
     <div className="relative flex items-center justify-end flex-grow">
       <Autocomplete
@@ -88,7 +106,7 @@ const RightContent: FC = () => {
         id="combo-box-demo"
         options={searchfield}
         sx={{
-          width: 280,
+          width: 240,
           marginRight: 1,
           background: "white",
           borderRadius: 1,
@@ -103,6 +121,7 @@ const RightContent: FC = () => {
             onChange={searching}
             {...params}
             label="Suche"
+            onBlur={() => setSearchActive(true)}
           />
         )}
       />
@@ -120,7 +139,7 @@ const RightContent: FC = () => {
               <p className="text-lg">{user.data?.me?.fullname}</p>
               <p className="text-xs">{user.data?.me?.email}</p>
               <Link to="/profile">
-                <p className="mt-3 text-lg">Profil Bearbeiten</p>
+                <p className="mt-3 text-lg">Profil bearbeiten</p>
               </Link>
             </div>
           </div>
@@ -128,7 +147,6 @@ const RightContent: FC = () => {
             <Link to="/profile-password">
               <p>Passwort ändern</p>
             </Link>
-            <p>E-Mail Benachrichtigungen</p>
           </div>
           <div className="flex items-center justify-start">
             {" "}
@@ -144,8 +162,8 @@ const RightContent: FC = () => {
 
       <DropDown
         position="right"
-        className="block pr-3 ml-3 mr-3 md:border-r md:border-gray-200 "
-        boxClassName=" mt-3 w-72 md:w-96 py-2.5 px-2 "
+        className="block pr-3 ml-1 mr-3 md:border-r md:border-gray-200 "
+        boxClassName=" mt-3 h-[380px] w-72 md:w-96 py-2.5 px-2 "
         withArrow={false}
         name={
           <Badge
@@ -164,8 +182,8 @@ const RightContent: FC = () => {
           </Badge>
         }
       >
-        <div>
-          <ul className="list-style-type: none">
+        <div className="h-full">
+          <ul className="list-style-type: none h-full overflow-scroll">
             {notifications.data?.me?.notifications
               ?.filter((el: NotificationEntity | undefined | null) => !el?.read)
               .map((el: any) => {
@@ -187,9 +205,7 @@ const RightContent: FC = () => {
                       }).then(() => notifications.refetch())
                     }
                     key={el.title}
-                    className={`border-b-[1px] p-2  border-gray-400 cursor-pointer ${
-                      !el.read && "bg-gray-100"
-                    }`}
+                    className={`border-b-[1px] p-2  border-white cursor-pointer`}
                   >
                     <p className={`text-base mt-2 ${!el.read && "font-bold"}`}>
                       {el?.title}
@@ -207,7 +223,7 @@ const RightContent: FC = () => {
                 style={{ color: "blue" }}
                 className="mt-2 text-sm text-center "
               >
-                see all notifications
+                Alle Benachrichtigungen ansehen
               </p>
             </Link>
           </ul>

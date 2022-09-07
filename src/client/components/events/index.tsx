@@ -89,8 +89,8 @@ const Events = () => {
   }, [result.data]);
 
   return (
-    <div className="m-auto md:m-12">
-      <div className="flex items-center w-full h-16 pl-2 overflow-hidden border-t-2 border-white md:absolute md:top-14 bg-primary md:bg-transparent md:border-none">
+    <div className="m-auto md:m-12 md:mt-0">
+      <div className="flex items-center w-full h-16 pl-2 overflow-hidden border-t-2 border-white  bg-primary md:bg-transparent md:border-none">
         <SideBar type="EVENT" />
 
         <FilterHeader />
@@ -129,7 +129,7 @@ const Events = () => {
                         date={el?.nextSchedule.startDate}
                         shareUrl={`event/${el.id}`}
                         route={`/event/${el.id}`}
-                        imgUrl={el?.titleImage?.id}
+                        imgUrl={`data:${el?.titleImage?.mimeType};base64,${el?.titleImage?.base64}`}
                         setFavorite={() =>
                           eventFavorite({
                             variables: {

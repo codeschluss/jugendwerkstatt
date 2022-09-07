@@ -3,26 +3,36 @@ import {
   useAddJobAdFavoriteMutation,
   useDeleteJobAdFavoriteMutation,
   useGetJobAdsQuery,
+  useGetMeBasicFavoritesQuery,
   useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
+import { useAuthStore } from "../../../store";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
 
 interface EventsProps {}
 
 const Jobs: React.FC<EventsProps> = () => {
+  let fetchedData = null;
+
   const result = useGetJobAdsQuery({
     fetchPolicy: "network-only",
+    skip: !!fetchedData,
+    variables: {
+      params: {
+        page: 1,
+        size: 5,
+      },
+    },
   });
-
-  const fetchedData: [JobAdEntity] = result.data?.getJobAds?.result as [
-    JobAdEntity
-  ];
+  const { isAuthenticated } = useAuthStore();
+  fetchedData = result.data?.getJobAds?.result as [JobAdEntity];
   const [jobFavorites] = useAddJobAdFavoriteMutation();
 
   const [deleteJobAdFavorite] = useDeleteJobAdFavoriteMutation();
 
-  const favorites = useGetMeFavoritesQuery({
+  const favorites = useGetMeBasicFavoritesQuery({
+    skip: !isAuthenticated,
     fetchPolicy: "network-only",
   });
   const refetchQueries = () => {

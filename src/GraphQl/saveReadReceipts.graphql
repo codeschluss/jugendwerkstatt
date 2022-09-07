@@ -1,0 +1,5 @@
+mutation SaveReadReceipts($entities: [ReadReceiptEntityInput]) {
+  saveReadReceipts(entities: $entities) {
+    id
+  }
+}

@@ -15,13 +15,13 @@ const SideBox: React.FC<SideBoxProps> = ({ active, hide }) => {
   return (
     <>
       <div
-        className={`w-60 bg-white md:bg-primary  fixed left-0 top-0
+        className={`w-72 bg-white md:bg-primary  fixed left-0 top-0 overflow-scroll
         h-full drop-shadow-xl md:drop-shadow-none z-20 transition transform-gpu duration-500 ${
           active
             ? "translate-x- opacity-1 pointer-events-auto"
             : !isTouch
-            ? "-translate-x-40 opacity-1"
-            : "-translate-x-60 opacity-1"
+            ? "-translate-x-52 opacity-1"
+            : "-translate-x-72 opacity-1"
           // : `-translate-x-${!isTouch ? "40" : "60"} opacity-1 `
         }`}
       >

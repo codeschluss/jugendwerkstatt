@@ -6,7 +6,6 @@ import {
   TemplateEntity,
   useDeleteTemplateMutation,
   useDeleteUserTemplateMutation,
-  useGetMeBasicQuery,
   useGetMeUserTemplatesQuery,
   useGetTemplatesQuery,
   UserTemplateEntity,
@@ -22,7 +21,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 const Templates: React.FC = () => {
   const location = useLocation();
   const { templateType }: any = location.state;
-  const user = useGetMeBasicQuery();
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -57,7 +55,7 @@ const Templates: React.FC = () => {
       <ul className="list-none text-base font-normal pl-4 text-gray-600">
         {fetchedTemplates?.map((template, index) => {
           return (
-            <li className="pt-4" key={index}>
+            <li className="pt-4 " key={index}>
               <Link
                 to={{
                   pathname: `/Forms/Templates/Edit/${template.id}`,
@@ -66,7 +64,7 @@ const Templates: React.FC = () => {
                   templateType: templateType.name,
                   name: template.name,
                   templateTypeId: templateType.id,
-                  edit: false,
+                  edit: true,
                 }}
               >
                 {template.name}
@@ -78,18 +76,18 @@ const Templates: React.FC = () => {
           );
         })}
       </ul>
-      <h5 className="text-xl font-bold pt-4">Eigene Vorlagen "</h5>
+      <h5 className="text-xl font-bold pt-4 ">Eigene Formulare</h5>
       <ul className="list-none text-base font-normal pl-4 text-gray-600">
         {fetchedUserTemplates
           ?.filter((ut) => ut.templateType?.id === templateType.id)
           ?.map((template, index) => {
             return (
               <li
-                className="pt-4 flex justify-between items-center"
+                className="pt-4 flex  justify-between items-center"
                 key={index}
               >
                 {template.name}
-                <div className="h-5 flex  justify-between float-right items-center">
+                <div className="h-5 flex   justify-between float-right items-center">
                   <Link
                     to={{
                       pathname: `/Forms/Templates/Edit/${template.id}`,
@@ -115,13 +113,13 @@ const Templates: React.FC = () => {
                     aria-describedby="alert-dialog-description"
                   >
                     <DialogTitle id="alert-dialog-title">
-                      {"Vorlagen Loschen?"}
+                      {"Vorlage Löschen?"}
                     </DialogTitle>
                     <DialogContent>
                       <DialogContentText id="alert-dialog-description">
-                        Are you sure you want to permanently delete your
-                        template? you will not be able to recover your files
-                        anytime soon.
+                        Bist du sicher, dass du die Vorlage unwiderruflich
+                        löschen möchtest? Die Vorlage kann nicht
+                        wiederhergestellt werden.
                       </DialogContentText>
                     </DialogContent>
                     <DialogActions>
@@ -132,7 +130,9 @@ const Templates: React.FC = () => {
                             variables: {
                               id: template?.id,
                             },
-                          }).then(() => userTemplatesResult.refetch())
+                          })
+                            .then(() => userTemplatesResult.refetch())
+                            .finally(() => setOpen(false))
                         }
                       >
                         sicher

@@ -84,68 +84,71 @@ const Jobs = () => {
   }, [result.data]);
 
   return (
-    <div className="p-4 m-auto md:m-12">
-      <div className=" pl-2 md:absolute  md:top-14 overflow-hidden bg-primary md:bg-transparent border-t-2 border-white md:border-none w-full items-center flex  h-16">
+    <div className=" m-auto md:m-12 md:mt-0">
+      <div className=" flex items-center w-full h-16 pl-2 overflow-hidden border-t-2 border-white  bg-primary md:bg-transparent md:border-none">
         <SideBar />
 
         <FilterHeader />
       </div>
-      {typesData
-        ?.filter((cat: JobTypeEntity | undefined | null) =>
-          cat?.jobAds?.some(
-            (job: JobAdEntity | undefined | null) =>
-              new Date(job?.dueDate) >= new Date(Date.now()) ||
-              new Date(job?.startDate) >= new Date(Date.now())
+
+      <div className="p-4">
+        {typesData
+          ?.filter((cat: JobTypeEntity | undefined | null) =>
+            cat?.jobAds?.some(
+              (job: JobAdEntity | undefined | null) =>
+                new Date(job?.dueDate) >= new Date(Date.now()) ||
+                new Date(job?.startDate) >= new Date(Date.now())
+            )
           )
-        )
-        .map((category: JobTypeEntity) => {
-          return (
-            <Slider
-              title={category?.name || ""}
-              className="-mx-4"
-              key={category?.id}
-            >
-              {category?.jobAds
-                ?.filter(
-                  (job: JobAdEntity | undefined | null) =>
-                    new Date(job?.dueDate) >= new Date(Date.now()) ||
-                    new Date(job?.startDate) >= new Date(Date.now())
-                )
-                .map((el: JobAdEntity | any) => {
-                  const checkId = (obj: any) => obj.id === el.id;
-                  const hasId =
-                    favorites?.data?.me?.favoriteJobAds?.some(checkId);
-                  return (
-                    <SlideCard
-                      shareUrl={`job-ad/${el.id}`}
-                      key={el.id}
-                      gradient={false}
-                      route={`/job-ad/${el.id}`}
-                      eventName={el?.title}
-                      location={`${el?.company?.name}`}
-                      date={el?.dueDate}
-                      isFavorite={hasId}
-                      color={category?.color}
-                      setFavorite={() => {
-                        jobFavorites({
-                          variables: {
-                            jobAdId: el.id,
-                          },
-                        }).then(() => refetchQueries());
-                      }}
-                      removeFavorite={() => {
-                        deleteJobAdFavorite({
-                          variables: {
-                            jobAdId: el.id,
-                          },
-                        }).then(() => refetchQueries());
-                      }}
-                    />
-                  );
-                })}
-            </Slider>
-          );
-        })}
+          .map((category: JobTypeEntity) => {
+            return (
+              <Slider
+                title={category?.name || ""}
+                className="-mx-4"
+                key={category?.id}
+              >
+                {category?.jobAds
+                  ?.filter(
+                    (job: JobAdEntity | undefined | null) =>
+                      new Date(job?.dueDate) >= new Date(Date.now()) ||
+                      new Date(job?.startDate) >= new Date(Date.now())
+                  )
+                  .map((el: JobAdEntity | any) => {
+                    const checkId = (obj: any) => obj.id === el.id;
+                    const hasId =
+                      favorites?.data?.me?.favoriteJobAds?.some(checkId);
+                    return (
+                      <SlideCard
+                        shareUrl={`job-ad/${el.id}`}
+                        key={el.id}
+                        gradient={false}
+                        route={`/job-ad/${el.id}`}
+                        eventName={el?.title}
+                        location={`${el?.company?.name}`}
+                        date={el?.dueDate}
+                        isFavorite={hasId}
+                        color={category?.color}
+                        setFavorite={() => {
+                          jobFavorites({
+                            variables: {
+                              jobAdId: el.id,
+                            },
+                          }).then(() => refetchQueries());
+                        }}
+                        removeFavorite={() => {
+                          deleteJobAdFavorite({
+                            variables: {
+                              jobAdId: el.id,
+                            },
+                          }).then(() => refetchQueries());
+                        }}
+                      />
+                    );
+                  })}
+              </Slider>
+            );
+          })}
+      </div>
     </div>
   );
 };

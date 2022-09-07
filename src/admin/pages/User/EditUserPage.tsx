@@ -70,7 +70,7 @@ const EditUserPage = (): ReactElement => {
   if (loading) return <p>loading...</p>;
 
   return (
-    <Accordion title="Max Müller Rolle zuweisen" open>
+    <Accordion title={`${user?.fullname} Rolle zuweisen`} open>
       <form className="min-h-full">
         {getValues('roles') && (
           <>

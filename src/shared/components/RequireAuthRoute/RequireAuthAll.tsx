@@ -10,25 +10,23 @@ import { useAuthStore } from "../../../store";
 import { RequireAuthLayout } from "./RequireAuthLayout";
 
 export const RequireAuthAll = (): ReactElement => {
-  // hooks
-  const location = useLocation();
-  const { isAuthenticated, user } = useAuthStore();
-  useExpireToken();
+    // hooks
+    const location = useLocation();
+    const { isAuthenticated, user } = useAuthStore();
+    useExpireToken();
 
-  const layout =
-    user?.roles.length !== 0 ? (
-      <RequireAuthLayout
-        accessRole={[
-          user?.roles.includes(UserRoleEnum.ADMIN) ? "admin" : "student",
-        ]}
-      />
+    const layout =
+        user?.roles.length !== 0 ? (
+            <RequireAuthLayout
+                accessRole={[user?.roles.includes(UserRoleEnum.ADMIN) ? "admin" : "student"]}
+            />
+        ) : (
+            <Outlet />
+        );
+
+    return isAuthenticated ? (
+        layout
     ) : (
-      <Outlet />
+        <Navigate to={{ pathname: "/" }} state={{ from: location }} />
     );
-
-  return isAuthenticated ? (
-    layout
-  ) : (
-    <Navigate to={{ pathname: "/" }} state={{ from: location }} />
-  );
 };

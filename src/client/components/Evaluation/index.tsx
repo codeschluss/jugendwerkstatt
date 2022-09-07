@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AnswerEntity,
   AnswerEntityInput,
@@ -24,27 +24,49 @@ const Evaluation: React.FC<ModalProps> = ({
   refetchParent,
   assignment,
 }) => {
-  const givenAnswers = assignment?.questionnaire?.questions?.map(
-    (question: QuestionEntity | undefined | null) =>
-      ({
-        question: { item: question?.item, id: question?.id },
-        rating: null,
-      } as AnswerEntityInput)
-  );
+  const [disable, setDisable] = useState(false);
+  const [count, setCount] = useState<any>();
+  const givenAnswers = assignment?.questionnaire?.questions
+    ?.map(
+      (question: QuestionEntity | undefined | null) =>
+        ({
+          question: {
+            item: question?.item,
+            id: question?.id,
+            sequenceOrder: question?.sequenceOrder,
+          },
+          rating: null,
+        } as AnswerEntityInput)
+    )
+    ?.sort(
+      (a: any, b: any) =>
+        a?.question?.sequenceOrder - b?.question?.sequenceOrder
+    );
+  let disa = 1;
 
+  const textComment: any = useRef();
   const [saveAssignment] = useSaveClientAssignmentMutation();
   const submitHandler = (e: any) => {
     e.preventDefault();
-    console.log(givenAnswers);
 
     saveAssignment({
       variables: {
         entity: {
           id: assignment?.id,
           answers: givenAnswers,
+          comment: textComment.current.value,
         },
       },
     }).then(() => refetchParent());
+  };
+
+  useEffect(() => {
+    if (givenAnswers?.every((a) => a.rating !== undefined)) setDisable(true);
+  }, [count]);
+
+  const isDisabledButton = () => {
+    if (givenAnswers?.every((a) => a.rating !== undefined)) return true;
+    else return false;
   };
 
   return (
@@ -52,15 +74,19 @@ const Evaluation: React.FC<ModalProps> = ({
       className={`${visible ? "inline-block" : "hidden"}
   absolute backdrop-blur-sm bg-white/30 w-screen h-screen z-50 grid place-items-center left-0`}
     >
-      <div className="w-[90vw] max-w-lg h-[80vh] mx-auto  border-[3px] rounded-md bg-gray-100">
+      <div className="w-[90vw] max-w-lg h-[80vh] mx-auto   border-[3px] rounded-md bg-gray-100">
         <TitleText />
-        <form onSubmit={submitHandler}>
+        <form
+          onSubmit={submitHandler}
+          className="md:flex md:flex-col md:items-center md:w-full"
+        >
           <div>
             <Svgs />
             {givenAnswers?.map(
               (answer: AnswerEntity | undefined | null, index: number) => {
                 const changeRating = (rating: number, question: string) => {
                   answer!.rating = rating;
+                  setCount(answer?.rating);
                 };
 
                 return (
@@ -76,13 +102,18 @@ const Evaluation: React.FC<ModalProps> = ({
 
           <div className="w-full h-32 p-1 my-1 md:w-full">
             <textarea
+              ref={textComment}
               placeholder="Was ich noch sagen wollte:"
               className="w-full h-full p-2 text-xs rounded-md resize-none md:text-base"
             />
           </div>
 
-          <Button buttonType={"submit"} isDisabled={true} isValidated={true}>
-            Send
+          <Button
+            buttonType={"submit"}
+            isDisabled={disable}
+            isValidated={disable}
+          >
+            Senden
           </Button>
         </form>
       </div>

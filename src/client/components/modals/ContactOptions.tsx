@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useContext } from "react";
 import {
   PhoneIcon,
   ChatAltIcon,
@@ -29,7 +29,7 @@ const ContactOptions: FunctionComponent<ModalProps> = ({
     <div
       onClick={clicked}
       className={`${visible ? "inline-block" : "hidden"}
-    absolute bg-white/30 w-screen h-screen z-50 flex justify-center `}
+    absolute bg-white/30 w-screen h-screen z-50 flex justify-center shadow-md `}
     >
       <div className=" w-72 md:w-96 h-80 bg-red-100 flex flex-col justify-start py-10 items-center text-gray-600 rounded-2xl">
         {imgSrc ? (
@@ -47,12 +47,7 @@ const ContactOptions: FunctionComponent<ModalProps> = ({
           <p className="text-sm text-center">{guestEmail}</p>
         </div>
         <div className="flex justify-around w-3/5 ">
-          <PhoneIcon className="w-7" onClick={() => alert("calling")} />
-          <ChatAltIcon className="w-7" onClick={openChat} />
-          <VideoCameraIcon
-            className="w-7"
-            onClick={() => alert("video call")}
-          />
+          <ChatAltIcon className="w-7 cursor-pointer" onClick={openChat} />
         </div>
       </div>
     </div>

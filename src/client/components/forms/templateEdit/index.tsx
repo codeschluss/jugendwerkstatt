@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import ClassicEditor from "ckeditor5-custom-build-jugendwerkstatt";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import DownloadIcon from "@heroicons/react/solid/DownloadIcon";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -12,12 +12,20 @@ import {
 } from "../../../../GraphQl/graphql";
 import I from "../../../../shared/components/ui/IconWrapper";
 import DropDown from "../../../../shared/components/ui/DropDown";
+import { readAuthToken } from "../../../../shared/utils";
+import {
+  Directory,
+  Encoding,
+  FilesystemDirectory,
+} from "@capacitor/filesystem";
+import { Browser } from "@capacitor/browser";
+import { Plugins } from "@capacitor/core";
 
 const TemplateEdit: React.FC = () => {
   const { id } = useParams();
-
+  const token = readAuthToken("accessToken");
   const navigate = useNavigate();
-
+  const { Filesystem } = Plugins;
   const location = useLocation();
   const { templateType, name, templateTypeId, edit }: any = location.state;
   const [templateName, setTemplateName] = useState(name);
@@ -51,7 +59,10 @@ const TemplateEdit: React.FC = () => {
   const downloadTemplateDocx = async () => {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         html: templateContent,
         name: templateName,
@@ -76,7 +87,10 @@ const TemplateEdit: React.FC = () => {
   const downloadTemplatePdf = async () => {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({
         html: templateContent,
         name: templateName,
@@ -94,9 +108,42 @@ const TemplateEdit: React.FC = () => {
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
+
+        const writeSecretFile = async () => {
+          await Filesystem.writeFile({
+            path: "secrets/text.txt",
+            data: "This is a test",
+            directory: Directory.Documents,
+            encoding: Encoding.UTF8,
+          });
+        };
+
+        const readSecretFile = async () => {
+          const contents = await Filesystem.readFile({
+            path: "secrets/text.txt",
+            directory: Directory.Data,
+            encoding: Encoding.UTF8,
+            recursive: true,
+          });
+
+          console.log("secrets:", contents);
+        };
+
+        writeSecretFile();
+        readSecretFile();
+
         alert("your file has downloaded!");
       })
       .catch(() => alert("oh no!"));
+  };
+
+  const writeSecretFile = async () => {
+    await Filesystem.writeFile({
+      path: "secrets/text.txt",
+      data: "This is a test",
+      directory: Directory.Documents,
+      encoding: Encoding.UTF8,
+    });
   };
 
   const saveTemplate = (): void => {
@@ -124,7 +171,7 @@ const TemplateEdit: React.FC = () => {
   }, [userTemplateContent, templateContentResult]);
 
   return (
-    <div className="container px-4 pt-4 mx-auto">
+    <div className="container md:px-4 pt-4 mx-auto">
       <h5 className="text-2xl font-bold">
         {templateType}
 
@@ -136,12 +183,14 @@ const TemplateEdit: React.FC = () => {
           withArrow={false}
         >
           <p className="text-sm font-normal text-center"> format:</p>
+
           <p
             onClick={downloadTemplatePdf}
             className="text-base font-normal text-center my-1 cursor-pointer hover:bg-gray-100"
           >
             .pdf
           </p>
+
           <p
             onClick={downloadTemplateDocx}
             className="text-base font-normal text-center my-1 cursor-pointer hover:bg-gray-100"
@@ -165,6 +214,9 @@ const TemplateEdit: React.FC = () => {
 
       <div className="pt-4 pb-6">
         <CKEditor
+          config={{
+            removePlugins: ["MediaEmbed"],
+          }}
           editor={ClassicEditor}
           data={templateContent}
           onChange={(event: any, editor: any) => {

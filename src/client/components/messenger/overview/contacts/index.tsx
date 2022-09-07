@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { API_URL } from "../../../../../config/app";
 import {
   ConjunctionOperator,
   QueryOperator,
@@ -8,19 +7,11 @@ import {
   useGetUsersQuery,
   useMeRolesQuery,
   UserEntity,
-  useSaveChatMutation,
+  useSaveChatMutation
 } from "../../../../../GraphQl/graphql";
-import ContactOptions from "../../../modals/ContactOptions";
-// import ContactOptions from "../../../modals/ContactOptions";
 import Item from "../Item";
 
 const Contacts = () => {
-  const [contactName, setContactName] = useState<any>("");
-  const [picId, setPicId] = useState<any>("");
-  const [contactId, setContactId] = useState<any>("");
-  const [contactPhone, setContactPhone] = useState<any>("");
-  const [contactEmail, setContactEmail] = useState<any>("");
-
   const meRoles = useMeRolesQuery();
 
   const adminOperands = [
@@ -35,14 +26,14 @@ const Contacts = () => {
       entity: {
         operator: QueryOperator.Equal,
         path: "roles.key",
-        value: "superviser",
+        value: "supervisor",
       },
     },
   ];
 
   meRoles.data?.me?.roles?.some(
     (el: RoleEntity | undefined | null) =>
-      el?.key === "admin" || el?.key === "superviser"
+      el?.key === "admin" || el?.key === "supvervisor"
   ) &&
     adminOperands.push({
       entity: {
@@ -87,38 +78,20 @@ const Contacts = () => {
     });
   };
   return (
-    <div>
-      <ContactOptions
-        clicked={() => setModal(false)}
-        visible={modal}
-        guestName={contactName}
-        guestNr={contactPhone}
-        guestEmail={contactEmail}
-        imgSrc={picId && `${API_URL}media/${picId}`}
-        openChat={() => handleCreateChat(contactId)}
-      />
-      {getUsers.data?.getUsers?.result?.map(
-        (el: UserEntity | undefined | null) => (
+    <div className="px-8">
+      {getUsers.data?.getUsers?.result
+        ?.filter((usr) => usr?.id !== meRoles?.data?.me?.id)
+        .map((el: UserEntity | undefined | null) => (
           <Item
             key={el?.id}
-            // onClick={() => handleCreateChat(el?.id)}
-            // href={`/messenger/chat/${el?.id}`}
-            onClick={() => {
-              setContactName(el?.fullname);
-              setPicId(el?.profilePicture?.id);
-              setContactId(el?.id);
-              setContactPhone(el?.phone);
-              setContactEmail(el?.email);
-              setModal(true);
-            }}
+            onClick={() => handleCreateChat(el?.id)}
             name={el?.fullname}
             imgUrl={
               el?.profilePicture?.id &&
-              `${API_URL}media/${el?.profilePicture?.id}`
+              `data:${el?.profilePicture?.mimeType};base64,${el?.profilePicture?.base64}`
             }
           />
-        )
-      )}
+        ))}
     </div>
   );
 };

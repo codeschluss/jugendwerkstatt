@@ -9,6 +9,9 @@ import useInput from "../../../../hooks/use-input";
 import CustomHeader from "../../header/customHeader/CustomHeader";
 import Button from "../../../../client/components/ui/Button";
 import AuthInput from "../../authentication/AuthInput";
+import { useEffect, useState } from "react";
+import { readAuthToken } from "../../../utils";
+import React from "react";
 
 const PersonalData = () => {
   // const { bgColor } = useContext(AuthContext);
@@ -16,13 +19,15 @@ const PersonalData = () => {
   const user = useGetMeBasicQuery();
   const navigate = useNavigate();
   const {
+    setEnteredValue: setNameValue,
     value: enteredName,
     validity: enteredNameValidity,
     hasError: nameInputError,
     valueChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurHandler,
-  } = useInput((value: string) => value !== "", user.data?.me?.fullname);
+  } = useInput((value: string) => value !== "");
   const {
+    setEnteredValue: setEmailValue,
     value: enteredEmail,
     validity: enteredEmailValidity,
     hasError: emailInputError,
@@ -30,23 +35,22 @@ const PersonalData = () => {
     inputBlurHandler: emailBlurHandler,
   } = useInput(
     (value: string) =>
-      value.includes("@") && value !== "" && value.includes("."),
-    user.data?.me?.email
+      value?.includes("@") && value !== "" && value?.includes(".")
   );
   const {
+    setEnteredValue: setPhoneValue,
     value: enteredPhone,
     hasError: phoneInputError,
     valueChangeHandler: phoneChangeHandler,
     inputBlurHandler: phoneBlurHandler,
   } = useInput(
     (value: string) =>
-      value.includes("@") && value !== "" && value.includes("."),
-    user?.data?.me?.phone
+      value?.includes("@") && value !== "" && value?.includes(".")
   );
 
   let letter;
   user.data?.me?.fullname &&
-    (letter = user.data.me.fullname.substring(0, 1).toUpperCase());
+    (letter = user?.data?.me?.fullname.substring(0, 1).toUpperCase());
 
   const [saveNewUser] = useRegisterUserMutation();
 
@@ -63,6 +67,9 @@ const PersonalData = () => {
             phone: enteredPhone === "" ? user.data?.me?.phone : enteredPhone,
           },
         },
+        onError: () => {
+          alert("Felder durfen nicht leer gelassen werden");
+        },
         onCompleted: () => {
           navigate("/profile");
         },
@@ -70,8 +77,14 @@ const PersonalData = () => {
     }
   };
 
+  useEffect(() => {
+    setNameValue(user.data?.me?.fullname);
+    setEmailValue(user.data?.me?.email);
+    setPhoneValue(user.data?.me?.phone);
+  }, [user.data]);
+
   return (
-    <div className="text-[#676767] absolute  md:static w-full md:w-2/5  z-20 top-0 bg-white">
+    <div className="text-[#676767] md:m-5 absolute  md:static w-full md:w-2/5  z-20 top-0 bg-white">
       <CustomHeader>Personal Data</CustomHeader>
       <div className="">
         <form
@@ -83,7 +96,7 @@ const PersonalData = () => {
               {user.data?.me?.profilePicture?.id ? (
                 <img
                   className="object-cover w-24 h-24 rounded-full"
-                  src={`${API_URL}media/${user.data.me?.profilePicture?.id}`}
+                  src={`data:${user?.data?.me?.profilePicture?.mimeType};base64,${user?.data?.me?.profilePicture?.base64}`}
                   alt=""
                 />
               ) : (
@@ -110,7 +123,7 @@ const PersonalData = () => {
                 onChange={nameChangeHandler}
                 onBlur={nameBlurHandler}
                 value={enteredName}
-                error={nameInputError ? "Kann nicht lehr gelassen werden" : ""}
+                error={nameInputError ? "Kann nicht leer gelassen werden" : ""}
                 inputClassName={`${
                   nameInputError && "border-500-red"
                 }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
@@ -121,7 +134,7 @@ const PersonalData = () => {
                 onChange={emailChangeHandler}
                 onBlur={emailBlurHandler}
                 value={enteredEmail}
-                error={emailInputError ? "Kann nicht lehr gelassen werden" : ""}
+                error={emailInputError ? "Kann nicht leer gelassen werden" : ""}
                 inputClassName={`${
                   emailInputError && "border-500-red"
                 }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
@@ -132,7 +145,7 @@ const PersonalData = () => {
                 onChange={phoneChangeHandler}
                 onBlur={phoneBlurHandler}
                 value={enteredPhone}
-                error={phoneInputError ? "Kann nicht lehr gelassen werden" : ""}
+                error={phoneInputError ? "Kann nicht leer gelassen werden" : ""}
                 inputClassName={`${
                   phoneInputError && "border-500-red"
                 }" w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"`}
@@ -141,8 +154,12 @@ const PersonalData = () => {
           </div>
           <span className="w-4/6 md:w-2/5 md:mt-5">
             <Button
-              isDisabled={enteredNameValidity || enteredEmailValidity}
-              isValidated={enteredEmailValidity || enteredNameValidity}
+              isDisabled={
+                enteredNameValidity && enteredEmailValidity ? true : false
+              }
+              isValidated={
+                enteredNameValidity && enteredEmailValidity ? true : false
+              }
               buttonType={"submit"}
             >
               Änderungen speichern

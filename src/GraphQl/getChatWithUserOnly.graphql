@@ -1,0 +1,10 @@
+query GetChatWithUserOnly($entity: ChatEntityInput) {
+  getChat(entity: $entity) {
+    participants {
+      user {
+        fullname
+        id
+      }
+    }
+  }
+}

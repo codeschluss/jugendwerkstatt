@@ -4,6 +4,8 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import Button from "../../../../client/components/ui/Button";
 import AuthInput from "../../authentication/AuthInput";
+import { useDeleteMeMutation } from "../../../../GraphQl/graphql";
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute" as "absolute",
@@ -18,8 +20,28 @@ const style = {
 
 export default function DeleteConfirmation() {
   const [open, setOpen] = React.useState(false);
+  const [password, setPassword] = React.useState<string>("");
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const navigate = useNavigate();
+
+  const passwordHandler = (event: any) => {
+    setPassword(event.target.value);
+  };
+
+  const [deleteAccount] = useDeleteMeMutation();
+
+  const deleteMeHandler = () => {
+    deleteAccount({
+      variables: {
+        password: password,
+      },
+    }).then(() => {
+      alert("Ihr Profil wurde gelöscht");
+      navigate("/");
+    });
+  };
 
   return (
     <div>
@@ -52,13 +74,19 @@ export default function DeleteConfirmation() {
               Please for your own security, enter your password
             </p>
             <AuthInput
+              onChange={passwordHandler}
+              value={password}
               type="password"
               id="password"
               inputClassName="w-full text-xl p-3 peer focus:outline-none border-2 rounded-md relative"
             />
             <div className="flex justify-between">
               {" "}
-              <Button isDisabled={true} isValidated={true} click={handleClose}>
+              <Button
+                isDisabled={password !== "" ? true : false}
+                isValidated={password !== "" ? true : false}
+                click={deleteMeHandler}
+              >
                 Ich stimme zu
               </Button>
               <button

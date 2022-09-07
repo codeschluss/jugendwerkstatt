@@ -1,13 +1,12 @@
 query GetGroups {
   groups: getGroups {
     result {
-      id
-      name
+      ...GroupField
       courses {
         ...CourseField
-      }
-      users {
-        ...UserField
+        members {
+          id
+        }
       }
     }
   }
@@ -16,9 +15,6 @@ query GetGroups {
 query GetGroup($entity: GroupEntityInput) {
   group: getGroup(entity: $entity) {
     ...GroupField
-    users {
-      ...UserField
-    }
     courses {
       ...CourseField
     }

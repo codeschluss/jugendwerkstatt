@@ -1,6 +1,9 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import Stack from "@mui/material/Stack";
+import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
+import { readAuthToken } from "../../../utils";
+import { API_URL } from "../../../../config/app";
 
 function stringToColor(string: string) {
   let hash = 0;
@@ -32,6 +35,17 @@ function stringAvatar(name: string) {
 }
 
 const BackgroundLetterAvatars: React.FC<{ fullname: any }> = ({ fullname }) => {
-  return <Avatar {...stringAvatar(fullname)} />;
+  const me = useGetMeBasicQuery();
+
+  return me.data?.me?.profilePicture ? (
+    <div className="w-12 h-12 ">
+      <img
+        className="w-full h-full bg-cover rounded-full"
+        src={`data:${me.data?.me?.profilePicture?.mimeType};base64,${me.data?.me?.profilePicture?.base64}`}
+      />
+    </div>
+  ) : (
+    <Avatar {...stringAvatar(fullname)} />
+  );
 };
 export default BackgroundLetterAvatars;

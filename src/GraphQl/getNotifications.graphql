@@ -1,5 +1,7 @@
-query GetNotifications {
+query GetMeNotifications {
   me {
+    id
+    fullname
     notifications {
       id
       read

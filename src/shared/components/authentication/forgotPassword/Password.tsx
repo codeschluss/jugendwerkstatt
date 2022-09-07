@@ -9,7 +9,7 @@ const Password = () => {
   const [errorText, setErrorText] = useState(false);
   const params = useParams();
   const navigate = useNavigate();
-  const regex = /[^A-Za-z0-9_.]/g;
+  const regex = /^(?=.*[0-9])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
 
   const {
     value: enteredPassword,

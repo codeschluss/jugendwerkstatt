@@ -1,5 +1,5 @@
-import { ReactElement } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { ReactElement, useEffect } from "react";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { useAuth } from "./hooks/useAuth";
 import { RequireAuthRoute, RequireNonAuthRoute } from "./shared/components";
 
@@ -42,12 +42,13 @@ import Password from "./shared/components/authentication/forgotPassword/Password
 import {
   CategoriesListPage,
   ChatActivationPage,
+  CourseMembersPage,
   CreateCategoriesPage,
+  CreateCourseMembersPage,
   CreateEvaluationAssignmentPage,
   CreateEventsPage,
   CreateFormsCategories,
   CreateFormsPage,
-  CreateGroupMembersPage,
   CreateMediaCategoriesPage,
   CreateMediaPage,
   CreateOrganizersPage,
@@ -67,10 +68,11 @@ import {
   FormsListPage,
   FormsUserListPage,
   GeneralAddressPage,
+  GroupCourseFormPage,
   GroupCoursesPage,
   GroupFormPage,
   GroupListPage,
-  GroupMembersPage,
+  GroupPage,
   MediaCategoriesListPage,
   MediaListPage,
   OrganizersListPage,
@@ -84,14 +86,127 @@ import {
 } from "./admin/pages";
 
 import { GeneralAddressForm } from "./admin/components/organisms";
+import GlobalPages from "./client/pages/globalPages";
 import Home from "./client/pages/home";
-import { RequireAuthAll } from "./shared/components/RequireAuthRoute/RequireAuthAll";
+import AddMemberPanel from "./client/pages/messenger/adminPanel/AddMemberPanel";
+import ChatAccessRules from "./client/pages/messenger/adminPanel/ChatAccessRules";
+import GroupNamePanel from "./client/pages/messenger/adminPanel/GroupNamePanel";
+import MainPanel from "./client/pages/messenger/adminPanel/MainPanel";
+import { useGetChatSettingsQuery } from "./GraphQl/graphql";
 import Notifications from "./shared/components/notifications";
+import { RequireAuthAll } from "./shared/components/RequireAuthRoute/RequireAuthAll";
+import { useAuthStore } from "./store";
+
+import { Capacitor } from "@capacitor/core";
+import {
+  ActionPerformed,
+  PushNotifications,
+  PushNotificationSchema,
+  Token,
+} from "@capacitor/push-notifications";
+import { Toast } from "@capacitor/toast";
+import RolePending from "./client/pages/verify/RolePending";
+import {
+  useGetMeBasicQuery,
+  useSaveSubscriptionMutation,
+} from "./GraphQl/graphql";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
+  const { isAuthenticated } = useAuthStore();
+  const isPushNotificationsAvailable =
+    Capacitor.isPluginAvailable("PushNotifications");
+  const chatEnabled = useGetChatSettingsQuery({
+    fetchPolicy: "network-only",
+    skip: !isAuthenticated,
+  });
+
+  const me = useGetMeBasicQuery({
+    skip: !isAuthenticated,
+  });
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      chatEnabled.refetch();
+      me.refetch();
+    }
+  }, [isAuthenticated]);
+
+  const [subs] = useSaveSubscriptionMutation();
+
+  useEffect(() => {
+    if (isPushNotificationsAvailable && me.data) {
+      PushNotifications.checkPermissions().then((res) => {
+        if (res.receive !== "granted") {
+          PushNotifications.requestPermissions().then((res) => {
+            if (res.receive === "denied") {
+              showToast("Push Notification permission denied");
+            } else {
+              showToast("Push Notification permission granted");
+              register();
+            }
+          });
+        } else {
+          register();
+        }
+      });
+    }
+  }, [me.data?.me]);
+  const navigate = useNavigate();
+
+  const register = () => {
+    PushNotifications.register();
+
+    PushNotifications.addListener("registration", (token: Token) => {
+      const entity = {
+        deviceToken: token.value,
+        user: {
+          id: me.data?.me?.id,
+        },
+      };
+      subs({
+        variables: {
+          entity,
+        },
+      });
+    })
+      .catch(() => alert("Unnknown error, contact admin"))
+      .finally();
+
+    // PushNotifications.addListener("registrationError", (error: any) => {
+    //   alert("Error on registration: " + JSON.stringify(error));
+    // });
+
+    PushNotifications.addListener(
+      "pushNotificationReceived",
+      (notification: PushNotificationSchema) => {}
+    );
+    PushNotifications.addListener(
+      "pushNotificationActionPerformed",
+      (notification: ActionPerformed) => {
+        switch (notification.notification.data.type) {
+          case "chat":
+            navigate(`messenger/chat/${notification.notification.data?.id}`);
+            break;
+          case "event":
+            navigate(`event/${notification.notification.data?.id}`);
+            break;
+          case undefined:
+            navigate("notifications");
+        }
+      }
+    );
+  };
+
+  const showToast = async (msg: string) => {
+    await Toast.show({
+      text: msg,
+    });
+  };
 
   if (loading) return <div>Loading...</div>;
+
+  const chatActive = !!chatEnabled?.data?.getSettings?.chatActive;
 
   return (
     <Routes>
@@ -105,26 +220,30 @@ const App = (): ReactElement => {
           path="/profile-upload-picture"
           element={<ProfileImageUpload />}
         />
-
         <Route path="/reVerifyEmail" element={<ReVerifyUser />} />
+        <Route path="/pendingRole" element={<RolePending />} />
         <Route path="/pending-approval" element={<ApprovalPending />} />
-        <Route path="/verification/:id" element={<RegisteredSuccessfully />} />
-
-        <Route path="/messenger" element={<Messenger />}>
-          <Route path="chats" element={<Chats />} />
-          <Route path="calls" element={<Calls />} />
-          <Route path="contacts" element={<Contacts />} />
-          <Route path="chat/:id" element={<Chat />} />
+        <Route path="/messenger" element={chatActive && <Messenger />}>
+          <Route path="chats" element={chatActive && <Chats />} />
+          <Route path="calls" element={chatActive && <Calls />} />
+          <Route path="contacts" element={chatActive && <Contacts />} />
+          <Route path="chat/:id" element={chatActive && <Chat />} />
         </Route>
+        <Route path="/adminMsnPanel/:id" element={<MainPanel />} />
+        <Route path="/groupAddMember/:id" element={<AddMemberPanel />} />
+        <Route path="/groupChatNameChange/:id" element={<GroupNamePanel />} />
+        <Route path="/groupChatRules/:id" element={<ChatAccessRules />} />{" "}
       </Route>
+      <Route path="/verification/:id" element={<RegisteredSuccessfully />} />
 
       <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />
+      <Route path="/infoPage/:id" element={<GlobalPages />} />
 
       <Route element={<RequireNonAuthRoute />}>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
-        <Route path="/forgot-password" element={<ForgotPassword />}>
+        <Route path="/reset-password" element={<ForgotPassword />}>
           <Route path="email" element={<Email />} />
           <Route path="password/:id" element={<Password />} />
         </Route>
@@ -136,26 +255,18 @@ const App = (): ReactElement => {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/jobs" element={<Jobs />} />
 
-        {/* <Route path="/messenger" element={<Messenger />}>
-          <Route path="chats" element={<Chats />} />
-          <Route path="calls" element={<Calls />} />
-          <Route path="contacts" element={<Contacts />} />
-          <Route path="chat/:id" element={<Chat />} />
-        </Route> */}
-
         <Route path="/upload-file" element={<UploadData />} />
 
         <Route path="/map" element={<Map />} />
         <Route path="/media-library" element={<MediaLibrary />} />
-        <Route path="/notifications" element={<Notifications />} />
 
         <Route path="/event/:id" element={<EventDetail />} />
+        <Route path="/calendar" element={<EventsCalendar />} />
 
         <Route path="/events">
           <Route index element={<Events />} />
           <Route path=":id" element={<EventDetail />} />
           <Route path="time" element={<EventsTime />} />
-          <Route path="calendar" element={<EventsCalendar />} />
         </Route>
 
         <Route path="/forms">
@@ -167,7 +278,15 @@ const App = (): ReactElement => {
       </Route>
 
       <Route
-        element={<RequireAuthRoute accessRole={["admin", "superviser"]} />}
+        element={
+          <RequireAuthRoute accessRole={["admin", "supervisor", "student"]} />
+        }
+      >
+        <Route path="/notifications" element={<Notifications />} />
+      </Route>
+
+      <Route
+        element={<RequireAuthRoute accessRole={["admin", "supervisor"]} />}
       >
         <Route path="/admin/events">
           <Route index element={<EventsListPage />} />
@@ -243,11 +362,20 @@ const App = (): ReactElement => {
 
         <Route path="/admin/groups">
           <Route index element={<GroupListPage />} />
+          <Route path=":id/view" element={<GroupPage />} />
           <Route path="new" element={<GroupFormPage />} />
           <Route path=":id" element={<GroupFormPage />} />
           <Route path=":id/courses" element={<GroupCoursesPage />} />
-          <Route path=":id/members" element={<GroupMembersPage />} />
-          <Route path=":id/members/new" element={<CreateGroupMembersPage />} />
+          <Route
+            path=":id/courses/:courseId"
+            element={<GroupCourseFormPage />}
+          />
+          <Route path=":id/courses/new" element={<GroupCourseFormPage />} />
+        </Route>
+
+        <Route path="/admin/courses">
+          <Route path=":id" element={<CourseMembersPage />} />
+          <Route path=":id/members/new" element={<CreateCourseMembersPage />} />
         </Route>
 
         <Route path="/admin/evaluations">

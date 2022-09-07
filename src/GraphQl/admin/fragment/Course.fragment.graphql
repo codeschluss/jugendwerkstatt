@@ -1,5 +1,13 @@
 fragment CourseField on CourseEntity {
   id
   name
-  active
+  description
+  group {
+    id
+    name
+  }
+  members {
+    id
+    fullname
+  }
 }

@@ -3,25 +3,36 @@ import {
   useAddEventFavoriteMutation,
   useDeleteEventFavoriteMutation,
   useGetEventsQuery,
-  useGetMeFavoritesQuery,
+  useGetMeBasicFavoritesQuery,
 } from "../../../GraphQl/graphql";
+import { useAuthStore } from "../../../store";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
 
 interface EventsProps {}
 
 const Events: React.FC<EventsProps> = () => {
-  const useEvents = useGetEventsQuery({});
+  let fetchedData = null;
 
+  const useEvents = useGetEventsQuery({
+    skip: !!fetchedData,
+    variables: {
+      params: {
+        page: 0,
+        size: 5,
+      },
+    },
+  });
+  const { isAuthenticated } = useAuthStore();
   const [eventFavorite] = useAddEventFavoriteMutation();
 
-  const fetchedData: [EventEntity] = useEvents.data?.getEvents?.result as [
-    EventEntity
-  ];
+  fetchedData = useEvents.data?.getEvents?.result as [EventEntity];
 
   const [deleteEventFavorite] = useDeleteEventFavoriteMutation();
 
-  const favorites = useGetMeFavoritesQuery({});
+  const favorites = useGetMeBasicFavoritesQuery({
+    skip: !isAuthenticated,
+  });
   const refetchQueries = () => {
     useEvents.refetch();
     favorites.refetch();
@@ -44,7 +55,7 @@ const Events: React.FC<EventsProps> = () => {
               eventName={el?.name}
               location={el?.address?.street}
               date={el?.nextSchedule.startDate}
-              imgUrl={el?.titleImage?.id}
+              imgUrl={`data:${el?.titleImage?.mimeType};base64,${el?.titleImage?.base64}`}
               setFavorite={() =>
                 eventFavorite({
                   variables: {

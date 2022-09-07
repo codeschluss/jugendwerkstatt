@@ -39,8 +39,6 @@ const Map: FunctionComponent = () => {
   const { category, dates } = useContext(FilterContext);
 
   const filterOperands: any = [];
-  console.log(dates, "dates");
-  console.log(category, "category");
 
   category &&
     filterOperands.push({
@@ -99,28 +97,7 @@ const Map: FunctionComponent = () => {
   useEffect(() => {
     let events = result.data?.getEvents?.result;
     setAllEvents(events);
-  }, [result.data?.getEvents?.result, allEvents]);
-
-  const theDate = new Date(selectedEvent?.nextSchedule?.startDate);
-  const year = theDate.getFullYear();
-  const month = theDate.getMonth();
-  const day = theDate.getDate();
-
-  useEffect(() => {
-    result.refetch();
-    setSelectedEvent(undefined);
-  }, [category, dates]);
-
-  const weekDays = [
-    "Sonntag",
-    "Montag",
-    "Dienstag",
-    "Mittwoch",
-    "Donnerstag",
-    "Freitag",
-    "Samstag",
-  ];
-  const weekDay = weekDays[theDate.getDay()];
+  }, [result.data?.getEvents?.result]);
 
   const checkId = (obj: any) => obj.id === selectedEvent?.id;
   const hasId = favorites?.data?.me?.favoriteEvents?.some(checkId);
@@ -129,18 +106,22 @@ const Map: FunctionComponent = () => {
     <div className="overflow-hidden relative">
       {allEvents && (
         <div className="map relative">
-          <div className="pl-2 md:absolute  md:top-0 right-0 overflow-hidden bg-white md:bg-slate-400  border-t-2 border-white md:border-none    items-center  z-20 flex  h-16">
+          <div className="pl-2 md:fixed  md:top-20 right-0 overflow-hidden bg-white md:bg-slate-400  border-t-2 border-white md:border-none    items-center  z-20 flex  h-16">
             <SideBar type="EVENT" />
 
             <FilterHeader />
           </div>
 
           <MapContainer
-            center={[
-              allEvents[0]?.address?.latitude,
-              allEvents[0]?.address?.longitude,
-            ]}
-            zoom={13}
+            center={
+              allEvents.length > 0
+                ? [
+                    allEvents[0]?.address?.latitude,
+                    allEvents[0]?.address?.longitude,
+                  ]
+                : [48.333, 9.888]
+            }
+            zoom={allEvents.length > 0 ? 13 : 11}
           >
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -160,16 +141,10 @@ const Map: FunctionComponent = () => {
                         click: () => setSelectedEvent(event),
                       }}
                       position={[
-                        event?.address?.latitude,
-                        event?.address?.longitude,
+                        allEvents === undefined ? 1 : event?.address?.latitude,
+                        allEvents === undefined ? 1 : event?.address?.longitude,
                       ]}
-                    >
-                      <Tooltip>
-                        <p>Stadt : {event?.address?.place}</p>
-                        <p>Straße : {event?.address?.street}</p>
-                        <p>Postleitzahl: {event?.address?.postalCode}</p>
-                      </Tooltip>
-                    </Marker>
+                    ></Marker>
                   </div>
                 );
               })}
@@ -186,9 +161,9 @@ const Map: FunctionComponent = () => {
               className=""
               eventName={selectedEvent?.name}
               location={`${selectedEvent?.address?.street}, ${selectedEvent?.address?.houseNumber}, ${selectedEvent?.address?.place}`}
-              date={selectedEvent?.nextSchedule}
-              route={`/selectedEvent/${selectedEvent?.id}`}
-              imgUrl={selectedEvent?.titleImage?.id}
+              date={selectedEvent?.nextSchedule?.startDate}
+              route={`/events/${selectedEvent?.id}`}
+              imgUrl={`data:${selectedEvent?.titleImage?.mimeType};base64,${selectedEvent?.titleImage?.base64}`}
               setFavorite={() =>
                 eventFavorite({
                   variables: {

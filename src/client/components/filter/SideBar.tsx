@@ -116,7 +116,8 @@ const SideBar: React.FC<{ type?: string }> = ({ type }) => {
       <FormControl sx={{ m: 3 }}>
         <DatePicker
           disablePast
-          label={type === "EVENT" ? "Start date" : "Due Date"}
+          inputFormat="DD.MM.YYYY"
+          label={type === "EVENT" ? "Start date" : "Bewerbungsfrist bis "}
           value={tempDates.tempStartDate}
           onChange={(newValue) => {
             setTempDates({ ...tempDates, tempStartDate: newValue });
@@ -127,7 +128,8 @@ const SideBar: React.FC<{ type?: string }> = ({ type }) => {
       <FormControl sx={{ m: 3 }}>
         <DatePicker
           disablePast
-          label={type === "EVENT" ? "End date" : "Start date"}
+          inputFormat="DD.MM.YYYY"
+          label={type === "EVENT" ? "End date" : "Berufsstart ab"}
           value={tempDates.tempEndDate}
           onChange={(newValue) => {
             setTempDates({ ...tempDates, tempEndDate: newValue });
@@ -143,7 +145,7 @@ const SideBar: React.FC<{ type?: string }> = ({ type }) => {
       <React.Fragment>
         <span
           onClick={toggleDrawer("right", true)}
-          className="flex items-center justify-center w-8 h-8 mr-2 bg-red-800 rounded-full md:bg-primary md:mr-10"
+          className="flex cursor-pointer items-center justify-center w-8 h-8 mr-2 bg-red-800 rounded-full md:bg-primary md:mr-10"
         >
           {" "}
           <FilterIcon className="w-6 text-white" />

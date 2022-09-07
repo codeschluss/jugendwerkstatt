@@ -20,7 +20,7 @@ const AuthWrapper: React.FC<AuthWrapperProps> = ({
   let authHeaderIcon;
 
   return (
-    <div className="px-0 flex flex-col w-full h-full md:mt-20  top-0 z-20">
+    <div className="px-0 flex flex-col w-full h-screen md:mt-20  top-0 z-20">
       <div className="px-0 relative h-100 flex justify-center items-center ">
         <img
           className="h-full w-full object-cover md:hidden block"

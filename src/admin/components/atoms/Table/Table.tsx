@@ -8,7 +8,7 @@ export const Table: FC<TableProps> & TableComposition = ({
   className,
   ...rest
 }) => (
-  <table className={twClsx("p-2 w-full", className)} {...rest}>
+  <table className={twClsx("p-2 w-full border-collapse", className)} {...rest}>
     {children}
   </table>
 );

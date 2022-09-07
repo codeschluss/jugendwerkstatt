@@ -1,8 +1,10 @@
-import Joi from 'joi';
+import Joi from "joi";
+import { validateMethod } from "../utils";
+import { FileSchema, FileSchemaHasOne } from "./EventsForm.schema";
 
 export const PublicPagesFormSchema = Joi.object({
-  pageName: Joi.string().required().label('Seitenname'),
-  images: Joi.array().min(1).required().label('Titelbild'),
-  description: Joi.string().required().label('TextField'),
-  video: Joi.any().required().label('Video'),
+    pageName: Joi.string().required().label("Seitenname"),
+    description: Joi.string().required().label("Beschreibung"),
+    files: Joi.array().min(1).items(FileSchema).has(FileSchemaHasOne),
+    video: Joi.any(),
 });

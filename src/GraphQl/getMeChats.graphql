@@ -1,25 +1,51 @@
 query GetMeChats {
   me {
     id
+
     participants {
       id
       chat {
+        avatar {
+          id
+          mimeType
+          base64
+        }
         id
         name
         lastMessage {
           id
           content
           created
-          user {
+          participant {
             id
-            fullname
+            user {
+              id
+              fullname
+              profilePicture {
+                id
+                base64
+                mimeType
+              }
+            }
           }
         }
         modified
         messages {
-          created
+          readReceipts {
+            participant {
+              user {
+                id
+              }
+            }
+          }
           content
+          created
           id
+          participant {
+            user {
+              id
+            }
+          }
         }
         participants {
           user {
@@ -27,6 +53,8 @@ query GetMeChats {
             id
             profilePicture {
               id
+              base64
+              mimeType
             }
           }
         }

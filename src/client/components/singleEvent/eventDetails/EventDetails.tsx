@@ -23,9 +23,11 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
   email,
   web,
   group,
-  schedule,
+  startSchedule,
+  endSchedule,
   dueDate,
   startDate,
+  endDate,
   theRest,
   description,
 }) => {
@@ -75,29 +77,55 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
           <I>
             <CalendarIcon />
           </I>
-          <h3 className="ml-3 mt-2">{formatDate(new Date(dueDate || ""))}</h3>
+          <h3 className="ml-3 mt-2">
+            Bewerbungsfrist: {formatDate(new Date(dueDate || ""))}
+          </h3>
         </div>
       ) : (
         <div className="flex text-md">
           <I>
-            <ClockIcon />
+            <CalendarIcon />
           </I>
-          <h3 className="ml-3 mt-2">{getHour(schedule)} Uhr</h3>
+          <h3 className="ml-3 mt-2">Start:</h3>
+          <h3 className="ml-3 mt-2">
+            {formatDate(new Date(startDate || ""))}
+          </h3>{" "}
+          <h3 className="ml-3 mt-2">{getHour(startSchedule)} Uhr</h3>
         </div>
       )}
-      <div className="flex text-md">
-        <I>
-          <CalendarIcon />
-        </I>
-        <h3 className="ml-3 mt-2">{formatDate(new Date(startDate || ""))}</h3>
-      </div>
+      {!dueDate ? (
+        <div className="flex text-md">
+          <I>
+            <CalendarIcon />
+          </I>
+          <h3 className="ml-3 mt-2">Ende:</h3>
+          <h3 className="ml-3 mt-2">
+            {formatDate(new Date(endDate || ""))}
+          </h3>{" "}
+          <h3 className="ml-3 mt-2">{getHour(endSchedule)} Uhr</h3>
+        </div>
+      ) : (
+        <div className="flex text-md">
+          <I>
+            <CalendarIcon />
+          </I>
+          <h3 className="ml-3 mt-2">
+            Berufsstart: {formatDate(new Date(startDate || ""))}
+          </h3>{" "}
+        </div>
+      )}
       <div className="flex text-md">
         <I>
           <OfficeBuildingIcon />
         </I>
         <h3 className="ml-3 mt-2">{theRest}</h3>
       </div>
-      <div className="md:hidden block">{description}</div>
+      <div
+        className="md:hidden block"
+        dangerouslySetInnerHTML={{
+          __html: description ? description : "",
+        }}
+      />
     </div>
   );
 };

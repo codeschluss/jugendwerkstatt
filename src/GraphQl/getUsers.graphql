@@ -7,6 +7,8 @@ query GetUsers($params: FilterSortPaginateInput) {
       email
       profilePicture {
         id
+        mimeType
+        base64
       }
     }
   }

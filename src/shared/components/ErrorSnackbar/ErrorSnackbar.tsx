@@ -19,7 +19,9 @@ export const ErrorSnackbar: FC = () => {
   return (
     <Snackbar
       open={!!info}
-      autoHideDuration={SnackbarDurations[info?.type || "error"]}
+      {...(info?.type && {
+        autoHideDuration: SnackbarDurations[info.type],
+      })}
       onClose={handleClose}
       anchorOrigin={{
         vertical: "bottom",
@@ -29,10 +31,11 @@ export const ErrorSnackbar: FC = () => {
       <div className="max-w-md min-w-[320px]">
         <Alert
           onClose={handleClose}
-          severity={(info?.type as AlertColor) || "error"}
+          {...(info?.type && {
+            severity: info.type as AlertColor,
+          })}
           variant="filled"
         >
-          <AlertTitle>Fehler</AlertTitle>
           <strong>{info?.message}</strong>
         </Alert>
       </div>

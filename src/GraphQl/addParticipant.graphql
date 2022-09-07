@@ -1,0 +1,7 @@
+mutation AddParticipantToChat($chatId: String, $userId: String) {
+  addParticipant(chatId: $chatId, userId: $userId)
+}
+
+mutation DeleteParticipant($deleteParticipantId: String) {
+  deleteParticipant(id: $deleteParticipantId)
+}

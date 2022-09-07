@@ -3,10 +3,14 @@ query GetMeBasic {
     id
     fullname
     phone
-    password
     email
+    roles {
+      key
+    }
     profilePicture {
       id
+      base64
+      mimeType
     }
   }
 }
