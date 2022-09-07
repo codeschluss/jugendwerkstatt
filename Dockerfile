@@ -1,6 +1,8 @@
 FROM alpine:latest
 LABEL maintainer info@codeschluss.de
 COPY / /tmp/jugendwerkstatt.client
+ARG REACT_APP_HOST
+ENV REACT_APP_HOST $REACT_APP_HOST
 RUN \
   #
   # packages
@@ -15,7 +17,7 @@ RUN \
   # jugendwerkstatt.client
   cd /tmp/jugendwerkstatt.client && \
   npm install && \
-  REACT_APP_HOST=$REACT_APP_HOST npm run -- build && \
+  npm run -- build && \
   mkdir -p /usr/share/webapps && \
   mv build /usr/share/webapps/jugendwerkstatt.client && \
   #
