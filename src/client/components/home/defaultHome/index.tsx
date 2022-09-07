@@ -8,8 +8,8 @@ const DefaultHome: React.FC = () => {
       <div className="w-full hidden md:block h-screen   top-0  left-0">
         <img className=" w-full h-full" src="/assets/Background1.png" alt="" />
       </div>
-      <div className="w-full  md:bg-white justify-center md:absolute md:h-5/6 md:top-1/2 md:-translate-y-1/2 md:left-1/2 md:-translate-x-1/2 md:rounded-2xl md:w-[624px] md:p-8 md:mx-auto h-full  top-0 z-20 m-0 md:pb-5">
-        <div className="w-full h-full md:w-10/12 md:h-10/12 md:bg-gray-200 m-auto md:rounded-2xl md:flex md:flex-col md: justify-between">
+      <div className="w-full  md:bg-white justify-center md:absolute md:h-5/6 md:top-1/2 md:-translate-y-1/2 md:left-1/2 md:-translate-x-1/2 md:rounded-2xl md:w-[624px] md:mx-auto h-full  top-0 z-20 m-0 md:pb-5">
+        <div className="w-full h-full md:w-10/12 md:h-10/12 md:bg-200 m-auto md:rounded-2xl md:flex md:flex-col md: justify-between">
           <img
             className="w-full md:hidden  mb-7"
             src="/assets/circles-bg.png"
