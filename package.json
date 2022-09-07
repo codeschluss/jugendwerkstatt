@@ -9,6 +9,7 @@
     "@capacitor/core": "^3.7.0",
     "@capacitor/ios": "^3.4.3",
     "@capacitor/push-notifications": "^1.0.9",
+    "@capacitor/splash-screen": "^1.2.2",
     "@capacitor/toast": "^1.0.8",
     "@ckeditor/ckeditor5-react": "^5.0.0",
     "@date-io/dayjs": "^2.14.0",
