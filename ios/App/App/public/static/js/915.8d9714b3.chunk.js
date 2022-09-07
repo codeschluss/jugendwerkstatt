@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkjugendwerkstatt=self.webpackChunkjugendwerkstatt||[]).push([[915],{48915:function(e,t,u){u.r(t);var n=u(77260),s=u(80184);t.default=function(){return(0,s.jsx)(n.eD,{})}}}]);
+//# sourceMappingURL=915.8d9714b3.chunk.js.map
