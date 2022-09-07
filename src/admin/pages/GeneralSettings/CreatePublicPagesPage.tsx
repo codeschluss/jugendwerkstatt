@@ -5,12 +5,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetPageQuery, useSavePageMutation } from "../../../GraphQl/graphql";
 import { Button } from "../../components/atoms";
 import {
-    Accordion,
-    EventImagePreview,
-    FormActions,
-    InputField,
-    UploadField,
-    UploadVideo,
+  Accordion,
+  EventImagePreview,
+  FormActions,
+  InputField,
+  UploadField,
+  UploadVideo
 } from "../../components/molecules";
 import { DescriptionFrom } from "../../components/organisms";
 import { base64ImageToFile, fileObject, twClsx } from "../../utils";
