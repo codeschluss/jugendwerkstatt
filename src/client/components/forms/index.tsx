@@ -1,7 +1,8 @@
+import { Capacitor } from "@capacitor/core";
 import {
   ChevronRightIcon,
   DownloadIcon,
-  XIcon
+  XIcon,
 } from "@heroicons/react/outline";
 import UploadIcon from "@heroicons/react/solid/UploadIcon";
 import Button from "@mui/material/Button";
@@ -17,7 +18,7 @@ import {
   TemplateTypeEntity,
   useDeleteUploadsMutation,
   useGetMeUploadsQuery,
-  useGetTemplateTypesQuery
+  useGetTemplateTypesQuery,
 } from "../../../GraphQl/graphql";
 import Action from "../../../shared/components/table/Action";
 import Row from "../../../shared/components/table/Row";
@@ -33,7 +34,7 @@ const Forms: React.FC = () => {
   const [fileToDelete, setFileToDelete] = React.useState<
     string | undefined | null
   >(null);
-
+  const device = Capacitor.getPlatform(); // -> 'web', 'ios' or 'android'
   const handleClickOpen = (IdToDelete: string | undefined | null) => {
     setOpen(true);
     setFileToDelete(IdToDelete);
@@ -71,7 +72,10 @@ const Forms: React.FC = () => {
         authorization: `Bearer ${token}`,
       },
     };
-    await fetch(process.env.REACT_APP_API_URL + `media/download/${mediaId}`, requestOptions)
+    await fetch(
+      process.env.REACT_APP_API_URL + `media/download/${mediaId}`,
+      requestOptions
+    )
       .then((resp) => resp.blob())
       .then((blob) => {
         const url = window.URL.createObjectURL(blob);
@@ -163,16 +167,18 @@ const Forms: React.FC = () => {
               <li className="pt-4 flex justify-between" key={index}>
                 {file.name}{" "}
                 <div className="flex">
-                  <DownloadIcon
-                    className="w-5 h-5 text-gray-800 "
-                    onClick={() =>
-                      downloadHandler(
-                        file.id,
-                        file?.name,
-                        file?.mimeType?.split("/")[1]
-                      )
-                    }
-                  />
+                  {device === "web" && (
+                    <DownloadIcon
+                      className="w-5 h-5 text-gray-800 "
+                      onClick={() =>
+                        downloadHandler(
+                          file.id,
+                          file?.name,
+                          file?.mimeType?.split("/")[1]
+                        )
+                      }
+                    />
+                  )}
                   <XIcon
                     className="w-5 h-5 text-red-500 ml-5 "
                     onClick={() => handleClickOpen(file.id)}

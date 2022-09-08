@@ -17,7 +17,7 @@ import {
   FilesystemDirectory,
 } from "@capacitor/filesystem";
 import { Browser } from "@capacitor/browser";
-import { Plugins } from "@capacitor/core";
+import { Capacitor, Plugins } from "@capacitor/core";
 
 const TemplateEdit: React.FC = () => {
   const { id } = useParams();
@@ -29,7 +29,7 @@ const TemplateEdit: React.FC = () => {
   const [templateName, setTemplateName] = useState(name);
   const [templateContent, setTemplateContent] = useState("");
   const [editName, setEditName] = useState(false);
-
+  const device = Capacitor.getPlatform(); // -> 'web', 'ios' or 'android'
   const userBasic = useGetMeBasicQuery();
   const userBasicId: any = userBasic?.data?.me?.id;
   const handleClick = (): void => {
@@ -197,29 +197,31 @@ const TemplateEdit: React.FC = () => {
       <h5 className="text-2xl font-bold">
         {templateType}
 
-        <DropDown
-          position="right"
-          className="float-right mt-auto"
-          boxClassName="w-40 mt-3 py-2.5 px-1"
-          name={<DownloadIcon className="w-5" />}
-          withArrow={false}
-        >
-          <p className="text-sm font-normal text-center"> format:</p>
-
-          <p
-            onClick={downloadTemplatePdf}
-            className="text-base font-normal text-center my-1 cursor-pointer hover:bg-gray-100"
+        {device === "web" && (
+          <DropDown
+            position="right"
+            className="float-right mt-auto"
+            boxClassName="w-40 mt-3 py-2.5 px-1"
+            name={<DownloadIcon className="w-5" />}
+            withArrow={false}
           >
-            .pdf
-          </p>
+            <p className="text-sm font-normal text-center"> format:</p>
 
-          <p
-            onClick={downloadTemplateDocx}
-            className="text-base font-normal text-center my-1 cursor-pointer hover:bg-gray-100"
-          >
-            .docx
-          </p>
-        </DropDown>
+            <p
+              onClick={downloadTemplatePdf}
+              className="text-base font-normal text-center my-1 cursor-pointer hover:bg-gray-100"
+            >
+              .pdf
+            </p>
+
+            <p
+              onClick={downloadTemplateDocx}
+              className="text-base font-normal text-center my-1 cursor-pointer hover:bg-gray-100"
+            >
+              .docx
+            </p>
+          </DropDown>
+        )}
       </h5>
       <h5 className="pt-4 text-xl font-normal" onClick={handleClick}>
         {editName ? (

@@ -225,7 +225,6 @@ const App = (): ReactElement => {
         <Route path="/pending-approval" element={<ApprovalPending />} />
         <Route path="/messenger" element={chatActive && <Messenger />}>
           <Route path="chats" element={chatActive && <Chats />} />
-          <Route path="calls" element={chatActive && <Calls />} />
           <Route path="contacts" element={chatActive && <Contacts />} />
           <Route path="chat/:id" element={chatActive && <Chat />} />
         </Route>
