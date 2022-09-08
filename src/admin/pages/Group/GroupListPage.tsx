@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import ForceRefetchContext from "../../../contexts/ForceRefetchContext";
 import {
   useDeleteGroupMutation,
   useGetGroupsQuery,
@@ -8,14 +10,17 @@ import { CustomTable } from "../../components/molecules";
 
 const GroupListPage = () => {
   const navigate = useNavigate();
-
+  const { reRender, setReRender } = useContext(ForceRefetchContext);
   const { data: { groups = null } = {}, refetch: refetchGroups } =
     useGetGroupsQuery({
       fetchPolicy: "cache-and-network",
     });
 
   const [deleteGroup] = useDeleteGroupMutation({
-    onCompleted: () => refetchGroups(),
+    onCompleted: () => {
+      refetchGroups();
+      setReRender(!reRender);
+    },
   });
 
   const handleGroupCoursesNavigate = (groupId: string) => () =>

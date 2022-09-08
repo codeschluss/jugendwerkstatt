@@ -1,7 +1,7 @@
 import {
   CalendarIcon,
   ChevronDoubleRightIcon,
-  MapIcon
+  MapIcon,
 } from "@heroicons/react/outline";
 import {
   AcademicCapIcon,
@@ -12,16 +12,17 @@ import {
   CogIcon,
   DocumentTextIcon,
   HeartIcon,
-  HomeIcon
+  HomeIcon,
 } from "@heroicons/react/solid";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Nav from "../../../../admin/components/molecules/Nav/Nav";
 import { navItems } from "../../../../admin/static/navItems";
+import ForceRefetchContext from "../../../../contexts/ForceRefetchContext";
 import SideBarContext from "../../../../contexts/SideBarContext";
 import {
   useGetChatSettingsQuery,
   useGetGroupsQuery,
-  useGetMeBasicQuery
+  useGetMeBasicQuery,
 } from "../../../../GraphQl/graphql";
 import { useAuthStore } from "../../../../store";
 import { sidebarStore } from "../../../../store/sidebar/sidebar.store";
@@ -35,7 +36,7 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
   const { user } = useAuthStore();
   const { sideBar, setSideBar } = useContext(SideBarContext);
   const { handleToggle } = sidebarStore();
-
+  const { reRender, setReRender } = useContext(ForceRefetchContext);
   const { isAuthenticated } = useAuthStore();
 
   const chatEnabled = useGetChatSettingsQuery({
@@ -45,12 +46,15 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
 
   const meRole = useGetMeBasicQuery();
 
-  const { data: { groups = null } = {} } = useGetGroupsQuery({
+  const { data: { groups = null } = {}, refetch } = useGetGroupsQuery({
     skip: !!meRole.data?.me?.roles?.some(
       (el) => el === "admin" || el === "supervisor"
     ),
   });
 
+  useEffect(() => {
+    refetch();
+  }, [reRender]);
   const mappedGroups =
     groups?.result?.map((group) => ({
       name: group?.name || "",

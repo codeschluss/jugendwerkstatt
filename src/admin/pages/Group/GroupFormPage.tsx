@@ -1,27 +1,28 @@
-import { ReactElement, useEffect } from 'react';
-import { FieldError, FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { Accordion, FormActions, InputField } from '../../components/molecules';
-import { GroupFormSchema } from '../../validations/GroupForm.schema';
+import { ReactElement, useContext, useEffect } from "react";
+import { FieldError, FormProvider, useForm } from "react-hook-form";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { Accordion, FormActions, InputField } from "../../components/molecules";
+import { GroupFormSchema } from "../../validations/GroupForm.schema";
 import {
   useGetGroupQuery,
   useSaveGroupMutation,
-} from '../../../GraphQl/graphql';
-import { useNavigate, useParams } from 'react-router-dom';
+} from "../../../GraphQl/graphql";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   DescriptionFrom,
   GroupCoursesForm,
   GroupCoursesInput,
-} from '../../components/organisms';
-import { twClsx } from '../../utils';
-import { GroupFormInputs } from './GroupForm.props';
+} from "../../components/organisms";
+import { twClsx } from "../../utils";
+import { GroupFormInputs } from "./GroupForm.props";
+import ForceRefetchContext from "../../../contexts/ForceRefetchContext";
 
 const GroupFormPage = (): ReactElement => {
   const navigate = useNavigate();
   const { id } = useParams();
-
+  const { reRender, setReRender } = useContext(ForceRefetchContext);
   const methods = useForm<GroupFormInputs>({
-    mode: 'onChange',
+    mode: "onChange",
     resolver: joiResolver(GroupFormSchema),
   });
   const {
@@ -36,14 +37,17 @@ const GroupFormPage = (): ReactElement => {
     skip: !id,
   });
   const [saveGroup] = useSaveGroupMutation({
-    onCompleted: () => navigate('/admin/groups'),
+    onCompleted: () => {
+      navigate("/admin/groups");
+      setReRender(!reRender);
+    },
   });
 
   useEffect(() => {
     if (id && group)
       reset({
-        name: group.name || '',
-        description: group.description || '',
+        name: group.name || "",
+        description: group.description || "",
       });
   }, [id, group, reset]);
 
@@ -56,7 +60,7 @@ const GroupFormPage = (): ReactElement => {
           description,
         },
       },
-    });
+    }).finally(() => setReRender(!reRender));
 
   return (
     <FormProvider {...methods}>
@@ -64,19 +68,19 @@ const GroupFormPage = (): ReactElement => {
         <Accordion
           title="Stammdaten"
           open={!!id}
-          className={twClsx(errors.name && 'border border-primary')}
+          className={twClsx(errors.name && "border border-primary")}
         >
           <InputField
             id="name"
             label="Gruppenname"
-            {...register('name')}
+            {...register("name")}
             error={errors.name?.message}
           />
         </Accordion>
 
         <Accordion
           title="Beschreibung"
-          className={twClsx(errors.description && 'border border-primary')}
+          className={twClsx(errors.description && "border border-primary")}
         >
           <DescriptionFrom />
         </Accordion>

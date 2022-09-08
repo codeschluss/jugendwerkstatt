@@ -1,25 +1,27 @@
-import { ReactElement } from 'react';
-import { useParams } from 'react-router-dom';
+import { ReactElement, useContext } from "react";
+import { useParams } from "react-router-dom";
+import ForceRefetchContext from "../../../contexts/ForceRefetchContext";
 import {
   useDeleteCourseMemberMutation,
   useGetCourseQuery,
-} from '../../../GraphQl/graphql';
-import { Action, Panel, Table } from '../../components/atoms';
-import { CustomTable } from '../../components/molecules';
+} from "../../../GraphQl/graphql";
+import { Action, Panel, Table } from "../../components/atoms";
+import { CustomTable } from "../../components/molecules";
 
 const CourseMembersPage = (): ReactElement => {
   const { id } = useParams();
-
   const { data: { course = null } = {}, refetch: refetchCourse } =
     useGetCourseQuery({
-      fetchPolicy: 'cache-and-network',
+      fetchPolicy: "cache-and-network",
       variables: { id },
     });
   const [deleteMember] = useDeleteCourseMemberMutation({
-    onCompleted: () => refetchCourse(),
+    onCompleted: () => {
+      refetchCourse();
+    },
   });
   const handleDeleteGroupMember = (userId: string) => () =>
-    deleteMember({ variables: { userId, courseId: course?.id || '' } });
+    deleteMember({ variables: { userId, courseId: course?.id || "" } });
 
   const courseMembers = course?.members || [];
 
@@ -27,17 +29,17 @@ const CourseMembersPage = (): ReactElement => {
     <Panel.Wrapper
       action={{
         to: `/admin/courses/${course?.id}/members/new`,
-        label: 'Teilnehmer hinzufügen',
+        label: "Teilnehmer hinzufügen",
       }}
     >
       <CustomTable
-        headerData={['Name', 'Gruppe', 'Aktionen']}
+        headerData={["Name", "Gruppe", "Aktionen"]}
         bodyData={courseMembers.map((member) => (
           <Table.Row key={member?.id}>
             <Table.Data>{member?.fullname}</Table.Data>
             <Table.Data>{course?.group?.name}</Table.Data>
             <Table.Data>
-              <Action onDelete={handleDeleteGroupMember(member?.id || '')} />
+              <Action onDelete={handleDeleteGroupMember(member?.id || "")} />
             </Table.Data>
           </Table.Row>
         ))}

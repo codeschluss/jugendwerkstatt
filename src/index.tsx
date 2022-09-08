@@ -15,6 +15,7 @@ import "./shared/styles/index.css";
 import "./shared/styles/SlickSlider.css";
 import "react-datepicker/dist/react-datepicker.css";
 import { VideoChatProvider } from "./contexts/VideoChatContext";
+import { ForceRefetchProvider } from "./contexts/ForceRefetchContext";
 
 ReactDOM.render(
   <Suspense fallback={<div>Loading...</div>}>
@@ -23,10 +24,12 @@ ReactDOM.render(
         <FilterProvider>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <VideoChatProvider>
-              <BrowserRouter>
-                <App />
-                <ErrorSnackbar />
-              </BrowserRouter>
+              <ForceRefetchProvider>
+                <BrowserRouter>
+                  <App />
+                  <ErrorSnackbar />
+                </BrowserRouter>
+              </ForceRefetchProvider>
             </VideoChatProvider>
           </LocalizationProvider>
         </FilterProvider>

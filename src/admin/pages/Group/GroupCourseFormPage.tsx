@@ -1,25 +1,26 @@
-import { ReactElement, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { FormProvider, useForm } from 'react-hook-form';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { Accordion, FormActions, InputField } from '../../components/molecules';
-import { GroupCourseFormSchema } from '../../validations/GroupForm.schema';
+import { ReactElement, useContext, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { FormProvider, useForm } from "react-hook-form";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { Accordion, FormActions, InputField } from "../../components/molecules";
+import { GroupCourseFormSchema } from "../../validations/GroupForm.schema";
 import {
   useGetCourseQuery,
   useGetGroupsQuery,
   useSaveCourseMutation,
-} from '../../../GraphQl/graphql';
-import { Select } from '../../components/atoms';
-import { DescriptionFrom } from '../../components/organisms';
-import { twClsx } from '../../utils';
-import { GroupCourseFormInputs } from './GroupForm.props';
+} from "../../../GraphQl/graphql";
+import { Select } from "../../components/atoms";
+import { DescriptionFrom } from "../../components/organisms";
+import { twClsx } from "../../utils";
+import { GroupCourseFormInputs } from "./GroupForm.props";
+import ForceRefetchContext from "../../../contexts/ForceRefetchContext";
 
 const GroupCourseFormPage = (): ReactElement => {
   const navigate = useNavigate();
   const { id, courseId } = useParams();
-
+  const { reRender, setReRender } = useContext(ForceRefetchContext);
   const methods = useForm<GroupCourseFormInputs>({
-    mode: 'onChange',
+    mode: "onChange",
     resolver: joiResolver(GroupCourseFormSchema),
   });
   const {
@@ -36,15 +37,18 @@ const GroupCourseFormPage = (): ReactElement => {
   });
 
   const [saveCourse] = useSaveCourseMutation({
-    onCompleted: () => navigate('/admin/groups'),
+    onCompleted: () => {
+      navigate("/admin/groups");
+      setReRender(!reRender);
+    },
   });
 
   useEffect(() => {
     if (id && course) {
       reset({
-        name: course.name || '',
-        group: course.group?.id || '',
-        description: course.description || '',
+        name: course.name || "",
+        group: course.group?.id || "",
+        description: course.description || "",
       });
     }
   }, [id, course, reset]);
@@ -68,24 +72,24 @@ const GroupCourseFormPage = (): ReactElement => {
         <Accordion
           title="Stammdaten"
           open={!!courseId}
-          className={twClsx(errors.name && 'border border-primary')}
+          className={twClsx(errors.name && "border border-primary")}
         >
           <InputField
             id="name"
             label="Kursname"
-            {...register('name')}
+            {...register("name")}
             error={errors.name?.message}
             className="mb-4"
           />
           <Select
             id="group"
             label="Gruppe"
-            {...register('group')}
+            {...register("group")}
             error={errors.group?.message}
           >
             {!course && <option value="">Wählen Sie eine Gruppe</option>}
             {groups?.result?.map((group) => (
-              <option key={group?.id} value={group?.id || ''}>
+              <option key={group?.id} value={group?.id || ""}>
                 {group?.name}
               </option>
             ))}
@@ -94,7 +98,7 @@ const GroupCourseFormPage = (): ReactElement => {
 
         <Accordion
           title="Beschreibung"
-          className={twClsx(errors.description && 'border border-primary')}
+          className={twClsx(errors.description && "border border-primary")}
         >
           <DescriptionFrom />
         </Accordion>
