@@ -1,7 +1,6 @@
 const colors = require("tailwindcss/colors");
 
 module.exports = {
-  mode: "jit",
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
@@ -23,6 +22,9 @@ module.exports = {
       // => @media (min-width: 960px) { ... }
       lg: "1440px",
     },
+    corePlugins: {
+      preflight: false,
+    },
     colors: {
       primary: "#c20639",
       transparent: "transparent",
@@ -41,5 +43,5 @@ module.exports = {
       charcoal: "#424242",
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };

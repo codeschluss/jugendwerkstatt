@@ -7,7 +7,7 @@ import {
   useGetMeBasicQuery,
   useGetTemplateQuery,
   useGetUserTemplateQuery,
-  useSaveUserTemplateMutation
+  useSaveUserTemplateMutation,
 } from "../../../../GraphQl/graphql";
 import DropDown from "../../../../shared/components/ui/DropDown";
 import { readAuthToken } from "../../../../shared/utils";
@@ -168,6 +168,30 @@ const TemplateEdit: React.FC = () => {
     }
   }, [userTemplateContent, templateContentResult]);
 
+  const headingConfig = {
+    options: [
+      { model: "paragraph", title: "Paragraph", class: "ck-heading_paragraph" },
+      {
+        model: "heading1",
+        view: "h2",
+        title: "Heading 1",
+        class: "ck-heading_heading1",
+      },
+      {
+        model: "heading2",
+        view: "h3",
+        title: "Heading 2",
+        class: "ck-heading_heading2",
+      },
+      {
+        model: "heading3",
+        view: "h4",
+        title: "Heading 3",
+        class: "ck-heading_heading3",
+      },
+    ],
+  };
+
   return (
     <div className="container md:px-4 pt-4 mx-auto">
       <h5 className="text-2xl font-bold">
@@ -210,7 +234,7 @@ const TemplateEdit: React.FC = () => {
         )}
       </h5>
 
-      <div className="pt-4 pb-6">
+      <div className="pt-4 pb-6 mt-5 prose inline w-full">
         <CKEditor
           config={{
             removePlugins: ["MediaEmbed"],
