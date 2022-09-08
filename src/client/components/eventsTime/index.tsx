@@ -57,6 +57,7 @@ const EventsTime: React.FC = () => {
             name: singleEvent.name,
             description: (
               <div
+                className="prose-xl"
                 dangerouslySetInnerHTML={{
                   __html: singleEvent.description ? desc : "",
                 }}

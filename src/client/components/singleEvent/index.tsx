@@ -135,6 +135,7 @@ export const SingleEvent = () => {
       <div className="hidden md:block p-5 rounded-md bg-white mt-8 md:mt-1 md:mx-3">
         <p className="text-3xl">{eventQuery?.data?.getEvent?.name}</p>
         <div
+          className="prose-xl"
           dangerouslySetInnerHTML={{
             __html: eventQuery?.data?.getEvent?.description ? desc : "",
           }}

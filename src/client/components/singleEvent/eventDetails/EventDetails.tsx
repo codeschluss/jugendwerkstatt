@@ -121,7 +121,7 @@ export const EventDetails: React.FC<EventDetailsProps> = ({
         <h3 className="ml-3 mt-2">{theRest}</h3>
       </div>
       <div
-        className="md:hidden block"
+        className="md:hidden block prose-xl"
         dangerouslySetInnerHTML={{
           __html: description ? description : "",
         }}

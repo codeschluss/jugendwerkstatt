@@ -93,7 +93,7 @@ const Login = (): ReactElement => {
           ocus:outline-none border-2 rounded-md"
           />
 
-          <Link className="my-10 underline" to="/forgot-password/email">
+          <Link className="my-10 underline" to="/reset-password/email">
             {" "}
             <p className="my-2">Passwort vergessen?</p>
           </Link>

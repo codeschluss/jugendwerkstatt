@@ -64,8 +64,9 @@ const GlobalPage = () => {
           {page.data?.getPage?.name}
         </p>
       </div>
-      <div className=" p-2 my-5  bg-white w-4/5 ">
+      <div className=" p-2 my-5  bg-white prose-xl w-4/5  ">
         <div
+          className="prose-xl"
           dangerouslySetInnerHTML={{
             __html: page.data?.getPage?.content ? desc : "",
           }}

@@ -15,6 +15,7 @@ const GroupMe: React.FC = () => {
             }}
           />
           <div
+            className="prose-xl"
             dangerouslySetInnerHTML={{
               __html: group.data?.me?.course?.group?.description
                 ? group.data?.me?.course?.group?.description
