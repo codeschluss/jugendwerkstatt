@@ -1,3 +1,5 @@
+import { Capacitor } from "@capacitor/core";
+
 const detectDevice = () => {
   const toMatch = [
     /Android/i,
@@ -8,10 +10,7 @@ const detectDevice = () => {
     /BlackBerry/i,
     /Windows Phone/i,
   ];
-
-  const iPad =
-    /iPad|iPhone|iPod/.test(navigator.platform) ||
-    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const device = Capacitor.getPlatform(); // -> 'web', 'ios' or 'android'
 
   const abc = () => {
     if (
@@ -19,19 +18,20 @@ const detectDevice = () => {
         /WebKit/.test(navigator.userAgent)) ||
       (navigator.platform === "MacIntel" &&
         navigator.maxTouchPoints &&
-        navigator.maxTouchPoints === 5)
+        navigator.maxTouchPoints > 1)
     ) {
       return true;
     }
   };
 
-  return (
-    toMatch.some((toMatchItem) => {
-      return navigator.userAgent.match(toMatchItem);
-    }) ||
-    iPad ||
-    abc
-  );
+  return device !== "ios"
+    ? toMatch.some((toMatchItem) => {
+        return navigator.userAgent.match(toMatchItem);
+      })
+    : abc ||
+        toMatch.some((toMatchItem) => {
+          return navigator.userAgent.match(toMatchItem);
+        });
 };
 
 export default detectDevice;

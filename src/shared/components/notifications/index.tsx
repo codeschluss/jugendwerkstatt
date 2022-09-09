@@ -37,18 +37,27 @@ const Notifications = () => {
               }).then(() => notifications.refetch())
             }
             key={el.id}
-            className={`border-b-[1px] p-2  border-gray-400 cursor-pointer md: 
+            className={`border-b-[1px] p-2 border-gray-400 cursor-pointer md: 
             flex md:justify-center md:ml-2 items-center  ${
               !el.read && "bg-gray-100"
             }`}
           >
-            <p className={`text-base mt-2 w-2/5 ${!el.read && "font-bold"}`}>
+            <p
+              style={{ hyphens: "auto", wordBreak: "break-all" }}
+              className={`text-base white-space:normal  mt-2 w-2/5 ${
+                !el.read && "font-bold"
+              }`}
+            >
               {el?.title}
             </p>
-            <p className={`text-sm  w-2/5 ${!el.read && "font-bold"} `}>
+            <p
+              style={{ hyphens: "auto", wordBreak: "break-all" }}
+              className={`text-sm white-space:normal
+              mx-2 w-2/5 ${!el.read && "font-bold"} `}
+            >
               {el?.content}
             </p>
-            <p className="text-sm  w-1/5">{`${weekDay}, ${date}.${month}.${year}`}</p>
+            <p className="text-sm  white-space:normal w-1/5">{`${weekDay}, ${date}.${month}.${year}`}</p>
           </div>
         );
       })}

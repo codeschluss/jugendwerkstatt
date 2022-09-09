@@ -67,20 +67,32 @@ const TemplateEdit: React.FC = () => {
         type: "docx",
       }),
     };
-    await fetch(process.env.REACT_APP_API_URL + "media/export", requestOptions)
-      .then((resp) => resp.blob())
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.style.display = "none";
-        a.href = url;
-        a.download = `${templateName}.docx`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        alert("your file has downloaded!");
-      })
-      .catch(() => alert("oh no!"));
+    if (device === "web") {
+      await fetch(
+        process.env.REACT_APP_API_URL + "media/export",
+        requestOptions
+      )
+        .then((resp) => resp.blob())
+        .then((blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          a.download = `${templateName}.docx`;
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+          alert("your file has downloaded!");
+        })
+        .catch(() => alert("oh no!"));
+    } else if (device === "ios" || device === "android") {
+      const openCapacitorSite = async () => {
+        await Browser.open({
+          url: `${process.env.REACT_APP_BASE_URL}downloaddoc/${process.env.REACT_APP_API_URL}${token}/${templateName}/docx`,
+        });
+      };
+      openCapacitorSite();
+    }
   };
   const downloadTemplatePdf = async () => {
     const requestOptions = {
@@ -95,53 +107,33 @@ const TemplateEdit: React.FC = () => {
         type: "pdf",
       }),
     };
-    await fetch(process.env.REACT_APP_API_URL + "media/export", requestOptions)
-      .then((resp) => resp.blob())
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.style.display = "none";
-        a.href = url;
-        a.download = `${templateName}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
+    if (device === "web") {
+      await fetch(
+        process.env.REACT_APP_API_URL + "media/export",
+        requestOptions
+      )
+        .then((resp) => resp.blob())
+        .then((blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          a.download = `${templateName}.pdf`;
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
 
-        const writeSecretFile = async () => {
-          await Filesystem.writeFile({
-            path: "secrets/text.txt",
-            data: "This is a test",
-            directory: Directory.Documents,
-            encoding: Encoding.UTF8,
-          });
-        };
-
-        const readSecretFile = async () => {
-          const contents = await Filesystem.readFile({
-            path: "secrets/text.txt",
-            directory: Directory.Data,
-            encoding: Encoding.UTF8,
-            recursive: true,
-          });
-
-          console.log("secrets:", contents);
-        };
-
-        writeSecretFile();
-        readSecretFile();
-
-        alert("your file has downloaded!");
-      })
-      .catch(() => alert("oh no!"));
-  };
-
-  const writeSecretFile = async () => {
-    await Filesystem.writeFile({
-      path: "secrets/text.txt",
-      data: "This is a test",
-      directory: Directory.Documents,
-      encoding: Encoding.UTF8,
-    });
+          alert("your file has downloaded!");
+        })
+        .catch(() => alert("oh no!"));
+    } else if (device === "ios" || device === "android") {
+      const openCapacitorSite = async () => {
+        await Browser.open({
+          url: `${process.env.REACT_APP_BASE_URL}downloaddoc/${process.env.REACT_APP_API_URL}${token}/${templateName}/pdf`,
+        });
+      };
+      openCapacitorSite();
+    }
   };
 
   const saveTemplate = (): void => {
@@ -197,31 +189,29 @@ const TemplateEdit: React.FC = () => {
       <h5 className="text-2xl font-bold">
         {templateType}
 
-        {device === "web" && (
-          <DropDown
-            position="right"
-            className="float-right mt-auto"
-            boxClassName="w-40 mt-3 py-2.5 px-1"
-            name={<DownloadIcon className="w-5" />}
-            withArrow={false}
+        <DropDown
+          position="right"
+          className="float-right mt-auto"
+          boxClassName="w-40 mt-3 py-2.5 px-1"
+          name={<DownloadIcon className="w-5" />}
+          withArrow={false}
+        >
+          <p className="text-sm font-normal text-center"> format:</p>
+
+          <p
+            onClick={downloadTemplatePdf}
+            className="text-base font-normal text-center my-1 cursor-pointer hover:bg-gray-100"
           >
-            <p className="text-sm font-normal text-center"> format:</p>
+            .pdf
+          </p>
 
-            <p
-              onClick={downloadTemplatePdf}
-              className="text-base font-normal text-center my-1 cursor-pointer hover:bg-gray-100"
-            >
-              .pdf
-            </p>
-
-            <p
-              onClick={downloadTemplateDocx}
-              className="text-base font-normal text-center my-1 cursor-pointer hover:bg-gray-100"
-            >
-              .docx
-            </p>
-          </DropDown>
-        )}
+          <p
+            onClick={downloadTemplateDocx}
+            className="text-base font-normal text-center my-1 cursor-pointer hover:bg-gray-100"
+          >
+            .docx
+          </p>
+        </DropDown>
       </h5>
       <h5 className="pt-4 text-xl font-normal" onClick={handleClick}>
         {editName ? (

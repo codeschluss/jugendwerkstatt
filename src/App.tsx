@@ -110,6 +110,7 @@ import {
   useGetMeBasicQuery,
   useSaveSubscriptionMutation,
 } from "./GraphQl/graphql";
+import DownloadDoc from "./shared/components/download/DownloadDoc";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
@@ -237,9 +238,17 @@ const App = (): ReactElement => {
 
       <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />
       <Route path="/infoPage/:id" element={<GlobalPages />} />
-
+      <Route
+        path="/downloaddoc/:url/media/export/:token/:name/:type/:content"
+        element={<DownloadDoc />}
+      />
+      <Route
+        path="/downloadfile/:url/media/download/:id/:token/:type"
+        element={<DownloadDoc />}
+      />
       <Route element={<RequireNonAuthRoute />}>
         <Route path="/login" element={<LoginPage />} />
+
         <Route path="/register" element={<RegisterPage />} />
 
         <Route path="/reset-password" element={<ForgotPassword />}>

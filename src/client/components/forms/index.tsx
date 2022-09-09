@@ -1,3 +1,4 @@
+import { Browser } from "@capacitor/browser";
 import { Capacitor } from "@capacitor/core";
 import {
   ChevronRightIcon,
@@ -72,24 +73,35 @@ const Forms: React.FC = () => {
         authorization: `Bearer ${token}`,
       },
     };
-    await fetch(
-      process.env.REACT_APP_API_URL + `media/download/${mediaId}`,
-      requestOptions
-    )
-      .then((resp) => resp.blob())
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.style.display = "none";
-        a.href = url;
-        a.download = `${mediaName}.${mediaMimeType}`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        alert("your file has downloaded!");
-      })
+    if (device === " web") {
+      await fetch(
+        process.env.REACT_APP_API_URL + `media/download/${mediaId}`,
+        requestOptions
+      )
+        .then((resp) => resp.blob())
+        .then((blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          a.download = `${mediaName}.${mediaMimeType}`;
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+          alert("your file has downloaded!");
+        })
 
-      .catch((e) => console.log(e));
+        .catch((e) => console.log(e));
+    } else if (device === "ios" || device === "android") {
+      const openCapacitorSite = async () => {
+        await Browser.open({
+          url: `${process.env.REACT_APP_BASE_URL}downloadfile/${
+            process.env.REACT_APP_API_URL + `media/download/${mediaId}`
+          }/${token}/${mediaMimeType}`,
+        });
+      };
+      openCapacitorSite();
+    }
   };
 
   return (
@@ -167,18 +179,17 @@ const Forms: React.FC = () => {
               <li className="pt-4 flex justify-between" key={index}>
                 {file.name}{" "}
                 <div className="flex">
-                  {device === "web" && (
-                    <DownloadIcon
-                      className="w-5 h-5 text-gray-800 "
-                      onClick={() =>
-                        downloadHandler(
-                          file.id,
-                          file?.name,
-                          file?.mimeType?.split("/")[1]
-                        )
-                      }
-                    />
-                  )}
+                  <DownloadIcon
+                    className="w-5 h-5 text-gray-800 "
+                    onClick={() =>
+                      downloadHandler(
+                        file.id,
+                        file?.name,
+                        file?.mimeType?.split("/")[1]
+                      )
+                    }
+                  />
+
                   <XIcon
                     className="w-5 h-5 text-red-500 ml-5 "
                     onClick={() => handleClickOpen(file.id)}

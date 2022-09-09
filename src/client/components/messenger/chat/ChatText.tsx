@@ -1,3 +1,5 @@
+import { Browser } from "@capacitor/browser";
+import { Capacitor } from "@capacitor/core";
 import { ChevronDownIcon, ReplyIcon } from "@heroicons/react/outline";
 import { Done, DoneAll } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
@@ -30,7 +32,7 @@ const ChatText: React.FC<TextProps> = ({
 }) => {
   const [mediaContent, setMediaContent] = useState<any>();
   const token = readAuthToken("accessToken");
-
+  const device = Capacitor.getPlatform(); // -> 'web', 'ios' or 'android'
   useEffect(() => {
     if (media?.mimeType?.includes("image")) {
       setMediaContent(
@@ -64,21 +66,35 @@ const ChatText: React.FC<TextProps> = ({
         authorization: `Bearer ${token}`,
       },
     };
-    await fetch(process.env.REACT_APP_API_URL + `media/download/${mediaId}`, requestOptions)
-      .then((resp) => resp.blob())
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.style.display = "none";
-        a.href = url;
-        a.download = `${mediaName}.${mediaMimeType}`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        alert("your file has downloaded!");
-      })
+    if (device === "web") {
+      await fetch(
+        process.env.REACT_APP_API_URL + `media/download/${mediaId}`,
+        requestOptions
+      )
+        .then((resp) => resp.blob())
+        .then((blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          a.download = `${mediaName}.${mediaMimeType}`;
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+          alert("your file has downloaded!");
+        })
 
-      .catch((e) => console.log(e));
+        .catch((e) => console.log(e));
+    } else if (device === "ios" || device === "android") {
+      const openCapacitorSite = async () => {
+        await Browser.open({
+          url: `${process.env.REACT_APP_BASE_URL}downloadfile/${
+            process.env.REACT_APP_API_URL + `media/download/${mediaId}`
+          }/${token}/${mediaMimeType}`,
+        });
+      };
+      openCapacitorSite();
+    }
   };
 
   return (
