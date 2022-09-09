@@ -3,6 +3,7 @@ import SideItems from "./SideItems";
 import detectDevice from "../../../utils/isTouch";
 import { useContext } from "react";
 import SideBarContext from "../../../../contexts/SideBarContext";
+import { Capacitor } from "@capacitor/core";
 
 interface SideBoxProps {
   active: boolean;
@@ -12,6 +13,7 @@ interface SideBoxProps {
 const SideBox: React.FC<SideBoxProps> = ({ active, hide }) => {
   const isTouch = detectDevice();
   const { setSideBar, sideBar } = useContext(SideBarContext);
+  const device = Capacitor.getPlatform(); // -> 'web', 'ios' or 'android'
   return (
     <>
       <div
