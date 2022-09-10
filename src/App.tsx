@@ -111,6 +111,7 @@ import {
   useSaveSubscriptionMutation,
 } from "./GraphQl/graphql";
 import DownloadDoc from "./shared/components/download/DownloadDoc";
+import DownloadPage from "./shared/components/download/DownloadFile";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
@@ -239,12 +240,12 @@ const App = (): ReactElement => {
       <Route path="/alreadyVerified" element={<AlreadyVerifiedUser />} />
       <Route path="/infoPage/:id" element={<GlobalPages />} />
       <Route
-        path="/downloaddoc/:url/media/export/:token/:name/:type/:content"
+        path="/downloaddoc/:content/:token/:name/:type"
         element={<DownloadDoc />}
       />
       <Route
-        path="/downloadfile/:url/media/download/:id/:token/:type"
-        element={<DownloadDoc />}
+        path="/downloadfile/:name/:id/:token/:type"
+        element={<DownloadPage />}
       />
       <Route element={<RequireNonAuthRoute />}>
         <Route path="/login" element={<LoginPage />} />

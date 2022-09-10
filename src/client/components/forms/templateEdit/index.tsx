@@ -84,11 +84,13 @@ const TemplateEdit: React.FC = () => {
           window.URL.revokeObjectURL(url);
           alert("your file has downloaded!");
         })
+
         .catch(() => alert("oh no!"));
+      console.log(templateContent, "content");
     } else if (device === "ios" || device === "android") {
       const openCapacitorSite = async () => {
         await Browser.open({
-          url: `${process.env.REACT_APP_BASE_URL}downloaddoc/${process.env.REACT_APP_API_URL}${token}/${templateName}/docx`,
+          url: `${process.env.REACT_APP_BASE_URL}downloaddoc/${templateContent}${token}/${templateName}/docx`,
         });
       };
       openCapacitorSite();
@@ -129,7 +131,7 @@ const TemplateEdit: React.FC = () => {
     } else if (device === "ios" || device === "android") {
       const openCapacitorSite = async () => {
         await Browser.open({
-          url: `${process.env.REACT_APP_BASE_URL}downloaddoc/${process.env.REACT_APP_API_URL}${token}/${templateName}/pdf`,
+          url: `${process.env.REACT_APP_BASE_URL}downloaddoc/${templateContent}${token}/${templateName}/pdf`,
         });
       };
       openCapacitorSite();

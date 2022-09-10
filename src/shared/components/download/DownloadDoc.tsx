@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 const DownloadDoc = () => {
   const { content } = useParams();
-  const { url } = useParams();
   const { token } = useParams();
   const { name } = useParams();
   const { type } = useParams();
@@ -23,7 +22,10 @@ const DownloadDoc = () => {
           type: type,
         }),
       };
-      await fetch(`${url}`, requestOptions)
+      await fetch(
+        process.env.REACT_APP_API_URL + "media/export",
+        requestOptions
+      )
         .then((resp) => resp.blob())
         .then((blob) => {
           const urli = window.URL.createObjectURL(blob);

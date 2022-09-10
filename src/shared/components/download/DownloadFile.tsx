@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 
 const DownloadPage = () => {
   const { id } = useParams();
-  const { url } = useParams();
   const { token } = useParams();
   const { name } = useParams();
   const { type } = useParams();
@@ -17,7 +16,10 @@ const DownloadPage = () => {
           authorization: `Bearer ${token}`,
         },
       };
-      await fetch(`${url}/${id}`, requestOptions)
+      await fetch(
+        process.env.REACT_APP_API_URL + `media/download/${id}`,
+        requestOptions
+      )
         .then((resp) => resp.blob())
         .then((blob) => {
           const url = window.URL.createObjectURL(blob);

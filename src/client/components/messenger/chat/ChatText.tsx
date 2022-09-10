@@ -88,9 +88,9 @@ const ChatText: React.FC<TextProps> = ({
     } else if (device === "ios" || device === "android") {
       const openCapacitorSite = async () => {
         await Browser.open({
-          url: `${process.env.REACT_APP_BASE_URL}downloadfile/${
-            process.env.REACT_APP_API_URL + `media/download/${mediaId}`
-          }/${token}/${mediaMimeType}`,
+          url: `${
+            process.env.REACT_APP_BASE_URL
+          }downloadfile/${mediaName`/${mediaId}`}/${token}/${mediaMimeType}`,
         });
       };
       openCapacitorSite();
