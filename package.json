@@ -59,6 +59,7 @@
     "react-hook-form": "^7.31.3",
     "react-leaflet": "^3.2.5",
     "react-player": "^2.10.1",
+    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.2.2",
     "react-scripts": "5.0.0",
     "react-select": "^5.3.2",
