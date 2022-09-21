@@ -17,6 +17,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import { Capacitor } from "@capacitor/core";
+import detectDevice from "../../../../shared/utils/isTouch";
 
 type Anchor = "top";
 
@@ -27,6 +28,7 @@ const DefaultHome: React.FC = () => {
 
   const navigate = useNavigate();
   const device = Capacitor.getPlatform(); // -> 'web', 'ios' or 'android'
+  const isTouch = detectDevice();
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -112,7 +114,7 @@ const DefaultHome: React.FC = () => {
 
   return (
     <>
-      {device === "ios" && <div className="w-full h-9 bg-primary"></div>}
+      {isTouch && <div className="w-full h-9 bg-primary"></div>}
       <Carousel
         autoPlay={true}
         infiniteLoop={true}
