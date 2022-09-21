@@ -1,6 +1,7 @@
 query GetJobAds($params: FilterSortPaginateInput) {
   getJobAds(params: $params) {
     result {
+      content
       company {
         address {
           houseNumber
