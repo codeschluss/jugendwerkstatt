@@ -16,6 +16,7 @@ import { formatDate } from "../../../../admin/utils";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
+import { Capacitor } from "@capacitor/core";
 
 type Anchor = "top";
 
@@ -25,6 +26,7 @@ const DefaultHome: React.FC = () => {
   });
 
   const navigate = useNavigate();
+  const device = Capacitor.getPlatform(); // -> 'web', 'ios' or 'android'
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -69,7 +71,7 @@ const DefaultHome: React.FC = () => {
         </p>
         <Link className="w-1/2  md:h-1/2 mt-2  " to="/login">
           <ButtonUi isValidated={true} isDisabled={true}>
-            Einlogen
+            Einloggen
           </ButtonUi>
         </Link>
         <Link className="w-1/2   md:h-1/2 mt-2   " to="/register">
@@ -110,6 +112,7 @@ const DefaultHome: React.FC = () => {
 
   return (
     <>
+      {device === "ios" && <div className="w-full h-9 bg-primary"></div>}
       <Carousel
         autoPlay={true}
         infiniteLoop={true}
@@ -185,14 +188,14 @@ const DefaultHome: React.FC = () => {
           dynamicHeight={false}
           showThumbs={false}
           interval={9000}
+          showArrows={false}
         >
           {jobs.data?.getJobAds?.result?.map(
             (el: JobAdEntity | undefined | null) => {
               return (
                 <div
                   onClick={toggleDrawer("top", true)}
-                  style={{ background: `${el?.type?.color}` }}
-                  className={` text-white cursor-pointer  w-full hover:border-blue-900 border-2 border-gray-500 h-60  my-5 rounded-lg p-5`}
+                  className={` text-gray-600 cursor-pointer  w-full hover:border-blue-900 border-2 border-gray-500 h-60  my-5 rounded-lg p-5`}
                   key={el?.id}
                 >
                   <p className="m-auto text-left  text-xl w-full">
@@ -209,7 +212,7 @@ const DefaultHome: React.FC = () => {
                     </div>
                   </div>
                   <div
-                    className=" prose text-white prose-p-m-0 w-full overflow-y-scroll mt-2 mb-2 h-1/2 flex justify-center"
+                    className=" prose text-gray-600  prose-p-m-0 w-full overflow-y-scroll mt-2 mb-2 h-1/2 flex justify-center"
                     dangerouslySetInnerHTML={{
                       __html: el?.content ? el.content : "",
                     }}
