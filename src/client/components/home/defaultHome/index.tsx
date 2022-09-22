@@ -118,11 +118,13 @@ const DefaultHome: React.FC = () => {
       <Carousel
         autoPlay={true}
         infiniteLoop={true}
-        emulateTouch={true}
         centerMode={true}
         dynamicHeight={false}
         showThumbs={false}
         interval={9000}
+        verticalSwipe={undefined}
+        emulateTouch={true}
+        swipeable={false}
       >
         {events.data?.getEvents?.result?.map(
           (el: EventEntity | undefined | null) => {
@@ -186,8 +188,8 @@ const DefaultHome: React.FC = () => {
       <div className="md:w-1/3 m-auto  w-screen mt-10 px-2 md:px-0 ">
         <p className="text-3xl text-center">Neuste Jobs</p>
         <Carousel
-          emulateTouch={true}
           dynamicHeight={false}
+          verticalSwipe={undefined}
           showThumbs={false}
           interval={9000}
           showArrows={false}
