@@ -1,9 +1,12 @@
 import { useGetGroupAndCourseQuery } from "../../../GraphQl/graphql";
+import { useAuthStore } from "../../../store";
 
 const GroupMe: React.FC = () => {
-  const group = useGetGroupAndCourseQuery();
-
-  return (
+  const { isAuthenticated, user } = useAuthStore();
+  const group = useGetGroupAndCourseQuery({
+    skip: !isAuthenticated,
+  });
+  return isAuthenticated ? (
     <div>
       {group.data && (
         <div className="w-full bg-white my-12 rounded-md flex flex-col items-start p-8">
@@ -25,7 +28,7 @@ const GroupMe: React.FC = () => {
         </div>
       )}
     </div>
-  );
+  ) : null;
 };
 
 export default GroupMe;

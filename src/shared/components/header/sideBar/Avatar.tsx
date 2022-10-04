@@ -1,6 +1,7 @@
 import Avatar from "@mui/material/Avatar";
 import * as React from "react";
 import { useGetMeBasicQuery } from "../../../../GraphQl/graphql";
+import { useAuthStore } from "../../../../store";
 
 function stringToColor(string: string) {
   let hash = 0;
@@ -32,7 +33,11 @@ function stringAvatar(name: string) {
 }
 
 const BackgroundLetterAvatars: React.FC<{ fullname: any }> = ({ fullname }) => {
-  const me = useGetMeBasicQuery();
+  const { isAuthenticated } = useAuthStore();
+
+  const me = useGetMeBasicQuery({
+    skip: !isAuthenticated,
+  });
 
   return me.data?.me?.profilePicture ? (
     <div className="w-12 h-12 ">

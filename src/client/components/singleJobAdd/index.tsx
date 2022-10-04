@@ -12,6 +12,7 @@ import { EventDetails } from "../singleEvent/eventDetails/EventDetails";
 import { JobHeader } from "./jobHeader";
 import { TitleImgSlider } from "../singleEvent/slider/Slider";
 import SideBar from "../filter/SideBar";
+import { useAuthStore } from "../../../store";
 export const SingleJobAdd = () => {
   const params = useParams();
 
@@ -25,8 +26,10 @@ export const SingleJobAdd = () => {
 
   const [jobFavorites] = useAddJobAdFavoriteMutation();
   const [deleteJobAdFavorite] = useDeleteJobAdFavoriteMutation();
+  const { isAuthenticated } = useAuthStore();
 
   const favorites = useGetMeBasicFavoritesQuery({
+    skip: !isAuthenticated,
     fetchPolicy: "network-only",
   });
 

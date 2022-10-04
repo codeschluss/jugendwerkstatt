@@ -1,9 +1,9 @@
-import { FC, ReactElement } from 'react';
-import Nav from '../../molecules/Nav/Nav';
+import { FC, ReactElement } from "react";
+import Nav from "../../molecules/Nav/Nav";
 // import { useGetGroupsQuery } from '../../../../GraphQl/graphql';
 // import { navItems } from '../../../static/navItems';
-import { SidebarProps } from './Sidebar.props';
-import { twClsx } from '../../../utils';
+import { SidebarProps } from "./Sidebar.props";
+import { twClsx } from "../../../utils";
 
 /**
  * @ NOTE: THIS COMPONENT HAS BEEN DEPRECATED
@@ -24,7 +24,7 @@ export const Sidebar: FC<SidebarProps> = (): ReactElement => {
 
   return (
     <aside className="dashboard-sidebar">
-      <Nav.Wrapper className={twClsx('flex-col justify-between min-h-screen')}>
+      <Nav.Wrapper className={twClsx("flex-col justify-between min-h-screen")}>
         <h1>Test</h1>
       </Nav.Wrapper>
     </aside>

@@ -44,16 +44,18 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
     skip: !isAuthenticated,
   });
 
-  const meRole = useGetMeBasicQuery();
+  const meRole = useGetMeBasicQuery({
+    skip: !isAuthenticated,
+  });
 
   const { data: { groups = null } = {}, refetch } = useGetGroupsQuery({
-    skip: !!meRole.data?.me?.roles?.some(
-      (el) => el === "admin" || el === "supervisor"
-    ),
+    skip:
+      !!meRole.data?.me?.roles?.some((el) => el === "admin") ||
+      !isAuthenticated,
   });
 
   useEffect(() => {
-    refetch();
+    isAuthenticated && refetch();
   }, [reRender]);
   const mappedGroups =
     groups?.result?.map((group) => ({
@@ -73,12 +75,14 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
         <ul>
           <>
             <Item name="Start" icon={<HomeIcon />} clicked={clicked} href="/" />
-            <Item
-              name="Formulare"
-              icon={<DocumentTextIcon />}
-              clicked={clicked}
-              href="/forms"
-            />
+            {isAuthenticated && (
+              <Item
+                name="Formulare"
+                icon={<DocumentTextIcon />}
+                clicked={clicked}
+                href="/forms"
+              />
+            )}
             <Item
               name="Events"
               icon={<CalendarSolid />}
@@ -111,24 +115,28 @@ const SideItems: React.FunctionComponent<SideItemsProps> = ({ clicked }) => {
               clicked={clicked}
               href="calendar"
             />
-            <Item
-              name="Favoriten"
-              icon={<HeartIcon />}
-              clicked={clicked}
-              href="/favorites"
-            />
+            {isAuthenticated && (
+              <Item
+                name="Favoriten"
+                icon={<HeartIcon />}
+                clicked={clicked}
+                href="/favorites"
+              />
+            )}
             <Item
               name="Karte"
               icon={<MapIcon />}
               clicked={clicked}
               href="/map"
             />
-            <Item
-              name="Einstellungen"
-              icon={<CogIcon />}
-              clicked={clicked}
-              href="/profile"
-            />
+            {isAuthenticated && (
+              <Item
+                name="Einstellungen"
+                icon={<CogIcon />}
+                clicked={clicked}
+                href="/profile"
+              />
+            )}
           </>
         </ul>
       ) : (

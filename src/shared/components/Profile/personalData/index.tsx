@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../../../../client/components/ui/Button";
 import {
-    useGetMeBasicQuery,
-    useRegisterUserMutation
+  useGetMeBasicQuery,
+  useRegisterUserMutation,
 } from "../../../../GraphQl/graphql";
 import useInput from "../../../../hooks/use-input";
 import AuthInput from "../../authentication/AuthInput";

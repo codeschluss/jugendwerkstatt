@@ -2,11 +2,9 @@ import { HeartIcon as OutlineHeart } from "@heroicons/react/outline";
 import { HeartIcon as SolidHeart } from "@heroicons/react/solid";
 import React from "react";
 import { Link } from "react-router-dom";
-import {
-    AddressEntity,
-    EventEntity
-} from "../../../GraphQl/graphql";
+import { AddressEntity, EventEntity } from "../../../GraphQl/graphql";
 import { readAuthToken } from "../../../shared/utils";
+import { useAuthStore } from "../../../store";
 import { SocialMedia } from "../ui/SocialMedia";
 export interface SlideCardProps {
   className?: string;
@@ -56,6 +54,7 @@ const SlideCard: React.FC<SlideCardProps> = ({
     "Samstag",
   ];
   const weekDay = weekDays[theDate.getDay()];
+  const { isAuthenticated } = useAuthStore();
 
   return (
     <div className={`${className} snap-center ${width} h-60   flex-none px-2`}>
@@ -87,18 +86,19 @@ const SlideCard: React.FC<SlideCardProps> = ({
           </Link>
           {(location || date) && (
             <div className="flex items-center w-14 md:w-20 justify-between">
-              <SocialMedia url={shareUrl} /> |
-              {isFavorite ? (
-                <SolidHeart
-                  className="w-5 cursor-pointer"
-                  onClick={removeFavorite}
-                />
-              ) : (
-                <OutlineHeart
-                  className="w-5 cursor-pointer"
-                  onClick={setFavorite}
-                />
-              )}
+              <SocialMedia url={shareUrl} /> {isAuthenticated && "|"}
+              {isAuthenticated &&
+                (isFavorite ? (
+                  <SolidHeart
+                    className="w-5 cursor-pointer"
+                    onClick={removeFavorite}
+                  />
+                ) : (
+                  <OutlineHeart
+                    className="w-5 cursor-pointer"
+                    onClick={setFavorite}
+                  />
+                ))}
             </div>
           )}
         </div>

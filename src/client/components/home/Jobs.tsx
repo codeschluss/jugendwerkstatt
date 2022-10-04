@@ -20,7 +20,7 @@ const Jobs: React.FC<EventsProps> = () => {
     skip: !!fetchedData,
     variables: {
       params: {
-        page: 1,
+        page: 0,
         size: 5,
       },
     },
@@ -28,7 +28,7 @@ const Jobs: React.FC<EventsProps> = () => {
   const { isAuthenticated } = useAuthStore();
   fetchedData = result.data?.getJobAds?.result as [JobAdEntity];
   const [jobFavorites] = useAddJobAdFavoriteMutation();
-
+  console.log(result);
   const [deleteJobAdFavorite] = useDeleteJobAdFavoriteMutation();
 
   const favorites = useGetMeBasicFavoritesQuery({

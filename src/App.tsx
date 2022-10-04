@@ -112,6 +112,7 @@ import {
 } from "./GraphQl/graphql";
 import DownloadDoc from "./shared/components/download/DownloadDoc";
 import DownloadPage from "./shared/components/download/DownloadFile";
+import { StandardNonAuthLayout } from "./shared/components/RequireAuthRoute/StandardNonAuthLayout";
 
 const App = (): ReactElement => {
   const { loading } = useAuth();
@@ -214,6 +215,24 @@ const App = (): ReactElement => {
     <Routes>
       <Route path="/" element={<Home />} />
 
+      <Route element={<StandardNonAuthLayout />}>
+        <Route path="/job-ad/:id" element={<JobDetails />} />
+        <Route path="/favorites" element={<Favorites />} />
+
+        <Route path="/map" element={<Map />} />
+        <Route path="/media-library" element={<MediaLibrary />} />
+
+        <Route path="/event/:id" element={<EventDetail />} />
+        <Route path="/calendar" element={<EventsCalendar />} />
+
+        <Route path="/events">
+          <Route index element={<Events />} />
+          <Route path=":id" element={<EventDetail />} />
+          <Route path="time" element={<EventsTime />} />
+        </Route>
+        <Route path="/jobs" element={<Jobs />} />
+      </Route>
+
       <Route element={<RequireAuthAll />}>
         <Route path="/profile" element={<ProfileSettings />} />
         <Route path="/profile-personal" element={<PersonalData />} />
@@ -260,23 +279,7 @@ const App = (): ReactElement => {
       </Route>
 
       <Route element={<RequireAuthRoute accessRole={["student"]} />}>
-        <Route path="/job-ad/:id" element={<JobDetails />} />
-        <Route path="/favorites" element={<Favorites />} />
-        <Route path="/jobs" element={<Jobs />} />
-
         <Route path="/upload-file" element={<UploadData />} />
-
-        <Route path="/map" element={<Map />} />
-        <Route path="/media-library" element={<MediaLibrary />} />
-
-        <Route path="/event/:id" element={<EventDetail />} />
-        <Route path="/calendar" element={<EventsCalendar />} />
-
-        <Route path="/events">
-          <Route index element={<Events />} />
-          <Route path=":id" element={<EventDetail />} />
-          <Route path="time" element={<EventsTime />} />
-        </Route>
 
         <Route path="/forms">
           <Route index element={<Forms />} />
