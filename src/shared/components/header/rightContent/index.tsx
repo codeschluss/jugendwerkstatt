@@ -113,7 +113,7 @@ const RightContent: FC = () => {
   }, [data]);
 
   return (
-    <div className="relative flex items-center justify-end flex-grow">
+    <div className="relative flex items-center justify-center flex-grow">
       <Autocomplete
         freeSolo
         id="combo-box-demo"
@@ -267,7 +267,9 @@ const RightContent: FC = () => {
       )}
       <MenuIcon
         onClick={() => setSideBar(!sideBar)}
-        className="w-5 h-5 md:hidden mr-3 text-white"
+        className={`w-5 h-5 md:hidden mr-3 text-white ${
+          !isAuthenticated && "ml-2.5"
+        }`}
       />
       {isAuthenticated && (
         <I className="hidden w-6 h-6 text-white cursor-pointer md:text-black md:flex md:ml-6">
