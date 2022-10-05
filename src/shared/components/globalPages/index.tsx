@@ -36,10 +36,10 @@ const GlobalPage = () => {
         {!isAuthenticated ? (
           <div className="flex justify-around w-full">
             <p className="cursor-pointer" onClick={() => navigate("/login")}>
-              Login
+              Einloggen
             </p>
             <p className="cursor-pointer" onClick={() => navigate("/register")}>
-              Register
+              Registrieren
             </p>
           </div>
         ) : (

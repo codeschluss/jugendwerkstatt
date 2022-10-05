@@ -1,6 +1,4 @@
-import {
-    FunctionComponent, useContext, useEffect, useState
-} from "react";
+import { FunctionComponent, useContext, useEffect, useState } from "react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import SwiperCore, { Virtual } from "swiper";
 import "swiper/css";
@@ -8,18 +6,21 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import FilterContext from "../../../contexts/FilterContext";
 import {
-    ConjunctionOperator,
-    EventEntity,
-    QueryOperator,
-    useAddEventFavoriteMutation,
-    useDeleteEventFavoriteMutation,
-    useGetEventsQuery,
-    useGetMeFavoritesQuery
+  ConjunctionOperator,
+  EventEntity,
+  QueryOperator,
+  useAddEventFavoriteMutation,
+  useDeleteEventFavoriteMutation,
+  useGetEventsQuery,
+  useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
 import FilterHeader from "../../../shared/components/header/filterHeader";
+import { useAuthStore } from "../../../store";
 import SideBar from "../filter/SideBar";
 import SlideCard from "../slideItems/SlideCard";
 import "./style.css";
+import { ArrowLeftIcon } from "@heroicons/react/outline";
+import { useNavigate } from "react-router-dom";
 
 SwiperCore.use([Virtual]);
 
@@ -30,6 +31,8 @@ const Map: FunctionComponent = () => {
   >();
 
   const { category, dates } = useContext(FilterContext);
+  const { isAuthenticated } = useAuthStore();
+  const navigate = useNavigate();
 
   const filterOperands: any = [];
 
@@ -81,7 +84,9 @@ const Map: FunctionComponent = () => {
 
   const [deleteEventFavorite] = useDeleteEventFavoriteMutation();
 
-  const favorites = useGetMeFavoritesQuery({});
+  const favorites = useGetMeFavoritesQuery({
+    skip: !isAuthenticated,
+  });
   const refetchQueries = () => {
     result.refetch();
     favorites.refetch();
@@ -99,7 +104,11 @@ const Map: FunctionComponent = () => {
     <div className="overflow-hidden relative">
       {allEvents && (
         <div className="map relative">
-          <div className="pl-2 md:fixed  md:top-20 right-0 overflow-hidden bg-white md:bg-slate-400  border-t-2 border-white md:border-none    items-center  z-20 flex  h-16">
+          <div
+            className="pl-2 md:fixed  md:top-20 right-0 overflow-hidden
+           bg-white md:bg-slate-400  border-t-2 border-white md:border-none    
+           items-center   z-20 flex mt-4  h-16 "
+          >
             <SideBar type="EVENT" />
 
             <FilterHeader />

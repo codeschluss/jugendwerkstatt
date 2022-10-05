@@ -1,4 +1,6 @@
+import { ArrowLeftIcon } from "@heroicons/react/outline";
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FilterContext from "../../../contexts/FilterContext";
 import {
   ConjunctionOperator,
@@ -11,6 +13,7 @@ import {
   useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
 import FilterHeader from "../../../shared/components/header/filterHeader";
+import { useAuthStore } from "../../../store";
 import SideBar from "../filter/SideBar";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
@@ -21,7 +24,8 @@ const Jobs = () => {
   const [jobFavorites] = useAddJobAdFavoriteMutation();
   const [deleteJobAdFavorite] = useDeleteJobAdFavoriteMutation();
   const { category, dates } = useContext(FilterContext);
-
+  const { isAuthenticated } = useAuthStore();
+  const navigate = useNavigate();
   const filterOperands: any = [];
 
   category &&
@@ -69,6 +73,7 @@ const Jobs = () => {
   );
 
   const favorites = useGetMeFavoritesQuery({
+    skip: !isAuthenticated,
     fetchPolicy: "network-only",
   });
   const refetchQueries = () => {
@@ -85,7 +90,10 @@ const Jobs = () => {
 
   return (
     <div className=" m-auto md:m-12 md:mt-0">
-      <div className=" flex items-center w-full h-16 pl-2 overflow-hidden border-t-2 border-white  bg-primary md:bg-transparent md:border-none">
+      <div
+        className=" flex items-center w-full h-16 pl-2 overflow-hidden border-t-2
+       border-white  bg-primary md:bg-transparent md:border-none justify-between"
+      >
         <SideBar />
 
         <FilterHeader />

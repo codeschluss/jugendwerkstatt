@@ -3,10 +3,14 @@ import {
   useGetMeNotificationsQuery,
   useSaveNotificationMutation,
 } from "../../../GraphQl/graphql";
+import { useAuthStore } from "../../../store";
 
 const Notifications = () => {
+  const { isAuthenticated } = useAuthStore();
+
   const notifications = useGetMeNotificationsQuery({
-    fetchPolicy: "cache-and-network",
+    skip: !isAuthenticated,
+    fetchPolicy: "network-only",
   });
   const [saveNotification] = useSaveNotificationMutation();
 
@@ -34,7 +38,9 @@ const Notifications = () => {
                     read: true,
                   },
                 },
-              }).then(() => notifications.refetch())
+              }).then(() => {
+                isAuthenticated && notifications.refetch();
+              })
             }
             key={el.id}
             className={`border-b-[1px] p-2 border-gray-400 cursor-pointer md: 

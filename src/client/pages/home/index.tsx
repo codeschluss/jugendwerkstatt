@@ -2,7 +2,6 @@ import { Navigate } from "react-router-dom";
 import { UserRoleEnum } from "../../../interfaces";
 import { UserLayout } from "../../../shared/components/UserLayout";
 import { useAuthStore } from "../../../store";
-import DefaultHome from "../../components/home/defaultHome";
 import Homepage from "../../components/home/Homepage";
 
 const Home = () => {
@@ -18,12 +17,10 @@ const Home = () => {
     return <Navigate to={{ pathname: "/admin" }} />;
   }
 
-  return isAuthenticated && user?.roles.includes(UserRoleEnum.STUDENT) ? (
+  return (
     <UserLayout>
       <Homepage />
     </UserLayout>
-  ) : (
-    <DefaultHome />
   );
 };
 

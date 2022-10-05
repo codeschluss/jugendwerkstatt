@@ -16,10 +16,6 @@ const SideBar: FC = () => {
           onClick={() => navigate(-1)}
           className="w-5 h-5 md:hidden"
         />
-        <MenuIcon
-          onClick={() => setSideBar(!sideBar)}
-          className="w-5 h-5 md:hidden"
-        />
       </div>
       <SideBox hide={() => setSideBar(false)} active={sideBar} />
     </>

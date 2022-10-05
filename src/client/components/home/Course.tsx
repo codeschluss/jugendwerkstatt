@@ -1,9 +1,14 @@
 import { useGetGroupAndCourseQuery } from "../../../GraphQl/graphql";
+import { useAuthStore } from "../../../store";
 
 const CourseMe: React.FC = () => {
-  const course = useGetGroupAndCourseQuery();
+  const { isAuthenticated, user } = useAuthStore();
 
-  return (
+  const course = useGetGroupAndCourseQuery({
+    skip: !isAuthenticated,
+  });
+
+  return isAuthenticated ? (
     <div>
       {course.data && (
         <div className="w-full bg-white my-12 rounded-md flex flex-col items-start p-8">
@@ -24,7 +29,7 @@ const CourseMe: React.FC = () => {
         </div>
       )}
     </div>
-  );
+  ) : null;
 };
 
 export default CourseMe;

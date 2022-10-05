@@ -1,4 +1,6 @@
+import { ArrowLeftIcon } from "@heroicons/react/outline";
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FilterContext from "../../../contexts/FilterContext";
 import {
   ConjunctionOperator,
@@ -11,6 +13,7 @@ import {
   useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
 import FilterHeader from "../../../shared/components/header/filterHeader";
+import { useAuthStore } from "../../../store";
 import SideBar from "../filter/SideBar";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
@@ -20,10 +23,12 @@ const Events = () => {
     EventCategoryEntity | any
   >();
   const { category, dates } = useContext(FilterContext);
+  const { isAuthenticated } = useAuthStore();
 
   const [eventFavorite] = useAddEventFavoriteMutation({});
 
   const [deleteEventFavorite] = useDeleteEventFavoriteMutation();
+  const navigate = useNavigate();
 
   const filterOperands: any = [];
 
@@ -71,7 +76,9 @@ const Events = () => {
       }
   );
 
-  const favorites = useGetMeFavoritesQuery({});
+  const favorites = useGetMeFavoritesQuery({
+    skip: !isAuthenticated,
+  });
   const refetchQueries = () => {
     result.refetch();
     favorites.refetch();
@@ -90,7 +97,10 @@ const Events = () => {
 
   return (
     <div className="m-auto md:m-12 md:mt-0">
-      <div className="flex items-center w-full h-16 pl-2 overflow-hidden border-t-2 border-white  bg-primary md:bg-transparent md:border-none">
+      <div
+        className="flex items-center w-full h-16 pl-2 overflow-hidden border-t-2
+       border-white  bg-primary md:bg-transparent md:border-none justify-between"
+      >
         <SideBar type="EVENT" />
 
         <FilterHeader />

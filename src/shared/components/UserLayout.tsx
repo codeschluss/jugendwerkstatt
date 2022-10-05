@@ -24,8 +24,12 @@ export const UserLayout: FC = ({ children }) => {
 
   const { handleOpen } = snackbarStore();
 
-  const feedback = useFeedbacksQuery();
-  const assignments = useGetMeAssignmentsQuery();
+  const feedback = useFeedbacksQuery({
+    skip: !isAuthenticated,
+  });
+  const assignments = useGetMeAssignmentsQuery({
+    skip: !isAuthenticated,
+  });
   const filteredAssignment = assignments.data?.me?.assignments?.filter(
     (assignment: AssignmentEntity | undefined | null) => {
       return assignment?.assignmentState?.name === "ASSIGNED";
@@ -62,7 +66,7 @@ export const UserLayout: FC = ({ children }) => {
     <>
       <main
         className={`flex flex-col  min-h-screen transition-all duration-500 ${
-          sideBar && isAuthenticated ? "md:pl-72" : "md:pl-20"
+          sideBar && "md:pl-72"
         }`}
       >
         {filteredAssignment?.map(
@@ -93,7 +97,7 @@ export const UserLayout: FC = ({ children }) => {
             }
           }
         )}
-        {isAuthenticated && <Header />}
+        <Header />
         <div className="">
           <div>{children}</div>
         </div>
