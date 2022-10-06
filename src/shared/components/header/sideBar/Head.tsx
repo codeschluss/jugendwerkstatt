@@ -6,8 +6,11 @@ import Styles from "./Head.module.css";
 import { UserIcon, UserAddIcon } from "@heroicons/react/outline";
 
 const Head: React.FunctionComponent = () => {
-  const { data } = useGetMeBasicQuery();
   const { isAuthenticated } = useAuthStore();
+
+  const { data } = useGetMeBasicQuery({
+    skip: !isAuthenticated,
+  });
 
   return (
     <div className="relative w-full p-8">

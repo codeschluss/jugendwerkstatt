@@ -7,6 +7,7 @@ import {
   useGetMeBasicFavoritesQuery,
   useGetMeFavoritesQuery,
 } from "../../../GraphQl/graphql";
+import { useAuthStore } from "../../../store";
 import SlideCard from "../slideItems/SlideCard";
 import Slider from "../slideItems/Slider";
 import { EventDetails } from "./eventDetails/EventDetails";
@@ -15,6 +16,7 @@ import { TitleImgSlider } from "./slider/Slider";
 
 export const SingleEvent = () => {
   const params = useParams();
+  const { isAuthenticated } = useAuthStore();
 
   const eventQuery = useGetEventQuery({
     variables: { id: params.id || "" },
@@ -30,6 +32,7 @@ export const SingleEvent = () => {
   const [deleteEventFavorite] = useDeleteEventFavoriteMutation();
 
   const favorites = useGetMeBasicFavoritesQuery({
+    skip: !isAuthenticated,
     fetchPolicy: "network-only",
   });
 
